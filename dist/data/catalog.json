@@ -1,0 +1,1404 @@
+{
+  "site": {
+    "title": "科研知识库 · 电子书",
+    "subtitle": "把分散的教材收进一个连续、安静的阅读空间"
+  },
+  "stats": {
+    "books": 6,
+    "docs": 100
+  },
+  "books": [
+    {
+      "slug": "zhou-machine-learning",
+      "title": "机器学习",
+      "author": "周志华",
+      "description": "从基本概念、经典模型到计算学习理论与强化学习。",
+      "tags": [
+        "人工智能",
+        "中文教材",
+        "机器学习"
+      ],
+      "sourceSiteName": "周志华《机器学习》· 在线图书",
+      "cover": "files/zhou-machine-learning/00-front-matter/images/cover.jpeg",
+      "docCount": 21,
+      "firstDocId": "dc419d2921af03c8"
+    },
+    {
+      "slug": "python-data-analysis",
+      "title": "Python 数据分析",
+      "author": "明日科技",
+      "description": "覆盖数据处理、可视化、机器学习与完整分析案例。",
+      "tags": [
+        "数据分析",
+        "Python",
+        "中文教材"
+      ],
+      "sourceSiteName": "Python 数据分析 · 教材站",
+      "cover": "files/python-data-analysis/00-front-matter/images/cover.jpg",
+      "docCount": 25,
+      "firstDocId": "0a3308c140f8f4e4"
+    },
+    {
+      "slug": "deep-learning",
+      "title": "动手学深度学习",
+      "author": "李沐等",
+      "description": "以在线教材、中文视频和可复现实验学习深度学习。",
+      "tags": [
+        "人工智能",
+        "深度学习",
+        "实验"
+      ],
+      "sourceSiteName": "动手学深度学习 · 学习站",
+      "cover": "",
+      "docCount": 3,
+      "firstDocId": "fddf97053cd983af"
+    },
+    {
+      "slug": "wind-energy",
+      "title": "Wind Energy Handbook",
+      "author": "Tony Burton 等",
+      "description": "Wind resource, aerodynamics, loads, control and offshore wind.",
+      "tags": [
+        "风能",
+        "英文教材",
+        "工程"
+      ],
+      "sourceSiteName": "风能技术",
+      "cover": "",
+      "docCount": 13,
+      "firstDocId": "5bd60ae7f9e17d72"
+    },
+    {
+      "slug": "风能技术",
+      "title": "风能技术",
+      "author": "Tony Burton 等 · 武鑫译",
+      "description": "系统介绍风资源、风力机设计、控制与风电场技术。",
+      "tags": [
+        "风能",
+        "中文教材",
+        "风电场"
+      ],
+      "sourceSiteName": "风能技术（第二版）",
+      "cover": "",
+      "docCount": 23,
+      "firstDocId": "b4ade889f42702e2"
+    },
+    {
+      "slug": "wind-turbine-theory-and-design",
+      "title": "风力发电机组理论与设计",
+      "author": "姚兴佳等",
+      "description": "从能量转换到整机、关键部件、控制和强度分析。",
+      "tags": [
+        "风能",
+        "工程设计",
+        "中文教材"
+      ],
+      "sourceSiteName": "风力发电机组理论与设计",
+      "cover": "files/wind-turbine-theory-and-design/00-front-matter/images/978-7-111-40451-4-coverpage-1.jpg",
+      "docCount": 15,
+      "firstDocId": "811b8e7782c84de7"
+    }
+  ],
+  "docs": [
+    {
+      "id": "dc419d2921af03c8",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "index.md",
+      "title": "课程首页",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "系统学习机器学习的基本概念、经典模型、理论基础与主要学习范式。",
+      "order": 1,
+      "previousId": "",
+      "nextId": "64b8b4f0b203604e"
+    },
+    {
+      "id": "64b8b4f0b203604e",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "course-resources.md",
+      "title": "课程资源",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "课件、tinyml 源码和分 P 视频按教材章节对应整理。正文与课程安排请直接从课程首页进入。",
+      "order": 2,
+      "previousId": "dc419d2921af03c8",
+      "nextId": "7a24220bb8809970"
+    },
+    {
+      "id": "7a24220bb8809970",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "tinyml-lab.md",
+      "title": "tiny_ml 算法实验室",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "tinyml 用 NumPy 实现西瓜书、Stanford CS229 和部分经典算法，让读者直接看到 fit() 背后的矩阵运算与参数更新；仓库还包含按陈天奇课件思路编写的简化版 XGBRegressor。",
+      "order": 3,
+      "previousId": "64b8b4f0b203604e",
+      "nextId": "3c7c1612390932f4"
+    },
+    {
+      "id": "3c7c1612390932f4",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在人工智能界有一种说法，认为机器学习是人工智能领域中最能够体现智能的一个分支。从历史来看，机器学习似乎也是人工智能中发展最快的分支之一。在二十世纪八十年代的时候，符号学习可能还是机器学习的主流，而自从二十世纪九十年代以来，就一直是统计机器学习的天下了。不知道是否可以这样认为：从主",
+      "order": 4,
+      "previousId": "7a24220bb8809970",
+      "nextId": "6d33a12baa08f7cc"
+    },
+    {
+      "id": "6d33a12baa08f7cc",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/01-introduction/index.md",
+      "title": "第1章 绪论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1235315584&amp;p=3&amp;highquality=1&amp;danmaku=0",
+      "order": 5,
+      "previousId": "3c7c1612390932f4",
+      "nextId": "9cb9cb4551057879"
+    },
+    {
+      "id": "9cb9cb4551057879",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/02-model-evaluation-and-selection/index.md",
+      "title": "第2章 模型评估与选择",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1235726895&amp;p=9&amp;highquality=1&amp;danmaku=0",
+      "order": 6,
+      "previousId": "6d33a12baa08f7cc",
+      "nextId": "ad0cb3f93073ee3d"
+    },
+    {
+      "id": "ad0cb3f93073ee3d",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/03-linear-models/index.md",
+      "title": "第3章 线性模型",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1235925424&amp;p=16&amp;highquality=1&amp;danmaku=",
+      "order": 7,
+      "previousId": "9cb9cb4551057879",
+      "nextId": "e153a3bb0ee44de3"
+    },
+    {
+      "id": "e153a3bb0ee44de3",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/04-decision-trees/index.md",
+      "title": "第4章 决策树",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1236964212&amp;p=26&amp;highquality=1&amp;danmaku=",
+      "order": 8,
+      "previousId": "ad0cb3f93073ee3d",
+      "nextId": "76c6f3bc95506b2c"
+    },
+    {
+      "id": "76c6f3bc95506b2c",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/05-neural-networks/index.md",
+      "title": "第5章 神经网络",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655696620&amp;p=37&amp;highquality=1&amp;danmaku",
+      "order": 9,
+      "previousId": "e153a3bb0ee44de3",
+      "nextId": "eab96497ad44debf"
+    },
+    {
+      "id": "eab96497ad44debf",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/06-support-vector-machines/index.md",
+      "title": "第6章 支持向量机",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655697209&amp;p=31&amp;highquality=1&amp;danmaku",
+      "order": 10,
+      "previousId": "76c6f3bc95506b2c",
+      "nextId": "b6de9a3d6eed7a06"
+    },
+    {
+      "id": "b6de9a3d6eed7a06",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/07-bayesian-classifiers/index.md",
+      "title": "第7章 贝叶斯分类器",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655895389&amp;p=42&amp;highquality=1&amp;danmaku",
+      "order": 11,
+      "previousId": "eab96497ad44debf",
+      "nextId": "9abe1b9786918e97"
+    },
+    {
+      "id": "9abe1b9786918e97",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/08-ensemble-learning/index.md",
+      "title": "第8章 集成学习",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655957698&amp;p=48&amp;highquality=1&amp;danmaku",
+      "order": 12,
+      "previousId": "b6de9a3d6eed7a06",
+      "nextId": "bfdec68905380cb1"
+    },
+    {
+      "id": "bfdec68905380cb1",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/09-clustering/index.md",
+      "title": "第9章 聚类",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655958072&amp;p=53&amp;highquality=1&amp;danmaku",
+      "order": 13,
+      "previousId": "9abe1b9786918e97",
+      "nextId": "6bd9a2ecac56b128"
+    },
+    {
+      "id": "6bd9a2ecac56b128",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/10-dimensionality-reduction-and-metric-learning/index.md",
+      "title": "第10章 降维与度量学习",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "k近邻（k-Nearest Neighbor，简称kNN）学习是一种常用的监督学习方法，其工作机制非常简单：给定测试样本，基于某种距离度量找出训练集中与其最靠近的k个训练样本，然后基于这k个“邻居”的信息来进行预测。通常，在分类任务中可使用“投票法”，即选择这k个样本中出现最多的",
+      "order": 14,
+      "previousId": "bfdec68905380cb1",
+      "nextId": "bc1fd3ed914552e4"
+    },
+    {
+      "id": "bc1fd3ed914552e4",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/11-feature-selection-and-sparse-learning/index.md",
+      "title": "第11章 特征选择与稀疏学习",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "我们能用很多属性描述一个西瓜，例如色泽、根蒂、敲声、纹理、触感等，但有经验的人往往只需看看根蒂、听听敲声就知道是否好瓜。换言之，对一个学习任务来说，给定属性集，其中有些属性可能很关键、很有用，另一些属性则可能没什么用。我们将属性称为“特征”（feature），对当前学习任务有用的",
+      "order": 15,
+      "previousId": "6bd9a2ecac56b128",
+      "nextId": "f7ae7e0eba00015d"
+    },
+    {
+      "id": "f7ae7e0eba00015d",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/12-computational-learning-theory/index.md",
+      "title": "第12章 计算学习理论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "顾名思义，计算学习理论（computational learning theory）研究的是关于通过“计算”来进行“学习”的理论，即关于机器学习的理论基础，其目的是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。",
+      "order": 16,
+      "previousId": "bc1fd3ed914552e4",
+      "nextId": "2ac21e4c5b4e9d38"
+    },
+    {
+      "id": "2ac21e4c5b4e9d38",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/13-semi-supervised-learning/index.md",
+      "title": "第13章 半监督学习",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "我们在丰收季节来到瓜田，满地都是西瓜，瓜农抱来三四个瓜说这都是好瓜，然后再指着地里的五六个瓜说这些还不好，还需再生长若干天。基于这些信息，我们能否构建一个模型，用于判别地里的哪些瓜是已该采摘的好瓜？显然，可将瓜农告诉我们的好瓜、不好的瓜分别作为正例和反例来训练一个分类器。然而，只",
+      "order": 17,
+      "previousId": "f7ae7e0eba00015d",
+      "nextId": "8492011b9bfee92c"
+    },
+    {
+      "id": "8492011b9bfee92c",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/14-probabilistic-graphical-models/index.md",
+      "title": "第14章 概率图模型",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "基于学习器进行预测，例如根据纹理、颜色、根蒂等信息判断一个瓜是否为好瓜就是在做推断；但推断远超出预测范畴，例如在吃到一个不见根蒂的好瓜时，“由果溯因”逆推其根蒂的状态也是推断。",
+      "order": 18,
+      "previousId": "2ac21e4c5b4e9d38",
+      "nextId": "a0a82159f31b0339"
+    },
+    {
+      "id": "a0a82159f31b0339",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/15-rule-learning/index.md",
+      "title": "第15章 规则学习",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "所有预测模型在广义上都可称为一个或一组“规则”，但规则学习中的“规则”是狭义的，事实上约定俗成地省略了“逻辑”二字。",
+      "order": 19,
+      "previousId": "8492011b9bfee92c",
+      "nextId": "25aa0a5c241fce28"
+    },
+    {
+      "id": "25aa0a5c241fce28",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "chapters/16-reinforcement-learning/index.md",
+      "title": "第16章 强化学习",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "我们考虑一下如何种西瓜。种瓜有许多步骤，从一开始的选种，到定期浇水、施肥、除草、杀虫，经过一段时间才能收获西瓜。通常要等到收获后，我们才知道种出的瓜好不好。若将得到好瓜作为辛勤种瓜劳动的奖赏，则在种瓜过程中当我们执行某个操作（例如，施肥）时，并不能立即获得这个最终奖赏，甚至难以判",
+      "order": 20,
+      "previousId": "a0a82159f31b0339",
+      "nextId": "311ba24020bc9d0d"
+    },
+    {
+      "id": "311ba24020bc9d0d",
+      "bookSlug": "zhou-machine-learning",
+      "relPath": "99-back-matter/index.md",
+      "title": "附录与后记",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "记实矩阵<img src=\"images/01024.jpeg\" class=\"zaozi1\" />第<img src=\"images/00944.jpeg\" class=\"zaozi1\" />行第<img src=\"images/01025.jpeg\" class=\"zaozi",
+      "order": 21,
+      "previousId": "25aa0a5c241fce28",
+      "nextId": ""
+    },
+    {
+      "id": "0a3308c140f8f4e4",
+      "bookSlug": "python-data-analysis",
+      "relPath": "index.md",
+      "title": "课程首页",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "从 NumPy、Pandas 入门，逐步学习数据清洗、统计、可视化、机器学习和完整分析案例。",
+      "order": 1,
+      "previousId": "",
+      "nextId": "d35d8f93e499f2cf"
+    },
+    {
+      "id": "d35d8f93e499f2cf",
+      "bookSlug": "python-data-analysis",
+      "relPath": "course-resources.md",
+      "title": "课程资源",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "第 3～7 章提供与教材三级大纲对应的现代 Python 教学脚本。",
+      "order": 2,
+      "previousId": "0a3308c140f8f4e4",
+      "nextId": "96794d9fbb602ba9"
+    },
+    {
+      "id": "96794d9fbb602ba9",
+      "bookSlug": "python-data-analysis",
+      "relPath": "code-lab.md",
+      "title": "交互式代码学习器",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在线切换第 3～7 章脚本，并按教材三级大纲查看代码片段；也可搜索关键写法、复制当前片段。在线内容与下载入口读取同一份 .py 文件；需要运行、修改或保存结果时，请下载后在本地 Python 环境中练习。",
+      "order": 3,
+      "previousId": "d35d8f93e499f2cf",
+      "nextId": "0e028fb7c28f0de1"
+    },
+    {
+      "id": "0e028fb7c28f0de1",
+      "bookSlug": "python-data-analysis",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "书名：Python数据分析从入门到精通（第2版）",
+      "order": 4,
+      "previousId": "96794d9fbb602ba9",
+      "nextId": "a2cebd9370b2c317"
+    },
+    {
+      "id": "a2cebd9370b2c317",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/01-chapter/index.md",
+      "title": "第1章 数据分析基础",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "数据分析是数学、统计学理论结合科学的统计分析方法（如线性回归分析、聚类分析、方差分析、时间序列分析等）对数据库中的数据、Excel数据、收集的大量数据、网页抓取的数据等进行分析，从中提取有价值的信息形成结论并进行展示的过程。本章将对数据分析的基础知识进行讲解。",
+      "order": 5,
+      "previousId": "0e028fb7c28f0de1",
+      "nextId": "07e7f77a2b4c4de4"
+    },
+    {
+      "id": "07e7f77a2b4c4de4",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/02-chapter/index.md",
+      "title": "第2章 搭建数据分析开发环境",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "工欲善其事，必先利其器。Python提供的数据处理、绘图、数据可视化、数组计算、机器学习等模块，使得数据可视化工作变得简单、高效。而要使用Python，需要先安装IDE开发环境，以及适合数据分析、数据可视化的Anaconda、Jupyter Notebook、Pycharm等开发",
+      "order": 6,
+      "previousId": "a2cebd9370b2c317",
+      "nextId": "e8f6db7585e7bd0e"
+    },
+    {
+      "id": "e8f6db7585e7bd0e",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/03-numpy/index.md",
+      "title": "第3章 NumPy模块之数组计算",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "NumPy模块在数据处理、数据清洗、数据过滤、数据转换等方面可以快速实现数据计算，Pandas的底层也是基于NumPy的。因此，这一章内容将介绍NumPy的基础知识，使读者快速了解NumPy并将其应用到实际数据分析工作当中。",
+      "order": 7,
+      "previousId": "07e7f77a2b4c4de4",
+      "nextId": "c0c84b750daac4eb"
+    },
+    {
+      "id": "c0c84b750daac4eb",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/04-pandas/index.md",
+      "title": "第4章 Pandas模块基础",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Pandas是Python的核心数据分析支持库，它提供了大量快速处理表格数据的函数和方法。本章将讲解Pandas模块的基础知识，主要内容包括安装和了解Pandas模块，Pandas模块的两大数据结构，即Series()对象和DataFrame()对象，还有索引的相关知识。",
+      "order": 8,
+      "previousId": "e8f6db7585e7bd0e",
+      "nextId": "844f3c47e72b81c1"
+    },
+    {
+      "id": "844f3c47e72b81c1",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/05-pandas/index.md",
+      "title": "第5章 Pandas模块之数据的读取",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在实现数据分析的过程中，数据读取与处理是首要任务。拿到数据后需要先读取数据才能对数据进行分析。本章将主要介绍如何读取Excel文件、CSV文件、HTML网页以及数据库中的数据。",
+      "order": 9,
+      "previousId": "c0c84b750daac4eb",
+      "nextId": "8d2488105aae38e1"
+    },
+    {
+      "id": "8d2488105aae38e1",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/06-pandas/index.md",
+      "title": "第6章 Pandas模块之数据的处理",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "数据读取后并不是所有的数据都是我们所需要的，因此还要对数据进行简单的处理，本章将主要介绍如何进行数据的抽取，数据的增、删、改、查以及如何对数据进行排序与排名操作。",
+      "order": 10,
+      "previousId": "844f3c47e72b81c1",
+      "nextId": "6b7c418e5bee7f95"
+    },
+    {
+      "id": "6b7c418e5bee7f95",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/07-pandas/index.md",
+      "title": "第7章 Pandas模块之数据的清洗",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "数据清洗是数据分析的一个重要工作，因为数据的质量直接影响数据分析以及算法模型的结果。本章主要介绍在进行数据清洗时如何处理缺失值、重复值和异常值，以及字符串操作和数据转换。",
+      "order": 11,
+      "previousId": "8d2488105aae38e1",
+      "nextId": "2c82daf4b486778a"
+    },
+    {
+      "id": "2c82daf4b486778a",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/08-chapter/index.md",
+      "title": "第8章 数据的计算与格式化",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "数据分析过程中少不了数据计算、数据的格式化。本章主要介绍数据计算与数据格式化，其中包含常见的数据计算函数（sum()、mean()、max()、min()）、高级的数据计算函数（median()、mode()、var()、std()、quantile()）以及数据的格式化等。",
+      "order": 12,
+      "previousId": "6b7c418e5bee7f95",
+      "nextId": "161d4ecb51f1b75e"
+    },
+    {
+      "id": "161d4ecb51f1b75e",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/09-chapter/index.md",
+      "title": "第9章 数据统计及透视表",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在实现数据分析的过程中，数据分组统计、数据移位、数据合并以及数据透视表都是不可缺少的数据分析技术。本章将通过各种实例来演示以上每种数据分析技术的实现方法。",
+      "order": 13,
+      "previousId": "2c82daf4b486778a",
+      "nextId": "4ec00f85d8417264"
+    },
+    {
+      "id": "4ec00f85d8417264",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/10-chapter/index.md",
+      "title": "第10章 处理日期与时间",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在对时间类型数据进行分析时，需要将字符串时间转换为标准时间类型，而Pandas有着强大的日期数据处理功能。本章主要介绍日期数据的处理，日期范围、频率和移位，时间区间与频率转换，重新采样与频率转换，移动窗口函数等。",
+      "order": 14,
+      "previousId": "161d4ecb51f1b75e",
+      "nextId": "1c7faf6a818466b3"
+    },
+    {
+      "id": "1c7faf6a818466b3",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/11-scikit-learn/index.md",
+      "title": "第11章 Scikit-Learn机器学习模块",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "机器学习，顾名思义就是让机器（计算机）模拟人类学习，从而有效提高工作效率。Python提供的第三方模块Scikit-Learn融入了大量的数学模型算法，使得数据分析、机器学习变得简单高效。本章主要内容包括Scikit-Learn概述、安装，常用的线性回归模型—最小二乘法回归、岭回",
+      "order": 15,
+      "previousId": "4ec00f85d8417264",
+      "nextId": "04c3968b9dcc561d"
+    },
+    {
+      "id": "04c3968b9dcc561d",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/12-matplotlib/index.md",
+      "title": "第12章 Matplotlib模块入门",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在数据分析中，我们经常用到大量的可视化操作。一张精美的图表不仅能够展示大量的信息，更能够直观体现数据之间隐藏的关系。本章主要介绍Matpoltlib模块的入门知识。",
+      "order": 16,
+      "previousId": "1c7faf6a818466b3",
+      "nextId": "1625141f5853bc28"
+    },
+    {
+      "id": "1625141f5853bc28",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/13-matplotlib/index.md",
+      "title": "第13章 Matplotlib模块进阶",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "相信通过上一章的学习，你已经掌握了Matplotlib的基础知识，学会了绘制各种类型的图表。本章是Matplotlib的进阶，包括图表的颜色设置、日期时间处理、次坐标轴图表、多个子图表绘制等内容。",
+      "order": 17,
+      "previousId": "04c3968b9dcc561d",
+      "nextId": "84bd101e7dde6eee"
+    },
+    {
+      "id": "84bd101e7dde6eee",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/14-seaborn/index.md",
+      "title": "第14章 Seaborn图表",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Seaborn模块与Matplotlib模块相似，也是Python数据可视化分析的第三方模块。由于Seaborn在Matplotlib的基础上进行了更高级的API封装，所以Seaborn可以通过一个高级界面来绘制更加有吸引力的统计图形。",
+      "order": 18,
+      "previousId": "1625141f5853bc28",
+      "nextId": "5ab5be053e7b94bd"
+    },
+    {
+      "id": "5ab5be053e7b94bd",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/15-plotly/index.md",
+      "title": "第15章 Plotly图表",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Plotly是一个基于JavaScript的动态绘图模块，绘制出来的图表可以与Web应用集成。该模块不仅提供了丰富而又强大的绘图库，还支持各种类型的绘图方案，绘图的种类丰富、效果美观，方便保存和分享。",
+      "order": 19,
+      "previousId": "84bd101e7dde6eee",
+      "nextId": "b9c51f48e9898482"
+    },
+    {
+      "id": "b9c51f48e9898482",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/16-bokeh/index.md",
+      "title": "第16章 Bokeh图表",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Anaconda开发环境中还集成了一个叫作Bokeh的模块，该模块同样可以根据数据集绘制对应的图表，以满足数据可视化的多种需求。本章将介绍如何使用Bokeh模块绘制数据图表。",
+      "order": 20,
+      "previousId": "5ab5be053e7b94bd",
+      "nextId": "7457cbd1ff3520f8"
+    },
+    {
+      "id": "7457cbd1ff3520f8",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/17-pyecharts/index.md",
+      "title": "第17章 Pyecharts图表",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Echarts是一个由百度开发并开源的数据可视化工具，而Python是一门适用于数据处理和数据分析的语言，为了适应Python的需求，Pyecharts模块诞生了。本章以Pyecharts 2.0.3版本为载体，介绍Pyecharts的安装、链式调用、Pyecharts图表的组成",
+      "order": 21,
+      "previousId": "b9c51f48e9898482",
+      "nextId": "f6decdfc5c4f281f"
+    },
+    {
+      "id": "f6decdfc5c4f281f",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/18-chapter/index.md",
+      "title": "第18章 股票数据分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Python在处理和分析股票金融类数据时具有其他语言不可比拟的优势，这是因为Pandas的创始人就是一名量化金融分析师，所以Pandas中的很多函数是专门为分析金融数据而设计的。本章介绍如何通过Python获取并分析股票行情数据。",
+      "order": 22,
+      "previousId": "7457cbd1ff3520f8",
+      "nextId": "91e3a67828cba3eb"
+    },
+    {
+      "id": "91e3a67828cba3eb",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/19-chapter/index.md",
+      "title": "第19章 淘宝网订单分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "淘宝电商每时每刻都会产生大量的订单数据，虽然淘宝后台也提供了数据分析功能，但是很多时候无法满足用户的需求，用户不能按照自己的想法挖掘更有价值的信息进行分析。本章将专门针对淘宝电商订单数据进行挖掘和分析，包括从数据预处理到数据分析的完整过程，掌握了这些分析方法，不但可以大大提高运营",
+      "order": 23,
+      "previousId": "f6decdfc5c4f281f",
+      "nextId": "c42d376c497c1704"
+    },
+    {
+      "id": "c42d376c497c1704",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/20-chapter/index.md",
+      "title": "第20章 网站用户数据分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "网站App平台注册用户分析，是指获得网站或App等平台用户的注册数据，并对用户注册数据进行统计、分析，从中发现产品推广对新注册用户的影响，以及目前的营销策略中可能存在的问题，为进一步修正或重新制定营销策略提供有效的依据。",
+      "order": 24,
+      "previousId": "91e3a67828cba3eb",
+      "nextId": "82d65ec0b0b6781d"
+    },
+    {
+      "id": "82d65ec0b0b6781d",
+      "bookSlug": "python-data-analysis",
+      "relPath": "chapters/21-nba/index.md",
+      "title": "第21章 NBA球员薪资分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "互联网时代，随处可见的网页表格数据对于数据分析和数据挖掘来说是很好的资源，但如果直接复制和粘贴网页上的数据，不仅费时费力，而且容易漏掉有用的数据或复制了其他没用的数据。Pandas提供了专门获取网页数据的方法，可以轻松地解决这一问题。本案例将使用Pandas实现简单爬虫，爬取NB",
+      "order": 25,
+      "previousId": "c42d376c497c1704",
+      "nextId": ""
+    },
+    {
+      "id": "fddf97053cd983af",
+      "bookSlug": "deep-learning",
+      "relPath": "index.md",
+      "title": "课程首页",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "以《动手学深度学习》第二版为教材，用中文课程视频辅助理解，并以可复现实验检验学习结果。",
+      "order": 1,
+      "previousId": "",
+      "nextId": "447436964dc1a742"
+    },
+    {
+      "id": "447436964dc1a742",
+      "bookSlug": "deep-learning",
+      "relPath": "course-resources.md",
+      "title": "课程资源",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "",
+      "order": 2,
+      "previousId": "fddf97053cd983af",
+      "nextId": "4ab69924aecec56e"
+    },
+    {
+      "id": "4ab69924aecec56e",
+      "bookSlug": "deep-learning",
+      "relPath": "research-workflow.md",
+      "title": "科研复现工作流",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "反复查看测试集来调参会让测试集变成验证集；只报告最好的一次随机结果也会夸大性能。先写评估协议，再运行实验。",
+      "order": 3,
+      "previousId": "447436964dc1a742",
+      "nextId": ""
+    },
+    {
+      "id": "5bd60ae7f9e17d72",
+      "bookSlug": "wind-energy",
+      "relPath": "index.md",
+      "title": "课程首页",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "A systematic reference covering wind resource, turbine aerodynamics, loads, components, control, power systems and offshore wind.",
+      "order": 1,
+      "previousId": "",
+      "nextId": "a08658a81ec757f4"
+    },
+    {
+      "id": "a08658a81ec757f4",
+      "bookSlug": "wind-energy",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Wind Energy Handbook",
+      "order": 2,
+      "previousId": "5bd60ae7f9e17d72",
+      "nextId": "4f0d6463d818ca87"
+    },
+    {
+      "id": "4f0d6463d818ca87",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/01-introduction/index.md",
+      "title": "第1章 Introduction",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Windmills have been used for at least 3000 years, mainly for grinding grain or pumping water; while in sailing ships the wind has been an es",
+      "order": 3,
+      "previousId": "a08658a81ec757f4",
+      "nextId": "b6504a0aec0eea5b"
+    },
+    {
+      "id": "b6504a0aec0eea5b",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/02-the-wind-resource/index.md",
+      "title": "第2章 The wind resource",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "The energy available in the wind varies as the cube of the wind speed, so an understanding of the characteristics of the wind resource is cr",
+      "order": 4,
+      "previousId": "4f0d6463d818ca87",
+      "nextId": "fd4f6f1c88a0862a"
+    },
+    {
+      "id": "fd4f6f1c88a0862a",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/03-aerodynamics-of-horizontal-axis-wind-turbines/index.md",
+      "title": "第3章 Aerodynamics",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "A wind turbine is a device for extracting kinetic energy from the wind. By removing some of its kinetic energy the wind must slow down but o",
+      "order": 5,
+      "previousId": "b6504a0aec0eea5b",
+      "nextId": "a27cd9932333fd1c"
+    },
+    {
+      "id": "a27cd9932333fd1c",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/04-further-aerodynamic-topics-for-wind-turbines/index.md",
+      "title": "第4章 Further aerodynamic topics",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Chapter 3 deals with the aerodynamic behaviour of wind turbines in steady wind conditions and with the rotor aligned with the wind direction",
+      "order": 6,
+      "previousId": "fd4f6f1c88a0862a",
+      "nextId": "19647e9a11be2999"
+    },
+    {
+      "id": "19647e9a11be2999",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/05-design-loads-for-horizontal-axis-wind-turbines/index.md",
+      "title": "第5章 Design loads",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "The preparation of national and international standards containing rules for the design of wind turbines began in the 1980s. The first publi",
+      "order": 7,
+      "previousId": "a27cd9932333fd1c",
+      "nextId": "fa5c7d9bf9f51c5b"
+    },
+    {
+      "id": "fa5c7d9bf9f51c5b",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/06-conceptual-design-of-horizontal-axis-wind-turbines/index.md",
+      "title": "第6章 Conceptual design",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Within the general category of horizontal axis wind turbines for grid applications there exists a great variety of possible machine configur",
+      "order": 8,
+      "previousId": "19647e9a11be2999",
+      "nextId": "eda549fb8849d9e9"
+    },
+    {
+      "id": "eda549fb8849d9e9",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/07-component-design/index.md",
+      "title": "第7章 Component design",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "A successful blade design must satisfy a wide range of objectives, some of which are in conflict. These objectives can be summarised as foll",
+      "order": 9,
+      "previousId": "fa5c7d9bf9f51c5b",
+      "nextId": "50ec0043725cb1d4"
+    },
+    {
+      "id": "50ec0043725cb1d4",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/08-the-controller/index.md",
+      "title": "第8章 The controller",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "In the most general sense, the wind turbine control system consists of a number of sensors, a number of actuators and a system consisting of",
+      "order": 10,
+      "previousId": "eda549fb8849d9e9",
+      "nextId": "644408e6baded7f2"
+    },
+    {
+      "id": "644408e6baded7f2",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/09-wind-turbine-installations-and-wind-farms/index.md",
+      "title": "第9章 Installations and wind farms",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "For any wind turbine installation, there are certain additional activities, (e.g. construction of foundations and access roads, electrical c",
+      "order": 11,
+      "previousId": "50ec0043725cb1d4",
+      "nextId": "fb5c6150dbe78e17"
+    },
+    {
+      "id": "fb5c6150dbe78e17",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/10-wind-energy-and-the-electric-power-system/index.md",
+      "title": "第10章 Electric power system",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "As the wind is a diffuse source of energy, wind farms and individual wind turbines are often distributed over wide geographical areas. Hence",
+      "order": 12,
+      "previousId": "644408e6baded7f2",
+      "nextId": "65afcf77167c2bbf"
+    },
+    {
+      "id": "65afcf77167c2bbf",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/11-offshore-wind-turbines-and-wind-farms/index.md",
+      "title": "第11章 Offshore wind",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Offshore wind energy is developing rapidly (Figure 11.1) with a total installed capacity in 2010 of approximately 3000 MW, some 1.5% of worl",
+      "order": 13,
+      "previousId": "fb5c6150dbe78e17",
+      "nextId": ""
+    },
+    {
+      "id": "b4ade889f42702e2",
+      "bookSlug": "风能技术",
+      "relPath": "index.md",
+      "title": "课程首页",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "系统介绍风资源、水平轴风力机空气动力学、载荷、部件、控制、电力系统与海上风电。",
+      "order": 1,
+      "previousId": "",
+      "nextId": "2f14a3b7bc723721"
+    },
+    {
+      "id": "2f14a3b7bc723721",
+      "bookSlug": "风能技术",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Tony Burton Nick Jenkins",
+      "order": 2,
+      "previousId": "b4ade889f42702e2",
+      "nextId": "5da5c3fc35befea9"
+    },
+    {
+      "id": "5da5c3fc35befea9",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/01-chapter/index.md",
+      "title": "作 者 简 介",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Tony Burton: 在早期的职业生涯中, Tony Burton 主要从事桥梁设计和施工。他于 1982 年加入了风能集团，为英国能源部协调海上风能评估项目第二阶段的实施。这是包括英国航空航天公司、GEC 和 CEGB 等多方合作的项目，其主要任务是对大型海上风电场的总体方",
+      "order": 3,
+      "previousId": "2f14a3b7bc723721",
+      "nextId": "a76e1b87b8230972"
+    },
+    {
+      "id": "a76e1b87b8230972",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/02-chapter/index.md",
+      "title": "内 容 简 介",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "能源与环境问题已成为可持续发展面临的主要问题, 日益引起国际社会的广泛关注。风能作为一种重要的可再生能源, 具有清洁、无污染、安全、 储量丰富的特点, 受到世界各国的普遍重视。本书全面详细地讲解了水平轴风力机的空气动力学、设计载荷、概念设计、零部件设计、风力机安装和风电场规划等内",
+      "order": 4,
+      "previousId": "5da5c3fc35befea9",
+      "nextId": "234683cd44ed157b"
+    },
+    {
+      "id": "234683cd44ed157b",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/03-cip/index.md",
+      "title": "图书在版编目 (CIP) 数据",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风能技术:第 2 版/(美)Tony Burton, Nick Jenkins, David Sharpe, Ervin Bossanyi 著；武鑫译. 一北京:科学出版社，2014. 1",
+      "order": 5,
+      "previousId": "a76e1b87b8230972",
+      "nextId": "dc99f98f3764ea68"
+    },
+    {
+      "id": "dc99f98f3764ea68",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/04-chapter/index.md",
+      "title": "第二版致谢",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "《风能技术》第二版主要得益于为第一版提供持续帮助和支持的单位和个人。 同时也感谢许多没有参与第一版但为第二版提供了建议和专业知识的人，尤其是那些为第二版最新的海上风力发电章节提出建设性意见的人。作者要特别感谢 Rose King, 她基于自己的博士论文对海上电力系统进行了讨论, ",
+      "order": 6,
+      "previousId": "234683cd44ed157b",
+      "nextId": "bb23ea6832f4fd4c"
+    },
+    {
+      "id": "bb23ea6832f4fd4c",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/05-chapter/index.md",
+      "title": "第一版致谢",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在本书的准备阶段，许多人以不同的方式给予作者大量的帮助。特别需要感谢: David Infield 为本书的第 4 章提供了大量的素材, David Quarton 审阅了本书的第 5 章; Mark Hancock, Martin Ansell, Colin Anderson ",
+      "order": 7,
+      "previousId": "dc99f98f3764ea68",
+      "nextId": "08eddefddc49930a"
+    },
+    {
+      "id": "08eddefddc49930a",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/06-chapter/index.md",
+      "title": "译者序",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "继《风能技术》第一版(中文版)出版 6 周年之际，《风能技术》第二版与读者见面了。",
+      "order": 8,
+      "previousId": "bb23ea6832f4fd4c",
+      "nextId": "11dcae63c9bc878d"
+    },
+    {
+      "id": "11dcae63c9bc878d",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/07-chapter/index.md",
+      "title": "第二版序",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "《风能技术》第二版，旨在反映自第一版出版发行近十年来发生在技术方面的主要创新和设计规则的衍变。在此期间, 风能发展的主要新方向是迅速扩张的海上风力发电。因此，本书有机会增加有关海上风力发电机组及海上风电场的新章节。",
+      "order": 9,
+      "previousId": "08eddefddc49930a",
+      "nextId": "d66c14a1ca981a19"
+    },
+    {
+      "id": "d66c14a1ca981a19",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/08-chapter/index.md",
+      "title": "目 录",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "2.6.5 长度尺度及其他参数 22",
+      "order": 10,
+      "previousId": "11dcae63c9bc878d",
+      "nextId": "822749e9425d0c37"
+    },
+    {
+      "id": "822749e9425d0c37",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/09-1/index.md",
+      "title": "第 1 章 概 论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "人类利用风能的历史较为悠久。最早可以追溯到 3000 年前风车的使用。那时候风车的主要用途是磨碎粮食和提水。当然，最早在海上航行的船只依靠的最基本动力源是风能。自中世纪起, 水平轴风车产业是农村经济构成的主要部分。 但是，随着廉价的化石燃料能源的出现以及农村电气化的实现，风车渐渐",
+      "order": 11,
+      "previousId": "d66c14a1ca981a19",
+      "nextId": "c783449d867b7cb4"
+    },
+    {
+      "id": "c783449d867b7cb4",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/10-2/index.md",
+      "title": "第 2 章 风资源",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "可利用的风能与风速的立方成正比, 这一点对于理解风能特性及风能开发利用的诸多方面至关重要。通常, 风能开发利用包括选择合适的地理位置、对风电场工程项目的经济可行性的评估、风力机的设计以及对电网和终端用户的影响。",
+      "order": 12,
+      "previousId": "822749e9425d0c37",
+      "nextId": "2972e7a63b78855a"
+    },
+    {
+      "id": "2972e7a63b78855a",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/11-3/index.md",
+      "title": "第 3 章 水平轴风力机的 空气动力学",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风力机是一种从风中吸取动能的装置。通过动能的转移，风速会下降，但是只有那些通过风轮圆盘的空气才会受到影响。假设将受影响的空气从那些没有经过风轮圆盘、没有从减速的空气中分离出来，那么就可以画出一个包含受到影响的空气团的边界面，该边界面分别向上游和下游延伸，从而形成一个横截面为圆形的",
+      "order": 13,
+      "previousId": "c783449d867b7cb4",
+      "nextId": "31e8ada49d7aece4"
+    },
+    {
+      "id": "31e8ada49d7aece4",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/12-4/index.md",
+      "title": "第 4 章 深层次的风力机空气 动力学主题",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "第 3 章处理了风力机稳定状态下并且正对风向时的空气动力学特性，但是在实际情况中, 风的状况一般是不稳定的, 并且风力机总是可能会有几度的偏航误差。",
+      "order": 14,
+      "previousId": "2972e7a63b78855a",
+      "nextId": "5cb384207725396f"
+    },
+    {
+      "id": "5cb384207725396f",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/13-5/index.md",
+      "title": "第 5 章 水平轴风力机 设计载荷",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "国家和国际标准的内容包括始于 20 世纪 80 年代的风力发电机组设计准则。 第一个出版的是 Germanischer Lloyd 在 1986 年草拟的一套认证准则。这些最初的准则随着知识体系的发展而被逐渐完善, 并促成 Germanischer Lloyd 的《风能转换系统的",
+      "order": 15,
+      "previousId": "31e8ada49d7aece4",
+      "nextId": "0761e9c08906d3e1"
+    },
+    {
+      "id": "0761e9c08906d3e1",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/14-6/index.md",
+      "title": "第 6 章 水平轴风力机的 概念设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "一般用于并网发电的水平轴风力机，在机械结构、功率控制策略和制动系统等方面具有多种选择方案。本章着眼于不同的设计选择，并考虑在每种情况下传统选择的利与弊。考虑某个方面所作出的决定会对另一个方面有所影响, 这种影响有时候是不可避免的, 将在后文讲解该内容。",
+      "order": 16,
+      "previousId": "5cb384207725396f",
+      "nextId": "a5f5b637c8a8fc7c"
+    },
+    {
+      "id": "a5f5b637c8a8fc7c",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/15-7/index.md",
+      "title": "第 7 章 零部件设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "一个成功的叶片设计必须满足多项技术指标, 其中某些指标之间会相互制约, 具体指标可归纳如下:",
+      "order": 17,
+      "previousId": "0761e9c08906d3e1",
+      "nextId": "119f61f7fa3db4c8"
+    },
+    {
+      "id": "119f61f7fa3db4c8",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/16-8/index.md",
+      "title": "第 8 章 控制器",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "整机运行状态控制, 即风力发电机组由一种运行状态到另一种运行状态的转换过渡过程控制。风力发电机组的运行状态一般包括以下几种:",
+      "order": 18,
+      "previousId": "a5f5b637c8a8fc7c",
+      "nextId": "0046de9582f91c05"
+    },
+    {
+      "id": "0046de9582f91c05",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/17-9/index.md",
+      "title": "第 9 章 风力机安装和风电场",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "对于任何风力机的安装，一些辅助工作都是必不可少的(如地基和出入风电场道路的建设、电网架设、场址建设以及项目开发和管理)。对于平坦的陆上场址，如丹麦和德国北部的典型场址, 总投资成本大约是前期工作成本的 1.3 倍 (EUREC 协会，1996)。在英国，场址通常选在比较偏远的丘陵",
+      "order": 19,
+      "previousId": "119f61f7fa3db4c8",
+      "nextId": "98b45e56d159b4c4"
+    },
+    {
+      "id": "98b45e56d159b4c4",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/18-10/index.md",
+      "title": "第 10 章 风能和电力系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "由于风能是一种分散式能源, 风电场和单台风力机通常分布于广阔的地理空间, 因而公共电力系统最开始构建从传统的发电机 (火电和水电) 给个别用户负荷供电，后电网通常扩展来吸收电能。小型的风电场和个别的风电机组连接至配电系统被称为分布式发电 (Jenkins 等, 2010)。大型风",
+      "order": 20,
+      "previousId": "0046de9582f91c05",
+      "nextId": "e870790b4ce0eea5"
+    },
+    {
+      "id": "e870790b4ce0eea5",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/19-11/index.md",
+      "title": "第 11 章 海上风力发电机组 和风电场",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "海上风力发电正在迅速发展(图 11.1)，在 2010 年，总装机容量约为 3000MW， 约占全世界风电场总容量的 1.5%。许多北欧国家开发大规模的陆上风电场变得很困难，所以将注意力转移到海上风力发电领域，风电场主要在北海和波罗的海沿岸。为了满足其温室气体减排的指标, 英国提",
+      "order": 21,
+      "previousId": "98b45e56d159b4c4",
+      "nextId": "e808772724184cbe"
+    },
+    {
+      "id": "e808772724184cbe",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/20-chapter/index.md",
+      "title": "参考文献",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "1. DNV, Vindeby, 5MW. [Online] [Cited: 0805, 2010.] http://www.dnv.com/industry/energy/ segments/windwavetidal/offshorereferences/vindeby.as",
+      "order": 22,
+      "previousId": "e870790b4ce0eea5",
+      "nextId": "8568f64bd0b3f3e5"
+    },
+    {
+      "id": "8568f64bd0b3f3e5",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/21-chapter/index.md",
+      "title": "符号表",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "${a}^{\\prime }\\;$ 切向诱导因子",
+      "order": 23,
+      "previousId": "e808772724184cbe",
+      "nextId": ""
+    },
+    {
+      "id": "811b8e7782c84de7",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "index.md",
+      "title": "课程首页",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "从能量转换和设计要求出发，系统学习整机方案、关键部件、控制、监测与强度分析。",
+      "order": 1,
+      "previousId": "",
+      "nextId": "5c3fe2c4206008a7"
+    },
+    {
+      "id": "5c3fe2c4206008a7",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "姚兴佳教授、博士生导师，沈阳工业大学风能技术研究所所长，中国可再生能源学会风能专业委员会副主任，国家科技支撑计划“大功率风电机组研制与示范”项目总体专家组组长，海上风力发电技术与检测国家重点实验室学术委员会主任，辽宁省风力发电技术重点实验室主任。获得国务院政府特殊津贴、“全国优秀",
+      "order": 2,
+      "previousId": "811b8e7782c84de7",
+      "nextId": "2f71b0d12a49352d"
+    },
+    {
+      "id": "2f71b0d12a49352d",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/01-chapter/index.md",
+      "title": "第1章 绪论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章重点介绍了本书涉及的风力发电（风电）机组理论与设计的基本内容，包括风力发电机组的设计依据、设计内容、设计原则和设计步骤。同时还简要介绍了几种风力发电机组的设计软件。",
+      "order": 3,
+      "previousId": "5c3fe2c4206008a7",
+      "nextId": "7e4f7bb8c9c1e3a7"
+    },
+    {
+      "id": "7e4f7bb8c9c1e3a7",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/02-chapter/index.md",
+      "title": "第2章 能量转换和传输理论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风力发电机组能量转换和传输理论是风力发电机组设计计算的基础，本章仅介绍其核心部分。包括风能捕获理论、能量传递理论和机电能量转换理论。",
+      "order": 4,
+      "previousId": "2f71b0d12a49352d",
+      "nextId": "13727d2a1d766ba7"
+    },
+    {
+      "id": "13727d2a1d766ba7",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/03-chapter/index.md",
+      "title": "第3章 风力发电机组设计要求",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "为了保证所设计的风力发电机组安全可靠，国内外的相关标准都规定了风力发电机组设计的技术要求。这些技术要求是设计中必须遵守的内容，设计人员应该掌握和应用。本章根据IEC 61400-1-2005和IEC 61400-3-2009介绍了风力发电机组的外部条件和结构设计的方法。",
+      "order": 5,
+      "previousId": "7e4f7bb8c9c1e3a7",
+      "nextId": "cb32a88a2e34adc0"
+    },
+    {
+      "id": "cb32a88a2e34adc0",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/04-chapter/index.md",
+      "title": "第4章 载荷",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章介绍了风力发电机组的载荷及其分析计算方法。包括载荷及其坐标系、坐标系的转换、载荷分类、载荷源、疲劳载荷分析、极限载荷分析和载荷叠加等。同时介绍了如何使用载荷计算软件。",
+      "order": 6,
+      "previousId": "13727d2a1d766ba7",
+      "nextId": "6e361bc0312f7f78"
+    },
+    {
+      "id": "6e361bc0312f7f78",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/05-chapter/index.md",
+      "title": "第5章 总体设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风力发电机组的总体设计是相对于局部设计的一个概念，总体设计是设计内容的一部分。主要包括总体参数设计、总体功能设计、总体布局设计、模型试验和总体成本模型等。",
+      "order": 7,
+      "previousId": "cb32a88a2e34adc0",
+      "nextId": "fa2d12df61dbc4c1"
+    },
+    {
+      "id": "fa2d12df61dbc4c1",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/06-chapter/index.md",
+      "title": "第6章 风轮",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风轮是风力机的核心部件，由叶片和轮毂组成。本章介绍风轮的设计问题。包括风轮设计概述、翼型介绍、叶片气动设计、叶片结构设计和轮毂的设计等。",
+      "order": 8,
+      "previousId": "6e361bc0312f7f78",
+      "nextId": "270803e6c5dc4093"
+    },
+    {
+      "id": "270803e6c5dc4093",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/07-chapter/index.md",
+      "title": "第7章 风力发电机",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "发电机是风力发电机组的重要部件，它把风力机主轴输出的机械能转换成电能并输送给电网（或储存在蓄电池中）。与其他类型电机一样，风力发电机的工作原理基于电磁感应定律和电磁力定律。电磁感应定律指出，导体在磁场中切割磁力线运动时将感生电动势；电磁力定律指出，处于磁场中的载流导体将产生电磁力",
+      "order": 9,
+      "previousId": "fa2d12df61dbc4c1",
+      "nextId": "70454f21f4efd814"
+    },
+    {
+      "id": "70454f21f4efd814",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/08-chapter/index.md",
+      "title": "第8章 主传动链",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章讨论风力发电机组中传递机械能所需的传动链主要部件设计。包括主轴、主轴承、主齿轮箱、联轴器和机舱。",
+      "order": 10,
+      "previousId": "270803e6c5dc4093",
+      "nextId": "a5d76fc3318db048"
+    },
+    {
+      "id": "a5d76fc3318db048",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/09-chapter/index.md",
+      "title": "第9章 塔架与基础",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "塔架与基础是风力发电机组的主要承载结构，要承受机舱重量、风轮作用力以及风作用在塔筒上的弯矩、剪力、转矩等作用，还要承受风轮引起的振动载荷。塔架的重量占风力发电机组总重的50％左右，其造价占风力发电机组造价的15％～50％。目前，国家已经发布了有关标准，如《GB/T 19072—2",
+      "order": 11,
+      "previousId": "70454f21f4efd814",
+      "nextId": "ce860997cd85bc1b"
+    },
+    {
+      "id": "ce860997cd85bc1b",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/10-chapter/index.md",
+      "title": "第10章 控制系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章重点介绍风力发电机组控制系统的设计，包括制动机构、变桨距系统、偏航系统、主控系统和安全保障系统等。",
+      "order": 12,
+      "previousId": "a5d76fc3318db048",
+      "nextId": "8e6e2afae4517048"
+    },
+    {
+      "id": "8e6e2afae4517048",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/11-chapter/index.md",
+      "title": "第11章 状态监测及故障诊断",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章介绍了风力发电机组的常见故障及原因、状态监测及故障诊断的方法，叙述了以双馈式风力发电机组为监测对象的在线监测及故障诊断系统的结构组成、功能模块及应用。",
+      "order": 13,
+      "previousId": "ce860997cd85bc1b",
+      "nextId": "9e7e6384ca72b320"
+    },
+    {
+      "id": "9e7e6384ca72b320",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/12-chapter/index.md",
+      "title": "第12章 强度分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章主要介绍以数值计算为主的风力发电机组强度分析方法。包括静强度分析、模态分析、疲劳强度分析和屈曲稳定性分析等。",
+      "order": 14,
+      "previousId": "8e6e2afae4517048",
+      "nextId": "3792b6514ebcfb8b"
+    },
+    {
+      "id": "3792b6514ebcfb8b",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "99-back-matter/index.md",
+      "title": "参考文献与附加信息",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "\\[1\\] 姚兴佳，宋俊，等.风力发电机组原理与应用\\[M\\].2版.北京：机械工业出版社，2011.",
+      "order": 15,
+      "previousId": "9e7e6384ca72b320",
+      "nextId": ""
+    }
+  ]
+}

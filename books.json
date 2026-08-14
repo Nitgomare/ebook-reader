@@ -1,0 +1,51 @@
+{
+  "site": {
+    "title": "科研知识库 · 电子书",
+    "subtitle": "把分散的教材收进一个连续、安静的阅读空间"
+  },
+  "books": [
+    {
+      "slug": "zhou-machine-learning",
+      "title": "机器学习",
+      "author": "周志华",
+      "description": "从基本概念、经典模型到计算学习理论与强化学习。",
+      "tags": ["人工智能", "中文教材", "机器学习"]
+    },
+    {
+      "slug": "python-data-analysis",
+      "title": "Python 数据分析",
+      "author": "明日科技",
+      "description": "覆盖数据处理、可视化、机器学习与完整分析案例。",
+      "tags": ["数据分析", "Python", "中文教材"]
+    },
+    {
+      "slug": "deep-learning",
+      "title": "动手学深度学习",
+      "author": "李沐等",
+      "description": "以在线教材、中文视频和可复现实验学习深度学习。",
+      "tags": ["人工智能", "深度学习", "实验"]
+    },
+    {
+      "slug": "wind-energy",
+      "title": "Wind Energy Handbook",
+      "author": "Tony Burton 等",
+      "description": "Wind resource, aerodynamics, loads, control and offshore wind.",
+      "tags": ["风能", "英文教材", "工程"]
+    },
+    {
+      "slug": "风能技术",
+      "title": "风能技术",
+      "author": "Tony Burton 等 · 武鑫译",
+      "description": "系统介绍风资源、风力机设计、控制与风电场技术。",
+      "tags": ["风能", "中文教材", "风电场"]
+    },
+    {
+      "slug": "wind-turbine-theory-and-design",
+      "title": "风力发电机组理论与设计",
+      "author": "姚兴佳等",
+      "description": "从能量转换到整机、关键部件、控制和强度分析。",
+      "tags": ["风能", "工程设计", "中文教材"]
+    }
+  ]
+}
+
