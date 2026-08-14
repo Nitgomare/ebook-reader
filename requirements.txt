@@ -1,0 +1,4 @@
+Markdown==3.10.3
+PyYAML==6.0.3
+pymdown-extensions==10.20.1
+
