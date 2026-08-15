@@ -107,10 +107,11 @@
   }
 
   function typesetMath() {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      window.MathJax.typesetClear([elements.article]);
-      window.MathJax.typesetPromise([elements.article]).catch(function () {});
-    }
+    if (!window.MathJax || !window.MathJax.startup || !window.MathJax.startup.promise) return;
+    window.MathJax.startup.promise.then(function () {
+      if (window.MathJax.typesetClear) window.MathJax.typesetClear([elements.article]);
+      return window.MathJax.typesetPromise([elements.article]);
+    }).catch(function () {});
   }
 
   async function renderDocument(id, anchor) {
