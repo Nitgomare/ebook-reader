@@ -34,7 +34,14 @@ MARKDOWN_EXTENSIONS = [
     "pymdownx.highlight",
     "pymdownx.arithmatex",
 ]
+MARKDOWN_EXTENSION_CONFIGS = {
+    "pymdownx.arithmatex": {
+        "generic": True,
+    },
+}
 URL_ATTR_RE = re.compile(r"(?P<attr>href|src)=(?P<quote>['\"])(?P<url>.*?)(?P=quote)", re.I)
+TABLE_RE = re.compile(r"(<table\b[^>]*>.*?</table>)", re.I | re.S)
+ESCAPED_HTML_TAG_RE = re.compile(r"\\<(?P<tag>[^>]+)\\>")
 FRONT_MATTER_RE = re.compile(r"\A---\s*\r?\n.*?\r?\n---\s*(?:\r?\n|\Z)", re.S)
 
 
@@ -287,8 +294,17 @@ def build_book(book: dict[str, object], output: Path) -> tuple[dict[str, object]
 
     public_docs: list[dict[str, object]] = []
     for doc in docs:
-        renderer = markdown.Markdown(extensions=MARKDOWN_EXTENSIONS, output_format="html5")
+        renderer = markdown.Markdown(
+            extensions=MARKDOWN_EXTENSIONS,
+            extension_configs=MARKDOWN_EXTENSION_CONFIGS,
+            output_format="html5",
+        )
         rendered = renderer.convert(str(doc.pop("markdown")))
+        rendered = ESCAPED_HTML_TAG_RE.sub(
+            lambda match: f"&lt;{html.escape(match.group('tag'))}&gt;",
+            rendered,
+        )
+        rendered = TABLE_RE.sub(r'<div class="table-wrapper">\1</div>', rendered)
         rendered = rewrite_document_urls(
             rendered,
             output=output,

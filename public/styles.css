@@ -10,8 +10,10 @@
   --topbar-height: 4.25rem;
   --sidebar-width: 18rem;
   --outline-width: 15rem;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, "Microsoft YaHei", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   color-scheme: light;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-sans);
 }
 
 * { box-sizing: border-box; }
@@ -27,7 +29,7 @@ button, input { font: inherit; }
   background: color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter: blur(18px);
 }
 .brand { display: inline-flex; align-items: center; gap: .75rem; min-width: 15.5rem; }
-.brand-mark { display: grid; width: 2.1rem; height: 2.1rem; place-items: center; border-radius: .65rem; color: #fff; background: var(--accent); font-family: Georgia, serif; font-weight: 700; }
+.brand-mark { display: grid; width: 2.1rem; height: 2.1rem; place-items: center; border-radius: .65rem; color: #fff; background: var(--accent); font-family: var(--font-sans); font-weight: 700; }
 .brand strong, .brand small { display: block; }
 .brand strong { font-size: .94rem; letter-spacing: .02em; }
 .brand small { margin-top: .08rem; color: var(--muted); font-size: .68rem; }
@@ -40,7 +42,7 @@ button, input { font: inherit; }
 .sidebar { position: sticky; top: var(--topbar-height); height: calc(100vh - var(--topbar-height)); overflow: auto; padding: 1.6rem 1.25rem 2rem; border-right: 1px solid var(--line); background: var(--surface); }
 .sidebar-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
 .eyebrow { margin: 0 0 .35rem; color: var(--accent); font-size: .62rem; font-weight: 800; letter-spacing: .16em; }
-.sidebar h2 { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-size: 1.32rem; font-weight: 600; }
+.sidebar h2 { margin: 0; font-family: var(--font-sans); font-size: 1.32rem; font-weight: 600; }
 .search-box { display: block; margin: 1.35rem 0 .75rem; }
 .search-label { display: block; margin-bottom: .4rem; color: var(--muted); font-size: .68rem; }
 .search-box input { width: 100%; padding: .68rem .75rem; border: 1px solid var(--line); border-radius: .5rem; outline: 0; color: var(--ink); background: var(--paper); font-size: .78rem; }
@@ -49,7 +51,7 @@ button, input { font: inherit; }
 .nav-group { margin: 0 0 1.25rem; }
 .nav-group h3 { margin: 0 0 .45rem; color: var(--muted); font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .doc-nav-link { display: grid; gap: .55rem; align-items: baseline; margin: 0 -.55rem; padding: .48rem .55rem; border-radius: .42rem; color: var(--muted); grid-template-columns: 1.6rem minmax(0, 1fr); }
-.doc-nav-link span { font-family: Georgia, serif; font-size: .65rem; opacity: .65; }
+.doc-nav-link span { font-family: var(--font-sans); font-size: .65rem; opacity: .65; }
 .doc-nav-link strong { overflow: hidden; font-size: .76rem; font-weight: 550; line-height: 1.45; text-overflow: ellipsis; white-space: nowrap; }
 .doc-nav-link:hover, .doc-nav-link.is-active { color: var(--accent); background: var(--accent-soft); }
 .book-tree { margin: 0 0 .55rem; border: 1px solid var(--line); border-radius: .5rem; background: var(--paper); }
@@ -71,24 +73,24 @@ button, input { font: inherit; }
 .hero { position: relative; overflow: hidden; min-height: 20rem; padding: clamp(2rem, 6vw, 4.2rem); border-radius: 1.35rem; color: #fff; background: linear-gradient(125deg, #123f36, #176b58 62%, #69a58e); box-shadow: 0 1.6rem 4rem rgb(31 70 58 / 18%); }
 .hero::after { position: absolute; right: -4rem; bottom: -7rem; width: 20rem; height: 20rem; border: 1px solid rgb(255 255 255 / 25%); border-radius: 50%; box-shadow: 0 0 0 3rem rgb(255 255 255 / 7%), 0 0 0 7rem rgb(255 255 255 / 5%); content: ""; }
 .hero .eyebrow { color: #bde3d5; }
-.hero h1 { position: relative; z-index: 1; max-width: 37rem; margin: .85rem 0 1rem; font-family: Georgia, "Noto Serif SC", serif; font-size: clamp(2.2rem, 5vw, 4.1rem); font-weight: 500; line-height: 1.15; letter-spacing: -.035em; }
+.hero h1 { position: relative; z-index: 1; max-width: 37rem; margin: .85rem 0 1rem; font-family: var(--font-sans); font-size: clamp(2.2rem, 5vw, 4.1rem); font-weight: 600; line-height: 1.15; letter-spacing: -.035em; }
 .hero > p:not(.eyebrow) { position: relative; z-index: 1; max-width: 35rem; color: rgb(255 255 255 / 78%); line-height: 1.8; }
 .primary-action { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 1rem; margin-top: 1.2rem; padding: .75rem 1rem; border-radius: 999px; color: var(--ink); background: #fff; font-size: .78rem; font-weight: 700; }
 .primary-action span { color: var(--accent); }
 .shelf-section { padding: 4rem 0 1rem; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; }
-.section-heading h2 { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-size: 2rem; font-weight: 500; }
+.section-heading h2 { margin: 0; font-family: var(--font-sans); font-size: 2rem; font-weight: 600; }
 .section-heading > p { color: var(--muted); font-size: .72rem; }
 .book-grid { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .book-card { display: grid; overflow: hidden; min-height: 15.5rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); grid-template-columns: 7.6rem minmax(0, 1fr); transition: transform 180ms, box-shadow 180ms, border-color 180ms; }
 .book-card:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); transform: translateY(-3px); box-shadow: 0 1rem 2.5rem rgb(35 50 44 / 10%); }
 .book-cover { position: relative; min-height: 100%; overflow: hidden; background: #e8ebe5; }
 .book-cover img { width: 100%; height: 100%; object-fit: cover; }
-.cover-fallback { display: grid; width: 100%; height: 100%; place-items: center; color: #fff; background: linear-gradient(155deg, var(--accent), #82a898); font-family: Georgia, serif; font-size: 1.4rem; }
-.book-number { position: absolute; right: .55rem; bottom: .55rem; display: grid; width: 1.75rem; height: 1.75rem; place-items: center; border-radius: 50%; color: var(--ink); background: rgb(255 255 255 / 88%); font-family: Georgia, serif; font-size: .65rem; }
+.cover-fallback { display: grid; width: 100%; height: 100%; place-items: center; color: #fff; background: linear-gradient(155deg, var(--accent), #82a898); font-family: var(--font-sans); font-size: 1.4rem; }
+.book-number { position: absolute; right: .55rem; bottom: .55rem; display: grid; width: 1.75rem; height: 1.75rem; place-items: center; border-radius: 50%; color: var(--ink); background: rgb(255 255 255 / 88%); font-family: var(--font-sans); font-size: .65rem; }
 .book-copy { display: flex; min-width: 0; padding: 1rem; flex-direction: column; }
 .book-tags { overflow: hidden; margin: 0; color: var(--warm); font-size: .58rem; font-weight: 750; letter-spacing: .03em; text-overflow: ellipsis; white-space: nowrap; }
-.book-copy h3 { margin: .55rem 0 .25rem; font-family: Georgia, "Noto Serif SC", serif; font-size: 1.1rem; font-weight: 600; line-height: 1.35; }
+.book-copy h3 { margin: .55rem 0 .25rem; font-family: var(--font-sans); font-size: 1.1rem; font-weight: 600; line-height: 1.35; }
 .book-author { margin: 0 0 .7rem !important; font-size: .65rem !important; }
 .book-copy > p:not(.book-tags) { display: -webkit-box; overflow: hidden; margin: 0; color: var(--muted); font-size: .7rem; line-height: 1.65; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
 .book-open { margin-top: auto; padding-top: .8rem; color: var(--accent); font-size: .7rem; font-weight: 700; }
@@ -97,9 +99,9 @@ button, input { font: inherit; }
 
 .reader-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 2.8rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--line); }
 .breadcrumb { margin: 0 0 .55rem; color: var(--accent); font-size: .68rem; font-weight: 700; }
-.reader-head h1 { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-size: clamp(2rem, 4.5vw, 3.15rem); font-weight: 500; line-height: 1.2; }
+.reader-head h1 { margin: 0; font-family: var(--font-sans); font-size: clamp(2rem, 4.5vw, 3.15rem); font-weight: 600; line-height: 1.2; }
 .outline-toggle { display: none; padding: .55rem .75rem; border: 1px solid var(--line); border-radius: .45rem; color: var(--muted); background: var(--surface); }
-.article { font-family: Georgia, "Noto Serif SC", "Songti SC", serif; font-size: 1.02rem; line-height: 1.9; overflow-wrap: anywhere; }
+.article { font-family: var(--font-sans); font-size: 1.02rem; line-height: 1.75; overflow-wrap: anywhere; }
 .article h1, .article h2, .article h3, .article h4 { scroll-margin-top: calc(var(--topbar-height) + 1.5rem); color: var(--ink); line-height: 1.35; }
 .article h1 { margin: 0 0 1.6rem; font-size: 2rem; }
 .article h2 { margin: 3rem 0 1rem; padding-bottom: .45rem; border-bottom: 1px solid var(--line); font-size: 1.55rem; }
@@ -107,19 +109,26 @@ button, input { font: inherit; }
 .article p { margin: 1rem 0; }
 .article a { color: var(--accent); text-decoration: underline; text-underline-offset: .18em; }
 .article img, .article video { display: block; max-width: 100%; height: auto; margin: 1.5rem auto; border-radius: .35rem; }
-.article table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .82rem; }
-.article th, .article td { padding: .55rem .7rem; border: 1px solid var(--line); text-align: left; }
+.table-wrapper { width: 100%; margin: 1.5rem 0; overflow-x: auto; }
+.article table { width: max-content; min-width: 100%; border-spacing: 0; border-collapse: collapse; font-family: var(--font-sans); font-size: .82rem; line-height: 1.5; }
+.article th, .article td { max-width: 30rem; padding: .55rem .8rem; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+.article th { font-weight: 600; background: #f6f8fa; }
+.article tbody tr:nth-child(2n) { background: #f6f8fa; }
+.arithmatex { max-width: 100%; }
+span.arithmatex { display: inline-block; vertical-align: middle; }
+div.arithmatex { overflow-x: auto; overflow-y: hidden; }
+.arithmatex mjx-container[display="true"] { margin: 1.5rem 0 !important; overflow-x: auto; overflow-y: hidden; }
 .article blockquote { margin: 1.4rem 0; padding: .25rem 1.1rem; border-left: 3px solid var(--accent); color: var(--muted); background: var(--accent-soft); }
-.article pre { overflow: auto; padding: 1rem; border-radius: .55rem; color: #e8eee9; background: #17231f; font: .78rem/1.65 ui-monospace, SFMono-Regular, Consolas, monospace; }
-.article code { padding: .12rem .3rem; border-radius: .25rem; background: #eceee9; font: .86em ui-monospace, SFMono-Regular, Consolas, monospace; }
+.article pre { overflow: auto; padding: 1rem; border-radius: .55rem; color: #e8eee9; background: #17231f; font: .78rem/1.65 var(--font-mono); }
+.article code { padding: .12rem .3rem; border-radius: .25rem; background: #eceee9; font: .86em var(--font-mono); }
 .article pre code { padding: 0; background: none; }
 .admonition { margin: 1.4rem 0; padding: .2rem 1rem .7rem; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: .4rem; background: var(--surface); }
-.admonition-title { font-family: ui-sans-serif, system-ui, sans-serif; font-size: .82rem; font-weight: 750; }
+.admonition-title { font-family: var(--font-sans); font-size: .82rem; font-weight: 750; }
 .pager { display: grid; gap: 1rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .pager a { display: flex; min-height: 5rem; padding: .9rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--surface); flex-direction: column; }
 .pager a:last-child { text-align: right; }
 .pager small { margin-bottom: .35rem; color: var(--muted); }
-.pager strong { font-family: Georgia, "Noto Serif SC", serif; font-size: .82rem; }
+.pager strong { font-family: var(--font-sans); font-size: .82rem; }
 .loading-copy { color: var(--muted); }
 
 .outline { position: sticky; top: var(--topbar-height); height: calc(100vh - var(--topbar-height)); padding: 1.7rem 1.2rem; border-left: 1px solid var(--line); }
