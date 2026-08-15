@@ -309,7 +309,17 @@ def build_book(book: dict[str, object], output: Path) -> tuple[dict[str, object]
         public_docs.append({key: value for key, value in payload.items() if key not in {"html", "headings"}})
 
     cover_url = ""
-    cover = find_cover(docs_root)
+    configured_cover = str(book.get("coverSource", "")).strip()
+    cover = docs_root / Path(*PurePosixPath(configured_cover).parts) if configured_cover else None
+    if cover is not None:
+        try:
+            cover.resolve().relative_to(docs_root.resolve())
+        except ValueError:
+            raise ValueError(f"封面路径越界：{configured_cover}")
+        if not cover.is_file():
+            raise FileNotFoundError(f"找不到封面：{cover}")
+    else:
+        cover = find_cover(docs_root)
     if cover:
         rel_cover = cover.relative_to(docs_root).as_posix()
         destination = output / "files" / slug / Path(*PurePosixPath(rel_cover).parts)

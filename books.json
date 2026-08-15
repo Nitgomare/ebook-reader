@@ -5,6 +5,14 @@
   },
   "books": [
     {
+      "slug": "robot-textbook",
+      "title": "轮腿式智能安保巡逻机器人项目实战",
+      "author": "湖南科技大学智能机器人设计与控制微专业教学团队",
+      "description": "覆盖轮腿机器人总体设计、机械结构、硬件、嵌入式软件、运动控制、环境感知、自主导航与综合测试。",
+      "coverSource": "0.png",
+      "tags": ["智能机器人", "轮腿机器人", "项目实战"]
+    },
+    {
       "slug": "zhou-machine-learning",
       "title": "机器学习",
       "author": "周志华",
@@ -48,4 +56,3 @@
     }
   ]
 }
-

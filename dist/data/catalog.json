@@ -4,10 +4,26 @@
     "subtitle": "把分散的教材收进一个连续、安静的阅读空间"
   },
   "stats": {
-    "books": 6,
-    "docs": 100
+    "books": 7,
+    "docs": 118
   },
   "books": [
+    {
+      "slug": "robot-textbook",
+      "title": "轮腿式智能安保巡逻机器人项目实战",
+      "author": "湖南科技大学智能机器人设计与控制微专业教学团队",
+      "description": "覆盖轮腿机器人总体设计、机械结构、硬件、嵌入式软件、运动控制、环境感知、自主导航与综合测试。",
+      "coverSource": "0.png",
+      "tags": [
+        "智能机器人",
+        "轮腿机器人",
+        "项目实战"
+      ],
+      "sourceSiteName": "轮腿式智能安保巡逻机器人项目实战",
+      "cover": "files/robot-textbook/0.png",
+      "docCount": 18,
+      "firstDocId": "2c0b4b2e2ac4605c"
+    },
     {
       "slug": "zhou-machine-learning",
       "title": "机器学习",
@@ -100,6 +116,240 @@
     }
   ],
   "docs": [
+    {
+      "id": "2c0b4b2e2ac4605c",
+      "bookSlug": "robot-textbook",
+      "relPath": "robot_textbook.md",
+      "title": "轮腿式智能安保巡逻机器人项目实战",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "肖钊<sup>a</sup>；何志鹏<sup>a</sup>；李学专<sup>b</sup>；朱荣钧<sup>c</sup>；唐咏荷<sup>d</sup>；李慧<sup>b</sup>；吴奥旗<sup>a</sup>；谢浩瑜<sup>b</sup>",
+      "order": 1,
+      "previousId": "",
+      "nextId": "06a82f8c4f3c4a40"
+    },
+    {
+      "id": "06a82f8c4f3c4a40",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_1/section_1.md",
+      "title": "第1章 绪论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "移动机器人经历了从轮式到腿式，再到轮腿复合式的演进过程。传统轮式机器人结构简单、移动效率高、控制容易，但在台阶、碎石、路缘等非结构化地形中往往无能为力；腿式机器人具备良好的地形适应性和越障能力，却存在能耗大、速度慢、控制复杂等不足。为兼顾高速高效移动与复杂地形通过能力，轮腿复合式",
+      "order": 2,
+      "previousId": "2c0b4b2e2ac4605c",
+      "nextId": "af316719069585eb"
+    },
+    {
+      "id": "af316719069585eb",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_2/section_2.md",
+      "title": "第2章 系统总体设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "MCU运行1 kHz实时控制环，采用STM32F405RGT6，主频168 MHz。",
+      "order": 3,
+      "previousId": "06a82f8c4f3c4a40",
+      "nextId": "f2a5b7e528b374aa"
+    },
+    {
+      "id": "f2a5b7e528b374aa",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_3/section_3.md",
+      "title": "第3章 机械结构设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "轮腿复合机器人按腿部数量和轮腿耦合方式可分为多种方案。针对安保巡逻场景，主要候选方案包括四足轮腿式、双足轮腿式和轮腿分离式。各方案对比如下：",
+      "order": 4,
+      "previousId": "af316719069585eb",
+      "nextId": "038e1ecb8bec4e7d"
+    },
+    {
+      "id": "038e1ecb8bec4e7d",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_4/section_4.md",
+      "title": "第4章 硬件系统设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本平台硬件系统以“上层计算平台 + 底层实时控制板”为核心，配合电源管理、电机驱动、传感器和通信接口组成。总体框架如下：",
+      "order": 5,
+      "previousId": "f2a5b7e528b374aa",
+      "nextId": "8e28b40040396839"
+    },
+    {
+      "id": "8e28b40040396839",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_5/section_5.md",
+      "title": "第5章 嵌入式软件开发",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "底层控制器选用STM32F405RGT6，主频168 MHz，基于FreeRTOS构建软件框架。为保证1 kHz控制环的严格实时性，控制算法不放在RTOS任务中，而是置于硬件定时器中断服务程序内执行。RTOS负责任务调度、通信和辅助功能。",
+      "order": 6,
+      "previousId": "038e1ecb8bec4e7d",
+      "nextId": "c4d47cb6a6f4ed45"
+    },
+    {
+      "id": "c4d47cb6a6f4ed45",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_6/section_6.md",
+      "title": "第6章 运动学与动力学建模",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本平台为双足轮腿机器人，每条腿包含髋关节和膝关节两个旋转自由度，末端为驱动轮。为描述运动，建立以下坐标系：",
+      "order": 7,
+      "previousId": "8e28b40040396839",
+      "nextId": "3b4717c53a5d62fd"
+    },
+    {
+      "id": "3b4717c53a5d62fd",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_7/section_7.md",
+      "title": "第7章 轮腿复合运动控制",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在轮式模式下，机器人依靠两个轮毂电机独立驱动，通过差速实现直线前进和原地转向。设左右轮线速度分别为 $vL$ 和 $vR$，两轮间距为 $d$（本平台 $d = 280$ mm），则机器人质心处的前进速度 $v$ 和转向角速度 $\\omega$ 为：",
+      "order": 8,
+      "previousId": "c4d47cb6a6f4ed45",
+      "nextId": "6f025302c26e487b"
+    },
+    {
+      "id": "6f025302c26e487b",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_8/section_8.md",
+      "title": "第8章 环境感知系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "环境感知系统是安保巡逻机器人的“眼睛”，负责实时获取周围环境信息，为自主导航、避障和异常检测提供数据支撑。本平台感知系统由以下传感器组成：",
+      "order": 9,
+      "previousId": "3b4717c53a5d62fd",
+      "nextId": "d2d066bc5adb1364"
+    },
+    {
+      "id": "d2d066bc5adb1364",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_9/section_9.md",
+      "title": "第9章 自主导航与路径规划",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "自主导航是安保巡逻机器人实现无人化巡逻的核心能力。对于双足轮腿式平台，导航系统不仅需要解决常规移动机器人的建图、定位、规划问题，还需要结合轮腿复合运动的特点，在路径规划与执行过程中合理利用轮式模式的高效性和腿式模式的越障能力。本章将围绕这一主线展开。",
+      "order": 10,
+      "previousId": "6f025302c26e487b",
+      "nextId": "041e7a1c7693c617"
+    },
+    {
+      "id": "041e7a1c7693c617",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_10/section_10.md",
+      "title": "第10章 安保巡逻任务系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "安保巡逻任务系统是机器人实现自主安保服务的顶层应用，负责巡逻任务的组织、调度、异常事件处理以及与远程监控端的交互。本章在导航系统（第9章）的基础上，设计并实现完整的安保巡逻任务管理框架，使机器人能够按照预设策略自主执行巡逻任务，并在发现异常时及时报警。",
+      "order": 11,
+      "previousId": "d2d066bc5adb1364",
+      "nextId": "d0867e168446dcbb"
+    },
+    {
+      "id": "d0867e168446dcbb",
+      "bookSlug": "robot-textbook",
+      "relPath": "section_11/section_11.md",
+      "title": "第11章 综合实战与测试验证",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "整机联调是将机械、硬件、嵌入式软件、运动控制、感知、导航、任务系统等全部模块集成为一个可运行整体，并验证各模块协同工作的过程。对于轮腿式安保巡逻机器人，联调重点在于轮腿复合运动的稳定性和多系统数据流的正确性。",
+      "order": 12,
+      "previousId": "041e7a1c7693c617",
+      "nextId": "ad44325bf8e14324"
+    },
+    {
+      "id": "ad44325bf8e14324",
+      "bookSlug": "robot-textbook",
+      "relPath": "appendix/appendix_a.md",
+      "title": "附录A 主要物料清单",
+      "sections": [
+        "附录"
+      ],
+      "excerpt": "",
+      "order": 13,
+      "previousId": "d0867e168446dcbb",
+      "nextId": "06fee700685d148e"
+    },
+    {
+      "id": "06fee700685d148e",
+      "bookSlug": "robot-textbook",
+      "relPath": "appendix/appendix_b.md",
+      "title": "附录B 核心接口定义与通信协议",
+      "sections": [
+        "附录"
+      ],
+      "excerpt": "物理层：CAN 2.0B，标准帧（11位ID），速率1 Mbps，终端电阻120 Ω。",
+      "order": 14,
+      "previousId": "ad44325bf8e14324",
+      "nextId": "13a556037a3378f3"
+    },
+    {
+      "id": "13a556037a3378f3",
+      "bookSlug": "robot-textbook",
+      "relPath": "appendix/appendix_c.md",
+      "title": "附录C 代码仓库结构与关键代码索引",
+      "sections": [
+        "附录"
+      ],
+      "excerpt": "",
+      "order": 15,
+      "previousId": "06fee700685d148e",
+      "nextId": "1c3f17bf239803fb"
+    },
+    {
+      "id": "1c3f17bf239803fb",
+      "bookSlug": "robot-textbook",
+      "relPath": "appendix/appendix_d.md",
+      "title": "附录D 工具链与开发环境配置",
+      "sections": [
+        "附录"
+      ],
+      "excerpt": "",
+      "order": 16,
+      "previousId": "13a556037a3378f3",
+      "nextId": "b9e6c798f895a4e7"
+    },
+    {
+      "id": "b9e6c798f895a4e7",
+      "bookSlug": "robot-textbook",
+      "relPath": "appendix/appendix_e.md",
+      "title": "附录E 常见故障排查表",
+      "sections": [
+        "附录"
+      ],
+      "excerpt": "",
+      "order": 17,
+      "previousId": "1c3f17bf239803fb",
+      "nextId": "4f46407ebacefb36"
+    },
+    {
+      "id": "4f46407ebacefb36",
+      "bookSlug": "robot-textbook",
+      "relPath": "appendix/appendix_f.md",
+      "title": "附录F 推荐阅读与参考文献",
+      "sections": [
+        "附录"
+      ],
+      "excerpt": "[1] Craig J J. Introduction to Robotics: Mechanics and Control[M]. 4th ed. Pearson, 2017.",
+      "order": 18,
+      "previousId": "b9e6c798f895a4e7",
+      "nextId": ""
+    },
     {
       "id": "dc419d2921af03c8",
       "bookSlug": "zhou-machine-learning",
