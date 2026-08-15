@@ -27,6 +27,14 @@
       "tags": ["数据分析", "Python", "中文教材"]
     },
     {
+      "slug": "python-beginner-to-master",
+      "title": "Python从入门到精通",
+      "author": "明日科技",
+      "description": "从 Python 基础语法逐步讲解函数、面向对象、文件、数据库、GUI、网络编程、Flask 与项目实战。",
+      "coverSource": "assets/images/Image00000.jpg",
+      "tags": ["Python", "编程入门", "项目实战"]
+    },
+    {
       "slug": "deep-learning",
       "title": "动手学深度学习",
       "author": "李沐等",

@@ -4,8 +4,8 @@
     "subtitle": "把分散的教材收进一个连续、安静的阅读空间"
   },
   "stats": {
-    "books": 7,
-    "docs": 118
+    "books": 8,
+    "docs": 144
   },
   "books": [
     {
@@ -53,6 +53,22 @@
       "cover": "files/python-data-analysis/00-front-matter/images/cover.jpg",
       "docCount": 25,
       "firstDocId": "0a3308c140f8f4e4"
+    },
+    {
+      "slug": "python-beginner-to-master",
+      "title": "Python从入门到精通",
+      "author": "明日科技",
+      "description": "从 Python 基础语法逐步讲解函数、面向对象、文件、数据库、GUI、网络编程、Flask 与项目实战。",
+      "coverSource": "assets/images/Image00000.jpg",
+      "tags": [
+        "Python",
+        "编程入门",
+        "项目实战"
+      ],
+      "sourceSiteName": "Python从入门到精通",
+      "cover": "files/python-beginner-to-master/assets/images/Image00000.jpg",
+      "docCount": 26,
+      "firstDocId": "4e235b15f071bc5f"
     },
     {
       "slug": "deep-learning",
@@ -946,6 +962,344 @@
       "excerpt": "互联网时代，随处可见的网页表格数据对于数据分析和数据挖掘来说是很好的资源，但如果直接复制和粘贴网页上的数据，不仅费时费力，而且容易漏掉有用的数据或复制了其他没用的数据。Pandas提供了专门获取网页数据的方法，可以轻松地解决这一问题。本案例将使用Pandas实现简单爬虫，爬取NB",
       "order": 25,
       "previousId": "c42d376c497c1704",
+      "nextId": ""
+    },
+    {
+      "id": "4e235b15f071bc5f",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "copyright.md",
+      "title": "版权信息",
+      "sections": [
+        "导读"
+      ],
+      "excerpt": "本书封面贴有清华大学出版社防伪标签，无标签者不得销售。",
+      "order": 1,
+      "previousId": "",
+      "nextId": "7d6ed8ea3075766c"
+    },
+    {
+      "id": "7d6ed8ea3075766c",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "introduction.md",
+      "title": "内容简介",
+      "sections": [
+        "导读"
+      ],
+      "excerpt": "《Python从入门到精通》从初学者角度出发，通过通俗易懂的语言、丰富多彩的实例，详细介绍了使用Python进行程序开发应该掌握的各方面技术。全书共分22章，包括初识Python、Python语言基础、运算符与表达式、流程控制语句、列表与元组、字典与集合、字符串、Python中使",
+      "order": 2,
+      "previousId": "4e235b15f071bc5f",
+      "nextId": "c8d5c65acc79e06c"
+    },
+    {
+      "id": "c8d5c65acc79e06c",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "preface.md",
+      "title": "前言 Preface",
+      "sections": [
+        "导读"
+      ],
+      "excerpt": "Python人称“胶水”语言，能够把用其他语言制作的各种模块（尤其是C/C++）很轻松地联结在一起。它是1989年由荷兰人Guido van Rossum发明的一种面向对象的解释型高级编程语言。由于Python语言简洁、易读，非常适合编程入门，现在很多学校都开设了这门课程，甚至有",
+      "order": 3,
+      "previousId": "7d6ed8ea3075766c",
+      "nextId": "5d05d680b081c251"
+    },
+    {
+      "id": "5d05d680b081c251",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-01.md",
+      "title": "第1章 初识Python",
+      "sections": [
+        "第1篇 基础知识"
+      ],
+      "excerpt": "Python是一种跨平台的、开源的、免费的、解释型的高级编程语言。近几年发展势头迅猛，在2018年3月的TIOBE编程语言排行榜中已经晋升到第4名，而在IEEE Spectrum发布的2017年度编程语言排行榜中，Python位居第一。另外，Python的应用领域非常广泛，如We",
+      "order": 4,
+      "previousId": "c8d5c65acc79e06c",
+      "nextId": "ac30dd2c4fec5333"
+    },
+    {
+      "id": "ac30dd2c4fec5333",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-02.md",
+      "title": "第2章 Python语言基础",
+      "sections": [
+        "第1篇 基础知识"
+      ],
+      "excerpt": "熟练掌握一门编程语言，最好的方法就是充分了解、掌握基础知识，并亲自体验，多敲代码，熟能生巧。",
+      "order": 5,
+      "previousId": "5d05d680b081c251",
+      "nextId": "6b25fb98aba10f94"
+    },
+    {
+      "id": "6b25fb98aba10f94",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-03.md",
+      "title": "第3章 运算符与表达式",
+      "sections": [
+        "第1篇 基础知识"
+      ],
+      "excerpt": "在进行数学运算或逻辑判断时，需要应用算术运算符、比较运算符，以及逻辑运算符等。因此，在Python中也提供了这些运算符。另外，Python还提供了一个可以根据条件确定返回值的条件表达式。这些内容都是Python开发必备的基础知识，需要读者掌握。",
+      "order": 6,
+      "previousId": "ac30dd2c4fec5333",
+      "nextId": "2259407787af38f2"
+    },
+    {
+      "id": "2259407787af38f2",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-04.md",
+      "title": "第4章 流程控制语句",
+      "sections": [
+        "第1篇 基础知识"
+      ],
+      "excerpt": "做任何事情都要遵循一定的原则。例如，到图书馆去借书，就必须要有借书证，并且借书证不能过期，这两个条件缺一不可。程序设计也是如此，需要利用流程控制实现与用户的交流，并根据用户的需求决定程序“做什么”“怎么做”。",
+      "order": 7,
+      "previousId": "6b25fb98aba10f94",
+      "nextId": "b92c39b1774e333f"
+    },
+    {
+      "id": "b92c39b1774e333f",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-05.md",
+      "title": "第5章 列表与元组",
+      "sections": [
+        "第1篇 基础知识"
+      ],
+      "excerpt": "在数学里，序列也称为数列，是指按照一定顺序排列的一列数，而在程序设计中，序列是一种常用的数据存储方式，几乎每种程序设计语言都提供了类似的数据结构，如C语言或Java中的数组等。",
+      "order": 8,
+      "previousId": "2259407787af38f2",
+      "nextId": "21d384955f00226f"
+    },
+    {
+      "id": "21d384955f00226f",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-06.md",
+      "title": "第6章 字典与集合",
+      "sections": [
+        "第1篇 基础知识"
+      ],
+      "excerpt": "在第5章中已经介绍了两个常用的序列结构——列表和元组。本章将再介绍两个序列结构——字典和集合。其中，字典这种序列结构就像电话通讯录，可以将联系人姓名和电话号码关联起来，在需要时可以直接通过姓名找到对应的电话；而集合就像是收集了很多表情的表情包，里面的所有表情都是唯一的。",
+      "order": 9,
+      "previousId": "b92c39b1774e333f",
+      "nextId": "ba5e34a4823a3778"
+    },
+    {
+      "id": "ba5e34a4823a3778",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-07.md",
+      "title": "第7章 字符串",
+      "sections": [
+        "第1篇 基础知识"
+      ],
+      "excerpt": "字符串几乎是所有编程语言在项目开发过程中涉及最多的一块内容。大部分项目的运行结果都需要以文本的形式展示给客户，比如财务系统的总账报表、电子游戏的比赛结果、火车站的列车时刻表等。这些都是经过程序精密的计算、判断和梳理，将我们想要的内容用文本形式直观地展示出来。曾经有一位“久经沙场”",
+      "order": 10,
+      "previousId": "21d384955f00226f",
+      "nextId": "0c301574a063492c"
+    },
+    {
+      "id": "0c301574a063492c",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-08.md",
+      "title": "第8章 Python中使用正则表达式",
+      "sections": [
+        "第2篇 进阶提高"
+      ],
+      "excerpt": "正则表达式（Regular Expression，常简写为regex或者RE），又称规则表达式，它不是某个编程语言所特有的，是计算机科学的一个概念，通常被用来检索和替换符合某些规则的文本。目前，正则表达式已经在各种计算机语言（如Java、C#和Python等）中得到了广泛的应用和",
+      "order": 11,
+      "previousId": "ba5e34a4823a3778",
+      "nextId": "fcaf66c6bdac7179"
+    },
+    {
+      "id": "fcaf66c6bdac7179",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-09.md",
+      "title": "第9章 函数",
+      "sections": [
+        "第2篇 进阶提高"
+      ],
+      "excerpt": "在前面的章节中，所有编写的代码都是从上到下依次执行的，如果某段代码需要多次使用，那么需要将该段代码复制多次。这种做法势必会影响开发效率。在实际项目开发中是不可取的。那么如果想让某一段代码多次使用，应该怎么做呢？在Python中，提供了函数。我们可以把实现某一功能的代码定义为一个函",
+      "order": 12,
+      "previousId": "0c301574a063492c",
+      "nextId": "cdfc410c02f24984"
+    },
+    {
+      "id": "cdfc410c02f24984",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-10.md",
+      "title": "第10章 面向对象程序设计",
+      "sections": [
+        "第2篇 进阶提高"
+      ],
+      "excerpt": "面向对象程序设计是在面向过程程序设计的基础上发展而来的，它比面向过程编程具有更强的灵活性和扩展性。面向对象程序设计也是一个程序员发展的“分水岭”，很多的初学者和略有成就的开发者，就是因为无法理解“面向对象”而放弃。这里要提醒一下初学者：要想在编程这条路上走得比别人远，就一定要掌握",
+      "order": 13,
+      "previousId": "fcaf66c6bdac7179",
+      "nextId": "30ad2a45561283d1"
+    },
+    {
+      "id": "30ad2a45561283d1",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-11.md",
+      "title": "第11章 模块",
+      "sections": [
+        "第2篇 进阶提高"
+      ],
+      "excerpt": "Python提供了强大的模块支持，主要体现为不仅在Python标准库中包含了大量的模块（称为标准模块），而且还有很多第三方模块，另外开发者自己也可以开发自定义模块。这些强大的模块支持将极大地提高我们的开发效率。",
+      "order": 14,
+      "previousId": "cdfc410c02f24984",
+      "nextId": "47139a530ac4d539"
+    },
+    {
+      "id": "47139a530ac4d539",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-12.md",
+      "title": "第12章 异常处理及程序调试",
+      "sections": [
+        "第2篇 进阶提高"
+      ],
+      "excerpt": "学习过C语言或者Java语言的用户都知道：在C语言或者Java语言中，编译器可以捕获很多语法错误。但是，在Python语言中，只有在程序运行后才会执行语法检查。所以，只有在运行或测试程序时，才会真正知道该程序能不能正常运行。因此，掌握一定的异常处理语句和程序调试方法是十分必要的。",
+      "order": 15,
+      "previousId": "30ad2a45561283d1",
+      "nextId": "a815debe7303b868"
+    },
+    {
+      "id": "a815debe7303b868",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-13.md",
+      "title": "第13章 文件及目录操作",
+      "sections": [
+        "第2篇 进阶提高"
+      ],
+      "excerpt": "在变量、序列和对象中存储的数据是暂时的，程序结束后就会丢失。为了能够长时间地保存程序中的数据，需要将程序中的数据保存到磁盘文件中。Python提供了内置的文件对象和对文件，以及目录进行操作的内置模块。通过这些技术可以很方便地将数据保存到文件（如文本文件等）中，以达到长时间保存数据",
+      "order": 16,
+      "previousId": "47139a530ac4d539",
+      "nextId": "aa5d857431a3d7ae"
+    },
+    {
+      "id": "aa5d857431a3d7ae",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-14.md",
+      "title": "第14章 操作数据库",
+      "sections": [
+        "第2篇 进阶提高"
+      ],
+      "excerpt": "程序运行的时候，数据都是在内存中的。当程序终止的时候，通常都需要将数据保存到磁盘上，前面我们学习了将数据写入文件，保存在磁盘上。为了便于程序保存和读取数据，而且，能直接通过条件快速查询到指定的数据，就出现了数据库（Database）这种专门用于集中存储和查询的软件。本章将介绍数据",
+      "order": 17,
+      "previousId": "a815debe7303b868",
+      "nextId": "7010c97a39748414"
+    },
+    {
+      "id": "7010c97a39748414",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-15.md",
+      "title": "第15章 GUI界面编程",
+      "sections": [
+        "第3篇 高级应用"
+      ],
+      "excerpt": "到目前为止，我们的所有输入和输出都只是IDLE中的简单文本。不过现代计算机和程序会使用大量的图形。如果我们的程序中也有一些图形就太好了。在这一章中，我们会开始建立一些简单的GUI。这说明从现在开始，我们的程序看上去就会像你平常熟悉的那些程序一样，将会有窗口、按钮之类的图形。",
+      "order": 18,
+      "previousId": "aa5d857431a3d7ae",
+      "nextId": "03d324ff4d229b2e"
+    },
+    {
+      "id": "03d324ff4d229b2e",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-16.md",
+      "title": "第16章 Pygame游戏编程",
+      "sections": [
+        "第3篇 高级应用"
+      ],
+      "excerpt": "Python非常受欢迎的一个原因是它的应用领域非常广泛，其中就包括游戏开发。而使用Python进行游戏开发的首选模块就是Pygame。本章我们就来学习一下如何使用Pygame开发游戏。与其他章节不同的是，本章的侧重点不是讲解理论知识，而是在编写游戏的过程中学习Pygame。我们会",
+      "order": 19,
+      "previousId": "7010c97a39748414",
+      "nextId": "5ad3b756f5b6d4c1"
+    },
+    {
+      "id": "5ad3b756f5b6d4c1",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-17.md",
+      "title": "第17章 网络爬虫开发",
+      "sections": [
+        "第3篇 高级应用"
+      ],
+      "excerpt": "随着大数据时代的来临，网络信息量也变得更多更大，网络爬虫在互联网中的地位将越来越重要。本章将介绍通过Python语言实现网络爬虫的常用技术，以及常见的网络爬虫框架，最后将通过一个实战项目详细地介绍爬虫爬取数据的整个过程。",
+      "order": 20,
+      "previousId": "03d324ff4d229b2e",
+      "nextId": "7a012a19160d1e1d"
+    },
+    {
+      "id": "7a012a19160d1e1d",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-18.md",
+      "title": "第18章 使用进程和线程",
+      "sections": [
+        "第3篇 高级应用"
+      ],
+      "excerpt": "为了实现在同一时间运行多个任务，Python引入了多线程的概念。在Python中可以通过方便、快捷的方式启动多线程模式。多线程常被应用在符合并发机制的程序中，如网络程序等。为了再进一步将工作任务细分，在一个进程内可以使用多个线程。本章将结合实例由浅入深地向读者介绍在Python中",
+      "order": 21,
+      "previousId": "5ad3b756f5b6d4c1",
+      "nextId": "6139c238c4ce19b5"
+    },
+    {
+      "id": "6139c238c4ce19b5",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-19.md",
+      "title": "第19章 网络编程",
+      "sections": [
+        "第3篇 高级应用"
+      ],
+      "excerpt": "计算机网络就是把各个计算机连接到一起，让网络中的计算机可以互相通信。网络编程就是如何在程序中实现两台计算机的通信。本章将讲解网络的基础知识，包括比较常见的TCP协议和UDP协议，以及如何使用TCP编程和UDP编程。",
+      "order": 22,
+      "previousId": "7a012a19160d1e1d",
+      "nextId": "8f6323721d3c5ec4"
+    },
+    {
+      "id": "8f6323721d3c5ec4",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-20.md",
+      "title": "第20章 Web编程",
+      "sections": [
+        "第3篇 高级应用"
+      ],
+      "excerpt": "由于Python简洁易懂，可维护性好，所以越来越多的互联网公司使用Python进行Web开发，如豆瓣、知乎等网站。本章将介绍Web基础知识，包括HTTP协议、Web服务器以及前端基础知识。此外，将重点介绍WSGI接口，最后介绍常用的Web开发框架。",
+      "order": 23,
+      "previousId": "6139c238c4ce19b5",
+      "nextId": "666d3cc2b38024c3"
+    },
+    {
+      "id": "666d3cc2b38024c3",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-21.md",
+      "title": "第21章 Flask框架",
+      "sections": [
+        "第3篇 高级应用"
+      ],
+      "excerpt": "第20章我们介绍了如何使用WSGI进行Web开发，并且介绍了4种Python常用Web框架，本章我们将详细介绍如何使用Flask框架。通过对比WSGI，读者将会发现使用Web框架开发Web应用程序的简单和高效。",
+      "order": 24,
+      "previousId": "8f6323721d3c5ec4",
+      "nextId": "7a98ad758bcd97a0"
+    },
+    {
+      "id": "7a98ad758bcd97a0",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "chapter-22.md",
+      "title": "第22章 e起去旅行网站",
+      "sections": [
+        "第4篇 项目实战"
+      ],
+      "excerpt": "第21章介绍了Flask框架的基本使用方法，本章我们就应用Flask框架实现一个介绍旅游景区及旅游攻略的网站——e起去旅行网站。e起去旅行网站是一个包括前台和后台的完整网站。前台主要包括用户登录、注册以及景区内容的展现，而后台主要包括景区管理、游记管理、用户管理等内容的增删改查。",
+      "order": 25,
+      "previousId": "666d3cc2b38024c3",
+      "nextId": "5982b580137248c2"
+    },
+    {
+      "id": "5982b580137248c2",
+      "bookSlug": "python-beginner-to-master",
+      "relPath": "appendix.md",
+      "title": "附录CD",
+      "sections": [
+        "附录"
+      ],
+      "excerpt": "",
+      "order": 26,
+      "previousId": "7a98ad758bcd97a0",
       "nextId": ""
     },
     {
