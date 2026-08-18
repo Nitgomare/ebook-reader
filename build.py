@@ -201,6 +201,14 @@ def copy_public(output: Path) -> None:
     if output.exists():
         shutil.rmtree(output)
     shutil.copytree(PUBLIC_ROOT, output)
+    asset_digest = hashlib.sha1(
+        (output / "app.js").read_bytes() + (output / "styles.css").read_bytes()
+    ).hexdigest()[:12]
+    index_path = output / "index.html"
+    index_path.write_text(
+        index_path.read_text(encoding="utf-8").replace("__ASSET_VERSION__", asset_digest),
+        encoding="utf-8",
+    )
     (output / "data" / "docs").mkdir(parents=True)
     (output / "data" / "code").mkdir(parents=True)
     (output / "files").mkdir(parents=True)

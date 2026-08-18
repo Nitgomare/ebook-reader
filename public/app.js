@@ -225,7 +225,7 @@
     elements.documentView.hidden = false;
     elements.outline.hidden = false;
     elements.article.innerHTML = '<p class="loading-copy">正在打开课程…</p>';
-    var response = await fetch("data/docs/" + id + ".json");
+    var response = await fetch("data/docs/" + id + ".json", { cache: "no-store" });
     if (!response.ok) throw new Error("课程内容加载失败");
     var doc = await response.json();
     state.activeDoc = doc;
@@ -288,7 +288,7 @@
     hideViews();
     elements.codeView.hidden = false;
     elements.codeContent.innerHTML = '<p class="loading-copy">正在加载文件…</p>';
-    var response = await fetch("data/code/" + id + ".json");
+    var response = await fetch("data/code/" + id + ".json", { cache: "no-store" });
     if (!response.ok) throw new Error("代码文件加载失败");
     var file = await response.json();
     var book = bookBySlug(file.bookSlug);
@@ -334,6 +334,7 @@
 
   function bindEvents() {
     window.addEventListener("hashchange", function () { route().catch(showError); });
+    window.addEventListener("load", function () { if (state.activeDoc) typesetMath(); });
     elements.openNav.addEventListener("click", openSidebar);
     elements.closeNav.addEventListener("click", closeSidebar);
     elements.scrim.addEventListener("click", closeSidebar);
@@ -364,7 +365,7 @@
   async function initialize() {
     cacheElements();
     bindEvents();
-    var response = await fetch("data/catalog.json");
+    var response = await fetch("data/catalog.json", { cache: "no-store" });
     if (!response.ok) throw new Error("课程目录加载失败，请先运行构建命令");
     state.catalog = await response.json();
     state.catalog.code = state.catalog.code || [];

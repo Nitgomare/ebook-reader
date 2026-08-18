@@ -43,6 +43,7 @@ def main() -> None:
         for path in (DIST / "data" / "code").glob("*.json")
     ]
     app_js = (DIST / "app.js").read_text(encoding="utf-8")
+    index_html = (DIST / "index.html").read_text(encoding="utf-8")
     report = {
         "stats": catalog["stats"],
         "data_titles": [doc["title"] for doc in data_docs],
@@ -77,6 +78,18 @@ def main() -> None:
         "python_video_links": len(
             set(re.findall(r"https://www\.bilibili\.com/video/BV1tDsgzxECr\?p=\d+", python_html))
         ),
+        "nonblocking_math_loader": (
+            'defer src="app.js?v=' in index_html
+            and 'async src="https://cdn.jsdelivr.net/npm/mathjax' in index_html
+            and index_html.index('defer src="app.js?v=')
+            < index_html.index('async src="https://cdn.jsdelivr.net/npm/mathjax')
+        ),
+        "versioned_static_assets": (
+            "__ASSET_VERSION__" not in index_html
+            and bool(re.search(r"app\.js\?v=[0-9a-f]{12}", index_html))
+            and bool(re.search(r"styles\.css\?v=[0-9a-f]{12}", index_html))
+        ),
+        "fresh_data_fetches": app_js.count('cache: "no-store"'),
     }
     assert report["stats"] == {"books": 6, "docs": 89, "code": 182}
     assert report["wind_documents"] == 51
@@ -97,6 +110,9 @@ def main() -> None:
     assert report["code_sidebar_navigation"]
     assert report["python_video_chapters"] == 14
     assert report["python_video_links"] == 172
+    assert report["nonblocking_math_loader"]
+    assert report["versioned_static_assets"]
+    assert report["fresh_data_fetches"] == 3
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
