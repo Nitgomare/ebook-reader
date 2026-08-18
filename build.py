@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Build the standalone electronic-book reader from the existing MkDocs books."""
+"""Build the standalone Python learning site from chapter-oriented courses."""
 
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent
 BOOKS_CANDIDATES = (
+    ROOT / "content" / "books",
     ROOT.parent / "books",
     ROOT.parent / "knowledge-base" / "books",
 )
@@ -26,6 +27,22 @@ BOOKS_ROOT = next((path for path in BOOKS_CANDIDATES if path.is_dir()), BOOKS_CA
 PUBLIC_ROOT = ROOT / "public"
 DEFAULT_OUTPUT = ROOT / "dist"
 SKIP_DIRS = {".git", ".idea", "__pycache__", "site", "dist", "node_modules"}
+CODE_EXTENSIONS = {
+    ".py": ("source", "python"),
+    ".ipynb": ("notebook", "python"),
+    ".sql": ("source", "sql"),
+    ".md": ("text", "markdown"),
+    ".txt": ("text", "text"),
+    ".json": ("dataset", "json"),
+    ".csv": ("dataset", "csv"),
+    ".html": ("source", "html"),
+    ".css": ("source", "css"),
+    ".js": ("source", "javascript"),
+    ".yaml": ("source", "yaml"),
+    ".yml": ("source", "yaml"),
+    ".toml": ("source", "toml"),
+}
+MAX_CODE_PREVIEW_BYTES = 256 * 1024
 MARKDOWN_EXTENSIONS = [
     "extra",
     "admonition",
@@ -100,7 +117,7 @@ class HeadingCollector(HTMLParser):
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="构建统一电子书阅读器")
+    parser = argparse.ArgumentParser(description="构建 Python 与数据分析学习站")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="静态产物目录")
     parser.add_argument(
         "--book",
@@ -118,6 +135,10 @@ def load_reader_config() -> dict[str, object]:
 def doc_id(book_slug: str, rel_path: str) -> str:
     digest = hashlib.sha1(f"{book_slug}/{rel_path}".encode("utf-8")).hexdigest()[:16]
     return digest
+
+
+def code_id(book_slug: str, rel_path: str) -> str:
+    return hashlib.sha1(f"code/{book_slug}/{rel_path}".encode("utf-8")).hexdigest()[:16]
 
 
 def flatten_nav(items: object, sections: tuple[str, ...] = ()) -> list[dict[str, object]]:
@@ -181,7 +202,106 @@ def copy_public(output: Path) -> None:
         shutil.rmtree(output)
     shutil.copytree(PUBLIC_ROOT, output)
     (output / "data" / "docs").mkdir(parents=True)
+    (output / "data" / "code").mkdir(parents=True)
     (output / "files").mkdir(parents=True)
+
+
+def decode_text(source: Path, limit: int = MAX_CODE_PREVIEW_BYTES) -> tuple[str, bool]:
+    raw = source.read_bytes()
+    truncated = len(raw) > limit
+    sample = raw[:limit]
+    for encoding in ("utf-8-sig", "gb18030", "latin-1"):
+        try:
+            return sample.decode(encoding), truncated
+        except UnicodeDecodeError:
+            continue
+    return sample.decode("utf-8", errors="replace"), truncated
+
+
+def notebook_cells(source: Path) -> list[dict[str, object]]:
+    notebook = json.loads(source.read_text(encoding="utf-8-sig"))
+    cells: list[dict[str, object]] = []
+    for index, cell in enumerate(notebook.get("cells", [])):
+        cell_type = str(cell.get("cell_type", "code"))
+        cell_source = cell.get("source", "")
+        text = "".join(cell_source) if isinstance(cell_source, list) else str(cell_source)
+        payload: dict[str, object] = {"index": index + 1, "type": cell_type, "source": text}
+        if cell_type == "markdown":
+            payload["html"] = markdown.markdown(text, extensions=["extra"])
+        elif cell_type == "code":
+            outputs: list[str] = []
+            for output in cell.get("outputs", []):
+                value = output.get("text")
+                if value is None:
+                    value = output.get("data", {}).get("text/plain")
+                if isinstance(value, list):
+                    value = "".join(value)
+                if value:
+                    outputs.append(str(value))
+            if outputs:
+                payload["output"] = "\n".join(outputs)[:20000]
+        cells.append(payload)
+    return cells
+
+
+def build_code_assets(
+    book: dict[str, object], output: Path, docs: list[dict[str, object]]
+) -> tuple[list[dict[str, object]], dict[str, list[str]]]:
+    configured = str(book.get("codeSource", "")).strip()
+    if not configured:
+        return [], {}
+    slug = str(book["slug"])
+    book_root = BOOKS_ROOT / slug
+    code_root = (book_root / configured).resolve()
+    code_root.relative_to(book_root.resolve())
+    if not code_root.is_dir():
+        raise FileNotFoundError(f"找不到配套代码目录：{code_root}")
+
+    configured_links = book.get("codeLinks", {})
+    explicit_links = configured_links if isinstance(configured_links, dict) else {}
+    by_doc: dict[str, list[str]] = {str(doc["relPath"]): [] for doc in docs}
+    public_files: list[dict[str, object]] = []
+    for source in sorted(code_root.rglob("*"), key=lambda path: path.as_posix().casefold()):
+        if not source.is_file() or source.suffix.lower() not in CODE_EXTENSIONS:
+            continue
+        if any(part in SKIP_DIRS for part in source.relative_to(code_root).parts):
+            continue
+        rel_path = source.relative_to(code_root).as_posix()
+        identifier = code_id(slug, rel_path)
+        kind, language = CODE_EXTENSIONS[source.suffix.lower()]
+        destination = output / "files" / "code" / slug / Path(*PurePosixPath(rel_path).parts)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+        encoded = "/".join(quote(part) for part in ("files", "code", slug, *PurePosixPath(rel_path).parts))
+        payload: dict[str, object] = {
+            "id": identifier,
+            "bookSlug": slug,
+            "path": rel_path,
+            "name": source.name,
+            "kind": kind,
+            "language": language,
+            "size": source.stat().st_size,
+            "downloadUrl": encoded,
+        }
+        if kind == "notebook":
+            payload["cells"] = notebook_cells(source)
+            payload["truncated"] = False
+        else:
+            payload["content"], payload["truncated"] = decode_text(source)
+        (output / "data" / "code" / f"{identifier}.json").write_text(
+            json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
+        )
+        public_files.append({key: value for key, value in payload.items() if key not in {"content", "cells"}})
+
+        group = PurePosixPath(rel_path).parts[0]
+        automatic_doc = f"{group}.md"
+        if automatic_doc in by_doc:
+            by_doc[automatic_doc].append(identifier)
+        for doc_path in explicit_links.get(group, []):
+            normalized = str(doc_path).replace("\\", "/")
+            if normalized in by_doc and identifier not in by_doc[normalized]:
+                by_doc[normalized].append(identifier)
+    return public_files, by_doc
 
 
 def safe_target(source_root: Path, current_rel: str, raw_url: str) -> tuple[Path, str, str] | None:
@@ -287,10 +407,13 @@ def collect_book_documents(book: dict[str, object]) -> tuple[Path, list[dict[str
     return docs_root, docs, mkdocs_config
 
 
-def build_book(book: dict[str, object], output: Path) -> tuple[dict[str, object], list[dict[str, object]]]:
+def build_book(
+    book: dict[str, object], output: Path
+) -> tuple[dict[str, object], list[dict[str, object]], list[dict[str, object]]]:
     docs_root, docs, mkdocs_config = collect_book_documents(book)
     slug = str(book["slug"])
     id_map = {str(doc["relPath"]): str(doc["id"]) for doc in docs}
+    public_code, code_by_doc = build_code_assets(book, output, docs)
 
     public_docs: list[dict[str, object]] = []
     for doc in docs:
@@ -318,6 +441,7 @@ def build_book(book: dict[str, object], output: Path) -> tuple[dict[str, object]
         payload = {key: value for key, value in doc.items() if key != "source"}
         payload["html"] = rendered
         payload["headings"] = collector.headings
+        payload["codeFiles"] = code_by_doc.get(str(doc["relPath"]), [])
         (output / "data" / "docs" / f"{doc['id']}.json").write_text(
             json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
             encoding="utf-8",
@@ -349,8 +473,9 @@ def build_book(book: dict[str, object], output: Path) -> tuple[dict[str, object]
         "cover": cover_url,
         "docCount": len(public_docs),
         "firstDocId": public_docs[0]["id"] if public_docs else "",
+        "codeCount": len(public_code),
     }
-    return public_book, public_docs
+    return public_book, public_docs, public_code
 
 
 def main() -> None:
@@ -368,17 +493,20 @@ def main() -> None:
     copy_public(output)
     catalog_books: list[dict[str, object]] = []
     catalog_docs: list[dict[str, object]] = []
+    catalog_code: list[dict[str, object]] = []
     for book in configured_books:
         print(f"Building {book['slug']} ...", flush=True)
-        public_book, public_docs = build_book(book, output)
+        public_book, public_docs, public_code = build_book(book, output)
         catalog_books.append(public_book)
         catalog_docs.extend(public_docs)
+        catalog_code.extend(public_code)
 
     catalog = {
         "site": config.get("site", {}),
-        "stats": {"books": len(catalog_books), "docs": len(catalog_docs)},
+        "stats": {"books": len(catalog_books), "docs": len(catalog_docs), "code": len(catalog_code)},
         "books": catalog_books,
         "docs": catalog_docs,
+        "code": catalog_code,
     }
     (output / "data" / "catalog.json").write_text(
         json.dumps(catalog, ensure_ascii=False, indent=2),
@@ -386,7 +514,10 @@ def main() -> None:
     )
     shutil.copy2(output / "index.html", output / "404.html")
     (output / ".nojekyll").write_text("", encoding="utf-8")
-    print(f"Complete: {output} ({len(catalog_books)} books, {len(catalog_docs)} documents)")
+    print(
+        f"Complete: {output} ({len(catalog_books)} courses, "
+        f"{len(catalog_docs)} documents, {len(catalog_code)} code files)"
+    )
 
 
 if __name__ == "__main__":

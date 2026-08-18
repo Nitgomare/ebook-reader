@@ -1,0 +1,8 @@
+{
+  "products": [
+    {
+      "id": "P1",
+      "name": "Product 1",
+      "category": "Clothing",
+      "price": 151.37,
+      "in_stock":

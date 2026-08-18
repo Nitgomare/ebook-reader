@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "张三",
+      "age": 28,
+      "email": "zhangsan@example.com",
+      "is_active": true,
+      "join_date": "2022-03-15"
+    },
+    {
+      "id": 2,
+      "name": "李四",
+      "age": 35,
+      "email": "lisi@example.com",
+      "is_active": false,
+      "join_date": "2021-11-02"
+    },
+    {
+      "id": 3,
+      "name": "王五",
+      "age": 24,
+      "email": "wangwu@example.com",
+      "is_active": true,
+      "join_date": "2023-01-20"
+    }
+  ]
+}

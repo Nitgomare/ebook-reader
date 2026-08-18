@@ -1,29 +1,48 @@
 (function () {
   "use strict";
 
-  var state = { catalog: null, activeBook: null, activeDoc: null };
+  var state = { catalog: null, activeBook: null, activeDoc: null, activeCode: null };
   var elements = {};
 
   function byId(id) { return document.getElementById(id); }
   function escapeHtml(value) {
-    return String(value || "").replace(/[&<>"']/g, function (char) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function (char) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char];
     });
   }
   function normalize(value) { return String(value || "").trim().toLocaleLowerCase(); }
   function bookBySlug(slug) { return state.catalog.books.find(function (book) { return book.slug === slug; }); }
   function docById(id) { return state.catalog.docs.find(function (doc) { return doc.id === id; }); }
+  function codeById(id) { return state.catalog.code.find(function (file) { return file.id === id; }); }
+  function formatBytes(bytes) {
+    var value = Number(bytes || 0);
+    if (value < 1024) return value + " B";
+    if (value < 1024 * 1024) return (value / 1024).toFixed(1) + " KB";
+    return (value / 1024 / 1024).toFixed(1) + " MB";
+  }
+  function codeLabel(file) {
+    return { notebook: "Notebook", dataset: "数据", source: "源码", text: "文本" }[file.kind] || "文件";
+  }
 
   function cacheElements() {
     ["siteTitle", "topMeta", "sidebar", "sidebarTitle", "searchInput", "catalogStatus", "navTree",
-      "libraryHome", "heroTitle", "heroSubtitle", "heroAction", "shelfStats", "bookGrid", "documentView",
-      "breadcrumb", "docTitle", "article", "previousLink", "nextLink", "outline", "outlineNav", "openNav",
-      "closeNav", "scrim", "outlineToggle", "startReadingLink"].forEach(function (id) { elements[id] = byId(id); });
+      "libraryHome", "heroTitle", "heroSubtitle", "homeStats", "shelfStats", "courseGrid", "resourceSection", "bookGrid",
+      "documentView", "breadcrumb", "docTitle", "article", "relatedCode", "relatedCodeList", "previousLink",
+      "nextLink", "outline", "outlineNav", "openNav", "closeNav", "scrim", "outlineToggle", "startReadingLink",
+      "codeLibrary", "codeCourseList", "codeView", "codeBreadcrumb", "codeTitle", "codeDownload", "codeMeta",
+      "codeContent"].forEach(function (id) { elements[id] = byId(id); });
+  }
+
+  function hideViews() {
+    [elements.libraryHome, elements.documentView, elements.codeLibrary, elements.codeView].forEach(function (view) {
+      view.hidden = true;
+    });
+    elements.outline.hidden = true;
   }
 
   function groupDocs(docs) {
     return docs.reduce(function (groups, doc) {
-      var label = doc.sections && doc.sections.length ? doc.sections[0] : "正文";
+      var label = doc.sections && doc.sections.length ? doc.sections[0] : "课程内容";
       var existing = groups.find(function (group) { return group.title === label; });
       if (!existing) { existing = { title: label, docs: [] }; groups.push(existing); }
       existing.docs.push(doc);
@@ -42,48 +61,58 @@
       });
       matchedCount += docs.length;
       if (needle && !docs.length) return "";
-
       var isActiveBook = state.activeBook && state.activeBook.slug === item.slug;
       var open = isActiveBook || Boolean(needle) ? " open" : "";
       var groups = groupDocs(docs).map(function (group) {
         return '<section class="nav-group"><h3>' + escapeHtml(group.title) + '</h3>' + group.docs.map(function (doc) {
           var active = state.activeDoc && state.activeDoc.id === doc.id ? " is-active" : "";
-          return '<a class="doc-nav-link' + active + '" data-doc-id="' + doc.id + '" href="#/doc/' + doc.id + '">' +
-            '<span>' + String(doc.order).padStart(2, "0") + '</span><strong>' + escapeHtml(doc.title) + '</strong></a>';
+          return '<a class="doc-nav-link' + active + '" href="#/doc/' + doc.id + '"><span>' +
+            String(doc.order).padStart(2, "0") + '</span><strong>' + escapeHtml(doc.title) + '</strong></a>';
         }).join("") + "</section>";
       }).join("");
-
-      return '<details class="book-tree" data-book-slug="' + escapeHtml(item.slug) + '"' + open + '>' +
-        '<summary><span class="book-tree-marker" aria-hidden="true">›</span><strong>' + escapeHtml(item.title) +
-        '</strong><small>' + item.docCount + ' 章</small></summary><div class="book-tree-children">' + groups + '</div></details>';
+      return '<details class="book-tree"' + open + '><summary><span class="book-tree-marker">›</span><strong>' +
+        escapeHtml(item.title) + '</strong><small>' + item.docCount + ' 节</small></summary><div class="book-tree-children">' +
+        groups + "</div></details>";
     }).join("");
-
-    elements.sidebarTitle.textContent = "电子书目录";
-    elements.catalogStatus.textContent = needle
-      ? "找到 " + matchedCount + " 个章节"
-      : state.catalog.books.length + " 本书 · " + state.catalog.docs.length + " 个章节";
+    elements.sidebarTitle.textContent = "课程目录";
+    elements.catalogStatus.textContent = needle ? "找到 " + matchedCount + " 个章节" :
+      state.catalog.books.length + " 套内容 · " + state.catalog.docs.length + " 个章节";
     elements.navTree.innerHTML = trees || '<p class="empty-nav">没有匹配的章节。</p>';
   }
 
+  function renderCourseCard(book, index) {
+    return '<a class="course-card" href="#/book/' + encodeURIComponent(book.slug) + '">' +
+      '<div class="course-index">0' + (index + 1) + '</div><div class="course-copy"><p class="book-tags">' +
+      book.tags.map(escapeHtml).join(" · ") + '</p><h3>' + escapeHtml(book.title) + '</h3><p>' +
+      escapeHtml(book.description) + '</p><div class="course-facts"><span>' + book.docCount + ' 节教程</span><span>' +
+      book.codeCount + ' 个代码/数据文件</span></div><strong>进入学习路径 →</strong></div></a>';
+  }
+
+  function renderResourceCard(book) {
+    var cover = book.cover ? '<img src="' + book.cover + '" alt="' + escapeHtml(book.title) + '封面" loading="lazy">' :
+      '<div class="cover-fallback"><span>' + escapeHtml(book.title.slice(0, 2)) + '</span></div>';
+    return '<a class="book-card" href="#/book/' + encodeURIComponent(book.slug) + '"><div class="book-cover">' + cover +
+      '</div><div class="book-copy"><p class="book-tags">' + book.tags.map(escapeHtml).join(" · ") + '</p><h3>' +
+      escapeHtml(book.title) + '</h3><p class="book-author">' + escapeHtml(book.author) + '</p><p>' +
+      escapeHtml(book.description) + '</p><span class="book-open">查看资料 <b>→</b></span></div></a>';
+  }
+
   function renderLibrary() {
+    hideViews();
     state.activeBook = null;
     state.activeDoc = null;
+    state.activeCode = null;
     elements.libraryHome.hidden = false;
-    elements.documentView.hidden = true;
-    elements.outline.hidden = true;
-    elements.heroTitle.textContent = "把知识放进一条连续的阅读路径。";
+    var courses = state.catalog.books.filter(function (book) { return book.featured; });
+    var resources = state.catalog.books.filter(function (book) { return !book.featured; });
+    elements.heroTitle.textContent = "从 Python 基础走到数据分析实践";
     elements.heroSubtitle.textContent = state.catalog.site.subtitle;
-    elements.heroAction.href = state.catalog.books.length ? "#/book/" + encodeURIComponent(state.catalog.books[0].slug) : "#/";
-    elements.shelfStats.textContent = state.catalog.stats.books + " 本书 · " + state.catalog.stats.docs + " 篇内容";
-    elements.bookGrid.innerHTML = state.catalog.books.map(function (book, index) {
-      var cover = book.cover ? '<img src="' + book.cover + '" alt="' + escapeHtml(book.title) + '封面" loading="lazy">' :
-        '<div class="cover-fallback"><span>' + escapeHtml(book.title.slice(0, 2)) + '</span></div>';
-      return '<a class="book-card" href="#/book/' + encodeURIComponent(book.slug) + '">' +
-        '<div class="book-cover">' + cover + '<span class="book-number">' + String(index + 1).padStart(2, "0") + '</span></div>' +
-        '<div class="book-copy"><p class="book-tags">' + book.tags.map(escapeHtml).join(" · ") + '</p><h3>' + escapeHtml(book.title) +
-        '</h3><p class="book-author">' + escapeHtml(book.author) + '</p><p>' + escapeHtml(book.description) +
-        '</p><span class="book-open">开始阅读 <b>→</b></span></div></a>';
-    }).join("");
+    elements.homeStats.innerHTML = '<span><strong>' + courses.length + '</strong> 条核心路径</span><span><strong>' +
+      state.catalog.stats.docs + '</strong> 个章节</span><span><strong>' + state.catalog.stats.code + '</strong> 个代码与数据文件</span>';
+    elements.shelfStats.textContent = "建议先学 Python，再进入数据分析";
+    elements.courseGrid.innerHTML = courses.map(renderCourseCard).join("");
+    elements.resourceSection.hidden = !resources.length;
+    elements.bookGrid.innerHTML = resources.map(renderResourceCard).join("");
     renderSidebar(null, elements.searchInput.value);
     document.title = state.catalog.site.title;
   }
@@ -98,12 +127,22 @@
   function renderPager(doc) {
     var previous = doc.previousId ? docById(doc.previousId) : null;
     var next = doc.nextId ? docById(doc.nextId) : null;
-    elements.previousLink.innerHTML = previous ? '<small>上一篇</small><strong>← ' + escapeHtml(previous.title) + '</strong>' : "";
+    elements.previousLink.innerHTML = previous ? '<small>上一节</small><strong>← ' + escapeHtml(previous.title) + '</strong>' : "";
     elements.previousLink.href = previous ? "#/doc/" + previous.id : "#";
     elements.previousLink.hidden = !previous;
-    elements.nextLink.innerHTML = next ? '<small>下一篇</small><strong>' + escapeHtml(next.title) + ' →</strong>' : "";
+    elements.nextLink.innerHTML = next ? '<small>下一节</small><strong>' + escapeHtml(next.title) + ' →</strong>' : "";
     elements.nextLink.href = next ? "#/doc/" + next.id : "#";
     elements.nextLink.hidden = !next;
+  }
+
+  function renderRelatedCode(ids) {
+    var files = (ids || []).map(codeById).filter(Boolean);
+    elements.relatedCode.hidden = !files.length;
+    elements.relatedCodeList.innerHTML = files.map(function (file) {
+      return '<a class="code-file-card" href="#/code/' + file.id + '"><span class="code-kind">' + codeLabel(file) +
+        '</span><strong>' + escapeHtml(file.name) + '</strong><small>' + escapeHtml(file.path) + ' · ' +
+        formatBytes(file.size) + '</small></a>';
+    }).join("");
   }
 
   function typesetMath() {
@@ -117,19 +156,21 @@
   async function renderDocument(id, anchor) {
     var summary = docById(id);
     if (!summary) { renderLibrary(); return; }
+    hideViews();
     var book = bookBySlug(summary.bookSlug);
     state.activeBook = book;
-    elements.libraryHome.hidden = true;
     elements.documentView.hidden = false;
     elements.outline.hidden = false;
-    elements.article.innerHTML = '<p class="loading-copy">正在打开章节…</p>';
+    elements.article.innerHTML = '<p class="loading-copy">正在打开课程…</p>';
     var response = await fetch("data/docs/" + id + ".json");
-    if (!response.ok) throw new Error("章节数据加载失败");
+    if (!response.ok) throw new Error("课程内容加载失败");
     var doc = await response.json();
     state.activeDoc = doc;
-    elements.breadcrumb.textContent = book.title + " / " + (doc.sections.join(" / ") || "正文");
+    state.activeCode = null;
+    elements.breadcrumb.textContent = book.title + " / " + (doc.sections.join(" / ") || "课程内容");
     elements.docTitle.textContent = doc.title;
     elements.article.innerHTML = doc.html;
+    renderRelatedCode(doc.codeFiles);
     renderOutline(doc.headings || []);
     renderPager(doc);
     renderSidebar(book, elements.searchInput.value);
@@ -139,6 +180,73 @@
       var target = anchor && document.getElementById(anchor);
       if (target) target.scrollIntoView({ block: "start" }); else window.scrollTo(0, 0);
     });
+  }
+
+  function renderCodeLibrary() {
+    hideViews();
+    state.activeDoc = null;
+    state.activeCode = null;
+    elements.codeLibrary.hidden = false;
+    var books = state.catalog.books.filter(function (book) { return book.codeCount; });
+    elements.codeCourseList.innerHTML = books.map(function (book) {
+      var files = state.catalog.code.filter(function (file) { return file.bookSlug === book.slug; });
+      var groups = files.reduce(function (result, file) {
+        var name = file.path.split("/")[0];
+        if (!result[name]) result[name] = [];
+        result[name].push(file);
+        return result;
+      }, {});
+      return '<section class="code-course"><div class="section-heading"><div><p class="eyebrow">' +
+        escapeHtml(book.author) + '</p><h2>' + escapeHtml(book.title) + '</h2></div><p>' + files.length +
+        ' 个文件</p></div>' + Object.keys(groups).map(function (group) {
+          var groupLabel = group === "shared-data" ? "共享练习数据" : group.replace("chapter-", "第 ").replace(/^第 (\d+)$/, "第 $1 章");
+          return '<details class="code-group" open><summary>' + escapeHtml(groupLabel) + '<small>' +
+            groups[group].length + '</small></summary><div>' + groups[group].map(function (file) {
+              return '<a href="#/code/' + file.id + '"><span>' + codeLabel(file) + '</span><strong>' +
+                escapeHtml(file.name) + '</strong><small>' + formatBytes(file.size) + '</small></a>';
+            }).join("") + '</div></details>';
+        }).join("") + '</section>';
+    }).join("");
+    renderSidebar(null, elements.searchInput.value);
+    document.title = "代码与数据 · " + state.catalog.site.title;
+    window.scrollTo(0, 0);
+  }
+
+  function renderNotebook(cells) {
+    return (cells || []).map(function (cell) {
+      if (cell.type === "markdown") {
+        return '<section class="notebook-cell markdown-cell"><span class="cell-label">Markdown ' + cell.index +
+          '</span><div class="notebook-markdown">' + (cell.html || "") + '</div></section>';
+      }
+      var output = cell.output ? '<div class="cell-output"><span>输出</span><pre>' + escapeHtml(cell.output) + '</pre></div>' : "";
+      return '<section class="notebook-cell"><span class="cell-label">In [' + cell.index + ']</span><pre><code>' +
+        escapeHtml(cell.source) + '</code></pre>' + output + '</section>';
+    }).join("");
+  }
+
+  async function renderCode(id) {
+    var summary = codeById(id);
+    if (!summary) { renderCodeLibrary(); return; }
+    hideViews();
+    elements.codeView.hidden = false;
+    elements.codeContent.innerHTML = '<p class="loading-copy">正在加载文件…</p>';
+    var response = await fetch("data/code/" + id + ".json");
+    if (!response.ok) throw new Error("代码文件加载失败");
+    var file = await response.json();
+    var book = bookBySlug(file.bookSlug);
+    state.activeBook = book;
+    state.activeDoc = null;
+    state.activeCode = file;
+    elements.codeBreadcrumb.textContent = book.title + " / " + codeLabel(file);
+    elements.codeTitle.textContent = file.name;
+    elements.codeDownload.href = file.downloadUrl;
+    elements.codeMeta.innerHTML = '<span>' + escapeHtml(file.path) + '</span><span>' + formatBytes(file.size) +
+      '</span><span>' + escapeHtml(file.language) + '</span>' + (file.truncated ? '<strong>网页仅显示前 256 KB</strong>' : '');
+    elements.codeContent.innerHTML = file.kind === "notebook" ? renderNotebook(file.cells) :
+      '<pre class="source-preview"><code>' + escapeHtml(file.content || "") + '</code></pre>';
+    renderSidebar(book, elements.searchInput.value);
+    document.title = file.name + " · " + state.catalog.site.title;
+    window.scrollTo(0, 0);
   }
 
   function parseRoute() {
@@ -151,11 +259,11 @@
     closeSidebar();
     var current = parseRoute();
     var docMatch = current.path.match(/^\/doc\/([^/]+)$/);
+    var codeMatch = current.path.match(/^\/code\/([^/]+)$/);
     var bookMatch = current.path.match(/^\/book\/(.+)$/);
-    if (docMatch) {
-      await renderDocument(docMatch[1], current.params.get("anchor") || "");
-      return;
-    }
+    if (docMatch) { await renderDocument(docMatch[1], current.params.get("anchor") || ""); return; }
+    if (codeMatch) { await renderCode(codeMatch[1]); return; }
+    if (current.path === "/code") { renderCodeLibrary(); return; }
     if (bookMatch) {
       var book = bookBySlug(decodeURIComponent(bookMatch[1]));
       if (book && book.firstDocId) { location.replace("#/doc/" + book.firstDocId); return; }
@@ -185,23 +293,23 @@
 
   function showError(error) {
     console.error(error);
-    elements.libraryHome.hidden = true;
+    hideViews();
     elements.documentView.hidden = false;
     elements.docTitle.textContent = "页面暂时无法打开";
-    elements.article.innerHTML = '<div class="error-card"><p>' + escapeHtml(error.message) + '</p><a href="#/">返回书架</a></div>';
+    elements.article.innerHTML = '<div class="error-card"><p>' + escapeHtml(error.message) + '</p><a href="#/">返回学习中心</a></div>';
   }
 
   async function initialize() {
     cacheElements();
     bindEvents();
     var response = await fetch("data/catalog.json");
-    if (!response.ok) throw new Error("目录数据加载失败，请先运行构建命令");
+    if (!response.ok) throw new Error("课程目录加载失败，请先运行构建命令");
     state.catalog = await response.json();
-    elements.siteTitle.textContent = state.catalog.site.title.replace(/\s*·\s*电子书$/, "");
-    elements.topMeta.textContent = state.catalog.stats.books + " 本书 · " + state.catalog.stats.docs + " 篇内容";
-    if (state.catalog.books.length && state.catalog.books[0].firstDocId) {
-      elements.startReadingLink.href = "#/doc/" + state.catalog.books[0].firstDocId;
-    }
+    state.catalog.code = state.catalog.code || [];
+    elements.siteTitle.textContent = state.catalog.site.title;
+    elements.topMeta.textContent = state.catalog.stats.docs + " 个章节 · " + state.catalog.stats.code + " 个代码/数据文件";
+    var firstCourse = state.catalog.books.find(function (book) { return book.featured && book.firstDocId; });
+    if (firstCourse) elements.startReadingLink.href = "#/doc/" + firstCourse.firstDocId;
     document.body.classList.remove("is-loading");
     await route();
   }

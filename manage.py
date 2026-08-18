@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Small local entry point for building and previewing the ebook reader."""
+"""Small local entry point for building and previewing the learning site."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="管理电子书阅读器")
+    parser = argparse.ArgumentParser(description="管理 Python 与数据分析学习站")
     parser.add_argument("command", choices=("build", "check", "preview"))
     parser.add_argument("--book", action="append", dest="books")
     parser.add_argument("--port", type=int, default=8010)

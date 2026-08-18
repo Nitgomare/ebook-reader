@@ -1,0 +1,6 @@
+,employee_id,first_name,last_name,email,phone_number,job_id,salary,commission_pct,manager_id,department_id
+102,202,Pat,Fay,PFAY,603.123.6666,MK_REP,6000.0,,201.0,20.0
+103,203,Susan,Mavris,SMAVRIS,515.123.7777,HR_REP,6500.0,,101.0,40.0
+104,204,Hermann,Baer,HBAER,515.123.8888,PR_REP,10000.0,,101.0,70.0
+105,205,Shelley,Higgins,SHIGGINS,515.123.8080,AC_MGR,12000.0,,101.0,110.0
+106,206,William,Gietz,WGIETZ,515.123.8181,AC_ACCOUNT,8300.0,,205.0,110.0

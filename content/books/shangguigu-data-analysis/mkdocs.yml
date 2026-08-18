@@ -1,0 +1,8 @@
+site_name: "Python 数据分析"
+docs_dir: docs
+nav:
+  - 课程导读: index.md
+  - "数据分析概述与环境搭建": chapter-01.md
+  - "Numpy科学计算": chapter-02.md
+  - "Pandas数据分析": chapter-03.md
+  - "数据可视化": chapter-04.md

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f7f6f1" />
-    <title>科研知识库 · 电子书</title>
+    <title>Python 与数据分析学习中心</title>
     <link rel="stylesheet" href="styles.css" />
     <script>
       window.MathJax = {
@@ -28,55 +28,78 @@
       <button class="icon-button menu-button" id="openNav" type="button" aria-label="打开章节目录">
         <span></span><span></span><span></span>
       </button>
-      <a class="brand" href="#/" aria-label="返回电子书首页">
-        <span class="brand-mark">研</span>
-        <span><strong id="siteTitle">科研知识库</strong><small>电子书</small></span>
+      <a class="brand" href="#/" aria-label="返回学习中心首页">
+        <span class="brand-mark">Py</span>
+        <span><strong id="siteTitle">Python 学习中心</strong><small>LEARNING HUB</small></span>
       </a>
       <nav class="top-links" aria-label="主要入口">
-        <a href="#/">书架</a>
-        <a href="#/" id="startReadingLink">开始阅读</a>
+        <a href="#/">学习路径</a>
+        <a href="#/code">代码与数据</a>
+        <a href="#/" id="startReadingLink">继续学习</a>
       </nav>
-      <div class="top-meta" id="topMeta">正在整理书架</div>
+      <div class="top-meta" id="topMeta">正在整理课程</div>
     </header>
 
     <div class="app-shell">
-      <aside class="sidebar" id="sidebar" aria-label="电子书章节">
+      <aside class="sidebar" id="sidebar" aria-label="课程章节">
         <div class="sidebar-head">
-          <div><p class="eyebrow">CONTENTS</p><h2 id="sidebarTitle">电子书目录</h2></div>
+          <div><p class="eyebrow">CONTENTS</p><h2 id="sidebarTitle">课程目录</h2></div>
           <button class="icon-button close-button" id="closeNav" type="button" aria-label="关闭目录">×</button>
         </div>
         <label class="search-box">
           <span class="search-label">搜索章节</span>
           <input id="searchInput" type="search" placeholder="标题、章节或关键词" autocomplete="off" />
         </label>
-        <div class="catalog-status" id="catalogStatus">正在生成目录</div>
+        <div class="catalog-status" id="catalogStatus">正在生成课程目录</div>
         <nav class="nav-tree" id="navTree"></nav>
       </aside>
 
       <main class="reader" id="reader">
         <section class="library-home" id="libraryHome" hidden>
-          <header class="hero">
-            <p class="eyebrow">DIGITAL READING ROOM</p>
-            <h1 id="heroTitle">把知识放进一条连续的阅读路径。</h1>
-            <p id="heroSubtitle">从书架进入章节，在同一个界面里搜索、阅读和跳转。</p>
-            <a class="primary-action" id="heroAction" href="#/">浏览电子书 <span>→</span></a>
+          <header class="home-intro">
+            <p class="eyebrow">PYTHON LEARNING HUB</p>
+            <h1 id="heroTitle">从 Python 基础走到数据分析实践</h1>
+            <p id="heroSubtitle">教程、示例代码、Notebook 与练习数据在同一个学习路径中联动。</p>
+            <div class="home-stats" id="homeStats"></div>
           </header>
-          <section class="shelf-section" aria-labelledby="shelfTitle">
-            <div class="section-heading"><div><p class="eyebrow">LIBRARY</p><h2 id="shelfTitle">电子书架</h2></div><p id="shelfStats"></p></div>
+          <section class="shelf-section learning-section" aria-labelledby="shelfTitle">
+            <div class="section-heading"><div><p class="eyebrow">LEARNING PATHS</p><h2 id="shelfTitle">核心学习路径</h2></div><p id="shelfStats"></p></div>
+            <div class="course-grid" id="courseGrid"></div>
+          </section>
+          <section class="shelf-section resource-section" id="resourceSection" aria-labelledby="resourceTitle">
+            <div class="section-heading"><div><p class="eyebrow">REFERENCE LIBRARY</p><h2 id="resourceTitle">扩展资料</h2></div></div>
             <div class="book-grid" id="bookGrid"></div>
           </section>
         </section>
 
         <section class="document-view" id="documentView" hidden>
           <header class="reader-head">
-            <div><p class="breadcrumb" id="breadcrumb">电子书</p><h1 id="docTitle">正在加载</h1></div>
+            <div><p class="breadcrumb" id="breadcrumb">课程</p><h1 id="docTitle">正在加载</h1></div>
             <button class="outline-toggle" id="outlineToggle" type="button">本文目录</button>
           </header>
           <article class="article" id="article" aria-live="polite"></article>
+          <section class="related-code" id="relatedCode" hidden>
+            <div class="section-heading"><div><p class="eyebrow">LEARN BY DOING</p><h2>本章配套代码与数据</h2></div></div>
+            <div class="related-code-list" id="relatedCodeList"></div>
+          </section>
           <nav class="pager" aria-label="上一篇和下一篇">
             <a id="previousLink" href="#"></a>
             <a id="nextLink" href="#"></a>
           </nav>
+        </section>
+
+        <section class="code-library" id="codeLibrary" hidden>
+          <header class="page-intro"><p class="eyebrow">CODE & DATA</p><h1>代码、Notebook 与练习数据</h1><p>按课程在线查看源码和 Notebook；较大的数据集显示摘要，并保留原文件下载。</p></header>
+          <div class="code-course-list" id="codeCourseList"></div>
+        </section>
+
+        <section class="code-view" id="codeView" hidden>
+          <header class="reader-head">
+            <div><p class="breadcrumb" id="codeBreadcrumb">配套代码</p><h1 id="codeTitle">正在加载</h1></div>
+            <a class="download-button" id="codeDownload" href="#" download>下载原文件</a>
+          </header>
+          <div class="code-meta" id="codeMeta"></div>
+          <div class="code-content" id="codeContent"></div>
         </section>
       </main>
 
@@ -85,6 +108,6 @@
       </aside>
     </div>
     <div class="scrim" id="scrim"></div>
-    <noscript>这个电子书阅读器需要启用 JavaScript。</noscript>
+    <noscript>这个学习网站需要启用 JavaScript。</noscript>
   </body>
 </html>
