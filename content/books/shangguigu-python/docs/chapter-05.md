@@ -1,5 +1,31 @@
 # 第 5 章 函数入门
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P044–P059（16 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P044 · 44_函数_概念及分类](https://www.bilibili.com/video/BV1tDsgzxECr?p=44)
+- [P045 · 45_函数_基本使用](https://www.bilibili.com/video/BV1tDsgzxECr?p=45)
+- [P046 · 46_函数_参数的使用](https://www.bilibili.com/video/BV1tDsgzxECr?p=46)
+- [P047 · 47_函数_位置参数](https://www.bilibili.com/video/BV1tDsgzxECr?p=47)
+- [P048 · 48_函数_关键字参数](https://www.bilibili.com/video/BV1tDsgzxECr?p=48)
+- [P049 · 49_函数_限制传参方式](https://www.bilibili.com/video/BV1tDsgzxECr?p=49)
+- [P050 · 50_函数_参数默认值](https://www.bilibili.com/video/BV1tDsgzxECr?p=50)
+- [P051 · 51_函数_可变参数](https://www.bilibili.com/video/BV1tDsgzxECr?p=51)
+- [P052 · 52_特殊的字面量_None](https://www.bilibili.com/video/BV1tDsgzxECr?p=52)
+- [P053 · 53_函数_返回值](https://www.bilibili.com/video/BV1tDsgzxECr?p=53)
+- [P054 · 54_全局作用域_局部作用域](https://www.bilibili.com/video/BV1tDsgzxECr?p=54)
+- [P055 · 55_函数_嵌套调用](https://www.bilibili.com/video/BV1tDsgzxECr?p=55)
+- [P056 · 56_函数_递归调用](https://www.bilibili.com/video/BV1tDsgzxECr?p=56)
+- [P057 · 57_函数_递归的应用](https://www.bilibili.com/video/BV1tDsgzxECr?p=57)
+- [P058 · 58_函数_说明文档](https://www.bilibili.com/video/BV1tDsgzxECr?p=58)
+- [P059 · 59_函数_综合案例](https://www.bilibili.com/video/BV1tDsgzxECr?p=59)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="Tv4BA"></a>
 
 ## 概念及分类

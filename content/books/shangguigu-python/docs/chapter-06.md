@@ -1,5 +1,44 @@
 # 第 6 章 数据容器
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P060–P088（29 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P060 · 60_何为数据容器](https://www.bilibili.com/video/BV1tDsgzxECr?p=60)
+- [P061 · 61_列表_定义列表](https://www.bilibili.com/video/BV1tDsgzxECr?p=61)
+- [P062 · 62_列表_下标（索引值）](https://www.bilibili.com/video/BV1tDsgzxECr?p=62)
+- [P063 · 63_列表_增删改查](https://www.bilibili.com/video/BV1tDsgzxECr?p=63)
+- [P064 · 64_列表_常用方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=64)
+- [P065 · 65_列表_常用内置函数](https://www.bilibili.com/video/BV1tDsgzxECr?p=65)
+- [P066 · 66_列表_循环遍历](https://www.bilibili.com/video/BV1tDsgzxECr?p=66)
+- [P067 · 67_列表_小练习](https://www.bilibili.com/video/BV1tDsgzxECr?p=67)
+- [P068 · 68_列表_总结](https://www.bilibili.com/video/BV1tDsgzxECr?p=68)
+- [P069 · 69_元组](https://www.bilibili.com/video/BV1tDsgzxECr?p=69)
+- [P070 · 70_函数_解包列表或元组传参](https://www.bilibili.com/video/BV1tDsgzxECr?p=70)
+- [P071 · 71_元组_总结](https://www.bilibili.com/video/BV1tDsgzxECr?p=71)
+- [P072 · 72_字符串](https://www.bilibili.com/video/BV1tDsgzxECr?p=72)
+- [P073 · 73_序列的切片操作](https://www.bilibili.com/video/BV1tDsgzxECr?p=73)
+- [P074 · 74_序列的其他操作](https://www.bilibili.com/video/BV1tDsgzxECr?p=74)
+- [P075 · 75_集合_定义集合](https://www.bilibili.com/video/BV1tDsgzxECr?p=75)
+- [P076 · 76_集合_增删改查](https://www.bilibili.com/video/BV1tDsgzxECr?p=76)
+- [P077 · 77_集合_常用方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=77)
+- [P078 · 78_集合_数学运算](https://www.bilibili.com/video/BV1tDsgzxECr?p=78)
+- [P079 · 79_集合_循环遍历](https://www.bilibili.com/video/BV1tDsgzxECr?p=79)
+- [P080 · 80_集合_总结](https://www.bilibili.com/video/BV1tDsgzxECr?p=80)
+- [P081 · 81_字典_定义字典](https://www.bilibili.com/video/BV1tDsgzxECr?p=81)
+- [P082 · 82_字典_增删改查](https://www.bilibili.com/video/BV1tDsgzxECr?p=82)
+- [P083 · 83_字典_常用方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=83)
+- [P084 · 84_字典_循环遍历](https://www.bilibili.com/video/BV1tDsgzxECr?p=84)
+- [P085 · 85_字典_总结](https://www.bilibili.com/video/BV1tDsgzxECr?p=85)
+- [P086 · 86_数据容器通用操作](https://www.bilibili.com/video/BV1tDsgzxECr?p=86)
+- [P087 · 87_数据容器_小练习](https://www.bilibili.com/video/BV1tDsgzxECr?p=87)
+- [P088 · 88_数据容器_总结](https://www.bilibili.com/video/BV1tDsgzxECr?p=88)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="xmBSy"></a>
 
 ## 概述

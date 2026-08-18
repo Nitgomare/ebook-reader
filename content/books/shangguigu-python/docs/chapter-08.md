@@ -1,5 +1,28 @@
 # 第 8 章 函数进阶
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P111–P123（13 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P111 · 111_重新认识函数](https://www.bilibili.com/video/BV1tDsgzxECr?p=111)
+- [P112 · 112_多返回值_参数的打包与解包](https://www.bilibili.com/video/BV1tDsgzxECr?p=112)
+- [P113 · 113_高阶函数](https://www.bilibili.com/video/BV1tDsgzxECr?p=113)
+- [P114 · 114_条件表达式](https://www.bilibili.com/video/BV1tDsgzxECr?p=114)
+- [P115 · 115_匿名函数](https://www.bilibili.com/video/BV1tDsgzxECr?p=115)
+- [P116 · 116_几个数据处理函数](https://www.bilibili.com/video/BV1tDsgzxECr?p=116)
+- [P117 · 117_列表推导式](https://www.bilibili.com/video/BV1tDsgzxECr?p=117)
+- [P118 · 118_常用内置函数](https://www.bilibili.com/video/BV1tDsgzxECr?p=118)
+- [P119 · 119_浅拷贝_深拷贝](https://www.bilibili.com/video/BV1tDsgzxECr?p=119)
+- [P120 · 120_四种作用域](https://www.bilibili.com/video/BV1tDsgzxECr?p=120)
+- [P121 · 121_闭包](https://www.bilibili.com/video/BV1tDsgzxECr?p=121)
+- [P122 · 122_装饰器](https://www.bilibili.com/video/BV1tDsgzxECr?p=122)
+- [P123 · 123_类型注解](https://www.bilibili.com/video/BV1tDsgzxECr?p=123)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="y4CT9"></a>
 
 ## 重新认识函数

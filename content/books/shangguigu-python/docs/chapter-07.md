@@ -1,5 +1,37 @@
 # 第 7 章 面向对象
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P089–P110（22 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P089 · 89_面相对象_概述](https://www.bilibili.com/video/BV1tDsgzxECr?p=89)
+- [P090 · 90_类的定义](https://www.bilibili.com/video/BV1tDsgzxECr?p=90)
+- [P091 · 91_创建实例](https://www.bilibili.com/video/BV1tDsgzxECr?p=91)
+- [P092 · 92_自定义方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=92)
+- [P093 · 93_实例属性](https://www.bilibili.com/video/BV1tDsgzxECr?p=93)
+- [P094 · 94_类属性](https://www.bilibili.com/video/BV1tDsgzxECr?p=94)
+- [P095 · 95_实例方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=95)
+- [P096 · 96_类方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=96)
+- [P097 · 97_静态方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=97)
+- [P098 · 98_继承](https://www.bilibili.com/video/BV1tDsgzxECr?p=98)
+- [P099 · 99_方法重写](https://www.bilibili.com/video/BV1tDsgzxECr?p=99)
+- [P100 · 100_两个常用方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=100)
+- [P101 · 101_多重继承](https://www.bilibili.com/video/BV1tDsgzxECr?p=101)
+- [P102 · 102_三种访问权限](https://www.bilibili.com/video/BV1tDsgzxECr?p=102)
+- [P103 · 103_getter与setter](https://www.bilibili.com/video/BV1tDsgzxECr?p=103)
+- [P104 · 104_魔法方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=104)
+- [P105 · 105_object类](https://www.bilibili.com/video/BV1tDsgzxECr?p=105)
+- [P106 · 106_标准多态](https://www.bilibili.com/video/BV1tDsgzxECr?p=106)
+- [P107 · 107_鸭子多态](https://www.bilibili.com/video/BV1tDsgzxECr?p=107)
+- [P108 · 108_抽象类](https://www.bilibili.com/video/BV1tDsgzxECr?p=108)
+- [P109 · 109_小练习](https://www.bilibili.com/video/BV1tDsgzxECr?p=109)
+- [P110 · 110_内存分析](https://www.bilibili.com/video/BV1tDsgzxECr?p=110)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="aV3CP"></a>
 
 ## 概述

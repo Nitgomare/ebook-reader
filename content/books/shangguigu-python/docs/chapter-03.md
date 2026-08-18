@@ -1,5 +1,31 @@
 # 第 3 章 Python 核心基础
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P015–P030（16 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P015 · 15.数据类型（数据也分性格，各有各的脾气）](https://www.bilibili.com/video/BV1tDsgzxECr?p=15)
+- [P016 · 16.整型（大整数分组，整数没有上限）](https://www.bilibili.com/video/BV1tDsgzxECr?p=16)
+- [P017 · 17.浮点型（科学计数法）](https://www.bilibili.com/video/BV1tDsgzxECr?p=17)
+- [P018 · 18_字符串_四种定义方式](https://www.bilibili.com/video/BV1tDsgzxECr?p=18)
+- [P019 · 19_字符串_格式化输出](https://www.bilibili.com/video/BV1tDsgzxECr?p=19)
+- [P020 · 20_字符串_占位符精度控制](https://www.bilibili.com/video/BV1tDsgzxECr?p=20)
+- [P021 · 21_字符串_转义字符](https://www.bilibili.com/video/BV1tDsgzxECr?p=21)
+- [P022 · 22_数据类型转换](https://www.bilibili.com/video/BV1tDsgzxECr?p=22)
+- [P023 · 23_算数运算符](https://www.bilibili.com/video/BV1tDsgzxECr?p=23)
+- [P024 · 24_赋值_复合赋值运算符](https://www.bilibili.com/video/BV1tDsgzxECr?p=24)
+- [P025 · 25_比较运算符](https://www.bilibili.com/video/BV1tDsgzxECr?p=25)
+- [P026 · 26_布尔类型](https://www.bilibili.com/video/BV1tDsgzxECr?p=26)
+- [P027 · 27_逻辑运算符](https://www.bilibili.com/video/BV1tDsgzxECr?p=27)
+- [P028 · 28_进制（概念）](https://www.bilibili.com/video/BV1tDsgzxECr?p=28)
+- [P029 · 29_进制（代码）](https://www.bilibili.com/video/BV1tDsgzxECr?p=29)
+- [P030 · 30_输入语句](https://www.bilibili.com/video/BV1tDsgzxECr?p=30)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="fELlz"></a>
 
 ## 字面量
