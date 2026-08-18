@@ -6,6 +6,7 @@
 
 - Python 编程：系统教程，配套逐章 `.py` 示例。
 - Python 数据分析：配套 NumPy、Pandas、Matplotlib、Seaborn Notebook 与练习数据。
+- 智能机器人：湖南科技大学微专业《轮腿式智能安保巡逻机器人项目实战》，包含跨学科项目教程和演示资源。
 - 风电技术：《Wind Energy Handbook》《风能技术（第二版）》和《风力发电机组理论与设计》。
 
 ## 架构
