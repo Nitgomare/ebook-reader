@@ -1,2008 +1,2551 @@
 {
   "site": {
-    "title": "科研知识库 · 电子书",
-    "subtitle": "把分散的教材收进一个连续、安静的阅读空间"
+    "title": "Python 与数据分析学习中心",
+    "subtitle": "教程、示例代码、Notebook 与练习数据在同一个学习路径中联动"
   },
   "stats": {
-    "books": 8,
-    "docs": 144
+    "books": 2,
+    "docs": 20,
+    "code": 182
   },
   "books": [
     {
-      "slug": "robot-textbook",
-      "title": "轮腿式智能安保巡逻机器人项目实战",
-      "author": "湖南科技大学智能机器人设计与控制微专业教学团队",
-      "description": "覆盖轮腿机器人总体设计、机械结构、硬件、嵌入式软件、运动控制、环境感知、自主导航与综合测试。",
-      "coverSource": "0.png",
+      "slug": "shangguigu-python",
+      "title": "Python 系统学习",
+      "author": "尚硅谷",
+      "description": "从环境准备和核心语法出发，逐步学习函数、面向对象、文件、并发与协程。",
       "tags": [
-        "智能机器人",
-        "轮腿机器人",
-        "项目实战"
+        "Python",
+        "基础课程",
+        "逐章源码"
       ],
-      "sourceSiteName": "轮腿式智能安保巡逻机器人项目实战",
-      "cover": "files/robot-textbook/0.png",
-      "docCount": 18,
-      "firstDocId": "2c0b4b2e2ac4605c"
+      "type": "course",
+      "featured": true,
+      "codeSource": "code",
+      "sourceSiteName": "Python 系统学习",
+      "cover": "",
+      "docCount": 15,
+      "firstDocId": "a844d33a9fc54823",
+      "codeCount": 165
     },
     {
-      "slug": "zhou-machine-learning",
-      "title": "机器学习",
-      "author": "周志华",
-      "description": "从基本概念、经典模型到计算学习理论与强化学习。",
-      "tags": [
-        "人工智能",
-        "中文教材",
-        "机器学习"
-      ],
-      "sourceSiteName": "周志华《机器学习》· 在线图书",
-      "cover": "files/zhou-machine-learning/00-front-matter/images/cover.jpeg",
-      "docCount": 21,
-      "firstDocId": "dc419d2921af03c8"
-    },
-    {
-      "slug": "python-data-analysis",
-      "title": "Python 数据分析",
-      "author": "明日科技",
-      "description": "覆盖数据处理、可视化、机器学习与完整分析案例。",
+      "slug": "shangguigu-data-analysis",
+      "title": "Python 数据分析实战",
+      "author": "尚硅谷",
+      "description": "系统学习 NumPy、Pandas、Matplotlib 和 Seaborn，并通过 Notebook 完成真实数据分析。",
       "tags": [
         "数据分析",
-        "Python",
-        "中文教材"
+        "Notebook",
+        "案例实践"
       ],
-      "sourceSiteName": "Python 数据分析 · 教材站",
-      "cover": "files/python-data-analysis/00-front-matter/images/cover.jpg",
-      "docCount": 25,
-      "firstDocId": "0a3308c140f8f4e4"
-    },
-    {
-      "slug": "python-beginner-to-master",
-      "title": "Python从入门到精通",
-      "author": "明日科技",
-      "description": "从 Python 基础语法逐步讲解函数、面向对象、文件、数据库、GUI、网络编程、Flask 与项目实战。",
-      "coverSource": "assets/images/Image00000.jpg",
-      "tags": [
-        "Python",
-        "编程入门",
-        "项目实战"
-      ],
-      "sourceSiteName": "Python从入门到精通",
-      "cover": "files/python-beginner-to-master/assets/images/Image00000.jpg",
-      "docCount": 26,
-      "firstDocId": "4e235b15f071bc5f"
-    },
-    {
-      "slug": "deep-learning",
-      "title": "动手学深度学习",
-      "author": "李沐等",
-      "description": "以在线教材、中文视频和可复现实验学习深度学习。",
-      "tags": [
-        "人工智能",
-        "深度学习",
-        "实验"
-      ],
-      "sourceSiteName": "动手学深度学习 · 学习站",
+      "type": "course",
+      "featured": true,
+      "codeSource": "code",
+      "codeLinks": {
+        "shared-data": [
+          "chapter-03.md",
+          "chapter-04.md"
+        ]
+      },
+      "sourceSiteName": "Python 数据分析",
       "cover": "",
-      "docCount": 3,
-      "firstDocId": "fddf97053cd983af"
-    },
-    {
-      "slug": "wind-energy",
-      "title": "Wind Energy Handbook",
-      "author": "Tony Burton 等",
-      "description": "Wind resource, aerodynamics, loads, control and offshore wind.",
-      "tags": [
-        "风能",
-        "英文教材",
-        "工程"
-      ],
-      "sourceSiteName": "风能技术",
-      "cover": "",
-      "docCount": 13,
-      "firstDocId": "5bd60ae7f9e17d72"
-    },
-    {
-      "slug": "风能技术",
-      "title": "风能技术",
-      "author": "Tony Burton 等 · 武鑫译",
-      "description": "系统介绍风资源、风力机设计、控制与风电场技术。",
-      "tags": [
-        "风能",
-        "中文教材",
-        "风电场"
-      ],
-      "sourceSiteName": "风能技术（第二版）",
-      "cover": "",
-      "docCount": 23,
-      "firstDocId": "b4ade889f42702e2"
-    },
-    {
-      "slug": "wind-turbine-theory-and-design",
-      "title": "风力发电机组理论与设计",
-      "author": "姚兴佳等",
-      "description": "从能量转换到整机、关键部件、控制和强度分析。",
-      "tags": [
-        "风能",
-        "工程设计",
-        "中文教材"
-      ],
-      "sourceSiteName": "风力发电机组理论与设计",
-      "cover": "files/wind-turbine-theory-and-design/00-front-matter/images/978-7-111-40451-4-coverpage-1.jpg",
-      "docCount": 15,
-      "firstDocId": "811b8e7782c84de7"
+      "docCount": 5,
+      "firstDocId": "d2804271a6039712",
+      "codeCount": 17
     }
   ],
   "docs": [
     {
-      "id": "2c0b4b2e2ac4605c",
-      "bookSlug": "robot-textbook",
-      "relPath": "robot_textbook.md",
-      "title": "轮腿式智能安保巡逻机器人项目实战",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "肖钊<sup>a</sup>；何志鹏<sup>a</sup>；李学专<sup>b</sup>；朱荣钧<sup>c</sup>；唐咏荷<sup>d</sup>；李慧<sup>b</sup>；吴奥旗<sup>a</sup>；谢浩瑜<sup>b</sup>",
-      "order": 1,
-      "previousId": "",
-      "nextId": "06a82f8c4f3c4a40"
-    },
-    {
-      "id": "06a82f8c4f3c4a40",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_1/section_1.md",
-      "title": "第1章 绪论",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "移动机器人经历了从轮式到腿式，再到轮腿复合式的演进过程。传统轮式机器人结构简单、移动效率高、控制容易，但在台阶、碎石、路缘等非结构化地形中往往无能为力；腿式机器人具备良好的地形适应性和越障能力，却存在能耗大、速度慢、控制复杂等不足。为兼顾高速高效移动与复杂地形通过能力，轮腿复合式",
-      "order": 2,
-      "previousId": "2c0b4b2e2ac4605c",
-      "nextId": "af316719069585eb"
-    },
-    {
-      "id": "af316719069585eb",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_2/section_2.md",
-      "title": "第2章 系统总体设计",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "MCU运行1 kHz实时控制环，采用STM32F405RGT6，主频168 MHz。",
-      "order": 3,
-      "previousId": "06a82f8c4f3c4a40",
-      "nextId": "f2a5b7e528b374aa"
-    },
-    {
-      "id": "f2a5b7e528b374aa",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_3/section_3.md",
-      "title": "第3章 机械结构设计",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "轮腿复合机器人按腿部数量和轮腿耦合方式可分为多种方案。针对安保巡逻场景，主要候选方案包括四足轮腿式、双足轮腿式和轮腿分离式。各方案对比如下：",
-      "order": 4,
-      "previousId": "af316719069585eb",
-      "nextId": "038e1ecb8bec4e7d"
-    },
-    {
-      "id": "038e1ecb8bec4e7d",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_4/section_4.md",
-      "title": "第4章 硬件系统设计",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "本平台硬件系统以“上层计算平台 + 底层实时控制板”为核心，配合电源管理、电机驱动、传感器和通信接口组成。总体框架如下：",
-      "order": 5,
-      "previousId": "f2a5b7e528b374aa",
-      "nextId": "8e28b40040396839"
-    },
-    {
-      "id": "8e28b40040396839",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_5/section_5.md",
-      "title": "第5章 嵌入式软件开发",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "底层控制器选用STM32F405RGT6，主频168 MHz，基于FreeRTOS构建软件框架。为保证1 kHz控制环的严格实时性，控制算法不放在RTOS任务中，而是置于硬件定时器中断服务程序内执行。RTOS负责任务调度、通信和辅助功能。",
-      "order": 6,
-      "previousId": "038e1ecb8bec4e7d",
-      "nextId": "c4d47cb6a6f4ed45"
-    },
-    {
-      "id": "c4d47cb6a6f4ed45",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_6/section_6.md",
-      "title": "第6章 运动学与动力学建模",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "本平台为双足轮腿机器人，每条腿包含髋关节和膝关节两个旋转自由度，末端为驱动轮。为描述运动，建立以下坐标系：",
-      "order": 7,
-      "previousId": "8e28b40040396839",
-      "nextId": "3b4717c53a5d62fd"
-    },
-    {
-      "id": "3b4717c53a5d62fd",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_7/section_7.md",
-      "title": "第7章 轮腿复合运动控制",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在轮式模式下，机器人依靠两个轮毂电机独立驱动，通过差速实现直线前进和原地转向。设左右轮线速度分别为 $vL$ 和 $vR$，两轮间距为 $d$（本平台 $d = 280$ mm），则机器人质心处的前进速度 $v$ 和转向角速度 $\\omega$ 为：",
-      "order": 8,
-      "previousId": "c4d47cb6a6f4ed45",
-      "nextId": "6f025302c26e487b"
-    },
-    {
-      "id": "6f025302c26e487b",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_8/section_8.md",
-      "title": "第8章 环境感知系统",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "环境感知系统是安保巡逻机器人的“眼睛”，负责实时获取周围环境信息，为自主导航、避障和异常检测提供数据支撑。本平台感知系统由以下传感器组成：",
-      "order": 9,
-      "previousId": "3b4717c53a5d62fd",
-      "nextId": "d2d066bc5adb1364"
-    },
-    {
-      "id": "d2d066bc5adb1364",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_9/section_9.md",
-      "title": "第9章 自主导航与路径规划",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "自主导航是安保巡逻机器人实现无人化巡逻的核心能力。对于双足轮腿式平台，导航系统不仅需要解决常规移动机器人的建图、定位、规划问题，还需要结合轮腿复合运动的特点，在路径规划与执行过程中合理利用轮式模式的高效性和腿式模式的越障能力。本章将围绕这一主线展开。",
-      "order": 10,
-      "previousId": "6f025302c26e487b",
-      "nextId": "041e7a1c7693c617"
-    },
-    {
-      "id": "041e7a1c7693c617",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_10/section_10.md",
-      "title": "第10章 安保巡逻任务系统",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "安保巡逻任务系统是机器人实现自主安保服务的顶层应用，负责巡逻任务的组织、调度、异常事件处理以及与远程监控端的交互。本章在导航系统（第9章）的基础上，设计并实现完整的安保巡逻任务管理框架，使机器人能够按照预设策略自主执行巡逻任务，并在发现异常时及时报警。",
-      "order": 11,
-      "previousId": "d2d066bc5adb1364",
-      "nextId": "d0867e168446dcbb"
-    },
-    {
-      "id": "d0867e168446dcbb",
-      "bookSlug": "robot-textbook",
-      "relPath": "section_11/section_11.md",
-      "title": "第11章 综合实战与测试验证",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "整机联调是将机械、硬件、嵌入式软件、运动控制、感知、导航、任务系统等全部模块集成为一个可运行整体，并验证各模块协同工作的过程。对于轮腿式安保巡逻机器人，联调重点在于轮腿复合运动的稳定性和多系统数据流的正确性。",
-      "order": 12,
-      "previousId": "041e7a1c7693c617",
-      "nextId": "ad44325bf8e14324"
-    },
-    {
-      "id": "ad44325bf8e14324",
-      "bookSlug": "robot-textbook",
-      "relPath": "appendix/appendix_a.md",
-      "title": "附录A 主要物料清单",
-      "sections": [
-        "附录"
-      ],
-      "excerpt": "",
-      "order": 13,
-      "previousId": "d0867e168446dcbb",
-      "nextId": "06fee700685d148e"
-    },
-    {
-      "id": "06fee700685d148e",
-      "bookSlug": "robot-textbook",
-      "relPath": "appendix/appendix_b.md",
-      "title": "附录B 核心接口定义与通信协议",
-      "sections": [
-        "附录"
-      ],
-      "excerpt": "物理层：CAN 2.0B，标准帧（11位ID），速率1 Mbps，终端电阻120 Ω。",
-      "order": 14,
-      "previousId": "ad44325bf8e14324",
-      "nextId": "13a556037a3378f3"
-    },
-    {
-      "id": "13a556037a3378f3",
-      "bookSlug": "robot-textbook",
-      "relPath": "appendix/appendix_c.md",
-      "title": "附录C 代码仓库结构与关键代码索引",
-      "sections": [
-        "附录"
-      ],
-      "excerpt": "",
-      "order": 15,
-      "previousId": "06fee700685d148e",
-      "nextId": "1c3f17bf239803fb"
-    },
-    {
-      "id": "1c3f17bf239803fb",
-      "bookSlug": "robot-textbook",
-      "relPath": "appendix/appendix_d.md",
-      "title": "附录D 工具链与开发环境配置",
-      "sections": [
-        "附录"
-      ],
-      "excerpt": "",
-      "order": 16,
-      "previousId": "13a556037a3378f3",
-      "nextId": "b9e6c798f895a4e7"
-    },
-    {
-      "id": "b9e6c798f895a4e7",
-      "bookSlug": "robot-textbook",
-      "relPath": "appendix/appendix_e.md",
-      "title": "附录E 常见故障排查表",
-      "sections": [
-        "附录"
-      ],
-      "excerpt": "",
-      "order": 17,
-      "previousId": "1c3f17bf239803fb",
-      "nextId": "4f46407ebacefb36"
-    },
-    {
-      "id": "4f46407ebacefb36",
-      "bookSlug": "robot-textbook",
-      "relPath": "appendix/appendix_f.md",
-      "title": "附录F 推荐阅读与参考文献",
-      "sections": [
-        "附录"
-      ],
-      "excerpt": "[1] Craig J J. Introduction to Robotics: Mechanics and Control[M]. 4th ed. Pearson, 2017.",
-      "order": 18,
-      "previousId": "b9e6c798f895a4e7",
-      "nextId": ""
-    },
-    {
-      "id": "dc419d2921af03c8",
-      "bookSlug": "zhou-machine-learning",
+      "id": "a844d33a9fc54823",
+      "bookSlug": "shangguigu-python",
       "relPath": "index.md",
-      "title": "课程首页",
+      "title": "课程导读",
       "sections": [
         "正文"
       ],
-      "excerpt": "系统学习机器学习的基本概念、经典模型、理论基础与主要学习范式。",
+      "excerpt": "从环境准备、核心语法到面向对象、并发与协程，配合逐章示例代码完成学习。",
       "order": 1,
       "previousId": "",
-      "nextId": "64b8b4f0b203604e"
+      "nextId": "9ce085645f85dfab",
+      "codeFiles": []
     },
     {
-      "id": "64b8b4f0b203604e",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "course-resources.md",
-      "title": "课程资源",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "课件、tinyml 源码和分 P 视频按教材章节对应整理。正文与课程安排请直接从课程首页进入。",
-      "order": 2,
-      "previousId": "dc419d2921af03c8",
-      "nextId": "7a24220bb8809970"
-    },
-    {
-      "id": "7a24220bb8809970",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "tinyml-lab.md",
-      "title": "tiny_ml 算法实验室",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "tinyml 用 NumPy 实现西瓜书、Stanford CS229 和部分经典算法，让读者直接看到 fit() 背后的矩阵运算与参数更新；仓库还包含按陈天奇课件思路编写的简化版 XGBRegressor。",
-      "order": 3,
-      "previousId": "64b8b4f0b203604e",
-      "nextId": "3c7c1612390932f4"
-    },
-    {
-      "id": "3c7c1612390932f4",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "00-front-matter/index.md",
-      "title": "前置内容",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在人工智能界有一种说法，认为机器学习是人工智能领域中最能够体现智能的一个分支。从历史来看，机器学习似乎也是人工智能中发展最快的分支之一。在二十世纪八十年代的时候，符号学习可能还是机器学习的主流，而自从二十世纪九十年代以来，就一直是统计机器学习的天下了。不知道是否可以这样认为：从主",
-      "order": 4,
-      "previousId": "7a24220bb8809970",
-      "nextId": "6d33a12baa08f7cc"
-    },
-    {
-      "id": "6d33a12baa08f7cc",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/01-introduction/index.md",
-      "title": "第1章 绪论",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1235315584&amp;p=3&amp;highquality=1&amp;danmaku=0",
-      "order": 5,
-      "previousId": "3c7c1612390932f4",
-      "nextId": "9cb9cb4551057879"
-    },
-    {
-      "id": "9cb9cb4551057879",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/02-model-evaluation-and-selection/index.md",
-      "title": "第2章 模型评估与选择",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1235726895&amp;p=9&amp;highquality=1&amp;danmaku=0",
-      "order": 6,
-      "previousId": "6d33a12baa08f7cc",
-      "nextId": "ad0cb3f93073ee3d"
-    },
-    {
-      "id": "ad0cb3f93073ee3d",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/03-linear-models/index.md",
-      "title": "第3章 线性模型",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1235925424&amp;p=16&amp;highquality=1&amp;danmaku=",
-      "order": 7,
-      "previousId": "9cb9cb4551057879",
-      "nextId": "e153a3bb0ee44de3"
-    },
-    {
-      "id": "e153a3bb0ee44de3",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/04-decision-trees/index.md",
-      "title": "第4章 决策树",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1236964212&amp;p=26&amp;highquality=1&amp;danmaku=",
-      "order": 8,
-      "previousId": "ad0cb3f93073ee3d",
-      "nextId": "76c6f3bc95506b2c"
-    },
-    {
-      "id": "76c6f3bc95506b2c",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/05-neural-networks/index.md",
-      "title": "第5章 神经网络",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655696620&amp;p=37&amp;highquality=1&amp;danmaku",
-      "order": 9,
-      "previousId": "e153a3bb0ee44de3",
-      "nextId": "eab96497ad44debf"
-    },
-    {
-      "id": "eab96497ad44debf",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/06-support-vector-machines/index.md",
-      "title": "第6章 支持向量机",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655697209&amp;p=31&amp;highquality=1&amp;danmaku",
-      "order": 10,
-      "previousId": "76c6f3bc95506b2c",
-      "nextId": "b6de9a3d6eed7a06"
-    },
-    {
-      "id": "b6de9a3d6eed7a06",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/07-bayesian-classifiers/index.md",
-      "title": "第7章 贝叶斯分类器",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655895389&amp;p=42&amp;highquality=1&amp;danmaku",
-      "order": 11,
-      "previousId": "eab96497ad44debf",
-      "nextId": "9abe1b9786918e97"
-    },
-    {
-      "id": "9abe1b9786918e97",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/08-ensemble-learning/index.md",
-      "title": "第8章 集成学习",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655957698&amp;p=48&amp;highquality=1&amp;danmaku",
-      "order": 12,
-      "previousId": "b6de9a3d6eed7a06",
-      "nextId": "bfdec68905380cb1"
-    },
-    {
-      "id": "bfdec68905380cb1",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/09-clustering/index.md",
-      "title": "第9章 聚类",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655958072&amp;p=53&amp;highquality=1&amp;danmaku",
-      "order": 13,
-      "previousId": "9abe1b9786918e97",
-      "nextId": "6bd9a2ecac56b128"
-    },
-    {
-      "id": "6bd9a2ecac56b128",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/10-dimensionality-reduction-and-metric-learning/index.md",
-      "title": "第10章 降维与度量学习",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "k近邻（k-Nearest Neighbor，简称kNN）学习是一种常用的监督学习方法，其工作机制非常简单：给定测试样本，基于某种距离度量找出训练集中与其最靠近的k个训练样本，然后基于这k个“邻居”的信息来进行预测。通常，在分类任务中可使用“投票法”，即选择这k个样本中出现最多的",
-      "order": 14,
-      "previousId": "bfdec68905380cb1",
-      "nextId": "bc1fd3ed914552e4"
-    },
-    {
-      "id": "bc1fd3ed914552e4",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/11-feature-selection-and-sparse-learning/index.md",
-      "title": "第11章 特征选择与稀疏学习",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "我们能用很多属性描述一个西瓜，例如色泽、根蒂、敲声、纹理、触感等，但有经验的人往往只需看看根蒂、听听敲声就知道是否好瓜。换言之，对一个学习任务来说，给定属性集，其中有些属性可能很关键、很有用，另一些属性则可能没什么用。我们将属性称为“特征”（feature），对当前学习任务有用的",
-      "order": 15,
-      "previousId": "6bd9a2ecac56b128",
-      "nextId": "f7ae7e0eba00015d"
-    },
-    {
-      "id": "f7ae7e0eba00015d",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/12-computational-learning-theory/index.md",
-      "title": "第12章 计算学习理论",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "顾名思义，计算学习理论（computational learning theory）研究的是关于通过“计算”来进行“学习”的理论，即关于机器学习的理论基础，其目的是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。",
-      "order": 16,
-      "previousId": "bc1fd3ed914552e4",
-      "nextId": "2ac21e4c5b4e9d38"
-    },
-    {
-      "id": "2ac21e4c5b4e9d38",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/13-semi-supervised-learning/index.md",
-      "title": "第13章 半监督学习",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "我们在丰收季节来到瓜田，满地都是西瓜，瓜农抱来三四个瓜说这都是好瓜，然后再指着地里的五六个瓜说这些还不好，还需再生长若干天。基于这些信息，我们能否构建一个模型，用于判别地里的哪些瓜是已该采摘的好瓜？显然，可将瓜农告诉我们的好瓜、不好的瓜分别作为正例和反例来训练一个分类器。然而，只",
-      "order": 17,
-      "previousId": "f7ae7e0eba00015d",
-      "nextId": "8492011b9bfee92c"
-    },
-    {
-      "id": "8492011b9bfee92c",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/14-probabilistic-graphical-models/index.md",
-      "title": "第14章 概率图模型",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "基于学习器进行预测，例如根据纹理、颜色、根蒂等信息判断一个瓜是否为好瓜就是在做推断；但推断远超出预测范畴，例如在吃到一个不见根蒂的好瓜时，“由果溯因”逆推其根蒂的状态也是推断。",
-      "order": 18,
-      "previousId": "2ac21e4c5b4e9d38",
-      "nextId": "a0a82159f31b0339"
-    },
-    {
-      "id": "a0a82159f31b0339",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/15-rule-learning/index.md",
-      "title": "第15章 规则学习",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "所有预测模型在广义上都可称为一个或一组“规则”，但规则学习中的“规则”是狭义的，事实上约定俗成地省略了“逻辑”二字。",
-      "order": 19,
-      "previousId": "8492011b9bfee92c",
-      "nextId": "25aa0a5c241fce28"
-    },
-    {
-      "id": "25aa0a5c241fce28",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "chapters/16-reinforcement-learning/index.md",
-      "title": "第16章 强化学习",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "我们考虑一下如何种西瓜。种瓜有许多步骤，从一开始的选种，到定期浇水、施肥、除草、杀虫，经过一段时间才能收获西瓜。通常要等到收获后，我们才知道种出的瓜好不好。若将得到好瓜作为辛勤种瓜劳动的奖赏，则在种瓜过程中当我们执行某个操作（例如，施肥）时，并不能立即获得这个最终奖赏，甚至难以判",
-      "order": 20,
-      "previousId": "a0a82159f31b0339",
-      "nextId": "311ba24020bc9d0d"
-    },
-    {
-      "id": "311ba24020bc9d0d",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "99-back-matter/index.md",
-      "title": "附录与后记",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "记实矩阵<img src=\"images/01024.jpeg\" class=\"zaozi1\" />第<img src=\"images/00944.jpeg\" class=\"zaozi1\" />行第<img src=\"images/01025.jpeg\" class=\"zaozi",
-      "order": 21,
-      "previousId": "25aa0a5c241fce28",
-      "nextId": ""
-    },
-    {
-      "id": "0a3308c140f8f4e4",
-      "bookSlug": "python-data-analysis",
-      "relPath": "index.md",
-      "title": "课程首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "从 NumPy、Pandas 入门，逐步学习数据清洗、统计、可视化、机器学习和完整分析案例。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "d35d8f93e499f2cf"
-    },
-    {
-      "id": "d35d8f93e499f2cf",
-      "bookSlug": "python-data-analysis",
-      "relPath": "course-resources.md",
-      "title": "课程资源",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "第 3～7 章提供与教材三级大纲对应的现代 Python 教学脚本。",
-      "order": 2,
-      "previousId": "0a3308c140f8f4e4",
-      "nextId": "96794d9fbb602ba9"
-    },
-    {
-      "id": "96794d9fbb602ba9",
-      "bookSlug": "python-data-analysis",
-      "relPath": "code-lab.md",
-      "title": "交互式代码学习器",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在线切换第 3～7 章脚本，并按教材三级大纲查看代码片段；也可搜索关键写法、复制当前片段。在线内容与下载入口读取同一份 .py 文件；需要运行、修改或保存结果时，请下载后在本地 Python 环境中练习。",
-      "order": 3,
-      "previousId": "d35d8f93e499f2cf",
-      "nextId": "0e028fb7c28f0de1"
-    },
-    {
-      "id": "0e028fb7c28f0de1",
-      "bookSlug": "python-data-analysis",
-      "relPath": "00-front-matter/index.md",
-      "title": "前置内容",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "书名：Python数据分析从入门到精通（第2版）",
-      "order": 4,
-      "previousId": "96794d9fbb602ba9",
-      "nextId": "a2cebd9370b2c317"
-    },
-    {
-      "id": "a2cebd9370b2c317",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/01-chapter/index.md",
-      "title": "第1章 数据分析基础",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "数据分析是数学、统计学理论结合科学的统计分析方法（如线性回归分析、聚类分析、方差分析、时间序列分析等）对数据库中的数据、Excel数据、收集的大量数据、网页抓取的数据等进行分析，从中提取有价值的信息形成结论并进行展示的过程。本章将对数据分析的基础知识进行讲解。",
-      "order": 5,
-      "previousId": "0e028fb7c28f0de1",
-      "nextId": "07e7f77a2b4c4de4"
-    },
-    {
-      "id": "07e7f77a2b4c4de4",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/02-chapter/index.md",
-      "title": "第2章 搭建数据分析开发环境",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "工欲善其事，必先利其器。Python提供的数据处理、绘图、数据可视化、数组计算、机器学习等模块，使得数据可视化工作变得简单、高效。而要使用Python，需要先安装IDE开发环境，以及适合数据分析、数据可视化的Anaconda、Jupyter Notebook、Pycharm等开发",
-      "order": 6,
-      "previousId": "a2cebd9370b2c317",
-      "nextId": "e8f6db7585e7bd0e"
-    },
-    {
-      "id": "e8f6db7585e7bd0e",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/03-numpy/index.md",
-      "title": "第3章 NumPy模块之数组计算",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "NumPy模块在数据处理、数据清洗、数据过滤、数据转换等方面可以快速实现数据计算，Pandas的底层也是基于NumPy的。因此，这一章内容将介绍NumPy的基础知识，使读者快速了解NumPy并将其应用到实际数据分析工作当中。",
-      "order": 7,
-      "previousId": "07e7f77a2b4c4de4",
-      "nextId": "c0c84b750daac4eb"
-    },
-    {
-      "id": "c0c84b750daac4eb",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/04-pandas/index.md",
-      "title": "第4章 Pandas模块基础",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Pandas是Python的核心数据分析支持库，它提供了大量快速处理表格数据的函数和方法。本章将讲解Pandas模块的基础知识，主要内容包括安装和了解Pandas模块，Pandas模块的两大数据结构，即Series()对象和DataFrame()对象，还有索引的相关知识。",
-      "order": 8,
-      "previousId": "e8f6db7585e7bd0e",
-      "nextId": "844f3c47e72b81c1"
-    },
-    {
-      "id": "844f3c47e72b81c1",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/05-pandas/index.md",
-      "title": "第5章 Pandas模块之数据的读取",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在实现数据分析的过程中，数据读取与处理是首要任务。拿到数据后需要先读取数据才能对数据进行分析。本章将主要介绍如何读取Excel文件、CSV文件、HTML网页以及数据库中的数据。",
-      "order": 9,
-      "previousId": "c0c84b750daac4eb",
-      "nextId": "8d2488105aae38e1"
-    },
-    {
-      "id": "8d2488105aae38e1",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/06-pandas/index.md",
-      "title": "第6章 Pandas模块之数据的处理",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "数据读取后并不是所有的数据都是我们所需要的，因此还要对数据进行简单的处理，本章将主要介绍如何进行数据的抽取，数据的增、删、改、查以及如何对数据进行排序与排名操作。",
-      "order": 10,
-      "previousId": "844f3c47e72b81c1",
-      "nextId": "6b7c418e5bee7f95"
-    },
-    {
-      "id": "6b7c418e5bee7f95",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/07-pandas/index.md",
-      "title": "第7章 Pandas模块之数据的清洗",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "数据清洗是数据分析的一个重要工作，因为数据的质量直接影响数据分析以及算法模型的结果。本章主要介绍在进行数据清洗时如何处理缺失值、重复值和异常值，以及字符串操作和数据转换。",
-      "order": 11,
-      "previousId": "8d2488105aae38e1",
-      "nextId": "2c82daf4b486778a"
-    },
-    {
-      "id": "2c82daf4b486778a",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/08-chapter/index.md",
-      "title": "第8章 数据的计算与格式化",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "数据分析过程中少不了数据计算、数据的格式化。本章主要介绍数据计算与数据格式化，其中包含常见的数据计算函数（sum()、mean()、max()、min()）、高级的数据计算函数（median()、mode()、var()、std()、quantile()）以及数据的格式化等。",
-      "order": 12,
-      "previousId": "6b7c418e5bee7f95",
-      "nextId": "161d4ecb51f1b75e"
-    },
-    {
-      "id": "161d4ecb51f1b75e",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/09-chapter/index.md",
-      "title": "第9章 数据统计及透视表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在实现数据分析的过程中，数据分组统计、数据移位、数据合并以及数据透视表都是不可缺少的数据分析技术。本章将通过各种实例来演示以上每种数据分析技术的实现方法。",
-      "order": 13,
-      "previousId": "2c82daf4b486778a",
-      "nextId": "4ec00f85d8417264"
-    },
-    {
-      "id": "4ec00f85d8417264",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/10-chapter/index.md",
-      "title": "第10章 处理日期与时间",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在对时间类型数据进行分析时，需要将字符串时间转换为标准时间类型，而Pandas有着强大的日期数据处理功能。本章主要介绍日期数据的处理，日期范围、频率和移位，时间区间与频率转换，重新采样与频率转换，移动窗口函数等。",
-      "order": 14,
-      "previousId": "161d4ecb51f1b75e",
-      "nextId": "1c7faf6a818466b3"
-    },
-    {
-      "id": "1c7faf6a818466b3",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/11-scikit-learn/index.md",
-      "title": "第11章 Scikit-Learn机器学习模块",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "机器学习，顾名思义就是让机器（计算机）模拟人类学习，从而有效提高工作效率。Python提供的第三方模块Scikit-Learn融入了大量的数学模型算法，使得数据分析、机器学习变得简单高效。本章主要内容包括Scikit-Learn概述、安装，常用的线性回归模型—最小二乘法回归、岭回",
-      "order": 15,
-      "previousId": "4ec00f85d8417264",
-      "nextId": "04c3968b9dcc561d"
-    },
-    {
-      "id": "04c3968b9dcc561d",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/12-matplotlib/index.md",
-      "title": "第12章 Matplotlib模块入门",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在数据分析中，我们经常用到大量的可视化操作。一张精美的图表不仅能够展示大量的信息，更能够直观体现数据之间隐藏的关系。本章主要介绍Matpoltlib模块的入门知识。",
-      "order": 16,
-      "previousId": "1c7faf6a818466b3",
-      "nextId": "1625141f5853bc28"
-    },
-    {
-      "id": "1625141f5853bc28",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/13-matplotlib/index.md",
-      "title": "第13章 Matplotlib模块进阶",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "相信通过上一章的学习，你已经掌握了Matplotlib的基础知识，学会了绘制各种类型的图表。本章是Matplotlib的进阶，包括图表的颜色设置、日期时间处理、次坐标轴图表、多个子图表绘制等内容。",
-      "order": 17,
-      "previousId": "04c3968b9dcc561d",
-      "nextId": "84bd101e7dde6eee"
-    },
-    {
-      "id": "84bd101e7dde6eee",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/14-seaborn/index.md",
-      "title": "第14章 Seaborn图表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Seaborn模块与Matplotlib模块相似，也是Python数据可视化分析的第三方模块。由于Seaborn在Matplotlib的基础上进行了更高级的API封装，所以Seaborn可以通过一个高级界面来绘制更加有吸引力的统计图形。",
-      "order": 18,
-      "previousId": "1625141f5853bc28",
-      "nextId": "5ab5be053e7b94bd"
-    },
-    {
-      "id": "5ab5be053e7b94bd",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/15-plotly/index.md",
-      "title": "第15章 Plotly图表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Plotly是一个基于JavaScript的动态绘图模块，绘制出来的图表可以与Web应用集成。该模块不仅提供了丰富而又强大的绘图库，还支持各种类型的绘图方案，绘图的种类丰富、效果美观，方便保存和分享。",
-      "order": 19,
-      "previousId": "84bd101e7dde6eee",
-      "nextId": "b9c51f48e9898482"
-    },
-    {
-      "id": "b9c51f48e9898482",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/16-bokeh/index.md",
-      "title": "第16章 Bokeh图表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Anaconda开发环境中还集成了一个叫作Bokeh的模块，该模块同样可以根据数据集绘制对应的图表，以满足数据可视化的多种需求。本章将介绍如何使用Bokeh模块绘制数据图表。",
-      "order": 20,
-      "previousId": "5ab5be053e7b94bd",
-      "nextId": "7457cbd1ff3520f8"
-    },
-    {
-      "id": "7457cbd1ff3520f8",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/17-pyecharts/index.md",
-      "title": "第17章 Pyecharts图表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Echarts是一个由百度开发并开源的数据可视化工具，而Python是一门适用于数据处理和数据分析的语言，为了适应Python的需求，Pyecharts模块诞生了。本章以Pyecharts 2.0.3版本为载体，介绍Pyecharts的安装、链式调用、Pyecharts图表的组成",
-      "order": 21,
-      "previousId": "b9c51f48e9898482",
-      "nextId": "f6decdfc5c4f281f"
-    },
-    {
-      "id": "f6decdfc5c4f281f",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/18-chapter/index.md",
-      "title": "第18章 股票数据分析",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Python在处理和分析股票金融类数据时具有其他语言不可比拟的优势，这是因为Pandas的创始人就是一名量化金融分析师，所以Pandas中的很多函数是专门为分析金融数据而设计的。本章介绍如何通过Python获取并分析股票行情数据。",
-      "order": 22,
-      "previousId": "7457cbd1ff3520f8",
-      "nextId": "91e3a67828cba3eb"
-    },
-    {
-      "id": "91e3a67828cba3eb",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/19-chapter/index.md",
-      "title": "第19章 淘宝网订单分析",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "淘宝电商每时每刻都会产生大量的订单数据，虽然淘宝后台也提供了数据分析功能，但是很多时候无法满足用户的需求，用户不能按照自己的想法挖掘更有价值的信息进行分析。本章将专门针对淘宝电商订单数据进行挖掘和分析，包括从数据预处理到数据分析的完整过程，掌握了这些分析方法，不但可以大大提高运营",
-      "order": 23,
-      "previousId": "f6decdfc5c4f281f",
-      "nextId": "c42d376c497c1704"
-    },
-    {
-      "id": "c42d376c497c1704",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/20-chapter/index.md",
-      "title": "第20章 网站用户数据分析",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "网站App平台注册用户分析，是指获得网站或App等平台用户的注册数据，并对用户注册数据进行统计、分析，从中发现产品推广对新注册用户的影响，以及目前的营销策略中可能存在的问题，为进一步修正或重新制定营销策略提供有效的依据。",
-      "order": 24,
-      "previousId": "91e3a67828cba3eb",
-      "nextId": "82d65ec0b0b6781d"
-    },
-    {
-      "id": "82d65ec0b0b6781d",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/21-nba/index.md",
-      "title": "第21章 NBA球员薪资分析",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "互联网时代，随处可见的网页表格数据对于数据分析和数据挖掘来说是很好的资源，但如果直接复制和粘贴网页上的数据，不仅费时费力，而且容易漏掉有用的数据或复制了其他没用的数据。Pandas提供了专门获取网页数据的方法，可以轻松地解决这一问题。本案例将使用Pandas实现简单爬虫，爬取NB",
-      "order": 25,
-      "previousId": "c42d376c497c1704",
-      "nextId": ""
-    },
-    {
-      "id": "4e235b15f071bc5f",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "copyright.md",
-      "title": "版权信息",
-      "sections": [
-        "导读"
-      ],
-      "excerpt": "本书封面贴有清华大学出版社防伪标签，无标签者不得销售。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "7d6ed8ea3075766c"
-    },
-    {
-      "id": "7d6ed8ea3075766c",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "introduction.md",
-      "title": "内容简介",
-      "sections": [
-        "导读"
-      ],
-      "excerpt": "《Python从入门到精通》从初学者角度出发，通过通俗易懂的语言、丰富多彩的实例，详细介绍了使用Python进行程序开发应该掌握的各方面技术。全书共分22章，包括初识Python、Python语言基础、运算符与表达式、流程控制语句、列表与元组、字典与集合、字符串、Python中使",
-      "order": 2,
-      "previousId": "4e235b15f071bc5f",
-      "nextId": "c8d5c65acc79e06c"
-    },
-    {
-      "id": "c8d5c65acc79e06c",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "preface.md",
-      "title": "前言 Preface",
-      "sections": [
-        "导读"
-      ],
-      "excerpt": "Python人称“胶水”语言，能够把用其他语言制作的各种模块（尤其是C/C++）很轻松地联结在一起。它是1989年由荷兰人Guido van Rossum发明的一种面向对象的解释型高级编程语言。由于Python语言简洁、易读，非常适合编程入门，现在很多学校都开设了这门课程，甚至有",
-      "order": 3,
-      "previousId": "7d6ed8ea3075766c",
-      "nextId": "5d05d680b081c251"
-    },
-    {
-      "id": "5d05d680b081c251",
-      "bookSlug": "python-beginner-to-master",
+      "id": "9ce085645f85dfab",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-01.md",
-      "title": "第1章 初识Python",
+      "title": "必备基础知识",
       "sections": [
-        "第1篇 基础知识"
+        "正文"
       ],
-      "excerpt": "Python是一种跨平台的、开源的、免费的、解释型的高级编程语言。近几年发展势头迅猛，在2018年3月的TIOBE编程语言排行榜中已经晋升到第4名，而在IEEE Spectrum发布的2017年度编程语言排行榜中，Python位居第一。另外，Python的应用领域非常广泛，如We",
-      "order": 4,
-      "previousId": "c8d5c65acc79e06c",
-      "nextId": "ac30dd2c4fec5333"
+      "excerpt": "计算机硬件主要由五个部分组成，分别是：运算器、控制器、存储器、输入设备、输出设备。",
+      "order": 2,
+      "previousId": "a844d33a9fc54823",
+      "nextId": "32475f645b3e70e5",
+      "codeFiles": [
+        "4dbb805067137e2a"
+      ]
     },
     {
-      "id": "ac30dd2c4fec5333",
-      "bookSlug": "python-beginner-to-master",
+      "id": "32475f645b3e70e5",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-02.md",
-      "title": "第2章 Python语言基础",
+      "title": "初识 Python",
       "sections": [
-        "第1篇 基础知识"
+        "正文"
       ],
-      "excerpt": "熟练掌握一门编程语言，最好的方法就是充分了解、掌握基础知识，并亲自体验，多敲代码，熟能生巧。",
-      "order": 5,
-      "previousId": "5d05d680b081c251",
-      "nextId": "6b25fb98aba10f94"
+      "excerpt": "主要原因是 Python 具备如下的特点：",
+      "order": 3,
+      "previousId": "9ce085645f85dfab",
+      "nextId": "4fb5ff6fc907d54c",
+      "codeFiles": [
+        "a6c2748cd024585a"
+      ]
     },
     {
-      "id": "6b25fb98aba10f94",
-      "bookSlug": "python-beginner-to-master",
+      "id": "4fb5ff6fc907d54c",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-03.md",
-      "title": "第3章 运算符与表达式",
+      "title": "Python 核心基础",
       "sections": [
-        "第1篇 基础知识"
+        "正文"
       ],
-      "excerpt": "在进行数学运算或逻辑判断时，需要应用算术运算符、比较运算符，以及逻辑运算符等。因此，在Python中也提供了这些运算符。另外，Python还提供了一个可以根据条件确定返回值的条件表达式。这些内容都是Python开发必备的基础知识，需要读者掌握。",
-      "order": 6,
-      "previousId": "ac30dd2c4fec5333",
-      "nextId": "2259407787af38f2"
+      "excerpt": "来看这样一个场景：老师让学生把：姓名、年龄、体重写在纸上，纸上的文字，就是学生想要表达的内容，这些内容不需要计算、也不需要转换，就是字面上的含义，一看就能理解。",
+      "order": 4,
+      "previousId": "32475f645b3e70e5",
+      "nextId": "570078cfb45da8eb",
+      "codeFiles": [
+        "f1f7e22c37fa10f3",
+        "d22736892810594f",
+        "ce107664e2415e4b",
+        "20da3a41d3c2ca02",
+        "f5c89950083108a4",
+        "b29c74c1b70d505e",
+        "e84502fb0d54e092",
+        "461807a3aa25cd64",
+        "435a5d0fd8a63582",
+        "8e729afd2d270eee",
+        "8eae1b04931a7156",
+        "e54045e313108414",
+        "b05ad1fa2702df69",
+        "64312fff9981b000",
+        "0f62f78f147138ef",
+        "7e76efc404722b20",
+        "fd2fe2db47727821",
+        "c7f32cd1b35b731b",
+        "c097494de43e5204",
+        "c0bb2b5eae8ea25f",
+        "3949a5ee9dfd2c27",
+        "b0f046f5ffa31152"
+      ]
     },
     {
-      "id": "2259407787af38f2",
-      "bookSlug": "python-beginner-to-master",
+      "id": "570078cfb45da8eb",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-04.md",
-      "title": "第4章 流程控制语句",
+      "title": "流程控制语句",
       "sections": [
-        "第1篇 基础知识"
+        "正文"
       ],
-      "excerpt": "做任何事情都要遵循一定的原则。例如，到图书馆去借书，就必须要有借书证，并且借书证不能过期，这两个条件缺一不可。程序设计也是如此，需要利用流程控制实现与用户的交流，并根据用户的需求决定程序“做什么”“怎么做”。",
-      "order": 7,
-      "previousId": "6b25fb98aba10f94",
-      "nextId": "b92c39b1774e333f"
+      "excerpt": "程序并不是简单的“从上到下”执行，很多时候，我们希望程序能根据不同的情况，做出不同的选择，比如：根据情况跳过某些代码，或者重复执行某些代码，那这时就需要用到『流程控制语句』，程序的执行流程大体上可分为三类：顺序、分之、循环。",
+      "order": 5,
+      "previousId": "4fb5ff6fc907d54c",
+      "nextId": "0e1c53f893b2e2e8",
+      "codeFiles": [
+        "2610fd98736f24c2",
+        "f113fc350c39a828",
+        "0691824023b0126d",
+        "17354c6589517487",
+        "3e8fadcc89032335",
+        "500513dbc53f5973",
+        "cf533fda9a105ad0",
+        "b401237c0ee22c94",
+        "4f97d5ebfaa2b8fe",
+        "c4ba02565af1aa80",
+        "44987a364a55c053",
+        "fd95cd2105728c0a"
+      ]
     },
     {
-      "id": "b92c39b1774e333f",
-      "bookSlug": "python-beginner-to-master",
+      "id": "0e1c53f893b2e2e8",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-05.md",
-      "title": "第5章 列表与元组",
+      "title": "函数入门",
       "sections": [
-        "第1篇 基础知识"
+        "正文"
       ],
-      "excerpt": "在数学里，序列也称为数列，是指按照一定顺序排列的一列数，而在程序设计中，序列是一种常用的数据存储方式，几乎每种程序设计语言都提供了类似的数据结构，如C语言或Java中的数组等。",
-      "order": 8,
-      "previousId": "2259407787af38f2",
-      "nextId": "21d384955f00226f"
+      "excerpt": "函数（function）是：组织好的、可重复使用的、用于执行特定任务的代码块。",
+      "order": 6,
+      "previousId": "570078cfb45da8eb",
+      "nextId": "31d963e6c8fcab66",
+      "codeFiles": [
+        "8b0bf25a7424ced5",
+        "96ed3fc8ee3fec9a",
+        "59bf64c4a6dbf6e7",
+        "df43f776edadf5d6",
+        "32566df710403463",
+        "d9892ffcf23190f5",
+        "94d4f5a8d31b3ed1",
+        "12a60b662334a957",
+        "1b066d6890656597",
+        "bfd8e056032750a2",
+        "f95831292062ac13",
+        "ace0ab3e87a21d58",
+        "aac23573f055ee0f",
+        "f208c125e28745df",
+        "a2bf37e26c55605f"
+      ]
     },
     {
-      "id": "21d384955f00226f",
-      "bookSlug": "python-beginner-to-master",
+      "id": "31d963e6c8fcab66",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-06.md",
-      "title": "第6章 字典与集合",
+      "title": "数据容器",
       "sections": [
-        "第1篇 基础知识"
+        "正文"
       ],
-      "excerpt": "在第5章中已经介绍了两个常用的序列结构——列表和元组。本章将再介绍两个序列结构——字典和集合。其中，字典这种序列结构就像电话通讯录，可以将联系人姓名和电话号码关联起来，在需要时可以直接通过姓名找到对应的电话；而集合就像是收集了很多表情的表情包，里面的所有表情都是唯一的。",
-      "order": 9,
-      "previousId": "b92c39b1774e333f",
-      "nextId": "ba5e34a4823a3778"
+      "excerpt": "在编程中，我们经常需要一次保存多个数据，比如：多个学生的名字、一组商品的价格、或一串测量数据等等，如果把一条数据看作一个“物品”，那这些物品需要被放进“容器”里统一管理，在 Python 中，这种用来存放多个数据的东西，就叫做『数据容器』。",
+      "order": 7,
+      "previousId": "0e1c53f893b2e2e8",
+      "nextId": "477324e79fb56fb3",
+      "codeFiles": [
+        "f0cf3c09245e1be8",
+        "5bbf7936ab380738",
+        "4560c30f4a704f42",
+        "74d3257dbae87c27",
+        "5a293985bdf88456",
+        "66c49656558671f3",
+        "d1e39ad791ded0c8",
+        "b9b0d972aaeec2a5",
+        "6370995d621254c8",
+        "7297f7d7400be9b2",
+        "d1738e21d6d7a138",
+        "decfeab738b97725",
+        "217f398fa17c0e86",
+        "60059c33dec2d876",
+        "09d1e184e5180292",
+        "9e1a3c69646bd482",
+        "311f4f2c6626641f",
+        "72275ff1c9e4fff9",
+        "196a17ba027d74fd",
+        "722cff94a21c59e0",
+        "cb7ef5ccffa3cecf",
+        "3f4b511c511f8ad3",
+        "b9c4734b9ba048be",
+        "ae6792b77347b4f3"
+      ]
     },
     {
-      "id": "ba5e34a4823a3778",
-      "bookSlug": "python-beginner-to-master",
+      "id": "477324e79fb56fb3",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-07.md",
-      "title": "第7章 字符串",
+      "title": "面向对象",
       "sections": [
-        "第1篇 基础知识"
+        "正文"
       ],
-      "excerpt": "字符串几乎是所有编程语言在项目开发过程中涉及最多的一块内容。大部分项目的运行结果都需要以文本的形式展示给客户，比如财务系统的总账报表、电子游戏的比赛结果、火车站的列车时刻表等。这些都是经过程序精密的计算、判断和梳理，将我们想要的内容用文本形式直观地展示出来。曾经有一位“久经沙场”",
-      "order": 10,
-      "previousId": "21d384955f00226f",
-      "nextId": "0c301574a063492c"
+      "excerpt": "『对象』是一个拥有『属性』和『行为』的个体，它是构成现实世界和程序世界的基本单位。编程领域有这么一句话，叫“万物皆对象！”之所以这么说，是因为任何一个具体存在的人或物，都可以看成是一个对象，例如：一个人、 一辆车、一部手机，都是对象，他们的『属性』和『行为』分别是：",
+      "order": 8,
+      "previousId": "31d963e6c8fcab66",
+      "nextId": "a49f0260c4a51ed7",
+      "codeFiles": [
+        "4ae7eb855a82b791",
+        "2c0a425de444c487",
+        "7429ad43d46d257f",
+        "c68d1baecb62b51f",
+        "6ef1fa759cc5cf98",
+        "fad9ce64c820c89a",
+        "6a265a56c1661573",
+        "553cf7e6d409e97f",
+        "d221b8eedd3918fe",
+        "4ce2bb21b8bf0568",
+        "08afc64b29535f7a",
+        "e3b5c48448952750",
+        "68303af777963b81",
+        "afb2734b521308ed",
+        "5f5cdaae4006ddeb",
+        "bc0b3bd7e93e8390",
+        "15541daed7433f44",
+        "b0015fa4655280c8",
+        "18db2793b1eb61a5",
+        "484ceac29169efb1",
+        "de7595dee1500039"
+      ]
     },
     {
-      "id": "0c301574a063492c",
-      "bookSlug": "python-beginner-to-master",
+      "id": "a49f0260c4a51ed7",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-08.md",
-      "title": "第8章 Python中使用正则表达式",
+      "title": "函数进阶",
       "sections": [
-        "第2篇 进阶提高"
+        "正文"
       ],
-      "excerpt": "正则表达式（Regular Expression，常简写为regex或者RE），又称规则表达式，它不是某个编程语言所特有的，是计算机科学的一个概念，通常被用来检索和替换符合某些规则的文本。目前，正则表达式已经在各种计算机语言（如Java、C#和Python等）中得到了广泛的应用和",
-      "order": 11,
-      "previousId": "ba5e34a4823a3778",
-      "nextId": "fcaf66c6bdac7179"
+      "excerpt": "上述代码中welcome函数的内存示意图：",
+      "order": 9,
+      "previousId": "477324e79fb56fb3",
+      "nextId": "5036790471830435",
+      "codeFiles": [
+        "044f2babe4475187",
+        "af33fcc57b7b176a",
+        "013846d29663f8e5",
+        "05e9157d252a195c",
+        "4f6f052b51d9f35d",
+        "af3cadb90b2086d3",
+        "5e0b45a37c122b80",
+        "adf0f56304560e08",
+        "99133ce36ebbe3a5",
+        "cc88951d218aa2f8",
+        "1a21682e40e84dff",
+        "a6b4039d592a881e",
+        "d1d13584e7115728",
+        "69034f87bfa57ea6",
+        "8ccd45158837a13b",
+        "c471aa978111d500",
+        "de2a134b37dcbd53",
+        "bf4192972147ba76"
+      ]
     },
     {
-      "id": "fcaf66c6bdac7179",
-      "bookSlug": "python-beginner-to-master",
+      "id": "5036790471830435",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-09.md",
-      "title": "第9章 函数",
+      "title": "错误与异常",
       "sections": [
-        "第2篇 进阶提高"
+        "正文"
       ],
-      "excerpt": "在前面的章节中，所有编写的代码都是从上到下依次执行的，如果某段代码需要多次使用，那么需要将该段代码复制多次。这种做法势必会影响开发效率。在实际项目开发中是不可取的。那么如果想让某一段代码多次使用，应该怎么做呢？在Python中，提供了函数。我们可以把实现某一功能的代码定义为一个函",
-      "order": 12,
-      "previousId": "0c301574a063492c",
-      "nextId": "cdfc410c02f24984"
+      "excerpt": "错误：代码本身有语法错误，解释器无法执行代码。———— 无法通过异常处理机制解决。",
+      "order": 10,
+      "previousId": "a49f0260c4a51ed7",
+      "nextId": "8ba110c3e775bea9",
+      "codeFiles": [
+        "8504d1d6188203fb",
+        "ad0a84b34c692fb8",
+        "3610a7618e4ad09e",
+        "bbe9c2cd5043adb4",
+        "363e909938472792"
+      ]
     },
     {
-      "id": "cdfc410c02f24984",
-      "bookSlug": "python-beginner-to-master",
+      "id": "8ba110c3e775bea9",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-10.md",
-      "title": "第10章 面向对象程序设计",
+      "title": "模块与包",
       "sections": [
-        "第2篇 进阶提高"
+        "正文"
       ],
-      "excerpt": "面向对象程序设计是在面向过程程序设计的基础上发展而来的，它比面向过程编程具有更强的灵活性和扩展性。面向对象程序设计也是一个程序员发展的“分水岭”，很多的初学者和略有成就的开发者，就是因为无法理解“面向对象”而放弃。这里要提醒一下初学者：要想在编程这条路上走得比别人远，就一定要掌握",
-      "order": 13,
-      "previousId": "fcaf66c6bdac7179",
-      "nextId": "30ad2a45561283d1"
+      "excerpt": "Python 中的模块分为三类，分别是：标准库模块、自定义模块、第三方模块。",
+      "order": 11,
+      "previousId": "5036790471830435",
+      "nextId": "ff72fa6783f9da7e",
+      "codeFiles": [
+        "64e6b0d16dd6d445",
+        "56d058719009d9f4",
+        "f763496b32cfb7ce",
+        "d4496575b97ac68b",
+        "aa20395c825825a3",
+        "87b72d7f9794df82",
+        "cf302767cc87ad20",
+        "6b83bdd2e774221f",
+        "9a539e1babdda7fc",
+        "185de31a90bbc012"
+      ]
     },
     {
-      "id": "30ad2a45561283d1",
-      "bookSlug": "python-beginner-to-master",
+      "id": "ff72fa6783f9da7e",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-11.md",
-      "title": "第11章 模块",
+      "title": "迭代器 vs 生成器",
       "sections": [
-        "第2篇 进阶提高"
+        "正文"
       ],
-      "excerpt": "Python提供了强大的模块支持，主要体现为不仅在Python标准库中包含了大量的模块（称为标准模块），而且还有很多第三方模块，另外开发者自己也可以开发自定义模块。这些强大的模块支持将极大地提高我们的开发效率。",
-      "order": 14,
-      "previousId": "cdfc410c02f24984",
-      "nextId": "47139a530ac4d539"
+      "excerpt": "先区分两个概念：可迭代对象（iterable）、迭代器（iterator）",
+      "order": 12,
+      "previousId": "8ba110c3e775bea9",
+      "nextId": "b9769d19bc4bb197",
+      "codeFiles": [
+        "348d53e5d7b33831",
+        "4efeddf0c44dfbdc",
+        "d2ba23f1aed0cc77",
+        "02f552d1cf290b19"
+      ]
     },
     {
-      "id": "47139a530ac4d539",
-      "bookSlug": "python-beginner-to-master",
+      "id": "b9769d19bc4bb197",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-12.md",
-      "title": "第12章 异常处理及程序调试",
+      "title": "文件操作",
       "sections": [
-        "第2篇 进阶提高"
+        "正文"
       ],
-      "excerpt": "学习过C语言或者Java语言的用户都知道：在C语言或者Java语言中，编译器可以捕获很多语法错误。但是，在Python语言中，只有在程序运行后才会执行语法检查。所以，只有在运行或测试程序时，才会真正知道该程序能不能正常运行。因此，掌握一定的异常处理语句和程序调试方法是十分必要的。",
-      "order": 15,
-      "previousId": "30ad2a45561283d1",
-      "nextId": "a815debe7303b868"
+      "excerpt": "从文件系统的『根目录』开始，完整描述文件或目录所在的位置。",
+      "order": 13,
+      "previousId": "ff72fa6783f9da7e",
+      "nextId": "3a962756d44d2b97",
+      "codeFiles": [
+        "9cf1519eaa8a7d9a",
+        "c32ad17542eaae16",
+        "778a04d340597f41",
+        "81a6b48907a5ec94",
+        "bad4381ea11dffcd",
+        "ee55ff1273d3001f",
+        "34c600233266eae0",
+        "ffd912256c7f30c3",
+        "ef02ae6ff27e4b30",
+        "90349582844abc64",
+        "6a52506dd401ac60",
+        "7a5769e743a08bb4"
+      ]
     },
     {
-      "id": "a815debe7303b868",
-      "bookSlug": "python-beginner-to-master",
+      "id": "3a962756d44d2b97",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-13.md",
-      "title": "第13章 文件及目录操作",
+      "title": "进程与线程",
       "sections": [
-        "第2篇 进阶提高"
+        "正文"
       ],
-      "excerpt": "在变量、序列和对象中存储的数据是暂时的，程序结束后就会丢失。为了能够长时间地保存程序中的数据，需要将程序中的数据保存到磁盘文件中。Python提供了内置的文件对象和对文件，以及目录进行操作的内置模块。通过这些技术可以很方便地将数据保存到文件（如文本文件等）中，以达到长时间保存数据",
-      "order": 16,
-      "previousId": "47139a530ac4d539",
-      "nextId": "aa5d857431a3d7ae"
+      "excerpt": "🔸概念：在一段时间内，当 CPU 面对多个任务时，会将每个任务交替着执行一段时间。",
+      "order": 14,
+      "previousId": "b9769d19bc4bb197",
+      "nextId": "f26986213044e077",
+      "codeFiles": [
+        "06e0d072697b34cd",
+        "6506ffd2ee053b8c",
+        "7a7a9dff6492a3c4",
+        "b2f523573ee7ac41",
+        "59815159919c6b05",
+        "4584c93d0cd36efd",
+        "d507c719ac6558f5",
+        "4d90bfdb8e6eab1a",
+        "fd0dce7ef28f120b",
+        "0a1e72c3debaa39d",
+        "3ca217ca8a56dbaa",
+        "db0a6bd1b20c6a8c",
+        "208cff3d015c5211",
+        "418db5a0fc4131ea",
+        "2b6e3ed1309c3666",
+        "d7d3c5c9ac97146f",
+        "470dadceaef990fd",
+        "d9f21556aef00b80",
+        "623999a5fa1761ca",
+        "4962d0d7c6a10e1a"
+      ]
     },
     {
-      "id": "aa5d857431a3d7ae",
-      "bookSlug": "python-beginner-to-master",
+      "id": "f26986213044e077",
+      "bookSlug": "shangguigu-python",
       "relPath": "chapter-14.md",
-      "title": "第14章 操作数据库",
-      "sections": [
-        "第2篇 进阶提高"
-      ],
-      "excerpt": "程序运行的时候，数据都是在内存中的。当程序终止的时候，通常都需要将数据保存到磁盘上，前面我们学习了将数据写入文件，保存在磁盘上。为了便于程序保存和读取数据，而且，能直接通过条件快速查询到指定的数据，就出现了数据库（Database）这种专门用于集中存储和查询的软件。本章将介绍数据",
-      "order": 17,
-      "previousId": "a815debe7303b868",
-      "nextId": "7010c97a39748414"
-    },
-    {
-      "id": "7010c97a39748414",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-15.md",
-      "title": "第15章 GUI界面编程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "到目前为止，我们的所有输入和输出都只是IDLE中的简单文本。不过现代计算机和程序会使用大量的图形。如果我们的程序中也有一些图形就太好了。在这一章中，我们会开始建立一些简单的GUI。这说明从现在开始，我们的程序看上去就会像你平常熟悉的那些程序一样，将会有窗口、按钮之类的图形。",
-      "order": 18,
-      "previousId": "aa5d857431a3d7ae",
-      "nextId": "03d324ff4d229b2e"
-    },
-    {
-      "id": "03d324ff4d229b2e",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-16.md",
-      "title": "第16章 Pygame游戏编程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "Python非常受欢迎的一个原因是它的应用领域非常广泛，其中就包括游戏开发。而使用Python进行游戏开发的首选模块就是Pygame。本章我们就来学习一下如何使用Pygame开发游戏。与其他章节不同的是，本章的侧重点不是讲解理论知识，而是在编写游戏的过程中学习Pygame。我们会",
-      "order": 19,
-      "previousId": "7010c97a39748414",
-      "nextId": "5ad3b756f5b6d4c1"
-    },
-    {
-      "id": "5ad3b756f5b6d4c1",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-17.md",
-      "title": "第17章 网络爬虫开发",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "随着大数据时代的来临，网络信息量也变得更多更大，网络爬虫在互联网中的地位将越来越重要。本章将介绍通过Python语言实现网络爬虫的常用技术，以及常见的网络爬虫框架，最后将通过一个实战项目详细地介绍爬虫爬取数据的整个过程。",
-      "order": 20,
-      "previousId": "03d324ff4d229b2e",
-      "nextId": "7a012a19160d1e1d"
-    },
-    {
-      "id": "7a012a19160d1e1d",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-18.md",
-      "title": "第18章 使用进程和线程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "为了实现在同一时间运行多个任务，Python引入了多线程的概念。在Python中可以通过方便、快捷的方式启动多线程模式。多线程常被应用在符合并发机制的程序中，如网络程序等。为了再进一步将工作任务细分，在一个进程内可以使用多个线程。本章将结合实例由浅入深地向读者介绍在Python中",
-      "order": 21,
-      "previousId": "5ad3b756f5b6d4c1",
-      "nextId": "6139c238c4ce19b5"
-    },
-    {
-      "id": "6139c238c4ce19b5",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-19.md",
-      "title": "第19章 网络编程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "计算机网络就是把各个计算机连接到一起，让网络中的计算机可以互相通信。网络编程就是如何在程序中实现两台计算机的通信。本章将讲解网络的基础知识，包括比较常见的TCP协议和UDP协议，以及如何使用TCP编程和UDP编程。",
-      "order": 22,
-      "previousId": "7a012a19160d1e1d",
-      "nextId": "8f6323721d3c5ec4"
-    },
-    {
-      "id": "8f6323721d3c5ec4",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-20.md",
-      "title": "第20章 Web编程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "由于Python简洁易懂，可维护性好，所以越来越多的互联网公司使用Python进行Web开发，如豆瓣、知乎等网站。本章将介绍Web基础知识，包括HTTP协议、Web服务器以及前端基础知识。此外，将重点介绍WSGI接口，最后介绍常用的Web开发框架。",
-      "order": 23,
-      "previousId": "6139c238c4ce19b5",
-      "nextId": "666d3cc2b38024c3"
-    },
-    {
-      "id": "666d3cc2b38024c3",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-21.md",
-      "title": "第21章 Flask框架",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "第20章我们介绍了如何使用WSGI进行Web开发，并且介绍了4种Python常用Web框架，本章我们将详细介绍如何使用Flask框架。通过对比WSGI，读者将会发现使用Web框架开发Web应用程序的简单和高效。",
-      "order": 24,
-      "previousId": "8f6323721d3c5ec4",
-      "nextId": "7a98ad758bcd97a0"
-    },
-    {
-      "id": "7a98ad758bcd97a0",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-22.md",
-      "title": "第22章 e起去旅行网站",
-      "sections": [
-        "第4篇 项目实战"
-      ],
-      "excerpt": "第21章介绍了Flask框架的基本使用方法，本章我们就应用Flask框架实现一个介绍旅游景区及旅游攻略的网站——e起去旅行网站。e起去旅行网站是一个包括前台和后台的完整网站。前台主要包括用户登录、注册以及景区内容的展现，而后台主要包括景区管理、游记管理、用户管理等内容的增删改查。",
-      "order": 25,
-      "previousId": "666d3cc2b38024c3",
-      "nextId": "5982b580137248c2"
-    },
-    {
-      "id": "5982b580137248c2",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "appendix.md",
-      "title": "附录CD",
-      "sections": [
-        "附录"
-      ],
-      "excerpt": "",
-      "order": 26,
-      "previousId": "7a98ad758bcd97a0",
-      "nextId": ""
-    },
-    {
-      "id": "fddf97053cd983af",
-      "bookSlug": "deep-learning",
-      "relPath": "index.md",
-      "title": "课程首页",
+      "title": "协程",
       "sections": [
         "正文"
       ],
-      "excerpt": "以《动手学深度学习》第二版为教材，用中文课程视频辅助理解，并以可复现实验检验学习结果。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "447436964dc1a742"
-    },
-    {
-      "id": "447436964dc1a742",
-      "bookSlug": "deep-learning",
-      "relPath": "course-resources.md",
-      "title": "课程资源",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "",
-      "order": 2,
-      "previousId": "fddf97053cd983af",
-      "nextId": "4ab69924aecec56e"
-    },
-    {
-      "id": "4ab69924aecec56e",
-      "bookSlug": "deep-learning",
-      "relPath": "research-workflow.md",
-      "title": "科研复现工作流",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "反复查看测试集来调参会让测试集变成验证集；只报告最好的一次随机结果也会夸大性能。先写评估协议，再运行实验。",
-      "order": 3,
-      "previousId": "447436964dc1a742",
-      "nextId": ""
-    },
-    {
-      "id": "5bd60ae7f9e17d72",
-      "bookSlug": "wind-energy",
-      "relPath": "index.md",
-      "title": "课程首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "A systematic reference covering wind resource, turbine aerodynamics, loads, components, control, power systems and offshore wind.",
-      "order": 1,
-      "previousId": "",
-      "nextId": "a08658a81ec757f4"
-    },
-    {
-      "id": "a08658a81ec757f4",
-      "bookSlug": "wind-energy",
-      "relPath": "00-front-matter/index.md",
-      "title": "前置内容",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Wind Energy Handbook",
-      "order": 2,
-      "previousId": "5bd60ae7f9e17d72",
-      "nextId": "4f0d6463d818ca87"
-    },
-    {
-      "id": "4f0d6463d818ca87",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/01-introduction/index.md",
-      "title": "第1章 Introduction",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Windmills have been used for at least 3000 years, mainly for grinding grain or pumping water; while in sailing ships the wind has been an es",
-      "order": 3,
-      "previousId": "a08658a81ec757f4",
-      "nextId": "b6504a0aec0eea5b"
-    },
-    {
-      "id": "b6504a0aec0eea5b",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/02-the-wind-resource/index.md",
-      "title": "第2章 The wind resource",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "The energy available in the wind varies as the cube of the wind speed, so an understanding of the characteristics of the wind resource is cr",
-      "order": 4,
-      "previousId": "4f0d6463d818ca87",
-      "nextId": "fd4f6f1c88a0862a"
-    },
-    {
-      "id": "fd4f6f1c88a0862a",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/03-aerodynamics-of-horizontal-axis-wind-turbines/index.md",
-      "title": "第3章 Aerodynamics",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "A wind turbine is a device for extracting kinetic energy from the wind. By removing some of its kinetic energy the wind must slow down but o",
-      "order": 5,
-      "previousId": "b6504a0aec0eea5b",
-      "nextId": "a27cd9932333fd1c"
-    },
-    {
-      "id": "a27cd9932333fd1c",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/04-further-aerodynamic-topics-for-wind-turbines/index.md",
-      "title": "第4章 Further aerodynamic topics",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Chapter 3 deals with the aerodynamic behaviour of wind turbines in steady wind conditions and with the rotor aligned with the wind direction",
-      "order": 6,
-      "previousId": "fd4f6f1c88a0862a",
-      "nextId": "19647e9a11be2999"
-    },
-    {
-      "id": "19647e9a11be2999",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/05-design-loads-for-horizontal-axis-wind-turbines/index.md",
-      "title": "第5章 Design loads",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "The preparation of national and international standards containing rules for the design of wind turbines began in the 1980s. The first publi",
-      "order": 7,
-      "previousId": "a27cd9932333fd1c",
-      "nextId": "fa5c7d9bf9f51c5b"
-    },
-    {
-      "id": "fa5c7d9bf9f51c5b",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/06-conceptual-design-of-horizontal-axis-wind-turbines/index.md",
-      "title": "第6章 Conceptual design",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Within the general category of horizontal axis wind turbines for grid applications there exists a great variety of possible machine configur",
-      "order": 8,
-      "previousId": "19647e9a11be2999",
-      "nextId": "eda549fb8849d9e9"
-    },
-    {
-      "id": "eda549fb8849d9e9",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/07-component-design/index.md",
-      "title": "第7章 Component design",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "A successful blade design must satisfy a wide range of objectives, some of which are in conflict. These objectives can be summarised as foll",
-      "order": 9,
-      "previousId": "fa5c7d9bf9f51c5b",
-      "nextId": "50ec0043725cb1d4"
-    },
-    {
-      "id": "50ec0043725cb1d4",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/08-the-controller/index.md",
-      "title": "第8章 The controller",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "In the most general sense, the wind turbine control system consists of a number of sensors, a number of actuators and a system consisting of",
-      "order": 10,
-      "previousId": "eda549fb8849d9e9",
-      "nextId": "644408e6baded7f2"
-    },
-    {
-      "id": "644408e6baded7f2",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/09-wind-turbine-installations-and-wind-farms/index.md",
-      "title": "第9章 Installations and wind farms",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "For any wind turbine installation, there are certain additional activities, (e.g. construction of foundations and access roads, electrical c",
-      "order": 11,
-      "previousId": "50ec0043725cb1d4",
-      "nextId": "fb5c6150dbe78e17"
-    },
-    {
-      "id": "fb5c6150dbe78e17",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/10-wind-energy-and-the-electric-power-system/index.md",
-      "title": "第10章 Electric power system",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "As the wind is a diffuse source of energy, wind farms and individual wind turbines are often distributed over wide geographical areas. Hence",
-      "order": 12,
-      "previousId": "644408e6baded7f2",
-      "nextId": "65afcf77167c2bbf"
-    },
-    {
-      "id": "65afcf77167c2bbf",
-      "bookSlug": "wind-energy",
-      "relPath": "chapters/11-offshore-wind-turbines-and-wind-farms/index.md",
-      "title": "第11章 Offshore wind",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Offshore wind energy is developing rapidly (Figure 11.1) with a total installed capacity in 2010 of approximately 3000 MW, some 1.5% of worl",
-      "order": 13,
-      "previousId": "fb5c6150dbe78e17",
-      "nextId": ""
-    },
-    {
-      "id": "b4ade889f42702e2",
-      "bookSlug": "风能技术",
-      "relPath": "index.md",
-      "title": "课程首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "系统介绍风资源、水平轴风力机空气动力学、载荷、部件、控制、电力系统与海上风电。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "2f14a3b7bc723721"
-    },
-    {
-      "id": "2f14a3b7bc723721",
-      "bookSlug": "风能技术",
-      "relPath": "00-front-matter/index.md",
-      "title": "前置内容",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Tony Burton Nick Jenkins",
-      "order": 2,
-      "previousId": "b4ade889f42702e2",
-      "nextId": "5da5c3fc35befea9"
-    },
-    {
-      "id": "5da5c3fc35befea9",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/01-chapter/index.md",
-      "title": "作 者 简 介",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Tony Burton: 在早期的职业生涯中, Tony Burton 主要从事桥梁设计和施工。他于 1982 年加入了风能集团，为英国能源部协调海上风能评估项目第二阶段的实施。这是包括英国航空航天公司、GEC 和 CEGB 等多方合作的项目，其主要任务是对大型海上风电场的总体方",
-      "order": 3,
-      "previousId": "2f14a3b7bc723721",
-      "nextId": "a76e1b87b8230972"
-    },
-    {
-      "id": "a76e1b87b8230972",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/02-chapter/index.md",
-      "title": "内 容 简 介",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "能源与环境问题已成为可持续发展面临的主要问题, 日益引起国际社会的广泛关注。风能作为一种重要的可再生能源, 具有清洁、无污染、安全、 储量丰富的特点, 受到世界各国的普遍重视。本书全面详细地讲解了水平轴风力机的空气动力学、设计载荷、概念设计、零部件设计、风力机安装和风电场规划等内",
-      "order": 4,
-      "previousId": "5da5c3fc35befea9",
-      "nextId": "234683cd44ed157b"
-    },
-    {
-      "id": "234683cd44ed157b",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/03-cip/index.md",
-      "title": "图书在版编目 (CIP) 数据",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "风能技术:第 2 版/(美)Tony Burton, Nick Jenkins, David Sharpe, Ervin Bossanyi 著；武鑫译. 一北京:科学出版社，2014. 1",
-      "order": 5,
-      "previousId": "a76e1b87b8230972",
-      "nextId": "dc99f98f3764ea68"
-    },
-    {
-      "id": "dc99f98f3764ea68",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/04-chapter/index.md",
-      "title": "第二版致谢",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "《风能技术》第二版主要得益于为第一版提供持续帮助和支持的单位和个人。 同时也感谢许多没有参与第一版但为第二版提供了建议和专业知识的人，尤其是那些为第二版最新的海上风力发电章节提出建设性意见的人。作者要特别感谢 Rose King, 她基于自己的博士论文对海上电力系统进行了讨论, ",
-      "order": 6,
-      "previousId": "234683cd44ed157b",
-      "nextId": "bb23ea6832f4fd4c"
-    },
-    {
-      "id": "bb23ea6832f4fd4c",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/05-chapter/index.md",
-      "title": "第一版致谢",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在本书的准备阶段，许多人以不同的方式给予作者大量的帮助。特别需要感谢: David Infield 为本书的第 4 章提供了大量的素材, David Quarton 审阅了本书的第 5 章; Mark Hancock, Martin Ansell, Colin Anderson ",
-      "order": 7,
-      "previousId": "dc99f98f3764ea68",
-      "nextId": "08eddefddc49930a"
-    },
-    {
-      "id": "08eddefddc49930a",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/06-chapter/index.md",
-      "title": "译者序",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "继《风能技术》第一版(中文版)出版 6 周年之际，《风能技术》第二版与读者见面了。",
-      "order": 8,
-      "previousId": "bb23ea6832f4fd4c",
-      "nextId": "11dcae63c9bc878d"
-    },
-    {
-      "id": "11dcae63c9bc878d",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/07-chapter/index.md",
-      "title": "第二版序",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "《风能技术》第二版，旨在反映自第一版出版发行近十年来发生在技术方面的主要创新和设计规则的衍变。在此期间, 风能发展的主要新方向是迅速扩张的海上风力发电。因此，本书有机会增加有关海上风力发电机组及海上风电场的新章节。",
-      "order": 9,
-      "previousId": "08eddefddc49930a",
-      "nextId": "d66c14a1ca981a19"
-    },
-    {
-      "id": "d66c14a1ca981a19",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/08-chapter/index.md",
-      "title": "目 录",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "2.6.5 长度尺度及其他参数 22",
-      "order": 10,
-      "previousId": "11dcae63c9bc878d",
-      "nextId": "822749e9425d0c37"
-    },
-    {
-      "id": "822749e9425d0c37",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/09-1/index.md",
-      "title": "第 1 章 概 论",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "人类利用风能的历史较为悠久。最早可以追溯到 3000 年前风车的使用。那时候风车的主要用途是磨碎粮食和提水。当然，最早在海上航行的船只依靠的最基本动力源是风能。自中世纪起, 水平轴风车产业是农村经济构成的主要部分。 但是，随着廉价的化石燃料能源的出现以及农村电气化的实现，风车渐渐",
-      "order": 11,
-      "previousId": "d66c14a1ca981a19",
-      "nextId": "c783449d867b7cb4"
-    },
-    {
-      "id": "c783449d867b7cb4",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/10-2/index.md",
-      "title": "第 2 章 风资源",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "可利用的风能与风速的立方成正比, 这一点对于理解风能特性及风能开发利用的诸多方面至关重要。通常, 风能开发利用包括选择合适的地理位置、对风电场工程项目的经济可行性的评估、风力机的设计以及对电网和终端用户的影响。",
-      "order": 12,
-      "previousId": "822749e9425d0c37",
-      "nextId": "2972e7a63b78855a"
-    },
-    {
-      "id": "2972e7a63b78855a",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/11-3/index.md",
-      "title": "第 3 章 水平轴风力机的 空气动力学",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "风力机是一种从风中吸取动能的装置。通过动能的转移，风速会下降，但是只有那些通过风轮圆盘的空气才会受到影响。假设将受影响的空气从那些没有经过风轮圆盘、没有从减速的空气中分离出来，那么就可以画出一个包含受到影响的空气团的边界面，该边界面分别向上游和下游延伸，从而形成一个横截面为圆形的",
-      "order": 13,
-      "previousId": "c783449d867b7cb4",
-      "nextId": "31e8ada49d7aece4"
-    },
-    {
-      "id": "31e8ada49d7aece4",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/12-4/index.md",
-      "title": "第 4 章 深层次的风力机空气 动力学主题",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "第 3 章处理了风力机稳定状态下并且正对风向时的空气动力学特性，但是在实际情况中, 风的状况一般是不稳定的, 并且风力机总是可能会有几度的偏航误差。",
-      "order": 14,
-      "previousId": "2972e7a63b78855a",
-      "nextId": "5cb384207725396f"
-    },
-    {
-      "id": "5cb384207725396f",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/13-5/index.md",
-      "title": "第 5 章 水平轴风力机 设计载荷",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "国家和国际标准的内容包括始于 20 世纪 80 年代的风力发电机组设计准则。 第一个出版的是 Germanischer Lloyd 在 1986 年草拟的一套认证准则。这些最初的准则随着知识体系的发展而被逐渐完善, 并促成 Germanischer Lloyd 的《风能转换系统的",
+      "excerpt": "概念：协程（Coroutine），是一种线程内部的任务调度机制，它通过事件循环，在用户态中实现任务的挂起与恢复执行，从而在遇到 IO 操作时，不让 CPU 等待，而是继续执行其它需要 CPU 的任务。",
       "order": 15,
-      "previousId": "31e8ada49d7aece4",
-      "nextId": "0761e9c08906d3e1"
+      "previousId": "3a962756d44d2b97",
+      "nextId": "",
+      "codeFiles": []
     },
     {
-      "id": "0761e9c08906d3e1",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/14-6/index.md",
-      "title": "第 6 章 水平轴风力机的 概念设计",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "一般用于并网发电的水平轴风力机，在机械结构、功率控制策略和制动系统等方面具有多种选择方案。本章着眼于不同的设计选择，并考虑在每种情况下传统选择的利与弊。考虑某个方面所作出的决定会对另一个方面有所影响, 这种影响有时候是不可避免的, 将在后文讲解该内容。",
-      "order": 16,
-      "previousId": "5cb384207725396f",
-      "nextId": "a5f5b637c8a8fc7c"
-    },
-    {
-      "id": "a5f5b637c8a8fc7c",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/15-7/index.md",
-      "title": "第 7 章 零部件设计",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "一个成功的叶片设计必须满足多项技术指标, 其中某些指标之间会相互制约, 具体指标可归纳如下:",
-      "order": 17,
-      "previousId": "0761e9c08906d3e1",
-      "nextId": "119f61f7fa3db4c8"
-    },
-    {
-      "id": "119f61f7fa3db4c8",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/16-8/index.md",
-      "title": "第 8 章 控制器",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "整机运行状态控制, 即风力发电机组由一种运行状态到另一种运行状态的转换过渡过程控制。风力发电机组的运行状态一般包括以下几种:",
-      "order": 18,
-      "previousId": "a5f5b637c8a8fc7c",
-      "nextId": "0046de9582f91c05"
-    },
-    {
-      "id": "0046de9582f91c05",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/17-9/index.md",
-      "title": "第 9 章 风力机安装和风电场",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "对于任何风力机的安装，一些辅助工作都是必不可少的(如地基和出入风电场道路的建设、电网架设、场址建设以及项目开发和管理)。对于平坦的陆上场址，如丹麦和德国北部的典型场址, 总投资成本大约是前期工作成本的 1.3 倍 (EUREC 协会，1996)。在英国，场址通常选在比较偏远的丘陵",
-      "order": 19,
-      "previousId": "119f61f7fa3db4c8",
-      "nextId": "98b45e56d159b4c4"
-    },
-    {
-      "id": "98b45e56d159b4c4",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/18-10/index.md",
-      "title": "第 10 章 风能和电力系统",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "由于风能是一种分散式能源, 风电场和单台风力机通常分布于广阔的地理空间, 因而公共电力系统最开始构建从传统的发电机 (火电和水电) 给个别用户负荷供电，后电网通常扩展来吸收电能。小型的风电场和个别的风电机组连接至配电系统被称为分布式发电 (Jenkins 等, 2010)。大型风",
-      "order": 20,
-      "previousId": "0046de9582f91c05",
-      "nextId": "e870790b4ce0eea5"
-    },
-    {
-      "id": "e870790b4ce0eea5",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/19-11/index.md",
-      "title": "第 11 章 海上风力发电机组 和风电场",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "海上风力发电正在迅速发展(图 11.1)，在 2010 年，总装机容量约为 3000MW， 约占全世界风电场总容量的 1.5%。许多北欧国家开发大规模的陆上风电场变得很困难，所以将注意力转移到海上风力发电领域，风电场主要在北海和波罗的海沿岸。为了满足其温室气体减排的指标, 英国提",
-      "order": 21,
-      "previousId": "98b45e56d159b4c4",
-      "nextId": "e808772724184cbe"
-    },
-    {
-      "id": "e808772724184cbe",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/20-chapter/index.md",
-      "title": "参考文献",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "1. DNV, Vindeby, 5MW. [Online] [Cited: 0805, 2010.] http://www.dnv.com/industry/energy/ segments/windwavetidal/offshorereferences/vindeby.as",
-      "order": 22,
-      "previousId": "e870790b4ce0eea5",
-      "nextId": "8568f64bd0b3f3e5"
-    },
-    {
-      "id": "8568f64bd0b3f3e5",
-      "bookSlug": "风能技术",
-      "relPath": "chapters/21-chapter/index.md",
-      "title": "符号表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "${a}^{\\prime }\\;$ 切向诱导因子",
-      "order": 23,
-      "previousId": "e808772724184cbe",
-      "nextId": ""
-    },
-    {
-      "id": "811b8e7782c84de7",
-      "bookSlug": "wind-turbine-theory-and-design",
+      "id": "d2804271a6039712",
+      "bookSlug": "shangguigu-data-analysis",
       "relPath": "index.md",
-      "title": "课程首页",
+      "title": "课程导读",
       "sections": [
         "正文"
       ],
-      "excerpt": "从能量转换和设计要求出发，系统学习整机方案、关键部件、控制、监测与强度分析。",
+      "excerpt": "围绕 NumPy、Pandas、Matplotlib 与 Seaborn，结合 Notebook 和真实数据完成分析实践。",
       "order": 1,
       "previousId": "",
-      "nextId": "5c3fe2c4206008a7"
+      "nextId": "50204d742907b7f6",
+      "codeFiles": []
     },
     {
-      "id": "5c3fe2c4206008a7",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "00-front-matter/index.md",
-      "title": "前置内容",
+      "id": "50204d742907b7f6",
+      "bookSlug": "shangguigu-data-analysis",
+      "relPath": "chapter-01.md",
+      "title": "数据分析概述与环境搭建",
       "sections": [
         "正文"
       ],
-      "excerpt": "姚兴佳教授、博士生导师，沈阳工业大学风能技术研究所所长，中国可再生能源学会风能专业委员会副主任，国家科技支撑计划“大功率风电机组研制与示范”项目总体专家组组长，海上风力发电技术与检测国家重点实验室学术委员会主任，辽宁省风力发电技术重点实验室主任。获得国务院政府特殊津贴、“全国优秀",
+      "excerpt": "数据从哪里来？公司数据库 | 公开数据集（如政府数据） | 手动爬取",
       "order": 2,
-      "previousId": "811b8e7782c84de7",
-      "nextId": "2f71b0d12a49352d"
+      "previousId": "d2804271a6039712",
+      "nextId": "2d1349bbcbd281d8",
+      "codeFiles": []
     },
     {
-      "id": "2f71b0d12a49352d",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/01-chapter/index.md",
-      "title": "第1章 绪论",
+      "id": "2d1349bbcbd281d8",
+      "bookSlug": "shangguigu-data-analysis",
+      "relPath": "chapter-02.md",
+      "title": "Numpy科学计算",
       "sections": [
         "正文"
       ],
-      "excerpt": "本章重点介绍了本书涉及的风力发电（风电）机组理论与设计的基本内容，包括风力发电机组的设计依据、设计内容、设计原则和设计步骤。同时还简要介绍了几种风力发电机组的设计软件。",
+      "excerpt": "numpy是Python中科学计算的基础包。它是一个Python库，提供多维数组对象、各种派生对象（例如掩码数组和矩阵）以及用于对数组进行快速操作的各种方法，包括数学、逻辑、形状操作、排序、选择、I/O",
       "order": 3,
-      "previousId": "5c3fe2c4206008a7",
-      "nextId": "7e4f7bb8c9c1e3a7"
+      "previousId": "50204d742907b7f6",
+      "nextId": "87998434aad55da5",
+      "codeFiles": [
+        "2e13022a9c828d0b"
+      ]
     },
     {
-      "id": "7e4f7bb8c9c1e3a7",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/02-chapter/index.md",
-      "title": "第2章 能量转换和传输理论",
+      "id": "87998434aad55da5",
+      "bookSlug": "shangguigu-data-analysis",
+      "relPath": "chapter-03.md",
+      "title": "Pandas数据分析",
       "sections": [
         "正文"
       ],
-      "excerpt": "风力发电机组能量转换和传输理论是风力发电机组设计计算的基础，本章仅介绍其核心部分。包括风能捕获理论、能量传递理论和机电能量转换理论。",
+      "excerpt": "Python 数据分析工具链中最核心的库，充当数据读取、清洗、分析、统计、输出的高效工具。",
       "order": 4,
-      "previousId": "2f71b0d12a49352d",
-      "nextId": "13727d2a1d766ba7"
+      "previousId": "2d1349bbcbd281d8",
+      "nextId": "9d712438f21a831c",
+      "codeFiles": [
+        "12d66456459b48d3",
+        "6c1ffe660171cb77",
+        "760170eac73f6f5c",
+        "508e0ec7569cf227",
+        "5cbcc5ccfacd9ac8",
+        "1e6a038a95c6cfd4",
+        "93bf65cc61a17471",
+        "38324c579729e745",
+        "5895e498d1a05929",
+        "bc7957dedc412452",
+        "2247d70ce863bc66",
+        "61804be918ede594",
+        "d574d7dd2aae44b2"
+      ]
     },
     {
-      "id": "13727d2a1d766ba7",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/03-chapter/index.md",
-      "title": "第3章 风力发电机组设计要求",
+      "id": "9d712438f21a831c",
+      "bookSlug": "shangguigu-data-analysis",
+      "relPath": "chapter-04.md",
+      "title": "数据可视化",
       "sections": [
         "正文"
       ],
-      "excerpt": "为了保证所设计的风力发电机组安全可靠，国内外的相关标准都规定了风力发电机组设计的技术要求。这些技术要求是设计中必须遵守的内容，设计人员应该掌握和应用。本章根据IEC 61400-1-2005和IEC 61400-3-2009介绍了风力发电机组的外部条件和结构设计的方法。",
+      "excerpt": "Matplotlib是一个Python绘图库，广泛用于创建各种类型的静态、动态和交互式图表。它是数据科学、机器学习、工程和科学计算领域中常用的绘图工具之一。",
       "order": 5,
-      "previousId": "7e4f7bb8c9c1e3a7",
-      "nextId": "cb32a88a2e34adc0"
+      "previousId": "87998434aad55da5",
+      "nextId": "",
+      "codeFiles": [
+        "aab09632493e7a4b",
+        "699e2e2adb7101e2",
+        "a72d82e453f4f082",
+        "508e0ec7569cf227",
+        "5cbcc5ccfacd9ac8",
+        "1e6a038a95c6cfd4",
+        "93bf65cc61a17471",
+        "38324c579729e745",
+        "5895e498d1a05929",
+        "bc7957dedc412452",
+        "2247d70ce863bc66",
+        "61804be918ede594",
+        "d574d7dd2aae44b2"
+      ]
+    }
+  ],
+  "code": [
+    {
+      "id": "4dbb805067137e2a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-01/说明.txt",
+      "name": "说明.txt",
+      "kind": "text",
+      "language": "text",
+      "size": 49,
+      "downloadUrl": "files/code/shangguigu-python/chapter-01/%E8%AF%B4%E6%98%8E.txt",
+      "truncated": false
     },
     {
-      "id": "cb32a88a2e34adc0",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/04-chapter/index.md",
-      "title": "第4章 载荷",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "本章介绍了风力发电机组的载荷及其分析计算方法。包括载荷及其坐标系、坐标系的转换、载荷分类、载荷源、疲劳载荷分析、极限载荷分析和载荷叠加等。同时介绍了如何使用载荷计算软件。",
-      "order": 6,
-      "previousId": "13727d2a1d766ba7",
-      "nextId": "6e361bc0312f7f78"
+      "id": "a6c2748cd024585a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-02/说明.txt",
+      "name": "说明.txt",
+      "kind": "text",
+      "language": "text",
+      "size": 49,
+      "downloadUrl": "files/code/shangguigu-python/chapter-02/%E8%AF%B4%E6%98%8E.txt",
+      "truncated": false
     },
     {
-      "id": "6e361bc0312f7f78",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/05-chapter/index.md",
-      "title": "第5章 总体设计",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "风力发电机组的总体设计是相对于局部设计的一个概念，总体设计是设计内容的一部分。主要包括总体参数设计、总体功能设计、总体布局设计、模型试验和总体成本模型等。",
-      "order": 7,
-      "previousId": "cb32a88a2e34adc0",
-      "nextId": "fa2d12df61dbc4c1"
+      "id": "f1f7e22c37fa10f3",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/01_字面量.py",
+      "name": "01_字面量.py",
+      "kind": "source",
+      "language": "python",
+      "size": 85,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/01_%E5%AD%97%E9%9D%A2%E9%87%8F.py",
+      "truncated": false
     },
     {
-      "id": "fa2d12df61dbc4c1",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/06-chapter/index.md",
-      "title": "第6章 风轮",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "风轮是风力机的核心部件，由叶片和轮毂组成。本章介绍风轮的设计问题。包括风轮设计概述、翼型介绍、叶片气动设计、叶片结构设计和轮毂的设计等。",
-      "order": 8,
-      "previousId": "6e361bc0312f7f78",
-      "nextId": "270803e6c5dc4093"
+      "id": "d22736892810594f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/02_变量.py",
+      "name": "02_变量.py",
+      "kind": "source",
+      "language": "python",
+      "size": 230,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/02_%E5%8F%98%E9%87%8F.py",
+      "truncated": false
     },
     {
-      "id": "270803e6c5dc4093",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/07-chapter/index.md",
-      "title": "第7章 风力发电机",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "发电机是风力发电机组的重要部件，它把风力机主轴输出的机械能转换成电能并输送给电网（或储存在蓄电池中）。与其他类型电机一样，风力发电机的工作原理基于电磁感应定律和电磁力定律。电磁感应定律指出，导体在磁场中切割磁力线运动时将感生电动势；电磁力定律指出，处于磁场中的载流导体将产生电磁力",
-      "order": 9,
-      "previousId": "fa2d12df61dbc4c1",
-      "nextId": "70454f21f4efd814"
+      "id": "ce107664e2415e4b",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/03_标识符命名规则.py",
+      "name": "03_标识符命名规则.py",
+      "kind": "source",
+      "language": "python",
+      "size": 157,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/03_%E6%A0%87%E8%AF%86%E7%AC%A6%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.py",
+      "truncated": false
     },
     {
-      "id": "70454f21f4efd814",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/08-chapter/index.md",
-      "title": "第8章 主传动链",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "本章讨论风力发电机组中传递机械能所需的传动链主要部件设计。包括主轴、主轴承、主齿轮箱、联轴器和机舱。",
-      "order": 10,
-      "previousId": "270803e6c5dc4093",
-      "nextId": "a5d76fc3318db048"
+      "id": "20da3a41d3c2ca02",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/04_常量.py",
+      "name": "04_常量.py",
+      "kind": "source",
+      "language": "python",
+      "size": 154,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/04_%E5%B8%B8%E9%87%8F.py",
+      "truncated": false
     },
     {
-      "id": "a5d76fc3318db048",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/09-chapter/index.md",
-      "title": "第9章 塔架与基础",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "塔架与基础是风力发电机组的主要承载结构，要承受机舱重量、风轮作用力以及风作用在塔筒上的弯矩、剪力、转矩等作用，还要承受风轮引起的振动载荷。塔架的重量占风力发电机组总重的50％左右，其造价占风力发电机组造价的15％～50％。目前，国家已经发布了有关标准，如《GB/T 19072—2",
-      "order": 11,
-      "previousId": "70454f21f4efd814",
-      "nextId": "ce860997cd85bc1b"
+      "id": "f5c89950083108a4",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/05_注释.py",
+      "name": "05_注释.py",
+      "kind": "source",
+      "language": "python",
+      "size": 528,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/05_%E6%B3%A8%E9%87%8A.py",
+      "truncated": false
     },
     {
-      "id": "ce860997cd85bc1b",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/10-chapter/index.md",
-      "title": "第10章 控制系统",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "本章重点介绍风力发电机组控制系统的设计，包括制动机构、变桨距系统、偏航系统、主控系统和安全保障系统等。",
-      "order": 12,
-      "previousId": "a5d76fc3318db048",
-      "nextId": "8e6e2afae4517048"
+      "id": "b29c74c1b70d505e",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/06_字符编码.py",
+      "name": "06_字符编码.py",
+      "kind": "source",
+      "language": "python",
+      "size": 167,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/06_%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81.py",
+      "truncated": false
     },
     {
-      "id": "8e6e2afae4517048",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/11-chapter/index.md",
-      "title": "第11章 状态监测及故障诊断",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "本章介绍了风力发电机组的常见故障及原因、状态监测及故障诊断的方法，叙述了以双馈式风力发电机组为监测对象的在线监测及故障诊断系统的结构组成、功能模块及应用。",
-      "order": 13,
-      "previousId": "ce860997cd85bc1b",
-      "nextId": "9e7e6384ca72b320"
+      "id": "e84502fb0d54e092",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/07_数据类型.py",
+      "name": "07_数据类型.py",
+      "kind": "source",
+      "language": "python",
+      "size": 219,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/07_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.py",
+      "truncated": false
     },
     {
-      "id": "9e7e6384ca72b320",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "chapters/12-chapter/index.md",
-      "title": "第12章 强度分析",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "本章主要介绍以数值计算为主的风力发电机组强度分析方法。包括静强度分析、模态分析、疲劳强度分析和屈曲稳定性分析等。",
-      "order": 14,
-      "previousId": "8e6e2afae4517048",
-      "nextId": "3792b6514ebcfb8b"
+      "id": "461807a3aa25cd64",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/08_整型.py",
+      "name": "08_整型.py",
+      "kind": "source",
+      "language": "python",
+      "size": 461,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/08_%E6%95%B4%E5%9E%8B.py",
+      "truncated": false
     },
     {
-      "id": "3792b6514ebcfb8b",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "99-back-matter/index.md",
-      "title": "参考文献与附加信息",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "\\[1\\] 姚兴佳，宋俊，等.风力发电机组原理与应用\\[M\\].2版.北京：机械工业出版社，2011.",
-      "order": 15,
-      "previousId": "9e7e6384ca72b320",
-      "nextId": ""
+      "id": "435a5d0fd8a63582",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/09_浮点型.py",
+      "name": "09_浮点型.py",
+      "kind": "source",
+      "language": "python",
+      "size": 464,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/09_%E6%B5%AE%E7%82%B9%E5%9E%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "8e729afd2d270eee",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/10_字符串_四种定义方式.py",
+      "name": "10_字符串_四种定义方式.py",
+      "kind": "source",
+      "language": "python",
+      "size": 591,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/10_%E5%AD%97%E7%AC%A6%E4%B8%B2_%E5%9B%9B%E7%A7%8D%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F.py",
+      "truncated": false
+    },
+    {
+      "id": "8eae1b04931a7156",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/11_字符串_格式化输出.py",
+      "name": "11_字符串_格式化输出.py",
+      "kind": "source",
+      "language": "python",
+      "size": 641,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/11_%E5%AD%97%E7%AC%A6%E4%B8%B2_%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA.py",
+      "truncated": false
+    },
+    {
+      "id": "e54045e313108414",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/12_字符串_占位符精度控制.py",
+      "name": "12_字符串_占位符精度控制.py",
+      "kind": "source",
+      "language": "python",
+      "size": 179,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/12_%E5%AD%97%E7%AC%A6%E4%B8%B2_%E5%8D%A0%E4%BD%8D%E7%AC%A6%E7%B2%BE%E5%BA%A6%E6%8E%A7%E5%88%B6.py",
+      "truncated": false
+    },
+    {
+      "id": "b05ad1fa2702df69",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/13_字符串_转义字符.py",
+      "name": "13_字符串_转义字符.py",
+      "kind": "source",
+      "language": "python",
+      "size": 797,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/13_%E5%AD%97%E7%AC%A6%E4%B8%B2_%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6.py",
+      "truncated": false
+    },
+    {
+      "id": "64312fff9981b000",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/14_数据类型转换.py",
+      "name": "14_数据类型转换.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1082,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/14_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.py",
+      "truncated": false
+    },
+    {
+      "id": "0f62f78f147138ef",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/15_算数运算符.py",
+      "name": "15_算数运算符.py",
+      "kind": "source",
+      "language": "python",
+      "size": 157,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/15_%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6.py",
+      "truncated": false
+    },
+    {
+      "id": "7e76efc404722b20",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/16_赋值运算符.py",
+      "name": "16_赋值运算符.py",
+      "kind": "source",
+      "language": "python",
+      "size": 90,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/16_%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6.py",
+      "truncated": false
+    },
+    {
+      "id": "fd2fe2db47727821",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/17_赋值_复合赋值运算符.py",
+      "name": "17_赋值_复合赋值运算符.py",
+      "kind": "source",
+      "language": "python",
+      "size": 917,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/17_%E8%B5%8B%E5%80%BC_%E5%A4%8D%E5%90%88%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6.py",
+      "truncated": false
+    },
+    {
+      "id": "c7f32cd1b35b731b",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/18_比较运算符.py",
+      "name": "18_比较运算符.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1124,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/18_%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6.py",
+      "truncated": false
+    },
+    {
+      "id": "c097494de43e5204",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/19_布尔类型.py",
+      "name": "19_布尔类型.py",
+      "kind": "source",
+      "language": "python",
+      "size": 897,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/19_%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "c0bb2b5eae8ea25f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/20_逻辑运算符.py",
+      "name": "20_逻辑运算符.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1909,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/20_%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6.py",
+      "truncated": false
+    },
+    {
+      "id": "3949a5ee9dfd2c27",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/21_进制.py",
+      "name": "21_进制.py",
+      "kind": "source",
+      "language": "python",
+      "size": 995,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/21_%E8%BF%9B%E5%88%B6.py",
+      "truncated": false
+    },
+    {
+      "id": "b0f046f5ffa31152",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-03/22_输入语句.py",
+      "name": "22_输入语句.py",
+      "kind": "source",
+      "language": "python",
+      "size": 378,
+      "downloadUrl": "files/code/shangguigu-python/chapter-03/22_%E8%BE%93%E5%85%A5%E8%AF%AD%E5%8F%A5.py",
+      "truncated": false
+    },
+    {
+      "id": "2610fd98736f24c2",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/01_单分支.py",
+      "name": "01_单分支.py",
+      "kind": "source",
+      "language": "python",
+      "size": 194,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/01_%E5%8D%95%E5%88%86%E6%94%AF.py",
+      "truncated": false
+    },
+    {
+      "id": "f113fc350c39a828",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/02_双分支.py",
+      "name": "02_双分支.py",
+      "kind": "source",
+      "language": "python",
+      "size": 294,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/02_%E5%8F%8C%E5%88%86%E6%94%AF.py",
+      "truncated": false
+    },
+    {
+      "id": "0691824023b0126d",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/03_多分支.py",
+      "name": "03_多分支.py",
+      "kind": "source",
+      "language": "python",
+      "size": 312,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/03_%E5%A4%9A%E5%88%86%E6%94%AF.py",
+      "truncated": false
+    },
+    {
+      "id": "17354c6589517487",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/04_嵌套分之.py",
+      "name": "04_嵌套分之.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1172,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/04_%E5%B5%8C%E5%A5%97%E5%88%86%E4%B9%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "3e8fadcc89032335",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/05_while_循环.py",
+      "name": "05_while_循环.py",
+      "kind": "source",
+      "language": "python",
+      "size": 179,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/05_while_%E5%BE%AA%E7%8E%AF.py",
+      "truncated": false
+    },
+    {
+      "id": "500513dbc53f5973",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/06_while_循环案例.py",
+      "name": "06_while_循环案例.py",
+      "kind": "source",
+      "language": "python",
+      "size": 409,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/06_while_%E5%BE%AA%E7%8E%AF%E6%A1%88%E4%BE%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "cf533fda9a105ad0",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/07_for_循环.py",
+      "name": "07_for_循环.py",
+      "kind": "source",
+      "language": "python",
+      "size": 584,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/07_for_%E5%BE%AA%E7%8E%AF.py",
+      "truncated": false
+    },
+    {
+      "id": "b401237c0ee22c94",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/08_for_循环案例.py",
+      "name": "08_for_循环案例.py",
+      "kind": "source",
+      "language": "python",
+      "size": 375,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/08_for_%E5%BE%AA%E7%8E%AF%E6%A1%88%E4%BE%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "4f97d5ebfaa2b8fe",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/09_嵌套循环.py",
+      "name": "09_嵌套循环.py",
+      "kind": "source",
+      "language": "python",
+      "size": 724,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/09_%E5%B5%8C%E5%A5%97%E5%BE%AA%E7%8E%AF.py",
+      "truncated": false
+    },
+    {
+      "id": "c4ba02565af1aa80",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/10_九九乘法表.py",
+      "name": "10_九九乘法表.py",
+      "kind": "source",
+      "language": "python",
+      "size": 238,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/10_%E4%B9%9D%E4%B9%9D%E4%B9%98%E6%B3%95%E8%A1%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "44987a364a55c053",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/11_continue与break.py",
+      "name": "11_continue与break.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1733,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/11_continue%E4%B8%8Ebreak.py",
+      "truncated": false
+    },
+    {
+      "id": "fd95cd2105728c0a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-04/12_综合案例.py",
+      "name": "12_综合案例.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2274,
+      "downloadUrl": "files/code/shangguigu-python/chapter-04/12_%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "8b0bf25a7424ced5",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/01_函数_基本使用.py",
+      "name": "01_函数_基本使用.py",
+      "kind": "source",
+      "language": "python",
+      "size": 226,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/01_%E5%87%BD%E6%95%B0_%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "96ed3fc8ee3fec9a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/02_函数_参数的使用.py",
+      "name": "02_函数_参数的使用.py",
+      "kind": "source",
+      "language": "python",
+      "size": 361,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/02_%E5%87%BD%E6%95%B0_%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "59bf64c4a6dbf6e7",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/03_函数_位置参数.py",
+      "name": "03_函数_位置参数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 368,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/03_%E5%87%BD%E6%95%B0_%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "df43f776edadf5d6",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/04_函数_关键字参数.py",
+      "name": "04_函数_关键字参数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 633,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/04_%E5%87%BD%E6%95%B0_%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "32566df710403463",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/05_函数_限制传参方式.py",
+      "name": "05_函数_限制传参方式.py",
+      "kind": "source",
+      "language": "python",
+      "size": 410,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/05_%E5%87%BD%E6%95%B0_%E9%99%90%E5%88%B6%E4%BC%A0%E5%8F%82%E6%96%B9%E5%BC%8F.py",
+      "truncated": false
+    },
+    {
+      "id": "d9892ffcf23190f5",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/06_函数_参数默认值.py",
+      "name": "06_函数_参数默认值.py",
+      "kind": "source",
+      "language": "python",
+      "size": 443,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/06_%E5%87%BD%E6%95%B0_%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC.py",
+      "truncated": false
+    },
+    {
+      "id": "94d4f5a8d31b3ed1",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/07_函数_可变参数.py",
+      "name": "07_函数_可变参数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 857,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/07_%E5%87%BD%E6%95%B0_%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "12a60b662334a957",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/08_None.py",
+      "name": "08_None.py",
+      "kind": "source",
+      "language": "python",
+      "size": 345,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/08_None.py",
+      "truncated": false
+    },
+    {
+      "id": "1b066d6890656597",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/09_函数_返回值.py",
+      "name": "09_函数_返回值.py",
+      "kind": "source",
+      "language": "python",
+      "size": 297,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/09_%E5%87%BD%E6%95%B0_%E8%BF%94%E5%9B%9E%E5%80%BC.py",
+      "truncated": false
+    },
+    {
+      "id": "bfd8e056032750a2",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/10_全局作用域_局部作用域.py",
+      "name": "10_全局作用域_局部作用域.py",
+      "kind": "source",
+      "language": "python",
+      "size": 956,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/10_%E5%85%A8%E5%B1%80%E4%BD%9C%E7%94%A8%E5%9F%9F_%E5%B1%80%E9%83%A8%E4%BD%9C%E7%94%A8%E5%9F%9F.py",
+      "truncated": false
+    },
+    {
+      "id": "f95831292062ac13",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/11_函数_嵌套调用.py",
+      "name": "11_函数_嵌套调用.py",
+      "kind": "source",
+      "language": "python",
+      "size": 665,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/11_%E5%87%BD%E6%95%B0_%E5%B5%8C%E5%A5%97%E8%B0%83%E7%94%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "ace0ab3e87a21d58",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/12_函数_递归调用.py",
+      "name": "12_函数_递归调用.py",
+      "kind": "source",
+      "language": "python",
+      "size": 343,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/12_%E5%87%BD%E6%95%B0_%E9%80%92%E5%BD%92%E8%B0%83%E7%94%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "aac23573f055ee0f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/13_函数_递归的应用.py",
+      "name": "13_函数_递归的应用.py",
+      "kind": "source",
+      "language": "python",
+      "size": 203,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/13_%E5%87%BD%E6%95%B0_%E9%80%92%E5%BD%92%E7%9A%84%E5%BA%94%E7%94%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "f208c125e28745df",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/14_函数_说明文档.py",
+      "name": "14_函数_说明文档.py",
+      "kind": "source",
+      "language": "python",
+      "size": 204,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/14_%E5%87%BD%E6%95%B0_%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3.py",
+      "truncated": false
+    },
+    {
+      "id": "a2bf37e26c55605f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-05/15_综合案例.py",
+      "name": "15_综合案例.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1682,
+      "downloadUrl": "files/code/shangguigu-python/chapter-05/15_%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "f0cf3c09245e1be8",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/01_列表_定义列表.py",
+      "name": "01_列表_定义列表.py",
+      "kind": "source",
+      "language": "python",
+      "size": 469,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/01_%E5%88%97%E8%A1%A8_%E5%AE%9A%E4%B9%89%E5%88%97%E8%A1%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "5bbf7936ab380738",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/02_列表_下标(索引值).py",
+      "name": "02_列表_下标(索引值).py",
+      "kind": "source",
+      "language": "python",
+      "size": 447,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/02_%E5%88%97%E8%A1%A8_%E4%B8%8B%E6%A0%87%28%E7%B4%A2%E5%BC%95%E5%80%BC%29.py",
+      "truncated": false
+    },
+    {
+      "id": "4560c30f4a704f42",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/03_列表_增删改查.py",
+      "name": "03_列表_增删改查.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1321,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/03_%E5%88%97%E8%A1%A8_%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.py",
+      "truncated": false
+    },
+    {
+      "id": "74d3257dbae87c27",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/04_列表_常用方法.py",
+      "name": "04_列表_常用方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1427,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/04_%E5%88%97%E8%A1%A8_%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "5a293985bdf88456",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/05_列表_常用内置函数.py",
+      "name": "05_列表_常用内置函数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2084,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/05_%E5%88%97%E8%A1%A8_%E5%B8%B8%E7%94%A8%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "66c49656558671f3",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/06_列表_循环遍历.py",
+      "name": "06_列表_循环遍历.py",
+      "kind": "source",
+      "language": "python",
+      "size": 811,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/06_%E5%88%97%E8%A1%A8_%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86.py",
+      "truncated": false
+    },
+    {
+      "id": "d1e39ad791ded0c8",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/07_列表_小练习.py",
+      "name": "07_列表_小练习.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1371,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/07_%E5%88%97%E8%A1%A8_%E5%B0%8F%E7%BB%83%E4%B9%A0.py",
+      "truncated": false
+    },
+    {
+      "id": "b9b0d972aaeec2a5",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/08_元组.py",
+      "name": "08_元组.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2366,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/08_%E5%85%83%E7%BB%84.py",
+      "truncated": false
+    },
+    {
+      "id": "6370995d621254c8",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/09_函数_解包列表或元组传参.py",
+      "name": "09_函数_解包列表或元组传参.py",
+      "kind": "source",
+      "language": "python",
+      "size": 658,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/09_%E5%87%BD%E6%95%B0_%E8%A7%A3%E5%8C%85%E5%88%97%E8%A1%A8%E6%88%96%E5%85%83%E7%BB%84%E4%BC%A0%E5%8F%82.py",
+      "truncated": false
+    },
+    {
+      "id": "7297f7d7400be9b2",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/10_函数_综合案例（优化版）.py",
+      "name": "10_函数_综合案例（优化版）.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1678,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/10_%E5%87%BD%E6%95%B0_%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B%EF%BC%88%E4%BC%98%E5%8C%96%E7%89%88%EF%BC%89.py",
+      "truncated": false
+    },
+    {
+      "id": "d1738e21d6d7a138",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/11_字符串（数据容器角度）.py",
+      "name": "11_字符串（数据容器角度）.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2102,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/11_%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8%E8%A7%92%E5%BA%A6%EF%BC%89.py",
+      "truncated": false
+    },
+    {
+      "id": "decfeab738b97725",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/12_序列的切片操作.py",
+      "name": "12_序列的切片操作.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1330,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/12_%E5%BA%8F%E5%88%97%E7%9A%84%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.py",
+      "truncated": false
+    },
+    {
+      "id": "217f398fa17c0e86",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/13_序列的其他操作.py",
+      "name": "13_序列的其他操作.py",
+      "kind": "source",
+      "language": "python",
+      "size": 595,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/13_%E5%BA%8F%E5%88%97%E7%9A%84%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C.py",
+      "truncated": false
+    },
+    {
+      "id": "60059c33dec2d876",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/14_集合_定义集合.py",
+      "name": "14_集合_定义集合.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1596,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/14_%E9%9B%86%E5%90%88_%E5%AE%9A%E4%B9%89%E9%9B%86%E5%90%88.py",
+      "truncated": false
+    },
+    {
+      "id": "09d1e184e5180292",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/15_集合_增删改查.py",
+      "name": "15_集合_增删改查.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1497,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/15_%E9%9B%86%E5%90%88_%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.py",
+      "truncated": false
+    },
+    {
+      "id": "9e1a3c69646bd482",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/16_集合_常用方法.py",
+      "name": "16_集合_常用方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1690,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/16_%E9%9B%86%E5%90%88_%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "311f4f2c6626641f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/17_集合_数学运算.py",
+      "name": "17_集合_数学运算.py",
+      "kind": "source",
+      "language": "python",
+      "size": 247,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/17_%E9%9B%86%E5%90%88_%E6%95%B0%E5%AD%A6%E8%BF%90%E7%AE%97.py",
+      "truncated": false
+    },
+    {
+      "id": "72275ff1c9e4fff9",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/18_集合_循环遍历.py",
+      "name": "18_集合_循环遍历.py",
+      "kind": "source",
+      "language": "python",
+      "size": 252,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/18_%E9%9B%86%E5%90%88_%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86.py",
+      "truncated": false
+    },
+    {
+      "id": "196a17ba027d74fd",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/19_字典_定义字典.py",
+      "name": "19_字典_定义字典.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1247,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/19_%E5%AD%97%E5%85%B8_%E5%AE%9A%E4%B9%89%E5%AD%97%E5%85%B8.py",
+      "truncated": false
+    },
+    {
+      "id": "722cff94a21c59e0",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/20_字典_增删改查.py",
+      "name": "20_字典_增删改查.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1276,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/20_%E5%AD%97%E5%85%B8_%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.py",
+      "truncated": false
+    },
+    {
+      "id": "cb7ef5ccffa3cecf",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/21_字典_常用方法.py",
+      "name": "21_字典_常用方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1057,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/21_%E5%AD%97%E5%85%B8_%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "3f4b511c511f8ad3",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/22_字典_循环遍历.py",
+      "name": "22_字典_循环遍历.py",
+      "kind": "source",
+      "language": "python",
+      "size": 247,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/22_%E5%AD%97%E5%85%B8_%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86.py",
+      "truncated": false
+    },
+    {
+      "id": "b9c4734b9ba048be",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/23_数据容器_通用操作.py",
+      "name": "23_数据容器_通用操作.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2708,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/23_%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8_%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C.py",
+      "truncated": false
+    },
+    {
+      "id": "ae6792b77347b4f3",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-06/24_数据容器_小练习.py",
+      "name": "24_数据容器_小练习.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2389,
+      "downloadUrl": "files/code/shangguigu-python/chapter-06/24_%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8_%E5%B0%8F%E7%BB%83%E4%B9%A0.py",
+      "truncated": false
+    },
+    {
+      "id": "4ae7eb855a82b791",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/01_类的定义.py",
+      "name": "01_类的定义.py",
+      "kind": "source",
+      "language": "python",
+      "size": 696,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/01_%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89.py",
+      "truncated": false
+    },
+    {
+      "id": "2c0a425de444c487",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/02_创建实例.py",
+      "name": "02_创建实例.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1037,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/02_%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "7429ad43d46d257f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/03_自定义方法.py",
+      "name": "03_自定义方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1378,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/03_%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "c68d1baecb62b51f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/04_实例属性.py",
+      "name": "04_实例属性.py",
+      "kind": "source",
+      "language": "python",
+      "size": 664,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/04_%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7.py",
+      "truncated": false
+    },
+    {
+      "id": "6ef1fa759cc5cf98",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/05_类属性.py",
+      "name": "05_类属性.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1550,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/05_%E7%B1%BB%E5%B1%9E%E6%80%A7.py",
+      "truncated": false
+    },
+    {
+      "id": "fad9ce64c820c89a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/06_实例方法.py",
+      "name": "06_实例方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1010,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/06_%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "6a265a56c1661573",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/07_类方法.py",
+      "name": "07_类方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2041,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/07_%E7%B1%BB%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "553cf7e6d409e97f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/08_静态方法.py",
+      "name": "08_静态方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1490,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/08_%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "d221b8eedd3918fe",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/09_继承.py",
+      "name": "09_继承.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1396,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/09_%E7%BB%A7%E6%89%BF.py",
+      "truncated": false
+    },
+    {
+      "id": "4ce2bb21b8bf0568",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/10_方法重写.py",
+      "name": "10_方法重写.py",
+      "kind": "source",
+      "language": "python",
+      "size": 923,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/10_%E6%96%B9%E6%B3%95%E9%87%8D%E5%86%99.py",
+      "truncated": false
+    },
+    {
+      "id": "08afc64b29535f7a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/11_两个常用方法.py",
+      "name": "11_两个常用方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 899,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/11_%E4%B8%A4%E4%B8%AA%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "e3b5c48448952750",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/12_多重继承.py",
+      "name": "12_多重继承.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1311,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/12_%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF.py",
+      "truncated": false
+    },
+    {
+      "id": "68303af777963b81",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/13_三种权限.py",
+      "name": "13_三种权限.py",
+      "kind": "source",
+      "language": "python",
+      "size": 991,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/13_%E4%B8%89%E7%A7%8D%E6%9D%83%E9%99%90.py",
+      "truncated": false
+    },
+    {
+      "id": "afb2734b521308ed",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/14_getter与setter.py",
+      "name": "14_getter与setter.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1510,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/14_getter%E4%B8%8Esetter.py",
+      "truncated": false
+    },
+    {
+      "id": "5f5cdaae4006ddeb",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/15_魔法方法.py",
+      "name": "15_魔法方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1410,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/15_%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "bc0b3bd7e93e8390",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/16_object类.py",
+      "name": "16_object类.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1311,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/16_object%E7%B1%BB.py",
+      "truncated": false
+    },
+    {
+      "id": "15541daed7433f44",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/17_标准多态.py",
+      "name": "17_标准多态.py",
+      "kind": "source",
+      "language": "python",
+      "size": 778,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/17_%E6%A0%87%E5%87%86%E5%A4%9A%E6%80%81.py",
+      "truncated": false
+    },
+    {
+      "id": "b0015fa4655280c8",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/18_鸭子多态.py",
+      "name": "18_鸭子多态.py",
+      "kind": "source",
+      "language": "python",
+      "size": 822,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/18_%E9%B8%AD%E5%AD%90%E5%A4%9A%E6%80%81.py",
+      "truncated": false
+    },
+    {
+      "id": "18db2793b1eb61a5",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/19_抽象类.py",
+      "name": "19_抽象类.py",
+      "kind": "source",
+      "language": "python",
+      "size": 700,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/19_%E6%8A%BD%E8%B1%A1%E7%B1%BB.py",
+      "truncated": false
+    },
+    {
+      "id": "484ceac29169efb1",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/20_小练习.py",
+      "name": "20_小练习.py",
+      "kind": "source",
+      "language": "python",
+      "size": 4798,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/20_%E5%B0%8F%E7%BB%83%E4%B9%A0.py",
+      "truncated": false
+    },
+    {
+      "id": "de7595dee1500039",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-07/21_内存分析.py",
+      "name": "21_内存分析.py",
+      "kind": "source",
+      "language": "python",
+      "size": 301,
+      "downloadUrl": "files/code/shangguigu-python/chapter-07/21_%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90.py",
+      "truncated": false
+    },
+    {
+      "id": "044f2babe4475187",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/01_重新认识函数.py",
+      "name": "01_重新认识函数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1749,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/01_%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86%E5%87%BD%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "af33fcc57b7b176a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/02_多返回值_参数的打包与解包.py",
+      "name": "02_多返回值_参数的打包与解包.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1235,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/02_%E5%A4%9A%E8%BF%94%E5%9B%9E%E5%80%BC_%E5%8F%82%E6%95%B0%E7%9A%84%E6%89%93%E5%8C%85%E4%B8%8E%E8%A7%A3%E5%8C%85.py",
+      "truncated": false
+    },
+    {
+      "id": "013846d29663f8e5",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/03_高阶函数.py",
+      "name": "03_高阶函数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 684,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/03_%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "05e9157d252a195c",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/04_条件表达式.py",
+      "name": "04_条件表达式.py",
+      "kind": "source",
+      "language": "python",
+      "size": 917,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/04_%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F.py",
+      "truncated": false
+    },
+    {
+      "id": "4f6f052b51d9f35d",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/05_匿名函数.py",
+      "name": "05_匿名函数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1342,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/05_%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "af3cadb90b2086d3",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/06_数据处理_map函数.py",
+      "name": "06_数据处理_map函数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1042,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/06_%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86_map%E5%87%BD%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "5e0b45a37c122b80",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/07_数据处理_filter函数.py",
+      "name": "07_数据处理_filter函数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1292,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/07_%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86_filter%E5%87%BD%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "adf0f56304560e08",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/08_数据处理_sorted函数.py",
+      "name": "08_数据处理_sorted函数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1048,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/08_%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86_sorted%E5%87%BD%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "99133ce36ebbe3a5",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/09_数据处理_reduce函数.py",
+      "name": "09_数据处理_reduce函数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 525,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/09_%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86_reduce%E5%87%BD%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "cc88951d218aa2f8",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/10_列表推导式.py",
+      "name": "10_列表推导式.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1319,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/10_%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F.py",
+      "truncated": false
+    },
+    {
+      "id": "1a21682e40e84dff",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/11_常用内置函数.py",
+      "name": "11_常用内置函数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 3020,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/11_%E5%B8%B8%E7%94%A8%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "a6b4039d592a881e",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/12_浅拷贝_深拷贝.py",
+      "name": "12_浅拷贝_深拷贝.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1243,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/12_%E6%B5%85%E6%8B%B7%E8%B4%9D_%E6%B7%B1%E6%8B%B7%E8%B4%9D.py",
+      "truncated": false
+    },
+    {
+      "id": "d1d13584e7115728",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/13_四种作用域.py",
+      "name": "13_四种作用域.py",
+      "kind": "source",
+      "language": "python",
+      "size": 472,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/13_%E5%9B%9B%E7%A7%8D%E4%BD%9C%E7%94%A8%E5%9F%9F.py",
+      "truncated": false
+    },
+    {
+      "id": "69034f87bfa57ea6",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/14_闭包.py",
+      "name": "14_闭包.py",
+      "kind": "source",
+      "language": "python",
+      "size": 3774,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/14_%E9%97%AD%E5%8C%85.py",
+      "truncated": false
+    },
+    {
+      "id": "8ccd45158837a13b",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/15_函数装饰器.py",
+      "name": "15_函数装饰器.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2905,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/15_%E5%87%BD%E6%95%B0%E8%A3%85%E9%A5%B0%E5%99%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "c471aa978111d500",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/16_类装饰器.py",
+      "name": "16_类装饰器.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1953,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/16_%E7%B1%BB%E8%A3%85%E9%A5%B0%E5%99%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "de2a134b37dcbd53",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/17_变量类型注解.py",
+      "name": "17_变量类型注解.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2258,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/17_%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3.py",
+      "truncated": false
+    },
+    {
+      "id": "bf4192972147ba76",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-08/18_函数类型注解.py",
+      "name": "18_函数类型注解.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1096,
+      "downloadUrl": "files/code/shangguigu-python/chapter-08/18_%E5%87%BD%E6%95%B0%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3.py",
+      "truncated": false
+    },
+    {
+      "id": "8504d1d6188203fb",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-09/01_错误与异常.py",
+      "name": "01_错误与异常.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1290,
+      "downloadUrl": "files/code/shangguigu-python/chapter-09/01_%E9%94%99%E8%AF%AF%E4%B8%8E%E5%BC%82%E5%B8%B8.py",
+      "truncated": false
+    },
+    {
+      "id": "ad0a84b34c692fb8",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-09/02_异常处理.py",
+      "name": "02_异常处理.py",
+      "kind": "source",
+      "language": "python",
+      "size": 5942,
+      "downloadUrl": "files/code/shangguigu-python/chapter-09/02_%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.py",
+      "truncated": false
+    },
+    {
+      "id": "3610a7618e4ad09e",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-09/03_手动抛出异常.py",
+      "name": "03_手动抛出异常.py",
+      "kind": "source",
+      "language": "python",
+      "size": 614,
+      "downloadUrl": "files/code/shangguigu-python/chapter-09/03_%E6%89%8B%E5%8A%A8%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8.py",
+      "truncated": false
+    },
+    {
+      "id": "bbe9c2cd5043adb4",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-09/04_异常传递机制.py",
+      "name": "04_异常传递机制.py",
+      "kind": "source",
+      "language": "python",
+      "size": 687,
+      "downloadUrl": "files/code/shangguigu-python/chapter-09/04_%E5%BC%82%E5%B8%B8%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6.py",
+      "truncated": false
+    },
+    {
+      "id": "363e909938472792",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-09/05_自定义异常类.py",
+      "name": "05_自定义异常类.py",
+      "kind": "source",
+      "language": "python",
+      "size": 653,
+      "downloadUrl": "files/code/shangguigu-python/chapter-09/05_%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E7%B1%BB.py",
+      "truncated": false
+    },
+    {
+      "id": "64e6b0d16dd6d445",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/01_模块.py",
+      "name": "01_模块.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2585,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/01_%E6%A8%A1%E5%9D%97.py",
+      "truncated": false
+    },
+    {
+      "id": "56d058719009d9f4",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/02_标准库模块.py",
+      "name": "02_标准库模块.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1479,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/02_%E6%A0%87%E5%87%86%E5%BA%93%E6%A8%A1%E5%9D%97.py",
+      "truncated": false
+    },
+    {
+      "id": "f763496b32cfb7ce",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/03_包.py",
+      "name": "03_包.py",
+      "kind": "source",
+      "language": "python",
+      "size": 3115,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/03_%E5%8C%85.py",
+      "truncated": false
+    },
+    {
+      "id": "d4496575b97ac68b",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/order.py",
+      "name": "order.py",
+      "kind": "source",
+      "language": "python",
+      "size": 337,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/order.py",
+      "truncated": false
+    },
+    {
+      "id": "aa20395c825825a3",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/pay.py",
+      "name": "pay.py",
+      "kind": "source",
+      "language": "python",
+      "size": 413,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/pay.py",
+      "truncated": false
+    },
+    {
+      "id": "87b72d7f9794df82",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/trade/__init__.py",
+      "name": "__init__.py",
+      "kind": "source",
+      "language": "python",
+      "size": 205,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/__init__.py",
+      "truncated": false
+    },
+    {
+      "id": "cf302767cc87ad20",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/trade/hello/__init__.py",
+      "name": "__init__.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/hello/__init__.py",
+      "truncated": false
+    },
+    {
+      "id": "6b83bdd2e774221f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/trade/hello/h1.py",
+      "name": "h1.py",
+      "kind": "source",
+      "language": "python",
+      "size": 38,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/hello/h1.py",
+      "truncated": false
+    },
+    {
+      "id": "9a539e1babdda7fc",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/trade/order.py",
+      "name": "order.py",
+      "kind": "source",
+      "language": "python",
+      "size": 340,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/order.py",
+      "truncated": false
+    },
+    {
+      "id": "185de31a90bbc012",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-10/trade/pay.py",
+      "name": "pay.py",
+      "kind": "source",
+      "language": "python",
+      "size": 419,
+      "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/pay.py",
+      "truncated": false
+    },
+    {
+      "id": "348d53e5d7b33831",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-11/01_初识迭代器.py",
+      "name": "01_初识迭代器.py",
+      "kind": "source",
+      "language": "python",
+      "size": 3156,
+      "downloadUrl": "files/code/shangguigu-python/chapter-11/01_%E5%88%9D%E8%AF%86%E8%BF%AD%E4%BB%A3%E5%99%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "4efeddf0c44dfbdc",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-11/02_手写迭代器.py",
+      "name": "02_手写迭代器.py",
+      "kind": "source",
+      "language": "python",
+      "size": 4315,
+      "downloadUrl": "files/code/shangguigu-python/chapter-11/02_%E6%89%8B%E5%86%99%E8%BF%AD%E4%BB%A3%E5%99%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "d2ba23f1aed0cc77",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-11/03_迭代器的优势.py",
+      "name": "03_迭代器的优势.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1710,
+      "downloadUrl": "files/code/shangguigu-python/chapter-11/03_%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E4%BC%98%E5%8A%BF.py",
+      "truncated": false
+    },
+    {
+      "id": "02f552d1cf290b19",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-11/04_生成器.py",
+      "name": "04_生成器.py",
+      "kind": "source",
+      "language": "python",
+      "size": 5863,
+      "downloadUrl": "files/code/shangguigu-python/chapter-11/04_%E7%94%9F%E6%88%90%E5%99%A8.py",
+      "truncated": false
+    },
+    {
+      "id": "9cf1519eaa8a7d9a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/01_前序知识.py",
+      "name": "01_前序知识.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1069,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/01_%E5%89%8D%E5%BA%8F%E7%9F%A5%E8%AF%86.py",
+      "truncated": false
+    },
+    {
+      "id": "c32ad17542eaae16",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/02_读取文件.py",
+      "name": "02_读取文件.py",
+      "kind": "source",
+      "language": "python",
+      "size": 4541,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/02_%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6.py",
+      "truncated": false
+    },
+    {
+      "id": "778a04d340597f41",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/03_关于with.py",
+      "name": "03_关于with.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2261,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/03_%E5%85%B3%E4%BA%8Ewith.py",
+      "truncated": false
+    },
+    {
+      "id": "81a6b48907a5ec94",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/04_写入文件.py",
+      "name": "04_写入文件.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2408,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/04_%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6.py",
+      "truncated": false
+    },
+    {
+      "id": "bad4381ea11dffcd",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/05_目录操作.py",
+      "name": "05_目录操作.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1672,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/05_%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C.py",
+      "truncated": false
+    },
+    {
+      "id": "ee55ff1273d3001f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/06_小练习.py",
+      "name": "06_小练习.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1928,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/06_%E5%B0%8F%E7%BB%83%E4%B9%A0.py",
+      "truncated": false
+    },
+    {
+      "id": "34c600233266eae0",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/a.txt",
+      "name": "a.txt",
+      "kind": "text",
+      "language": "text",
+      "size": 85,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/a.txt",
+      "truncated": false
+    },
+    {
+      "id": "ffd912256c7f30c3",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/b.txt",
+      "name": "b.txt",
+      "kind": "text",
+      "language": "text",
+      "size": 7,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/b.txt",
+      "truncated": false
+    },
+    {
+      "id": "ef02ae6ff27e4b30",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/demo.txt",
+      "name": "demo.txt",
+      "kind": "text",
+      "language": "text",
+      "size": 15,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/demo.txt",
+      "truncated": false
+    },
+    {
+      "id": "90349582844abc64",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/demo2.txt",
+      "name": "demo2.txt",
+      "kind": "text",
+      "language": "text",
+      "size": 7,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/demo2.txt",
+      "truncated": false
+    },
+    {
+      "id": "6a52506dd401ac60",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/demo3.txt",
+      "name": "demo3.txt",
+      "kind": "text",
+      "language": "text",
+      "size": 7,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/demo3.txt",
+      "truncated": false
+    },
+    {
+      "id": "7a5769e743a08bb4",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-12/log.txt",
+      "name": "log.txt",
+      "kind": "text",
+      "language": "text",
+      "size": 342,
+      "downloadUrl": "files/code/shangguigu-python/chapter-12/log.txt",
+      "truncated": false
+    },
+    {
+      "id": "06e0d072697b34cd",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/01_一些概念.py",
+      "name": "01_一些概念.py",
+      "kind": "source",
+      "language": "python",
+      "size": 2511,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/01_%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5.py",
+      "truncated": false
+    },
+    {
+      "id": "6506ffd2ee053b8c",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/02_主进程_子进程.py",
+      "name": "02_主进程_子进程.py",
+      "kind": "source",
+      "language": "python",
+      "size": 304,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/02_%E4%B8%BB%E8%BF%9B%E7%A8%8B_%E5%AD%90%E8%BF%9B%E7%A8%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "7a7a9dff6492a3c4",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/03_使用Process_创建进程.py",
+      "name": "03_使用Process_创建进程.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1771,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/03_%E4%BD%BF%E7%94%A8Process_%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "b2f523573ee7ac41",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/04_关于Process_参数.py",
+      "name": "04_关于Process_参数.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1375,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/04_%E5%85%B3%E4%BA%8EProcess_%E5%8F%82%E6%95%B0.py",
+      "truncated": false
+    },
+    {
+      "id": "59815159919c6b05",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/05_Lock.py",
+      "name": "05_Lock.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1439,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/05_Lock.py",
+      "truncated": false
+    },
+    {
+      "id": "4584c93d0cd36efd",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/06_join_方法.py",
+      "name": "06_join_方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1357,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/06_join_%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "d507c719ac6558f5",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/07_terminate_方法.py",
+      "name": "07_terminate_方法.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1097,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/07_terminate_%E6%96%B9%E6%B3%95.py",
+      "truncated": false
+    },
+    {
+      "id": "4d90bfdb8e6eab1a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/08_守护进程.py",
+      "name": "08_守护进程.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1623,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/08_%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "fd0dce7ef28f120b",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/09_进程之间不共享变量.py",
+      "name": "09_进程之间不共享变量.py",
+      "kind": "source",
+      "language": "python",
+      "size": 786,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/09_%E8%BF%9B%E7%A8%8B%E4%B9%8B%E9%97%B4%E4%B8%8D%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F.py",
+      "truncated": false
+    },
+    {
+      "id": "0a1e72c3debaa39d",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/10_Queue_队列.py",
+      "name": "10_Queue_队列.py",
+      "kind": "source",
+      "language": "python",
+      "size": 3112,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/10_Queue_%E9%98%9F%E5%88%97.py",
+      "truncated": false
+    },
+    {
+      "id": "3ca217ca8a56dbaa",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/11_使用Queue_进程通信.py",
+      "name": "11_使用Queue_进程通信.py",
+      "kind": "source",
+      "language": "python",
+      "size": 622,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/11_%E4%BD%BF%E7%94%A8Queue_%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1.py",
+      "truncated": false
+    },
+    {
+      "id": "db0a6bd1b20c6a8c",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/12_使用Pipe_进程通信.py",
+      "name": "12_使用Pipe_进程通信.py",
+      "kind": "source",
+      "language": "python",
+      "size": 453,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/12_%E4%BD%BF%E7%94%A8Pipe_%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1.py",
+      "truncated": false
+    },
+    {
+      "id": "208cff3d015c5211",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/13_继承Process_创建进程.py",
+      "name": "13_继承Process_创建进程.py",
+      "kind": "source",
+      "language": "python",
+      "size": 901,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/13_%E7%BB%A7%E6%89%BFProcess_%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "418db5a0fc4131ea",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/14_进程池.py",
+      "name": "14_进程池.py",
+      "kind": "source",
+      "language": "python",
+      "size": 6380,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/14_%E8%BF%9B%E7%A8%8B%E6%B1%A0.py",
+      "truncated": false
+    },
+    {
+      "id": "2b6e3ed1309c3666",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/15_使用Thread_创建线程.py",
+      "name": "15_使用Thread_创建线程.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1523,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/15_%E4%BD%BF%E7%94%A8Thread_%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "d7d3c5c9ac97146f",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/16_继承Thread_创建线程.py",
+      "name": "16_继承Thread_创建线程.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1294,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/16_%E7%BB%A7%E6%89%BFThread_%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B.py",
+      "truncated": false
+    },
+    {
+      "id": "470dadceaef990fd",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/17_线程池.py",
+      "name": "17_线程池.py",
+      "kind": "source",
+      "language": "python",
+      "size": 6351,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/17_%E7%BA%BF%E7%A8%8B%E6%B1%A0.py",
+      "truncated": false
+    },
+    {
+      "id": "d9f21556aef00b80",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/18_GIL锁.py",
+      "name": "18_GIL锁.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1985,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/18_GIL%E9%94%81.py",
+      "truncated": false
+    },
+    {
+      "id": "623999a5fa1761ca",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/19_CPU密集型任务.py",
+      "name": "19_CPU密集型任务.py",
+      "kind": "source",
+      "language": "python",
+      "size": 981,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/19_CPU%E5%AF%86%E9%9B%86%E5%9E%8B%E4%BB%BB%E5%8A%A1.py",
+      "truncated": false
+    },
+    {
+      "id": "4962d0d7c6a10e1a",
+      "bookSlug": "shangguigu-python",
+      "path": "chapter-13/20_IO密集型任务.py",
+      "name": "20_IO密集型任务.py",
+      "kind": "source",
+      "language": "python",
+      "size": 1031,
+      "downloadUrl": "files/code/shangguigu-python/chapter-13/20_IO%E5%AF%86%E9%9B%86%E5%9E%8B%E4%BB%BB%E5%8A%A1.py",
+      "truncated": false
+    },
+    {
+      "id": "2e13022a9c828d0b",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "chapter-02/1.numpy学习.ipynb",
+      "name": "1.numpy学习.ipynb",
+      "kind": "notebook",
+      "language": "python",
+      "size": 20802,
+      "downloadUrl": "files/code/shangguigu-data-analysis/chapter-02/1.numpy%E5%AD%A6%E4%B9%A0.ipynb",
+      "truncated": false
+    },
+    {
+      "id": "12d66456459b48d3",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "chapter-03/2.series学习.ipynb",
+      "name": "2.series学习.ipynb",
+      "kind": "notebook",
+      "language": "python",
+      "size": 14895,
+      "downloadUrl": "files/code/shangguigu-data-analysis/chapter-03/2.series%E5%AD%A6%E4%B9%A0.ipynb",
+      "truncated": false
+    },
+    {
+      "id": "6c1ffe660171cb77",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "chapter-03/3.DataFrame学习.ipynb",
+      "name": "3.DataFrame学习.ipynb",
+      "kind": "notebook",
+      "language": "python",
+      "size": 23104,
+      "downloadUrl": "files/code/shangguigu-data-analysis/chapter-03/3.DataFrame%E5%AD%A6%E4%B9%A0.ipynb",
+      "truncated": false
+    },
+    {
+      "id": "760170eac73f6f5c",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "chapter-03/4.数据分析.ipynb",
+      "name": "4.数据分析.ipynb",
+      "kind": "notebook",
+      "language": "python",
+      "size": 17844,
+      "downloadUrl": "files/code/shangguigu-data-analysis/chapter-03/4.%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90.ipynb",
+      "truncated": false
+    },
+    {
+      "id": "aab09632493e7a4b",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "chapter-04/5.matplotlib学习.ipynb",
+      "name": "5.matplotlib学习.ipynb",
+      "kind": "notebook",
+      "language": "python",
+      "size": 12451,
+      "downloadUrl": "files/code/shangguigu-data-analysis/chapter-04/5.matplotlib%E5%AD%A6%E4%B9%A0.ipynb",
+      "truncated": false
+    },
+    {
+      "id": "699e2e2adb7101e2",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "chapter-04/6.seaborn学习.ipynb",
+      "name": "6.seaborn学习.ipynb",
+      "kind": "notebook",
+      "language": "python",
+      "size": 5802,
+      "downloadUrl": "files/code/shangguigu-data-analysis/chapter-04/6.seaborn%E5%AD%A6%E4%B9%A0.ipynb",
+      "truncated": false
+    },
+    {
+      "id": "a72d82e453f4f082",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "chapter-04/7.房地产市场分析.ipynb",
+      "name": "7.房地产市场分析.ipynb",
+      "kind": "notebook",
+      "language": "python",
+      "size": 11959,
+      "downloadUrl": "files/code/shangguigu-data-analysis/chapter-04/7.%E6%88%BF%E5%9C%B0%E4%BA%A7%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90.ipynb",
+      "truncated": false
+    },
+    {
+      "id": "508e0ec7569cf227",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/data1.json",
+      "name": "data1.json",
+      "kind": "dataset",
+      "language": "json",
+      "size": 130,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/data1.json",
+      "truncated": false
+    },
+    {
+      "id": "5cbcc5ccfacd9ac8",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/employees.csv",
+      "name": "employees.csv",
+      "kind": "dataset",
+      "language": "csv",
+      "size": 7395,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/employees.csv",
+      "truncated": false
+    },
+    {
+      "id": "1e6a038a95c6cfd4",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/house_sales.csv",
+      "name": "house_sales.csv",
+      "kind": "dataset",
+      "language": "csv",
+      "size": 20123570,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/house_sales.csv",
+      "truncated": true
+    },
+    {
+      "id": "93bf65cc61a17471",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/new.csv",
+      "name": "new.csv",
+      "kind": "dataset",
+      "language": "csv",
+      "size": 449,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/new.csv",
+      "truncated": false
+    },
+    {
+      "id": "38324c579729e745",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/penguins.csv",
+      "name": "penguins.csv",
+      "kind": "dataset",
+      "language": "csv",
+      "size": 15355,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/penguins.csv",
+      "truncated": false
+    },
+    {
+      "id": "5895e498d1a05929",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/products.json",
+      "name": "products.json",
+      "kind": "dataset",
+      "language": "json",
+      "size": 140,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/products.json",
+      "truncated": false
+    },
+    {
+      "id": "bc7957dedc412452",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/sleep.csv",
+      "name": "sleep.csv",
+      "kind": "dataset",
+      "language": "csv",
+      "size": 27772,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/sleep.csv",
+      "truncated": false
+    },
+    {
+      "id": "2247d70ce863bc66",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/test.json",
+      "name": "test.json",
+      "kind": "dataset",
+      "language": "json",
+      "size": 510,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/test.json",
+      "truncated": false
+    },
+    {
+      "id": "61804be918ede594",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/weather.csv",
+      "name": "weather.csv",
+      "kind": "dataset",
+      "language": "csv",
+      "size": 49679,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/weather.csv",
+      "truncated": false
+    },
+    {
+      "id": "d574d7dd2aae44b2",
+      "bookSlug": "shangguigu-data-analysis",
+      "path": "shared-data/weather_withna.csv",
+      "name": "weather_withna.csv",
+      "kind": "dataset",
+      "language": "csv",
+      "size": 43323,
+      "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/weather_withna.csv",
+      "truncated": false
     }
   ]
 }
