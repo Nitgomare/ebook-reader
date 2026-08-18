@@ -67,6 +67,19 @@ button, input { font: inherit; }
 .book-tree .nav-group { margin-bottom: .85rem; }
 .book-tree .nav-group h3 { padding-left: .35rem; }
 .empty-nav { color: var(--muted); font-size: .66rem; }
+.code-book-tree .book-tree-children { padding: .55rem; }
+.code-folder { margin-bottom: .4rem; border: 1px solid var(--line); border-radius: .42rem; background: var(--surface); }
+.code-folder:last-child { margin-bottom: 0; }
+.code-folder > summary { display: grid; min-height: 2.35rem; align-items: center; gap: .35rem; padding: .42rem .5rem; cursor: pointer; list-style: none; grid-template-columns: .85rem minmax(0, 1fr) auto; }
+.code-folder > summary::-webkit-details-marker { display: none; }
+.code-folder > summary strong { overflow: hidden; font-size: .68rem; text-overflow: ellipsis; white-space: nowrap; }
+.code-folder > summary small { color: var(--muted); font-size: .56rem; }
+.code-folder[open] > summary { color: var(--accent); background: var(--accent-soft); }
+.code-folder > div { padding: .3rem; border-top: 1px solid var(--line); }
+.code-nav-link { display: grid; min-width: 0; align-items: center; gap: .35rem; padding: .38rem .42rem; border-radius: .32rem; color: var(--muted); grid-template-columns: 2.5rem minmax(0, 1fr); }
+.code-nav-link:hover, .code-nav-link.is-active { color: var(--accent); background: var(--accent-soft); }
+.code-nav-link span { overflow: hidden; font-size: .52rem; font-weight: 750; text-overflow: ellipsis; white-space: nowrap; }
+.code-nav-link strong { overflow: hidden; font: 550 .65rem/1.45 var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
 
 .reader { min-width: 0; padding: clamp(2rem, 4.5vw, 4.8rem) clamp(1.25rem, 5vw, 5.5rem); }
 .library-home, .document-view, .code-library, .code-view { width: min(100%, 62rem); margin: 0 auto; }

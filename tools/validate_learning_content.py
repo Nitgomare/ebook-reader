@@ -32,6 +32,7 @@ def main() -> None:
         json.loads(path.read_text(encoding="utf-8"))
         for path in (DIST / "data" / "code").glob("*.json")
     ]
+    app_js = (DIST / "app.js").read_text(encoding="utf-8")
     report = {
         "stats": catalog["stats"],
         "data_titles": [doc["title"] for doc in data_docs],
@@ -53,6 +54,10 @@ def main() -> None:
         "song_font_in_css": bool(
             re.search("宋体|SimSun", (DIST / "styles.css").read_text(encoding="utf-8"), re.I)
         ),
+        "code_sidebar_navigation": all(
+            token in app_js
+            for token in ("renderCodeSidebar", "code-nav-link", "搜索代码与数据")
+        ),
     }
     assert report["stats"] == {"books": 5, "docs": 71, "code": 182}
     assert report["wind_documents"] == 51
@@ -65,6 +70,7 @@ def main() -> None:
     assert report["missing_downloads"] == 0
     assert not report["old_positioning_in_ui"]
     assert not report["song_font_in_css"]
+    assert report["code_sidebar_navigation"]
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
