@@ -1,11 +1,31 @@
 {
   "site": {
-    "title": "Python 与数据分析学习中心",
-    "subtitle": "教程、示例代码、Notebook 与练习数据在同一个学习路径中联动"
+    "title": "公共知识学习中心",
+    "subtitle": "把编程、数据分析与风电工程资料组织成可持续扩展的学习路径",
+    "categories": [
+      {
+        "id": "python",
+        "title": "Python 编程",
+        "eyebrow": "PYTHON",
+        "description": "从语言基础、工程实践到逐章源码。"
+      },
+      {
+        "id": "data-analysis",
+        "title": "Python 数据分析",
+        "eyebrow": "DATA ANALYSIS",
+        "description": "结合 Notebook、练习数据与完整案例学习分析工具链。"
+      },
+      {
+        "id": "wind-energy",
+        "title": "风电技术",
+        "eyebrow": "WIND ENERGY",
+        "description": "覆盖风资源、空气动力学、载荷、控制、整机设计与风电场。"
+      }
+    ]
   },
   "stats": {
-    "books": 2,
-    "docs": 20,
+    "books": 5,
+    "docs": 71,
     "code": 182
   },
   "books": [
@@ -19,6 +39,7 @@
         "基础课程",
         "逐章源码"
       ],
+      "category": "python",
       "type": "course",
       "featured": true,
       "codeSource": "code",
@@ -38,6 +59,7 @@
         "Notebook",
         "案例实践"
       ],
+      "category": "data-analysis",
       "type": "course",
       "featured": true,
       "codeSource": "code",
@@ -52,6 +74,60 @@
       "docCount": 5,
       "firstDocId": "d2804271a6039712",
       "codeCount": 17
+    },
+    {
+      "slug": "wind-energy",
+      "title": "Wind Energy Handbook",
+      "author": "Tony Burton 等",
+      "description": "英文风能工程教材，系统覆盖风资源、空气动力学、设计载荷、控制、电力系统与海上风电。",
+      "tags": [
+        "风能",
+        "英文教材",
+        "工程"
+      ],
+      "category": "wind-energy",
+      "type": "reference",
+      "sourceSiteName": "风能技术",
+      "cover": "",
+      "docCount": 13,
+      "firstDocId": "5bd60ae7f9e17d72",
+      "codeCount": 0
+    },
+    {
+      "slug": "风能技术",
+      "title": "风能技术（第二版）",
+      "author": "Tony Burton 等 · 武鑫译",
+      "description": "中文系统教材，介绍风资源、风力机设计、零部件、控制以及风电场技术。",
+      "tags": [
+        "风能",
+        "中文教材",
+        "风电场"
+      ],
+      "category": "wind-energy",
+      "type": "reference",
+      "sourceSiteName": "风能技术（第二版）",
+      "cover": "",
+      "docCount": 23,
+      "firstDocId": "b4ade889f42702e2",
+      "codeCount": 0
+    },
+    {
+      "slug": "wind-turbine-theory-and-design",
+      "title": "风力发电机组理论与设计",
+      "author": "姚兴佳等",
+      "description": "从能量转换与载荷出发，讲解整机、风轮、传动链、塔架、控制和强度分析。",
+      "tags": [
+        "风能",
+        "工程设计",
+        "中文教材"
+      ],
+      "category": "wind-energy",
+      "type": "reference",
+      "sourceSiteName": "风力发电机组理论与设计",
+      "cover": "files/wind-turbine-theory-and-design/00-front-matter/images/978-7-111-40451-4-coverpage-1.jpg",
+      "docCount": 15,
+      "firstDocId": "811b8e7782c84de7",
+      "codeCount": 0
     }
   ],
   "docs": [
@@ -542,6 +618,720 @@
         "61804be918ede594",
         "d574d7dd2aae44b2"
       ]
+    },
+    {
+      "id": "5bd60ae7f9e17d72",
+      "bookSlug": "wind-energy",
+      "relPath": "index.md",
+      "title": "课程首页",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "A systematic reference covering wind resource, turbine aerodynamics, loads, components, control, power systems and offshore wind.",
+      "order": 1,
+      "previousId": "",
+      "nextId": "a08658a81ec757f4",
+      "codeFiles": []
+    },
+    {
+      "id": "a08658a81ec757f4",
+      "bookSlug": "wind-energy",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Wind Energy Handbook",
+      "order": 2,
+      "previousId": "5bd60ae7f9e17d72",
+      "nextId": "4f0d6463d818ca87",
+      "codeFiles": []
+    },
+    {
+      "id": "4f0d6463d818ca87",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/01-introduction/index.md",
+      "title": "第1章 Introduction",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Windmills have been used for at least 3000 years, mainly for grinding grain or pumping water; while in sailing ships the wind has been an es",
+      "order": 3,
+      "previousId": "a08658a81ec757f4",
+      "nextId": "b6504a0aec0eea5b",
+      "codeFiles": []
+    },
+    {
+      "id": "b6504a0aec0eea5b",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/02-the-wind-resource/index.md",
+      "title": "第2章 The wind resource",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "The energy available in the wind varies as the cube of the wind speed, so an understanding of the characteristics of the wind resource is cr",
+      "order": 4,
+      "previousId": "4f0d6463d818ca87",
+      "nextId": "fd4f6f1c88a0862a",
+      "codeFiles": []
+    },
+    {
+      "id": "fd4f6f1c88a0862a",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/03-aerodynamics-of-horizontal-axis-wind-turbines/index.md",
+      "title": "第3章 Aerodynamics",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "A wind turbine is a device for extracting kinetic energy from the wind. By removing some of its kinetic energy the wind must slow down but o",
+      "order": 5,
+      "previousId": "b6504a0aec0eea5b",
+      "nextId": "a27cd9932333fd1c",
+      "codeFiles": []
+    },
+    {
+      "id": "a27cd9932333fd1c",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/04-further-aerodynamic-topics-for-wind-turbines/index.md",
+      "title": "第4章 Further aerodynamic topics",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Chapter 3 deals with the aerodynamic behaviour of wind turbines in steady wind conditions and with the rotor aligned with the wind direction",
+      "order": 6,
+      "previousId": "fd4f6f1c88a0862a",
+      "nextId": "19647e9a11be2999",
+      "codeFiles": []
+    },
+    {
+      "id": "19647e9a11be2999",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/05-design-loads-for-horizontal-axis-wind-turbines/index.md",
+      "title": "第5章 Design loads",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "The preparation of national and international standards containing rules for the design of wind turbines began in the 1980s. The first publi",
+      "order": 7,
+      "previousId": "a27cd9932333fd1c",
+      "nextId": "fa5c7d9bf9f51c5b",
+      "codeFiles": []
+    },
+    {
+      "id": "fa5c7d9bf9f51c5b",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/06-conceptual-design-of-horizontal-axis-wind-turbines/index.md",
+      "title": "第6章 Conceptual design",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Within the general category of horizontal axis wind turbines for grid applications there exists a great variety of possible machine configur",
+      "order": 8,
+      "previousId": "19647e9a11be2999",
+      "nextId": "eda549fb8849d9e9",
+      "codeFiles": []
+    },
+    {
+      "id": "eda549fb8849d9e9",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/07-component-design/index.md",
+      "title": "第7章 Component design",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "A successful blade design must satisfy a wide range of objectives, some of which are in conflict. These objectives can be summarised as foll",
+      "order": 9,
+      "previousId": "fa5c7d9bf9f51c5b",
+      "nextId": "50ec0043725cb1d4",
+      "codeFiles": []
+    },
+    {
+      "id": "50ec0043725cb1d4",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/08-the-controller/index.md",
+      "title": "第8章 The controller",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "In the most general sense, the wind turbine control system consists of a number of sensors, a number of actuators and a system consisting of",
+      "order": 10,
+      "previousId": "eda549fb8849d9e9",
+      "nextId": "644408e6baded7f2",
+      "codeFiles": []
+    },
+    {
+      "id": "644408e6baded7f2",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/09-wind-turbine-installations-and-wind-farms/index.md",
+      "title": "第9章 Installations and wind farms",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "For any wind turbine installation, there are certain additional activities, (e.g. construction of foundations and access roads, electrical c",
+      "order": 11,
+      "previousId": "50ec0043725cb1d4",
+      "nextId": "fb5c6150dbe78e17",
+      "codeFiles": []
+    },
+    {
+      "id": "fb5c6150dbe78e17",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/10-wind-energy-and-the-electric-power-system/index.md",
+      "title": "第10章 Electric power system",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "As the wind is a diffuse source of energy, wind farms and individual wind turbines are often distributed over wide geographical areas. Hence",
+      "order": 12,
+      "previousId": "644408e6baded7f2",
+      "nextId": "65afcf77167c2bbf",
+      "codeFiles": []
+    },
+    {
+      "id": "65afcf77167c2bbf",
+      "bookSlug": "wind-energy",
+      "relPath": "chapters/11-offshore-wind-turbines-and-wind-farms/index.md",
+      "title": "第11章 Offshore wind",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Offshore wind energy is developing rapidly (Figure 11.1) with a total installed capacity in 2010 of approximately 3000 MW, some 1.5% of worl",
+      "order": 13,
+      "previousId": "fb5c6150dbe78e17",
+      "nextId": "",
+      "codeFiles": []
+    },
+    {
+      "id": "b4ade889f42702e2",
+      "bookSlug": "风能技术",
+      "relPath": "index.md",
+      "title": "课程首页",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "系统介绍风资源、水平轴风力机空气动力学、载荷、部件、控制、电力系统与海上风电。",
+      "order": 1,
+      "previousId": "",
+      "nextId": "2f14a3b7bc723721",
+      "codeFiles": []
+    },
+    {
+      "id": "2f14a3b7bc723721",
+      "bookSlug": "风能技术",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Tony Burton Nick Jenkins",
+      "order": 2,
+      "previousId": "b4ade889f42702e2",
+      "nextId": "5da5c3fc35befea9",
+      "codeFiles": []
+    },
+    {
+      "id": "5da5c3fc35befea9",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/01-chapter/index.md",
+      "title": "作 者 简 介",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "Tony Burton: 在早期的职业生涯中, Tony Burton 主要从事桥梁设计和施工。他于 1982 年加入了风能集团，为英国能源部协调海上风能评估项目第二阶段的实施。这是包括英国航空航天公司、GEC 和 CEGB 等多方合作的项目，其主要任务是对大型海上风电场的总体方",
+      "order": 3,
+      "previousId": "2f14a3b7bc723721",
+      "nextId": "a76e1b87b8230972",
+      "codeFiles": []
+    },
+    {
+      "id": "a76e1b87b8230972",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/02-chapter/index.md",
+      "title": "内 容 简 介",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "能源与环境问题已成为可持续发展面临的主要问题, 日益引起国际社会的广泛关注。风能作为一种重要的可再生能源, 具有清洁、无污染、安全、 储量丰富的特点, 受到世界各国的普遍重视。本书全面详细地讲解了水平轴风力机的空气动力学、设计载荷、概念设计、零部件设计、风力机安装和风电场规划等内",
+      "order": 4,
+      "previousId": "5da5c3fc35befea9",
+      "nextId": "234683cd44ed157b",
+      "codeFiles": []
+    },
+    {
+      "id": "234683cd44ed157b",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/03-cip/index.md",
+      "title": "图书在版编目 (CIP) 数据",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风能技术:第 2 版/(美)Tony Burton, Nick Jenkins, David Sharpe, Ervin Bossanyi 著；武鑫译. 一北京:科学出版社，2014. 1",
+      "order": 5,
+      "previousId": "a76e1b87b8230972",
+      "nextId": "dc99f98f3764ea68",
+      "codeFiles": []
+    },
+    {
+      "id": "dc99f98f3764ea68",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/04-chapter/index.md",
+      "title": "第二版致谢",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "《风能技术》第二版主要得益于为第一版提供持续帮助和支持的单位和个人。 同时也感谢许多没有参与第一版但为第二版提供了建议和专业知识的人，尤其是那些为第二版最新的海上风力发电章节提出建设性意见的人。作者要特别感谢 Rose King, 她基于自己的博士论文对海上电力系统进行了讨论, ",
+      "order": 6,
+      "previousId": "234683cd44ed157b",
+      "nextId": "bb23ea6832f4fd4c",
+      "codeFiles": []
+    },
+    {
+      "id": "bb23ea6832f4fd4c",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/05-chapter/index.md",
+      "title": "第一版致谢",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在本书的准备阶段，许多人以不同的方式给予作者大量的帮助。特别需要感谢: David Infield 为本书的第 4 章提供了大量的素材, David Quarton 审阅了本书的第 5 章; Mark Hancock, Martin Ansell, Colin Anderson ",
+      "order": 7,
+      "previousId": "dc99f98f3764ea68",
+      "nextId": "08eddefddc49930a",
+      "codeFiles": []
+    },
+    {
+      "id": "08eddefddc49930a",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/06-chapter/index.md",
+      "title": "译者序",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "继《风能技术》第一版(中文版)出版 6 周年之际，《风能技术》第二版与读者见面了。",
+      "order": 8,
+      "previousId": "bb23ea6832f4fd4c",
+      "nextId": "11dcae63c9bc878d",
+      "codeFiles": []
+    },
+    {
+      "id": "11dcae63c9bc878d",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/07-chapter/index.md",
+      "title": "第二版序",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "《风能技术》第二版，旨在反映自第一版出版发行近十年来发生在技术方面的主要创新和设计规则的衍变。在此期间, 风能发展的主要新方向是迅速扩张的海上风力发电。因此，本书有机会增加有关海上风力发电机组及海上风电场的新章节。",
+      "order": 9,
+      "previousId": "08eddefddc49930a",
+      "nextId": "d66c14a1ca981a19",
+      "codeFiles": []
+    },
+    {
+      "id": "d66c14a1ca981a19",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/08-chapter/index.md",
+      "title": "目 录",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "2.6.5 长度尺度及其他参数 22",
+      "order": 10,
+      "previousId": "11dcae63c9bc878d",
+      "nextId": "822749e9425d0c37",
+      "codeFiles": []
+    },
+    {
+      "id": "822749e9425d0c37",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/09-1/index.md",
+      "title": "第 1 章 概 论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "人类利用风能的历史较为悠久。最早可以追溯到 3000 年前风车的使用。那时候风车的主要用途是磨碎粮食和提水。当然，最早在海上航行的船只依靠的最基本动力源是风能。自中世纪起, 水平轴风车产业是农村经济构成的主要部分。 但是，随着廉价的化石燃料能源的出现以及农村电气化的实现，风车渐渐",
+      "order": 11,
+      "previousId": "d66c14a1ca981a19",
+      "nextId": "c783449d867b7cb4",
+      "codeFiles": []
+    },
+    {
+      "id": "c783449d867b7cb4",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/10-2/index.md",
+      "title": "第 2 章 风资源",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "可利用的风能与风速的立方成正比, 这一点对于理解风能特性及风能开发利用的诸多方面至关重要。通常, 风能开发利用包括选择合适的地理位置、对风电场工程项目的经济可行性的评估、风力机的设计以及对电网和终端用户的影响。",
+      "order": 12,
+      "previousId": "822749e9425d0c37",
+      "nextId": "2972e7a63b78855a",
+      "codeFiles": []
+    },
+    {
+      "id": "2972e7a63b78855a",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/11-3/index.md",
+      "title": "第 3 章 水平轴风力机的 空气动力学",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风力机是一种从风中吸取动能的装置。通过动能的转移，风速会下降，但是只有那些通过风轮圆盘的空气才会受到影响。假设将受影响的空气从那些没有经过风轮圆盘、没有从减速的空气中分离出来，那么就可以画出一个包含受到影响的空气团的边界面，该边界面分别向上游和下游延伸，从而形成一个横截面为圆形的",
+      "order": 13,
+      "previousId": "c783449d867b7cb4",
+      "nextId": "31e8ada49d7aece4",
+      "codeFiles": []
+    },
+    {
+      "id": "31e8ada49d7aece4",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/12-4/index.md",
+      "title": "第 4 章 深层次的风力机空气 动力学主题",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "第 3 章处理了风力机稳定状态下并且正对风向时的空气动力学特性，但是在实际情况中, 风的状况一般是不稳定的, 并且风力机总是可能会有几度的偏航误差。",
+      "order": 14,
+      "previousId": "2972e7a63b78855a",
+      "nextId": "5cb384207725396f",
+      "codeFiles": []
+    },
+    {
+      "id": "5cb384207725396f",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/13-5/index.md",
+      "title": "第 5 章 水平轴风力机 设计载荷",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "国家和国际标准的内容包括始于 20 世纪 80 年代的风力发电机组设计准则。 第一个出版的是 Germanischer Lloyd 在 1986 年草拟的一套认证准则。这些最初的准则随着知识体系的发展而被逐渐完善, 并促成 Germanischer Lloyd 的《风能转换系统的",
+      "order": 15,
+      "previousId": "31e8ada49d7aece4",
+      "nextId": "0761e9c08906d3e1",
+      "codeFiles": []
+    },
+    {
+      "id": "0761e9c08906d3e1",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/14-6/index.md",
+      "title": "第 6 章 水平轴风力机的 概念设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "一般用于并网发电的水平轴风力机，在机械结构、功率控制策略和制动系统等方面具有多种选择方案。本章着眼于不同的设计选择，并考虑在每种情况下传统选择的利与弊。考虑某个方面所作出的决定会对另一个方面有所影响, 这种影响有时候是不可避免的, 将在后文讲解该内容。",
+      "order": 16,
+      "previousId": "5cb384207725396f",
+      "nextId": "a5f5b637c8a8fc7c",
+      "codeFiles": []
+    },
+    {
+      "id": "a5f5b637c8a8fc7c",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/15-7/index.md",
+      "title": "第 7 章 零部件设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "一个成功的叶片设计必须满足多项技术指标, 其中某些指标之间会相互制约, 具体指标可归纳如下:",
+      "order": 17,
+      "previousId": "0761e9c08906d3e1",
+      "nextId": "119f61f7fa3db4c8",
+      "codeFiles": []
+    },
+    {
+      "id": "119f61f7fa3db4c8",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/16-8/index.md",
+      "title": "第 8 章 控制器",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "整机运行状态控制, 即风力发电机组由一种运行状态到另一种运行状态的转换过渡过程控制。风力发电机组的运行状态一般包括以下几种:",
+      "order": 18,
+      "previousId": "a5f5b637c8a8fc7c",
+      "nextId": "0046de9582f91c05",
+      "codeFiles": []
+    },
+    {
+      "id": "0046de9582f91c05",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/17-9/index.md",
+      "title": "第 9 章 风力机安装和风电场",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "对于任何风力机的安装，一些辅助工作都是必不可少的(如地基和出入风电场道路的建设、电网架设、场址建设以及项目开发和管理)。对于平坦的陆上场址，如丹麦和德国北部的典型场址, 总投资成本大约是前期工作成本的 1.3 倍 (EUREC 协会，1996)。在英国，场址通常选在比较偏远的丘陵",
+      "order": 19,
+      "previousId": "119f61f7fa3db4c8",
+      "nextId": "98b45e56d159b4c4",
+      "codeFiles": []
+    },
+    {
+      "id": "98b45e56d159b4c4",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/18-10/index.md",
+      "title": "第 10 章 风能和电力系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "由于风能是一种分散式能源, 风电场和单台风力机通常分布于广阔的地理空间, 因而公共电力系统最开始构建从传统的发电机 (火电和水电) 给个别用户负荷供电，后电网通常扩展来吸收电能。小型的风电场和个别的风电机组连接至配电系统被称为分布式发电 (Jenkins 等, 2010)。大型风",
+      "order": 20,
+      "previousId": "0046de9582f91c05",
+      "nextId": "e870790b4ce0eea5",
+      "codeFiles": []
+    },
+    {
+      "id": "e870790b4ce0eea5",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/19-11/index.md",
+      "title": "第 11 章 海上风力发电机组 和风电场",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "海上风力发电正在迅速发展(图 11.1)，在 2010 年，总装机容量约为 3000MW， 约占全世界风电场总容量的 1.5%。许多北欧国家开发大规模的陆上风电场变得很困难，所以将注意力转移到海上风力发电领域，风电场主要在北海和波罗的海沿岸。为了满足其温室气体减排的指标, 英国提",
+      "order": 21,
+      "previousId": "98b45e56d159b4c4",
+      "nextId": "e808772724184cbe",
+      "codeFiles": []
+    },
+    {
+      "id": "e808772724184cbe",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/20-chapter/index.md",
+      "title": "参考文献",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "1. DNV, Vindeby, 5MW. [Online] [Cited: 0805, 2010.] http://www.dnv.com/industry/energy/ segments/windwavetidal/offshorereferences/vindeby.as",
+      "order": 22,
+      "previousId": "e870790b4ce0eea5",
+      "nextId": "8568f64bd0b3f3e5",
+      "codeFiles": []
+    },
+    {
+      "id": "8568f64bd0b3f3e5",
+      "bookSlug": "风能技术",
+      "relPath": "chapters/21-chapter/index.md",
+      "title": "符号表",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "${a}^{\\prime }\\;$ 切向诱导因子",
+      "order": 23,
+      "previousId": "e808772724184cbe",
+      "nextId": "",
+      "codeFiles": []
+    },
+    {
+      "id": "811b8e7782c84de7",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "index.md",
+      "title": "课程首页",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "从能量转换和设计要求出发，系统学习整机方案、关键部件、控制、监测与强度分析。",
+      "order": 1,
+      "previousId": "",
+      "nextId": "5c3fe2c4206008a7",
+      "codeFiles": []
+    },
+    {
+      "id": "5c3fe2c4206008a7",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "姚兴佳教授、博士生导师，沈阳工业大学风能技术研究所所长，中国可再生能源学会风能专业委员会副主任，国家科技支撑计划“大功率风电机组研制与示范”项目总体专家组组长，海上风力发电技术与检测国家重点实验室学术委员会主任，辽宁省风力发电技术重点实验室主任。获得国务院政府特殊津贴、“全国优秀",
+      "order": 2,
+      "previousId": "811b8e7782c84de7",
+      "nextId": "2f71b0d12a49352d",
+      "codeFiles": []
+    },
+    {
+      "id": "2f71b0d12a49352d",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/01-chapter/index.md",
+      "title": "第1章 绪论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章重点介绍了本书涉及的风力发电（风电）机组理论与设计的基本内容，包括风力发电机组的设计依据、设计内容、设计原则和设计步骤。同时还简要介绍了几种风力发电机组的设计软件。",
+      "order": 3,
+      "previousId": "5c3fe2c4206008a7",
+      "nextId": "7e4f7bb8c9c1e3a7",
+      "codeFiles": []
+    },
+    {
+      "id": "7e4f7bb8c9c1e3a7",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/02-chapter/index.md",
+      "title": "第2章 能量转换和传输理论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风力发电机组能量转换和传输理论是风力发电机组设计计算的基础，本章仅介绍其核心部分。包括风能捕获理论、能量传递理论和机电能量转换理论。",
+      "order": 4,
+      "previousId": "2f71b0d12a49352d",
+      "nextId": "13727d2a1d766ba7",
+      "codeFiles": []
+    },
+    {
+      "id": "13727d2a1d766ba7",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/03-chapter/index.md",
+      "title": "第3章 风力发电机组设计要求",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "为了保证所设计的风力发电机组安全可靠，国内外的相关标准都规定了风力发电机组设计的技术要求。这些技术要求是设计中必须遵守的内容，设计人员应该掌握和应用。本章根据IEC 61400-1-2005和IEC 61400-3-2009介绍了风力发电机组的外部条件和结构设计的方法。",
+      "order": 5,
+      "previousId": "7e4f7bb8c9c1e3a7",
+      "nextId": "cb32a88a2e34adc0",
+      "codeFiles": []
+    },
+    {
+      "id": "cb32a88a2e34adc0",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/04-chapter/index.md",
+      "title": "第4章 载荷",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章介绍了风力发电机组的载荷及其分析计算方法。包括载荷及其坐标系、坐标系的转换、载荷分类、载荷源、疲劳载荷分析、极限载荷分析和载荷叠加等。同时介绍了如何使用载荷计算软件。",
+      "order": 6,
+      "previousId": "13727d2a1d766ba7",
+      "nextId": "6e361bc0312f7f78",
+      "codeFiles": []
+    },
+    {
+      "id": "6e361bc0312f7f78",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/05-chapter/index.md",
+      "title": "第5章 总体设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风力发电机组的总体设计是相对于局部设计的一个概念，总体设计是设计内容的一部分。主要包括总体参数设计、总体功能设计、总体布局设计、模型试验和总体成本模型等。",
+      "order": 7,
+      "previousId": "cb32a88a2e34adc0",
+      "nextId": "fa2d12df61dbc4c1",
+      "codeFiles": []
+    },
+    {
+      "id": "fa2d12df61dbc4c1",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/06-chapter/index.md",
+      "title": "第6章 风轮",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风轮是风力机的核心部件，由叶片和轮毂组成。本章介绍风轮的设计问题。包括风轮设计概述、翼型介绍、叶片气动设计、叶片结构设计和轮毂的设计等。",
+      "order": 8,
+      "previousId": "6e361bc0312f7f78",
+      "nextId": "270803e6c5dc4093",
+      "codeFiles": []
+    },
+    {
+      "id": "270803e6c5dc4093",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/07-chapter/index.md",
+      "title": "第7章 风力发电机",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "发电机是风力发电机组的重要部件，它把风力机主轴输出的机械能转换成电能并输送给电网（或储存在蓄电池中）。与其他类型电机一样，风力发电机的工作原理基于电磁感应定律和电磁力定律。电磁感应定律指出，导体在磁场中切割磁力线运动时将感生电动势；电磁力定律指出，处于磁场中的载流导体将产生电磁力",
+      "order": 9,
+      "previousId": "fa2d12df61dbc4c1",
+      "nextId": "70454f21f4efd814",
+      "codeFiles": []
+    },
+    {
+      "id": "70454f21f4efd814",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/08-chapter/index.md",
+      "title": "第8章 主传动链",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章讨论风力发电机组中传递机械能所需的传动链主要部件设计。包括主轴、主轴承、主齿轮箱、联轴器和机舱。",
+      "order": 10,
+      "previousId": "270803e6c5dc4093",
+      "nextId": "a5d76fc3318db048",
+      "codeFiles": []
+    },
+    {
+      "id": "a5d76fc3318db048",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/09-chapter/index.md",
+      "title": "第9章 塔架与基础",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "塔架与基础是风力发电机组的主要承载结构，要承受机舱重量、风轮作用力以及风作用在塔筒上的弯矩、剪力、转矩等作用，还要承受风轮引起的振动载荷。塔架的重量占风力发电机组总重的50％左右，其造价占风力发电机组造价的15％～50％。目前，国家已经发布了有关标准，如《GB/T 19072—2",
+      "order": 11,
+      "previousId": "70454f21f4efd814",
+      "nextId": "ce860997cd85bc1b",
+      "codeFiles": []
+    },
+    {
+      "id": "ce860997cd85bc1b",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/10-chapter/index.md",
+      "title": "第10章 控制系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章重点介绍风力发电机组控制系统的设计，包括制动机构、变桨距系统、偏航系统、主控系统和安全保障系统等。",
+      "order": 12,
+      "previousId": "a5d76fc3318db048",
+      "nextId": "8e6e2afae4517048",
+      "codeFiles": []
+    },
+    {
+      "id": "8e6e2afae4517048",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/11-chapter/index.md",
+      "title": "第11章 状态监测及故障诊断",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章介绍了风力发电机组的常见故障及原因、状态监测及故障诊断的方法，叙述了以双馈式风力发电机组为监测对象的在线监测及故障诊断系统的结构组成、功能模块及应用。",
+      "order": 13,
+      "previousId": "ce860997cd85bc1b",
+      "nextId": "9e7e6384ca72b320",
+      "codeFiles": []
+    },
+    {
+      "id": "9e7e6384ca72b320",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "chapters/12-chapter/index.md",
+      "title": "第12章 强度分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章主要介绍以数值计算为主的风力发电机组强度分析方法。包括静强度分析、模态分析、疲劳强度分析和屈曲稳定性分析等。",
+      "order": 14,
+      "previousId": "8e6e2afae4517048",
+      "nextId": "3792b6514ebcfb8b",
+      "codeFiles": []
+    },
+    {
+      "id": "3792b6514ebcfb8b",
+      "bookSlug": "wind-turbine-theory-and-design",
+      "relPath": "99-back-matter/index.md",
+      "title": "参考文献与附加信息",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "\\[1\\] 姚兴佳，宋俊，等.风力发电机组原理与应用\\[M\\].2版.北京：机械工业出版社，2011.",
+      "order": 15,
+      "previousId": "9e7e6384ca72b320",
+      "nextId": "",
+      "codeFiles": []
     }
   ],
   "code": [
@@ -552,7 +1342,7 @@
       "name": "说明.txt",
       "kind": "text",
       "language": "text",
-      "size": 49,
+      "size": 50,
       "downloadUrl": "files/code/shangguigu-python/chapter-01/%E8%AF%B4%E6%98%8E.txt",
       "truncated": false
     },
@@ -563,7 +1353,7 @@
       "name": "说明.txt",
       "kind": "text",
       "language": "text",
-      "size": 49,
+      "size": 50,
       "downloadUrl": "files/code/shangguigu-python/chapter-02/%E8%AF%B4%E6%98%8E.txt",
       "truncated": false
     },
@@ -574,7 +1364,7 @@
       "name": "01_字面量.py",
       "kind": "source",
       "language": "python",
-      "size": 85,
+      "size": 86,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/01_%E5%AD%97%E9%9D%A2%E9%87%8F.py",
       "truncated": false
     },
@@ -585,7 +1375,7 @@
       "name": "02_变量.py",
       "kind": "source",
       "language": "python",
-      "size": 230,
+      "size": 231,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/02_%E5%8F%98%E9%87%8F.py",
       "truncated": false
     },
@@ -596,7 +1386,7 @@
       "name": "03_标识符命名规则.py",
       "kind": "source",
       "language": "python",
-      "size": 157,
+      "size": 158,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/03_%E6%A0%87%E8%AF%86%E7%AC%A6%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.py",
       "truncated": false
     },
@@ -607,7 +1397,7 @@
       "name": "04_常量.py",
       "kind": "source",
       "language": "python",
-      "size": 154,
+      "size": 155,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/04_%E5%B8%B8%E9%87%8F.py",
       "truncated": false
     },
@@ -618,7 +1408,7 @@
       "name": "05_注释.py",
       "kind": "source",
       "language": "python",
-      "size": 528,
+      "size": 529,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/05_%E6%B3%A8%E9%87%8A.py",
       "truncated": false
     },
@@ -629,7 +1419,7 @@
       "name": "06_字符编码.py",
       "kind": "source",
       "language": "python",
-      "size": 167,
+      "size": 168,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/06_%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81.py",
       "truncated": false
     },
@@ -640,7 +1430,7 @@
       "name": "07_数据类型.py",
       "kind": "source",
       "language": "python",
-      "size": 219,
+      "size": 220,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/07_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.py",
       "truncated": false
     },
@@ -651,7 +1441,7 @@
       "name": "08_整型.py",
       "kind": "source",
       "language": "python",
-      "size": 461,
+      "size": 462,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/08_%E6%95%B4%E5%9E%8B.py",
       "truncated": false
     },
@@ -662,7 +1452,7 @@
       "name": "09_浮点型.py",
       "kind": "source",
       "language": "python",
-      "size": 464,
+      "size": 465,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/09_%E6%B5%AE%E7%82%B9%E5%9E%8B.py",
       "truncated": false
     },
@@ -673,7 +1463,7 @@
       "name": "10_字符串_四种定义方式.py",
       "kind": "source",
       "language": "python",
-      "size": 591,
+      "size": 592,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/10_%E5%AD%97%E7%AC%A6%E4%B8%B2_%E5%9B%9B%E7%A7%8D%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F.py",
       "truncated": false
     },
@@ -684,7 +1474,7 @@
       "name": "11_字符串_格式化输出.py",
       "kind": "source",
       "language": "python",
-      "size": 641,
+      "size": 642,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/11_%E5%AD%97%E7%AC%A6%E4%B8%B2_%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA.py",
       "truncated": false
     },
@@ -695,7 +1485,7 @@
       "name": "12_字符串_占位符精度控制.py",
       "kind": "source",
       "language": "python",
-      "size": 179,
+      "size": 180,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/12_%E5%AD%97%E7%AC%A6%E4%B8%B2_%E5%8D%A0%E4%BD%8D%E7%AC%A6%E7%B2%BE%E5%BA%A6%E6%8E%A7%E5%88%B6.py",
       "truncated": false
     },
@@ -706,7 +1496,7 @@
       "name": "13_字符串_转义字符.py",
       "kind": "source",
       "language": "python",
-      "size": 797,
+      "size": 798,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/13_%E5%AD%97%E7%AC%A6%E4%B8%B2_%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6.py",
       "truncated": false
     },
@@ -717,7 +1507,7 @@
       "name": "14_数据类型转换.py",
       "kind": "source",
       "language": "python",
-      "size": 1082,
+      "size": 1083,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/14_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.py",
       "truncated": false
     },
@@ -728,7 +1518,7 @@
       "name": "15_算数运算符.py",
       "kind": "source",
       "language": "python",
-      "size": 157,
+      "size": 158,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/15_%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6.py",
       "truncated": false
     },
@@ -739,7 +1529,7 @@
       "name": "16_赋值运算符.py",
       "kind": "source",
       "language": "python",
-      "size": 90,
+      "size": 91,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/16_%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6.py",
       "truncated": false
     },
@@ -750,7 +1540,7 @@
       "name": "17_赋值_复合赋值运算符.py",
       "kind": "source",
       "language": "python",
-      "size": 917,
+      "size": 918,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/17_%E8%B5%8B%E5%80%BC_%E5%A4%8D%E5%90%88%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6.py",
       "truncated": false
     },
@@ -761,7 +1551,7 @@
       "name": "18_比较运算符.py",
       "kind": "source",
       "language": "python",
-      "size": 1124,
+      "size": 1125,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/18_%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6.py",
       "truncated": false
     },
@@ -772,7 +1562,7 @@
       "name": "19_布尔类型.py",
       "kind": "source",
       "language": "python",
-      "size": 897,
+      "size": 898,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/19_%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B.py",
       "truncated": false
     },
@@ -783,7 +1573,7 @@
       "name": "20_逻辑运算符.py",
       "kind": "source",
       "language": "python",
-      "size": 1909,
+      "size": 1910,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/20_%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6.py",
       "truncated": false
     },
@@ -794,7 +1584,7 @@
       "name": "21_进制.py",
       "kind": "source",
       "language": "python",
-      "size": 995,
+      "size": 996,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/21_%E8%BF%9B%E5%88%B6.py",
       "truncated": false
     },
@@ -805,7 +1595,7 @@
       "name": "22_输入语句.py",
       "kind": "source",
       "language": "python",
-      "size": 378,
+      "size": 379,
       "downloadUrl": "files/code/shangguigu-python/chapter-03/22_%E8%BE%93%E5%85%A5%E8%AF%AD%E5%8F%A5.py",
       "truncated": false
     },
@@ -816,7 +1606,7 @@
       "name": "01_单分支.py",
       "kind": "source",
       "language": "python",
-      "size": 194,
+      "size": 195,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/01_%E5%8D%95%E5%88%86%E6%94%AF.py",
       "truncated": false
     },
@@ -827,7 +1617,7 @@
       "name": "02_双分支.py",
       "kind": "source",
       "language": "python",
-      "size": 294,
+      "size": 295,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/02_%E5%8F%8C%E5%88%86%E6%94%AF.py",
       "truncated": false
     },
@@ -838,7 +1628,7 @@
       "name": "03_多分支.py",
       "kind": "source",
       "language": "python",
-      "size": 312,
+      "size": 313,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/03_%E5%A4%9A%E5%88%86%E6%94%AF.py",
       "truncated": false
     },
@@ -849,7 +1639,7 @@
       "name": "04_嵌套分之.py",
       "kind": "source",
       "language": "python",
-      "size": 1172,
+      "size": 1173,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/04_%E5%B5%8C%E5%A5%97%E5%88%86%E4%B9%8B.py",
       "truncated": false
     },
@@ -860,7 +1650,7 @@
       "name": "05_while_循环.py",
       "kind": "source",
       "language": "python",
-      "size": 179,
+      "size": 180,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/05_while_%E5%BE%AA%E7%8E%AF.py",
       "truncated": false
     },
@@ -871,7 +1661,7 @@
       "name": "06_while_循环案例.py",
       "kind": "source",
       "language": "python",
-      "size": 409,
+      "size": 410,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/06_while_%E5%BE%AA%E7%8E%AF%E6%A1%88%E4%BE%8B.py",
       "truncated": false
     },
@@ -882,7 +1672,7 @@
       "name": "07_for_循环.py",
       "kind": "source",
       "language": "python",
-      "size": 584,
+      "size": 585,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/07_for_%E5%BE%AA%E7%8E%AF.py",
       "truncated": false
     },
@@ -893,7 +1683,7 @@
       "name": "08_for_循环案例.py",
       "kind": "source",
       "language": "python",
-      "size": 375,
+      "size": 376,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/08_for_%E5%BE%AA%E7%8E%AF%E6%A1%88%E4%BE%8B.py",
       "truncated": false
     },
@@ -904,7 +1694,7 @@
       "name": "09_嵌套循环.py",
       "kind": "source",
       "language": "python",
-      "size": 724,
+      "size": 725,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/09_%E5%B5%8C%E5%A5%97%E5%BE%AA%E7%8E%AF.py",
       "truncated": false
     },
@@ -915,7 +1705,7 @@
       "name": "10_九九乘法表.py",
       "kind": "source",
       "language": "python",
-      "size": 238,
+      "size": 239,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/10_%E4%B9%9D%E4%B9%9D%E4%B9%98%E6%B3%95%E8%A1%A8.py",
       "truncated": false
     },
@@ -926,7 +1716,7 @@
       "name": "11_continue与break.py",
       "kind": "source",
       "language": "python",
-      "size": 1733,
+      "size": 1734,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/11_continue%E4%B8%8Ebreak.py",
       "truncated": false
     },
@@ -937,7 +1727,7 @@
       "name": "12_综合案例.py",
       "kind": "source",
       "language": "python",
-      "size": 2274,
+      "size": 2275,
       "downloadUrl": "files/code/shangguigu-python/chapter-04/12_%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B.py",
       "truncated": false
     },
@@ -948,7 +1738,7 @@
       "name": "01_函数_基本使用.py",
       "kind": "source",
       "language": "python",
-      "size": 226,
+      "size": 227,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/01_%E5%87%BD%E6%95%B0_%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8.py",
       "truncated": false
     },
@@ -959,7 +1749,7 @@
       "name": "02_函数_参数的使用.py",
       "kind": "source",
       "language": "python",
-      "size": 361,
+      "size": 362,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/02_%E5%87%BD%E6%95%B0_%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8.py",
       "truncated": false
     },
@@ -970,7 +1760,7 @@
       "name": "03_函数_位置参数.py",
       "kind": "source",
       "language": "python",
-      "size": 368,
+      "size": 369,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/03_%E5%87%BD%E6%95%B0_%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0.py",
       "truncated": false
     },
@@ -981,7 +1771,7 @@
       "name": "04_函数_关键字参数.py",
       "kind": "source",
       "language": "python",
-      "size": 633,
+      "size": 634,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/04_%E5%87%BD%E6%95%B0_%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0.py",
       "truncated": false
     },
@@ -992,7 +1782,7 @@
       "name": "05_函数_限制传参方式.py",
       "kind": "source",
       "language": "python",
-      "size": 410,
+      "size": 411,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/05_%E5%87%BD%E6%95%B0_%E9%99%90%E5%88%B6%E4%BC%A0%E5%8F%82%E6%96%B9%E5%BC%8F.py",
       "truncated": false
     },
@@ -1003,7 +1793,7 @@
       "name": "06_函数_参数默认值.py",
       "kind": "source",
       "language": "python",
-      "size": 443,
+      "size": 444,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/06_%E5%87%BD%E6%95%B0_%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC.py",
       "truncated": false
     },
@@ -1014,7 +1804,7 @@
       "name": "07_函数_可变参数.py",
       "kind": "source",
       "language": "python",
-      "size": 857,
+      "size": 858,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/07_%E5%87%BD%E6%95%B0_%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0.py",
       "truncated": false
     },
@@ -1025,7 +1815,7 @@
       "name": "08_None.py",
       "kind": "source",
       "language": "python",
-      "size": 345,
+      "size": 346,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/08_None.py",
       "truncated": false
     },
@@ -1036,7 +1826,7 @@
       "name": "09_函数_返回值.py",
       "kind": "source",
       "language": "python",
-      "size": 297,
+      "size": 298,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/09_%E5%87%BD%E6%95%B0_%E8%BF%94%E5%9B%9E%E5%80%BC.py",
       "truncated": false
     },
@@ -1047,7 +1837,7 @@
       "name": "10_全局作用域_局部作用域.py",
       "kind": "source",
       "language": "python",
-      "size": 956,
+      "size": 957,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/10_%E5%85%A8%E5%B1%80%E4%BD%9C%E7%94%A8%E5%9F%9F_%E5%B1%80%E9%83%A8%E4%BD%9C%E7%94%A8%E5%9F%9F.py",
       "truncated": false
     },
@@ -1058,7 +1848,7 @@
       "name": "11_函数_嵌套调用.py",
       "kind": "source",
       "language": "python",
-      "size": 665,
+      "size": 666,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/11_%E5%87%BD%E6%95%B0_%E5%B5%8C%E5%A5%97%E8%B0%83%E7%94%A8.py",
       "truncated": false
     },
@@ -1069,7 +1859,7 @@
       "name": "12_函数_递归调用.py",
       "kind": "source",
       "language": "python",
-      "size": 343,
+      "size": 344,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/12_%E5%87%BD%E6%95%B0_%E9%80%92%E5%BD%92%E8%B0%83%E7%94%A8.py",
       "truncated": false
     },
@@ -1080,7 +1870,7 @@
       "name": "13_函数_递归的应用.py",
       "kind": "source",
       "language": "python",
-      "size": 203,
+      "size": 204,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/13_%E5%87%BD%E6%95%B0_%E9%80%92%E5%BD%92%E7%9A%84%E5%BA%94%E7%94%A8.py",
       "truncated": false
     },
@@ -1091,7 +1881,7 @@
       "name": "14_函数_说明文档.py",
       "kind": "source",
       "language": "python",
-      "size": 204,
+      "size": 205,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/14_%E5%87%BD%E6%95%B0_%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3.py",
       "truncated": false
     },
@@ -1102,7 +1892,7 @@
       "name": "15_综合案例.py",
       "kind": "source",
       "language": "python",
-      "size": 1682,
+      "size": 1683,
       "downloadUrl": "files/code/shangguigu-python/chapter-05/15_%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B.py",
       "truncated": false
     },
@@ -1113,7 +1903,7 @@
       "name": "01_列表_定义列表.py",
       "kind": "source",
       "language": "python",
-      "size": 469,
+      "size": 470,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/01_%E5%88%97%E8%A1%A8_%E5%AE%9A%E4%B9%89%E5%88%97%E8%A1%A8.py",
       "truncated": false
     },
@@ -1124,7 +1914,7 @@
       "name": "02_列表_下标(索引值).py",
       "kind": "source",
       "language": "python",
-      "size": 447,
+      "size": 448,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/02_%E5%88%97%E8%A1%A8_%E4%B8%8B%E6%A0%87%28%E7%B4%A2%E5%BC%95%E5%80%BC%29.py",
       "truncated": false
     },
@@ -1135,7 +1925,7 @@
       "name": "03_列表_增删改查.py",
       "kind": "source",
       "language": "python",
-      "size": 1321,
+      "size": 1322,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/03_%E5%88%97%E8%A1%A8_%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.py",
       "truncated": false
     },
@@ -1146,7 +1936,7 @@
       "name": "04_列表_常用方法.py",
       "kind": "source",
       "language": "python",
-      "size": 1427,
+      "size": 1428,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/04_%E5%88%97%E8%A1%A8_%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -1157,7 +1947,7 @@
       "name": "05_列表_常用内置函数.py",
       "kind": "source",
       "language": "python",
-      "size": 2084,
+      "size": 2085,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/05_%E5%88%97%E8%A1%A8_%E5%B8%B8%E7%94%A8%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0.py",
       "truncated": false
     },
@@ -1168,7 +1958,7 @@
       "name": "06_列表_循环遍历.py",
       "kind": "source",
       "language": "python",
-      "size": 811,
+      "size": 812,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/06_%E5%88%97%E8%A1%A8_%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86.py",
       "truncated": false
     },
@@ -1179,7 +1969,7 @@
       "name": "07_列表_小练习.py",
       "kind": "source",
       "language": "python",
-      "size": 1371,
+      "size": 1372,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/07_%E5%88%97%E8%A1%A8_%E5%B0%8F%E7%BB%83%E4%B9%A0.py",
       "truncated": false
     },
@@ -1190,7 +1980,7 @@
       "name": "08_元组.py",
       "kind": "source",
       "language": "python",
-      "size": 2366,
+      "size": 2367,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/08_%E5%85%83%E7%BB%84.py",
       "truncated": false
     },
@@ -1201,7 +1991,7 @@
       "name": "09_函数_解包列表或元组传参.py",
       "kind": "source",
       "language": "python",
-      "size": 658,
+      "size": 659,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/09_%E5%87%BD%E6%95%B0_%E8%A7%A3%E5%8C%85%E5%88%97%E8%A1%A8%E6%88%96%E5%85%83%E7%BB%84%E4%BC%A0%E5%8F%82.py",
       "truncated": false
     },
@@ -1212,7 +2002,7 @@
       "name": "10_函数_综合案例（优化版）.py",
       "kind": "source",
       "language": "python",
-      "size": 1678,
+      "size": 1679,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/10_%E5%87%BD%E6%95%B0_%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B%EF%BC%88%E4%BC%98%E5%8C%96%E7%89%88%EF%BC%89.py",
       "truncated": false
     },
@@ -1223,7 +2013,7 @@
       "name": "11_字符串（数据容器角度）.py",
       "kind": "source",
       "language": "python",
-      "size": 2102,
+      "size": 2103,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/11_%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8%E8%A7%92%E5%BA%A6%EF%BC%89.py",
       "truncated": false
     },
@@ -1234,7 +2024,7 @@
       "name": "12_序列的切片操作.py",
       "kind": "source",
       "language": "python",
-      "size": 1330,
+      "size": 1331,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/12_%E5%BA%8F%E5%88%97%E7%9A%84%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C.py",
       "truncated": false
     },
@@ -1245,7 +2035,7 @@
       "name": "13_序列的其他操作.py",
       "kind": "source",
       "language": "python",
-      "size": 595,
+      "size": 596,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/13_%E5%BA%8F%E5%88%97%E7%9A%84%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C.py",
       "truncated": false
     },
@@ -1256,7 +2046,7 @@
       "name": "14_集合_定义集合.py",
       "kind": "source",
       "language": "python",
-      "size": 1596,
+      "size": 1597,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/14_%E9%9B%86%E5%90%88_%E5%AE%9A%E4%B9%89%E9%9B%86%E5%90%88.py",
       "truncated": false
     },
@@ -1267,7 +2057,7 @@
       "name": "15_集合_增删改查.py",
       "kind": "source",
       "language": "python",
-      "size": 1497,
+      "size": 1498,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/15_%E9%9B%86%E5%90%88_%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.py",
       "truncated": false
     },
@@ -1278,7 +2068,7 @@
       "name": "16_集合_常用方法.py",
       "kind": "source",
       "language": "python",
-      "size": 1690,
+      "size": 1691,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/16_%E9%9B%86%E5%90%88_%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -1289,7 +2079,7 @@
       "name": "17_集合_数学运算.py",
       "kind": "source",
       "language": "python",
-      "size": 247,
+      "size": 248,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/17_%E9%9B%86%E5%90%88_%E6%95%B0%E5%AD%A6%E8%BF%90%E7%AE%97.py",
       "truncated": false
     },
@@ -1300,7 +2090,7 @@
       "name": "18_集合_循环遍历.py",
       "kind": "source",
       "language": "python",
-      "size": 252,
+      "size": 253,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/18_%E9%9B%86%E5%90%88_%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86.py",
       "truncated": false
     },
@@ -1311,7 +2101,7 @@
       "name": "19_字典_定义字典.py",
       "kind": "source",
       "language": "python",
-      "size": 1247,
+      "size": 1248,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/19_%E5%AD%97%E5%85%B8_%E5%AE%9A%E4%B9%89%E5%AD%97%E5%85%B8.py",
       "truncated": false
     },
@@ -1322,7 +2112,7 @@
       "name": "20_字典_增删改查.py",
       "kind": "source",
       "language": "python",
-      "size": 1276,
+      "size": 1277,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/20_%E5%AD%97%E5%85%B8_%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.py",
       "truncated": false
     },
@@ -1333,7 +2123,7 @@
       "name": "21_字典_常用方法.py",
       "kind": "source",
       "language": "python",
-      "size": 1057,
+      "size": 1058,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/21_%E5%AD%97%E5%85%B8_%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -1344,7 +2134,7 @@
       "name": "22_字典_循环遍历.py",
       "kind": "source",
       "language": "python",
-      "size": 247,
+      "size": 248,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/22_%E5%AD%97%E5%85%B8_%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86.py",
       "truncated": false
     },
@@ -1355,7 +2145,7 @@
       "name": "23_数据容器_通用操作.py",
       "kind": "source",
       "language": "python",
-      "size": 2708,
+      "size": 2709,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/23_%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8_%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C.py",
       "truncated": false
     },
@@ -1366,7 +2156,7 @@
       "name": "24_数据容器_小练习.py",
       "kind": "source",
       "language": "python",
-      "size": 2389,
+      "size": 2390,
       "downloadUrl": "files/code/shangguigu-python/chapter-06/24_%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8_%E5%B0%8F%E7%BB%83%E4%B9%A0.py",
       "truncated": false
     },
@@ -1377,7 +2167,7 @@
       "name": "01_类的定义.py",
       "kind": "source",
       "language": "python",
-      "size": 696,
+      "size": 697,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/01_%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89.py",
       "truncated": false
     },
@@ -1388,7 +2178,7 @@
       "name": "02_创建实例.py",
       "kind": "source",
       "language": "python",
-      "size": 1037,
+      "size": 1038,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/02_%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B.py",
       "truncated": false
     },
@@ -1399,7 +2189,7 @@
       "name": "03_自定义方法.py",
       "kind": "source",
       "language": "python",
-      "size": 1378,
+      "size": 1379,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/03_%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -1410,7 +2200,7 @@
       "name": "04_实例属性.py",
       "kind": "source",
       "language": "python",
-      "size": 664,
+      "size": 665,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/04_%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7.py",
       "truncated": false
     },
@@ -1421,7 +2211,7 @@
       "name": "05_类属性.py",
       "kind": "source",
       "language": "python",
-      "size": 1550,
+      "size": 1551,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/05_%E7%B1%BB%E5%B1%9E%E6%80%A7.py",
       "truncated": false
     },
@@ -1432,7 +2222,7 @@
       "name": "06_实例方法.py",
       "kind": "source",
       "language": "python",
-      "size": 1010,
+      "size": 1011,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/06_%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -1443,7 +2233,7 @@
       "name": "07_类方法.py",
       "kind": "source",
       "language": "python",
-      "size": 2041,
+      "size": 2042,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/07_%E7%B1%BB%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -1454,7 +2244,7 @@
       "name": "08_静态方法.py",
       "kind": "source",
       "language": "python",
-      "size": 1490,
+      "size": 1491,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/08_%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -1465,7 +2255,7 @@
       "name": "09_继承.py",
       "kind": "source",
       "language": "python",
-      "size": 1396,
+      "size": 1397,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/09_%E7%BB%A7%E6%89%BF.py",
       "truncated": false
     },
@@ -1476,7 +2266,7 @@
       "name": "10_方法重写.py",
       "kind": "source",
       "language": "python",
-      "size": 923,
+      "size": 924,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/10_%E6%96%B9%E6%B3%95%E9%87%8D%E5%86%99.py",
       "truncated": false
     },
@@ -1487,7 +2277,7 @@
       "name": "11_两个常用方法.py",
       "kind": "source",
       "language": "python",
-      "size": 899,
+      "size": 900,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/11_%E4%B8%A4%E4%B8%AA%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -1498,7 +2288,7 @@
       "name": "12_多重继承.py",
       "kind": "source",
       "language": "python",
-      "size": 1311,
+      "size": 1312,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/12_%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF.py",
       "truncated": false
     },
@@ -1509,7 +2299,7 @@
       "name": "13_三种权限.py",
       "kind": "source",
       "language": "python",
-      "size": 991,
+      "size": 992,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/13_%E4%B8%89%E7%A7%8D%E6%9D%83%E9%99%90.py",
       "truncated": false
     },
@@ -1520,7 +2310,7 @@
       "name": "14_getter与setter.py",
       "kind": "source",
       "language": "python",
-      "size": 1510,
+      "size": 1511,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/14_getter%E4%B8%8Esetter.py",
       "truncated": false
     },
@@ -1531,7 +2321,7 @@
       "name": "15_魔法方法.py",
       "kind": "source",
       "language": "python",
-      "size": 1410,
+      "size": 1411,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/15_%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -1542,7 +2332,7 @@
       "name": "16_object类.py",
       "kind": "source",
       "language": "python",
-      "size": 1311,
+      "size": 1312,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/16_object%E7%B1%BB.py",
       "truncated": false
     },
@@ -1553,7 +2343,7 @@
       "name": "17_标准多态.py",
       "kind": "source",
       "language": "python",
-      "size": 778,
+      "size": 779,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/17_%E6%A0%87%E5%87%86%E5%A4%9A%E6%80%81.py",
       "truncated": false
     },
@@ -1564,7 +2354,7 @@
       "name": "18_鸭子多态.py",
       "kind": "source",
       "language": "python",
-      "size": 822,
+      "size": 823,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/18_%E9%B8%AD%E5%AD%90%E5%A4%9A%E6%80%81.py",
       "truncated": false
     },
@@ -1575,7 +2365,7 @@
       "name": "19_抽象类.py",
       "kind": "source",
       "language": "python",
-      "size": 700,
+      "size": 701,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/19_%E6%8A%BD%E8%B1%A1%E7%B1%BB.py",
       "truncated": false
     },
@@ -1586,7 +2376,7 @@
       "name": "20_小练习.py",
       "kind": "source",
       "language": "python",
-      "size": 4798,
+      "size": 4799,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/20_%E5%B0%8F%E7%BB%83%E4%B9%A0.py",
       "truncated": false
     },
@@ -1597,7 +2387,7 @@
       "name": "21_内存分析.py",
       "kind": "source",
       "language": "python",
-      "size": 301,
+      "size": 302,
       "downloadUrl": "files/code/shangguigu-python/chapter-07/21_%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90.py",
       "truncated": false
     },
@@ -1608,7 +2398,7 @@
       "name": "01_重新认识函数.py",
       "kind": "source",
       "language": "python",
-      "size": 1749,
+      "size": 1750,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/01_%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86%E5%87%BD%E6%95%B0.py",
       "truncated": false
     },
@@ -1619,7 +2409,7 @@
       "name": "02_多返回值_参数的打包与解包.py",
       "kind": "source",
       "language": "python",
-      "size": 1235,
+      "size": 1236,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/02_%E5%A4%9A%E8%BF%94%E5%9B%9E%E5%80%BC_%E5%8F%82%E6%95%B0%E7%9A%84%E6%89%93%E5%8C%85%E4%B8%8E%E8%A7%A3%E5%8C%85.py",
       "truncated": false
     },
@@ -1630,7 +2420,7 @@
       "name": "03_高阶函数.py",
       "kind": "source",
       "language": "python",
-      "size": 684,
+      "size": 685,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/03_%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0.py",
       "truncated": false
     },
@@ -1641,7 +2431,7 @@
       "name": "04_条件表达式.py",
       "kind": "source",
       "language": "python",
-      "size": 917,
+      "size": 918,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/04_%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F.py",
       "truncated": false
     },
@@ -1652,7 +2442,7 @@
       "name": "05_匿名函数.py",
       "kind": "source",
       "language": "python",
-      "size": 1342,
+      "size": 1343,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/05_%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0.py",
       "truncated": false
     },
@@ -1663,7 +2453,7 @@
       "name": "06_数据处理_map函数.py",
       "kind": "source",
       "language": "python",
-      "size": 1042,
+      "size": 1043,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/06_%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86_map%E5%87%BD%E6%95%B0.py",
       "truncated": false
     },
@@ -1674,7 +2464,7 @@
       "name": "07_数据处理_filter函数.py",
       "kind": "source",
       "language": "python",
-      "size": 1292,
+      "size": 1293,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/07_%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86_filter%E5%87%BD%E6%95%B0.py",
       "truncated": false
     },
@@ -1685,7 +2475,7 @@
       "name": "08_数据处理_sorted函数.py",
       "kind": "source",
       "language": "python",
-      "size": 1048,
+      "size": 1049,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/08_%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86_sorted%E5%87%BD%E6%95%B0.py",
       "truncated": false
     },
@@ -1696,7 +2486,7 @@
       "name": "09_数据处理_reduce函数.py",
       "kind": "source",
       "language": "python",
-      "size": 525,
+      "size": 526,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/09_%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86_reduce%E5%87%BD%E6%95%B0.py",
       "truncated": false
     },
@@ -1707,7 +2497,7 @@
       "name": "10_列表推导式.py",
       "kind": "source",
       "language": "python",
-      "size": 1319,
+      "size": 1320,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/10_%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F.py",
       "truncated": false
     },
@@ -1718,7 +2508,7 @@
       "name": "11_常用内置函数.py",
       "kind": "source",
       "language": "python",
-      "size": 3020,
+      "size": 3021,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/11_%E5%B8%B8%E7%94%A8%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0.py",
       "truncated": false
     },
@@ -1729,7 +2519,7 @@
       "name": "12_浅拷贝_深拷贝.py",
       "kind": "source",
       "language": "python",
-      "size": 1243,
+      "size": 1244,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/12_%E6%B5%85%E6%8B%B7%E8%B4%9D_%E6%B7%B1%E6%8B%B7%E8%B4%9D.py",
       "truncated": false
     },
@@ -1740,7 +2530,7 @@
       "name": "13_四种作用域.py",
       "kind": "source",
       "language": "python",
-      "size": 472,
+      "size": 473,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/13_%E5%9B%9B%E7%A7%8D%E4%BD%9C%E7%94%A8%E5%9F%9F.py",
       "truncated": false
     },
@@ -1751,7 +2541,7 @@
       "name": "14_闭包.py",
       "kind": "source",
       "language": "python",
-      "size": 3774,
+      "size": 3775,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/14_%E9%97%AD%E5%8C%85.py",
       "truncated": false
     },
@@ -1762,7 +2552,7 @@
       "name": "15_函数装饰器.py",
       "kind": "source",
       "language": "python",
-      "size": 2905,
+      "size": 2906,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/15_%E5%87%BD%E6%95%B0%E8%A3%85%E9%A5%B0%E5%99%A8.py",
       "truncated": false
     },
@@ -1773,7 +2563,7 @@
       "name": "16_类装饰器.py",
       "kind": "source",
       "language": "python",
-      "size": 1953,
+      "size": 1954,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/16_%E7%B1%BB%E8%A3%85%E9%A5%B0%E5%99%A8.py",
       "truncated": false
     },
@@ -1784,7 +2574,7 @@
       "name": "17_变量类型注解.py",
       "kind": "source",
       "language": "python",
-      "size": 2258,
+      "size": 2259,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/17_%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3.py",
       "truncated": false
     },
@@ -1795,7 +2585,7 @@
       "name": "18_函数类型注解.py",
       "kind": "source",
       "language": "python",
-      "size": 1096,
+      "size": 1097,
       "downloadUrl": "files/code/shangguigu-python/chapter-08/18_%E5%87%BD%E6%95%B0%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3.py",
       "truncated": false
     },
@@ -1806,7 +2596,7 @@
       "name": "01_错误与异常.py",
       "kind": "source",
       "language": "python",
-      "size": 1290,
+      "size": 1291,
       "downloadUrl": "files/code/shangguigu-python/chapter-09/01_%E9%94%99%E8%AF%AF%E4%B8%8E%E5%BC%82%E5%B8%B8.py",
       "truncated": false
     },
@@ -1817,7 +2607,7 @@
       "name": "02_异常处理.py",
       "kind": "source",
       "language": "python",
-      "size": 5942,
+      "size": 5943,
       "downloadUrl": "files/code/shangguigu-python/chapter-09/02_%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.py",
       "truncated": false
     },
@@ -1828,7 +2618,7 @@
       "name": "03_手动抛出异常.py",
       "kind": "source",
       "language": "python",
-      "size": 614,
+      "size": 615,
       "downloadUrl": "files/code/shangguigu-python/chapter-09/03_%E6%89%8B%E5%8A%A8%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8.py",
       "truncated": false
     },
@@ -1839,7 +2629,7 @@
       "name": "04_异常传递机制.py",
       "kind": "source",
       "language": "python",
-      "size": 687,
+      "size": 688,
       "downloadUrl": "files/code/shangguigu-python/chapter-09/04_%E5%BC%82%E5%B8%B8%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6.py",
       "truncated": false
     },
@@ -1850,7 +2640,7 @@
       "name": "05_自定义异常类.py",
       "kind": "source",
       "language": "python",
-      "size": 653,
+      "size": 654,
       "downloadUrl": "files/code/shangguigu-python/chapter-09/05_%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E7%B1%BB.py",
       "truncated": false
     },
@@ -1861,7 +2651,7 @@
       "name": "01_模块.py",
       "kind": "source",
       "language": "python",
-      "size": 2585,
+      "size": 2586,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/01_%E6%A8%A1%E5%9D%97.py",
       "truncated": false
     },
@@ -1872,7 +2662,7 @@
       "name": "02_标准库模块.py",
       "kind": "source",
       "language": "python",
-      "size": 1479,
+      "size": 1480,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/02_%E6%A0%87%E5%87%86%E5%BA%93%E6%A8%A1%E5%9D%97.py",
       "truncated": false
     },
@@ -1883,7 +2673,7 @@
       "name": "03_包.py",
       "kind": "source",
       "language": "python",
-      "size": 3115,
+      "size": 3116,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/03_%E5%8C%85.py",
       "truncated": false
     },
@@ -1894,7 +2684,7 @@
       "name": "order.py",
       "kind": "source",
       "language": "python",
-      "size": 337,
+      "size": 338,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/order.py",
       "truncated": false
     },
@@ -1905,7 +2695,7 @@
       "name": "pay.py",
       "kind": "source",
       "language": "python",
-      "size": 413,
+      "size": 414,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/pay.py",
       "truncated": false
     },
@@ -1916,7 +2706,7 @@
       "name": "__init__.py",
       "kind": "source",
       "language": "python",
-      "size": 205,
+      "size": 206,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/__init__.py",
       "truncated": false
     },
@@ -1927,7 +2717,7 @@
       "name": "__init__.py",
       "kind": "source",
       "language": "python",
-      "size": 1,
+      "size": 2,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/hello/__init__.py",
       "truncated": false
     },
@@ -1938,7 +2728,7 @@
       "name": "h1.py",
       "kind": "source",
       "language": "python",
-      "size": 38,
+      "size": 39,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/hello/h1.py",
       "truncated": false
     },
@@ -1949,7 +2739,7 @@
       "name": "order.py",
       "kind": "source",
       "language": "python",
-      "size": 340,
+      "size": 341,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/order.py",
       "truncated": false
     },
@@ -1960,7 +2750,7 @@
       "name": "pay.py",
       "kind": "source",
       "language": "python",
-      "size": 419,
+      "size": 420,
       "downloadUrl": "files/code/shangguigu-python/chapter-10/trade/pay.py",
       "truncated": false
     },
@@ -1971,7 +2761,7 @@
       "name": "01_初识迭代器.py",
       "kind": "source",
       "language": "python",
-      "size": 3156,
+      "size": 3157,
       "downloadUrl": "files/code/shangguigu-python/chapter-11/01_%E5%88%9D%E8%AF%86%E8%BF%AD%E4%BB%A3%E5%99%A8.py",
       "truncated": false
     },
@@ -1982,7 +2772,7 @@
       "name": "02_手写迭代器.py",
       "kind": "source",
       "language": "python",
-      "size": 4315,
+      "size": 4316,
       "downloadUrl": "files/code/shangguigu-python/chapter-11/02_%E6%89%8B%E5%86%99%E8%BF%AD%E4%BB%A3%E5%99%A8.py",
       "truncated": false
     },
@@ -1993,7 +2783,7 @@
       "name": "03_迭代器的优势.py",
       "kind": "source",
       "language": "python",
-      "size": 1710,
+      "size": 1711,
       "downloadUrl": "files/code/shangguigu-python/chapter-11/03_%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E4%BC%98%E5%8A%BF.py",
       "truncated": false
     },
@@ -2004,7 +2794,7 @@
       "name": "04_生成器.py",
       "kind": "source",
       "language": "python",
-      "size": 5863,
+      "size": 5864,
       "downloadUrl": "files/code/shangguigu-python/chapter-11/04_%E7%94%9F%E6%88%90%E5%99%A8.py",
       "truncated": false
     },
@@ -2015,7 +2805,7 @@
       "name": "01_前序知识.py",
       "kind": "source",
       "language": "python",
-      "size": 1069,
+      "size": 1070,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/01_%E5%89%8D%E5%BA%8F%E7%9F%A5%E8%AF%86.py",
       "truncated": false
     },
@@ -2026,7 +2816,7 @@
       "name": "02_读取文件.py",
       "kind": "source",
       "language": "python",
-      "size": 4541,
+      "size": 4542,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/02_%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6.py",
       "truncated": false
     },
@@ -2037,7 +2827,7 @@
       "name": "03_关于with.py",
       "kind": "source",
       "language": "python",
-      "size": 2261,
+      "size": 2262,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/03_%E5%85%B3%E4%BA%8Ewith.py",
       "truncated": false
     },
@@ -2048,7 +2838,7 @@
       "name": "04_写入文件.py",
       "kind": "source",
       "language": "python",
-      "size": 2408,
+      "size": 2409,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/04_%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6.py",
       "truncated": false
     },
@@ -2059,7 +2849,7 @@
       "name": "05_目录操作.py",
       "kind": "source",
       "language": "python",
-      "size": 1672,
+      "size": 1673,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/05_%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C.py",
       "truncated": false
     },
@@ -2070,7 +2860,7 @@
       "name": "06_小练习.py",
       "kind": "source",
       "language": "python",
-      "size": 1928,
+      "size": 1929,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/06_%E5%B0%8F%E7%BB%83%E4%B9%A0.py",
       "truncated": false
     },
@@ -2081,7 +2871,7 @@
       "name": "a.txt",
       "kind": "text",
       "language": "text",
-      "size": 85,
+      "size": 86,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/a.txt",
       "truncated": false
     },
@@ -2092,7 +2882,7 @@
       "name": "b.txt",
       "kind": "text",
       "language": "text",
-      "size": 7,
+      "size": 8,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/b.txt",
       "truncated": false
     },
@@ -2103,7 +2893,7 @@
       "name": "demo.txt",
       "kind": "text",
       "language": "text",
-      "size": 15,
+      "size": 16,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/demo.txt",
       "truncated": false
     },
@@ -2114,7 +2904,7 @@
       "name": "demo2.txt",
       "kind": "text",
       "language": "text",
-      "size": 7,
+      "size": 8,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/demo2.txt",
       "truncated": false
     },
@@ -2125,7 +2915,7 @@
       "name": "demo3.txt",
       "kind": "text",
       "language": "text",
-      "size": 7,
+      "size": 8,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/demo3.txt",
       "truncated": false
     },
@@ -2136,7 +2926,7 @@
       "name": "log.txt",
       "kind": "text",
       "language": "text",
-      "size": 342,
+      "size": 343,
       "downloadUrl": "files/code/shangguigu-python/chapter-12/log.txt",
       "truncated": false
     },
@@ -2147,7 +2937,7 @@
       "name": "01_一些概念.py",
       "kind": "source",
       "language": "python",
-      "size": 2511,
+      "size": 2512,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/01_%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5.py",
       "truncated": false
     },
@@ -2158,7 +2948,7 @@
       "name": "02_主进程_子进程.py",
       "kind": "source",
       "language": "python",
-      "size": 304,
+      "size": 305,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/02_%E4%B8%BB%E8%BF%9B%E7%A8%8B_%E5%AD%90%E8%BF%9B%E7%A8%8B.py",
       "truncated": false
     },
@@ -2169,7 +2959,7 @@
       "name": "03_使用Process_创建进程.py",
       "kind": "source",
       "language": "python",
-      "size": 1771,
+      "size": 1772,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/03_%E4%BD%BF%E7%94%A8Process_%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B.py",
       "truncated": false
     },
@@ -2180,7 +2970,7 @@
       "name": "04_关于Process_参数.py",
       "kind": "source",
       "language": "python",
-      "size": 1375,
+      "size": 1376,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/04_%E5%85%B3%E4%BA%8EProcess_%E5%8F%82%E6%95%B0.py",
       "truncated": false
     },
@@ -2191,7 +2981,7 @@
       "name": "05_Lock.py",
       "kind": "source",
       "language": "python",
-      "size": 1439,
+      "size": 1440,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/05_Lock.py",
       "truncated": false
     },
@@ -2202,7 +2992,7 @@
       "name": "06_join_方法.py",
       "kind": "source",
       "language": "python",
-      "size": 1357,
+      "size": 1358,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/06_join_%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -2213,7 +3003,7 @@
       "name": "07_terminate_方法.py",
       "kind": "source",
       "language": "python",
-      "size": 1097,
+      "size": 1098,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/07_terminate_%E6%96%B9%E6%B3%95.py",
       "truncated": false
     },
@@ -2224,7 +3014,7 @@
       "name": "08_守护进程.py",
       "kind": "source",
       "language": "python",
-      "size": 1623,
+      "size": 1624,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/08_%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B.py",
       "truncated": false
     },
@@ -2235,7 +3025,7 @@
       "name": "09_进程之间不共享变量.py",
       "kind": "source",
       "language": "python",
-      "size": 786,
+      "size": 787,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/09_%E8%BF%9B%E7%A8%8B%E4%B9%8B%E9%97%B4%E4%B8%8D%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F.py",
       "truncated": false
     },
@@ -2246,7 +3036,7 @@
       "name": "10_Queue_队列.py",
       "kind": "source",
       "language": "python",
-      "size": 3112,
+      "size": 3113,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/10_Queue_%E9%98%9F%E5%88%97.py",
       "truncated": false
     },
@@ -2257,7 +3047,7 @@
       "name": "11_使用Queue_进程通信.py",
       "kind": "source",
       "language": "python",
-      "size": 622,
+      "size": 623,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/11_%E4%BD%BF%E7%94%A8Queue_%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1.py",
       "truncated": false
     },
@@ -2268,7 +3058,7 @@
       "name": "12_使用Pipe_进程通信.py",
       "kind": "source",
       "language": "python",
-      "size": 453,
+      "size": 454,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/12_%E4%BD%BF%E7%94%A8Pipe_%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1.py",
       "truncated": false
     },
@@ -2279,7 +3069,7 @@
       "name": "13_继承Process_创建进程.py",
       "kind": "source",
       "language": "python",
-      "size": 901,
+      "size": 902,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/13_%E7%BB%A7%E6%89%BFProcess_%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B.py",
       "truncated": false
     },
@@ -2290,7 +3080,7 @@
       "name": "14_进程池.py",
       "kind": "source",
       "language": "python",
-      "size": 6380,
+      "size": 6381,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/14_%E8%BF%9B%E7%A8%8B%E6%B1%A0.py",
       "truncated": false
     },
@@ -2301,7 +3091,7 @@
       "name": "15_使用Thread_创建线程.py",
       "kind": "source",
       "language": "python",
-      "size": 1523,
+      "size": 1524,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/15_%E4%BD%BF%E7%94%A8Thread_%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B.py",
       "truncated": false
     },
@@ -2312,7 +3102,7 @@
       "name": "16_继承Thread_创建线程.py",
       "kind": "source",
       "language": "python",
-      "size": 1294,
+      "size": 1295,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/16_%E7%BB%A7%E6%89%BFThread_%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B.py",
       "truncated": false
     },
@@ -2323,7 +3113,7 @@
       "name": "17_线程池.py",
       "kind": "source",
       "language": "python",
-      "size": 6351,
+      "size": 6352,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/17_%E7%BA%BF%E7%A8%8B%E6%B1%A0.py",
       "truncated": false
     },
@@ -2334,7 +3124,7 @@
       "name": "18_GIL锁.py",
       "kind": "source",
       "language": "python",
-      "size": 1985,
+      "size": 1986,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/18_GIL%E9%94%81.py",
       "truncated": false
     },
@@ -2345,7 +3135,7 @@
       "name": "19_CPU密集型任务.py",
       "kind": "source",
       "language": "python",
-      "size": 981,
+      "size": 982,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/19_CPU%E5%AF%86%E9%9B%86%E5%9E%8B%E4%BB%BB%E5%8A%A1.py",
       "truncated": false
     },
@@ -2356,7 +3146,7 @@
       "name": "20_IO密集型任务.py",
       "kind": "source",
       "language": "python",
-      "size": 1031,
+      "size": 1032,
       "downloadUrl": "files/code/shangguigu-python/chapter-13/20_IO%E5%AF%86%E9%9B%86%E5%9E%8B%E4%BB%BB%E5%8A%A1.py",
       "truncated": false
     },
@@ -2367,7 +3157,7 @@
       "name": "1.numpy学习.ipynb",
       "kind": "notebook",
       "language": "python",
-      "size": 20802,
+      "size": 21756,
       "downloadUrl": "files/code/shangguigu-data-analysis/chapter-02/1.numpy%E5%AD%A6%E4%B9%A0.ipynb",
       "truncated": false
     },
@@ -2378,7 +3168,7 @@
       "name": "2.series学习.ipynb",
       "kind": "notebook",
       "language": "python",
-      "size": 14895,
+      "size": 15489,
       "downloadUrl": "files/code/shangguigu-data-analysis/chapter-03/2.series%E5%AD%A6%E4%B9%A0.ipynb",
       "truncated": false
     },
@@ -2389,7 +3179,7 @@
       "name": "3.DataFrame学习.ipynb",
       "kind": "notebook",
       "language": "python",
-      "size": 23104,
+      "size": 23916,
       "downloadUrl": "files/code/shangguigu-data-analysis/chapter-03/3.DataFrame%E5%AD%A6%E4%B9%A0.ipynb",
       "truncated": false
     },
@@ -2400,7 +3190,7 @@
       "name": "4.数据分析.ipynb",
       "kind": "notebook",
       "language": "python",
-      "size": 17844,
+      "size": 18513,
       "downloadUrl": "files/code/shangguigu-data-analysis/chapter-03/4.%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90.ipynb",
       "truncated": false
     },
@@ -2411,7 +3201,7 @@
       "name": "5.matplotlib学习.ipynb",
       "kind": "notebook",
       "language": "python",
-      "size": 12451,
+      "size": 12860,
       "downloadUrl": "files/code/shangguigu-data-analysis/chapter-04/5.matplotlib%E5%AD%A6%E4%B9%A0.ipynb",
       "truncated": false
     },
@@ -2422,7 +3212,7 @@
       "name": "6.seaborn学习.ipynb",
       "kind": "notebook",
       "language": "python",
-      "size": 5802,
+      "size": 5986,
       "downloadUrl": "files/code/shangguigu-data-analysis/chapter-04/6.seaborn%E5%AD%A6%E4%B9%A0.ipynb",
       "truncated": false
     },
@@ -2433,7 +3223,7 @@
       "name": "7.房地产市场分析.ipynb",
       "kind": "notebook",
       "language": "python",
-      "size": 11959,
+      "size": 12364,
       "downloadUrl": "files/code/shangguigu-data-analysis/chapter-04/7.%E6%88%BF%E5%9C%B0%E4%BA%A7%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90.ipynb",
       "truncated": false
     },
@@ -2444,7 +3234,7 @@
       "name": "data1.json",
       "kind": "dataset",
       "language": "json",
-      "size": 130,
+      "size": 136,
       "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/data1.json",
       "truncated": false
     },
@@ -2477,7 +3267,7 @@
       "name": "new.csv",
       "kind": "dataset",
       "language": "csv",
-      "size": 449,
+      "size": 455,
       "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/new.csv",
       "truncated": false
     },
@@ -2499,7 +3289,7 @@
       "name": "products.json",
       "kind": "dataset",
       "language": "json",
-      "size": 140,
+      "size": 148,
       "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/products.json",
       "truncated": false
     },
@@ -2521,7 +3311,7 @@
       "name": "test.json",
       "kind": "dataset",
       "language": "json",
-      "size": 510,
+      "size": 538,
       "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/test.json",
       "truncated": false
     },

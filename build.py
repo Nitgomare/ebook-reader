@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Build the standalone Python learning site from chapter-oriented courses."""
+"""Build the standalone public knowledge site from chapter-oriented courses."""
 
 from __future__ import annotations
 
@@ -117,7 +117,7 @@ class HeadingCollector(HTMLParser):
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="构建 Python 与数据分析学习站")
+    parser = argparse.ArgumentParser(description="构建公共知识学习站")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="静态产物目录")
     parser.add_argument(
         "--book",

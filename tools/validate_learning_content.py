@@ -18,6 +18,12 @@ def main() -> None:
     data_docs = [
         doc for doc in catalog["docs"] if doc["bookSlug"] == "shangguigu-data-analysis"
     ]
+    wind_docs = [
+        doc
+        for doc in catalog["docs"]
+        if doc["bookSlug"]
+        in {"wind-energy", "风能技术", "wind-turbine-theory-and-design"}
+    ]
     data_html = "".join(
         json.loads((DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8"))["html"]
         for doc in data_docs
@@ -29,6 +35,8 @@ def main() -> None:
     report = {
         "stats": catalog["stats"],
         "data_titles": [doc["title"] for doc in data_docs],
+        "wind_documents": len(wind_docs),
+        "categories": [item["id"] for item in catalog["site"]["categories"]],
         "data_tables": len(re.findall(r"<table\b", data_html)),
         "data_code_blocks": len(re.findall(r"<pre\b", data_html)),
         "data_images": len(re.findall(r"<img\b", data_html)),
@@ -46,7 +54,9 @@ def main() -> None:
             re.search("宋体|SimSun", (DIST / "styles.css").read_text(encoding="utf-8"), re.I)
         ),
     }
-    assert report["stats"] == {"books": 2, "docs": 20, "code": 182}
+    assert report["stats"] == {"books": 5, "docs": 71, "code": 182}
+    assert report["wind_documents"] == 51
+    assert report["categories"] == ["python", "data-analysis", "wind-energy"]
     assert report["data_tables"] == 49
     assert report["data_code_blocks"] >= 250
     assert report["data_images"] == 68

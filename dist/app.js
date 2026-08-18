@@ -26,7 +26,7 @@
 
   function cacheElements() {
     ["siteTitle", "topMeta", "sidebar", "sidebarTitle", "searchInput", "catalogStatus", "navTree",
-      "libraryHome", "heroTitle", "heroSubtitle", "homeStats", "shelfStats", "courseGrid", "resourceSection", "bookGrid",
+      "libraryHome", "heroTitle", "heroSubtitle", "homeStats", "categorySections",
       "documentView", "breadcrumb", "docTitle", "article", "relatedCode", "relatedCodeList", "previousLink",
       "nextLink", "outline", "outlineNav", "openNav", "closeNav", "scrim", "outlineToggle", "startReadingLink",
       "codeLibrary", "codeCourseList", "codeView", "codeBreadcrumb", "codeTitle", "codeDownload", "codeMeta",
@@ -94,7 +94,19 @@
     return '<a class="book-card" href="#/book/' + encodeURIComponent(book.slug) + '"><div class="book-cover">' + cover +
       '</div><div class="book-copy"><p class="book-tags">' + book.tags.map(escapeHtml).join(" · ") + '</p><h3>' +
       escapeHtml(book.title) + '</h3><p class="book-author">' + escapeHtml(book.author) + '</p><p>' +
-      escapeHtml(book.description) + '</p><span class="book-open">查看资料 <b>→</b></span></div></a>';
+      escapeHtml(book.description) + '</p><div class="book-facts"><span>' + book.docCount + ' 个章节</span>' +
+      (book.codeCount ? '<span>' + book.codeCount + ' 个代码/数据文件</span>' : '') +
+      '</div><span class="book-open">进入学习 <b>→</b></span></div></a>';
+  }
+
+  function renderCategory(category) {
+    var books = state.catalog.books.filter(function (book) { return book.category === category.id; });
+    if (!books.length) return "";
+    return '<section class="shelf-section category-section" aria-labelledby="category-' + escapeHtml(category.id) + '">' +
+      '<div class="section-heading"><div><p class="eyebrow">' + escapeHtml(category.eyebrow || category.id) +
+      '</p><h2 id="category-' + escapeHtml(category.id) + '">' + escapeHtml(category.title) + '</h2></div><p>' +
+      escapeHtml(category.description || "") + '</p></div><div class="book-grid">' +
+      books.map(renderResourceCard).join("") + '</div></section>';
   }
 
   function renderLibrary() {
@@ -103,16 +115,13 @@
     state.activeDoc = null;
     state.activeCode = null;
     elements.libraryHome.hidden = false;
-    var courses = state.catalog.books.filter(function (book) { return book.featured; });
-    var resources = state.catalog.books.filter(function (book) { return !book.featured; });
-    elements.heroTitle.textContent = "从 Python 基础走到数据分析实践";
+    var categories = state.catalog.site.categories || [];
+    elements.heroTitle.textContent = state.catalog.site.title;
     elements.heroSubtitle.textContent = state.catalog.site.subtitle;
-    elements.homeStats.innerHTML = '<span><strong>' + courses.length + '</strong> 条核心路径</span><span><strong>' +
+    elements.homeStats.innerHTML = '<span><strong>' + categories.length + '</strong> 个知识领域</span><span><strong>' +
+      state.catalog.stats.books + '</strong> 套课程与教材</span><span><strong>' +
       state.catalog.stats.docs + '</strong> 个章节</span><span><strong>' + state.catalog.stats.code + '</strong> 个代码与数据文件</span>';
-    elements.shelfStats.textContent = "建议先学 Python，再进入数据分析";
-    elements.courseGrid.innerHTML = courses.map(renderCourseCard).join("");
-    elements.resourceSection.hidden = !resources.length;
-    elements.bookGrid.innerHTML = resources.map(renderResourceCard).join("");
+    elements.categorySections.innerHTML = categories.map(renderCategory).join("");
     renderSidebar(null, elements.searchInput.value);
     document.title = state.catalog.site.title;
   }
@@ -308,7 +317,7 @@
     state.catalog.code = state.catalog.code || [];
     elements.siteTitle.textContent = state.catalog.site.title;
     elements.topMeta.textContent = state.catalog.stats.docs + " 个章节 · " + state.catalog.stats.code + " 个代码/数据文件";
-    var firstCourse = state.catalog.books.find(function (book) { return book.featured && book.firstDocId; });
+    var firstCourse = state.catalog.books.find(function (book) { return book.firstDocId; });
     if (firstCourse) elements.startReadingLink.href = "#/doc/" + firstCourse.firstDocId;
     document.body.classList.remove("is-loading");
     await route();
