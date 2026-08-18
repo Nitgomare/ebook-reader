@@ -25,7 +25,7 @@
   }
 
   function cacheElements() {
-    ["siteTitle", "topMeta", "sidebar", "sidebarTitle", "searchInput", "catalogStatus", "navTree",
+    ["siteTitle", "topMeta", "sidebar", "sidebarTitle", "searchLabel", "searchInput", "catalogStatus", "navTree",
       "libraryHome", "heroTitle", "heroSubtitle", "homeStats", "categorySections",
       "documentView", "breadcrumb", "docTitle", "article", "relatedCode", "relatedCodeList", "previousLink",
       "nextLink", "outline", "outlineNav", "openNav", "closeNav", "scrim", "outlineToggle", "startReadingLink",
@@ -52,6 +52,8 @@
 
   function renderSidebar(book, query) {
     state.activeBook = book || state.activeBook;
+    elements.searchLabel.textContent = "搜索章节";
+    elements.searchInput.placeholder = "标题、章节或关键词";
     var needle = normalize(query);
     var matchedCount = 0;
     var trees = state.catalog.books.map(function (item) {
@@ -78,6 +80,58 @@
     elements.catalogStatus.textContent = needle ? "找到 " + matchedCount + " 个章节" :
       state.catalog.books.length + " 套内容 · " + state.catalog.docs.length + " 个章节";
     elements.navTree.innerHTML = trees || '<p class="empty-nav">没有匹配的章节。</p>';
+  }
+
+  function codeGroupLabel(name) {
+    return name === "shared-data" ? "共享练习数据" :
+      name.replace("chapter-", "第 ").replace(/^第 (\d+)$/, "第 $1 章");
+  }
+
+  function groupCodeFiles(files) {
+    return files.reduce(function (groups, file) {
+      var name = file.path.split("/")[0] || "其他";
+      var group = groups.find(function (item) { return item.name === name; });
+      if (!group) { group = { name: name, files: [] }; groups.push(group); }
+      group.files.push(file);
+      return groups;
+    }, []);
+  }
+
+  function renderCodeSidebar(activeFile, query) {
+    var needle = normalize(query);
+    var matchedCount = 0;
+    elements.searchLabel.textContent = "搜索代码与数据";
+    elements.searchInput.placeholder = "文件名、路径或类型";
+    var trees = state.catalog.books.map(function (book) {
+      var files = state.catalog.code.filter(function (file) {
+        if (file.bookSlug !== book.slug) return false;
+        return !needle || normalize(file.name + " " + file.path + " " + file.language + " " + codeLabel(file)).indexOf(needle) !== -1;
+      });
+      matchedCount += files.length;
+      if (!files.length) return "";
+      var isActiveBook = activeFile && activeFile.bookSlug === book.slug;
+      var groups = groupCodeFiles(files).map(function (group) {
+        var isActiveGroup = isActiveBook && activeFile.path.split("/")[0] === group.name;
+        var open = needle || isActiveGroup ? " open" : "";
+        var links = group.files.map(function (file) {
+          var active = activeFile && activeFile.id === file.id ? " is-active" : "";
+          var label = file.path.split("/").slice(1).join("/") || file.name;
+          return '<a class="code-nav-link' + active + '" href="#/code/' + file.id + '" title="' +
+            escapeHtml(file.path) + '"><span>' + escapeHtml(codeLabel(file)) + '</span><strong>' +
+            escapeHtml(label) + '</strong></a>';
+        }).join("");
+        return '<details class="code-folder"' + open + '><summary><span class="book-tree-marker">›</span><strong>' +
+          escapeHtml(codeGroupLabel(group.name)) + '</strong><small>' + group.files.length + '</small></summary><div>' +
+          links + '</div></details>';
+      }).join("");
+      var openBook = needle || isActiveBook || !activeFile && state.catalog.books.filter(function (item) { return item.codeCount; })[0].slug === book.slug ? " open" : "";
+      return '<details class="book-tree code-book-tree"' + openBook + '><summary><span class="book-tree-marker">›</span><strong>' +
+        escapeHtml(book.title) + '</strong><small>' + files.length + ' 个</small></summary><div class="book-tree-children">' +
+        groups + '</div></details>';
+    }).join("");
+    elements.sidebarTitle.textContent = "代码与数据";
+    elements.catalogStatus.textContent = needle ? "找到 " + matchedCount + " 个文件" : state.catalog.code.length + " 个可在线查看文件";
+    elements.navTree.innerHTML = trees || '<p class="empty-nav">没有匹配的代码或数据。</p>';
   }
 
   function renderCourseCard(book, index) {
@@ -193,30 +247,25 @@
 
   function renderCodeLibrary() {
     hideViews();
+    state.activeBook = null;
     state.activeDoc = null;
     state.activeCode = null;
     elements.codeLibrary.hidden = false;
     var books = state.catalog.books.filter(function (book) { return book.codeCount; });
     elements.codeCourseList.innerHTML = books.map(function (book) {
       var files = state.catalog.code.filter(function (file) { return file.bookSlug === book.slug; });
-      var groups = files.reduce(function (result, file) {
-        var name = file.path.split("/")[0];
-        if (!result[name]) result[name] = [];
-        result[name].push(file);
-        return result;
-      }, {});
+      var groups = groupCodeFiles(files);
       return '<section class="code-course"><div class="section-heading"><div><p class="eyebrow">' +
         escapeHtml(book.author) + '</p><h2>' + escapeHtml(book.title) + '</h2></div><p>' + files.length +
-        ' 个文件</p></div>' + Object.keys(groups).map(function (group) {
-          var groupLabel = group === "shared-data" ? "共享练习数据" : group.replace("chapter-", "第 ").replace(/^第 (\d+)$/, "第 $1 章");
-          return '<details class="code-group" open><summary>' + escapeHtml(groupLabel) + '<small>' +
-            groups[group].length + '</small></summary><div>' + groups[group].map(function (file) {
+        ' 个文件</p></div>' + groups.map(function (group) {
+          return '<details class="code-group" open><summary>' + escapeHtml(codeGroupLabel(group.name)) + '<small>' +
+            group.files.length + '</small></summary><div>' + group.files.map(function (file) {
               return '<a href="#/code/' + file.id + '"><span>' + codeLabel(file) + '</span><strong>' +
                 escapeHtml(file.name) + '</strong><small>' + formatBytes(file.size) + '</small></a>';
             }).join("") + '</div></details>';
         }).join("") + '</section>';
     }).join("");
-    renderSidebar(null, elements.searchInput.value);
+    renderCodeSidebar(null, elements.searchInput.value);
     document.title = "代码与数据 · " + state.catalog.site.title;
     window.scrollTo(0, 0);
   }
@@ -253,7 +302,7 @@
       '</span><span>' + escapeHtml(file.language) + '</span>' + (file.truncated ? '<strong>网页仅显示前 256 KB</strong>' : '');
     elements.codeContent.innerHTML = file.kind === "notebook" ? renderNotebook(file.cells) :
       '<pre class="source-preview"><code>' + escapeHtml(file.content || "") + '</code></pre>';
-    renderSidebar(book, elements.searchInput.value);
+    renderCodeSidebar(file, elements.searchInput.value);
     document.title = file.name + " · " + state.catalog.site.title;
     window.scrollTo(0, 0);
   }
@@ -288,7 +337,11 @@
     elements.openNav.addEventListener("click", openSidebar);
     elements.closeNav.addEventListener("click", closeSidebar);
     elements.scrim.addEventListener("click", closeSidebar);
-    elements.searchInput.addEventListener("input", function () { renderSidebar(state.activeBook, this.value); });
+    elements.searchInput.addEventListener("input", function () {
+      var codeMode = !elements.codeLibrary.hidden || !elements.codeView.hidden;
+      if (codeMode) renderCodeSidebar(state.activeCode, this.value);
+      else renderSidebar(state.activeBook, this.value);
+    });
     elements.outlineToggle.addEventListener("click", function () { elements.outline.classList.toggle("is-open"); });
     elements.outlineNav.addEventListener("click", function (event) {
       var link = event.target.closest("a");
