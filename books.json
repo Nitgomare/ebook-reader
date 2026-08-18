@@ -1,7 +1,27 @@
 {
   "site": {
-    "title": "Python 与数据分析学习中心",
-    "subtitle": "教程、示例代码、Notebook 与练习数据在同一个学习路径中联动"
+    "title": "公共知识学习中心",
+    "subtitle": "把编程、数据分析与风电工程资料组织成可持续扩展的学习路径",
+    "categories": [
+      {
+        "id": "python",
+        "title": "Python 编程",
+        "eyebrow": "PYTHON",
+        "description": "从语言基础、工程实践到逐章源码。"
+      },
+      {
+        "id": "data-analysis",
+        "title": "Python 数据分析",
+        "eyebrow": "DATA ANALYSIS",
+        "description": "结合 Notebook、练习数据与完整案例学习分析工具链。"
+      },
+      {
+        "id": "wind-energy",
+        "title": "风电技术",
+        "eyebrow": "WIND ENERGY",
+        "description": "覆盖风资源、空气动力学、载荷、控制、整机设计与风电场。"
+      }
+    ]
   },
   "books": [
     {
@@ -10,6 +30,7 @@
       "author": "尚硅谷",
       "description": "从环境准备和核心语法出发，逐步学习函数、面向对象、文件、并发与协程。",
       "tags": ["Python", "基础课程", "逐章源码"],
+      "category": "python",
       "type": "course",
       "featured": true,
       "codeSource": "code"
@@ -20,12 +41,40 @@
       "author": "尚硅谷",
       "description": "系统学习 NumPy、Pandas、Matplotlib 和 Seaborn，并通过 Notebook 完成真实数据分析。",
       "tags": ["数据分析", "Notebook", "案例实践"],
+      "category": "data-analysis",
       "type": "course",
       "featured": true,
       "codeSource": "code",
       "codeLinks": {
         "shared-data": ["chapter-03.md", "chapter-04.md"]
       }
+    },
+    {
+      "slug": "wind-energy",
+      "title": "Wind Energy Handbook",
+      "author": "Tony Burton 等",
+      "description": "英文风能工程教材，系统覆盖风资源、空气动力学、设计载荷、控制、电力系统与海上风电。",
+      "tags": ["风能", "英文教材", "工程"],
+      "category": "wind-energy",
+      "type": "reference"
+    },
+    {
+      "slug": "风能技术",
+      "title": "风能技术（第二版）",
+      "author": "Tony Burton 等 · 武鑫译",
+      "description": "中文系统教材，介绍风资源、风力机设计、零部件、控制以及风电场技术。",
+      "tags": ["风能", "中文教材", "风电场"],
+      "category": "wind-energy",
+      "type": "reference"
+    },
+    {
+      "slug": "wind-turbine-theory-and-design",
+      "title": "风力发电机组理论与设计",
+      "author": "姚兴佳等",
+      "description": "从能量转换与载荷出发，讲解整机、风轮、传动链、塔架、控制和强度分析。",
+      "tags": ["风能", "工程设计", "中文教材"],
+      "category": "wind-energy",
+      "type": "reference"
     }
   ]
 }

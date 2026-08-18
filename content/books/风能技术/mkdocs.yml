@@ -1,0 +1,67 @@
+site_name: "风能技术（第二版）"
+
+docs_dir: docs
+site_dir: "../../site/book-sites/风能技术"
+
+theme:
+  name: material
+  language: zh
+
+  icon:
+    logo: material/wind-turbine
+
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.path
+    - content.code.copy
+
+nav:
+  - 课程首页: index.md
+  - 前置内容: 00-front-matter/index.md
+  - "作 者 简 介": chapters/01-chapter/index.md
+  - "内 容 简 介": chapters/02-chapter/index.md
+  - "图书在版编目 (CIP) 数据": chapters/03-cip/index.md
+  - "第二版致谢": chapters/04-chapter/index.md
+  - "第一版致谢": chapters/05-chapter/index.md
+  - "译者序": chapters/06-chapter/index.md
+  - "第二版序": chapters/07-chapter/index.md
+  - "目 录": chapters/08-chapter/index.md
+  - "第 1 章 概 论": chapters/09-1/index.md
+  - "第 2 章 风资源": chapters/10-2/index.md
+  - "第 3 章 水平轴风力机的 空气动力学": chapters/11-3/index.md
+  - "第 4 章 深层次的风力机空气 动力学主题": chapters/12-4/index.md
+  - "第 5 章 水平轴风力机 设计载荷": chapters/13-5/index.md
+  - "第 6 章 水平轴风力机的 概念设计": chapters/14-6/index.md
+  - "第 7 章 零部件设计": chapters/15-7/index.md
+  - "第 8 章 控制器": chapters/16-8/index.md
+  - "第 9 章 风力机安装和风电场": chapters/17-9/index.md
+  - "第 10 章 风能和电力系统": chapters/18-10/index.md
+  - "第 11 章 海上风力发电机组 和风电场": chapters/19-11/index.md
+  - "参考文献": chapters/20-chapter/index.md
+  - "符号表": chapters/21-chapter/index.md
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      permalink: true
+      toc_depth: "2-3"
+
+extra_javascript:
+  - assets/javascripts/mathjax.js
+  - assets/javascripts/back-to-main.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - assets/stylesheets/course-home.css
+  - assets/stylesheets/back-to-main.css
+
+extra:
+  homepage: "/"
+
+copyright: 'Made by <a href="https://github.com/Nitgomare" target="_blank" rel="noopener">Mike Zheng</a>'
