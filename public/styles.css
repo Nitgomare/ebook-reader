@@ -93,6 +93,8 @@ button, input { font: inherit; }
 .primary-action { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 1rem; margin-top: 1.2rem; padding: .75rem 1rem; border-radius: 999px; color: var(--ink); background: #fff; font-size: .78rem; font-weight: 700; }
 .primary-action span { color: var(--accent); }
 .shelf-section { padding: 3rem 0 1rem; }
+.category-section + .category-section { border-top: 1px solid var(--line); }
+.category-section .section-heading > p { max-width: 28rem; margin: 0; line-height: 1.7; text-align: right; }
 .resource-section { padding-top: 3.4rem; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; }
 .section-heading h2 { margin: 0; font-family: var(--font-sans); font-size: 2rem; font-weight: 600; }
@@ -109,6 +111,8 @@ button, input { font: inherit; }
 .book-copy h3 { margin: .55rem 0 .25rem; font-family: var(--font-sans); font-size: 1.1rem; font-weight: 600; line-height: 1.35; }
 .book-author { margin: 0 0 .7rem !important; font-size: .65rem !important; }
 .book-copy > p:not(.book-tags) { display: -webkit-box; overflow: hidden; margin: 0; color: var(--muted); font-size: .7rem; line-height: 1.65; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.book-facts { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .7rem; }
+.book-facts span { padding: .22rem .4rem; border-radius: 999px; color: var(--muted); background: var(--accent-soft); font-size: .58rem; }
 .book-open { margin-top: auto; padding-top: .8rem; color: var(--accent); font-size: .7rem; font-weight: 700; }
 .book-open b { display: inline-block; transition: transform 160ms; }
 .book-card:hover .book-open b { transform: translateX(.22rem); }
@@ -223,6 +227,7 @@ div.arithmatex { overflow-x: auto; overflow-y: hidden; }
   .home-intro h1, .page-intro h1 { width: calc(100vw - 1.8rem); max-width: 100%; font-size: clamp(1.9rem, 9vw, 2.6rem); overflow-wrap: anywhere; word-break: break-all; }
   .home-intro > p:not(.eyebrow), .page-intro > p:not(.eyebrow) { overflow-wrap: anywhere; }
   .section-heading { align-items: flex-start; flex-direction: column; }
+  .category-section .section-heading > p { max-width: 100%; text-align: left; }
   .course-grid, .related-code-list { grid-template-columns: 1fr; }
   .course-card { width: 100%; min-width: 0; min-height: 14rem; }
   .course-copy > p { overflow-wrap: anywhere; }

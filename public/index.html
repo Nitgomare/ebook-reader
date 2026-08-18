@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f7f6f1" />
-    <title>Python 与数据分析学习中心</title>
+    <title>公共知识学习中心</title>
     <link rel="stylesheet" href="styles.css" />
     <script>
       window.MathJax = {
@@ -29,11 +29,11 @@
         <span></span><span></span><span></span>
       </button>
       <a class="brand" href="#/" aria-label="返回学习中心首页">
-        <span class="brand-mark">Py</span>
-        <span><strong id="siteTitle">Python 学习中心</strong><small>LEARNING HUB</small></span>
+        <span class="brand-mark">知</span>
+        <span><strong id="siteTitle">公共知识学习中心</strong><small>KNOWLEDGE HUB</small></span>
       </a>
       <nav class="top-links" aria-label="主要入口">
-        <a href="#/">学习路径</a>
+        <a href="#/">知识分类</a>
         <a href="#/code">代码与数据</a>
         <a href="#/" id="startReadingLink">继续学习</a>
       </nav>
@@ -57,19 +57,12 @@
       <main class="reader" id="reader">
         <section class="library-home" id="libraryHome" hidden>
           <header class="home-intro">
-            <p class="eyebrow">PYTHON LEARNING HUB</p>
-            <h1 id="heroTitle">从 Python 基础走到数据分析实践</h1>
-            <p id="heroSubtitle">教程、示例代码、Notebook 与练习数据在同一个学习路径中联动。</p>
+            <p class="eyebrow">PUBLIC KNOWLEDGE HUB</p>
+            <h1 id="heroTitle">公共知识学习中心</h1>
+            <p id="heroSubtitle">编程、数据分析与风电工程资料，按知识领域持续整理。</p>
             <div class="home-stats" id="homeStats"></div>
           </header>
-          <section class="shelf-section learning-section" aria-labelledby="shelfTitle">
-            <div class="section-heading"><div><p class="eyebrow">LEARNING PATHS</p><h2 id="shelfTitle">核心学习路径</h2></div><p id="shelfStats"></p></div>
-            <div class="course-grid" id="courseGrid"></div>
-          </section>
-          <section class="shelf-section resource-section" id="resourceSection" aria-labelledby="resourceTitle">
-            <div class="section-heading"><div><p class="eyebrow">REFERENCE LIBRARY</p><h2 id="resourceTitle">扩展资料</h2></div></div>
-            <div class="book-grid" id="bookGrid"></div>
-          </section>
+          <div class="category-sections" id="categorySections"></div>
         </section>
 
         <section class="document-view" id="documentView" hidden>
