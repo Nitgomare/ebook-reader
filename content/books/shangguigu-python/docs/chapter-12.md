@@ -1,5 +1,21 @@
 # 第 12 章 文件操作
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P136–P141（6 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P136 · 136_文件操作_前序知识](https://www.bilibili.com/video/BV1tDsgzxECr?p=136)
+- [P137 · 137_文件操作_读取文件](https://www.bilibili.com/video/BV1tDsgzxECr?p=137)
+- [P138 · 138_关于with](https://www.bilibili.com/video/BV1tDsgzxECr?p=138)
+- [P139 · 139_文件操作_写入文件](https://www.bilibili.com/video/BV1tDsgzxECr?p=139)
+- [P140 · 140_目录操作](https://www.bilibili.com/video/BV1tDsgzxECr?p=140)
+- [P141 · 141_文件操作_小练习](https://www.bilibili.com/video/BV1tDsgzxECr?p=141)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="QwQAx"></a>
 
 ## 文件的分类

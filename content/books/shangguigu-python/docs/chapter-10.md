@@ -1,5 +1,20 @@
 # 第 10 章 模块与包
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P127–P131（5 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P127 · 127_模块入门_自定义模块](https://www.bilibili.com/video/BV1tDsgzxECr?p=127)
+- [P128 · 128_标准库模块](https://www.bilibili.com/video/BV1tDsgzxECr?p=128)
+- [P129 · 129_包_自定义包_标准库包](https://www.bilibili.com/video/BV1tDsgzxECr?p=129)
+- [P130 · 130_第三方包_全局环境_虚拟环境](https://www.bilibili.com/video/BV1tDsgzxECr?p=130)
+- [P131 · 131_非管理员运行CMD的问题](https://www.bilibili.com/video/BV1tDsgzxECr?p=131)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="U7r5T"></a>
 
 ## 模块

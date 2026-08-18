@@ -1,5 +1,23 @@
 # 第 1 章 必备基础知识
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P001–P008（8 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P001 · 001_课程简介（Python叕火了？）](https://www.bilibili.com/video/BV1tDsgzxECr?p=1)
+- [P002 · 02.Python概述（Python到底强在哪？）](https://www.bilibili.com/video/BV1tDsgzxECr?p=2)
+- [P003 · 03.编译型 vs 解释型（编程语言的两大门派）](https://www.bilibili.com/video/BV1tDsgzxECr?p=3)
+- [P004 · 04.安装Python解释器（10分钟搞定Python环境）](https://www.bilibili.com/video/BV1tDsgzxECr?p=4)
+- [P005 · 05.先来个打印吧（第一个Python程序）](https://www.bilibili.com/video/BV1tDsgzxECr?p=5)
+- [P006 · 06.安装PyCharm（最强的Python IDE长啥样？）](https://www.bilibili.com/video/BV1tDsgzxECr?p=6)
+- [P007 · 07.设置PyCharm（超贴心的设置方案）](https://www.bilibili.com/video/BV1tDsgzxECr?p=7)
+- [P008 · 08.PyCharm快捷键（最全的快捷键设置指南）](https://www.bilibili.com/video/BV1tDsgzxECr?p=8)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="f3OHN"></a>
 
 ## 计算机组成

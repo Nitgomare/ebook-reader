@@ -1,5 +1,28 @@
 # 第 4 章 流程控制语句
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P031–P043（13 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P031 · 31_单分支](https://www.bilibili.com/video/BV1tDsgzxECr?p=31)
+- [P032 · 32_双分支](https://www.bilibili.com/video/BV1tDsgzxECr?p=32)
+- [P033 · 33_多分支](https://www.bilibili.com/video/BV1tDsgzxECr?p=33)
+- [P034 · 34_嵌套分支](https://www.bilibili.com/video/BV1tDsgzxECr?p=34)
+- [P035 · 35_while循环](https://www.bilibili.com/video/BV1tDsgzxECr?p=35)
+- [P036 · 36_while循环案例](https://www.bilibili.com/video/BV1tDsgzxECr?p=36)
+- [P037 · 37_for循环](https://www.bilibili.com/video/BV1tDsgzxECr?p=37)
+- [P038 · 38_for循环案例](https://www.bilibili.com/video/BV1tDsgzxECr?p=38)
+- [P039 · 39_对比while与for](https://www.bilibili.com/video/BV1tDsgzxECr?p=39)
+- [P040 · 40_嵌套循环](https://www.bilibili.com/video/BV1tDsgzxECr?p=40)
+- [P041 · 41_九九乘法表](https://www.bilibili.com/video/BV1tDsgzxECr?p=41)
+- [P042 · 42_continu与break](https://www.bilibili.com/video/BV1tDsgzxECr?p=42)
+- [P043 · 43_流程控制_综合案例](https://www.bilibili.com/video/BV1tDsgzxECr?p=43)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 程序并不是简单的“从上到下”执行，很多时候，我们希望程序能根据不同的情况，做出不同的选择，比如：根据情况跳过某些代码，或者重复执行某些代码，那这时就需要用到『流程控制语句』，程序的执行流程大体上可分为三类：**顺序**、**分之**、**循环**。
 
 > **📋备注**：其中顺序执行是最简单的，就是按照程序的编写顺序依次执行，所以我们不再探讨顺序执行。

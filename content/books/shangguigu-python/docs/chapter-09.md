@@ -1,5 +1,18 @@
 # 第 9 章 错误与异常
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P124–P126（3 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P124 · 124_错误与异常](https://www.bilibili.com/video/BV1tDsgzxECr?p=124)
+- [P125 · 125_异常处理](https://www.bilibili.com/video/BV1tDsgzxECr?p=125)
+- [P126 · 126_手动抛出异常_异常传递_自定义异常](https://www.bilibili.com/video/BV1tDsgzxECr?p=126)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="irG93"></a>
 
 ## 错误与异常
