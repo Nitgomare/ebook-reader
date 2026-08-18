@@ -1,0 +1,23 @@
+site_name: "轮腿式智能安保巡逻机器人项目实战"
+docs_dir: docs
+
+nav:
+  - "轮腿式智能安保巡逻机器人项目实战": robot_textbook.md
+  - "第1章 绪论": section_1/section_1.md
+  - "第2章 系统总体设计": section_2/section_2.md
+  - "第3章 机械结构设计": section_3/section_3.md
+  - "第4章 硬件系统设计": section_4/section_4.md
+  - "第5章 嵌入式软件开发": section_5/section_5.md
+  - "第6章 运动学与动力学建模": section_6/section_6.md
+  - "第7章 轮腿复合运动控制": section_7/section_7.md
+  - "第8章 环境感知系统": section_8/section_8.md
+  - "第9章 自主导航与路径规划": section_9/section_9.md
+  - "第10章 安保巡逻任务系统": section_10/section_10.md
+  - "第11章 综合实战与测试验证": section_11/section_11.md
+  - "附录":
+      - "附录A 主要物料清单": appendix/appendix_a.md
+      - "附录B 核心接口定义与通信协议": appendix/appendix_b.md
+      - "附录C 代码仓库结构与关键代码索引": appendix/appendix_c.md
+      - "附录D 工具链与开发环境配置": appendix/appendix_d.md
+      - "附录E 常见故障排查表": appendix/appendix_e.md
+      - "附录F 推荐阅读与参考文献": appendix/appendix_f.md
