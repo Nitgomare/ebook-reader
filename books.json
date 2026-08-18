@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "公共知识学习中心",
-    "subtitle": "把编程、数据分析与风电工程资料组织成可持续扩展的学习路径",
+    "subtitle": "把编程、数据分析、智能机器人与风电工程资料组织成可持续扩展的学习路径",
     "categories": [
       {
         "id": "python",
@@ -14,6 +14,12 @@
         "title": "Python 数据分析",
         "eyebrow": "DATA ANALYSIS",
         "description": "结合 Notebook、练习数据与完整案例学习分析工具链。"
+      },
+      {
+        "id": "robotics",
+        "title": "智能机器人",
+        "eyebrow": "INTELLIGENT ROBOTICS",
+        "description": "以真实工程项目贯通机械、硬件、嵌入式、控制、感知与自主导航。"
       },
       {
         "id": "wind-energy",
@@ -48,6 +54,16 @@
       "codeLinks": {
         "shared-data": ["chapter-03.md", "chapter-04.md"]
       }
+    },
+    {
+      "slug": "robot-textbook",
+      "title": "轮腿式智能安保巡逻机器人项目实战",
+      "author": "湖南科技大学智能机器人设计与控制微专业教学团队",
+      "description": "围绕轮腿机器人完整项目，覆盖总体设计、机械结构、硬件、嵌入式软件、运动控制、环境感知、自主导航与综合测试。",
+      "coverSource": "0.png",
+      "tags": ["智能机器人", "轮腿机器人", "项目实战"],
+      "category": "robotics",
+      "type": "course"
     },
     {
       "slug": "wind-energy",
