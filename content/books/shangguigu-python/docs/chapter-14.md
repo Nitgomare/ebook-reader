@@ -1,5 +1,22 @@
 # 第 14 章 协程
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P166–P172（7 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P166 · 166_什么是协程](https://www.bilibili.com/video/BV1tDsgzxECr?p=166)
+- [P167 · 167_协程函数_协程对象](https://www.bilibili.com/video/BV1tDsgzxECr?p=167)
+- [P168 · 168_await关键字](https://www.bilibili.com/video/BV1tDsgzxECr?p=168)
+- [P169 · 169_多个任务_同步执行](https://www.bilibili.com/video/BV1tDsgzxECr?p=169)
+- [P170 · 170_多个任务_异步执行](https://www.bilibili.com/video/BV1tDsgzxECr?p=170)
+- [P171 · 171_传统方式下载多个图片](https://www.bilibili.com/video/BV1tDsgzxECr?p=171)
+- [P172 · 172_使用协程下载多个图片](https://www.bilibili.com/video/BV1tDsgzxECr?p=172)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="dqJAN"></a>
 
 ## 什么是协程

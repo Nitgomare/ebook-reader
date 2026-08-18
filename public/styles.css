@@ -157,6 +157,13 @@ div.arithmatex { overflow-x: auto; overflow-y: hidden; }
 .article pre code { padding: 0; background: none; }
 .admonition { margin: 1.4rem 0; padding: .2rem 1rem .7rem; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: .4rem; background: var(--surface); }
 .admonition-title { font-family: var(--font-sans); font-size: .82rem; font-weight: 750; }
+.chapter-videos { margin: 1.2rem 0 2rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--surface); }
+.chapter-videos > summary { padding: .85rem 1rem; color: var(--accent); background: var(--accent-soft); cursor: pointer; font-size: .84rem; }
+.chapter-videos[open] > summary { border-bottom: 1px solid var(--line); }
+.chapter-videos > p, .chapter-videos > ul { margin-right: 1rem; margin-left: 1rem; }
+.chapter-videos > p { color: var(--muted); font-size: .78rem; }
+.chapter-videos > ul { max-height: 24rem; overflow: auto; padding: 0 0 .6rem 1.25rem; }
+.chapter-videos li { margin: .38rem 0; font-size: .78rem; }
 .pager { display: grid; gap: 1rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .pager a { display: flex; min-height: 5rem; padding: .9rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--surface); flex-direction: column; }
 .pager a:last-child { text-align: right; }

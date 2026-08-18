@@ -1,5 +1,21 @@
 # 第 2 章 初识 Python
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P009–P014（6 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P009 · 09.字面量（Python世界的第一块砖）](https://www.bilibili.com/video/BV1tDsgzxECr?p=9)
+- [P010 · 10.变量（让数据能被反复使用）](https://www.bilibili.com/video/BV1tDsgzxECr?p=10)
+- [P011 · 11.标识符命名规则（程序中起名要有规矩）](https://www.bilibili.com/video/BV1tDsgzxECr?p=11)
+- [P012 · 12.常量（让重要的值不再被误改）](https://www.bilibili.com/video/BV1tDsgzxECr?p=12)
+- [P013 · 13.注释（未来的你会感谢现在写注释的你）](https://www.bilibili.com/video/BV1tDsgzxECr?p=13)
+- [P014 · 14.字符编码（别再怕乱码了，原理就这么回事）](https://www.bilibili.com/video/BV1tDsgzxECr?p=14)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="cT9NQ"></a>
 
 ## Python 概述

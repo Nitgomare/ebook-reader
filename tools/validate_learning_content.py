@@ -28,6 +28,11 @@ def main() -> None:
         json.loads((DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8"))["html"]
         for doc in data_docs
     )
+    python_docs = [doc for doc in catalog["docs"] if doc["bookSlug"] == "shangguigu-python"]
+    python_html = "".join(
+        json.loads((DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8"))["html"]
+        for doc in python_docs
+    )
     code_payloads = [
         json.loads(path.read_text(encoding="utf-8"))
         for path in (DIST / "data" / "code").glob("*.json")
@@ -58,6 +63,10 @@ def main() -> None:
             token in app_js
             for token in ("renderCodeSidebar", "code-nav-link", "搜索代码与数据")
         ),
+        "python_video_chapters": python_html.count('class="chapter-videos"'),
+        "python_video_links": len(
+            set(re.findall(r"https://www\.bilibili\.com/video/BV1tDsgzxECr\?p=\d+", python_html))
+        ),
     }
     assert report["stats"] == {"books": 5, "docs": 71, "code": 182}
     assert report["wind_documents"] == 51
@@ -71,6 +80,8 @@ def main() -> None:
     assert not report["old_positioning_in_ui"]
     assert not report["song_font_in_css"]
     assert report["code_sidebar_navigation"]
+    assert report["python_video_chapters"] == 14
+    assert report["python_video_links"] == 172
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 

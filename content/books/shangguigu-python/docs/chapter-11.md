@@ -1,5 +1,19 @@
 # 第 11 章 迭代器 vs 生成器
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P132–P135（4 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P132 · 132_初识迭代器](https://www.bilibili.com/video/BV1tDsgzxECr?p=132)
+- [P133 · 133_手写迭代器](https://www.bilibili.com/video/BV1tDsgzxECr?p=133)
+- [P134 · 134_迭代器的优势](https://www.bilibili.com/video/BV1tDsgzxECr?p=134)
+- [P135 · 135_生成器](https://www.bilibili.com/video/BV1tDsgzxECr?p=135)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="CAnpo"></a>
 
 ## 迭代器

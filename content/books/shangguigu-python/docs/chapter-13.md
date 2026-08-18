@@ -1,5 +1,39 @@
 # 第 13 章 进程与线程
 
+<!-- bilibili-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P142–P165（24 集）</strong></summary>
+
+视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。
+
+- [P142 · 142_并发_并行_同步_异步_进程_线程](https://www.bilibili.com/video/BV1tDsgzxECr?p=142)
+- [P143 · 143_主进程_子进程](https://www.bilibili.com/video/BV1tDsgzxECr?p=143)
+- [P144 · 144_使用Process创建进程](https://www.bilibili.com/video/BV1tDsgzxECr?p=144)
+- [P145 · 145_关于Process参数](https://www.bilibili.com/video/BV1tDsgzxECr?p=145)
+- [P146 · 146_Lock（进程锁）](https://www.bilibili.com/video/BV1tDsgzxECr?p=146)
+- [P147 · 147_join方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=147)
+- [P148 · 148_terminate方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=148)
+- [P149 · 149_守护进程](https://www.bilibili.com/video/BV1tDsgzxECr?p=149)
+- [P150 · 150_进程之间不共享变量](https://www.bilibili.com/video/BV1tDsgzxECr?p=150)
+- [P151 · 151_Queue（队列）](https://www.bilibili.com/video/BV1tDsgzxECr?p=151)
+- [P152 · 152_使用Queue实现进程通信](https://www.bilibili.com/video/BV1tDsgzxECr?p=152)
+- [P153 · 153_使用Pipe实现进程通信](https://www.bilibili.com/video/BV1tDsgzxECr?p=153)
+- [P154 · 154_继承Process类_创建进程](https://www.bilibili.com/video/BV1tDsgzxECr?p=154)
+- [P155 · 155_进程池_基本使用](https://www.bilibili.com/video/BV1tDsgzxECr?p=155)
+- [P156 · 156_进程池_获取进程的执行结果](https://www.bilibili.com/video/BV1tDsgzxECr?p=156)
+- [P157 · 157_进程池_as_completed 方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=157)
+- [P158 · 158_进程池_add_done_callback方法](https://www.bilibili.com/video/BV1tDsgzxECr?p=158)
+- [P159 · 159_进程池_map方法（批量提交任务）](https://www.bilibili.com/video/BV1tDsgzxECr?p=159)
+- [P160 · 160_进程池_结合with使用](https://www.bilibili.com/video/BV1tDsgzxECr?p=160)
+- [P161 · 161_使用Thread_创建线程](https://www.bilibili.com/video/BV1tDsgzxECr?p=161)
+- [P162 · 162_继承Thread_创建线程](https://www.bilibili.com/video/BV1tDsgzxECr?p=162)
+- [P163 · 163_线程池](https://www.bilibili.com/video/BV1tDsgzxECr?p=163)
+- [P164 · 164_GIL锁](https://www.bilibili.com/video/BV1tDsgzxECr?p=164)
+- [P165 · 165_多进程 VS 多线程](https://www.bilibili.com/video/BV1tDsgzxECr?p=165)
+
+</details>
+<!-- bilibili-playlist:end -->
+
 <a id="ojS6I"></a>
 
 ## 一些核心概念

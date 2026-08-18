@@ -58,9 +58,10 @@ python -m venv .venv
 2. 在 `mkdocs.yml` 中维护章节顺序。
 3. 将可在线查看的源码和数据放进课程 `code/`，按 `chapter-XX/` 与教程章节自动关联。
 4. 大型数据文件仍可下载，但网页预览最多读取前 256 KB，避免浏览器卡顿。
-5. 在 `books.json` 中设置课程所属 `category`；首页会按 `site.categories` 的顺序自动分区。
-6. 发布前运行 `manage.py check`，检查章节路由、图片、代码关联、下载文件和 GitHub 单文件上限。
-7. 提交源码配置和 `dist/`；推送到 `main` 后，GitHub Actions 自动部署 Pages。
+5. Python 视频分 P 目录可用 `..\.venv\Scripts\python.exe tools\sync_bilibili_playlist.py` 从 Bilibili 官方接口同步，并按既定章节范围更新。
+6. 在 `books.json` 中设置课程所属 `category`；首页会按 `site.categories` 的顺序自动分区。
+7. 发布前运行 `manage.py check`，检查章节路由、图片、代码关联、下载文件和 GitHub 单文件上限。
+8. 提交源码配置和 `dist/`；推送到 `main` 后，GitHub Actions 自动部署 Pages。
 
 ## 部署
 
