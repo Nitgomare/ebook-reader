@@ -1,5 +1,46 @@
 # 3.Pandas数据分析
 
+<!-- bilibili-data-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P022–P052（31 集）</strong></summary>
+
+点击分 P 标题可直接播放对应内容。
+
+- [P022 · 022-pandas-pandas介绍](https://www.bilibili.com/video/BV1D9GLzyEL6?p=22)
+- [P023 · 023-pandas-series的创建](https://www.bilibili.com/video/BV1D9GLzyEL6?p=23)
+- [P024 · 024-pandas-series的属性](https://www.bilibili.com/video/BV1D9GLzyEL6?p=24)
+- [P025 · 025-pandas-访问series数据](https://www.bilibili.com/video/BV1D9GLzyEL6?p=25)
+- [P026 · 026-pandas-series常用方法](https://www.bilibili.com/video/BV1D9GLzyEL6?p=26)
+- [P027 · 027-pandas-series常用方法2](https://www.bilibili.com/video/BV1D9GLzyEL6?p=27)
+- [P028 · 028-pandas-series案例-学生成绩统计](https://www.bilibili.com/video/BV1D9GLzyEL6?p=28)
+- [P029 · 029-pandas-series案例-温度数据分析](https://www.bilibili.com/video/BV1D9GLzyEL6?p=29)
+- [P030 · 030-pandas-series案例-股票价格分析](https://www.bilibili.com/video/BV1D9GLzyEL6?p=30)
+- [P031 · 031-pandas-series案例-销售数据分析](https://www.bilibili.com/video/BV1D9GLzyEL6?p=31)
+- [P032 · 032-pandas-series案例-每小时销售数据分析](https://www.bilibili.com/video/BV1D9GLzyEL6?p=32)
+- [P033 · 033-pandas-series总结](https://www.bilibili.com/video/BV1D9GLzyEL6?p=33)
+- [P034 · 034-pandas-DataFrame介绍](https://www.bilibili.com/video/BV1D9GLzyEL6?p=34)
+- [P035 · 035-pandas-DataFrame的创建](https://www.bilibili.com/video/BV1D9GLzyEL6?p=35)
+- [P036 · 036-pandas-DataFrame的属性](https://www.bilibili.com/video/BV1D9GLzyEL6?p=36)
+- [P037 · 037-pandas-访问DataFrame的数据](https://www.bilibili.com/video/BV1D9GLzyEL6?p=37)
+- [P038 · 038-pandas-DataFrame常见方法](https://www.bilibili.com/video/BV1D9GLzyEL6?p=38)
+- [P039 · 039-pandas-DataFrame案例-学生成绩分析](https://www.bilibili.com/video/BV1D9GLzyEL6?p=39)
+- [P040 · 040-pandas-DataFrame案例-销售数据分析](https://www.bilibili.com/video/BV1D9GLzyEL6?p=40)
+- [P041 · 041-pandas-DataFrame总结](https://www.bilibili.com/video/BV1D9GLzyEL6?p=41)
+- [P042 · 042-pandas-数据分析步骤](https://www.bilibili.com/video/BV1D9GLzyEL6?p=42)
+- [P043 · 043-pandas-数据的导入导出](https://www.bilibili.com/video/BV1D9GLzyEL6?p=43)
+- [P044 · 044-pandas-缺失值的处理](https://www.bilibili.com/video/BV1D9GLzyEL6?p=44)
+- [P045 · 045-pandas-数据类型转换](https://www.bilibili.com/video/BV1D9GLzyEL6?p=45)
+- [P046 · 046-pandas-数据变形](https://www.bilibili.com/video/BV1D9GLzyEL6?p=46)
+- [P047 · 047-pandas-数据分箱](https://www.bilibili.com/video/BV1D9GLzyEL6?p=47)
+- [P048 · 048-pandas-时间数据处理](https://www.bilibili.com/video/BV1D9GLzyEL6?p=48)
+- [P049 · 049-pandas-分组聚合](https://www.bilibili.com/video/BV1D9GLzyEL6?p=49)
+- [P050 · 050-pandas-综合案例-企鹅体重分析](https://www.bilibili.com/video/BV1D9GLzyEL6?p=50)
+- [P051 · 051-pandas-综合案例-睡眠质量分析](https://www.bilibili.com/video/BV1D9GLzyEL6?p=51)
+- [P052 · 052-pandas-本章小结](https://www.bilibili.com/video/BV1D9GLzyEL6?p=52)
+
+</details>
+<!-- bilibili-data-playlist:end -->
+
 ## 3.1 Pandas 简介
 
 ### 3.1.1 Pandas 是什么？

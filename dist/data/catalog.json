@@ -552,7 +552,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "围绕 NumPy、Pandas、Matplotlib 与 Seaborn，结合 Notebook 和真实数据完成分析实践。",
+      "excerpt": "围绕 NumPy、Pandas、Matplotlib 与 Seaborn，将课本、代码和 69 节配套视频组织在同一条学习路径中。建议按表格顺序学习；每章正文末尾仍可查看关联源码和数据文件。",
       "order": 1,
       "previousId": "",
       "nextId": "50204d742907b7f6",
@@ -566,7 +566,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "数据从哪里来？公司数据库 | 公开数据集（如政府数据） | 手动爬取",
+      "excerpt": "点击分 P 标题可直接播放对应内容。",
       "order": 2,
       "previousId": "d2804271a6039712",
       "nextId": "2d1349bbcbd281d8",
@@ -580,7 +580,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "numpy是Python中科学计算的基础包。它是一个Python库，提供多维数组对象、各种派生对象（例如掩码数组和矩阵）以及用于对数组进行快速操作的各种方法，包括数学、逻辑、形状操作、排序、选择、I/O",
+      "excerpt": "点击分 P 标题可直接播放对应内容。",
       "order": 3,
       "previousId": "50204d742907b7f6",
       "nextId": "87998434aad55da5",
@@ -596,7 +596,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "Python 数据分析工具链中最核心的库，充当数据读取、清洗、分析、统计、输出的高效工具。",
+      "excerpt": "点击分 P 标题可直接播放对应内容。",
       "order": 4,
       "previousId": "2d1349bbcbd281d8",
       "nextId": "9d712438f21a831c",
@@ -624,7 +624,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "Matplotlib是一个Python绘图库，广泛用于创建各种类型的静态、动态和交互式图表。它是数据科学、机器学习、工程和科学计算领域中常用的绘图工具之一。",
+      "excerpt": "点击分 P 标题可直接播放对应内容。",
       "order": 5,
       "previousId": "87998434aad55da5",
       "nextId": "",

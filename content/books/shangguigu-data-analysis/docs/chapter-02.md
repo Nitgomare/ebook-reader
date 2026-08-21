@@ -1,5 +1,31 @@
 # 2. Numpy科学计算
 
+<!-- bilibili-data-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P006–P021（16 集）</strong></summary>
+
+点击分 P 标题可直接播放对应内容。
+
+- [P006 · 006-numpy-numpy介绍](https://www.bilibili.com/video/BV1D9GLzyEL6?p=6)
+- [P007 · 007-numpy-ndarray的特性](https://www.bilibili.com/video/BV1D9GLzyEL6?p=7)
+- [P008 · 008-numpy-ndarray的属性](https://www.bilibili.com/video/BV1D9GLzyEL6?p=8)
+- [P009 · 009-numpy-ndarray的创建1](https://www.bilibili.com/video/BV1D9GLzyEL6?p=9)
+- [P010 · 010-numpy-ndarray的创建2](https://www.bilibili.com/video/BV1D9GLzyEL6?p=10)
+- [P011 · 011-numpy-ndarray的创建3](https://www.bilibili.com/video/BV1D9GLzyEL6?p=11)
+- [P012 · 012-numpy-ndarray的数据类型](https://www.bilibili.com/video/BV1D9GLzyEL6?p=12)
+- [P013 · 013-numpy-索引与切片](https://www.bilibili.com/video/BV1D9GLzyEL6?p=13)
+- [P014 · 014-numpy-ndarray的运算](https://www.bilibili.com/video/BV1D9GLzyEL6?p=14)
+- [P015 · 015-numpy-基本数学函数](https://www.bilibili.com/video/BV1D9GLzyEL6?p=15)
+- [P016 · 016-numpy-统计函数](https://www.bilibili.com/video/BV1D9GLzyEL6?p=16)
+- [P017 · 017-numpy-比较函数](https://www.bilibili.com/video/BV1D9GLzyEL6?p=17)
+- [P018 · 018-numpy-排序函数](https://www.bilibili.com/video/BV1D9GLzyEL6?p=18)
+- [P019 · 019-numpy-本章小结](https://www.bilibili.com/video/BV1D9GLzyEL6?p=19)
+- [P020 · 020-numpy-本章练习1](https://www.bilibili.com/video/BV1D9GLzyEL6?p=20)
+- [P021 · 021-numpy-本章练习2](https://www.bilibili.com/video/BV1D9GLzyEL6?p=21)
+
+</details>
+<!-- bilibili-data-playlist:end -->
+
 ## 2.1 numpy介绍
 
 numpy是Python中科学计算的基础包。它是一个Python库，提供多维数组对象、各种派生对象（例如掩码数组和矩阵）以及用于对数组进行快速操作的各种方法，包括数学、逻辑、形状操作、排序、选择、I/O
