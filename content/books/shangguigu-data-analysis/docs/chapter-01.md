@@ -1,5 +1,20 @@
 # 1. 数据分析概述与环境搭建
 
+<!-- bilibili-data-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P001–P005（5 集）</strong></summary>
+
+点击分 P 标题可直接播放对应内容。
+
+- [P001 · 001-课程介绍](https://www.bilibili.com/video/BV1D9GLzyEL6?p=1)
+- [P002 · 002-课程导论-anaconda安装](https://www.bilibili.com/video/BV1D9GLzyEL6?p=2)
+- [P003 · 003-课程导论-jupyter的使用](https://www.bilibili.com/video/BV1D9GLzyEL6?p=3)
+- [P004 · 004-课程导论-pycharm中使用jupyter](https://www.bilibili.com/video/BV1D9GLzyEL6?p=4)
+- [P005 · 005-课程导论-本章小结](https://www.bilibili.com/video/BV1D9GLzyEL6?p=5)
+
+</details>
+<!-- bilibili-data-playlist:end -->
+
 ## 1.1 数据分析课程导论
 
 ### 1.1.1 为什么要学数据分析？
