@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import hashlib
+import html
 import re
 import urllib.request
 from pathlib import Path
@@ -94,17 +95,22 @@ def video_block(pages: list[dict[str, object]], start: int, end: int) -> str:
     )
 
 
-def compact_video_links(pages: list[dict[str, object]], start: int, end: int) -> str:
-    return "<br>".join(
-        f"[P{int(item['page']):03d}]({VIDEO_URL.format(page=int(item['page']))})"
-        for item in pages[start - 1 : end]
-    )
+def video_cards(pages: list[dict[str, object]], start: int, end: int) -> str:
+    links = []
+    for item in pages[start - 1 : end]:
+        page = int(item["page"])
+        title = html.escape(str(item["part"]).strip())
+        links.append(
+            f'<a href="{VIDEO_URL.format(page=page)}" target="_blank" rel="noopener">'
+            f'<span>P{page:03d}</span><strong>{title}</strong></a>'
+        )
+    return "".join(links)
 
 
-def chapter_code_link(chapter: str) -> str:
+def chapter_code(chapter: str) -> tuple[str, int]:
     folder = CODE / chapter.removesuffix(".md")
     if not folder.is_dir():
-        return ""
+        return "", 0
     files = sorted(
         path for path in folder.rglob("*")
         if path.is_file()
@@ -112,41 +118,76 @@ def chapter_code_link(chapter: str) -> str:
         and "__pycache__" not in path.parts
     )
     if not files:
-        return ""
+        return "", 0
     rel_path = files[0].relative_to(CODE).as_posix()
     identifier = hashlib.sha1(f"code/shangguigu-python/{rel_path}".encode("utf-8")).hexdigest()[:16]
-    return f"[本章源码（{len(files)}）](#/code/{identifier})"
+    return identifier, len(files)
+
+
+def course_unit(
+    number: int,
+    chapter: str,
+    title: str,
+    pages: list[dict[str, object]],
+    start: int,
+    end: int,
+) -> str:
+    code_id, code_count = chapter_code(chapter)
+    resources = [
+        f'<a class="course-resource" href="{chapter}"><span>课本</span><strong>阅读第 {number} 章</strong><b>→</b></a>'
+    ]
+    if code_id:
+        resources.append(
+            f'<a class="course-resource" href="#/code/{code_id}"><span>代码</span>'
+            f'<strong>本章源码 · {code_count}</strong><b>→</b></a>'
+        )
+    count = end - start + 1
+    return "".join([
+        '<article class="course-unit">',
+        '<header class="course-unit-head">',
+        f'<span class="course-unit-index">{number:02d}</span>',
+        '<div class="course-unit-title">',
+        f'<small>第 {number} 章 · P{start:03d}–P{end:03d}</small>',
+        f'<h3>{html.escape(title)}</h3>',
+        '</div>',
+        f'<span class="course-unit-count">{count} 节视频</span>',
+        '</header>',
+        f'<div class="course-resources">{"".join(resources)}</div>',
+        '<details class="course-unit-videos">',
+        f'<summary><span>配套视频</span><strong>P{start:03d}–P{end:03d}</strong><small>展开 {count} 节</small></summary>',
+        f'<div class="course-video-list">{video_cards(pages, start, end)}</div>',
+        '</details>',
+        '</article>',
+    ])
 
 
 def build_guide(pages: list[dict[str, object]]) -> str:
-    rows = []
+    units = []
     learning_path = []
     for number, (chapter, (start, end)) in enumerate(CHAPTER_RANGES.items(), start=1):
         title = CHAPTER_TITLES[chapter]
-        rows.append(
-            f"| {number:02d} · {title} | [第 {number} 章]({chapter}) |  | "
-            f"{chapter_code_link(chapter)} | {compact_video_links(pages, start, end)} |"
-        )
+        units.append(course_unit(number, chapter, title, pages, start, end))
         learning_path.append(f"{number}. [{title}]({chapter})")
     return "\n".join([
         "# Python 基础课程",
         "",
-        "从开发环境、核心语法和数据容器逐步学习到面向对象、文件操作、并发与协程，将课本、逐章源码和 172 节配套视频集中在同一条学习路径中。",
-        "",
-        '<div class="course-guide-note" markdown="1">',
-        "",
-        "**使用方法**：按课程安排顺序阅读课本，打开对应源码边学边运行，再用分 P 视频补充讲解。空白单元格表示当前资源中没有对应课件或代码。",
-        "",
-        "</div>",
+        '<section class="course-guide-hero">',
+        '<div class="course-guide-copy">',
+        '<span>PYTHON LEARNING PATH</span>',
+        '<h2>从第一行代码，<br>到并发与协程</h2>',
+        '<p>按章节阅读课本、在线查看源码，再用配套视频巩固知识点。每一项资源都能从课程卡片直接进入。</p>',
+        '</div>',
+        '<div class="course-guide-stats">',
+        '<span><strong>14</strong><small>章系统课程</small></span>',
+        '<span><strong>172</strong><small>节配套视频</small></span>',
+        '<span><strong>165</strong><small>份源码示例</small></span>',
+        '</div>',
+        '</section>',
         "",
         "## 课程安排",
         "",
-        '<div class="course-schedule" markdown="1">',
-        "",
-        "| 主题 | 课本位置 | 课件 | 代码 | 视频 |",
-        "| --- | --- | --- | --- | --- |",
-        *rows,
-        "",
+        '<div class="course-schedule-cards">',
+        *units,
         "</div>",
         "",
         "## 学习路径",

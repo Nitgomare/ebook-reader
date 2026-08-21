@@ -33,6 +33,9 @@ def main() -> None:
         json.loads((DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8"))["html"]
         for doc in data_docs
     )
+    data_guide_html = json.loads(
+        (DIST / "data" / "docs" / f"{data_docs[0]['id']}.json").read_text(encoding="utf-8")
+    )["html"]
     python_docs = [doc for doc in catalog["docs"] if doc["bookSlug"] == "shangguigu-python"]
     python_html = "".join(
         json.loads((DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8"))["html"]
@@ -84,8 +87,9 @@ def main() -> None:
         "python_course_schedule": (
             "Python 基础课程" in python_guide_html
             and "课程安排" in python_guide_html
-            and all(label in python_guide_html for label in ("课本位置", "课件", "代码", "视频"))
+            and 'class="course-guide-hero"' in python_guide_html
         ),
+        "python_course_cards": python_guide_html.count('class="course-unit"'),
         "python_guide_video_links": len(
             set(re.findall(r"https://www\.bilibili\.com/video/BV1tDsgzxECr\?p=\d+", python_guide_html))
         ),
@@ -97,14 +101,15 @@ def main() -> None:
             set(re.findall(r"https://www\.bilibili\.com/video/BV1D9GLzyEL6\?p=\d+", data_html))
         ),
         "data_course_schedule": (
-            "课程安排" in data_html
-            and all(label in data_html for label in ("课本位置", "课件", "代码", "视频"))
-            and all(f"#/code/{identifier}" in data_html for identifier in (
+            "课程安排" in data_guide_html
+            and 'class="course-guide-hero course-guide-hero-data"' in data_guide_html
+            and all(f"#/code/{identifier}" in data_guide_html for identifier in (
                 "2e13022a9c828d0b", "12d66456459b48d3", "6c1ffe660171cb77",
                 "760170eac73f6f5c", "aab09632493e7a4b", "699e2e2adb7101e2",
                 "a72d82e453f4f082",
             ))
         ),
+        "data_course_cards": data_guide_html.count('class="course-unit"'),
         "nonblocking_math_loader": (
             'defer src="app.js?v=' in index_html
             and 'async src="https://cdn.jsdelivr.net/npm/mathjax' in index_html
@@ -126,7 +131,7 @@ def main() -> None:
     assert report["robot_tables"] == 64
     assert report["robot_formulas"] == 172
     assert report["categories"] == ["python", "data-analysis", "robotics", "wind-energy"]
-    assert report["data_tables"] == 50
+    assert report["data_tables"] == 49
     assert report["data_code_blocks"] >= 250
     assert report["data_images"] == 68
     assert report["notebooks"] == 7
@@ -138,11 +143,13 @@ def main() -> None:
     assert report["python_video_chapters"] == 14
     assert report["python_video_links"] == 172
     assert report["python_course_schedule"]
+    assert report["python_course_cards"] == 14
     assert report["python_guide_video_links"] == 172
     assert report["python_guide_code_links"] == 13
     assert report["data_video_chapters"] == 4
     assert report["data_video_links"] == 69
     assert report["data_course_schedule"]
+    assert report["data_course_cards"] == 16
     assert report["nonblocking_math_loader"]
     assert report["versioned_static_assets"]
     assert report["fresh_data_fetches"] == 3
