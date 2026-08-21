@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import html
 import re
 import urllib.request
 from pathlib import Path
@@ -66,6 +67,18 @@ def video_links(pages: list[dict[str, object]], start: int, end: int, detailed: 
     return "<br>".join(links) if not detailed else "\n".join(f"- {link}" for link in links)
 
 
+def video_cards(pages: list[dict[str, object]], start: int, end: int) -> str:
+    links = []
+    for item in pages[start - 1 : end]:
+        page = int(item["page"])
+        title = html.escape(str(item["part"]).strip())
+        links.append(
+            f'<a href="{VIDEO_URL.format(page=page)}" target="_blank" rel="noopener">'
+            f'<span>P{page:03d}</span><strong>{title}</strong></a>'
+        )
+    return "".join(links)
+
+
 def video_block(pages: list[dict[str, object]], start: int, end: int) -> str:
     return "\n".join([
         START,
@@ -97,32 +110,55 @@ def update_chapter(path: Path, block: str) -> None:
 
 
 def build_guide(pages: list[dict[str, object]]) -> str:
-    rows = []
-    for topic, book_label, book_path, code_label, code_id, start, end in SCHEDULE:
-        code = f"[{code_label}](#/code/{code_id})" if code_id else ""
-        rows.append(
-            f"| {topic} | [{book_label}]({book_path}) |  | {code} | "
-            f"{video_links(pages, start, end, detailed=False)} |"
-        )
+    units = []
+    for number, (topic, book_label, book_path, code_label, code_id, start, end) in enumerate(SCHEDULE, start=1):
+        resources = [
+            f'<a class="course-resource" href="{book_path}"><span>课本</span>'
+            f'<strong>{book_label} · 阅读正文</strong><b>→</b></a>'
+        ]
+        if code_id:
+            resources.append(
+                f'<a class="course-resource" href="#/code/{code_id}"><span>代码</span>'
+                f'<strong>{html.escape(code_label)}</strong><b>→</b></a>'
+            )
+        count = end - start + 1
+        units.append("".join([
+            '<article class="course-unit">',
+            '<header class="course-unit-head">',
+            f'<span class="course-unit-index">{number:02d}</span>',
+            '<div class="course-unit-title">',
+            f'<small>{html.escape(book_label)} · P{start:03d}–P{end:03d}</small>',
+            f'<h3>{html.escape(topic)}</h3>',
+            '</div>',
+            f'<span class="course-unit-count">{count} 节视频</span>',
+            '</header>',
+            f'<div class="course-resources">{"".join(resources)}</div>',
+            '<details class="course-unit-videos">',
+            f'<summary><span>配套视频</span><strong>P{start:03d}–P{end:03d}</strong><small>展开 {count} 节</small></summary>',
+            f'<div class="course-video-list">{video_cards(pages, start, end)}</div>',
+            '</details>',
+            '</article>',
+        ]))
     return "\n".join([
         "# Python 数据分析课程",
         "",
-        "围绕 NumPy、Pandas、Matplotlib 与 Seaborn，将课本、代码和 69 节配套视频组织在同一条学习路径中。建议按表格顺序学习；每章正文末尾仍可查看关联源码和数据文件。",
-        "",
-        '<div class="course-guide-note" markdown="1">',
-        "",
-        "**使用方法**：先读课本定位知识点，再在线打开 Notebook 对照运行，最后用视频补充讲解。课件栏为空表示当前资源中没有对应课件。",
-        "",
-        "</div>",
+        '<section class="course-guide-hero course-guide-hero-data">',
+        '<div class="course-guide-copy">',
+        '<span>DATA ANALYSIS LEARNING PATH</span>',
+        '<h2>从数据处理，<br>到可视化项目实战</h2>',
+        '<p>围绕 NumPy、Pandas、Matplotlib 与 Seaborn，把课本、Notebook 和视频组织成可以直接执行的学习路线。</p>',
+        '</div>',
+        '<div class="course-guide-stats">',
+        '<span><strong>4</strong><small>个学习阶段</small></span>',
+        '<span><strong>69</strong><small>节配套视频</small></span>',
+        '<span><strong>7</strong><small>个 Notebook</small></span>',
+        '</div>',
+        '</section>',
         "",
         "## 课程安排",
         "",
-        '<div class="course-schedule" markdown="1">',
-        "",
-        "| 主题 | 课本位置 | 课件 | 代码 | 视频 |",
-        "| --- | --- | --- | --- | --- |",
-        *rows,
-        "",
+        '<div class="course-schedule-cards">',
+        *units,
         "</div>",
         "",
         "## 学习路径",
