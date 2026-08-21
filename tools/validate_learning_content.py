@@ -78,6 +78,19 @@ def main() -> None:
         "python_video_links": len(
             set(re.findall(r"https://www\.bilibili\.com/video/BV1tDsgzxECr\?p=\d+", python_html))
         ),
+        "data_video_chapters": data_html.count('class="chapter-videos"'),
+        "data_video_links": len(
+            set(re.findall(r"https://www\.bilibili\.com/video/BV1D9GLzyEL6\?p=\d+", data_html))
+        ),
+        "data_course_schedule": (
+            "课程安排" in data_html
+            and all(label in data_html for label in ("课本位置", "课件", "代码", "视频"))
+            and all(f"#/code/{identifier}" in data_html for identifier in (
+                "2e13022a9c828d0b", "12d66456459b48d3", "6c1ffe660171cb77",
+                "760170eac73f6f5c", "aab09632493e7a4b", "699e2e2adb7101e2",
+                "a72d82e453f4f082",
+            ))
+        ),
         "nonblocking_math_loader": (
             'defer src="app.js?v=' in index_html
             and 'async src="https://cdn.jsdelivr.net/npm/mathjax' in index_html
@@ -99,7 +112,7 @@ def main() -> None:
     assert report["robot_tables"] == 64
     assert report["robot_formulas"] == 172
     assert report["categories"] == ["python", "data-analysis", "robotics", "wind-energy"]
-    assert report["data_tables"] == 49
+    assert report["data_tables"] == 50
     assert report["data_code_blocks"] >= 250
     assert report["data_images"] == 68
     assert report["notebooks"] == 7
@@ -110,6 +123,9 @@ def main() -> None:
     assert report["code_sidebar_navigation"]
     assert report["python_video_chapters"] == 14
     assert report["python_video_links"] == 172
+    assert report["data_video_chapters"] == 4
+    assert report["data_video_links"] == 69
+    assert report["data_course_schedule"]
     assert report["nonblocking_math_loader"]
     assert report["versioned_static_assets"]
     assert report["fresh_data_fetches"] == 3

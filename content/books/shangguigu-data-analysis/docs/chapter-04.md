@@ -1,5 +1,32 @@
 # 4. 数据可视化
 
+<!-- bilibili-data-playlist:start -->
+<details class="chapter-videos" markdown="1">
+<summary><strong>本章配套视频 · P053–P069（17 集）</strong></summary>
+
+点击分 P 标题可直接播放对应内容。
+
+- [P053 · 053-数据可视化-可视化介绍](https://www.bilibili.com/video/BV1D9GLzyEL6?p=53)
+- [P054 · 054-matplotlib-折线图](https://www.bilibili.com/video/BV1D9GLzyEL6?p=54)
+- [P055 · 055-matplotlib-条形图](https://www.bilibili.com/video/BV1D9GLzyEL6?p=55)
+- [P056 · 056-matplotlib-饼图](https://www.bilibili.com/video/BV1D9GLzyEL6?p=56)
+- [P057 · 057-matplotlib-散点图](https://www.bilibili.com/video/BV1D9GLzyEL6?p=57)
+- [P058 · 058-matplotlib-箱线图](https://www.bilibili.com/video/BV1D9GLzyEL6?p=58)
+- [P059 · 059-matplotlib-多个图表的绘制](https://www.bilibili.com/video/BV1D9GLzyEL6?p=59)
+- [P060 · 060-matplotlib-综合案例讲解](https://www.bilibili.com/video/BV1D9GLzyEL6?p=60)
+- [P061 · 061-seaborn学习](https://www.bilibili.com/video/BV1D9GLzyEL6?p=61)
+- [P062 · 062-项目实战-项目介绍](https://www.bilibili.com/video/BV1D9GLzyEL6?p=62)
+- [P063 · 063-项目实战-数据导入](https://www.bilibili.com/video/BV1D9GLzyEL6?p=63)
+- [P064 · 064-项目实战-数据类型转换](https://www.bilibili.com/video/BV1D9GLzyEL6?p=64)
+- [P065 · 065-项目实战-异常值处理](https://www.bilibili.com/video/BV1D9GLzyEL6?p=65)
+- [P066 · 066-项目实战-数据特征构造](https://www.bilibili.com/video/BV1D9GLzyEL6?p=66)
+- [P067 · 067-项目实战-特征相关性](https://www.bilibili.com/video/BV1D9GLzyEL6?p=67)
+- [P068 · 068-项目实战-房价分布直方图](https://www.bilibili.com/video/BV1D9GLzyEL6?p=68)
+- [P069 · 069-项目实战-朝向分析](https://www.bilibili.com/video/BV1D9GLzyEL6?p=69)
+
+</details>
+<!-- bilibili-data-playlist:end -->
+
 ## 4.1 可视化介绍
 
 **为什么要进行数据可视化？**

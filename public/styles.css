@@ -164,6 +164,16 @@ div.arithmatex { overflow-x: auto; overflow-y: hidden; }
 .chapter-videos > p { color: var(--muted); font-size: .78rem; }
 .chapter-videos > ul { max-height: 24rem; overflow: auto; padding: 0 0 .6rem 1.25rem; }
 .chapter-videos li { margin: .38rem 0; font-size: .78rem; }
+.course-guide-note { margin: 1.4rem 0 2.2rem; padding: .85rem 1rem; border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line)); border-radius: .55rem; background: var(--accent-soft); }
+.course-guide-note p { margin: 0; color: var(--muted); font-size: .84rem; }
+.course-schedule table { min-width: 50rem; }
+.course-schedule th { color: #fff; background: var(--accent) !important; white-space: nowrap; }
+.course-schedule td:first-child { min-width: 12rem; color: var(--ink); font-weight: 650; }
+.course-schedule td:nth-child(2),
+.course-schedule td:nth-child(3),
+.course-schedule td:nth-child(4) { min-width: 5.8rem; text-align: center; }
+.course-schedule td:nth-child(5) { min-width: 12rem; }
+.course-schedule td:nth-child(5) a { display: inline-block; margin: .12rem .1rem; padding: .14rem .38rem; border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line)); border-radius: 999px; background: var(--accent-soft); font: 650 .68rem/1.4 var(--font-mono); text-decoration: none; }
 .pager { display: grid; gap: 1rem; margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .pager a { display: flex; min-height: 5rem; padding: .9rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--surface); flex-direction: column; }
 .pager a:last-child { text-align: right; }
