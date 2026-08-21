@@ -38,6 +38,9 @@ def main() -> None:
         json.loads((DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8"))["html"]
         for doc in python_docs
     )
+    python_guide_html = json.loads(
+        (DIST / "data" / "docs" / f"{python_docs[0]['id']}.json").read_text(encoding="utf-8")
+    )["html"]
     code_payloads = [
         json.loads(path.read_text(encoding="utf-8"))
         for path in (DIST / "data" / "code").glob("*.json")
@@ -77,6 +80,17 @@ def main() -> None:
         "python_video_chapters": python_html.count('class="chapter-videos"'),
         "python_video_links": len(
             set(re.findall(r"https://www\.bilibili\.com/video/BV1tDsgzxECr\?p=\d+", python_html))
+        ),
+        "python_course_schedule": (
+            "Python 基础课程" in python_guide_html
+            and "课程安排" in python_guide_html
+            and all(label in python_guide_html for label in ("课本位置", "课件", "代码", "视频"))
+        ),
+        "python_guide_video_links": len(
+            set(re.findall(r"https://www\.bilibili\.com/video/BV1tDsgzxECr\?p=\d+", python_guide_html))
+        ),
+        "python_guide_code_links": len(
+            set(re.findall(r"#/code/[0-9a-f]{16}", python_guide_html))
         ),
         "data_video_chapters": data_html.count('class="chapter-videos"'),
         "data_video_links": len(
@@ -123,6 +137,9 @@ def main() -> None:
     assert report["code_sidebar_navigation"]
     assert report["python_video_chapters"] == 14
     assert report["python_video_links"] == 172
+    assert report["python_course_schedule"]
+    assert report["python_guide_video_links"] == 172
+    assert report["python_guide_code_links"] == 13
     assert report["data_video_chapters"] == 4
     assert report["data_video_links"] == 69
     assert report["data_course_schedule"]
