@@ -164,7 +164,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "从开发环境、核心语法和数据容器逐步学习到面向对象、文件操作、并发与协程，将课本、逐章源码和 172 节配套视频集中在同一条学习路径中。",
+      "excerpt": "",
       "order": 1,
       "previousId": "",
       "nextId": "9ce085645f85dfab",
@@ -552,7 +552,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "围绕 NumPy、Pandas、Matplotlib 与 Seaborn，将课本、代码和 69 节配套视频组织在同一条学习路径中。建议按表格顺序学习；每章正文末尾仍可查看关联源码和数据文件。",
+      "excerpt": "",
       "order": 1,
       "previousId": "",
       "nextId": "50204d742907b7f6",
