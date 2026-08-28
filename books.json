@@ -67,7 +67,10 @@
       "category": "python",
       "type": "course",
       "featured": true,
-      "codeSource": "code"
+      "codeSource": "code",
+      "resourceLinks": [
+        {"label": "尚硅谷 Python 配套视频", "url": "https://www.bilibili.com/video/BV1tDsgzxECr/", "kind": "视频"}
+      ]
     },
     {
       "slug": "python-beginner-to-master",
@@ -88,6 +91,9 @@
       "type": "course",
       "featured": true,
       "codeSource": "code",
+      "resourceLinks": [
+        {"label": "尚硅谷数据分析配套视频", "url": "https://www.bilibili.com/video/BV1D9GLzyEL6/", "kind": "视频"}
+      ],
       "codeLinks": {
         "shared-data": ["chapter-03.md", "chapter-04.md"]
       }
@@ -99,7 +105,11 @@
       "description": "覆盖 NumPy、Pandas、Matplotlib、Seaborn、机器学习与完整数据分析案例。",
       "tags": ["数据分析", "中文教材", "案例"],
       "category": "data-analysis",
-      "type": "reference"
+      "type": "reference",
+      "codeSource": "docs/assets/code",
+      "resourceLinks": [
+        {"label": "数据分析补充视频", "url": "https://www.bilibili.com/video/BV1D9GLzyEL6/", "kind": "视频"}
+      ]
     },
     {
       "slug": "deep-learning",
@@ -109,7 +119,11 @@
       "tags": ["深度学习", "PyTorch", "课程导航"],
       "category": "artificial-intelligence",
       "type": "course",
-      "featured": true
+      "featured": true,
+      "resourceLinks": [
+        {"label": "《动手学深度学习》第二版中文教材", "url": "https://zh-v2.d2l.ai/", "kind": "教材"},
+        {"label": "李沐中文课程与视频", "url": "https://courses.d2l.ai/zh-v2/", "kind": "课程"}
+      ]
     },
     {
       "slug": "zhou-machine-learning",
@@ -118,7 +132,10 @@
       "description": "从基本概念、经典模型到计算学习理论与强化学习的系统教材。",
       "tags": ["机器学习", "西瓜书", "中文教材"],
       "category": "artificial-intelligence",
-      "type": "reference"
+      "type": "reference",
+      "resourceLinks": [
+        {"label": "机器学习配套视频", "url": "https://www.bilibili.com/video/BV1gG411f7zX/", "kind": "视频"}
+      ]
     },
     {
       "slug": "robot-textbook",
