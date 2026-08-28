@@ -133,6 +133,7 @@
       "tags": ["机器学习", "西瓜书", "中文教材"],
       "category": "artificial-intelligence",
       "type": "reference",
+      "codeSource": "code",
       "resourceLinks": [
         {"label": "机器学习配套视频", "url": "https://www.bilibili.com/video/BV1gG411f7zX/", "kind": "视频"}
       ]
