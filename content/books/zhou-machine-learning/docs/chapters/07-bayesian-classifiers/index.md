@@ -1,996 +1,847 @@
 # 第7章 贝叶斯分类器
 
-<div class="chapter-video">
-<div class="chapter-video__heading"><strong>本章配套视频 · P42–P47</strong><span>播放器从 P42 开始</span></div>
-<div class="video-embed">
-  <iframe
-    src="https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655895389&amp;p=42&amp;high_quality=1&amp;danmaku=0&amp;autoplay=0"
-    title="第 7 章 贝叶斯分类器配套视频，从 P42 开始"
-    loading="lazy"
-    scrolling="no"
-    frameborder="0"
-    allow="fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-<details class="video-parts">
-<summary>展开本章全部分 P（P42–P47）</summary>
-<div class="video-parts__links">
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=42" target="_blank" rel="noopener">P42 · 贝叶斯决策论</a>
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=43" target="_blank" rel="noopener">P43 · 生成式和判别模型</a>
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=44" target="_blank" rel="noopener">P44 · 贝叶斯定理</a>
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=45" target="_blank" rel="noopener">P45 · 极大似然估计</a>
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=46" target="_blank" rel="noopener">P46 · 朴素贝叶斯分类器</a>
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=47" target="_blank" rel="noopener">P47 · 拉普拉斯修正</a>
-</div>
-</details>
-</div>
-
-
 ## 7.1 贝叶斯决策论
 
-贝叶斯决策论（Bayesian decision theory）是概率框架下实施决策的基本方法。对分类任务来说，在所有相关概率都已知的理想情形下，贝叶斯决策论考虑如何基于这些概率和误判损失来选择最优的类别标记。下面我们以多分类任务为例来解释其基本原理。
+贝叶斯决策论(Bayesian decision theory)是概率框架下实施决策的基本方法. 对分类任务来说, 在所有相关概率都已知的理想情形下, 贝叶斯决策论考虑如何基于这些概率和误判损失来选择最优的类别标记. 下面我们以多分类任务为例来解释其基本原理.
 
-<div class="kuang">
+假设有 $N$ 种可能的类别标记,即 $\mathcal{Y} = \left\{  {{c}_{1},{c}_{2},\ldots ,{c}_{N}}\right\}  ,{\lambda }_{ij}$ 是将一个真实标记为 ${c}_{j}$ 的样本误分类为 ${c}_{i}$ 所产生的损失. 基于后验概率 $P\left( {{c}_{i} \mid  \mathbf{x}}\right)$ 可获得将样本 $\mathbf{x}$ 分类为 ${c}_{i}$ 所产生的期望损失(expected loss),即在样本 $\mathbf{x}$ 上的 “条件风险” (conditional risk)
 
-决策论中将“期望损失”称为“风险”（risk）。
+$$
+R\left( {{c}_{i} \mid  \mathbf{x}}\right)  = \mathop{\sum }\limits_{{j = 1}}^{N}{\lambda }_{ij}P\left( {{c}_{j} \mid  \mathbf{x}}\right) . \tag{7.1}
+$$
 
-</div>
+我们的任务是寻找一个判定准则 $h : \mathcal{X} \mapsto  \mathcal{Y}$ 以最小化总体风险
 
-假设有N种可能的类别标记，即<img src="images/00355.jpeg" class="zaozi1" />={c<sub>1</sub>，c<sub>2</sub>，…，c<sub>N</sub>}，λ<sub>ij</sub>是将一个真实标记为c<sub>j</sub>的样本误分类为c<sub>i</sub>所产生的损失。基于后验概率P（c<sub>i</sub>\|x）可获得将样本x分类为c<sub>i</sub>所产生的期望损失（expected loss），即在样本x上的“条件风险”（conditional risk）
+$$
+R\left( h\right)  = {\mathbb{E}}_{\mathbf{x}}\left\lbrack  {R\left( {h\left( \mathbf{x}\right)  \mid  \mathbf{x}}\right) }\right\rbrack  . \tag{7.2}
+$$
 
-<div class="img-center1">
+显然,对每个样本 $\mathbf{x}$ ,若 $h$ 能最小化条件风险 $R\left( {h\left( \mathbf{x}\right)  \mid  \mathbf{x}}\right)$ ,则总体风险 $R\left( h\right)$ 也将被最小化. 这就产生了贝叶斯判定准则(Bayes decision rule): 为最小化总体风险,只需在每个样本上选择那个能使条件风险 $R\left( {c \mid  \mathbf{x}}\right)$ 最小的类别标记,即
 
-<img src="images/00356.jpeg" class="calibre8" />
+$$
+{h}^{ * }\left( \mathbf{x}\right)  = \underset{c \in  \mathcal{Y}}{\arg \min }R\left( {c \mid  \mathbf{x}}\right) , \tag{7.3}
+$$
 
-</div>
+此时， ${h}^{ * }$ 称为贝叶斯最优分类器(Bayes optimal classifier)，与之对应的总体风险 $R\left( {h}^{ * }\right)$ 称为贝叶斯风险(Bayes risk). $1 - R\left( {h}^{ * }\right)$ 反映了分类器所能达到的最好性能, 即通过机器学习所能产生的模型精度的理论上限.
 
-我们的任务是寻找一个判定准则h：x<img src="images/00357.jpeg" class="zaozi1" />y以最小化总体风险
+具体来说,若目标是最小化分类错误率,则误判损失 ${\lambda }_{ij}$ 可写为
 
-R（h）=<img src="images/00358.jpeg" class="zaozi1" /><sub>x</sub>\[R（h（x））\|x）\]。　（7.2）
-
-显然，对每个样本x，若h能最小化条件风险R（h（x）\|x），则总体风险R（h）也将被最小化。这就产生了贝叶斯判定准则（Bayes decision rule）：为最小化总体风险，只需在每个样本上选择那个能使条件风险R（c\|x）最小的类别标记，即
-
-<div class="img-center1">
-
-<img src="images/00359.jpeg" class="calibre8" />
-
-</div>
-
-此时，h\*称为贝叶斯最优分类器（Bayes optimal classifier），与之对应的总体风险R（h\*）称为贝叶斯风险（Bayes risk）。1-R（h\*）反映了分类器所能达到的最好性能，即通过机器学习所能产生的模型精度的理论上限。
-
-<div class="kuang">
-
-错误率对应于0/1损失函数，参见（第6章 支持向量机）。
-
-</div>
-
-具体来说，若目标是最小化分类错误率，则误判损失λ<sub>ij</sub>可写为
-
-<div class="img-center1">
-
-<img src="images/00360.jpeg" class="calibre8" />
-
-</div>
-
-此时条件风险
-
-R（c\|x）=1-P（c\|x） （7.5）
-
-于是，最小化分类错误率的贝叶斯最优分类器为
-
-<div class="img-center1">
-
-<img src="images/00361.jpeg" class="calibre8" />
-
-</div>
-
-即对每个样本x，选择能使后验概率P（c\|x）最大的类别标记。
-
-<div class="kuang">
-
-注意，这只是从概率框架的角度来理解机器学习；事实上很多机器学习技术无须准确估计出后验概率就能准确进行分类。
-
-</div>
-
-不难看出，欲使用贝叶斯判定准则来最小化决策风险，首先要获得后验概率P（c\|x）。然而，在现实任务中这通常难以直接获得。从这个角度来看，注意，这只是从概率框架的角度来理解机器学习；事实上很多机器学习技术无须准确估计出后验概率就能准确进行分类。机器学习所要实现的是基于有限的训练样本集尽可能准确地估计出后验概率P（c\|x）。大体来说，主要有两种策略：给定x，可通过直接建模P（c\|x）来预测c，这样得到的是“判别式模型”（discriminative models）；也可先对联合概率分布P（x，c）建模，然后再由此获得P（c\|x），这样得到的是“生成式模型”（generative models）。显然，前面介绍的决策树、BP神经网络、支持向量机等，都可归入判别式模型的范畴。对生成式模型来说，必然考虑
-
-<div class="img-center1">
-
-<img src="images/00362.jpeg" class="calibre8" />
-
-</div>
-
-基于贝叶斯定理，P（c\|x）可写为
-
-<div class="img-center1">
-
-<img src="images/00363.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-P（x）对所有类标记均相同。
-
-</div>
-
-其中，P（c）是类“先验”（prior）概率；P（x\|c）是样本x相对于类标记c的类条件概率（class-conditional probability），或称为“似然”（likelihood）；P（x）是用于归一化的“证据”（evidence）因子。对给定样本x，证据因子P（x）与类标记无关，因此估计P（c\|x）的问题就转化为如何基于训练数据D来估计先验P（c）和似然P（x\|c）。
-
-<div class="kuang">
-
-为便于讨论，我们假设所有属性均为离散型。对连续属性，可将概率质量函数P（·）换成概率密度函数P（·）。
-
-</div>
-
-类先验概率P（c）表达了样本空间中各类样本所占的比例，根据大数定律，当训练集包含充足的独立同分布样本时，P（c）可通过各类样本出现的频率来进行估计。
-
-<div class="kuang">
-
-参见（7.3 朴素贝叶斯分类器）。
-
-</div>
-
-对类条件概率P（x\|c）来说，由于它涉及关于x所有属性的联合概率，直接根据样本出现的频率来估计将会遇到严重的困难。例如，假设样本的d个属性都是二值的，则样本空间将有2<sup>d</sup>种可能的取值，在现实应用中，这个值往往远大于训练样本数m，也就是说，很多样本取值在训练集中根本没有出现，直接使用频率来估计P（x\|c）显然不可行，因为“未被观测到”与“出现概率为零”通常是不同的。
-
-<span id="part0065.html"></span>
-
-## 7.2 极大似然估计
-
-<div class="kuang">
-
-连续分布下为概率密度函数P（x\|c）。
-
-</div>
-
-估计类条件概率的一种常用策略是先假定其具有某种确定的概率分布形式，再基于训练样本对概率分布的参数进行估计。具体地，记关于类别c的类条件概率为P（x\|c），假设P（x\|c）具有确定的形式并且被参数向量θ<sub>c</sub>唯一确定，则我们的任务就是利用训练集D估计参数θ<sub>c</sub>，为明确起见，我们将P（x\|c）记为P（x\|θ<sub>c</sub>）。
-
-<div class="kuang">
-
-从二十世纪二三十年代开始出现了频率主义学派和贝叶斯学派的争论，至今仍在继续。两派在很多重要问题上观点不同，甚至在对概率的基本解释上就有分歧。有兴趣的读者可参阅\[Efron，2005;Samaniego，2010\]。  
-
-亦称“极大似然法”。
-
-</div>
-
-事实上，概率模型的训练过程就是参数估计（parameter estimation）过程，对于参数估计，统计学界的两个学派分别提供了不同的解决方案：频率主义学派（Frequentist）认为参数虽然未知，但却是客观存在的固定值，因此，可通过优化似然函数等准则来确定参数值；贝叶斯学派（Bayesian）则认为参数是未观察到的随机变量，其本身也可有分布，因此，可假定参数服从一个先验分布，然后基于观测到的数据来计算参数的后验分布。本节介绍源自频率主义学派的极大似然估计（Maximum Likelihood Estimation，简称MLE），这是根据数据采样来估计概率分布参数的经典方法。
-
-令D<sub>c</sub>表示训练集D中第c类样本组成的集合，假设这些样本是独立同分布的，则参数θ<sub>c</sub>对于数据集D<sub>c</sub>的似然是
-
-<div class="img-center1">
-
-<img src="images/00364.jpeg" class="calibre8" />
-
-</div>
-
-对θ<sub>c</sub>进行极大似然估计，就是去寻找能最大化似然P（D<sub>c</sub>\|θ<sub>c</sub>）的参数值<img src="images/00365.jpeg" class="zaozi1" />。直观上看，极大似然估计是试图在θ<sub>c</sub>所有可能的取值中，找到一个能使数据出现的“可能性”最大的值。
-
-式（7-9）中的连乘操作易造成下溢，通常使用对数似然（log-likelihood）
-
-<div class="img-center1">
-
-<img src="images/00366.jpeg" class="calibre8" />
-
-</div>
-
-此时参数θ<sub>c</sub>的极大似然估计<img src="images/00365.jpeg" class="zaozi1" />为
-
-<div class="img-center1">
-
-<img src="images/00367.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-N为正态分布，参见（附录C.1.7 高斯分布）。
-
-</div>
-
-例如，在连续属性情形下，假设概率密度函数<img src="images/00368.jpeg" class="zaozi1" />，则参数μ<sub>c</sub>和<img src="images/00369.jpeg" class="zaozi1" />的极大似然估计为
-
-<div class="img-center1">
-
-<img src="images/00370.jpeg" class="calibre8" />
-
-</div>
-
-也就是说，通过极大似然法得到的正态分布均值就是样本均值，方差就是<img src="images/00371.jpeg" class="zaozi1" />的均值，这显然是一个符合直觉的结果。在离散属性情形下，也可通过类似的方式估计类条件概率。
-
-需注意的是，这种参数化的方法虽能使类条件概率估计变得相对简单，但估计结果的准确性严重依赖于所假设的概率分布形式是否符合潜在的真实数据分布。在现实应用中，欲做出能较好地接近潜在真实分布的假设，往往需在一定程度上利用关于应用任务本身的经验知识，否则若仅凭“猜测”来假设概率分布形式，很可能产生误导性的结果。
-
-<span id="part0066.html"></span>
-
-## 7.3 朴素贝叶斯分类器
-
-<div class="kuang">
-
-基于有限训练样本直接估计联合概率，在计算上将会遭遇组合爆炸问题，在数据上将会遭遇样本稀疏问题；属性数越多，问题越严重。
-
-</div>
-
-不难发现，基于贝叶斯公式（7.8）来估计后验概率P（c\|x）的主要困难在于：类条件概率P（x\|c）是所有属性上的联合概率，难以从有限的训练样本直接估计而得。为避开这个障碍，朴素贝叶斯分类器（<img src="images/00372.jpeg" class="zaozi1" /> Bayes classifier）采用了“属性条件独立性假设”（attribute conditional independence assumption）：对已知类别，假设所有属性相互独立。换言之，假设每个属性独立地对分类结果发生影响。
-
-基于属性条件独立性假设，式（7.8）可重写为
-
-<div class="img-center1">
-
-<img src="images/00373.jpeg" class="calibre8" />
-
-</div>
-
-其中d为属性数目，x<sub>i</sub>为x在第i个属性上的取值。
-
-<div class="kuang">
-
-x<sub>i</sub>实际上是一个“属性-值”对，例如“色泽=青绿”。为便于讨论，在上下文明确时，有时我们用x<sub>i</sub>表示第i个属性对应的变量（如“色泽”），有时直接用其指代x在第i个属性上的取值（如“青绿”）。
-
-</div>
-
-由于对所有类别来说P（x）相同，因此基于式（7.6）的贝叶斯判定准则有
-
-<div class="img-center1">
-
-<img src="images/00374.jpeg" class="calibre8" />
-
-</div>
-
-这就是朴素贝叶斯分类器的表达式。
-
-显然，朴素贝叶斯分类器的训练过程就是基于训练集D来估计类先验概率P（c），并为每个属性估计条件概率P（x<sub>i</sub>\|c）。
-
-令D<sub>c</sub>表示训练集D中第c类样本组成的集合，若有充足的独立同分布样本，则可容易地估计出类先验概率
-
-<div class="img-center1">
-
-<img src="images/00375.jpeg" class="calibre8" />
-
-</div>
-
-对离散属性而言，令D<sub>c，x<sub>i</sub></sub>表示D<sub>c</sub>中在第i个属性上取值为x<sub>i</sub>的样本组成的集合，则条件概率P（x<sub>i</sub>\|c）可估计为
-
-<div class="img-center1">
-
-<img src="images/00376.jpeg" class="calibre8" />
-
-</div>
-
-对连续属性可考虑概率密度函数，假定p（x<sub>i</sub>\|c）~N（μ<sub>c，i</sub>，<img src="images/00377.jpeg" class="zaozi1" />），其中μ<sub>c，i</sub>和<img src="images/00377.jpeg" class="zaozi1" />分别是第c类样本在第i个属性上取值的均值和方差，则有
-
-<div class="img-center1">
-
-<img src="images/00378.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-西瓜数据集3.0见（4.4.1 连续值处理　表4.3 西瓜数据集3.0）。
-
-</div>
-
-下面我们用西瓜数据集3.0训练一个朴素贝叶斯分类器，对测试例“测1”进行分类：
-
-<div class="img-center1">
-
-<img src="images/00379.jpeg" class="calibre8" />
-
-</div>
-
-首先估计类先验概率P（c），显然有
-
-<div class="img-center1">
-
-<img src="images/00380.jpeg" class="calibre17" />
-
-</div>
-
-<div class="kuang">
-
-注意，当样本数目足够多时才能进行有意义的概率估计。本书仅是以西瓜数据集3.0对估计过程做一个简单的演示。
-
-</div>
-
-然后，为每个属性估计条件概率P（x<sub>i</sub>\|c）：
-
-<div class="img-center1">
-
-<img src="images/00381.jpeg" class="calibre10" />
-
-</div>
-
-<div class="img-center1">
-
-<img src="images/00382.jpeg" class="calibre8" />
-
-</div>
-
-于是，有
-
-P（好瓜=是）×P<sub>青绿\|是</sub>×P<sub>蜷缩\|是</sub>×P<sub>浊响\|是</sub>×P<sub>清晰\|是</sub>×P<sub>凹陷\|是</sub>×P<sub>硬滑\|是</sub>×p<sub>密度：0.697\|是</sub>×p<sub>含糖：0.460\|是</sub>≈0.063，
-
-P（好瓜=否）×P<sub>青绿\|否</sub>×P<sub>蜷缩\|否</sub>×P<sub>浊响\|否</sub>×P<sub>清晰\|否</sub>×P<sub>凹陷\|否</sub>×P<sub>硬滑\|否</sub>×p<sub>密度：0.697\|否</sub>×p<sub>含糖：0.460\|否</sub>≈6.80×10<sup>-5</sup>。
-
-<div class="kuang">
-
-实践中常通过取对数的方式来将“连乘”转化为“连加”以避免数值下溢。
-
-</div>
-
-由于0.063\>6.80×10<sup>-5</sup>，因此，朴素贝叶斯分类器将测试样本“测1”判别为“好瓜”。
-
-需注意，若某个属性值在训练集中没有与某个类同时出现过，则直接基于式（7.17）进行概率估计，再根据式（7.15）进行判别将出现问题。例如，在使用西瓜数据集3.0训练朴素贝叶斯分类器时，对一个“敲声=清脆”的测试例，有
-
-<div class="img-center1">
-
-<img src="images/00383.jpeg" class="calibre15" />
-
-</div>
-
-由于式（7.15）的连乘式计算出的概率值为零，因此，无论该样本的其他属性是什么，哪怕在其他属性上明显像好瓜，分类的结果都将是“好瓜=否”，这显然不太合理。  
-
-为了避免其他属性携带的信息被训练集中未出现的属性值“抹去”，在估计概率值时通常要进行“平滑”（smoothing），常用“拉普拉斯修正”（Laplacian correction）。具体来说，令N表示训练集D中可能的类别数，N<sub>i</sub>表示第i个属性可能的取值数，则式（7.16）和（7.17）分别修正为  
-
-<div class="img-center1">
-
-<img src="images/00384.jpeg" class="calibre8" />
-
-</div>
-
-例如，在本节的例子中，类先验概率可估计为
-
-<div class="img-center1">
-
-<img src="images/00385.jpeg" class="calibre8" />
-
-</div>
-
-类似地，P<sub>清脆\|是</sub>和P<sub>清脆\|否</sub>可估计为
-
-<div class="img-center1">
-
-<img src="images/00386.jpeg" class="calibre19" />
-
-</div>
-
-<div class="img-center1">
-
-<img src="images/00387.jpeg" class="calibre19" />
-
-</div>
-
-同时，上文提到的概率P<sub>清脆\|是</sub>可估计为
-
-<div class="img-center1">
-
-<img src="images/00388.jpeg" class="calibre19" />
-
-</div>
-
-<div class="kuang">
-
-拉普拉斯修正实质上假设了属性值与类别均匀分布，这是在朴素贝叶斯学习过程中额外引入的关于数据的先验。  
-
-</div>
-
-显然，拉普拉斯修正避免了因训练集样本不充分而导致概率估值为零的问题，并且在训练集变大时，修正过程所引入的先验（prior）的影响也会逐渐变得可忽略，使得估值渐趋向于实际概率值。
-
-<div class="kuang">
-
-懒惰学习参见（10.1 k近邻学习）。  
-
-增量学习参见（5.5.2 ART网络）。  
-
-</div>
-
-在现实任务中朴素贝叶斯分类器有多种使用方式。例如，若任务对预测速度要求较高，则对给定训练集，可将朴素贝叶斯分类器涉及的所有概率估值事先计算好存储起来，这样在进行预测时只需“查表”即可进行判别；若任务数据更替频繁，则可采用“懒惰学习”（lazy learning）方式，先不进行任何训练，等收到预测请求时再根据当前数据集进行概率估值；若数据不断增加，则可在现有估值基础上，仅对新增样本的属性值所涉及的概率估值进行计数修正即可实现增量学习。
-
-<span id="part0067.html"></span>
-
-## 7.4 半朴素贝叶斯分类器
-
-为了降低贝叶斯公式（7.8）中估计后验概率P（c\|x）的困难，朴素贝叶斯分类器采用了属性条件独立性假设，但在现实任务中这个假设往往很难成立。于是，人们尝试对属性条件独立性假设进行一定程度的放松，由此产生了一类称为“半朴素贝叶斯分类器”（semi-<img src="images/00372.jpeg" class="zaozi1" /> Bayes classifiers）的学习方法。
-
-半朴素贝叶斯分类器的基本想法是适当考虑一部分属性间的相互依赖信息，从而既不需进行完全联合概率计算，又不至于彻底忽略了比较强的属性依赖关系。“独依赖估计”（One-Dependent Estimator，简称ODE）是半朴素贝叶斯分类器最常用的一种策略。顾名思议，所谓“独依赖”就是假设每个属性在类别之外最多仅依赖于一个其他属性，即
-
-<div class="img-center1">
-
-<img src="images/00389.jpeg" class="calibre8" />
-
-</div>
-
-其中pa<sub>i</sub>为属性x<sub>i</sub>所依赖的属性，称为x<sub>i</sub>的父属性。此时，对每个属性x<sub>i</sub>，若其父属性pa<sub>i</sub>已知，则可采用类似式（7.20）的办法来估计概率值P（x<sub>i</sub>\|c，pa<sub>i</sub>）。于是，问题的关键就转化为如何确定每个属性的父属性，不同的做法产生不同的独依赖分类器。
-
-最直接的做法是假设所有属性都依赖于同一个属性，称为“超父”（superparent），然后通过交叉验证等模型选择方法来确定超父属性，由此形成了SPODE（Super-Parent ODE）方法。例如，在图7.1（b）中，x<sub>1</sub>是超父属性。  
-
-<div class="img-center1">
-
-<img src="images/00390.jpeg" class="calibre8" />
-
-图7.1 朴素贝叶斯与两种半朴素贝叶斯分类器所考虑的属性依赖关系
-
-</div>
-
-TAN （Tree Augmented <img src="images/00372.jpeg" class="zaozi1" /> Bayes） \[Friedman et al., 1997\]则是在最大带权生成树（<span class="calibre20">maximum weighted spanning tree）算法\[Chow and Liu, 1968\]的基础上，通过以下步骤将属性间依赖关系约简为如图7.1（c）所示的树形结构：</span>
-
-（1）计算任意两个属性之间的条件互信息（conditional mutual information）
-
-<div class="img-center1">
-
-<img src="images/00391.jpeg" class="calibre8" />
-
-</div>
-
-（2）以属性为结点构建完全图, 任意两个结点之间边的权重设为I（x<sub>i</sub>,x<sub>j</sub>\|y）；
-
-（3）构建此完全图的最大带权生成树, 挑选根变量，将边置为有向；  
-
-（4）加入类别结点y，增加从y到每个属性的有向边。
-
-容易看出，条件互信息I（x<sub>i</sub>,x<sub>j</sub>\|y）刻画了属性x<sub>i</sub>和x<sub>j</sub>在已知类别情况下的相关性，因此，通过最大生成树算法，TAN实际上仅保留了强相关属性之间的依赖性。
-
-<div class="kuang">
-
-集成学习参见（第8章 集成学习）。
-
-</div>
-
-AODE（Averaged One-Dependent Estimator）\[Webb et al., 2005\]是一种基于集成学习机制、更为强大的独依赖分类器。与SPODE通过模型选择确定超父属性不同， AODE尝试将每个属性作为超父来构建SPODE，然后将那些具有足够训练数据支撑的SPODE集成起来作为最终结果，即
-
-<div class="img-center1">
-
-<img src="images/00392.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-m'默认设为30\[Webb et al.,2005\]。
-
-</div>
-
-其中D<sub>x<sub>i</sub></sub>是在第i个属性上取值为x<sub>i</sub>的样本的集合，m'为阈值常数。显然，AODE需估计P（c，x<sub>i</sub>）和P（x<sub>j</sub>\|c，x<sub>i</sub>）。类似式（7.20），有
-
-<div class="img-center1">
-
-<img src="images/00393.jpeg" class="calibre8" />
-
-</div>
-
-其中N是D中可能的类别数，N<sub>i</sub>是第i个属性可能的取值数，D<sub>c，x<sub>i</sub></sub>是类别为c且在第i个属性上取值为x<sub>i</sub>的样本集合，D<sub>c，x<sub>i</sub>，x<sub>j</sub></sub>是类别为c且在第i和第j个属性上取值分别为x<sub>i</sub>和x<sub>j</sub>的样本集合。例如，对西瓜数据集3.0有
-
-<div class="img-center1">
-
-<img src="images/00394.jpeg" class="calibre8" />
-
-</div>
-
-不难看出，与朴素贝叶斯分类器类似，AODE的训练过程也是“计数”，即在训练数据集上对符合条件的样本进行计数的过程。与朴素贝叶斯分类器相似，AODE无需模型选择，既能通过预计算节省预测时间，也能采取懒惰学习方式在预测时再进行计数，并且易于实现增量学习。  
-
-<div class="kuang">
-
-“高阶依赖”即对多个属性依赖。  
-
-</div>
-
-既然将属性条件独立性假设放松为独依赖假设可能获得泛化性能的提升，那么，能否通过考虑属性间的高阶依赖来进一步提升泛化性能呢？也就是说，将式（7.23）中的属性pa<sub>i</sub>替换为包含k个属性的集合pa<sub>i</sub>，从而将ODE拓展为kDE。需注意的是，随着k的增加，准确估计概率P（x<sub>i</sub>\|y，pa<sub>i</sub>）所需的训练样本数量将以指数级增加。因此，若训练数据非常充分，泛化性能有可能提升；但在有限样本条件下，则又陷入估计高阶联合概率的泥沼。  
-
-<span id="part0068.html"></span>
-
-## 7.5 贝叶斯网
-
-<div class="kuang">
-
-贝叶斯网是一种经典的概率图模型。概率图模型参见（第14章 概率图模型）。
-
-为了简化讨论，本节假定所有属性均为离散型。对于连续属性，条件概率表可推广为条件概率密度函数。  
-
-</div>
-
-贝叶斯网（Bayesian network）亦称“信念网”（belief network），它借助有向无环图（Directed Acyclic Graph，简称DAG）来刻画属性之间的依赖关系，并使用条件概率表（Conditional Probability Table，简称CPT）来描述属性的联合概率分布。  
-
-具体来说，一个贝叶斯网B由结构G和参数θ两部分构成，即B=（G，θ）。网络结构G是一个有向无环图，其每个结点对应于一个属性，若两个属性有直接依赖关系，则它们由一条边连接起来；参数θ定量描述这种依赖关系，假设属性x<sub>i</sub>在G中的父结点集为π<sub>i</sub>，则θ包含了每个属性的条件概率表θ<sub>x<sub>i</sub>\|π<sub>i</sub></sub>=P<sub>B</sub>（x<sub>i</sub>\|π<sub>i</sub>）。
-
-<div class="kuang">
-
-这里已将西瓜数据集的连续属性“含糖率”转化为离散属性“甜度”。  
-
-</div>
-
-作为一个例子，图7.2给出了西瓜问题的一种贝叶斯网结构和属性“根蒂”的条件概率表。从图中网络结构可看出，“色泽”直接依赖于“好瓜”和“甜度”，而“根蒂”则直接依赖于“甜度”；进一步从条件概率表能得到“根蒂”对“甜度”量化依赖关系，如P（根蒂=硬挺\|甜度=高）=0.1等。  
-
-<div class="img-center1">
-
-<img src="images/00395.jpeg" class="calibre15" />
-
-</div>
-
-图7.2 西瓜问题的一种贝叶斯网结构以及属性“根蒂”的条件概率表
-
-### 7.5.1 结构
-
-贝叶斯网结构有效地表达了属性间的条件独立性。给定父结点集，贝叶斯网假设每个属性与它的非后裔属性独立，于是B=\<G，θ\>将属性x<sub>1</sub>，x<sub>2</sub>，…，x<sub>d</sub><span class="calibre20">的联合概率分布定义为</span>
-
-<div class="img-center1">
-
-<img src="images/00396.jpeg" class="calibre8" />
-
-</div>
-
-以图7.2为例，联合概率分布定义为
-
-P（x<sub>1</sub>，x<sub>2</sub>，x<sub>3</sub>，x<sub>4</sub>，x<sub>5</sub>）=P（x<sub>1</sub>）P（x<sub>2</sub>）P（x<sub>3</sub>\|x<sub>1</sub>）P（x<sub>4</sub>\|x<sub>1</sub>，x<sub>2</sub>）P（x<sub>5</sub>\|x<sub>2</sub>），
-
-<div class="kuang">
-
-这里并未列举出所有的条件独立关系。  
-
-</div>
-
-显然，x<sub>3</sub>和x<sub>4</sub>在给定的x<sub>1</sub>的取值时独立，x<sub>4</sub>和x<sub>5</sub>在给定x<sub>2</sub>的取值时独立，分别简记为x<sub>3</sub><img src="images/00397.jpeg" class="zaozi1" />x<sub>4</sub>\|x<sub>1</sub>和x<sub>4</sub><img src="images/00397.jpeg" class="zaozi1" />x<sub>5</sub>\|x<sub>2</sub>。
-
-图7.3显示出贝叶斯网中三个变量之间的典型依赖关系，其中前两种在式（7.26）中已有所体现。
-
-<div class="img-center1">
-
-<img src="images/00398.jpeg" class="calibre15" />
-
-图7.3 贝叶斯网中三个变量之间的典型依赖关系  
-
-</div>
-
-在“同父”（common parent）结构中，给定父结点x<sub>1</sub>的取值，则x<sub>3</sub>和x<sub>4</sub>条件独立。在“顺序”结构中，给定x的值，则y与z条件独立。V型结构（V-structure）亦称“冲撞”结构，给定子结点x<sub>4</sub>的取值，x<sub>1</sub>与x<sub>2</sub>必不独立；奇妙的是，若x<sub>4</sub>的取值完全未知，则V型结构下x<sub>1</sub>与x<sub>2</sub>却是相互独立的。我们做一个简单的验证：
-
-<div class="img-center1">
-
-<img src="images/00399.jpeg" class="calibre8" />
-
-</div>
-
-这样的独立性称为“边际独立性”（marginal independence），记为x<sub>1</sub><img src="images/00400.jpeg" class="zaozi1" />x<sub>2</sub>。
-
-<div class="kuang">
-
-对变量做积分或求和亦称“边际化” （marginalization）。  
-
-</div>
-
-事实上，一个变量取值的确定与否，能对另两个变量间的独立性发生影响，这个现象并非V型结构所特有。例如在同父结构中，条件独立性x<sub>3</sub><img src="images/00397.jpeg" class="zaozi1" />x<sub>4</sub>\|x<sub>1</sub>成立，但若x<sub>1</sub>的取值未知，则x<sub>3</sub>和x<sub>4</sub>就不独立，即x<sub>3</sub><img src="images/00400.jpeg" class="zaozi1" />x<sub>4</sub>不成立；在顺序结构中，y<img src="images/00397.jpeg" class="zaozi1" />z\|x，但y<img src="images/00400.jpeg" class="zaozi1" />z不成立。
-
-<div class="kuang">
-
-D是指“有向” （directed）。  
-
-</div>
-
-为了分析有向图中变量间的条件独立性，可使用“有向分离”（Dseparation）。我们先把有向图转变为一个无向图：  
-
-<div class="kuang">
-
-同父、顺序和V型结构的发现以及有向分离的提出推动了因果发现方面的研究，参阅\[Pearl，1988\]。  
-
-</div>
-
-·找出有向图中的所有V型结构，在V型结构的两个父结点之间加上一条无向边；
-
-·将所有有向边改为无向边。
-
-<div class="kuang">
-
-也有译为“端正图”。
-
-“道德化”的蕴义：孩子的父母应建立牢靠的关系，否则是不道德的。  
-
-</div>
-
-由此产生的无向图称为“道德图”（moral graph），令父结点相连的过程称为“道德化”（moralization）\[Cowell et al., 1999\]。
-
-基于道德图能直观、迅速地找到变量间的条件独立性。假定道德图中有变量x，y和变量集合z=｛z<sub>i</sub>｝，若变量x和y能在图上被z分开，即从道德图中将变量集合z去除后，x和y分属两个连通分支，则称变量x和y被z有向分离，x<img src="images/00397.jpeg" class="zaozi1" />y\|z成立。例如，图7.2所对应的道德图如图7.4所示，从图中能容易地找出所有的条件独立关系：x<sub>3</sub><img src="images/00397.jpeg" class="zaozi1" />x<sub>4</sub>\|x<sub>1</sub>，x<sub>4</sub><img src="images/00397.jpeg" class="zaozi1" />x<sub>5</sub>\|x<sub>2</sub>，x<sub>3</sub><img src="images/00397.jpeg" class="zaozi1" />x<sub>2</sub>\|x<sub>1</sub>，x<sub>3</sub><img src="images/00397.jpeg" class="zaozi1" />x<sub>5</sub>\|x<sub>1</sub>，x<sub>3</sub><img src="images/00397.jpeg" class="zaozi1" />x<sub>5</sub>\|x<sub>2</sub>等。  
-
-<div class="img-center1">
-
-<img src="images/00401.jpeg" class="calibre13" />
-
-</div>
-
-图7.4 图7.2对应的道德图  
-
-### 7.5.2学习
-
-若网络结构已知，即属性间的依赖关系已知，则贝叶斯网的学习过程相对简单，只需通过对训练样本“计数”，估计出每个结点的条件概率表即可。但在现实应用中我们往往并不知晓网络结构，于是，贝叶斯网学习的首要任务就是根据训练数据集来找出结构最“恰当”的贝叶斯网。“评分搜索”是求解这一问题的常用办法。具体来说，我们先定义一个评分函数（score function），以此来评估贝叶斯网与训练数据的契合程度，然后基于这个评分函数来寻找结构最优的贝叶斯网。显然，评分函数引入了关于我们希望获得什么样的贝叶斯网的归纳偏好。  
-
-<div class="kuang">
-
-归纳偏好参见（1.4 归纳偏好）。  
-
-</div>
-
-常用评分函数通常基于信息论准则，此类准则将学习问题看作一个数据压缩任务，学习的目标是找到一个能以最短编码长度描述训练数据的模型，此时编码的长度包括了描述模型自身所需的字节长度和使用该模型描述数据所需的字节长度。对贝叶斯网学习而言，模型就是一个贝叶斯网，同时，每个贝叶斯网描述了一个在训练数据上的概率分布，自有一套编码机制能使那些经常出现的样本有更短的编码。于是，我们应选择那个综合编码长度（包括描述网络和编码数据）最短的贝叶斯网，这就是“最小描述长度”（Minimal Description Length，简称MDL）准则。  
-
-<div class="kuang">
-
-这里我们把类别也看作一个属性，即x<sub>i</sub>是一个包括示例和类别的向量。  
-
-</div>
-
-给定训练集D={x<sub>1</sub>，x<sub>2</sub>，…，x<sub>m</sub>}，贝叶斯网B=\<G，θ\>在D上的评分函数可写为  
-
-s（B\|D）=f（θ）\|B\|-LL（B\|D）， （7.28）
-
-其中，\|B\|是贝叶斯网的参数个数；f（θ）表示描述每个参数θ所需的字节数；而
-
-<div class="img-center1">
-
-<img src="images/00402.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-可以从统计学习角度理解，将两项分别视为结构风险和经验风险。  
-
-</div>
-
-是贝叶斯网B的对数似然。显然，式（7.28）的第一项是计算编码贝叶斯网B所需的字节数，第二项是计算B所对应的概率分布P<sub>B</sub>对D描述得有多好。于是，学习任务就转化为一个优化任务，即寻找一个贝叶斯网B使评分函数s（B\|D）最小。  
-
-若f（θ）=1，即每个参数用1字节描述，则得到AIC（Akaike Information Criterion）评分函数
-
-AIC（B\|D）=\|B\|-LL（B\|D）。 （7.30）
-
-若f（θ）=<img src="images/00403.jpeg" class="zaozi1" />，即每个参数用<img src="images/00403.jpeg" class="zaozi1" />字节描述，则得到BIC（Bayesian Information Criterion）评分函数
-
-<div class="img-center1">
-
-<img src="images/00404.jpeg" class="calibre8" />
-
-</div>
-
-显然，若f（θ）=0，即不计算对网络进行编码的长度，则评分函数退化为负对数似然，相应的，学习任务退化为极大似然估计。
-
-不难发现，若贝叶斯网B=\<G，θ\>的网络结构G固定，则评分函数s（B\|D）的第一项为常数。此时，最小化s（B\|D）等价于对参数θ的极大似然估计，由式（7.29）和（7.26）可知，参数θ<sub>x<sub>i</sub>\|π<sub>i</sub></sub>能直接在训练数据D上通过经验估计获得，即
-
-<div class="img-center1">
-
-<img src="images/00405.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-即事件在训练数据上出现的频率。  
-
-</div>
-
-其中<img src="images/00406.jpeg" class="zaozi1" />D（·）是D上的经验分布。因此，为了最小化评分函数s（B\|D），只需对网络结构进行搜索，而候选结构的最优参数可直接在训练集上计算得到。
-
-<div class="kuang">
-
-例如TAN\[Friedman et al.,1997\]将结构限定为树形（半朴素贝叶斯分类器可看作贝叶斯网的特例）。
-
-</div>
-
-不幸的是，从所有可能的网络结构空间搜索最优贝叶斯网结构是一个NP难问题，难以快速求解。有两种常用的策略能在有限时间内求得近似解：第一种是贪心法，例如从某个网络结构出发，每次调整一条边（增加、删除或调整方向），直到评分函数值不再降低为止；第二种是通过给网络结构施加约束来削减搜索空间，例如将网络结构限定为树形结构等。
-
-### 7.5.3 推断
-
-<div class="kuang">
-
-类别也可看作一个属性变量。  
-
-</div>
-
-贝叶斯网训练好之后就能用来回答“查询”（query），即通过一些属性变量的观测值来推测其他属性变量的取值。例如在西瓜问题中，若我们观测到西瓜色泽青绿、敲声浊响、根蒂蜷缩，想知道它是否成熟、甜度如何。这样通过已知变量观测值来推测待查询变量的过程称为“推断”（inference），已知变量观测值称为“证据”（evidence）。  
-
-<div class="kuang">
-
-更多关于推断的内容见（第14章 概率图模型）。  
-
-变分推断也很常用，参见（14.5 近似推断）。  
-
-</div>
-
-最理想的是直接根据贝叶斯网定义的联合概率分布来精确计算后验概率，不幸的是，这样的“精确推断”已被证明是NP难的\[Cooper，1990\]；换言之，当网络结点较多、连接稠密时，难以进行精确推断，此时需借助“近似推断”，通过降低精度要求，在有限时间内求得近似解。在现实应用中，贝叶斯网的近似推断常使用吉布斯采样（Gibbs sampling）来完成，这是一种随机采样方法，我们来看看它是如何工作的。
-
-令**Q**={Q<sub>1</sub>，Q<sub>2</sub>，…，Q<sub>n</sub>}表示待查询变量，**E**=｛E<sub>1</sub>，E<sub>2</sub>，…，E<sub>K</sub>｝为证据变量，已知其取值为**e**={e<sub>1</sub>，e<sub>2</sub>，…，e<sub>k</sub>｝。目标是计算后验概率P（**Q**=q\|**E**=e），其中**q**=｛q<sub>1</sub>，q<sub>2</sub>，…，q<sub>n</sub>｝是待查询变量的一组取值。以西瓜问题为例，待查询变量为**Q**=｛好瓜，甜度｝，证据变量为**E**=｛色泽，敲声，根蒂｝且已知其取值为**e**=｛青绿，浊响，蜷缩｝，查询的目标值是**q**=｛是，高｝，即这是好瓜且甜度高的概率有多大。
-
-如图7.5所示，吉布斯采样算法先随机产生一个与证据**E**=**e**一致的样本**q**<sup>0</sup>作为初始点，然后每步从当前样本出发产生下一个样本。具体来说，在第t次采样中，算法先假设**q**<sup>t</sup>=**q**<sup>t-1</sup>，然后对非证据变量逐个进行采样改变其取值，采样概率根据贝叶斯网B和其他变量的当前取值（即**Z**=**z**）计算获得。假定经过T次采样得到的与**q**一致的样本共有n<sub>q</sub>个，则可近似估算出后验概率  
-
-<div class="img-center1">
-
-<img src="images/00407.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-更多关于马尔可夫链和吉布斯采样的内容参见（14.5 近似推断）。  
-
-</div>
-
-实质上，吉布斯采样是在贝叶斯网所有变量的联合状态空间与证据**E**=**e**一致的子空间中进行“随机漫步”（random walk）。<span class="calibre20">每一步仅依赖于前一步的状态，这是一个“马尔可夫链”（Markov chain）。在一定条件下，无论从什么初始状态开始，马尔可夫链第t步的状态分布在t→∞时必收敛于一个平稳分布（stationary distribution）；对于吉布斯采样来说，这个分布恰好是**P**（**Q**\|**E**=**e**）。因此，在T很大时，吉布斯采样相当于根据P（**Q**\|**E**=**e**）采样，从而保证了式（7.33）收敛于P（**Q**=**q**\|**E**=**e**）。</span>
-
-<div class="img-center1">
-
-<img src="images/00408.jpeg" class="calibre8" />
-
-</div>
-
-图7.5 吉布斯采样算法
-
-<div class="kuang">
-
-除去变量Q<sub>i</sub>外的其他变量。
-
-</div>
-
-需注意的是，由于马尔可夫链通常需很长时间才能趋于平稳分布，因此吉布斯采样算法的收敛速度较慢。此外，若贝叶斯网中存在极端概率“0”或“1”，则不能保证马尔可夫链存在平稳分布，此时吉布斯采样会给出错误的估计结果。  
-
-<span id="part0069.html"></span>
-
-## 7.6 EM算法
-
-在前面的讨论中，我们一直假设训练样本所有属性变量的值都已被观测到，即训练样本是“完整”的。但在现实应用中往往会遇到“不完整”的训练样本，例如由于西瓜的根蒂已脱落，无法看出是“蜷缩”还是“硬挺”，则训练样本的“根蒂”属性变量值未知。在这种存在“未观测”变量的情形下，是否仍能对模型参数进行估计呢？  
-
-<div class="kuang">
-
-由于“似然”常基于指对数似然数族函数来定义，因此对数似然及后续EM迭代过程中一般是使用自然对数ln（·）。  
-
-</div>
-
-未观测变量的学名是“隐变量”（latent variable）。令**X**表示已观测变量集，**Z**表示隐变量集，**Θ**表示模型参数。若欲对**Θ**做极大似然估计，则应最大化对数似然  
-
-LL（θ\|X，Z）=lnP（X，Z\|θ） （7.34）
-
-然而由于**Z**是隐变量，上式无法直接求解。此时我们可通过对**Z**计算期望，来最大化已观测数据的对数“边际似然”（marginal likelihood）  
-
-<div class="img-center1">
-
-<img src="images/00409.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-直译为“期望最大化算法”，通常直接称EM 算法。  
-
-这里仅给出EM算法的一般描述，具体例子参见（9.4.3 高斯混合聚类）。  
-
-</div>
-
-**EM**（Expectation-Maximization）算法\[Dempster et al.,1977\]是常用的估计参数隐变量的利器，它是一种迭代式的方法，其基本想法是：若参数**Θ**已知，则可根据训练数据推断出最优隐变量**Z**的值（**E**步）；反之，若**Z**的值已知，则可方便地对参数**Θ**做极大似然估计（**M**步）。  
-
-于是，以初始值**Θ**<sup>0</sup>为起点，对式（7.35），可迭代执行以下步骤直至收敛：  
-
-·基于**Θ**<span class="calibre20"><sup>t</sup>推断隐变量**Z**的期望，记为**Z**<sup>t</sup>；</span>
-
-·基于已观测变量**X**和**Z**<sup>t</sup>对参数**Θ**<span class="calibre20">做极大似然估计，记为</span>**Θ**<span class="calibre20"><sup>t+1</sup>；</span>
-
-<span class="calibre20">这就是**EM**算法的原型。  
-</span>
-
-<span class="calibre20">进一步，若我们不是取**Z**的期望，而是基于</span>**Θ**<sup>t</sup>计算隐变量**Z**的概率分布P（Z\|X，**Θ**<span class="calibre20"><sup>t</sup>），则EM算法的两个步骤是：</span>
-
-·E步（Expectation）：以当前参数θ<sup>t</sup>推断隐变量分布P（Z\|X，θ<sup>t</sup>），并计算对数似然LL（θ\|X，Z）关于Z的期望
-
-<div class="img-center1">
-
-<img src="images/00410.jpeg" class="calibre8" />
-
-</div>
-
-·M步（Maximization）：寻找参数最大化期望似然，即
-
-<div class="img-center1">
-
-<img src="images/00411.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-EM算法的收敛性分析参见\[Wu，1983\]。  
-
-EM算法可看作用坐标下降（coordinate descent）法来最大化对数似然下界的过程。坐标下降法参见（附录B.5 坐标下降法）。  
-
-</div>
-
-简要来说，EM算法使用两个步骤交替计算：第一步是期望（E）步，利用当前估计的参数值来计算对数似然的期望值；第二步是最大化（M）步，寻找能使E步产生的似然期望最大化的参数值。然后，新得到的参数值重新被用于E步，……直至收敛到局部最优解。  
-
-事实上，隐变量估计问题也可通过梯度下降等优化算法求解，但由于求和的项数将随着隐变量的数目以指数级上升，会给梯度计算带来麻烦；而EM算法则可看作一种非梯度优化方法。  
-
-<span id="part0070.html"></span>
-
-## 7.7 阅读材料
-
-贝叶斯决策论在机器学习、模式识别等诸多关注数据分析的领域都有极为重要的地位。对贝叶斯定理进行近似求解，为机器学习算法的设计提供了一种有效途径。为避免贝叶斯定理求解时面临的组合爆炸、样本稀疏问题，朴素贝叶斯分类器引入了属性条件独立性假设。这个假设在现实应用中往往很难成立，但有趣的是，朴素贝叶斯分类器在很多情形下都能获得相当好的性能\[Domingos and Pazzani，1997；Ng and Jordan，2002\]。一种解释是对分类任务来说，只需各类别的条件概率排序正确、无须精准概率值即可导致正确分类结果\[Domingos and Pazzani，1997\]；另一种解释是，若属性间依赖对所有类别影响相同，或依赖关系的影响能相互抵消，则属性条件独立性假设在降低计算开销的同时不会对性能产生负面影响\[Zhang，2004\]。朴素贝叶斯分类器在信息检索领域尤为常用\[Lewis，1998\]，\[McCallum and Nigam，1998\]对其在文本分类中的两种常见用法进行了比较。
-
-根据对属性间依赖的涉及程度，贝叶斯分类器形成了一个“谱”：朴素贝叶斯分类器不考虑属性间依赖性，贝叶斯网能表示任意属性间的依赖性，二者分别位于“谱”的两端；介于两者之间的则是一系列半朴素贝叶斯分类器，它们基于各种假设和约束来对属性间的部分依赖性进行建模。一般认为，半朴素贝叶斯分类器的研究始于\[Kononenko，1991\]。ODE仅考虑依赖一个父属性，由此形成了独依赖分类器如TAN\[Friedman et al.,1997\]、AODE\[Webb et al.,2005\]、LBR（lazy Bayesian Rule）\[Zheng and Webb，2000\]等；kDE则考虑最多依赖k个父属性，由此形成了k依赖分类器如KDB\[Sahami，1996\]、NBtree\[Kohavi，1996\]等。  
-
-贝叶斯分类器（Bayes Classifier）与一般意义上的“贝叶斯学习”（Bayesian Learning）有显著区别，前者是通过最大后验概率进行单点估计，后者则是进行分布估计。关于贝叶斯学习的内容可参阅\[Bishop，2006\]。  
-
-<div class="kuang">
-
-J.Pearl教授因这方面的卓越贡献而获得2011年图灵奖，参见（第14章 概率图模型）。  
-
-贝叶斯网是经典的概率图模型, 参见（第14章 概率图模型）。  
-
-</div>
-
-贝叶斯网为不确定学习和推断提供了基本框架，因其强大的表示能力、良好的可解释性而广受关注\[Pearl，1988\]。贝叶斯网学习可分为结构学习和参数学习两部分。参数学习通常较为简单，而结构学习则被证明是NP难问题\[Cooper，1990；Chickering et al.,2004\]，人们为此提出了多种评分搜索方法\[Friedman and Goldszmidt，1996\]。贝叶斯网通常被看作生成式模型，但近年来也有不少关于贝叶斯网判别式学习的研究\[Grossman and Domingos，2004\]。关于贝叶斯网的更多介绍可参阅\[Jensen，1997；Heckerman，1998\]。  
-
-EM算法是最常见的隐变量估计方法，在机器学习中有极为广泛的用途，例如常被用来学习高斯混合模型（Gaussian mixture model，简称GMM）的参数；9.4节将介绍的k均值聚类算法就是一个典型的EM算法。更多关于EM算法的分析、拓展和应用可参阅\[McLachlan and Krishnan，2008\]。  
-
-<div class="kuang">
-
-“数据挖掘十大算法”还包括前几章介绍的C4.5、CART决策树、支持向量机，以及后几章将要介绍的AdaBoost、k均值聚类、k近邻算法等。  
-
-</div>
-
-本章介绍的朴素贝叶斯算法和EM算法均曾入选“数据挖掘十大算法”\[Wu et al.,2007\]。  
-
-<span id="part0071.html"></span>
-
-## 习题
-
-<div class="kuang">
-
-西瓜数据集3.0见（4.4.1 连续值处理的表4.3 西瓜数据集3.0）。
-
-</div>
-
-7.1 试使用极大似然法估算西瓜数据集3.0中前3个属性的类条件概率。
-
-7.2\* 试证明：条件独立性假设不成立时，朴素贝叶斯分类器仍有可能产生最优贝叶斯分类器。
-
-7.3 试编程实现拉普拉斯修正的朴素贝叶斯分类器，并以西瓜数据集3.0为训练集，对p.151“测1”样本进行判别。  
-
-7.4 实践中使用式（7.15）决定分类类别时，若数据的维数非常高，则概率连乘<img src="images/00412.jpeg" class="zaozi1" />P（x<sub>i</sub>\|c）的结果通常会非常接近于0从而导致下溢。试述防止下溢的可能方案。
-
-<div class="kuang">
-
-假设同先验；参见（3.4 线性判别分析）。  
-
-</div>
-
-7.5 试证明：二分类任务中两类数据满足高斯分布且方差相同时，线性判别分析产生贝叶斯最优分类器。
-
-7.6 试编程实现AODE分类器，并以西瓜数据集3.0为训练集，对p.151的“测1”样本进行判别。  
-
-7.7 给定d个二值属性的二分类任务，假设对于任何先验概率项的估算至少需30个样例，则在朴素贝叶斯分类器式（7.15）中估算先验概率项P（c）需30×2=60个样例。试估计在AODE式（7.23）中估算先验概率项P（c，x<sub>i</sub>）所需的样例数（分别考虑最好和最坏情形）。  
-
-7.8 考虑图7.3，试证明：在同父结构中，若x<sub>1</sub>的取值未知，则x3<img src="images/00400.jpeg" class="zaozi1" />x4不成立；在顺序结构中，y<img src="images/00397.jpeg" class="zaozi1" />z\|x，但y<img src="images/00400.jpeg" class="zaozi1" />z不成立。
-
-<div class="kuang">
-
-西瓜数据集2.0见（4.2.1 信息增益的表4.1 西瓜数据集2.0）。  
-
-</div>
-
-7.9 以西瓜数据集2.0为训练集，试基于BIC准则构建一个贝叶斯网。
-
-7.10 以西瓜数据集2.0中属性“脐部”为隐变量，试基于EM算法构建一个贝叶斯网。  
-
-<span id="part0072.html"></span>
-
-## 参考文献
-
-Bishop, C. M. （2006）. *Pattern Recognition and Machine Learning*. Springer,New York, NY.  
-
-Chickering, D. M., D. Heckerman, and C. Meek. （2004）. “Large-sample learning of Bayesian networks is NP-hard.” *Journal of Machine Learning Research*,5：1287–1330.  
-
-Chow, C. K. and C. N. Liu. （1968）. “Approximating discrete probability distributions with dependence trees.” *IEEE Transactions on Information Theory*,14（3）：462–467.  
-
-Cooper, G. F. （1990）. “The computational complexity of probabilistic inference using Bayesian belief networks.” *Artificial Intelligence*, 42（2-3）：393–405.  
-
-Cowell, R. G., P. Dawid, S. L. Lauritzen, and D. J. Spiegelhalter. （1999）. *Probabilistic Networks and Expert Systems*. Springer, New York, NY.  
-
-Dempster, A. P., N. M. Laird, and D. B. Rubin. （1977）. “Maximum likelihood from incomplete data via the EM algorithm.” *Journal of the Royal Statistical Society - Series B*, 39（1）：1–38.  
-
-Domingos, P. and M. Pazzani. （1997）. “On the optimality of the simple Bayesian classifier under zero-one loss.” *Machine Learning*, 29（2-3）：103–130.  
-
-Efron, B. （2005）. “Bayesians, frequentists, and scientists.” *Journal of the American Statistical Association*, 100（469）：1–5.  
-
-Friedman, N., D. Geiger, and M. Goldszmidt. （1997）. “Bayesian network classifiers.”<span class="calibre20">*Machine Learning*, 29（2-3）：131–163.</span>
-
-<span class="calibre20">Friedman, N. and M. Goldszmidt. （1996）. “Learning Bayesian networks with local structure.” In *Proceedings of the 12th Annual Conference on Uncertainty in Artificial Intelligence （UAI）*, 252–262, Portland, OR.  
-</span>
-
-<span class="calibre20">Grossman, D. and P. Domingos. （2004）. “Learning Bayesian network classifiers by maximizing conditional likelihood.” In *Proceedings of the 21st International Conference on Machine Learning （ICML）*, 46–53, Banff, Canada.  
-</span>
-
-<span class="calibre20">Heckerman, D. （1998）. “A tutorial on learning with Bayesian networks.” In *Learning in Graphical Models* （M. I. Jordan, ed.）, 301–354, Kluwer, Dordrecht,The Netherlands.  
-</span>
-
-<span class="calibre20">Jensen, F. V. （1997）. *An Introduction to Bayesian Networks*. Springer, NY.  
-</span>
-
-<span class="calibre20">Kohavi, R. （1996）. “Scaling up the accuracy of naive-Bayes classifiers：A decision-tree hybrid.” In *Proceedings of the 2nd International Conference on Knowledge Discovery and Data Mining （KDD）*, 202–207, Portland, OR.  
-</span>
-
-<span class="calibre20">Kononenko, I. （1991）. “Semi-naive Bayesian classifier.” In *Proceedings of the 6th European Working Session on Learning （EWSL）*, 206–219, Porto, Portugal.  
-</span>
-
-<span class="calibre20">Lewis, D. D. （1998）. “Naive （Bayes） at forty：The independence assumption in information retrieval.” In *Proceedings of the 10th European Conference on Machine Learning （ECML）*, 4–15, Chemnitz, Germany.  
-</span>
-
-<span class="calibre20">McCallum, A. and K. Nigam. （1998）. “A comparison of event models for naive Bayes text classification.” In *Working Notes of the AAAI’98 Workshop on Learning for Text Cagegorization*, Madison, WI.  
-</span>
-
-<span class="calibre20">McLachlan, G. and T. Krishnan. （2008）. *The EM Algorithm and Extensions*,2nd edition. John Wiley & Sons, Hoboken, NJ.  
-</span>
-
-Ng, A. Y. and M. I. Jordan. （2002）. “On discriminative vs. generative classifiers：<span class="calibre20">A comparison of logistic regression and naive Bayes.” In *Advances in Neural Information Processing Systems 14 （NIPS）* （T. G. Dietterich, S. Becker, and Z. Ghahramani, eds.）, 841–848, MIT Press, Cambridge, MA.</span>
-
-<span class="calibre20">Pearl, J. （1988）. *Probabilistic Reasoning in Intelligent Systems：Networks of Plausible Inference*. Morgan Kaufmann, San Francisco, CA.  
-</span>
-
-<span class="calibre20">Sahami, M. （1996）. “Learning limited dependence Bayesian classifiers.” In *Proceedings of the 2nd International Conference on Knowledge Discovery and Data Mining （KDD）*, 335–338, Portland, OR.  
-</span>
-
-<span class="calibre20">Samaniego, F. J. （2010）. *A Comparison of the Bayesian and Frequentist Approaches to Estimation*. Springer, New York, NY.  
-</span>
-
-<span class="calibre20">Webb, G., J. Boughton, and Z.Wang. （2005）. “Not so naive Bayes：Aggregating one-dependence estimators.” *Machine Learning*, 58（1）：5–24.  
-</span>
-
-Wu, C. F. Jeff. （1983）. “On the convergence properties of the EM algorithm.”<span class="calibre20">*Annals of Statistics*, 11（1）：95–103.</span>
-
-<span class="calibre20">Wu, X., V. Kumar, J. R. Quinlan, J. Ghosh, Q. Yang, H. Motoda, G. J. McLachlan,A. Ng, B. Liu, P. S. Yu, Z.-H. Zhou, M. Steinbach, D. J. Hand,and D. Steinberg. （2007）. “Top 10 algorithms in data mining.” *Knowledge *</span>*and Information Systems*, 14（1）：1–37.<span class="calibre20">  
-</span>
-
-Zhang, H. （2004）. “The optimality of naive Bayes.” In *Proceedings of the 17th International Florida Artificial Intelligence Research Society Conference（FLAIRS）*, 562–567, Miami, FL.  
-
-Zheng, Z. and G. I. Webb. （2000）. “Lazy learning of Bayesian rules.” *Machine Learning*, 41（1）：53–84.  
-
-<span id="part0073_split_000.html"></span>
-
-<div class="img-center2">
-
-<img src="images/00024.jpeg" class="tu1" />
-
-</div>
-
-<span id="part0073_split_001.html"></span>
-
-## 休息一会儿
-
-<div class="kuang1">
-
-### 小故事：“机器学习”名字的由来
-
-<div class="float-right">
-
-<img src="images/00413.jpeg" class="calibre10" />
-
-</div>
-
-1763年12月23日，托马斯·贝叶斯（Thomas Bayes，1701？—1761）的遗产受赠者R.Price牧师在英国皇家学会宣读了贝叶斯的遗作《论机会学说中一个问题的求解》，其中给出了贝叶斯定理，这一天现在被当作贝叶斯定理的诞生日。虽然贝叶斯定理在今天已成为概率统计最经典的内容之一，但贝叶斯本人却笼罩在谜团中。  
-
-<div class="kuang">
-
-英国皇家学会相当于英会国科学院，皇家学会会士相当于科学院院士。  
-
-</div>
-
-现有资料表明，贝叶斯是一位神职人员，长期担任英国坦布里奇韦尔斯地方教堂的牧师，他从事数学研究的目的是为了证明上帝的存在。他在1742年当选英国皇家学会会士，但没有记录表明他此前发表过任何科学或数学论文。他的提名是由皇家学会的重量级人物签署的，但为什么提名以及他为何能当选，至今仍是个谜。贝叶斯的研究工作和他本人在他生活的时代很少有人关注，贝叶斯定理出现后很快就被遗忘了，后来大数学家拉普拉斯使它重新被科学界所熟悉，但直到二十世纪随着统计学的广泛应用才备受瞩目。贝叶斯的出生年份至今也没有清楚确定，甚至关于如今广泛流传的他的画像是不是贝叶斯本人，也仍存在争议。  
-
-</div>
-
-<span id="part0074_split_000.html"></span>
-
-<div class="img-center">
-
-<img src="images/00007.jpeg" class="tu" />
-
-</div>
-
-<span id="part0074_split_001.html"></span>
+$$
+{\lambda }_{ij} = \left\{  \begin{array}{ll} 0, & \text{ if }i = j; \\  1, & \text{ otherwise, } \end{array}\right. \tag{7.4}
+$$
 
 ---
 
-## 本站实践：概率输出必须经过验证
+决策论中将“期望损失”称为“风险”(risk).
 
-!!! tip "分类置信度不等于真实概率"
-    在机械状态识别中，对比朴素贝叶斯、LDA/GDA 与逻辑回归时，除准确率外还要检查混淆矩阵、概率校准和不同设备上的稳定性。本站 [验证实验](/programming/ml-from-scratch/#validation-lab) 给出按试验分组的最小模板。
+错误率对应于 $0/1$ 损失函数，参见第 6 章.
 
-延伸源码：[tiny_ml Bayes](https://github.com/fengyang95/tiny_ml/tree/master/tinyml/bayes) 与 [判别分析](https://github.com/fengyang95/tiny_ml/tree/master/tinyml/discriminant_analysis)。阅读时核对分布假设、协方差估计和数值稳定性。
+---
+
+此时条件风险
+
+$$
+R\left( {c \mid  \mathbf{x}}\right)  = 1 - P\left( {c \mid  \mathbf{x}}\right) , \tag{7.5}
+$$
+
+于是, 最小化分类错误率的贝叶斯最优分类器为
+
+$$
+{h}^{ * }\left( \mathbf{x}\right)  = \underset{c \in  \mathcal{Y}}{\arg \max }P\left( {c \mid  \mathbf{x}}\right) , \tag{7.6}
+$$
+
+即对每个样本 $\mathbf{x}$ ,选择能使后验概率 $P\left( {c \mid  \mathbf{x}}\right)$ 最大的类别标记.
+
+不难看出，欲使用贝叶斯判定准则来最小化决策风险，首先要获得后验概率 $P\left( {c \mid  \mathbf{x}}\right)$ . 然而，在现实任务中这通常难以直接获得. 从这个角度来看，机器学习所要实现的是基于有限的训练样本集尽可能准确地估计出后验概率 $P\left( {c \mid  \mathbf{x}}\right)$ . 大体来说,主要有两种策略: 给定 $\mathbf{x}$ ,可通过直接建模 $P\left( {c \mid  \mathbf{x}}\right)$ 来预测 $c$ ,这样得到的是 “判别式模型” (discriminative models); 也可先对联合概率分布 $P\left( {\mathbf{x}, c}\right)$ 建模,然后再由此获得 $P\left( {c \mid  \mathbf{x}}\right)$ ,这样得到的是 “生成式模型" (generative models). 显然, 前面介绍的决策树、BP 神经网络、支持向量机等, 都可归入判别式模型的范畴. 对生成式模型来说, 必然考虑
+
+$$
+P\left( {c \mid  \mathbf{x}}\right)  = \frac{P\left( {\mathbf{x}, c}\right) }{P\left( \mathbf{x}\right) }. \tag{7.7}
+$$
+
+基于贝叶斯定理, $P\left( {c \mid  \mathbf{x}}\right)$ 可写为
+
+$$
+P\left( {c \mid  \mathbf{x}}\right)  = \frac{P\left( c\right) P\left( {\mathbf{x} \mid  c}\right) }{P\left( \mathbf{x}\right) }, \tag{7.8}
+$$
+
+其中, $P\left( c\right)$ 是类 “先验” (prior)概率; $P\left( {\mathbf{x} \mid  c}\right)$ 是样本 $\mathbf{x}$ 相对于类标记 $c$ 的类条件概率(class-conditional probability),或称为 “似然” (likelihood); $P\left( \mathbf{x}\right)$ 是用于归一化的 “证据” (evidence)因子. 对给定样本 $\mathbf{x}$ ,证据因子 $P\left( \mathbf{x}\right)$ 与类标记无关,因此估计 $P\left( {c \mid  \mathbf{x}}\right)$ 的问题就转化为如何基于训练数据 $D$ 来估计先验 $P\left( c\right)$ 和似然 $P\left( {\mathbf{x} \mid  c}\right)$ .
+
+类先验概率 $P\left( c\right)$ 表达了样本空间中各类样本所占的比例,根据大数定律, 当训练集包含充足的独立同分布样本时, $P\left( c\right)$ 可通过各类样本出现的频率来进行估计.
+
+对类条件概率 $P\left( {\mathbf{x} \mid  c}\right)$ 来说,由于它涉及关于 $\mathbf{x}$ 所有属性的联合概率,直此时参数 ${\mathbf{\theta }}_{c}$ 的极大似然估计 ${\widehat{\mathbf{\theta }}}_{c}$ 为
+
+$$
+{\widehat{\mathbf{\theta }}}_{c} = \underset{{\mathbf{\theta }}_{c}}{\arg \max }{LL}\left( {\mathbf{\theta }}_{c}\right) . \tag{7.11}
+$$
+
+---
+
+注意, 这只是从概率框架的角度来理解机器学习; 事实上很多机器学习技术无须准确估计出后验概率就能准确进行分类.
+
+$P\left( \mathbf{x}\right)$ 对所有类标记均相同.
+
+为便于讨论, 我们假设所有属性均为离散型. 对连续属性, 可将概率质量函数 $P\left( \cdot \right)$ 换成概率密度函 - 数 $p\left( \cdot \right)$ .
+
+---
+
+参见 7.3 节. 接根据样本出现的频率来估计将会遇到严重的困难. 例如,假设样本的 $d$ 个属性都是二值的,则样本空间将有 ${2}^{d}$ 种可能的取值,在现实应用中,这个值往往远大于训练样本数 $m$ ,也就是说,很多样本取值在训练集中根本没有出现,直接使用频率来估计 $P\left( {\mathbf{x} \mid  c}\right)$ 显然不可行,因为 “未被观测到” 与 “出现概率为零” 通常是不同的.
+
+## 7.2 极大似然估计
+
+估计类条件概率的一种常用策略是先假定其具有某种确定的概率分布形式,再基于训练样本对概率分布的参数进行估计. 具体地,记关于类别 $c$ 的类条件概率为 $P\left( {\mathbf{x} \mid  c}\right)$ ,假设 $P\left( {\mathbf{x} \mid  c}\right)$ 具有确定的形式并且被参数向量 ${\mathbf{\theta }}_{c}$ 唯一确定, 则我们的任务就是利用训练集 $D$ 估计参数 ${\mathbf{\theta }}_{c}$ . 为明确起见,我们将 $P\left( {\mathbf{x} \mid  c}\right)$ 记为 $P\left( {\mathbf{x} \mid  {\mathbf{\theta }}_{c}}\right)$ .
+
+事实上, 概率模型的训练过程就是参数估计(parameter estimation)过程. 对于参数估计, 统计学界的两个学派分别提供了不同的解决方案: 频率主义学派(Frequentist)认为参数虽然未知, 但却是客观存在的固定值, 因此, 可通过优化似然函数等准则来确定参数值; 贝叶斯学派(Bayesian)则认为参数是未观察到的随机变量, 其本身也可有分布, 因此, 可假定参数服从一个先验分布, 然后基于观测到的数据来计算参数的后验分布. 本节介绍源自频率主义学派的极大似然估计(Maximum Likelihood Estimation, 简称 MLE), 这是根据数据采样来估计概率分布参数的经典方法.
+
+令 ${D}_{c}$ 表示训练集 $D$ 中第 $c$ 类样本组成的集合,假设这些样本是独立同分布的，则参数 ${\mathbf{\theta }}_{c}$ 对于数据集 ${D}_{c}$ 的似然是
+
+$$
+P\left( {{D}_{c} \mid  {\mathbf{\theta }}_{c}}\right)  = \mathop{\prod }\limits_{{\mathbf{x} \in  {D}_{c}}}P\left( {\mathbf{x} \mid  {\mathbf{\theta }}_{c}}\right) . \tag{7.9}
+$$
+
+对 ${\mathbf{\theta }}_{c}$ 进行极大似然估计,就是去寻找能最大化似然 $P\left( {{D}_{c} \mid  {\mathbf{\theta }}_{c}}\right)$ 的参数值 ${\widehat{\mathbf{\theta }}}_{c}$ . 直观上看,极大似然估计是试图在 ${\mathbf{\theta }}_{c}$ 所有可能的取值中,找到一个能使数据出现的 “可能性” 最大的值.
+
+式(7.9)中的连乘操作易造成下溢, 通常使用对数似然(log-likelihood)
+
+$$
+{LL}\left( {\mathbf{\theta }}_{c}\right)  = \log P\left( {{D}_{c} \mid  {\mathbf{\theta }}_{c}}\right)
+$$
+
+$$
+= \mathop{\sum }\limits_{{\mathbf{x} \in  {D}_{c}}}\log P\left( {\mathbf{x} \mid  {\mathbf{\theta }}_{c}}\right) , \tag{7.10}
+$$
+
+---
+
+连续分布下为概率密度函数 $p\left( {\mathbf{x} \mid  c}\right)$ .
+
+从二十世纪二三十年代开始出现了频率主义学派和贝叶斯学派的争论, 至今仍在继续. 两派在很多重要问题上观点不同， 甚至在对概率的基本解释上就有分歧. 有兴趣的读者可参阅 [Efron, 2005; Samaniego, 2010].
+
+亦称 “极大似然法”.
+
+---
+
+例如,在连续属性情形下,假设概率密度函数 $p\left( {\mathbf{x} \mid  c}\right)  \sim  \mathcal{N}\left( {{\mathbf{\mu }}_{c},{\mathbf{\sigma }}_{c}^{2}}\right)$ ,则参数 ${\mathbf{\mu }}_{c}$ 和 ${\mathbf{\sigma }}_{c}^{2}$ 的极大似然估计为
+
+$$
+{\widehat{\mathbf{\mu }}}_{c} = \frac{1}{\left| {D}_{c}\right| }\mathop{\sum }\limits_{{\mathbf{x} \in  {D}_{c}}}\mathbf{x}, \tag{7.12}
+$$
+
+$$
+{\widehat{\mathbf{\sigma }}}_{c}^{2} = \frac{1}{\left| {D}_{c}\right| }\mathop{\sum }\limits_{{\mathbf{x} \in  {D}_{c}}}\left( {\mathbf{x} - {\widehat{\mathbf{\mu }}}_{c}}\right) {\left( \mathbf{x} - {\widehat{\mathbf{\mu }}}_{c}\right) }^{\mathrm{T}}. \tag{7.13}
+$$
+
+也就是说, 通过极大似然法得到的正态分布均值就是样本均值, 方差就是 $\left( {\mathbf{x} - {\widehat{\mathbf{\mu }}}_{c}}\right) {\left( \mathbf{x} - {\widehat{\mathbf{\mu }}}_{c}\right) }^{\mathrm{T}}$ 的均值,这显然是一个符合直觉的结果. 在离散属性情形下, 也可通过类似的方式估计类条件概率.
+
+需注意的是，这种参数化的方法虽能使类条件概率估计变得相对简单，但估计结果的准确性严重依赖于所假设的概率分布形式是否符合潜在的真实数据分布. 在现实应用中, 欲做出能较好地接近潜在真实分布的假设, 往往需在一定程度上利用关于应用任务本身的经验知识, 否则若仅凭 “猜测” 来假设概率分布形式, 很可能产生误导性的结果.
+
+## 7.3 朴素贝叶斯分类器
+
+不难发现,基于贝叶斯公式(7.8)来估计后验概率 $P\left( {c \mid  \mathbf{x}}\right)$ 的主要困难在于: 类条件概率 $P\left( {\mathbf{x} \mid  c}\right)$ 是所有属性上的联合概率,难以从有限的训练样本直接估计而得. 为避开这个障碍, 朴素贝叶斯分类器(naïve Bayes classifier)采用了 “属性条件独立性假设” (attribute conditional independence assumption): 对已知类别, 假设所有属性相互独立. 换言之, 假设每个属性独立地对分类结果发生影响.
+
+基于属性条件独立性假设, 式(7.8)可重写为
+
+$$
+P\left( {c \mid  \mathbf{x}}\right)  = \frac{P\left( c\right) P\left( {\mathbf{x} \mid  c}\right) }{P\left( \mathbf{x}\right) } = \frac{P\left( c\right) }{P\left( \mathbf{x}\right) }\mathop{\prod }\limits_{{i = 1}}^{d}P\left( {{x}_{i} \mid  c}\right) , \tag{7.14}
+$$
+
+其中 $d$ 为属性数目, ${x}_{i}$ 为 $\mathbf{x}$ 在第 $i$ 个属性上的取值.
+
+---
+
+$\mathcal{N}$ 为正态分布,参见附录 C.1.7.
+
+基于有限训练样本直接估计联合概率, 在计算上将会遭遇组合爆炸问题， 在数据上将会遭遇样本稀疏问题；属性数越多，问题越严重.
+
+---
+
+由于对所有类别来说 $P\left( \mathbf{x}\right)$ 相同,因此基于式(7.6)的贝叶斯判定准则有
+
+$$
+{h}_{nb}\left( \mathbf{x}\right)  = \underset{c \in  \mathcal{Y}}{\arg \max }P\left( c\right) \mathop{\prod }\limits_{{i = 1}}^{d}P\left( {{x}_{i} \mid  c}\right) , \tag{7.15}
+$$
+
+这就是朴素贝叶斯分类器的表达式.
+
+显然,朴素贝叶斯分类器的训练过程就是基于训练集 $D$ 来估计类先验概率 $P\left( c\right)$ ,并为每个属性估计条件概率 $P\left( {{x}_{i} \mid  c}\right)$ .
+
+令 ${D}_{c}$ 表示训练集 $D$ 中第 $c$ 类样本组成的集合,若有充足的独立同分布样本, 则可容易地估计出类先验概率
+
+$$
+P\left( c\right)  = \frac{\left| {D}_{c}\right| }{\left| D\right| } \tag{7.16}
+$$
+
+对离散属性而言,令 ${D}_{c,{x}_{i}}$ 表示 ${D}_{c}$ 中在第 $i$ 个属性上取值为 ${x}_{i}$ 的样本组成的集合,则条件概率 $P\left( {{x}_{i} \mid  c}\right)$ 可估计为
+
+$$
+P\left( {{x}_{i} \mid  c}\right)  = \frac{\left| {D}_{c,{x}_{i}}\right| }{\left| {D}_{c}\right| }. \tag{7.17}
+$$
+
+对连续属性可考虑概率密度函数,假定 $p\left( {{x}_{i} \mid  c}\right)  \sim  \mathcal{N}\left( {{\mu }_{c, i},{\sigma }_{c, i}^{2}}\right)$ ,其中 ${\mu }_{c, i}$ 和 ${\sigma }_{c, i}^{2}$ 分别是第 $c$ 类样本在第 $i$ 个属性上取值的均值和方差,则有
+
+$$
+p\left( {{x}_{i} \mid  c}\right)  = \frac{1}{\sqrt{2\pi }{\sigma }_{c, i}}\exp \left( {-\frac{{\left( {x}_{i} - {\mu }_{c, i}\right) }^{2}}{2{\sigma }_{c, i}^{2}}}\right) . \tag{7.18}
+$$
+
+下面我们用西瓜数据集 3.0 训练一个朴素贝叶斯分类器, 对测试例 “测 1” 进行分类:
+
+<table><tr><td>编号</td><td>色泽</td><td>根蒂</td><td>敲声</td><td>纹理</td><td>脐部</td><td>触感</td><td>密度</td><td>含糖率</td><td>好瓜</td></tr><tr><td>测 1</td><td>青绿</td><td>蜷缩</td><td>浊响</td><td>清晰</td><td>凹陷</td><td>硬滑</td><td>0.697</td><td>0.460</td><td>?</td></tr></table>
+
+首先估计类先验概率 $P\left( c\right)$ ,显然有
+
+$$
+P\left( {\text{ 好瓜 } = \text{ 是 }}\right)  = \frac{8}{17} \approx  {0.471},
+$$
+
+$$
+P\left( {\text{ 好瓜 } = \text{ 否 }}\right)  = \frac{9}{17} \approx  {0.529}.
+$$
+
+然后,为每个属性估计条件概率 $P\left( {{x}_{i} \mid  c}\right)$ :
+
+---
+
+${x}_{i}$ 实际上是一个 “属性一值” 对，例如 “色泽 $=$ 青绿”. 为便于讨论, 在上下文明确时，有时我们用 ${x}_{i}$ 表示第 $i$ 个属性对应的变量(如 “色泽”), 有时直接用其指代 $\mathbf{x}$ 在第 $i$ 个属性上的取值(如 “青绿” ).
+
+西瓜数据集 3.0 见 p.84 表 4.3.
+
+---
+
+${P}_{\text{ 青绿 } \mid  \text{ 是 }} = P\left( {\text{ 色泽 } = \text{ 青绿 } \mid  \text{ 好瓜 } = \text{ 是 }}\right)  = \frac{3}{8} = {0.375},$
+
+${P}_{\text{ 青绿 }}{}_{\text{ 行 }} = P\left( {\text{ 色泽 } = \text{ 青绿 } \mid  \text{ 好瓜 } = \text{ 否 }}\right)  = \frac{3}{9} \approx  {0.333},$
+
+${P}_{\text{ 蜷缩 } \mid  \text{ 是 }} = P\left( {\text{ 根蒂 } = \text{ 蜷缩 } \mid  \text{ 好瓜 } = \text{ 是 }}\right)  = \frac{5}{8} = {0.375}$ ,
+
+${P}_{\text{ 蜷缩小否 }} = P\left( {\text{ 根蒂 } = \text{ 蜷缩 | 好瓜 = 否 }}\right)  = \frac{3}{9} \approx  {0.333}$ ,
+
+${P}_{\text{ 池响 } \mid  \text{ 是 }} = P\left( {\text{ 敲声 } = \text{ 浊响 } \mid  \text{ 好瓜 } = \text{ 是 }}\right)  = \frac{6}{8} = {0.750}$ ,
+
+${P}_{\text{ 池响 } \mid  \text{ 否 }} = P\left( {\text{ 敲声 } = \text{ 浊响 } \mid  \text{ 好瓜 } = \text{ 否 }}\right)  = \frac{4}{9} \approx  {0.444}$ ,
+
+${P}_{\text{ 清晰 } \mid  \text{ 是 }} = P\left( {\text{ 纹理 } = \text{ 清晰 } \mid  \text{ 好瓜 } = \text{ 是 }}\right)  = \frac{7}{8} = {0.875}$ ,
+
+${P}_{\text{ 清晰 }}{}_{\text{ 行 }} = P\left( {\text{ 纹理 } = \text{ 清晰 } \mid  \text{ 好瓜 } = \text{ 否 }}\right)  = \frac{2}{9} \approx  {0.222},$
+
+${P}_{\text{ 凹陷 } \mid  \text{ 是 }} = P\left( {\text{ 脐部 } = \text{ 凹陷 } \mid  \text{ 好瓜 } = \text{ 是 }}\right)  = \frac{6}{8} = {0.750},$
+
+${P}_{\text{ 凹陷 } \mid  \text{ 否 }} = P\left( {\text{ 脐部 } = \text{ 凹陷 } \mid  \text{ 好瓜 } = \text{ 否 }}\right)  = \frac{2}{9} \approx  {0.222},$
+
+${P}_{\text{ 硬滑 } \mid  \text{ 是 }} = P\left( {\text{ 触感 } = \text{ 硬滑 } \mid  \text{ 好瓜 } = \text{ 是 }}\right)  = \frac{6}{8} = {0.750},$
+
+${P}_{\text{ 硬滑 }}{}_{\text{ 行 }} = P\left( {\text{ 触感 } = \text{ 硬滑 } \mid  \text{ 好瓜 } = \text{ 否 }}\right)  = \frac{6}{9} \approx  {0.667},$
+
+${p}_{\text{ 密度: 0.697 | 是 }} = p$ (密度 $= {0.697}$ | 好瓜 = 是)
+
+$$
+= \frac{1}{\sqrt{2\pi } \cdot  {0.129}}\exp \left( {-\frac{{\left( {0.697} - {0.574}\right) }^{2}}{2 \cdot  {0.129}^{2}}}\right)  \approx  {1.959},
+$$
+
+${p}_{\text{ 密度 }}{}_{{0.697} \mid  \text{ 否 }} = p$ (密度 $= {0.697} \mid$ 好瓜 $= \text{ 否 }$ )
+
+$$
+= \frac{1}{\sqrt{2\pi } \cdot  {0.195}}\exp \left( {-\frac{{\left( {0.697} - {0.496}\right) }^{2}}{2 \cdot  {0.195}^{2}}}\right)  \approx  {1.203},
+$$
+
+${p}_{\text{ 含糖: 0.460 }}\left| {{}_{\text{ 昆 }} = p\text{ (含糖率 } = {0.460}}\right|$ 好瓜 $=$ 是)
+
+$$
+= \frac{1}{\sqrt{2\pi } \cdot  {0.101}}\exp \left( {-\frac{{\left( {0.460} - {0.279}\right) }^{2}}{2 \cdot  {0.101}^{2}}}\right)  \approx  {0.788},
+$$
+
+${p}_{\text{ 含糖: 0.460 |否 }} = p$ (含糖率 $= {0.460} \mid$ 好瓜 $=$ 否)
+
+$$
+= \frac{1}{\sqrt{2\pi } \cdot  {0.108}}\exp \left( {-\frac{{\left( {0.460} - {0.154}\right) }^{2}}{2 \cdot  {0.108}^{2}}}\right)  \approx  {0.066}.
+$$
+
+于是, 有
+
+---
+
+注意, 当样本数目足够多时才能进行有意义的概率估计. 本书仅是以西瓜数据集 3.0 对估计过程做一个简单的演示.
+
+---
+
+$P\left( {\text{ 好瓜 } = \text{ 是 }}\right)  \times  {P}_{\text{ 青绿 }}$ 是 $\times  {P}_{\text{ 蜷缩 }}$ 是 $\times  {P}_{\text{ 浊响 }}$ 是 $\times  {P}_{\text{ 清晰 }}$ 是 $\times  {P}_{\text{ 凹陷 }}$ 是
+
+$$
+\times  {P}_{\text{ 硬滑 }}\text{ 是 } \times  {p}_{\text{ 密度: 0.697 }}\text{ 是 } \times  {p}_{\text{ 含糖: 0.460 }}\text{ 是 } \approx  {0.038}\text{ , }
+$$
+
+$P\left( {\text{ 好瓜 } = \text{ 否 }}\right)  \times  {P}_{\text{ 青绿 }}$ 在 $\times  {P}_{\text{ 蜷缩 }} \times  {P}_{\text{ 浊响 }}$ 否 $\times  {P}_{\text{ 清晰 }}$ 否 $\times  {P}_{\text{ 凹陷 }}$ 否
+
+$$
+\times  {P}_{\text{ 硬滑 }} \times  {p}_{\text{ 密度 }}{0.697} \mid  \text{ 否 } \times  {p}_{\text{ 含糖 }}{0.460} \mid  \text{ 否 } \approx  {6.80} \times  {10}^{-5}\text{ . }
+$$
+
+由于 ${0.038} > {6.80} \times  {10}^{-5}$ ,因此,朴素贝叶斯分类器将测试样本 “测 1 ” 判别为 “好瓜”.
+
+需注意, 若某个属性值在训练集中没有与某个类同时出现过, 则直接基于式(7.17)进行概率估计, 再根据式(7.15) 进行判别将出现问题. 例如, 在使用西瓜数据集 3.0 训练朴素贝叶斯分类器时, 对一个 “敲声=清脆” 的测试例, 有
+
+$$
+{P}_{\text{ 清脆 }} = P\left( {\text{ 敲声 } = \text{ 清脆 } \mid  \text{ 好瓜 } = \text{ 是 }}\right)  = \frac{0}{8} = 0\text{ , }
+$$
+
+由于式(7.15)的连乘式计算出的概率值为零, 因此, 无论该样本的其他属性是什么，哪怕在其他属性上明显像好瓜，分类的结果都将是 “好瓜=否”，这显然不太合理.
+
+为了避免其他属性携带的信息被训练集中未出现的属性值 “抹去”, 在估计概率值时通常要进行 “平滑” (smoothing), 常用 “拉普拉斯修正" (Laplacian correction). 具体来说,令 $N$ 表示训练集 $D$ 中可能的类别数, ${N}_{i}$ 表示第 $i$ 个属性可能的取值数,则式(7.16)和(7.17)分别修正为
+
+$$
+\widehat{P}\left( c\right)  = \frac{\left| {D}_{c}\right|  + 1}{\left| D\right|  + N} \tag{7.19}
+$$
+
+$$
+\widehat{P}\left( {{x}_{i} \mid  c}\right)  = \frac{\left| {D}_{c,{x}_{i}}\right|  + 1}{\left| {D}_{c}\right|  + {N}_{i}}. \tag{7.20}
+$$
+
+例如, 在本节的例子中, 类先验概率可估计为
+
+$$
+\widehat{P}\left( {\text{ 好瓜 } = \text{ 是 }}\right)  = \frac{8 + 1}{{17} + 2} \approx  {0.474},\;\widehat{P}\left( {\text{ 好瓜 } = \text{ 否 }}\right)  = \frac{9 + 1}{{17} + 2} \approx  {0.526}.
+$$
+
+类似地, ${P}_{\text{ 青绿 |是 }}$ 和 ${P}_{\text{ 青绿 | 否 }}$ 可估计为
+
+$$
+{\widehat{P}}_{\text{ 青绿 } \mid  \text{ 是 }} = \widehat{P}\left( {\text{ 色 泽 } = \text{ 青绿 } \mid  \text{ 好瓜 } = \text{ 是 }}\right)  = \frac{3 + 1}{8 + 3} \approx  {0.364},
+$$
+
+$$
+{\widehat{P}}_{\text{ 青绿 } \mid  \text{ 否 }} = \widehat{P}\left( {\text{ 色 泽 } = \text{ 青绿 } \mid  \text{ 好瓜 } = \text{ 否 }}\right)  = \frac{3 + 1}{9 + 3} \approx  {0.333}.
+$$
+
+---
+
+实践中常通过取对数的方式来将 “连乘” 转化为 “连加” 以避免数值下溢.
+
+---
+
+同时,上文提到的概率 ${P}_{\text{ 清脆 }}$ . 可估计为
+
+$$
+{\widehat{P}}_{\text{ 清脆 }} = \widehat{P}\left( {\text{ 敲声 } = \text{ 清脆 } \mid  \text{ 好瓜 } = \text{ 是 }}\right)  = \frac{0 + 1}{8 + 3} \approx  {0.091}.
+$$
+
+显然, 拉普拉斯修正避免了因训练集样本不充分而导致概率估值为零的问题, 并且在训练集变大时, 修正过程所引入的先验(prior)的影响也会逐渐变得可忽略, 使得估值渐趋向于实际概率值.
+
+在现实任务中朴素贝叶斯分类器有多种使用方式. 例如, 若任务对预测速度要求较高, 则对给定训练集, 可将朴素贝叶斯分类器涉及的所有概率估值事先计算好存储起来, 这样在进行预测时只需 “查表” 即可进行判别; 若任务数据更替频繁, 则可采用 “懒惰学习” (lazy learning) 方式, 先不进行任何训练, 待收到预测请求时再根据当前数据集进行概率估值; 若数据不断增加, 则可在现有估值基础上, 仅对新增样本的属性值所涉及的概率估值进行计数修正即可实现增量学习.
+
+## 7.4 半朴素贝叶斯分类器
+
+为了降低贝叶斯公式(7.8)中估计后验概率 $P\left( {c \mid  \mathbf{x}}\right)$ 的困难,朴素贝叶斯分类器采用了属性条件独立性假设, 但在现实任务中这个假设往往很难成立. 于是, 人们尝试对属性条件独立性假设进行一定程度的放松, 由此产生了一类称为 “半朴素贝叶斯分类器” (semi-naïve Bayes classifiers)的学习方法.
+
+半朴素贝叶斯分类器的基本想法是适当考虑一部分属性间的相互依赖信息, 从而既不需进行完全联合概率计算, 又不至于彻底忽略了比较强的属性依赖关系. “独依赖估计” (One-Dependent Estimator, 简称 ODE)是半朴素贝叶斯分类器最常用的一种策略. 顾名思议, 所谓 “独依赖” 就是假设每个属性在类别之外最多仅依赖于一个其他属性, 即
+
+$$
+P\left( {c \mid  \mathbf{x}}\right)  \propto  P\left( c\right) \mathop{\prod }\limits_{{i = 1}}^{d}P\left( {{x}_{i} \mid  c, p{a}_{i}}\right) , \tag{7.21}
+$$
+
+其中 $p{a}_{i}$ 为属性 ${x}_{i}$ 所依赖的属性,称为 ${x}_{i}$ 的父属性. 此时,对每个属性 ${x}_{i}$ ,若其父属性 $p{a}_{i}$ 已知，则可采用类似式(7.20) 的办法来估计概率值 $P\left( {{x}_{i} \mid  c, p{a}_{i}}\right)$ . 于是, 问题的关键就转化为如何确定每个属性的父属性, 不同的做法产生不同的独依赖分类器.
+
+---
+
+拉普拉斯修正实质上假设了属性值与类别均匀分布, 这是在朴素贝叶斯学习过程中额外引入的关于数据的先验.
+
+懒惰学习参见 10.1 节.
+
+增量学习参见 5.5.2 节.
+
+---
+
+最直接的做法是假设所有属性都依赖于同一个属性, 称为 “超父” (super-parent), 然后通过交叉验证等模型选择方法来确定超父属性, 由此形成了 SPODE (Super-Parent ODE)方法. 例如,在图 7.1(b)中, ${x}_{1}$ 是超父属性.
+
+![154_705_462_1201_317_0.jpg](../../images/154_705_462_1201_317_0.jpg)
+
+图 7.1 朴素贝叶斯与两种半朴素贝叶斯分类器所考虑的属性依赖关系
+
+TAN (Tree Augmented naïve Bayes) [Friedman et al., 1997] 则是在最大带权生成树(maximum weighted spanning tree)算法 [Chow and Liu, 1968] 的基础上, 通过以下步骤将属性间依赖关系约简为如图 7.1(c) 所示的树形结构:
+
+(1) 计算任意两个属性之间的条件互信息(conditional mutual information)
+
+$$
+I\left( {{x}_{i},{x}_{j} \mid  y}\right)  = \mathop{\sum }\limits_{{{x}_{i},{x}_{j};c \in  \mathcal{Y}}}P\left( {{x}_{i},{x}_{j} \mid  c}\right) \log \frac{P\left( {{x}_{i},{x}_{j} \mid  c}\right) }{P\left( {{x}_{i} \mid  c}\right) P\left( {{x}_{j} \mid  c}\right) }; \tag{7.22}
+$$
+
+(2) 以属性为结点构建完全图, 任意两个结点之间边的权重设为 $I\left( {{x}_{i},{x}_{j} \mid  y}\right)$
+
+(3) 构建此完全图的最大带权生成树, 挑选根变量, 将边置为有向;
+
+(4) 加入类别结点 $y$ ,增加从 $y$ 到每个属性的有向边.
+
+容易看出,条件互信息 $I\left( {{x}_{i},{x}_{j} \mid  y}\right)$ 刻画了属性 ${x}_{i}$ 和 ${x}_{j}$ 在已知类别情况下的相关性, 因此, 通过最大生成树算法, TAN 实际上仅保留了强相关属性之间的依赖性.
+
+AODE (Averaged One-Dependent Estimator) [Webb et al., 2005] 是一种基于集成学习机制、更为强大的独依赖分类器. 与 SPODE 通过模型选择确定超父属性不同，AODE 尝试将每个属性作为超父来构建 SPODE, 然后将那些具有足够训练数据支撑的 SPODE 集成起来作为最终结果, 即
+
+$$
+P\left( {c \mid  \mathbf{x}}\right)  \propto  \mathop{\sum }\limits_{\substack{{i = 1} \\  {\left| {D}_{{x}_{i}}\right|  \geq  {m}^{\prime }} }}^{d}P\left( {c,{x}_{i}}\right) \mathop{\prod }\limits_{{j = 1}}^{d}P\left( {{x}_{j} \mid  c,{x}_{i}}\right) , \tag{7.23}
+$$
+
+---
+
+集成学习参见第 8 章.
+
+---
+
+其中 ${D}_{{x}_{i}}$ 是在第 $i$ 个属性上取值为 ${x}_{i}$ 的样本的集合, ${m}^{\prime }$ 为阈值常数. 显然, AODE 需估计 $P\left( {c,{x}_{i}}\right)$ 和 $P\left( {{x}_{j} \mid  c,{x}_{i}}\right)$ . 类似式(7.20),有
+
+$$
+\widehat{P}\left( {c,{x}_{i}}\right)  = \frac{\left| {D}_{c,{x}_{i}}\right|  + 1}{\left| D\right|  + {N}_{i}} \tag{7.24}
+$$
+
+$$
+\widehat{P}\left( {{x}_{j} \mid  c,{x}_{i}}\right)  = \frac{\left| {D}_{c,{x}_{i},{x}_{j}}\right|  + 1}{\left| {D}_{c,{x}_{i}}\right|  + {N}_{j}}, \tag{7.25}
+$$
+
+其中 ${N}_{i}$ 是第 $i$ 个属性可能的取值数, ${D}_{c,{x}_{i}}$ 是类别为 $c$ 且在第 $i$ 个属性上取值为 ${x}_{i}$ 的样本集合, ${D}_{c,{x}_{i},{x}_{j}}$ 是类别为 $c$ 且在第 $i$ 和第 $j$ 个属性上取值分别为 ${x}_{i}$ 和 ${x}_{j}$ 的样本集合. 例如，对西瓜数据集 3.0 有
+
+$$
+{\widehat{P}}_{\text{ 是,浊响 }} = \widehat{P}\text{ (好瓜 } = \text{ 是,敲声 } = \text{ 浊响) } = \frac{6 + 1}{{17} + 3} = {0.350}\text{ , }
+$$
+
+${\widehat{P}}_{\text{ 凹陷 | 是,浊响 }} = \widehat{P}$ (脐部 = 凹陷 | 好瓜 = 是,敲声 = 浊响) = $\frac{3 + 1}{6 + 3} = {0.444}$ .
+
+不难看出, 与朴素贝叶斯分类器类似, AODE 的训练过程也是 “计数”, 即在训练数据集上对符合条件的样本进行计数的过程. 与朴素贝叶斯分类器相似, AODE 无需模型选择, 既能通过预计算节省预测时间, 也能采取懒惰学习方式在预测时再进行计数, 并且易于实现增量学习.
+
+既然将属性条件独立性假设放松为独依赖假设可能获得泛化性能的提升, 那么, 能否通过考虑属性间的高阶依赖来进一步提升泛化性能呢? 也就是说, 将式(7.23)中的属性 $p{a}_{i}$ 替换为包含 $k$ 个属性的集合 ${\mathbf{{pa}}}_{i}$ ,从而将 ODE 拓展为 $k$ DE. 需注意的是，随着 $k$ 的增加，准确估计概率 $P\left( {{x}_{i} \mid  y,{\mathbf{{pa}}}_{i}}\right)$ 所需的训练样本数量将以指数级增加. 因此, 若训练数据非常充分, 泛化性能有可能提升; 但在有限样本条件下, 则又陷入估计高阶联合概率的泥沼.
+
+## 7.5 贝叶斯网
+
+贝叶斯网(Bayesian network)亦称 “信念网” (belief network), 它借助有向无环图(Directed Acyclic Graph, 简称 DAG)来刻画属性之间的依赖关系, 并使用条件概率表(Conditional Probability Table, 简称 CPT)来描述属性的联合概率分布.
+
+---
+
+${m}^{\prime }$ 默认设为 30 [Webb et al., 2005].
+
+“高阶依赖” 即对多个属性依赖.
+
+贝叶斯网是一种经典的概率图模型. 概率图模型参见第 14 章.
+
+为了简化讨论, 本节假定所有属性均为离散型. 对于连续属性, 条件概率表可推广为条件概率密度函数.
+
+---
+
+具体来说,一个贝叶斯网 $B$ 由结构 $G$ 和参数 $\Theta$ 两部分构成,即 $B = \langle G,\Theta \rangle$ . 网络结构 $G$ 是一个有向无环图,其每个结点对应于一个属性,若两个属性有直接依赖关系,则它们由一条边连接起来; 参数 $\Theta$ 定量描述这种依赖关系, 假设属性 ${x}_{i}$ 在 $G$ 中的父结点集为 ${\pi }_{i}$ ,则 $\Theta$ 包含了每个属性的条件概率表 ${\theta }_{{x}_{i} \mid  {\pi }_{i}} = {P}_{B}\left( {{x}_{i} \mid  {\pi }_{i}}\right) .$
+
+---
+
+这里已将西瓜数据集的连续属性 “含糖率” 转化为离散属性 “甜度”.
+
+---
+
+作为一个例子, 图 7.2 给出了西瓜问题的一种贝叶斯网结构和属性 “根蒂”的条件概率表. 从图中网络结构可看出，“色泽”直接依赖于“好瓜” 和 “甜度”，而 “根蒂” 则直接依赖于 “甜度”；进一步从条件概率表能得到 “根蒂”对“甜度”量化依赖关系,如 $P\left( {\text{ 根蒂 } = \text{ 硬挺 | 甜度 } = \text{ 高 }}\right)  = {0.1}$ 等.
+
+![156_819_844_951_254_0.jpg](../../images/156_819_844_951_254_0.jpg)
+
+图 7.2 西瓜问题的一种贝叶斯网结构以及属性 “根蒂” 的条件概率表
+
+### 7.5.1 结构
+
+贝叶斯网结构有效地表达了属性间的条件独立性. 给定父结点集，贝叶斯网假设每个属性与它的非后裔属性独立,于是 $B = \langle G,\Theta \rangle$ 将属性 ${x}_{1},{x}_{2},\ldots ,{x}_{d}$ 的联合概率分布定义为
+
+$$
+{P}_{B}\left( {{x}_{1},{x}_{2},\ldots ,{x}_{d}}\right)  = \mathop{\prod }\limits_{{i = 1}}^{d}{P}_{B}\left( {{x}_{i} \mid  {\pi }_{i}}\right)  = \mathop{\prod }\limits_{{i = 1}}^{d}{\theta }_{{x}_{i} \mid  {\pi }_{i}}. \tag{7.26}
+$$
+
+以图 7.2 为例, 联合概率分布定义为
+
+$$
+P\left( {{x}_{1},{x}_{2},{x}_{3},{x}_{4},{x}_{5}}\right)  = P\left( {x}_{1}\right) P\left( {x}_{2}\right) P\left( {{x}_{3} \mid  {x}_{1}}\right) P\left( {{x}_{4} \mid  {x}_{1},{x}_{2}}\right) P\left( {{x}_{5} \mid  {x}_{2}}\right) ,
+$$
+
+---
+
+这里并未列举出所有的条件独立关系.
+
+---
+
+显然, ${x}_{3}$ 和 ${x}_{4}$ 在给定 ${x}_{1}$ 的取值时独立, ${x}_{4}$ 和 ${x}_{5}$ 在给定 ${x}_{2}$ 的取值时独立,分别简记为 ${x}_{3} \bot  {x}_{4} \mid  {x}_{1}$ 和 ${x}_{4} \bot  {x}_{5} \mid  {x}_{2}$ .
+
+图 7.3 显示出贝叶斯网中三个变量之间的典型依赖关系, 其中前两种在式(7.26)中已有所体现.
+
+![157_838_133_825_250_0.jpg](../../images/157_838_133_825_250_0.jpg)
+
+图 7.3 贝叶斯网中三个变量之间的典型依赖关系
+
+在 “同父” (common parent) 结构中,给定父结点 ${x}_{1}$ 的取值,则 ${x}_{3}$ 与 ${x}_{4}$ 条件独立. 在 “顺序” 结构中,给定 $x$ 的值,则 $y$ 与 $z$ 条件独立. $\mathrm{V}$ 型结构(V-structure)亦称 “冲撞” 结构,给定子结点 ${x}_{4}$ 的取值, ${x}_{1}$ 与 ${x}_{2}$ 必不独立; 奇妙的是,若 ${x}_{4}$ 的取值完全未知,则 $\mathrm{V}$ 型结构下 ${x}_{1}$ 与 ${x}_{2}$ 却是相互独立的. 我们做一个简单的验证:
+
+$$
+P\left( {{x}_{1},{x}_{2}}\right)  = \mathop{\sum }\limits_{{x}_{4}}P\left( {{x}_{1},{x}_{2},{x}_{4}}\right)
+$$
+
+$$
+= \mathop{\sum }\limits_{{x}_{4}}P\left( {{x}_{4} \mid  {x}_{1},{x}_{2}}\right) P\left( {x}_{1}\right) P\left( {x}_{2}\right)
+$$
+
+$$
+= P\left( {x}_{1}\right) P\left( {x}_{2}\right) . \tag{7.27}
+$$
+
+---
+
+对变量做积分或求和亦称 “边际化” (marginal-ization).
+
+---
+
+这样的独立性称为 “边际独立性” (marginal independence),记为 ${x}_{1} \text{ ⫫ } {x}_{2}$ .
+
+事实上, 一个变量取值的确定与否, 能对另两个变量间的独立性发生影响, 这个现象并非 V 型结构所特有. 例如在同父结构中,条件独立性 ${x}_{3} \bot  {x}_{4} \mid  {x}_{1}$ 成立,但若 ${x}_{1}$ 的取值未知,则 ${x}_{3}$ 和 ${x}_{4}$ 就不独立,即 ${x}_{3} \text{ ⫫ } {x}_{4}$ 不成立; 在顺序结构中， $y \bot  z \mid  x$ ，但 $y \text{ ⫫ } z$ 不成立.
+
+---
+
+D 是指 “有向” (directed).
+
+同父、顺序和Ｖ型结构的发现以及有向分离的提出推动了因果发现方面的研究, 参阅 [Pearl, 1988].
+
+---
+
+为了分析有向图中变量间的条件独立性, 可使用 “有向分离” (D-separation). 我们先把有向图转变为一个无向图:
+
+- 找出有向图中的所有 V 型结构, 在 V 型结构的两个父结点之间加上一条无向边;
+
+- 将所有有向边改为无向边.
+
+由此产生的无向图称为 “道德图” (moral graph), 令父结点相连的过程称为 "道德化" (moralization) [Cowell et al., 1999].
+
+---
+
+也有译为 “端正图”.
+
+“道德化” 的蕴义:孩子的父母应建立牢靠的关系，否则是不道德的.
+
+---
+
+基于道德图能直观、迅速地找到变量间的条件独立性. 假定道德图中有变量 $x, y$ 和变量集合 $\mathbf{z} = \left\{  {z}_{i}\right\}$ ,若变量 $x$ 和 $y$ 能在图上被 $\mathbf{z}$ 分开,即从道德图中将变量集合 $\mathbf{z}$ 去除后, $x$ 和 $y$ 分属两个连通分支,则称变量 $x$ 和 $y$ 被 $\mathbf{z}$ 有向分离, $x \bot  y \mid  \mathbf{z}$ 成立. 例如,图 7.2 所对应的道德图如图 7.4 所示,从图中能容易地找出所有的条件独立关系: ${x}_{3} \bot  {x}_{4}\left| {{x}_{1},{x}_{4} \bot  {x}_{5}}\right| {x}_{2},{x}_{3} \bot  {x}_{2}\left| {{x}_{1},{x}_{3} \bot  {x}_{5}}\right| {x}_{1}$ , ${x}_{3} \bot  {x}_{5} \mid  {x}_{2}$ 等.
+
+![158_979_453_622_245_0.jpg](../../images/158_979_453_622_245_0.jpg)
+
+图 7.4 图 7.2 对应的道德图
+
+### 7.5.2 学习
+
+若网络结构已知，即属性间的依赖关系已知，则贝叶斯网的学习过程相对简单, 只需通过对训练样本 “计数”, 估计出每个结点的条件概率表即可. 但在现实应用中我们往往并不知晓网络结构，于是，贝叶斯网学习的首要任务就是根据训练数据集来找出结构最“恰当”的贝叶斯网. “评分搜索” 是求解这一问题的常用办法. 具体来说, 我们先定义一个评分函数(score function), 以此来评估贝叶斯网与训练数据的契合程度, 然后基于这个评分函数来寻找结构最优的贝叶斯网. 显然, 评分函数引入了关于我们希望获得什么样的贝叶斯网的归纳偏好.
+
+常用评分函数通常基于信息论准则，此类准则将学习问题看作一个数据压缩任务, 学习的目标是找到一个能以最短编码长度描述训练数据的模型, 此时编码的长度包括了描述模型自身所需的字节长度和使用该模型描述数据所需的字节长度. 对贝叶斯网学习而言, 模型就是一个贝叶斯网, 同时, 每个贝叶斯网描述了一个在训练数据上的概率分布, 自有一套编码机制能使那些经常出现的样本有更短的编码. 于是, 我们应选择那个综合编码长度(包括描述网络和编码数据)最短的贝叶斯网, 这就是 “最小描述长度” (Minimal Description Length, 简称 MDL)准则.
+
+给定训练集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ ,贝叶斯网 $B = \langle G,\Theta \rangle$ 在 $D$ 上的评分函数可写为
+
+$$
+s\left( {B \mid  D}\right)  = f\left( \theta \right) \left| B\right|  - {LL}\left( {B \mid  D}\right) , \tag{7.28}
+$$
+
+其中， $\left| B\right|$ 是贝叶斯网的参数个数； $f\left( \theta \right)$ 表示描述每个参数 $\theta$ 所需的字节数；而
+
+$$
+{LL}\left( {B \mid  D}\right)  = \mathop{\sum }\limits_{{i = 1}}^{m}\log {P}_{B}\left( {\mathbf{x}}_{i}\right) \tag{7.29}
+$$
+
+---
+
+归纳偏好参见 1.4 节.
+
+这里我们把类别也看作一个属性,即 ${\mathbf{x}}_{\mathbf{i}}$ 是一个包括示例和类别的向量.
+
+---
+
+是贝叶斯网 $B$ 的对数似然. 显然,式(7.28)的第一项是计算编码贝叶斯网 $B$ 所需的字节数,第二项是计算 $B$ 所对应的概率分布 ${P}_{B}$ 需多少字节来描述 $D$ . 于是,学习任务就转化为一个优化任务,即寻找一个贝叶斯网 $B$ 使评分函数 $s\left( {B \mid  D}\right)$ 最小.
+
+若 $f\left( \theta \right)  = 1$ ,即每个参数用 1 字节描述,则得到 AIC (Akaike Information Criterion)评分函数
+
+$$
+\operatorname{AIC}\left( {B \mid  D}\right)  = \left| B\right|  - {LL}\left( {B \mid  D}\right) . \tag{7.30}
+$$
+
+若 $f\left( \theta \right)  = \frac{1}{2}\log m$ ,即每个参数用 $\frac{1}{2}\log m$ 字节描述,则得到 BIC (Bayesian Information Criterion)评分函数
+
+$$
+\operatorname{BIC}\left( {B \mid  D}\right)  = \frac{\log m}{2}\left| B\right|  - {LL}\left( {B \mid  D}\right) . \tag{7.31}
+$$
+
+显然,若 $f\left( \theta \right)  = 0$ ,即不计算对网络进行编码的长度,则评分函数退化为负对数似然, 相应的, 学习任务退化为极大似然估计.
+
+不难发现,若贝叶斯网 $B = \langle G,\Theta \rangle$ 的网络结构 $G$ 固定,则评分函数 $s\left( {B \mid  D}\right)$ 的第一项为常数. 此时,最小化 $s\left( {B \mid  D}\right)$ 等价于对参数 $\Theta$ 的极大似然估计. 由式(7.29)和(7.26)可知,参数 ${\theta }_{{x}_{i} \mid  {\pi }_{i}}$ 能直接在训练数据 $D$ 上通过经验估计获得, 即
+
+$$
+{\theta }_{{x}_{i} \mid  {\pi }_{i}} = {\widehat{P}}_{D}\left( {{x}_{i} \mid  {\pi }_{i}}\right) , \tag{7.32}
+$$
+
+其中 ${\widehat{P}}_{D}\left( \cdot \right)$ 是 $D$ 上的经验分布. 因此,为了最小化评分函数 $s\left( {B \mid  D}\right)$ ,只需对网络结构进行搜索, 而候选结构的最优参数可直接在训练集上计算得到.
+
+不幸的是，从所有可能的网络结构空间搜索最优贝叶斯网结构是一个 NP 难问题, 难以快速求解. 有两种常用的策略能在有限时间内求得近似解: 第一种是贪心法, 例如从某个网络结构出发, 每次调整一条边(增加、删除或调整方向), 直到评分函数值不再降低为止; 第二种是通过给网络结构施加约束来削减搜索空间, 例如将网络结构限定为树形结构等.
+
+---
+
+即事件在训练数据上出现的频率.
+
+例如 TAN [Friedman et al., 1997] 将结构限定为树形(半朴素贝叶斯分类器可看作贝叶斯网的特例).
+
+---
+
+### 7.5.3 推断
+
+贝叶斯网训练好之后就能用来回答 “查询” (query)，即通过一些属性变量的观测值来推测其他属性变量的取值. 例如在西瓜问题中, 若我们观测到西瓜色泽青绿、敲声浊响、根蒂蜷缩，想知道它是否成熟、甜度如何. 这样通过已知变量观测值来推测待查询变量的过程称为 “推断” (inference), 已知变量观测值称为 “证据” (evidence).
+
+最理想的是直接根据贝叶斯网定义的联合概率分布来精确计算后验概率, 不幸的是，这样的 “精确推断” 已被证明是 NP 难的 [Cooper, 1990]; 换言之, 当网络结点较多、连接稠密时, 难以进行精确推断, 此时需借助 “近似推断”, 通过降低精度要求, 在有限时间内求得近似解. 在现实应用中, 贝叶斯网的近似推断常使用吉布斯采样(Gibbs sampling)来完成, 这是一种随机采样方法, 我们来看看它是如何工作的.
+
+令 $\mathbf{Q} = \left\{  {{Q}_{1},{Q}_{2},\ldots ,{Q}_{n}}\right\}$ 表示待查询变量, $\mathbf{E} = \left\{  {{E}_{1},{E}_{2},\ldots ,{E}_{k}}\right\}$ 为证据变量,已知其取值为 $\mathbf{e} = \left\{  {{e}_{1},{e}_{2},\ldots ,{e}_{k}}\right\}$ . 目标是计算后验概率 $P\left( {\mathbf{Q} = \mathbf{q} \mid  \mathbf{E} = \mathbf{e}}\right)$ , 其中 $\mathbf{q} = \left\{  {{q}_{1},{q}_{2},\ldots ,{q}_{n}}\right\}$ 是待查询变量的一组取值. 以西瓜问题为例,待查询变量为 $\mathbf{Q} = \{$ 好瓜,甜度 $\}$ ,证据变量为 $\mathbf{E} = \{$ 色泽,敲声,根蒂 $\}$ 且已知其取值为 $\mathbf{e} = \{$ 青绿,浊响,蜷缩 $\}$ ,查询的目标值是 $\mathbf{q} = \{$ 是,高 $\}$ ,即这是好瓜且甜度高的概率有多大.
+
+如图 7.5 所示,吉布斯采样算法先随机产生一个与证据 $\mathbf{E} = \mathbf{e}$ 一致的样本 ${\mathbf{q}}^{0}$ 作为初始点,然后每步从当前样本出发产生下一个样本. 具体来说,在第 $t$ 次采样中,算法先假设 ${\mathbf{q}}^{t} = {\mathbf{q}}^{t - 1}$ ,然后对非证据变量逐个进行采样改变其取值, 采样概率根据贝叶斯网 $B$ 和其他变量的当前取值(即 $\mathbf{Z} = \mathbf{z}$ )计算获得. 假定经过 $T$ 次采样得到的与 $\mathbf{q}$ 一致的样本共有 ${n}_{q}$ 个,则可近似估算出后验概率
+
+$$
+P\left( {\mathbf{Q} = \mathbf{q} \mid  \mathbf{E} = \mathbf{e}}\right)  \simeq  \frac{{n}_{q}}{T}. \tag{7.33}
+$$
+
+实质上,吉布斯采样是在贝叶斯网所有变量的联合状态空间与证据 $\mathbf{E} = \mathbf{e}$ 一致的子空间中进行 “随机漫步” (random walk). 每一步仅依赖于前一步的状态, 这是一个 “马尔可夫链” (Markov chain). 在一定条件下, 无论从什么初始状态开始,马尔可夫链第 $t$ 步的状态分布在 $t \rightarrow  \infty$ 时必收敛于一个平稳分布(stationary distribution); 对于吉布斯采样来说, 这个分布恰好是 $P\left( {\mathbf{Q} \mid  \mathbf{E} = \mathbf{e}}\right)$ . 因此,在 $T$ 很大时,吉布斯采样相当于根据 $P\left( {\mathbf{Q} \mid  \mathbf{E} = \mathbf{e}}\right)$ 采样, 从而保证了式(7.33)收敛于 $P\left( {\mathbf{Q} = \mathbf{q} \mid  \mathbf{E} = \mathbf{e}}\right)$ .
+
+---
+
+类别也可看作一个属性变量.
+
+更多关于推断的内容见第 14 章.
+
+变分推断也很常用, 参见 14.5 节.
+
+更多关于马尔可夫链和吉布斯采样的内容参见 14.5 节.
+
+---
+
+---
+
+输入:贝叶斯网 $B = \langle G,\Theta \rangle$ ；
+
+			采样次数 $T$ ;
+
+			证据变量 $\mathbf{E}$ 及其取值 $\mathbf{e}$ ;
+
+			待查询变量 $\mathbf{Q}$ 及其取值 $\mathbf{q}$ .
+
+过程:
+
+		${n}_{q} = 0$
+
+		${\mathbf{q}}^{\widetilde{0}} =$ 对 $\mathbf{Q}$ 随机赋初值
+
+		for $t = 1,2,\ldots , T$ do
+
+			for ${Q}_{i} \in  \mathbf{Q}$ do
+
+				$\mathbf{Z} = \mathbf{E} \cup  \mathbf{Q} \smallsetminus  \left\{  {Q}_{i}\right\}$
+
+					$\mathbf{z} = \mathbf{e} \cup  {\mathbf{q}}^{t - 1} \smallsetminus  \left\{  {q}_{i}^{t - 1}\right\}$
+
+				根据 $B$ 计算分布 ${P}_{B}\left( {{Q}_{i} \mid  \mathbf{Z} = \mathbf{z}}\right)$ ;
+
+				${q}_{i}^{t} =$ 根据 ${P}_{B}\left( {{Q}_{i} \mid  \mathbf{Z} = \mathbf{z}}\right)$ 采样所获 ${Q}_{i}$ 取值;
+
+				${\mathbf{q}}^{t} =$ 将 ${\mathbf{q}}^{t - 1}$ 中的 ${q}_{i}^{t - 1}$ 用 ${q}_{i}^{t}$ 替换
+
+			end for
+
+			if ${\mathbf{q}}^{t} = \mathbf{q}$ then
+
+				${n}_{q} = {n}_{q} + 1$
+
+			end if
+
+		end for
+
+输出: $P\left( {\mathbf{Q} = \mathbf{q} \mid  \mathbf{E} = \mathbf{e}}\right)  \simeq  \frac{{n}_{q}}{T}$
+
+---
+
+图 7.5 吉布斯采样算法
+
+需注意的是，由于马尔可夫链通常需很长时间才能趋于平稳分布，因此吉布斯采样算法的收敛速度较慢. 此外, 若贝叶斯网中存在极端概率 “ 0 ” 或 “1”, 则不能保证马尔可夫链存在平稳分布, 此时吉布斯采样会给出错误的估计结果.
+
+## 7.6 EM算法
+
+在前面的讨论中, 我们一直假设训练样本所有属性变量的值都已被观测到, 即训练样本是 “完整” 的. 但在现实应用中往往会遇到 “不完整” 的训练样本，例如由于西瓜的根蒂已脱落，无法看出是 “蜷缩” 还是 “硬挺”，则训练样本的 “根蒂” 属性变量值未知. 在这种存在 “未观测” 变量的情形下, 是否仍能对模型参数进行估计呢?
+
+未观测变量的学名是 “隐变量” (latent variable). 令 $\mathbf{X}$ 表示已观测变量集, $\mathbf{Z}$ 表示隐变量集, $\Theta$ 表示模型参数. 若欲对 $\Theta$ 做极大似然估计,则应最大化对数似然
+
+$$
+\operatorname{LL}\left( {\Theta  \mid  \mathbf{X},\mathbf{Z}}\right)  = \ln P\left( {\mathbf{X},\mathbf{Z} \mid  \Theta }\right) . \tag{7.34}
+$$
+
+然而由于 $\mathbf{Z}$ 是隐变量,上式无法直接求解. 此时我们可通过对 $\mathbf{Z}$ 计算期望,来最大化已观测数据的对数 “边际似然” (marginal likelihood)
+
+$$
+{LL}\left( {\Theta  \mid  \mathbf{X}}\right)  = \ln P\left( {\mathbf{X} \mid  \Theta }\right)  = \ln \mathop{\sum }\limits_{\mathbf{Z}}P\left( {\mathbf{X},\mathbf{Z} \mid  \Theta }\right) . \tag{7.35}
+$$
+
+---
+
+除去变量 ${Q}_{i}$ 外的其他变量.
+
+由于“似然”常基于指数族函数来定义, 因此对数似然及后续 EM 迭代过程中一般是使用自然对数 $\ln \left( \cdot \right)$ .
+
+---
+
+EM (Expectation-Maximization) 算法 [Dempster et al., 1977] 是常用的估计参数隐变量的利器,它是一种迭代式的方法,其基本想法是: 若参数 $\Theta$ 已知, 则可根据训练数据推断出最优隐变量 $\mathbf{Z}$ 的值 (E 步); 反之,若 $\mathbf{Z}$ 的值已知,则可方便地对参数 $\Theta$ 做极大似然估计 (M 步).
+
+于是,以初始值 ${\Theta }^{0}$ 为起点,对式(7.35),可迭代执行以下步骤直至收敛:
+
+- 基于 ${\Theta }^{t}$ 推断隐变量 $\mathbf{Z}$ 的期望,记为 ${\mathbf{Z}}^{t}$ ;
+
+- 基于已观测变量 $\mathbf{X}$ 和 ${\mathbf{Z}}^{t}$ 对参数 $\Theta$ 做极大似然估计,记为 ${\Theta }^{t + 1}$ ;
+
+这就是 EM 算法的原型.
+
+进一步,若我们不是取 $\mathbf{Z}$ 的期望,而是基于 ${\Theta }^{t}$ 计算隐变量 $\mathbf{Z}$ 的概率分布 $P\left( {\mathbf{Z} \mid  \mathbf{X},{\Theta }^{t}}\right)$ ,则 EM 算法的两个步骤是:
+
+- E 步 (Expectation): 以当前参数 ${\Theta }^{t}$ 推断隐变量分布 $P\left( {\mathbf{Z} \mid  \mathbf{X},{\Theta }^{t}}\right)$ ,并计算对数似然 ${LL}\left( {\Theta  \mid  \mathbf{X},\mathbf{Z}}\right)$ 关于 $\mathbf{Z}$ 的期望
+
+$$
+Q\left( {\Theta  \mid  {\Theta }^{t}}\right)  = {\mathbb{E}}_{\mathbf{Z} \mid  \mathbf{X},{\Theta }^{t}}\operatorname{LL}\left( {\Theta  \mid  \mathbf{X},\mathbf{Z}}\right) . \tag{7.36}
+$$
+
+- M 步 (Maximization): 寻找参数最大化期望似然, 即
+
+$$
+{\Theta }^{t + 1} = \underset{\Theta }{\arg \max }Q\left( {\Theta  \mid  {\Theta }^{t}}\right) . \tag{7.37}
+$$
+
+简要来说, EM 算法使用两个步骤交替计算: 第一步是期望(E)步, 利用当前估计的参数值来计算对数似然的期望值; 第二步是最大化(M)步, 寻找能使 E 步产生的似然期望最大化的参数值. 然后，新得到的参数值重新被用于 E 步, 一一一直至收敛到局部最优解.
+
+事实上, 隐变量估计问题也可通过梯度下降等优化算法求解, 但由于求和的项数将随着隐变量的数目以指数级上升，会给梯度计算带来麻烦；而 EM 算法则可看作一种非梯度优化方法.
+
+---
+
+直译为 “期望最大化算法”, 通常直接称 EM 算法.
+
+这里仅给出EM 算法的一般描述，具体例子参见 9.4.3 节.
+
+EM 算法的收敛性分析参见 $\left\lbrack  {\mathrm{{Wu}},{1983}}\right\rbrack$ .
+
+EM 算法可看作用坐标下降 (coordinate descent) 法来最大化对数似然下界的过程. 坐标下降法参见附录 B.5.
+
+---
+
+## 7.7 阅读材料
+
+贝叶斯决策论在机器学习、模式识别等诸多关注数据分析的领域都有极为重要的地位. 对贝叶斯定理进行近似求解, 为机器学习算法的设计提供了一种有效途径. 为避免贝叶斯定理求解时面临的组合爆炸、样本稀疏问题, 朴素贝叶斯分类器引入了属性条件独立性假设. 这个假设在现实应用中往往很难成立, 但有趣的是, 朴素贝叶斯分类器在很多情形下都能获得相当好的性能 [Domingos and Pazzani, 1997; Ng and Jordan, 2002]. 一种解释是对分类任务来说, 只需各类别的条件概率排序正确、无须精准概率值即可导致正确分类结果 [Domingos and Pazzani, 1997]; 另一种解释是, 若属性间依赖对所有类别影响相同, 或依赖关系的影响能相互抵消, 则属性条件独立性假设在降低计算开销的同时不会对性能产生负面影响 [Zhang, 2004]. 朴素贝叶斯分类器在信息检索领域尤为常用 [Lewis, 1998], [McCallum and Nigam, 1998] 对其在文本分类中的两种常见用法进行了比较.
+
+根据对属性间依赖的涉及程度, 贝叶斯分类器形成了一个 “谱”: 朴素贝叶斯分类器不考虑属性间依赖性, 贝叶斯网能表示任意属性间的依赖性, 二者分别位于 “谱” 的两端; 介于两者之间的则是一系列半朴素贝叶斯分类器, 它们基于各种假设和约束来对属性间的部分依赖性进行建模. 一般认为, 半朴素贝叶斯分类器的研究始于 [Kononenko, 1991]. ODE 仅考虑依赖一个父属性, 由此形成了独依赖分类器如 TAN [Friedman et al., 1997]、AODE [Webb et al., 2005]、LBR (lazy Bayesian Rule) [Zheng and Webb, 2000] 等; kDE 则考虑最多依赖 $k$ 个父属性,由此形成了 $k$ 依赖分类器如KDB [Sahami,1996]、NBtree [Kohavi, 1996]等.
+
+贝叶斯分类器(Bayes Classifier)与一般意义上的 “贝叶斯学习” (Bayesian Learning) 有显著区别, 前者是通过最大后验概率进行单点估计, 后者则是进行分布估计. 关于贝叶斯学习的内容可参阅 [Bishop, 2006].
+
+贝叶斯网为不确定学习和推断提供了基本框架, 因其强大的表示能力、 良好的可解释性而广受关注 [Pearl, 1988]. 贝叶斯网学习可分为结构学习和参数学习两部分. 参数学习通常较为简单, 而结构学习则被证明是 NP 难问题 [Cooper, 1990; Chickering et al., 2004], 人们为此提出了多种评分搜索方法 [Friedman and Goldszmidt, 1996]. 贝叶斯网通常被看作生成式模型, 但近年来也有不少关于贝叶斯网判别式学习的研究 [Grossman and Domingos, 2004]. 关于贝叶斯网的更多介绍可参阅 [Jensen, 1997; Heckerman, 1998].
+
+EM 算法是最常见的隐变量估计方法, 在机器学习中有极为广泛的用途, 例如常被用来学习高斯混合模型(Gaussian mixture model, 简称 GMM) 的参数; 9.4 节将介绍的 $k$ 均值聚类算法就是一个典型的 EM 算法. 更多关于 EM 算法的分析、拓展和应用可参阅 [McLachlan and Krishnan, 2008].
+
+---
+
+J. Pearl 教授因这方面的卓越贡献而获得 2011 年图灵奖，参见第 14 章.
+
+贝叶斯网是经典的概率图模型, 参见第 14 章.
+
+---
+
+本章介绍的朴素贝叶斯算法和 EM 算法均曾入选 “数据挖掘十大算法” [Wu et al., 2007].
+
+---
+
+“数据挖掘十大算法” 还包括前几章介绍的 C4.5、CART 决策树、支持向量机，以及后几章将要介绍的 AdaBoost、 $k$ 均值聚类、 $k$ 近邻算法等.
+
+西瓜数据集 3.0 见 p.84 的表 4.3.
+
+---
+
+假设同先验; 参见 3.4 节.
+
+西瓜数据集 2.0 见 p. 76 的表 4.1.
+
+## 习题
+
+试使用极大似然法估算西瓜数据集 3.0 中前 3 个属性的类条件概率.
+
+7.2* 试证明: 条件独立性假设不成立时, 朴素贝叶斯分类器仍有可能产生最优贝叶斯分类器.
+
+7.3 试编程实现拉普拉斯修正的朴素贝叶斯分类器, 并以西瓜数据集 3.0 为训练集, 对 p.151 “测 1” 样本进行判别.
+
+7.4 实践中使用式(7.15)决定分类类别时, 若数据的维数非常高, 则概率连乘 $\mathop{\prod }\limits_{{i = 1}}^{d}P\left( {{x}_{i} \mid  c}\right)$ 的结果通常会非常接近于 0 从而导致下溢. 试述防止下溢的可能方案.
+
+7.5 试证明: 二分类任务中两类数据满足高斯分布且方差相同时, 线性判别分析产生贝叶斯最优分类器.
+
+7.6 试编程实现 AODE 分类器, 并以西瓜数据集 3.0 为训练集, 对 p.151 的 “测 1 ” 样本进行判别.
+
+7.7 给定 $d$ 个二值属性的二分类任务,假设对于任何先验概率项的估算至少需 30 个样例，则在朴素贝叶斯分类器式(7.15)中估算先验概率项 $P\left( c\right)$ 需 ${30} \times  2 = {60}$ 个样例. 试估计在 AODE 式(7.23)中估算先验概率项 $P\left( {c,{x}_{i}}\right)$ 所需的样例数(分别考虑最好和最坏情形).
+
+7.8 考虑图 7.3,试证明: 在同父结构中,若 ${x}_{1}$ 的取值未知,则 ${x}_{3} \text{ ⫫ } {x}_{4}$ 不成立; 在顺序结构中, $y \bot  z \mid  x$ ,但 $y \text{ ⫫ } z$ 不成立.
+
+7.9 以西瓜数据集 2.0 为训练集, 试基于 BIC 准则构建一个贝叶斯网.
+
+7.10 以西瓜数据集 2.0 中属性 “脐部” 为隐变量, 试基于 EM 算法构建一个贝叶斯网.
+
+## 参考文献
+
+Bishop, C. M. (2006). Pattern Recognition and Machine Learning. Springer, New York, NY.
+
+Chickering, D. M., D. Heckerman, and C. Meek. (2004). "Large-sample learning of Bayesian networks is NP-hard." Journal of Machine Learning Research, 5:1287-1330.
+
+Chow, C. K. and C. N. Liu. (1968). "Approximating discrete probability distributions with dependence trees." IEEE Transactions on Information Theory, 14(3):462-467.
+
+Cooper, G. F. (1990). "The computational complexity of probabilistic inference using Bayesian belief networks." Artificial Intelligence, 42(2-3):393-405.
+
+Cowell, R. G., P. Dawid, S. L. Lauritzen, and D. J. Spiegelhalter. (1999). Probabilistic Networks and Expert Systems. Springer, New York, NY.
+
+Dempster, A. P., N. M. Laird, and D. B. Rubin. (1977). "Maximum likelihood from incomplete data via the EM algorithm." Journal of the Royal Statistical Society - Series B, 39(1):1-38.
+
+Domingos, P. and M. Pazzani. (1997). "On the optimality of the simple Bayesian classifier under zero-one loss." Machine Learning, 29(2-3):103-130.
+
+Efron, B. (2005). "Bayesians, frequentists, and scientists." Journal of the American Statistical Association, 100(469):1-5.
+
+Friedman, N., D. Geiger, and M. Goldszmidt. (1997). "Bayesian network classifiers." Machine Learning, 29(2-3):131-163.
+
+Friedman, N. and M. Goldszmidt. (1996). "Learning Bayesian networks with local structure." In Proceedings of the 12th Annual Conference on Uncertainty in Artificial Intelligence (UAI), 252-262, Portland, OR.
+
+Grossman, D. and P. Domingos. (2004). "Learning Bayesian network classifiers by maximizing conditional likelihood." In Proceedings of the 21st International Conference on Machine Learning (ICML), 46-53, Banff, Canada.
+
+Heckerman, D. (1998). "A tutorial on learning with Bayesian networks." In Learning in Graphical Models (M. I. Jordan, ed.), 301-354, Kluwer, Dordrecht, The Netherlands.
+
+Jensen, F. V. (1997). An Introduction to Bayesian Networks. Springer, NY.
+
+Kohavi, R. (1996). "Scaling up the accuracy of naive-Bayes classifiers: A decision-tree hybrid." In Proceedings of the 2nd International Conference on Knowledge Discovery and Data Mining (KDD), 202-207, Portland, OR.
+
+Kononenko, I. (1991). "Semi-naive Bayesian classifier." In Proceedings of the 6th European Working Session on Learning (EWSL), 206-219, Porto, Portugal.
+
+Lewis, D. D. (1998). "Naive (Bayes) at forty: The independence assumption in information retrieval." In Proceedings of the 10th European Conference on Machine Learning (ECML), 4-15, Chemnitz, Germany.
+
+McCallum, A. and K. Nigam. (1998). "A comparison of event models for naive Bayes text classification." In Working Notes of the AAAI'98 Workshop on Learning for Text Cagegorization, Madison, WI.
+
+McLachlan, G. and T. Krishnan. (2008). The EM Algorithm and Extensions, 2nd edition. John Wiley & Sons, Hoboken, NJ.
+
+Ng, A. Y. and M. I. Jordan. (2002). "On discriminative vs. generative classifiers: A comparison of logistic regression and naive Bayes." In Advances in Neural Information Processing Systems 14 (NIPS) (T. G. Dietterich, S. Becker, and Z. Ghahramani, eds.), 841-848, MIT Press, Cambridge, MA.
+
+Pearl, J. (1988). Probabilistic Reasoning in Intelligent Systems: Networks of Plausible Inference. Morgan Kaufmann, San Francisco, CA.
+
+Sahami, M. (1996). "Learning limited dependence Bayesian classifiers." In Proceedings of the 2nd International Conference on Knowledge Discovery and Data Mining (KDD), 335-338, Portland, OR.
+
+Samaniego, F. J. (2010). A Comparison of the Bayesian and Frequentist Approaches to Estimation. Springer, New York, NY.
+
+Webb, G., J. Boughton, and Z. Wang. (2005). "Not so naive Bayes: Aggregating one-dependence estimators." Machine Learning, 58(1):5-24.
+
+Wu, C. F. Jeff. (1983). "On the convergence properties of the EM algorithm." Annals of Statistics, 11(1):95-103.
+
+Wu, X., V. Kumar, J. R. Quinlan, J. Ghosh, Q. Yang, H. Motoda, G. J. M-cLachlan, A. Ng, B. Liu, P. S. Yu, Z.-H. Zhou, M. Steinbach, D. J. Hand, and D. Steinberg. (2007). "Top 10 algorithms in data mining." Knowledge and Information Systems, 14(1):1-37.
+
+Zhang, H. (2004). "The optimality of naive Bayes." In Proceedings of the 17th International Florida Artificial Intelligence Research Society Conference (FLAIRS), 562-567, Miami, FL.
+
+Zheng, Z. and G. I. Webb. (2000). "Lazy learning of Bayesian rules." Machine Learning, 41(1):53-84.
+
+休息一会儿
+
+![168_1663_887_281_359_0.jpg](../../images/168_1663_887_281_359_0.jpg)
+
+## 小故事: 贝叶斯之谜
+
+1763 年 12 月 23 日，托马斯·贝叶斯(Thomas Bayes, 1701?-1761)的遗产受赠者 R. Price 牧师在英国皇家学会宣读了贝叶斯的遗作《论机会学说中一个问题的求解》， 其中给出了贝叶斯定理, 这一天现在被当作贝叶斯定理的诞生日. 虽然贝叶斯定理在今天已成为概率统计最经典的内容之一，但贝叶斯本人却笼罩在谜团中.
+
+现有资料表明，贝叶斯是一位神职人员，长期担任英国坦布里奇韦尔斯地方教堂的牧师，他从事数学研究的目的是为了证明上帝的存在. 他在 1742 年当选英国皇家学会会士，但没有记录表明他此前发表过任何科学或数学论文. 他的提名是由皇家学会的重量级人物签署的，但为什么提名以及他为何能当选， 至今仍是个谜. 贝叶斯的研究工作和他本人在他生活的时代很少有人关注，贝叶斯定理出现后很快就被遗忘了，后来大数学家拉普拉斯使它重新被科学界所熟悉，但直到二十世纪随着统计学的广泛应用才备受瞩目. 贝叶斯的出生年份至今也没有清楚确定，甚至关于如今广泛流传的他的画像是不是贝叶斯本人， 也仍存在争议.
+
+---
+
+英国皇家学会相当于英国科学院，皇家学会会士相当于科学院院士.
+
+---
+
+<table><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
