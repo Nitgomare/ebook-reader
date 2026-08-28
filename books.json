@@ -130,6 +130,7 @@
       "title": "机器学习",
       "author": "周志华",
       "description": "从基本概念、经典模型到计算学习理论与强化学习的系统教材。",
+      "coverSource": "assets/cover.jpeg",
       "tags": ["机器学习", "西瓜书", "中文教材"],
       "category": "artificial-intelligence",
       "type": "reference",

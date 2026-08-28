@@ -1,1064 +1,1123 @@
 # 第9章 聚类
 
-<div class="chapter-video">
-<div class="chapter-video__heading"><strong>本章配套视频 · P53–P56</strong><span>播放器从 P53 开始</span></div>
-<div class="video-embed">
-  <iframe
-    src="https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655958072&amp;p=53&amp;high_quality=1&amp;danmaku=0&amp;autoplay=0"
-    title="第 9 章 聚类配套视频，从 P53 开始"
-    loading="lazy"
-    scrolling="no"
-    frameborder="0"
-    allow="fullscreen; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-<details class="video-parts">
-<summary>展开本章全部分 P（P53–P56）</summary>
-<div class="video-parts__links">
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=53" target="_blank" rel="noopener">P53 · 聚类</a>
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=54" target="_blank" rel="noopener">P54 · 聚类性能度量</a>
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=55" target="_blank" rel="noopener">P55 · 距离计算</a>
-<a class="video-part" href="https://www.bilibili.com/video/BV1gG411f7zX/?p=56" target="_blank" rel="noopener">P56 · 聚类方法概述</a>
-</div>
-</details>
-</div>
-
-
 ## 9.1 聚类任务
 
-<div class="kuang">
+在 “无监督学习” (unsupervised learning) 中, 训练样本的标记信息是未知的, 目标是通过对无标记训练样本的学习来揭示数据的内在性质及规律, 为进一步的数据分析提供基础. 此类学习任务中研究最多、应用最广的是 “聚类" (clustering).
 
-常见的无监督学习任务还有密度估计（density estimation）、异常检测（anomaly detection）等。
+聚类试图将数据集中的样本划分为若干个通常是不相交的子集，每个子集称为一个 “簇” (cluster). 通过这样的划分, 每个簇可能对应于一些潜在的概念(类别)，如 “浅色瓜” “深色瓜”， “有籽瓜” “无籽瓜”，甚至 “本地瓜” “外地瓜” 等; 需说明的是, 这些概念对聚类算法而言事先是未知的, 聚类过程仅能自动形成簇结构，簇所对应的概念语义需由使用者来把握和命名.
 
-</div>
+形式化地说,假定样本集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ 包含 $m$ 个无标记样本, 每个样本 ${\mathbf{x}}_{i} = \left( {{x}_{i1};{x}_{i2};\ldots ;{x}_{in}}\right)$ 是一个 $n$ 维特征向量,则聚类算法将样本集 $D$ 划分为 $k$ 个不相交的簇 $\left\{  {{C}_{l} \mid  l = 1,2;\ldots , k}\right\}$ ,其中 ${C}_{{l}^{\prime }}\mathop{\bigcap }\limits_{{{l}^{\prime } \neq  l}}{C}_{l} = \varnothing$ 且 $D = \mathop{\bigcup }\limits_{{l = 1}}^{k}{C}_{l}$ . 相应地,我们用 ${\lambda }_{j} \in  \{ 1,2,\ldots , k\}$ 表示样本 ${\mathbf{x}}_{j}$ 的 “簇标记" (cluster label),即 ${\mathbf{x}}_{j} \in  {C}_{{\lambda }_{j}}$ . 于是,聚类的结果可用包含 $m$ 个元素的簇标记向量 $\mathbf{\lambda } = \left( {{\lambda }_{1};{\lambda }_{2};\ldots ;{\lambda }_{m}}\right)$ 表示.
 
-在“无监督学习”（unsupervised learning）中，训练样本的标记信息是未知的，目标是通过对无标记训练样本的学习来揭示数据的内在性质及规律，为进一步的数据分析提供基础。此类学习任务中研究最多、应用最广的是“聚类”（clustering）。
+聚类既能作为一个单独过程, 用于找寻数据内在的分布结构, 也可作为分类等其他学习任务的前驱过程. 例如, 在一些商业应用中需对新用户的类型进行判别, 但定义 “用户类型” 对商家来说却可能不太容易, 此时往往可先对用户数据进行聚类, 根据聚类结果将每个簇定义为一个类, 然后再基于这些类训练分类模型, 用于判别新用户的类型.
 
-<div class="kuang">
-
-对聚类算法而言，样本簇亦称“类”。  
-
-</div>
-
-聚类试图将数据集中的样本划分为若干个通常是不相交的子集，每个子集称为一个“簇”（cluster）。通过这样的划分，每个簇可能对应于一些潜在的概念（类别），如“浅色瓜”“深色瓜”，“有籽瓜”“无籽瓜”，甚至“本地瓜”“外地瓜”等；需说明的是，这些概念对聚类算法而言事先是未知的，聚类过程仅能自动形成簇结构，簇所对应的概念语义需由使用者来把握和命名。
-
-<div class="kuang">
-
-聚类任务中也可使用有标记训练样本，如（9.4.2学习向量量化）与（13.6 半监督聚类），但样本的类标记与聚类产生的簇有所不同。
-
-</div>
-
-形式化地说，假定样本集D=｛x<sub>1</sub>，x<sub>2</sub>，…，x<sub>m</sub>｝包含m个无标记样本，每个样本x<sub>i</sub>=（x<sub>i1</sub>，x<sub>i2</sub>，…，x<sub>in</sub>）是一个n维特征向量，则聚类算法将样本集D划分为k个不相交的簇｛C<sub>l</sub>\|l=1，2，…，k｝，其中C<sub>l'</sub>⋂︀<sub>l'≠l</sub>C<sub>l</sub>=<img src="images/00479.jpeg" class="zaozi1" />且D=<img src="images/00480.jpeg" class="zaozi1" />C<sub>l</sub>。相应地，我们用λ<sub>j</sub>∈｛1，2，…，k｝表示样本x<sub>j</sub>的“簇标记”（cluster label），即x<sub>j</sub>∈C<sub>λ<sub>j</sub></sub>。于是，聚类的结果可用包含m个元素的簇标记向量λ=（λ<sub>1</sub>；λ<sub>2</sub>；…；λ<sub>m</sub>）表示。  
-
-聚类既能作为一个单独过程，用于找寻数据内在的分布结构，也可作为分类等其他学习任务的前驱过程。例如，在一些商业应用中需对新用户的类型进行判别，但定义“用户类型”对商家来说却可能不太容易，此时往往可先对用户数据进行聚类，根据聚类结果将每个簇定义为一个类，然后再基于这些类训练分类模型，用于判别新用户的类型。
-
-基于不同的学习策略，人们设计出多种类型的聚类算法。本章后半部分将对不同类型的代表性算法进行介绍，但在此之前，我们先讨论聚类算法涉及的两个基本问题――性能度量和距离计算。
-
-<span id="part0084.html"></span>
+基于不同的学习策略, 人们设计出多种类型的聚类算法. 本章后半部分将对不同类型的代表性算法进行介绍, 但在此之前, 我们先讨论聚类算法涉及的两个基本问题一性能度量和距离计算.
 
 ## 9.2 性能度量
 
-<div class="kuang">
-
-监督学习中的性能度量参见（2.3 性能度量）。  
-
-</div>
-
-聚类性能度量亦称聚类“有效性指标”（validity index）。与监督学习中的性能度量作用相似，对聚类结果，我们需通过某种性能度量来评估其好坏；另一方面，若明确了最终将要使用的性能度量，则可直接将其作为聚类过程的优化目标，从而更好地得到符合要求的聚类结果。
-
-聚类是将样本集D划分为若干互不相交的子集，即样本簇。那么，什么样的聚类结果比较好呢？直观上看，我们希望“物以类聚”，即同一簇的样本尽可能彼此相似，不同簇的样本尽可能不同。换言之，聚类结果的“簇内相似度”（intra-cluster similarity）高且“簇间相似度”（inter-cluster similarity）低。
-
-<div class="kuang">
-
-例如将领域专家给出的划分结果作为参考模型。
-
-</div>
-
-聚类性能度量大致有两类。一类是将聚类结果与某个“参考模型”（reference model）进行比较，称为“外部指标”（external index）；另一类是直接考察聚类结果而不利用任何参考模型，称为“内部指标”（internal index）。
-
-<div class="kuang">
-
-通常k≠s。  
-
-</div>
-
-对数据集D=｛x<sub>1</sub>，x<sub>2</sub>，…，x<sub>m</sub>｝，假定通过聚类给出的簇划分为C｛C<sub>1</sub>，C<sub>2</sub>，…，C<sub>k</sub>｝，参考模型给出的簇划分为C\*=｛<img src="images/00481.jpeg" class="zaozi1" />｝。相应地，令λ与λ\*分别表示C和C\*对应的簇标记向量。我们将样本两两配对考虑，定义  
-
-<div class="img-center1">
-
-<img src="images/00482.jpeg" class="calibre8" />
-
-</div>
-
-其中集合SS包含了C中隶属于相同簇且在C\*中也隶属于相同簇的样本对，集合SD包含了在C中隶属于相同簇但在C\*中隶属于不同簇的样本对，……由于每个样本对（x<sub>i</sub>，x<sub>j</sub>）（i\<j）仅能出现在一个集合中，因此有a+b+c+d=m（m-1）/2成立。
-
-基于式（9.1）～（9.4）可导出下面这些常用的聚类性能度量外部指标：  
-
-• Jaccard 系数（Jaccard Coefficient，简称JC）  
-
-<div class="img-center1">
-
-<img src="images/00483.jpeg" class="calibre10" />
-
-</div>
-
-• FM指数（Fowlkes and Mallows Index，简称FMI）  
-
-<div class="img-center1">
-
-<img src="images/00484.jpeg" class="calibre10" />
-
-</div>
-
-• Rand指数（Rand Index，简称RI）  
-
-<div class="img-center1">
-
-<img src="images/00485.jpeg" class="calibre10" />
-
-</div>
-
-显然，上述性能度量的结果值均在\[0，1\]区间，值越大越好。  
-
-考虑聚类结果的簇划分C=｛C<sub>1</sub>，C<sub>2</sub>，…，C<sub>K</sub>｝，定义  
-
-<div class="img-center1">
-
-<img src="images/00486.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-距离越大则样本的相似度越低；距离计算见（9.3 距离计算）。  
-
-</div>
-
-其中，dist（·，·）用于计算两个样本之间的距离；μ代表簇C的中心点μ=<img src="images/00487.jpeg" class="zaozi" />。显然，avg（C）对应于簇C内样本间的平均距离，diam（C）对应于簇C内样本间的最远距离，d<sub>min</sub>（C<sub>i</sub>，C<sub>j</sub>）对应于簇C<sub>i</sub>与簇C<sub>j</sub>最近样本间的距离，d<sub>cen</sub>（C<sub>i</sub>，C<sub>j</sub><span class="calibre20">）对应于簇C<sub>i</sub>与簇</span>C<sub>j</sub><span class="calibre20">中心点间的距离。</span>
-
-基于式（9.8）~（9.11）可导出下面这些常用的聚类性能度量内部指标：
-
-• DB 指数（Davies-Bouldin Index，简称DBI）  
-
-<div class="img-center1">
-
-<img src="images/00488.jpeg" class="calibre8" />
-
-</div>
-
-• Dunn指数（Dunn Index，简称DI）  
-
-<div class="img-center1">
-
-<img src="images/00489.jpeg" class="calibre8" />
-
-</div>
-
-显然，DBI的值越小越好，而DI则相反，值越大越好。  
-
-<span id="part0085.html"></span>
-
-## 9.3 距离计算
-
-对函数dist（·，·），若它是一个“距离度量”（distance measure），则需满足一些基本性质：  
-
-非负性：dist（x<sub>i</sub>，x<sub>j</sub>）≥0； （9.14）
-
-同一性：dist（x<sub>i</sub>，x<sub>j</sub>）=0当且仅当x<sub>i</sub>=x<sub>j</sub>； （9.15）
-
-对称性：dist（x<sub>i</sub>，x<sub>j</sub>）=dist（x<sub>j</sub>，x<sub>i</sub>）； （9.16）
-
-直递性：dist（x<sub>i</sub>，x<sub>j</sub>）≤dist（x<sub>i</sub>，x<sub>k</sub>）+dist（x<sub>k</sub>，x<sub>j</sub>） （9.17）
-
-<div class="kuang">
-
-直递性常被直接称为“三角不等式”。  
-
-式（9.18）即为x<sub>i</sub>-x<sub>j</sub>的L<sub>p</sub>范数\|\|x<sub>i</sub>-x<sub>j</sub>\|\|p。  
-
-p<img src="images/00357.jpeg" class="zaozi1" />∞时则得到切比雪夫距离。
-
-亦称“街区距离”（city block distance）。  
-
-</div>
-
-给定样本x<sub>i</sub>=（x<sub>i1</sub>；x<sub>i2</sub>；…；x<sub>in</sub>）与x<sub>j</sub>=（x<sub>j1</sub>；x<sub>j2</sub>；…；x<sub>jn</sub>），最常用的是“闵可夫斯基距离”（Minkowski distance）  
-
-<div class="img-center1">
-
-<img src="images/00490.jpeg" class="calibre8" />
-
-</div>
-
-对p≥1，式（9.18）显然满足式（9.14）～（9.17）的距离度量基本性质。  
-
-p=2时，闵可夫斯基距离即欧氏距离（Euclidean distance）  
-
-<div class="img-center1">
-
-<img src="images/00491.jpeg" class="calibre8" />
-
-</div>
-
-p=1时，闵可夫斯基距离即曼哈顿距离（Manhattan distance）  
-
-<div class="img-center1">
-
-<img src="images/00492.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-连续属性亦称“数值属性”（numerical attribute）,“离散属性”亦称“列名属性”（nominal attribute）。  
-
-</div>
-
-我们常将属性划分为“连续属性”（continuous attribute）和“离散属性”（categorical attribute），前者在定义域上有无穷多个可能的取值，后者在定义域上是有限个取值。然而，在讨论距离计算时，属性上是否定义了“序”关系更为重要。例如定义域为{1，2，3}的离散属性与连续属性的性质更接近一些，能直接在属性值上计算距离：“1”与“2”比较接近、与“3”比较远，这样的属性称为“有序属性”（ordinal attribute）；而定义域为{飞机，火车，轮船}这样的离散属性则不能直接在属性值上计算距离，称为“无序属性”（non-ordinal attribute）。显然，闵可夫斯基距离可用于有序属性。  
-
-<div class="kuang">
-
-样本类别已知时k通常设置为类别数。  
-
-</div>
-
-对无序属性可采用VDM（Value Difference Metric） \[Stanfill and Waltz，1986\]。令m<sub>u，a</sub>表示在属性u上取值为a的样本数，m<sub>u，a，i</sub>表示在第i个样本簇中在属性u上取值为a的样本数，k为样本簇数，则属性u上两个离散值a与b之间的VDM距离为  
-
-<div class="img-center1">
-
-<img src="images/00493.jpeg" class="calibre8" />
-
-</div>
-
-于是，将闵可夫斯基距离和VDM结合即可处理混合属性。假定有n<sub>c</sub>个有序属性、n-n<sub>c</sub><span class="calibre20">个无序属性，不失一般性，令有序属性排列在无序属性之前，则</span>
-
-<div class="img-center1">
-
-<img src="images/00494.jpeg" class="calibre8" />
-
-</div>
-
-<span class="calibre20">当样本空间中不同属性的重要性不同时，可使用“加权距离”（weighted distance）。以加权闵可夫斯基距离为例：  
-</span>
-
-<div class="img-center1">
-
-<img src="images/00495.jpeg" class="calibre8" />
-
-</div>
-
-其中权重w<sub>i</sub>≥0（i=1，2，…，n）表征不同属性的重要性，通常<img src="images/00496.jpeg" class="zaozi1" />w<sub>i</sub>=1。  
-
-<div class="kuang">
-
-参见（10.6 度量学习）。  
-
-这个例子中，从数学上看，令d<sub>3</sub>=3即可满足直递性；但从语义上看，d<sub>3</sub>应远大于d<sub>1</sub>与d<sub>2</sub>。
-
-</div>
-
-需注意的是，通常我们是基于某种形式的距离来定义“相似度度量”（similarity measure），距离越大，相似度越小。然而，用于相似度度量的距离未必一定要满足距离度量的所有基本性质，尤其是直递性（9。17）。例如在某些任务中我们可能希望有这样的相似度度量：“人”“马”分别与“人马”相似，但“人”与“马”很不相似；要达到这个目的，可以令“人”“马”与“人马”之间的距离都比较小，但“人”与“马”之间的距离很大，如图9.1所示，此时该距离不再满足直递性；这样的距离称为“非度量距离”（non-metric distance）。此外，本节介绍的距离计算式都是事先定义好的，但在不少现实任务中，有必要基于数据样本来确定合适的距离计算式，这可通过“距离度量学习”（distance metric learning）来实现。  
-
-<div class="img-center1">
-
-<img src="images/00497.jpeg" class="calibre10" />
-
-</div>
-
-图9.1 非度量距离的一个例子  
-
-<span id="part0086.html"></span>
-
-## 9.4 原型聚类
-
-<div class="kuang">
-
-“原型”是指样本空间中具有代表性的点。  
-
-</div>
-
-原型聚类亦称“基于原型的聚类”（prototype-based clustering），此类算法假设聚类结构能通过一组原型刻画，在现实聚类任务中极为常用。通常情形下，算法先对原型进行初始化，然后对原型进行迭代更新求解。采用不同的原型表示、不同的求解方式，将产生不同的算法。下面介绍几种著名的原型聚类算法。  
-
-### 9.4.1 k均值算法
-
-给定样本集D={x<sub>1</sub>，x<sub>2</sub>，…，x<sub>m</sub>}，“k均值”（k-means）算法针对聚类所得簇划分C=｛C<sub>1</sub>，C<sub>2</sub>，…，C<sub>K</sub>｝最小化平方误差  
-
-<div class="img-center1">
-
-<img src="images/00498.jpeg" class="calibre10" />
-
-</div>
-
-其中<img src="images/00499.jpeg" class="zaozi" />x是簇C<sub>i</sub>的均值向量。直观来看，式（9.24）在一定程度上刻画了簇内样本围绕簇均值向量的紧密程度，E值越小则簇内样本相似度越高。  
-
-最小化式（9.24）并不容易，找到它的最优解需考察样本集D所有可能的簇划分，这是一个NP难问题\[Aloise et al., 2009\]。因此，k均值算法采用了贪心策略，通过迭代优化来近似求解式（9.24）。算法流程如图9.2所示，<span class="calibre20">其中第1行对均值向量进行初始化，在第4–8行与第9–16行依次对当前簇划分及均值向量迭代更新，若迭代更新后聚类结果保持不变，则在第18行将当前簇划分结果返回。</span>
-
-<div class="kuang">
-
-p.89的西瓜数据集3.0α<span class="calibre20">是西瓜数据集4.0的子集。</span>
-
-样本9～21的类别是“好瓜=否”，其他样本的类别是“好瓜=是”。由于本节使用无标记样本，因此类别标记信息未在表中给出。
-
-为避免运行时间过长，通常设置一个最大运行轮数或最小调整幅度阈值，若达到最大轮数或调整幅度小于阈值，则停止运行。  
-
-</div>
-
-<span class="calibre20">下面以表9.1的西瓜数据集4.0为例来演示k均值算法的学习过程。</span>为方便叙述，我们将编号为i的样本为x<sub>i</sub>，这是一个包含“密度”与“含糖率”两个属性值的二维向量。  
-
-表9.1 西瓜数据集4.0  
-
-<div class="img-center1">
-
-<img src="images/00500.jpeg" class="calibre8" />
-
-</div>
-
-<div class="img-center1">
-
-<img src="images/00501.jpeg" class="calibre8" />
-
-</div>
-
-图9.2 k均值算法  
-
-假定聚类簇数k=3，算法开始时随机选取三个样本x<sub>6</sub>，x<sub>12</sub>，x<sub>24</sub>作为初始均值向量，即  
-
-μ<sub>1</sub>=（0.403；0.237），μ<sub>2</sub>=（0.343；0.099），μ<sub>3</sub>=（0.478；0.437）。
-
-考察样本x<sub>1</sub>=（0.697；0.460），它与当前均值向量μ<sub>1</sub>，μ<sub>2</sub>，μ<sub>3</sub>的距离分别为0.369，0.506，0.220，因此x<sub>1</sub>将被划入簇C<sub>3</sub>中。类似的，对数据集中的所有样本考察一遍后，可得当前簇划分为  
-
-C<sub>1</sub>={x<sub>3</sub>，x<sub>5</sub>，x<sub>6</sub>，x<sub>7</sub>，x<sub>8</sub>，x<sub>9</sub>，x<sub>10</sub>，x<sub>13</sub>，x<sub>14</sub>，x<sub>17</sub>，x<sub>18</sub>，x<sub>19</sub>，x<sub>20</sub>，x<sub>23</sub>}；
-
-C<sub>2</sub>={x<sub>11</sub>，x<sub>12</sub>，x<sub>16</sub>）；
-
-C<sub>3</sub>={x<sub>1</sub>，x<sub>2</sub>，x<sub>4</sub>，x<sub>15</sub>，x<sub>21</sub>，x<sub>22</sub>，x<sub>24</sub>，x<sub>25</sub>，x<sub>26</sub>，x<sub>27</sub>，x<sub>28</sub>，x<sub>29</sub>，x<sub>30</sub>}；
-
-于是，可从C<sub>1</sub>，C<sub>2</sub>，C<sub>3</sub>分别求出新的均值向量
-
-<div class="img-center1">
-
-<img src="images/00502.jpeg" class="calibre8" />
-
-</div>
-
-更新当前均值向量后，不断重复上述过程，如图9.3所示，第五轮迭代产生的结果与第四轮迭代相同，于是算法停止，得到最终的簇划分。  
-
-<div class="img-center1">
-
-<img src="images/00503.jpeg" class="calibre8" />
-
-</div>
-
-图9.3 西瓜数据集4.0上k均值算法（k=3）在各轮迭代后的结果。样本点与均值向量分别用“.”与“+”表示，红色虚线显示出簇划分。  
-
-### 9.4.2学习向量量化
-
-<div class="kuang">
-
-可看作通过聚类来形成类别“子类”结构，每个子类对应一个聚类簇。  
-
-</div>
-
-与k均值算法类似，“学习向量量化”（Learning Vector Quantization，简称LVQ）也是试图找到一组原型向量来刻画聚类结构，但与一般聚类算法不同的是，LVQ假设数据样本带有类别标记，学习过程利用样本的这些监督信息来辅助聚类。  
-
-给定样本集D=｛（x<sub>1</sub>，y<sub>1</sub>），（x<sub>2</sub>，y<sub>2</sub>），…，（x<sub>m</sub>，y<sub>m</sub>）｝，每个样本x<sub>j</sub>是由n个属性描述的特征向量（x<sub>j1</sub>，x<sub>j2</sub>，…，x<sub>jn</sub>），y<sub>j</sub>∈Y是样本x<sub>j</sub>的类别标记。LVQ的目标是学得一组n维原型向量｛P<sub>1</sub>，P<sub>2</sub>，…，P<sub>q</sub>｝，每个原型向量代表一个聚类簇，簇标记t<sub>i</sub>∈Y。
-
-<div class="img-center1">
-
-<img src="images/00504.jpeg" class="calibre8" />
-
-</div>
-
-图9.4学习向量量化算法  
-
-<div class="kuang">
-
-x<sub>j</sub>与p<sub>i\*</sub>的类别相同。
-
-x<sub>j</sub>与p<sub>i\*</sub>的类别不同。  
-
-如达到最大迭代轮数。  
-
-第5行是竞争学习的“胜者为王”策略。SOM是基于无标记样本的聚类算法，而LVQ可看作SOM基于监督信息的扩展。关于竞争学习与SOM，参见（5.5.2 ART网络）和（5.5.3 SOM网络）。  
-
-</div>
-
-LVQ算法描述如图9.4所示。算法第1行先对原型向量进行初始化，例如对第q个簇可从类别标记为t<sub>q</sub>的样本中随机选取一个作为原型向量。算法第<span class="calibre20">2～12行对原型向量进行迭代优化。在每一轮迭代中，算法随机选取一个有标记训练样本，找出与其距离最近的原型向量，并根据两者的类别标记是否一致来对原型向量进行相应的更新。在第12行中，若算法的停止条件已满足（例如已达到最大迭代轮数，或原型向量更新很小甚至不再更新），则将当前原型向量作为最终结果返回。</span>  
-
-显然，LVQ的关键是第6–10行，即如何更新原型向量。直观上看，对样本x<sub>j</sub>，若最近的原型向量p<sub>i\*</sub>与x<sub>j</sub>的类别标记相同，则令p<sub>i\*</sub>向x<sub>j</sub><span class="calibre20">的方向靠拢，如第7行所示，此时新原型向量为</span>
-
-<div class="img-center1">
-
-<img src="images/00505.jpeg" class="calibre8" />
-
-</div>
-
-p'与x<sub>j</sub><span class="calibre20">之间的距离为</span>
-
-<div class="img-center1">
-
-<img src="images/00506.jpeg" class="calibre8" />
-
-</div>
-
-<span class="calibre20">令学习率η</span>∈（0，1），则原型向量p<sub>i\*</sub>在更新为p'之后将更接近x<sub>j</sub>。<span class="calibre20">  
-</span>
-
-类似的，若p<sub>i\*</sub>与x<sub>j</sub>的类别标记不同，则更新后的原型向量与x<sub>j</sub><span class="calibre20">之间的距离将增大为（1+</span>η<span class="calibre20">）·\|\|</span>p<sub>i\*</sub>-x<sub>j</sub>\|\|<sub>2</sub>，从而更远离x<sub>j</sub>。
-
-在学得一组原型向量｛p<sub>1</sub>，p<sub>2</sub>，…，p<sub>q</sub>｝后，即可实现对样本空间X的簇划分。对任意样本x，它将被划入与其距离最近的原型向量所代表的簇中；换言之，每个原型向量p<sub>i</sub>定义了与之相关的一个区域R<sub>i</sub>，该区域中每个样本与p<sub>i</sub><span class="calibre20">的距离不大于它与其他原型向量p<sub>i'</sub>（i'≠i）的距离，即</span>
-
-<div class="img-center1">
-
-<img src="images/00507.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-若将R<sub>i</sub><span class="calibre20">中样本全用原型向量</span>p<sub>i</sub><span class="calibre20">表示，则可实现数据的“有损压缩”（</span>lossy compression<span class="calibre20">），这称为“向量量化”（</span>vector quantization<span class="calibre20">）；LVQ由此而得名。</span>
-
-<span class="calibre20">即希望为“好瓜=是”找到3个簇，“好瓜=否”找到2个簇。  
-</span>
-
-</div>
-
-<span class="calibre20">由此形成了对样本空间X的簇划分｛R<sub>1</sub>，R<sub>2</sub>，R<sub>q</sub>｝，该划分通常称“</span>Voronoi剖分<span class="calibre20">”（</span>Voronoi tessellation<span class="calibre20">）。</span>
-
-<span class="calibre20">下面我们以表9.1的西瓜数据集4.0为例来演示LVQ的学习过程。令9–21号样本的类别标记为c<sub>2</sub>，其他样本的类别标记为c<sub>1</sub>。假定q=5，即学习目标是找到5个原型向量p<sub>1</sub>，p<sub>2</sub>，p<sub>3</sub>，p<sub>4</sub>，p<sub>5</sub>，并假定其对应的类别标记分别为c<sub>1</sub>，c<sub>2</sub>，c<sub>2</sub>，c<sub>1</sub>，c<sub>1</sub>。  
-</span>
-
-<span class="calibre20">算法开始时，根据样本的类别标记和簇的预设类别标记对原型向量进行随机初始化，假定初始化为样本x<sub>5</sub>，x<sub>12</sub>，x<sub>18</sub>，x<sub>23</sub>，x<sub>29</sub>。在第一轮迭代中，假定随机选取的样本为x<sub>1</sub>，该样本与当前原型向量</span>p<sub>1</sub>，p<sub>2</sub>，p<sub>3</sub>，p<sub>4</sub>，p<sub>5</sub>的距离分别为0.283，0.506，0.434，0.260，0.032。由于p<sub>5</sub>与x<sub>1</sub>距离最近且两者具有相同的类别标记c<sub>1</sub>，假定学习率η=0.1，则LVQ更新p<sub>5</sub><span class="calibre20">得到新原型向量</span>
-
-<div class="img-center1">
-
-<img src="images/00508.jpeg" class="calibre8" />
-
-</div>
-
-将p<sub>5</sub><span class="calibre20">更新为p'后，不断重复上述过程，不同轮数之后的聚类结果如图9.5所示。</span>
-
-### 9.4.3 高斯混合聚类
-
-与k均值、LVQ用原型向量来刻画聚类结构不同，高斯混合（Mixture-of-Gaussian）聚类采用概率模型来表达聚类原型。
-
-<div class="kuang">
-
-记为x~N（μ，<img src="images/00509.jpeg" class="zaozi1" />）。
-
-<img src="images/00509.jpeg" class="zaozi1" />：对称正定矩阵；｜<img src="images/00509.jpeg" class="zaozi1" />｜：<img src="images/00509.jpeg" class="zaozi1" />的行列式；<img src="images/00509.jpeg" class="zaozi1" /><sup>-1</sup>：<img src="images/00509.jpeg" class="zaozi1" />的逆矩阵。
-
-</div>
-
-<span class="calibre20">我们先简单回顾一下（多元）高斯分布的定义。对n维样本空间X中的随机向量x，若x服从高斯分布，其概率密度函数为  
-</span>
-
-<div class="img-center1">
-
-<img src="images/00510.jpeg" class="calibre8" />
-
-</div>
-
-其中μ是n维均值向量，<img src="images/00509.jpeg" class="zaozi1" />是n×n的协方差矩阵。由式（9.28）可看出，高斯分布完全由均值向量μ和协方差矩阵<img src="images/00509.jpeg" class="zaozi1" />这两个参数确定。为了明确显示高斯分布与相应参数的依赖关系，将概率密度函数记为p（x\|μ，<img src="images/00509.jpeg" class="zaozi1" />）。
-
-<div class="img-center1">
-
-<img src="images/00511.jpeg" class="calibre8" />
-
-</div>
-
-图9.5 西瓜数据集4.0上LVQ算法（q=5）在不同轮数迭代后的聚类结果。c<sub>1</sub>，c<sub>2</sub>类样本点与原型向量分别用“.”，“°”与“+”表示，红色虚线显示出聚类形成的Voronoi剖分。
-
-我们可定义高斯混合分布  
-
-<div class="img-center1">
-
-<img src="images/00512.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-p<sub>M</sub>（·）也是概率密度函数，<img src="images/00513.jpeg" class="zaozi1" />p<sub>M</sub><span class="calibre20">（x）dx=1。</span>
-
-</div>
-
-该分布共由k个混合成分组成，每个混合成分对应一个高斯分布。其中μ<sub>i</sub>与<img src="images/00509.jpeg" class="zaozi1" /><sub>i</sub>是第i个高斯混合成分的参数，而α<sub>i</sub>\>0为相应的“混合系数”（mixture coefficient），<img src="images/00514.jpeg" class="zaozi1" />α<sub>i</sub>=1。
-
-假设样本的生成过程由高斯混合分布给出：首先，根据α<sub>1</sub>，α<sub>2</sub>，…，α<sub>k</sub>定义的先验分布选择高斯混合成分，其中α<sub>i</sub><span class="calibre20">为选择第i个混合成分的概率；然后，根据被选择的混合成分的概率密度函数进行采样，从而生成相应的样本。</span>
-
-<span class="calibre20">若训练集D=｛x<sub>1</sub>，x<sub>2</sub>，…，x<sub>m</sub>｝由上述过程生成，令随机变量z<sub>j</sub></span>∈{1，2，…，k}表示生成样本x<sub>j</sub>的高斯混合成分，其取值未知。显然，z<sub>j</sub><span class="calibre20">的先验概率P（</span>z<sub>j</sub><span class="calibre20">=i）对应于</span>α<sub>i</sub><span class="calibre20">（i=1，2，…，k）。根据贝叶斯定理，</span>z<sub>j</sub><span class="calibre20">的后验分布对应于</span>
-
-<div class="img-center1">
-
-<img src="images/00515.jpeg" class="calibre8" />
-
-</div>
-
-换言之，p<sub>M</sub>（z<sub>j</sub><span class="calibre20">=i\|x<sub>j</sub>）给出了样本</span>x<sub>j</sub><span class="calibre20">由第i个高斯混合成分生成的后验概率。为方便叙述，将其简记为γ<sub>ji</sub>（i=1，2，…，k）。</span>
-
-<span class="calibre20">当高斯混合分布（9.29）已知时，高斯混合聚类将把样本集D划分为k个簇C=｛C<sub>1</sub>，C<sub>2</sub>，…，C<sub>k</sub>｝，每个样本</span>x<sub>j</sub>的簇标记为γ<sub>j</sub>如下确定：
-
-<div class="img-center1">
-
-<img src="images/00516.jpeg" class="calibre8" />
-
-</div>
-
-因此，从原型聚类的角度来看，高斯混合聚类是采用概率模型（高斯分布）对原型进行刻画，簇划分则由原型对应后验概率确定。  
-
-<div class="kuang">
-
-极大似然估计参见（7.2 极大似然估计）。  
-
-</div>
-
-那么，对于式（9.29），模型参数｛（α<sub>i</sub>，μ<sub>i</sub>，<img src="images/00509.jpeg" class="zaozi1" /><sub>i</sub><span class="calibre20">）\|1≤i≤k｝如何求解呢？显然，给定样本集D，可采用极大似然估计，即最大化（对数）似然</span>
-
-<div class="img-center1">
-
-<img src="images/00517.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-EM算法参见（7.6 EM算法）。
-
-</div>
-
-<span class="calibre20">常采用EM算法进行迭代优化求解。下面我们做一个简单的推导。  
-</span>
-
-<span class="calibre20">若参数</span>（α<sub>i</sub>，μ<sub>i</sub>，<img src="images/00509.jpeg" class="zaozi1" /><sub>i</sub>）\|1≤i≤k｝能使式（9.32）最大化，则由<img src="images/00518.jpeg" class="zaozi" />=0有
-
-<div class="img-center1">
-
-<img src="images/00519.jpeg" class="calibre8" />
-
-</div>
-
-由式（9.30）以及γ<sub>ji</sub>=p<sub>M</sub>（z<sub>j</sub>=i\|x<sub>j</sub>），有
-
-<div class="img-center1">
-
-<img src="images/00520.jpeg" class="calibre8" />
-
-</div>
-
-即各混合成分的均值可通过样本加权平均来估计，样本权重是每个样本属于该成分的后验概率。类似的，由<img src="images/00518.jpeg" class="zaozi" />=0可得  
-
-<div class="img-center1">
-
-<img src="images/00521.jpeg" class="calibre8" />
-
-</div>
-
-对于混合系数α<sub>i</sub><span class="calibre20">，除了要最大化LL（D），还需满足</span>α<sub>i</sub>≥0，<img src="images/00514.jpeg" class="zaozi" />α<sub>i</sub>=1。考虑LL（D）的拉格朗日形式
-
-<div class="img-center1">
-
-<img src="images/00522.jpeg" class="calibre8" />
-
-</div>
-
-其中λ为拉格朗日乘子。由式（9.36）对α<sub>i</sub><span class="calibre20">的导数为0，有</span>
-
-<div class="img-center1">
-
-<img src="images/00523.jpeg" class="calibre8" />
-
-</div>
-
-两边同乘以α<sub>i</sub>对所有混合成分求和可知λ=-m，有
-
-<div class="img-center1">
-
-<img src="images/00524.jpeg" class="calibre8" />
-
-</div>
-
-即每个高斯成分的混合系数由样本属于该成分的平均后验概率确定。  
-
-由上述推导即可获得高斯混合模型的EM算法：在每步迭代中，先根据当前参数来计算每个样本属于每个高斯成分的后验概率γ<sub>ji</sub>（E步），再根据式（9.34）、（9.35）和（9.38）更新模型参数｛（α<sub>i，</sub>μ<sub>i</sub>，<img src="images/00509.jpeg" class="zaozi1" /><sub>i</sub><span class="calibre20">）\|1≤i≤k｝（M步）。</span>
-
-<span class="calibre20">高斯混合聚类算法描述如图9.6所示。算法第1行对高斯混合分布的模型参数进行初始化。然后，在第2–12行基于EM算法对模型参数进行迭代更新。若EM算法的停止条件满足（例如已达到最大迭代轮数，或似然函数LL（D）增长很少甚至不再增长），则在第14–17行根据高斯混合分布确定簇划分，在第18行返回最终结果。  
-</span>
-
-<div class="img-center1">
-
-<img src="images/00525.jpeg" class="calibre8" />
-
-</div>
-
-图9.6 高斯混合聚类算法
-
-<div class="kuang">
-
-EM算法的E步。
-
-EM算法的M步。
-
-例如达到最大迭代轮数。  
-
-</div>
-
-以表9.1的西瓜数据集4.0为例，令高斯混合成分的个数k=3。算法开始时，假定将高斯混合分布的模型参数初始化为：α<sub>1</sub>=α<sub>2</sub>=α<sub>3</sub>=<img src="images/00526.jpeg" class="zaozi1" />；μ<sub>1</sub>=μ<sub>6</sub>，μ<sub>2</sub>=x<sub>22</sub>，μ<sub>3</sub>=x<sub>27</sub>；<img src="images/00509.jpeg" class="zaozi1" /><sub>1</sub>=<img src="images/00509.jpeg" class="zaozi1" /><sub>2</sub>=<img src="images/00509.jpeg" class="zaozi1" /><sub>3</sub>=<img src="images/00527.jpeg" class="zaozi1" />。  
-
-在第一轮迭代中，先计算样本由各混合成分生成的后验概率。以x<sub>1</sub>为例，由式（9.30）算出后验概率γ<sub>11</sub>=0.219，γ<sub>12</sub>=0.404，γ<sub>13</sub>=0.377。所有样本的后验概率算完后，得到如下新的模型参数：  
-
-<div class="img-center1">
-
-<img src="images/00528.jpeg" class="calibre8" />
-
-</div>
-
-模型参数更新后，不断重复上述过程，不同轮数之后的聚类结果如图9.7所示。  
-
-<div class="img-center1">
-
-<img src="images/00529.jpeg" class="calibre8" />
-
-</div>
-
-图9.7 高斯混合聚类（K=3）在不同轮数迭代后的聚类结果。其中样本簇C<sub>1</sub>，C<sub>2</sub>与C<sub>3</sub>中的样本点分别用“○”，“■”与“▲”表示，各高斯混合成分的均值向量用“+”表示。
-
-<span id="part0087.html"></span>
-
-## 9.5 密度聚类
-
-密度聚类亦称“基于密度的聚类”（density-based clustering），此类算法假设聚类结构能通过样本分布的紧密程度确定。通常情形下，密度聚类算法从样本密度的角度来考察样本之间的可连接性，并基于可连接样本不断扩展聚类簇以获得最终的聚类结果。  
-
-<div class="kuang">
-
-全称“Density-Based S-DBSCANpatial Clustering of Applications with Noise”。  
-
-在本章后续内容中，距离函数dist（·，·）在默认情况下设为欧氏距离。
-
-密度直达关系通常不满足对称性。  
-
-密度可达关系满足直递性，但不满足对称性。  
-
-密度相连关系满足对称性。  
-
-</div>
-
-DBSCAN是一种著名的密度聚类算法，它基于一组“邻域”（neighborhood）参数（ε，MinPts）来刻画样本分布的紧密程度，给定数据集D=｛x<sub>1</sub>，x<sub>2</sub>，…，x<sub>m</sub>｝，定义下面这几个概念：  
-
-· ε-邻域：对x<sub>j</sub>∈D，其ε-邻域包含样本集D中与x<sub>j</sub>的距离不大于ε的样本，即N<sub>ε</sub>（x<sub>j</sub>）={x<sub>i</sub>∈D\|dist（x<sub>i</sub>，x<sub>j</sub>）≤ε<span class="calibre20">}；</span>
-
-<span class="calibre20">· </span>核心对象（core object）：若x<sub>j</sub><span class="calibre20">的</span>ε-邻域至少包含MinPts个样本，即\|N<sub>ε</sub>（x<sub>j</sub>）\|≥MinPts，则x<sub>j</sub><span class="calibre20">是一个核心对象；</span>
-
-<span class="calibre20">· </span>密度直达（directly density-reachable）：若x<sub>j</sub><span class="calibre20">位于</span>x<sub>i</sub>的ε-邻域中，且x<sub>i</sub><span class="calibre20">是核心对象，则称</span>x<sub>j</sub><span class="calibre20">由</span><span class="calibre20">x</span><sub>i</sub><span class="calibre20">密度直达；</span>
-
-<span class="calibre20">· </span>密度可达（density-reachable）：对x<sub>i</sub><span class="calibre20">与</span>x<sub>j</sub><span class="calibre20">，若存在样本序列p<sub>1</sub>，p<sub>2</sub>，…，p<sub>n</sub>，其中p<sub>1</sub>=x<sub>i</sub>，p<sub>n</sub>=x<sub>j</sub>且p<sub>i+1</sub>由p<sub>i</sub>密度直达，则称x<sub>j</sub>由x<sub>i</sub>密度直达；</span>
-
-<span class="calibre20">· </span>密度相连（density-connected）：对x<sub>i</sub><span class="calibre20">与</span>x<sub>j</sub><span class="calibre20">，若存在x<sub>k</sub>使得x<sub>i</sub>与x<sub>j</sub>均由x<sub>k</sub>密度可达，则称</span>x<sub>i</sub><span class="calibre20">与</span>x<sub>j</sub><span class="calibre20">密度相连。</span>
-
-图9.8给出了上述概念的直观显示。
-
-<div class="img-center1">
-
-<img src="images/00530.jpeg" class="calibre10" />
-
-</div>
-
-图9.8 DBSCAN定义的基本概念（MinPts=3）：虚线显示出ε-邻域，x<sub>1</sub>是核心对象，x<sub>2</sub>由x<sub>1</sub>密度直达，x<sub>3</sub>由x<sub>1</sub>密度可达，x<sub>3</sub>与x<sub>4</sub>密度相连。  
-
-<div class="kuang">
-
-D中不属于任何簇的样本被认为是噪声（noise）或异常（anomaly）样本。
-
-</div>
-
-基于这些概念，DBSCAN将“簇”定义为：由密度可达关系导出的最大的密度相连样本集合。形式化地说，给定邻域参数（ε，MinPts），簇C⊆D是满足以下性质的非空样本子集：  
-
-<div class="img-center1">
-
-<img src="images/00531.jpeg" class="calibre8" />
-
-</div>
-
-那么，如何从数据集D中找到满足以上性质的聚类簇呢？实际上，若x为核心对象，由x密度可达的所有样本组成的集合记为X=｛x'∈D\|x‘由x密度可达｝，则不难证明X即为满足连接性与最大性的簇。
-
-于是，DBSCAN算法先任选数据集中的一个核心对象为“种子”（seed），再由此出发确定相应的聚类簇，算法描述如图9.9所示。在第1~7行中，算法先根据给定的邻域参数（ε，MinPts）找出所有核心对象；然后在第10~24行中，以任一核心对象为出发点，找出由其密度可达的样本生成聚类簇，直到所有核心对象均被访问过为止。
-
-<div class="img-center1">
-
-<img src="images/00532.jpeg" class="calibre8" />
-
-</div>
-
-图9.9 DBSCAN算法  
-
-以表9.1的西瓜数据集4.0为例，假定邻域参数（ε，MinPts）设置为ε=0.11，MinPts=5。DBSCAN算法先找出各样本的ε-邻域并确定核心对象集合：Ω=｛x<sub>3</sub>，x<sub>5</sub>，x<sub>6</sub>，x<sub>8</sub>，x<sub>9</sub>，x<sub>13</sub>，x<sub>14</sub>，x<sub>18</sub>，x<sub>19</sub>，x<sub>24</sub>，x<sub>25</sub>，x<sub>28</sub>，x<sub>29</sub>｝。然后，从Ω中随机选取一个核心对象作为种子，找出由它密度可达的所有样本，这就构成了第一个聚类簇。不失一般性，假定核心对象x<sub>8</sub>被选中作为种子，则DBSCAN生成的第一个聚类簇为
-
-C<sub>1</sub>={x<sub>6</sub>，x<sub>7</sub>，x<sub>8</sub>，x<sub>10</sub>，x<sub>12</sub>，x<sub>18</sub>，x<sub>19</sub>，x<sub>20</sub>，x<sub>23</sub>}。
-
-然后，DBSCAN将C<sub>1</sub>中包含的核心对象从Ω中去除：Ω=Ω\C<sub>1</sub>=｛x<sub>3</sub>，x<sub>5</sub>，x<sub>9</sub>，x<sub>13</sub>，x<sub>14</sub>，x<sub>24</sub>，x<sub>25</sub>，x<sub>28</sub>，x<sub>29</sub><span class="calibre20">｝。再从更新后的集合</span>Ω中随机选取一个核心对象作为种子来生成下一个聚类簇。上述过程不断重复，直至Ω为空。图9.10显示出DBSCAN先后生成聚类簇的情况。C<sub>1</sub>之后生成的聚类簇为
-
-<div class="img-center1">
-
-<img src="images/00533.jpeg" class="calibre8" />
-
-</div>
-
-图9.10 DBSCAN算法（<span class="calibre22">ε=0.11，MinPts=5）生成聚类簇的先后情况。核心对象、非核心对象、噪声样本分别用“●”“○”“\*”表示，红色虚线显示出簇划分。</span>
-
-C<sub>2</sub>={x<sub>3</sub>，x<sub>4</sub>，x<sub>5</sub>，x<sub>9</sub>，x<sub>13</sub>，x<sub>14</sub>，x<sub>16</sub>，x<sub>17</sub>，x<sub>21</sub>}；
-
-C<sub>3</sub>={x<sub>1</sub>，x<sub>2</sub>，x<sub>22</sub>，x<sub>26</sub>，x<sub>29</sub>）；
-
-C<sub>4</sub>={x<sub>24</sub>，x<sub>25</sub>，x<sub>27</sub>，x<sub>28</sub>，x<sub>30</sub>）。
-
-<span id="part0088.html"></span>
-
-## 9.6 层次聚类
-
-层次聚类（hierarchical clustering）试图在不同层次对数据集进行划分，从而形成树形的聚类结构。数据集的划分可采用“自底向上”的聚合策略，也可采用“自顶向下”的分拆策略。
-
-<div class="kuang">
-
-AGNES是AGglomerative NESting的简写。
-
-集合间的距离计算常采用豪斯多夫距离（Hausdorff distance），参见习题9.2。  
-
-</div>
-
-AGNES是一种采用自底向上聚合策略的层次聚类算法。它先将数据集中的每个样本看作一个初始聚类簇，然后在算法运行的每一步中找出距离最近的两个聚类簇进行合并，该过程不断重复，直至达到预设的聚类簇个数。这里的关键是如何计算聚类簇之间的距离。实际上，每个簇是一个样本集合，因此，只需采用关于集合的某种距离即可。例如，给定聚类簇C<sub>i</sub>与C<sub>j</sub>，可通过下面的式子来计算距离：
-
-<div class="img-center1">
-
-<img src="images/00534.jpeg" class="calibre8" />
-
-</div>
-
-<div class="kuang">
-
-通常使用d<sub>min</sub>，d<sub>max</sub>或d<sub>avg</sub><span class="calibre20">。</span>
-
-<span class="calibre20">初始化单样本聚类簇。  
-</span>
-
-<span class="calibre20">初始化聚类簇距离矩阵。  
-</span>
-
-i\*＜j\*。
-
-</div>
-
-显然，最小距离由两个簇的最近样本决定，最大距离由两个簇的最远样本决定，而平均距离则由两个簇的所有样本共同决定。当聚类簇距离由d<sub>min</sub>，d<sub>max</sub>或d<sub>avg</sub>计算时，AGNES算法被相应地称为“单链接”（single-linkage）、“全链接”（complete-linkage）或“均链接”（average-linkage）算法。  
-
-<div class="img-center1">
-
-<img src="images/00535.jpeg" class="calibre8" />
-
-</div>
-
-图9.11 AGNES算法
-
-<div class="kuang">
-
-西瓜数据集4.0见（9.4.1 k均值算法 表9.1 西瓜数据集4.0）。  
-
-</div>
-
-AGNES算法描述如图9.11所示。在第1–9行，算法先对仅含一个样本的初始聚类簇和相应的距离矩阵进行初始化；然后在第11–23行，AGNES不断合并距离最近的聚类簇，并对合并得到的聚类簇的距离矩阵进行更新；上述过程不断重复，直至达到预设的聚类簇数。
-
-以西瓜数据集4.0为例，令AGNES算法一直执行到所有样本出现在同一个簇中，即k=1，则可得到图9。12所示的“树状图”（dendrogram），其中每层链接一组聚类簇。
-
-<div class="img-center1">
-
-<img src="images/00536.jpeg" class="calibre8" />
-
-</div>
-
-图9.12 西瓜数据集4.0上AGNES算法生成的树状图（采用d<sub>max</sub>）。横轴对应于样本编号，纵轴对应于聚类簇距离。  
-
-在树状图的特定层次上进行分割，则可得到相应的簇划分结果。例如，以图9.12中所示虚线分割树状图，将得到包含7个聚类簇的结果：  
-
-C<sub>1</sub>={x<sub>1</sub>，x<sub>26</sub>，x<sub>29</sub>}；C<sub>2</sub>={x<sub>2</sub>，x<sub>3</sub>，x<sub>4</sub>，x<sub>21</sub>，x<sub>22</sub>}；
-
-C<sub>3</sub>={x<sub>23</sub>，x<sub>24</sub>，x<sub>25</sub>，x<sub>27</sub>，x<sub>28</sub>，x<sub>30</sub>}；C<sub>4</sub>={x<sub>5</sub>，x<sub>7</sub>}；
-
-C<sub>5</sub>={x<sub>9</sub>，x<sub>13</sub>，x<sub>14</sub>，x<sub>16</sub>，x<sub>17</sub>}；C<sub>6</sub>={x<sub>6</sub>，x<sub>8</sub>，x<sub>10</sub>，x<sub>15</sub>，x<sub>18</sub>，x<sub>19</sub>，x<sub>20</sub>}；
-
-C<sub>7</sub>={x<sub>11</sub>，x<sub>12</sub>}。
-
-将分割层逐步提升，则可得到聚类簇逐渐减少的聚类结果。例如图9.13显示出了从图9.12中产生7至4个聚类簇的划分结果。  
-
-<div class="img-center1">
-
-<img src="images/00537.jpeg" class="calibre8" />
-
-</div>
-
-图9.13 西瓜数据集4.0上AGNES算法（采用d<sub>max</sub>）在不同聚类簇数（k=7，6，5，4）时的簇划分结果。样本点用“●”表示，红色虚线显示出簇划分。
-
-<span id="part0089.html"></span>
-
-## 9.7 阅读材料
-
-<div class="kuang">
-
-例如同一堆水果，既能按大小，也能按颜色，甚至能按产地聚类。
-
-</div>
-
-聚类也许是机器学习中“新算法”出现最多、最快的领域。一个重要原因是聚类不存在客观标准；给定数据集，总能从某个角度找到以往算法未覆盖的某种标准从而设计出新算法\[Estivill-Castro，2002\]。相对于机器学习其他分支来说，聚类的知识还不够系统化，因此著名教科书\[Mitchell，1997\]中甚至没有关于聚类的章节。但聚类技术本身在现实任务中非常重要，因此本章勉强采用了“列举式”的叙述方式，相较于其他各章给出了更多的算法描述。关于聚类更多的内容，可参阅这方面的专门书籍和综述文章如\[Jain and Dubes，1988；Jain et al.,1999；Xu and Wunsch II，2005；Jain，2009\]等。
-
-聚类性能度量除9。2节的内容外，常见的还有F值、互信息（mutual information）、平均廓宽（average silhouette width）\[Rousseeuw，1987\]等，可参阅\[Jain and Dubes，1988；Halkidi et al.,2001；Maulik and Bandyopadhyay，2002\]。
-
-距离计算是很多学习任务的核心技术。闵可夫斯基距离提供了距离计算的一般形式。除闵可夫斯基距离之外，内积距离、余弦距离等也很常用，可参阅\[Deza and Deza，2009\]。MinkovDM在\[Zhou and Yu，2005\]中正式给出。模式识别、图像检索等涉及复杂语义的应用中常会涉及非度量距离\[Jacobs et al.,2000；Tan et al.,2009\]。距离度量学习可直接嵌入到聚类学习过程中\[Xing et al.,2003\]。
-
-<div class="kuang">
-
-距离度量学习参见（10.6 度量学习）。
-
-凸形簇结构即形似“椭球”的簇结构。
-
-Bregman距离亦称Bregman divergence，是一类不满足对称性和直递性的距离。
-
-降维参见（第10章 降维与度量学习）。
-
-</div>
-
-k均值算法可看作高斯混合聚类在混合成分方差相等、且每个样本仅指派给一个混合成分时的特例。该算法在历史上曾被不同领域的学者多次重新发明，如Steinhaus在1956年、Lloyd在1957年、McQueen在1967年等\[Jain and Dubes，1988；Jain，2009\]。k<span class="calibre20">均值算法有大量变体，如k-medoids算法\[Kaufman and Rousseeuw，1987\]强制原型向量必为训练样本，k-modes算法\[Huang，1998\]可处理离散属性，Fuzzy C-means（简称FCM）\[Bezdek，1981\]则是“软聚类”（soft clustering）算法，允许每个样本以不同程度同时属于多个原型。需注意的是，k均值类算法仅在凸形簇结构上效果较好。最近研究表明，若采用某种Bregman距离，则可显著增强此类算法对更多类型簇结构的适用性\[Banerjee et al.,2005\]。引入核技巧则可得到核k均值（kernel k-means）算法\[Sch<img src="images/00538.jpeg" class="zaozi1" />lkopf et al.,1998\]，这与谱聚类（spectral clustering）\[von Luxburg，2007\]</span>有密切联系\[Dhillon et al.,2004\]，后者可看作在拉普拉斯特征映射（Laplacian Eigenmap）降维后执行k均值聚类。聚类簇数k通常需由用户提供，有一些启发式用于自动确定k\[Pelleg and Moore，2000；Tibshirani et al.,2001\]，但常用的仍是基于不同k值多次运行后选取最佳结果。
-
-LVQ算法在每轮迭代中仅更新与当前样本距离最近的原型向量。同时更新多个原型向量能显著提高收敛速度，相应的改进算法有LVQ2、LVQ3等\[Kohonen，2001\]。\[McLachlan and Peel，2000\]详细介绍了高斯混合聚类，算法中EM迭代优化的推导过程可参阅\[Bilmes，1998；Jain and Dubes，1988\]。
-
-采用不同方式表征样本分布的紧密程度，可设计出不同的密度聚类算法，除DBSCAN\[Ester et al.,1996\]外，较常用的还有OPTICS\[Ankerst et al.,1999\]、DENCLUE\[Hinneburg and Keim，1998\]等。AGNES\[Kaufman and Rousseeuw，1990\]采用了自底向上的聚合策略来产生层次聚类结构，与之相反，DIANA\[Kaufman and Rousseeuw，1990\]则是采用自顶向下的分拆策略。AGNES和DIANA都不能对已合并或已分拆的聚类簇进行回溯调整，常用的层次聚类算法如BIRCH\[Zhang et al.,1996\]、ROCK\[Guha et al.,1999\]等对此进行了改进。
-
-聚类集成（clustering ensemble）通过对多个聚类学习器进行集成，能有效降低聚类假设与真实聚类结构不符、聚类过程中的随机性等因素带来的不利影响，可参阅\[Zhou，2012\]第7章。
-
-<div class="kuang">
-
-亦称outlier detection。
-
-</div>
-
-异常检测（anomaly detection）\[Hodge and Austin，2004；Chandola et al.,2009\]常借助聚类或距离计算进行，如将远离所有簇中心的样本作为异常点，或将密度极低处的样本作为异常点。最近有研究提出基于“隔离性”（isolation）可快速检测出异常点\[Liuetal.，2012\]。
-
-<span id="part0090.html"></span>
-
-## 习题
-
-9.1 试证明，p≥1时，闵可夫斯基距离满足距离度量的四条基本性质；0≤p＜1时，闵可夫斯基距离不满足直递性，但满足非负性、同一性、对称性；p趋向无穷大时，闵可夫斯基距离等于对应分量的最大绝对距离，即
-
-<div class="img-center1">
-
-<img src="images/00539.jpeg" class="calibre15" />
-
-</div>
-
-9.2 同一样本空间中的集合X与Z之间的距离可通过“豪斯多夫距离”（Hausdorff distance）计算：
-
-dist<sub>H</sub>（X，Z）=max（dist<sub>h</sub>（X，Z），dist<sub>h</sub>（Z，X）），
-
-（9.44）
-
-其中
-
-<div class="img-center1">
-
-<img src="images/00540.jpeg" class="calibre8" />
-
-</div>
-
-试证明：豪斯多夫距离满足距离度量的四条基本性质。
-
-9.3 试析k均值算法能否找到最小化式（9.24）的最优解。
-
-<div class="kuang">
-
-西瓜数据集4.0见（9.4.1 k均值算法 表9.1 西瓜数据集4.0）。
-
-</div>
-
-9.4 试编程实现k均值算法，设置三组不同的k值、三组不同初始中心点，在西瓜数据集4.0上进行实验比较，并讨论什么样的初始中心有利于取得好结果。
-
-9.5 基于DBSCAN的概念定义，若x为核心对象，由x密度可达的所有样本构成的集合为X。试证明：X满足连接性（9.39）与最大性（9.40）。
-
-9.6 试析AGNES算法使用最小距离和最大距离的区别。
-
-<div class="kuang">
-
-即凸形簇结构。
-
-</div>
-
-9.7 聚类结果中若每个簇都有一个凸包（包含簇样本的凸多面体），且这些凸包不相交，则称为凸聚类。试析本章介绍的哪些聚类算法只能产生凸聚类，哪些能产生非凸聚类。
-
-9.8 试设计一个聚类性能度量指标，并与9.2节中的指标比较。
-
-9.9\* 试设计一个能用于混合属性的非度量距离。
-
-9.10\* 试设计一个能自动确定聚类数的改进k均值算法，编程实现并在西瓜数据集4.0上运行。
-
-<span id="part0091.html"></span>
-
-## 参考文献
-
-Aloise, D., A. Deshpande, P. Hansen, and P. Popat. （2009）. “NP-hardness of Euclidean sum-of-squares clustering.” *Machine Learning*, 75（2）：245–248.  
-
-Ankerst, M., M. Breunig, H.-P. Kriegel, and J. Sander. （1999）. “OPTICS：Ordering points to identify the clustering structure.” In *Proceedings of the ACM SIGMOD International Conference on Management of Data （SIGMOD）*,49–60, Philadelphia, PA.  
-
-Banerjee, A., S. Merugu, I. Dhillon, and J. Ghosh. （2005）. “Clustering with Bregman divergences.” *Journal of Machine Learning Research*, 6：1705–1749.  
-
-Bezdek, J. C. （1981）. *Pattern Recognition with Fuzzy Objective Function Algorithms*.<span class="calibre20">Plenum Press, New York, NY.</span>
-
-<span class="calibre20">Bilmes, J. A. （1998）. “A gentle tutorial of the EM algorithm and its applications to parameter estimation for Gaussian mixture and hidden Markov models.” Technical Report TR-97-021, Department of Electrical Engineering and Computer Science, University of California at Berkeley, Berkeley, CA.  
-</span>
-
-<span class="calibre20">Chandola, V., A. Banerjee, and V. Kumar. （2009）. “Anomaly detection：A survey.” *ACM Computing Surveys*, 41（3）：Article 15.  
-</span>
-
-<span class="calibre20">Deza, M. and E. Deza. （2009）. *Encyclopedia of Distances*. Springer, Berlin.  
-</span>
-
-<span class="calibre20">Dhillon, I. S., Y. Guan, and B. Kulis. （2004）. "Kernel *k*-means：Spectral clustering and normalized cuts.“ In *Proceedings of the 10th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining （KDD）*,551.556, Seattle, WA.  
-</span>
-
-<span class="calibre20">Ester, M., H. P. Kriegel, J. Sander, and X. Xu. （1996）. “A density-based algorithm for discovering clusters in large spatial databases.” In *Proceedings of the 2nd International Conference on Knowledge Discovery and Data Mining（KDD）*, 226–231, Portland, OR.  
-</span>
-
-<span class="calibre20">Estivill-Castro, V. （2002）. “Why so many clustering algorithms - a position paper.” *SIGKDD Explorations*, 1（4）：65–75.  
-</span>
-
-<span class="calibre20">Guha, S., R. Rastogi, and K. Shim. （1999）. “ROCK：A robust clustering algorithm for categorical attributes.” In *Proceedings of the 15th International Conference on Data Engineering （ICDE）*, 512–521, Sydney, Australia.  
-</span>
-
-<span class="calibre20">Halkidi, M., Y. Batistakis, and M. Vazirgiannis. （2001）. “On clustering valida</span>tion techniques.” *Journal of Intelligent Information Systems*, 27（2-3）：107–145.<span class="calibre20">  
-</span>
-
-Hinneburg, A. and D. A. Keim. （1998）. “An efficient approach to clustering in large multimedia databases with noise.” In *Proceedings of the 4th International Conference on Knowledge Discovery and Data Mining （KDD）*, 58–65,New York, NY.  
-
-Hodge, V. J. and J. Austin. （2004）. “A survey of outlier detection methodologies.”<span class="calibre20">*Artificial Intelligence Review*, 22（2）：85–126.</span>
-
-<span class="calibre20">Huang, Z. （1998）. ”Extensions to the k-means algorithm for clustering large data sets with categorical values." *Data Mining and Knowledge Discovery*,2（3）：283.304.  
-</span>
-
-<span class="calibre20">Jacobs, D. W., D. Weinshall, and Y. Gdalyahu. （2000）. “Classification with non-metric distances：Image retrieval and class representation.” *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 6（22）：583–600.  
-</span>
-
-<span class="calibre20">Jain, A. K. （2009）. "Data clustering：50 years beyond k-means." *Pattern Recognition Letters*, 31（8）：651.666.  
-</span>
-
-<span class="calibre20">Jain, A. K. and R. C. Dubes. （1988）. *Algorithms for Clustering Data*. Prentice Hall, Upper Saddle River, NJ.  
-</span>
-
-Jain, A. K., M. N. Murty, and P. J. Flynn. （1999）. “Data clustering：A review.”<span class="calibre20">*ACM Computing Surveys*, 3（31）：264–323.</span>
-
-Kaufman, L. and P. J. Rousseeuw. （1987）. "Clustering by means of medoids."In *Statistical Data Analysis Based on the L<sub>1</sub>-Norm and Related Methods* （Y.<span class="calibre20">Dodge, ed.）, 405.416, Elsevier, Amsterdam, The Netherlands.</span>
-
-<span class="calibre20">Kaufman, L. and P. J. Rousseeuw. （1990）. Finding Groups in Data：*An Introduction to Cluster Analysis*. John Wiley & Sons, New York, NY.  
-</span>
-
-<span class="calibre20">Kohonen, T. （2001）. *Self-Organizing Maps*, 3rd edition. Springer, Berlin.  
-</span>
-
-Liu, F. T., K. M. Ting, and Z.-H. Zhou. （2012）. “Isolation-based anomaly detection.”<span class="calibre20">*ACM Transactions on Knowledge Discovery from Data*, 6（1）：Article3.</span>
-
-<span class="calibre20">Maulik, U. and S. Bandyopadhyay. （2002）. “Performance evaluation of some clustering algorithms and validity indices.” *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 24（12）：1650–1654.  
-</span>
-
-<span class="calibre20">McLachlan, G. and D. Peel. （2000）. *Finite Mixture Models*. John Wiley & Sons,New York, NY.  
-</span>
-
-<span class="calibre20">Mitchell, T. （1997）. *Machine Learning*. McGraw Hill, New York, NY.  
-</span>
-
-<span class="calibre20">Pelleg, D. and A. Moore. （2000）. “X-means：Extending k-means with efficient estimation of the number of clusters." In *Proceedings of the 17th International Conference on Machine Learning （ICML）*, 727.734, Stanford, CA.  
-</span>
-
-<span class="calibre20">Rousseeuw, P. J. （1987）. “Silhouettes：A graphical aid to the interpretation and validation of cluster analysis.” *Journal of Computational and Applied Mathematics*, 20：53–65.  
-</span>
-
-<span class="calibre20">Sch¨olkopf, B., A. Smola, and K.-R. M¨uller. （1998）. “Nonliear component analysis as a kernel eigenvalue problem.” *Neural Computation*, 10（5）：1299–1319.  
-</span>
-
-<span class="calibre20">Stanfill, C. and D.Waltz. （1986）. “Toward memory-based reasoning.” *Communications of the ACM*, 29（12）：1213–1228.  
-</span>
-
-<span class="calibre20">Tan, X., S. Chen, Z.-H. Zhou, and J. Liu. （2009）. “Face recognition under occlusions and variant expressions with partial similarity.” *IEEE Transactions on Information Forensics and Security*, 2（4）：217–230.  
-</span>
-
-<span class="calibre20">Tibshirani, R., G. Walther, and T. Hastie. （2001）. “Estimating the number of clusters in a data set via the gap statistic.” *Journal of the Royal Statistical Society - Series B*, 63（2）：411–423.  
-</span>
-
-<span class="calibre20">von Luxburg, U. （2007）. “A tutorial on spectral clustering.” *Statistics and Computing*, 17（4）：395–416.  
-</span>
-
-<span class="calibre20">Xing, E. P., A. Y. Ng, M. I. Jordan, and S. Russell. （2003）. “Distance metric learning, with application to clustering with side-information.” In *Advances in Neural Information Processing Systems 15 （NIPS）* （S. Becker, S. Thrun,and K. Obermayer, eds.）, 505–512, MIT Press, Cambridge, MA.  
-</span>
-
-<span class="calibre20">Xu, R. and D. Wunsch II. （2005）. “Survey of clustering algorithms.” *IEEE Transactions on Neural Networks*, 3（16）：645–678.  
-</span>
-
-<span class="calibre20">Zhang, T., R. Ramakrishnan, and M. Livny. （1996）. “BIRCH：An efficient data clustering method for very large databases.” In *Proceedings of the ACM SIGMOD International Conference on Management of Data （SIGMOD）*,103–114, Montreal, Canada.  
-</span>
-
-<span class="calibre20">Zhou, Z.-H. （2012）. *Ensemble Methods：Foundations and Algorithms*. Chap</span>man & Hall/CRC, Boca Raton, FL.<span class="calibre20">  
-</span>
-
-Zhou, Z.-H. and Y. Yu. （2005）. “Ensembling local learners through multimodal perturbation.” *IEEE Transactions on Systems, Man, and Cybernetics - Part B：Cybernetics*, 35（4）：725–735.  
-
-<span id="part0092_split_000.html"></span>
-
-<div class="img-center2">
-
-<img src="images/00024.jpeg" class="tu1" />
-
-</div>
-
-<span id="part0092_split_001.html"></span>
-
-## 休息一会儿
-
-<div class="kuang1">
-
-### 小故事：曼哈顿距离与赫尔曼·闵可夫斯基
-
-<div class="float-right">
-
-<img src="images/00541.jpeg" class="calibre10" />
-
-</div>
-
-曼哈顿距离（Manhattan distance）亦称“出租车几何”（Taxicab geometry），是德国大数学家赫尔曼·闵可夫斯基（Hermann Minkowski，1864—1909）所创的词汇，其得名是由于该距离标明了几何度量空间中两点在标准坐标系上的绝对轴距总和，这恰是规划为方形区块的城市里两点之间的最短行程，例如从曼哈顿的第五大道与33街交点前往第三大道与23街交点，需走过（5。3）+（33。23）=12个街区。
-
-<div class="kuang">
-
-今立陶宛的考纳斯（Kaunas）。
-
-哥尼斯堡是著名的“七桥问题”发源地，今俄罗斯加里宁格勒。
-
-四维时空亦称“闵可夫斯基时空”或“闵可夫斯基空间”。
-
-</div>
-
-闵可夫斯基出生于俄国亚力克索塔斯（Alexotas）的一个犹太人家庭，由于当时俄国政府迫害犹太人，他八岁时随全家移居普鲁士哥尼斯堡，与后来成为大数学家的希尔伯特一河之隔。闵可夫斯基从小就是著名神童，他熟读莎士比亚、席勒和歌德的作品，几乎能全文背诵《浮士德》；八岁进入预科学校，仅用五年半就完成了八年的学业；十七岁时建立了n元二次型的完整理论体系，解决了法国科学院公开悬赏的数学难题。1908年9月他在科隆的一次学术会议上做了《空间与时间》的著名演讲，提出了四维时空理论，为广义相对论的建立开辟了道路。不幸的是，三个月后他死于急性阑尾炎。
-
-1896年闵可夫斯基在苏黎世大学任教期间，是爱因斯坦的数学老师。诺贝尔物理学奖得主玻恩曾说，在闵可夫斯基的数学工作中找到了“相对论的整个武器库”。闵可夫斯基去世后，其生前好友希尔伯特整理了他的遗作，于1911年出版了《闵可夫斯基全集》。闵可夫斯基的哥哥奥斯卡是“胰岛素之父”，侄子鲁道夫是美国著名天文学家。
-
-</div>
-
-<span id="part0093_split_000.html"></span>
-
-<div class="img-center">
-
-<img src="images/00007.jpeg" class="tu" />
-
-</div>
-
-<span id="part0093_split_001.html"></span>
+聚类性能度量亦称聚类 “有效性指标” (validity index). 与监督学习中的性能度量作用相似，对聚类结果，我们需通过某种性能度量来评估其好坏；另一方面, 若明确了最终将要使用的性能度量, 则可直接将其作为聚类过程的优化目标, 从而更好地得到符合要求的聚类结果.
 
 ---
 
-## 本站实践：用聚类识别未知工况
+常见的无监督学习任务还有密度估计 (density estimation)、异常检测 (anomaly detection) 等.
 
-!!! success "先把一次 K-Means 更新写清楚"
-    [K-Means NumPy 实验](/programming/ml-from-scratch/#clustering-lab) 用广播一次得到“样本 × 簇”的距离矩阵，并讨论标准化、空簇和初始化。机械场景中，聚类标签本身没有物理含义，必须再用转速、载荷和频谱解释各簇。
+对聚类算法而言, 样本簇亦称“类”.
 
-延伸源码：[tiny_ml 聚类实现](https://github.com/fengyang95/tiny_ml/tree/master/tinyml/cluster)，覆盖 K-Means、LVQ、GMM、DBSCAN 与 AGNES。
+聚类任务中也可使用有标记训练样本, 如 9.4.2 与 13.6 节, 但样本的类标记与聚类产生的簇有所不同.
+
+---
+
+聚类是将样本集 $D$ 划分为若干互不相交的子集,即样本簇. 那么,什么样的聚类结果比较好呢? 直观上看, 我们希望 “物以类聚”, 即同一簇的样本尽可能彼此相似，不同簇的样本尽可能不同. 换言之，聚类结果的 “簇内相似度" (intra-cluster similarity)高且 “簇间相似度” (inter-cluster similarity)低.
+
+聚类性能度量大致有两类. 一类是将聚类结果与某个 “参考模型" (reference model)进行比较, 称为 “外部指标” (external index); 另一类是直接考察聚类结果而不利用任何参考模型, 称为 “内部指标” (internal index).
+
+对数据集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ ,假定通过聚类给出的簇划分为 $\mathcal{C} = \left\{  {C}_{1}\right.$ , $\left. {{C}_{2},\ldots ,{C}_{k}}\right\}$ ,参考模型给出的簇划分为 ${\mathcal{C}}^{ * } = \left\{  {{C}_{1}^{ * },{C}_{2}^{ * },\ldots ,{C}_{s}^{ * }}\right\}$ . 相应地,令 $\mathbf{\lambda }$ 与 ${\mathbf{\lambda }}^{ * }$ 分别表示与 $\mathcal{C}$ 和 ${\mathcal{C}}^{ * }$ 对应的簇标记向量. 我们将样本两两配对考虑,定义
+
+$$
+a = \left| {SS}\right| ,\;{SS} = \left\{  {\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  \mid  {\lambda }_{i} = {\lambda }_{j},{\lambda }_{i}^{ * } = {\lambda }_{j}^{ * }, i < j)}\right\}  , \tag{9.1}
+$$
+
+$$
+b = \left| {SD}\right| ,\;{SD} = \left\{  {\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  \mid  {\lambda }_{i} = {\lambda }_{j},{\lambda }_{i}^{ * } \neq  {\lambda }_{j}^{ * }, i < j)}\right\}  , \tag{9.2}
+$$
+
+$$
+c = \left| {DS}\right| ,\;{DS} = \left\{  {\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  \mid  {\lambda }_{i} \neq  {\lambda }_{j},{\lambda }_{i}^{ * } = {\lambda }_{j}^{ * }, i < j)}\right\}  , \tag{9.3}
+$$
+
+$$
+d = \left| {DD}\right| ,\;{DD} = \left\{  {\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  \mid  {\lambda }_{i} \neq  {\lambda }_{j},{\lambda }_{i}^{ * } \neq  {\lambda }_{j}^{ * }, i < j)}\right\}  , \tag{9.4}
+$$
+
+其中集合 ${SS}$ 包含了在 $\mathcal{C}$ 中隶属于相同簇且在 ${\mathcal{C}}^{ * }$ 中也隶属于相同簇的样本对,集合 ${SD}$ 包含了在 $\mathcal{C}$ 中隶属于相同簇但在 ${\mathcal{C}}^{ * }$ 中隶属于不同簇的样本对, $\cdots \cdots$ 由于每个样本对 $\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right) \left( {i < j}\right)$ 仅能出现在一个集合中,因此有 $a + b + c + d = m\left( {m - 1}\right) /2$ 成立.
+
+基于式(9.1) $\sim  \left( {9.4}\right)$ 可导出下面这些常用的聚类性能度量外部指标:
+
+- Jaccard 系数(Jaccard Coefficient, 简称 JC)
+
+$$
+\mathrm{{JC}} = \frac{a}{a + b + c}. \tag{9.5}
+$$
+
+- FM 指数(Fowlkes and Mallows Index, 简称 FMI)
+
+$$
+\mathrm{{FMI}} = \sqrt{\frac{a}{a + b} \cdot  \frac{a}{a + c}}. \tag{9.6}
+$$
+
+---
+
+监督学习中的性能度量参见 2.3 节.
+
+例如将领域专家给出的划分结果作为参考模型.
+
+通常 $k \neq  s$ .
+
+---
+
+- Rand 指数(Rand Index, 简称 RI)
+
+$$
+\mathrm{{RI}} = \frac{2\left( {a + d}\right) }{m\left( {m - 1}\right) }. \tag{9.7}
+$$
+
+显然,上述性能度量的结果值均在 $\left\lbrack  {0,1}\right\rbrack$ 区间,值越大越好.
+
+考虑聚类结果的簇划分 $\mathcal{C} = \left\{  {{C}_{1},{C}_{2},\ldots ,{C}_{k}}\right\}$ ,定义
+
+$$
+\operatorname{avg}\left( C\right)  = \frac{2}{\left| C\right| \left( {\left| C\right|  - 1}\right) }\mathop{\sum }\limits_{{1 \leq  i < j \leq  \left| C\right| }}\operatorname{dist}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right) , \tag{9.8}
+$$
+
+$$
+\operatorname{diam}\left( C\right)  = \mathop{\max }\limits_{{1 \leq  i < j \leq  \left| C\right| }}\operatorname{dist}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right) , \tag{9.9}
+$$
+
+$$
+{d}_{\min }\left( {{C}_{i},{C}_{j}}\right)  = \mathop{\min }\limits_{{{\mathbf{x}}_{i} \in  {C}_{i},{\mathbf{x}}_{j} \in  {C}_{j}}}\operatorname{dist}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right) , \tag{9.10}
+$$
+
+$$
+{d}_{\text{ cen }}\left( {{C}_{i},{C}_{j}}\right)  = \operatorname{dist}\left( {{\mathbf{\mu }}_{i},{\mathbf{\mu }}_{j}}\right) , \tag{9.11}
+$$
+
+---
+
+距离越大则样本的相似度越低；距离计算见下节.
+
+---
+
+其中，dist $\left( {\cdot , \cdot  }\right)$ 用于计算两个样本之间的距离; $\mathbf{\mu }$ 代表簇 $C$ 的中心点 $\mathbf{\mu } = \; \frac{1}{\left| C\right| }\mathop{\sum }\limits_{{1 \leq  i \leq  \left| C\right| }}{x}_{i}$ . 显然, $\operatorname{avg}\left( C\right)$ 对应于簇 $C$ 内样本间的平均距离, $\operatorname{diam}\left( C\right)$ 对应于簇 $C$ 内样本间的最远距离, ${d}_{\min }\left( {{C}_{i},{C}_{j}}\right)$ 对应于簇 ${C}_{i}$ 与簇 ${C}_{j}$ 最近样本间的距离, ${d}_{\text{ cen }}\left( {{C}_{i},{C}_{j}}\right)$ 对应于簇 ${C}_{i}$ 与簇 ${C}_{j}$ 中心点间的距离.
+
+基于式(9.8) $\sim  \left( {9.11}\right)$ 可导出下面这些常用的聚类性能度量内部指标:
+
+- DB 指数(Davies-Bouldin Index, 简称 DBI)
+
+$$
+\mathrm{{DBI}} = \frac{1}{k}\mathop{\sum }\limits_{{i = 1}}^{k}\mathop{\max }\limits_{{j \neq  i}}\left( \frac{\operatorname{avg}\left( {C}_{i}\right)  + \operatorname{avg}\left( {C}_{j}\right) }{{d}_{\mathrm{{cen}}}\left( {{\mathbf{\mu }}_{i},{\mathbf{\mu }}_{j}}\right) }\right) . \tag{9.12}
+$$
+
+- Dunn 指数(Dunn Index, 简称 DI)
+
+$$
+\mathrm{{DI}} = \mathop{\min }\limits_{{1 \leq  i \leq  k}}\left\{  {\mathop{\min }\limits_{{j \neq  i}}\left( \frac{{d}_{\min }\left( {{C}_{i},{C}_{j}}\right) }{\mathop{\max }\limits_{{1 \leq  l \leq  k}}\operatorname{diam}\left( {C}_{l}\right) }\right) }\right\}  . \tag{9.13}
+$$
+
+显然, DBI 的值越小越好, 而 DI 则相反, 值越大越好.
+
+## 9.3 距离计算
+
+对函数 $\operatorname{dist}\left( {\cdot , \cdot  }\right)$ ,若它是一个 “距离度量” (distance measure),则需满足一些基本性质:
+
+非负性: $\operatorname{dist}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  \geq  0$ ;(9.14)
+
+同一性: $\operatorname{dist}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  = 0$ 当且仅当 ${\mathbf{x}}_{i} = {\mathbf{x}}_{j}$ ;(9.15)
+
+对称性: $\operatorname{dist}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  = \operatorname{dist}\left( {{\mathbf{x}}_{j},{\mathbf{x}}_{i}}\right)$ ;(9.16)
+
+直递性: $\operatorname{dist}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  \leq  \operatorname{dist}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{k}}\right)  + \operatorname{dist}\left( {{\mathbf{x}}_{k},{\mathbf{x}}_{j}}\right)$ .(9.17)
+
+给定样本 ${\mathbf{x}}_{i} = \left( {{x}_{i1};{x}_{i2};\ldots ;{x}_{in}}\right)$ 与 ${\mathbf{x}}_{j} = \left( {{x}_{j1};{x}_{j2};\ldots ;{x}_{jn}}\right)$ ,最常用的是 “闵可夫斯基距离” (Minkowski distance)
+
+$$
+{\operatorname{dist}}_{\mathrm{{mk}}}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  = {\left( \mathop{\sum }\limits_{{u = 1}}^{n}{\left| {x}_{iu} - {x}_{ju}\right| }^{p}\right) }^{\frac{1}{p}}. \tag{9.18}
+$$
+
+对 $p \geq  1$ ，式(9.18)显然满足式(9.14)～(9.17)的距离度量基本性质.
+
+$p = 2$ 时，闵可夫斯基距离即欧氏距离(Euclidean distance)
+
+$$
+{\operatorname{dist}}_{\mathrm{{ed}}}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  = {\begin{Vmatrix}{\mathbf{x}}_{i} - {\mathbf{x}}_{j}\end{Vmatrix}}_{2} = \sqrt{\mathop{\sum }\limits_{{u = 1}}^{n}{\left| {x}_{iu} - {x}_{ju}\right| }^{2}}. \tag{9.19}
+$$
+
+$p = 1$ 时,闵可夫斯基距离即曼哈顿距离(Manhattan distance)
+
+$$
+{\operatorname{dist}}_{\operatorname{man}}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  = {\begin{Vmatrix}{\mathbf{x}}_{i} - {\mathbf{x}}_{j}\end{Vmatrix}}_{1} = \mathop{\sum }\limits_{{u = 1}}^{n}\left| {{x}_{iu} - {x}_{ju}}\right| . \tag{9.20}
+$$
+
+我们常将属性划分为 “连续属性” (continuous attribute) 和 “离散属性" (categorical attribute), 前者在定义域上有无穷多个可能的取值, 后者在定义域上是有限个取值. 然而, 在讨论距离计算时, 属性上是否定义了 “序” 关系更为重要. 例如定义域为 $\{ 1,2,3\}$ 的离散属性与连续属性的性质更接近一些, 能直接在属性值上计算距离: “ 1 ” 与 “ 2 ” 比较接近、与 “ 3 ” 比较远, 这样的属性称为 “有序属性” (ordinal attribute); 而定义域为 $\{$ 飞机,火车,轮船 $\}$ 这样的离散属性则不能直接在属性值上计算距离, 称为 “无序属性” (non-ordinal attribute). 显然, 闵可夫斯基距离可用于有序属性.
+
+对无序属性可采用 VDM (Value Difference Metric) [Stanfill and Waltz, 1986]. 令 ${m}_{u, a}$ 表示在属性 $u$ 上取值为 $a$ 的样本数, ${m}_{u, a, i}$ 表示在第 $i$ 个样本簇中在属性 $u$ 上取值为 $a$ 的样本数, $k$ 为样本簇数,则属性 $u$ 上两个离散值 $a$ 与 $b$ 之间的 VDM 距离为
+
+$$
+{\mathrm{{VDM}}}_{p}\left( {a, b}\right)  = \mathop{\sum }\limits_{{i = 1}}^{k}{\left| \frac{{m}_{u, a, i}}{{m}_{u, a}} - \frac{{m}_{u, b, i}}{{m}_{u, b}}\right| }^{p}. \tag{9.21}
+$$
+
+---
+
+直递性常被直接称为 “三角不等式”.
+
+式(9.18) 即为 ${\mathbf{x}}_{i} - {\mathbf{x}}_{j}$ 的 ${\mathrm{L}}_{p}$ 范数 ${\begin{Vmatrix}{\mathbf{x}}_{i} - {\mathbf{x}}_{j}\end{Vmatrix}}_{p}$ .
+
+$p \mapsto  \infty$ 时则得到切比雪夫距离.
+
+亦称 “街区距离” (city block distance).
+
+连续属性亦称 “数值属性" (numerical attribute), “离散属性” 亦称 “列名属性” (nominal attribute).
+
+样本类别已知时 $k$ 通常设置为类别数.
+
+---
+
+于是,将闵可夫斯基距离和 VDM 结合即可处理混合属性. 假定有 ${n}_{c}$ 个有序属性、 $n - {n}_{c}$ 个无序属性,不失一般性,令有序属性排列在无序属性之前,则
+
+$$
+{\operatorname{MinkovDM}}_{p}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  = {\left( \mathop{\sum }\limits_{{u = 1}}^{{n}_{c}}{\left| {x}_{iu} - {x}_{ju}\right| }^{p} + \mathop{\sum }\limits_{{u = {n}_{c} + 1}}^{n}{\operatorname{VDM}}_{p}\left( {x}_{iu},{x}_{ju}\right) \right) }^{\frac{1}{p}}.
+$$
+
+(9.22)
+
+当样本空间中不同属性的重要性不同时, 可使用 “加权距离” (weighted distance). 以加权闵可夫斯基距离为例:
+
+$$
+{\operatorname{dist}}_{\mathrm{{wmk}}}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  = {\left( {w}_{1} \cdot  {\left| {x}_{i1} - {x}_{j1}\right| }^{p} + \ldots  + {w}_{n} \cdot  {\left| {x}_{in} - {x}_{jn}\right| }^{p}\right) }^{\frac{1}{p}}, \tag{9.23}
+$$
+
+其中权重 ${w}_{i} \geq  0\left( {i = 1,2,\ldots , n}\right)$ 表征不同属性的重要性,通常 $\mathop{\sum }\limits_{{i = 1}}^{n}{w}_{i} = 1$ .
+
+---
+
+参见 10.6 节.
+
+---
+
+需注意的是，通常我们是基于某种形式的距离来定义 “相似度度量” (similarity measure), 距离越大, 相似度越小. 然而, 用于相似度度量的距离未必一定要满足距离度量的所有基本性质, 尤其是直递性 (9.17). 例如在某些任务中我们可能希望有这样的相似度度量: “人” “马” 分别与 “人马” 相似，但 “人” 与 “马” 很不相似; 要达到这个目的, 可以令 “人” “马” 与 “人马”之间的距离都比较小，但 “人” 与 “马” 之间的距离很大，如图 9.1 所示, 此时该距离不再满足直递性; 这样的距离称为 “非度量距离” (non-metric distance). 此外, 本节介绍的距离计算式都是事先定义好的, 但在不少现实任务中，有必要基于数据样本来确定合适的距离计算式，这可通过 “距离度量学习" (distance metric learning)来实现.
+
+这个例子中, 从数学上看,令 ${d}_{3} = 3$ 即可满足直递性; 但从语义上看, ${d}_{3}$ 应远大于 ${d}_{1}$ 与 ${d}_{2}$ .
+
+![200_872_1554_864_420_0.jpg](../../images/200_872_1554_864_420_0.jpg)
+
+图 9.1 非度量距离的一个例子
+
+## 9.4 原型聚类
+
+原型聚类亦称 “基于原型的聚类” (prototype-based clustering), 此类算法假设聚类结构能通过一组原型刻画, 在现实聚类任务中极为常用. 通常情形下, 算法先对原型进行初始化, 然后对原型进行迭代更新求解. 采用不同的原型表示、不同的求解方式, 将产生不同的算法. 下面介绍几种著名的原型聚类算法.
+
+### 9.4.1 $k$ 均值算法
+
+给定样本集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ ,“ $k$ 均值” ( $k$ -means)算法针对聚类所得簇划分 $\mathcal{C} = \left\{  {{C}_{1},{C}_{2},\ldots ,{C}_{k}}\right\}$ 最小化平方误差
+
+$$
+E = \mathop{\sum }\limits_{{i = 1}}^{k}\mathop{\sum }\limits_{{\mathbf{x} \in  {C}_{i}}}{\begin{Vmatrix}\mathbf{x} - {\mathbf{\mu }}_{i}\end{Vmatrix}}_{2}^{2}, \tag{9.24}
+$$
+
+其中 ${\mathbf{\mu }}_{i} = \frac{1}{\left| {C}_{i}\right| }\mathop{\sum }\limits_{{\mathbf{x} \in  {C}_{i}}}\mathbf{x}$ 是簇 ${C}_{i}$ 的均值向量. 直观来看,式(9.24) 在一定程度上刻画了簇内样本围绕簇均值向量的紧密程度, $E$ 值越小则簇内样本相似度越高.
+
+最小化式(9.24)并不容易,找到它的最优解需考察样本集 $D$ 所有可能的簇划分,这是一个 NP 难问题[Aloise et al.,2009]. 因此, $k$ 均值算法采用了贪心策略, 通过迭代优化来近似求解式(9.24). 算法流程如图 9.2 所示, 其中第 1 行对均值向量进行初始化, 在第 4-8 行与第 9-16 行依次对当前簇划分及均值向量迭代更新, 若迭代更新后聚类结果保持不变, 则在第 18 行将当前簇划分结果返回.
+
+下面以表 9.1 的西瓜数据集 4.0 为例来演示 $k$ 均值算法的学习过程. 为方便叙述,我们将编号为 $i$ 的样本称为 ${\mathbf{x}}_{i}$ ,这是一个包含 “密度” 与 “含糖率” 两个属性值的二维向量.
+
+p. 89 的西瓜数据集 3.0α 是西瓜数据集 4.0 的子集.
+
+表 9.1 西瓜数据集 4.0
+
+<table><tr><td>编号</td><td>密度</td><td>含糖率</td><td>编号</td><td>密度</td><td>含糖率</td><td>编号</td><td>密度</td><td>含糖率</td></tr><tr><td>1</td><td>0.697</td><td>0.460</td><td>11</td><td>0.245</td><td>0.057</td><td>21</td><td>0.748</td><td>0.232</td></tr><tr><td>2</td><td>0.774</td><td>0.376</td><td>12</td><td>0.343</td><td>0.099</td><td>22</td><td>0.714</td><td>0.346</td></tr><tr><td>3</td><td>0.634</td><td>0.264</td><td>13</td><td>0.639</td><td>0.161</td><td>23</td><td>0.483</td><td>0.312</td></tr><tr><td>4</td><td>0.608</td><td>0.318</td><td>14</td><td>0.657</td><td>0.198</td><td>24</td><td>0.478</td><td>0.437</td></tr><tr><td>5</td><td>0.556</td><td>0.215</td><td>15</td><td>0.360</td><td>0.370</td><td>25</td><td>0.525</td><td>0.369</td></tr><tr><td>6</td><td>0.403</td><td>0.237</td><td>16</td><td>0.593</td><td>0.042</td><td>26</td><td>0.751</td><td>0.489</td></tr><tr><td>7</td><td>0.481</td><td>0.149</td><td>17</td><td>0.719</td><td>0.103</td><td>27</td><td>0.532</td><td>0.472</td></tr><tr><td>8</td><td>0.437</td><td>0.211</td><td>18</td><td>0.359</td><td>0.188</td><td>28</td><td>0.473</td><td>0.376</td></tr><tr><td>9</td><td>0.666</td><td>0.091</td><td>19</td><td>0.339</td><td>0.241</td><td>29</td><td>0.725</td><td>0.445</td></tr><tr><td>10</td><td>0.243</td><td>0.267</td><td>20</td><td>0.282</td><td>0.257</td><td>30</td><td>0.446</td><td>0.459</td></tr></table>
+
+---
+
+“原型”是指样本空间中具有代表性的点.
+
+样本 $9 \sim  {21}$ 的类别是 “好瓜=否”，其他样本的类别是 “好瓜= 是”. 由于本节使用无标记样本, 因此类别标记信息未在表中给出.
+
+---
+
+---
+
+输入: 样本集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ ;
+
+					聚类簇数 $k$ .
+
+过程:
+
+		从 $D$ 中随机选择 $k$ 个样本作为初始均值向量 $\left\{  {{\mathbf{\mu }}_{1},{\mathbf{\mu }}_{2},\ldots ,{\mathbf{\mu }}_{k}}\right\}$
+
+		repeat
+
+				令 ${C}_{i} = \varnothing \left( {1 \leq  i \leq  k}\right)$
+
+				for $j = 1,2,\ldots , m$ do
+
+						计算样本 ${\mathbf{x}}_{j}$ 与各均值向量 ${\mathbf{\mu }}_{i}\left( {1 \leq  i \leq  k}\right)$ 的距离: ${d}_{ji} = {\begin{Vmatrix}{\mathbf{x}}_{j} - {\mathbf{\mu }}_{i}\end{Vmatrix}}_{2}$ ;
+
+						根据距离最近的均值向量确定 ${\mathbf{x}}_{j}$ 的簇标记: ${\lambda }_{j} = \arg \mathop{\min }\limits_{{i \in  \{ 1,2,\ldots , k\} }}{d}_{ji}$ ;
+
+					将样本 ${\mathbf{x}}_{j}$ 划入相应的簇: ${C}_{{\lambda }_{j}} = {C}_{{\lambda }_{j}}\bigcup \left\{  {\mathbf{x}}_{j}\right\}$ ;
+
+				end for
+
+				for $i = 1,2,\ldots , k$ do
+
+						计算新均值向量: ${\mathbf{\mu }}_{i}^{\prime } = \frac{1}{\left| {C}_{i}\right| }\mathop{\sum }\limits_{{\mathbf{x} \in  {C}_{i}}}\mathbf{x}$ ;
+
+						if ${\mathbf{\mu }}_{i}^{\prime } \neq  {\mathbf{\mu }}_{i}$ then
+
+							将当前均值向量 ${\mathbf{\mu }}_{i}$ 更新为 ${\mathbf{\mu }}_{i}^{\prime }$
+
+						else
+
+							保持当前均值向量不变
+
+						end if
+
+				end for
+
+		until 当前均值向量均未更新
+
+输出: 簇划分 $\mathcal{C} = \left\{  {{C}_{1},{C}_{2},\ldots ,{C}_{k}}\right\}$
+
+---
+
+图 ${9.2k}$ 均值算法
+
+---
+
+为避免运行时间过长, 通常设置一个最大运行轮数或最小调整幅度阈值， 若达到最大轮数或调整幅度小于阈值, 则停止运行.
+
+---
+
+假定聚类簇数 $k = 3$ ，算法开始时随机选取三个样本 ${\mathbf{x}}_{6},{\mathbf{x}}_{12},{\mathbf{x}}_{27}$ 作为初始均值向量, 即
+
+$$
+{\mathbf{\mu }}_{1} = \left( {{0.403};{0.237}}\right) ,{\mathbf{\mu }}_{2} = \left( {{0.343};{0.099}}\right) ,{\mathbf{\mu }}_{3} = \left( {{0.532};{0.472}}\right) .
+$$
+
+考察样本 ${\mathbf{x}}_{1} = \left( {{0.697};{0.460}}\right)$ ,它与当前均值向量 ${\mathbf{\mu }}_{1},{\mathbf{\mu }}_{2},{\mathbf{\mu }}_{3}$ 的距离分别为 0.369,0.506,0.166,因此 ${\mathbf{x}}_{1}$ 将被划入簇 ${C}_{3}$ 中. 类似的,对数据集中的所有样本考察一遍后, 可得当前簇划分为
+
+$$
+{C}_{1} = \left\{  {{\mathbf{x}}_{5},{\mathbf{x}}_{6},{\mathbf{x}}_{7},{\mathbf{x}}_{8},{\mathbf{x}}_{9},{\mathbf{x}}_{10},{\mathbf{x}}_{13},{\mathbf{x}}_{14},{\mathbf{x}}_{15},{\mathbf{x}}_{17},{\mathbf{x}}_{18},{\mathbf{x}}_{19},{\mathbf{x}}_{20},{\mathbf{x}}_{23}}\right\}
+$$
+
+$$
+{C}_{2} = \left\{  {{\mathbf{x}}_{11},{\mathbf{x}}_{12},{\mathbf{x}}_{16}}\right\}
+$$
+
+$$
+{C}_{3} = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},{\mathbf{x}}_{3},{\mathbf{x}}_{4},{\mathbf{x}}_{21},{\mathbf{x}}_{22},{\mathbf{x}}_{24},{\mathbf{x}}_{25},{\mathbf{x}}_{26},{\mathbf{x}}_{27},{\mathbf{x}}_{28},{\mathbf{x}}_{29},{\mathbf{x}}_{30}}\right\}  .
+$$
+
+于是,可从 ${C}_{1}\text{ 、 }{C}_{2}\text{ 、 }{C}_{3}$ 分别求出新的均值向量
+
+$$
+{\mathbf{\mu }}_{1}^{\prime } = \left( {{0.473};{0.214}}\right) ,{\mathbf{\mu }}_{2}^{\prime } = \left( {{0.394};{0.066}}\right) ,{\mathbf{\mu }}_{3}^{\prime } = \left( {{0.623};{0.388}}\right) .
+$$
+
+更新当前均值向量后, 不断重复上述过程, 如图 9.3 所示, 第五轮迭代产生的结果与第四轮迭代相同，于是算法停止，得到最终的簇划分.
+
+![203_591_124_1322_1186_0.jpg](../../images/203_591_124_1322_1186_0.jpg)
+
+图 9.3 西瓜数据集 4.0 上 $k$ 均值算法 $\left( {k = 3}\right)$ 在各轮迭代后的结果. 样本点与均值向量分别用 “ $\bullet$ ” 与 “+” 表示，红色虚线显示出簇划分.
+
+### 9.4.2 学习向量量化
+
+---
+
+可看作通过聚类来形成类别 “子类” 结构, 每个子类对应一个聚类簇.
+
+---
+
+与 $k$ 均值算法类似,“学习向量量化” (Learning Vector Quantization,简称 LVQ)也是试图找到一组原型向量来刻画聚类结构, 但与一般聚类算法不同的是, LVQ 假设数据样本带有类别标记, 学习过程利用样本的这些监督信息来辅助聚类.
+
+给定样本集 $D = \left\{  {\left( {{\mathbf{x}}_{1},{y}_{1}}\right) ,\left( {{\mathbf{x}}_{2},{y}_{2}}\right) ,\ldots ,\left( {{\mathbf{x}}_{m},{y}_{m}}\right) }\right\}$ ,每个样本 ${\mathbf{x}}_{j}$ 是由 $n$ 个属性描述的特征向量 $\left( {{x}_{j1};{x}_{j2};\ldots ;{x}_{jn}}\right) ,{y}_{j} \in  \mathcal{Y}$ 是样本 ${\mathbf{x}}_{j}$ 的类别标记. LVQ 的目标是学得一组 $n$ 维原型向量 $\left\{  {{\mathbf{p}}_{1},{\mathbf{p}}_{2},\ldots ,{\mathbf{p}}_{q}}\right\}$ ,每个原型向量代表一个聚类簇, 簇标记 ${t}_{i} \in  \mathcal{Y}$ .
+
+LVQ 算法描述如图 9.4 所示. 算法第 1 行先对原型向量进行初始化, 例如对第 $q$ 个簇可从类别标记为 ${t}_{q}$ 的样本中随机选取一个作为原型向量. 算法第 2~12 行对原型向量进行迭代优化. 在每一轮迭代中，算法随机选取一个有标记训练样本，找出与其距离最近的原型向量，并根据两者的类别标记是否一致来对原型向量进行相应的更新. 在第 12 行中，若算法的停止条件已满足(例如已达到最大迭代轮数，或原型向量更新很小甚至不再更新)，则将当前原型向量作为最终结果返回.
+
+---
+
+输入: 样本集 $D = \left\{  {\left( {{\mathbf{x}}_{1},{y}_{1}}\right) ,\left( {{\mathbf{x}}_{2},{y}_{2}}\right) ,\ldots ,\left( {{\mathbf{x}}_{m},{y}_{m}}\right) }\right\}$ ;
+
+			原型向量个数 $q$ ,各原型向量预设的类别标记 $\left\{  {{t}_{1},{t}_{2},\ldots ,{t}_{q}}\right\}$ ;
+
+			学习率 $\eta  \in  \left( {0,1}\right)$ .
+
+过程:
+
+	初始化一组原型向量 $\left\{  {{\mathbf{p}}_{1},{\mathbf{p}}_{2},\ldots ,{\mathbf{p}}_{q}}\right\}$
+
+	repeat
+
+		从样本集 $D$ 随机选取样本 $\left( {{\mathbf{x}}_{j},{y}_{j}}\right)$ ;
+
+		计算样本 ${\mathbf{x}}_{j}$ 与 ${\mathbf{p}}_{i}\left( {1 \leq  i \leq  q}\right)$ 的距离: ${d}_{ji} = {\begin{Vmatrix}{\mathbf{x}}_{j} - {\mathbf{p}}_{i}\end{Vmatrix}}_{2}$ ;
+
+		找出与 ${\mathbf{x}}_{j}$ 距离最近的原型向量 ${p}_{{i}^{ * }},{i}^{ * } = \arg \mathop{\min }\limits_{{i \in  \{ 1,2,\ldots , q\} }}{d}_{ji}$ ;
+
+		if ${y}_{j} = {t}_{{i}^{ * }}$ then
+
+			${\mathbf{p}}^{\prime } = {\mathbf{p}}_{{i}^{ * }} + \eta  \cdot  \left( {{\mathbf{x}}_{j} - {\mathbf{p}}_{{i}^{ * }}}\right)$
+
+		else
+
+			${\mathbf{p}}^{\prime } = {\mathbf{p}}_{{i}^{ * }} - \eta  \cdot  \left( {{\mathbf{x}}_{j} - {\mathbf{p}}_{{i}^{ * }}}\right)$
+
+		end if
+
+		将原型向量 ${\mathbf{p}}_{{i}^{ * }}$ 更新为 ${\mathbf{p}}^{\prime }$
+
+	until 满足停止条件
+
+输出: 原型向量 $\left\{  {{\mathbf{p}}_{1},{\mathbf{p}}_{2},\ldots ,{\mathbf{p}}_{q}}\right\}$
+
+---
+
+图 9.4 学习向量量化算法
+
+---
+
+${\mathbf{x}}_{j}$ 与 ${\mathbf{p}}_{{i}^{ * }}$ 的类别相同.
+
+${\mathbf{x}}_{j}$ 与 ${\mathbf{p}}_{{i}^{ * }}$ 的类别不同.
+
+如达到最大迭代轮数.
+
+第 5 行是竞争学习的 “胜者为王”策略. SOM 是基于无标记样本的聚类算法, 而 LVQ 可看作 SOM 基于监督信息的扩展. 关于竞争学习与 SOM, 参见 5.5.2 和 5.5.3 节.
+
+---
+
+显然, LVQ 的关键是第 6-10 行, 即如何更新原型向量. 直观上看, 对样本 ${\mathbf{x}}_{j}$ ,若最近的原型向量 ${\mathbf{p}}_{{i}^{ * }}$ 与 ${\mathbf{x}}_{j}$ 的类别标记相同,则令 ${\mathbf{p}}_{{i}^{ * }}$ 向 ${\mathbf{x}}_{j}$ 的方向靠拢, 如第 7 行所示, 此时新原型向量为
+
+$$
+{\mathbf{p}}^{\prime } = {\mathbf{p}}_{{i}^{ * }} + \eta  \cdot  \left( {{\mathbf{x}}_{j} - {\mathbf{p}}_{{i}^{ * }}}\right) , \tag{9.25}
+$$
+
+${\mathbf{p}}^{\prime }$ 与 ${\mathbf{x}}_{j}$ 之间的距离为
+
+$$
+{\begin{Vmatrix}{\mathbf{p}}^{\prime } - {\mathbf{x}}_{j}\end{Vmatrix}}_{2} = {\begin{Vmatrix}{\mathbf{p}}_{{i}^{ * }} + \eta  \cdot  \left( {\mathbf{x}}_{j} - {\mathbf{p}}_{{i}^{ * }}\right)  - {\mathbf{x}}_{j}\end{Vmatrix}}_{2}
+$$
+
+$$
+= \left( {1 - \eta }\right)  \cdot  {\begin{Vmatrix}{\mathbf{p}}_{{i}^{ * }} - {\mathbf{x}}_{j}\end{Vmatrix}}_{2}. \tag{9.26}
+$$
+
+令学习率 $\eta  \in  \left( {0,1}\right)$ ,则原型向量 ${\mathbf{p}}_{{i}^{ * }}$ 在更新为 ${\mathbf{p}}^{\prime }$ 之后将更接近 ${\mathbf{x}}_{j}$ .
+
+类似的,若 ${\mathbf{p}}_{{i}^{ * }}$ 与 ${\mathbf{x}}_{j}$ 的类别标记不同,则更新后的原型向量与 ${\mathbf{x}}_{j}$ 之间的距离将增大为 $\left( {1 + \eta }\right)  \cdot  {\begin{Vmatrix}{\mathbf{p}}_{{i}^{ * }} - {\mathbf{x}}_{j}\end{Vmatrix}}_{2}$ ,从而更远离 ${\mathbf{x}}_{j}$ .
+
+在学得一组原型向量 $\left\{  {{\mathbf{p}}_{1},{\mathbf{p}}_{2},\ldots ,{\mathbf{p}}_{q}}\right\}$ 后,即可实现对样本空间 $\mathcal{X}$ 的簇划分. 对任意样本 $x$ ,它将被划入与其距离最近的原型向量所代表的簇中; 换言之,每个原型向量 ${\mathbf{p}}_{i}$ 定义了与之相关的一个区域 ${R}_{i}$ ,该区域中每个样本与 ${\mathbf{p}}_{i}$ 的距离不大于它与其他原型向量 ${\mathbf{p}}_{{i}^{\prime }}\left( {{i}^{\prime } \neq  i}\right)$ 的距离,即
+
+$$
+{R}_{i} = \left\{  {\mathbf{x} \in  \mathcal{X}\left| \right| \left| {\mathbf{x} - {\mathbf{p}}_{i}}\right| \left| {{}_{2} \leq  }\right| \left| {\mathbf{x} - {\mathbf{p}}_{{i}^{\prime }}}\right| { \mid  }_{2},{i}^{\prime } \neq  i}\right\}  . \tag{9.27}
+$$
+
+由此形成了对样本空间 $\mathcal{X}$ 的簇划分 $\left\{  {{R}_{1},{R}_{2},\ldots ,{R}_{q}}\right\}$ ,该划分通常称为 "Voronoi剖分" (Voronoi tessellation).
+
+下面我们以表 9.1 的西瓜数据集 4.0 为例来演示 LVQ 的学习过程. 令 9-21 号样本的类别标记为 ${c}_{2}$ ,其他样本的类别标记为 ${c}_{1}$ . 假定 $q = 5$ ,即学习目标是找到 5 个原型向量 ${\mathbf{p}}_{1},{\mathbf{p}}_{2},{\mathbf{p}}_{3},{\mathbf{p}}_{4},{\mathbf{p}}_{5}$ ,并假定其对应的类别标记分别为 ${c}_{1},{c}_{2},{c}_{2},{c}_{1},{c}_{1}$ .
+
+算法开始时, 根据样本的类别标记和簇的预设类别标记对原型向量进行随机初始化,假定初始化为样本 ${\mathbf{x}}_{5},{\mathbf{x}}_{12},{\mathbf{x}}_{18},{\mathbf{x}}_{23},{\mathbf{x}}_{29}$ . 在第一轮迭代中,假定随机选取的样本为 ${\mathbf{x}}_{1}$ ,该样本与当前原型向量 ${\mathbf{p}}_{1},{\mathbf{p}}_{2},{\mathbf{p}}_{3},{\mathbf{p}}_{4},{\mathbf{p}}_{5}$ 的距离分别为 0.283,0.506,0.434,0.260,0.032 . 由于 ${\mathbf{p}}_{5}$ 与 ${\mathbf{x}}_{1}$ 距离最近且两者具有相同的类别标记 ${c}_{2}$ ,假定学习率 $\eta  = {0.1}$ ,则 LVQ 更新 ${\mathbf{p}}_{5}$ 得到新原型向量
+
+$$
+{\mathbf{p}}^{\prime } = {\mathbf{p}}_{5} + \eta  \cdot  \left( {{\mathbf{x}}_{1} - {\mathbf{p}}_{5}}\right)
+$$
+
+$$
+= \left( {{0.725};{0.445}}\right)  + {0.1} \cdot  \left( {\left( {{0.697};{0.460}}\right)  - \left( {{0.725};{0.445}}\right) }\right)
+$$
+
+$$
+= \left( {{0.722};{0.442}}\right) \text{ . }
+$$
+
+将 ${\mathbf{p}}_{5}$ 更新为 ${\mathbf{p}}^{\prime }$ 后,不断重复上述过程,不同轮数之后的聚类结果如图 9.5 所示.
+
+### 9.4.3 高斯混合聚类
+
+与 $k$ 均值、LVQ 用原型向量来刻画聚类结构不同，高斯混合(Mixture-of-Gaussian)聚类采用概率模型来表达聚类原型.
+
+我们先简单回顾一下(多元)高斯分布的定义. 对 $n$ 维样本空间 $\mathcal{X}$ 中的随机向量 $\mathbf{x}$ ,若 $\mathbf{x}$ 服从高斯分布,其概率密度函数为
+
+$$
+p\left( \mathbf{x}\right)  = \frac{1}{{\left( 2\pi \right) }^{\frac{n}{2}}{\left| \mathbf{\sum }\right| }^{\frac{1}{2}}}{e}^{-\frac{1}{2}{\left( \mathbf{x} - \mathbf{\mu }\right) }^{\mathrm{T}}{\mathbf{\sum }}^{-1}\left( {\mathbf{x} - \mathbf{\mu }}\right) }, \tag{9.28}
+$$
+
+其中 $\mathbf{\mu }$ 是 $n$ 维均值向量, $\mathbf{\sum }$ 是 $n \times  n$ 的协方差矩阵. 由式(9.28)可看出,高斯分布完全由均值向量 $\mathbf{\mu }$ 和协方差矩阵 $\mathbf{\sum }$ 这两个参数确定. 为了明确显示高斯分布与相应参数的依赖关系,将概率密度函数记为 $p\left( {\mathbf{x} \mid  \mathbf{\mu },\mathbf{\sum }}\right)$ .
+
+---
+
+若将 ${R}_{i}$ 中样本全用原型向量 ${\mathbf{p}}_{i}$ 表示,则可实现数据的 “有损压缩” (lossy compression), 这称为 “向量量化” (vector quantization); LVQ 由此而得名.
+
+即希望为 “好瓜 = 是” 找到 3 个簇，“好瓜 = 否” 找到 2 个簇.
+
+记为 $\mathbf{x} \sim  \mathcal{N}\left( {\mathbf{\mu },\mathbf{\sum }}\right)$ .
+
+$\mathbf{\sum }$ : 对称正定矩阵; $\left| \mathbf{\sum }\right|  : \mathbf{\sum }$ 的行列式; ${\mathbf{\sum }}^{-1} : \mathbf{\sum }$ 的逆矩阵.
+
+---
+
+![206_642_135_1307_1186_0.jpg](../../images/206_642_135_1307_1186_0.jpg)
+
+图 9.5 西瓜数据集 4.0 上 LVQ 算法 $\left( {q = 5}\right)$ 在不同轮数迭代后的聚类结果. ${c}_{1},{c}_{2}$ 类样本点与原型向量分别用 “●”，“∘”与“+”表示，红色虚线显示出聚类形成的 Voronoi 剖分.
+
+我们可定义高斯混合分布
+
+$$
+{p}_{\mathcal{M}}\left( \mathbf{x}\right)  = \mathop{\sum }\limits_{{i = 1}}^{k}{\alpha }_{i} \cdot  p\left( {\mathbf{x} \mid  {\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right) , \tag{9.29}
+$$
+
+---
+
+${p}_{\mathcal{M}}\left( \cdot \right)$ 也是概率密度函数, $\int {p}_{\mathcal{M}}\left( \mathbf{x}\right) \mathrm{d}\mathbf{x} = 1$ .
+
+---
+
+该分布共由 $k$ 个混合成分组成,每个混合成分对应一个高斯分布. 其中 ${\mathbf{\mu }}_{i}$ 与 ${\mathbf{\sum }}_{i}$ 是第 $i$ 个高斯混合成分的参数,而 ${\alpha }_{i} > 0$ 为相应的 “混合系数” (mixture coefficient), $\mathop{\sum }\limits_{{i = 1}}^{k}{\alpha }_{i} = 1$ .
+
+假设样本的生成过程由高斯混合分布给出: 首先,根据 ${\alpha }_{1},{\alpha }_{2},\ldots ,{\alpha }_{k}$ 定义的先验分布选择高斯混合成分,其中 ${\alpha }_{i}$ 为选择第 $i$ 个混合成分的概率; 然后,根据被选择的混合成分的概率密度函数进行采样, 从而生成相应的样本.
+
+若训练集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ 由上述过程生成,令随机变量 ${z}_{j} \in  \{ 1$ , $2,\ldots , k\}$ 表示生成样本 ${\mathbf{x}}_{j}$ 的高斯混合成分,其取值未知. 显然, ${z}_{j}$ 的先验概率 $P\left( {{z}_{j} = i}\right)$ 对应于 ${\alpha }_{i}\left( {i = 1,2,\ldots , k}\right)$ . 根据贝叶斯定理, ${z}_{j}$ 的后验分布对应于
+
+$$
+{p}_{\mathcal{M}}\left( {{z}_{j} = i \mid  {\mathbf{x}}_{j}}\right)  = \frac{P\left( {{z}_{j} = i}\right)  \cdot  {p}_{\mathcal{M}}\left( {{\mathbf{x}}_{j} \mid  {z}_{j} = i}\right) }{{p}_{\mathcal{M}}\left( {\mathbf{x}}_{j}\right) }
+$$
+
+$$
+= \frac{{\alpha }_{i} \cdot  p\left( {{\mathbf{x}}_{j} \mid  {\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right) }{\mathop{\sum }\limits_{{l = 1}}^{k}{\alpha }_{l} \cdot  p\left( {{\mathbf{x}}_{j} \mid  {\mathbf{\mu }}_{l},{\mathbf{\sum }}_{l}}\right) }. \tag{9.30}
+$$
+
+换言之, ${p}_{\mathcal{M}}\left( {{z}_{j} = i \mid  {\mathbf{x}}_{j}}\right)$ 给出了样本 ${\mathbf{x}}_{j}$ 由第 $i$ 个高斯混合成分生成的后验概率. 为方便叙述,将其简记为 ${\gamma }_{ji}\left( {i = 1,2,\ldots , k}\right)$ .
+
+当高斯混合分布 (9.29) 已知时,高斯混合聚类将把样本集 $D$ 划分为 $k$ 个簇 $\mathcal{C} = \left\{  {{C}_{1},{C}_{2},\ldots ,{C}_{k}}\right\}$ ,每个样本 ${\mathbf{x}}_{j}$ 的簇标记 ${\lambda }_{j}$ 如下确定:
+
+$$
+{\lambda }_{j} = \mathop{\operatorname{argmax}}\limits_{{i \in  \{ 1,2,\ldots , k\} }}{\gamma }_{ji} \tag{9.31}
+$$
+
+因此, 从原型聚类的角度来看, 高斯混合聚类是采用概率模型(高斯分布)对原型进行刻画, 簇划分则由原型对应后验概率确定.
+
+那么,对于式(9.29),模型参数 $\left\{  {\left( {{\alpha }_{i},{\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right)  \mid  1 \leq  i \leq  k}\right\}$ 如何求解呢? 显然, 给定样本集 $D$ ,可采用极大似然估计,即最大化(对数)似然
+
+$$
+{LL}\left( D\right)  = \ln \left( {\mathop{\prod }\limits_{{j = 1}}^{m}{p}_{\mathcal{M}}\left( {\mathbf{x}}_{j}\right) }\right)
+$$
+
+$$
+= \mathop{\sum }\limits_{{j = 1}}^{m}\ln \left( {\mathop{\sum }\limits_{{i = 1}}^{k}{\alpha }_{i} \cdot  p\left( {{\mathbf{x}}_{j} \mid  {\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right) }\right) , \tag{9.32}
+$$
+
+常采用 EM 算法进行迭代优化求解. 下面我们做一个简单的推导.
+
+若参数 $\left\{  {\left( {{\alpha }_{i},{\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right)  \mid  1 \leq  i \leq  k}\right\}$ 能使式(9.32)最大化,则由 $\frac{\partial {LL}\left( D\right) }{\partial {\mathbf{\mu }}_{i}} = 0$ 有
+
+$$
+\mathop{\sum }\limits_{{j = 1}}^{m}\frac{{\alpha }_{i} \cdot  p\left( {{\mathbf{x}}_{j} \mid  {\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right) }{\mathop{\sum }\limits_{{l = 1}}^{k}{\alpha }_{l} \cdot  p\left( {{\mathbf{x}}_{j} \mid  {\mathbf{\mu }}_{l},{\mathbf{\sum }}_{l}}\right) }\left( {{\mathbf{x}}_{j} - {\mathbf{\mu }}_{i}}\right)  = 0, \tag{9.33}
+$$
+
+由式(9.30)以及 ${\gamma }_{ji} = {p}_{\mathcal{M}}\left( {{z}_{j} = i \mid  {\mathbf{x}}_{j}}\right)$ ,有
+
+$$
+{\mathbf{\mu }}_{i} = \frac{\mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji}{\mathbf{x}}_{j}}{\mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji}} \tag{9.34}
+$$
+
+---
+
+极大似然估计参见 7.2 节.
+
+EM 算法参见 7.6 节.
+
+---
+
+即各混合成分的均值可通过样本加权平均来估计, 样本权重是每个样本属于该成分的后验概率. 类似的,由 $\frac{\partial {LL}\left( D\right) }{\partial {\mathbf{\sum }}_{i}} = 0$ 可得
+
+$$
+{\mathbf{\sum }}_{i} = \frac{\mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji}\left( {{\mathbf{x}}_{j} - {\mathbf{\mu }}_{i}}\right) {\left( {\mathbf{x}}_{j} - {\mathbf{\mu }}_{i}\right) }^{\mathrm{T}}}{\mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji}}. \tag{9.35}
+$$
+
+对于混合系数 ${\alpha }_{i}$ ,除了要最大化 ${LL}\left( D\right)$ ,还需满足 ${\alpha }_{i} \geq  0,\mathop{\sum }\limits_{{i = 1}}^{k}{\alpha }_{i} = 1$ . 考虑 ${LL}\left( D\right)$ 的拉格朗日形式
+
+$$
+{LL}\left( D\right)  + \lambda \left( {\mathop{\sum }\limits_{{i = 1}}^{k}{\alpha }_{i} - 1}\right) , \tag{9.36}
+$$
+
+其中 $\lambda$ 为拉格朗日乘子. 由式(9.36)对 ${\alpha }_{i}$ 的导数为 0,有
+
+$$
+\mathop{\sum }\limits_{{j = 1}}^{m}\frac{p\left( {{\mathbf{x}}_{j} \mid  {\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right) }{\mathop{\sum }\limits_{{l = 1}}^{k}{\alpha }_{l} \cdot  p\left( {{\mathbf{x}}_{j} \mid  {\mathbf{\mu }}_{l},{\mathbf{\sum }}_{l}}\right) } + \lambda  = 0, \tag{9.37}
+$$
+
+两边同乘以 ${\alpha }_{i}$ ,对所有样本求和可知 $\lambda  =  - m$ ,有
+
+$$
+{\alpha }_{i} = \frac{1}{m}\mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji} \tag{9.38}
+$$
+
+即每个高斯成分的混合系数由样本属于该成分的平均后验概率确定.
+
+由上述推导即可获得高斯混合模型的 EM 算法: 在每步迭代中, 先根据当前参数来计算每个样本属于每个高斯成分的后验概率 ${\gamma }_{ji}$ (E步),再根据式(9.34)、(9.35)和(9.38)更新模型参数 $\left\{  {\left( {{\alpha }_{i},{\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right)  \mid  1 \leq  i \leq  k}\right\}$ (M步).
+
+高斯混合聚类算法描述如图 9.6 所示. 算法第 1 行对高斯混合分布的模型参数进行初始化. 然后，在第 2-12 行基于 EM 算法对模型参数进行迭代更新. 若 EM 算法的停止条件满足(例如已达到最大迭代轮数,或似然函数 ${LL}\left( D\right)$ 增长很少甚至不再增长), 则在第 14-17 行根据高斯混合分布确定簇划分, 在第 18 行返回最终结果.
+
+---
+
+输入: 样本集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ ;
+
+			高斯混合成分个数 $k$ .
+
+过程:
+
+	初始化高斯混合分布的模型参数 $\left\{  {\left( {{\alpha }_{i},{\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right)  \mid  1 \leq  i \leq  k}\right\}$
+
+	repeat
+
+		for $j = 1,2,\ldots , m$ do
+
+				根据式(9.30)计算 ${\mathbf{x}}_{j}$ 由各混合成分生成的后验概率,即
+
+				${\gamma }_{ji} = {p}_{\mathcal{M}}\left( {{z}_{j} = i \mid  {\mathbf{x}}_{j}}\right) \left( {1 \leq  i \leq  k}\right)$
+
+		end for
+
+		for $i = 1,2,\ldots , k$ do
+
+				计算新均值向量: ${\mathbf{\mu }}_{i}^{\prime } = \frac{\mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji}{\mathbf{x}}_{j}}{\mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji}}$ ;
+
+				计算新协方差矩阵: ${\mathbf{\sum }}_{i}^{\prime } = \frac{\mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji}\left( {{\mathbf{x}}_{j} - {\mathbf{\mu }}_{i}^{\prime }}\right) {\left( {\mathbf{x}}_{j} - {\mathbf{\mu }}_{i}^{\prime }\right) }^{\mathrm{T}}}{\cdot \mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji}}$ ;
+
+				计算新混合系数: ${\alpha }_{i}^{\prime } = \frac{\mathop{\sum }\limits_{{j = 1}}^{m}{\gamma }_{ji}}{m}$ ;
+
+			end for
+
+			将模型参数 $\left\{  {\left( {{\alpha }_{i},{\mathbf{\mu }}_{i},{\mathbf{\sum }}_{i}}\right)  \mid  1 \leq  i \leq  k}\right\}$ 更新为 $\left\{  {\left( {{\alpha }_{i}^{\prime },{\mathbf{\mu }}_{i}^{\prime },{\mathbf{\sum }}_{i}^{\prime }}\right)  \mid  1 \leq  i \leq  k}\right\}$
+
+		until 满足停止条件
+
+		${C}_{i} = \varnothing \left( {1 \leq  i \leq  k}\right)$
+
+		for $j = 1,2,\ldots , m$ do
+
+			根据式(9.31)确定 ${\mathbf{x}}_{j}$ 的簇标记 ${\lambda }_{j}$ ;
+
+		将 ${\mathbf{x}}_{j}$ 划入相应的簇: ${C}_{{\lambda }_{j}} = {C}_{{\lambda }_{j}}\bigcup \left\{  {\mathbf{x}}_{j}\right\}$
+
+		end for
+
+输出: 簇划分 $\mathcal{C} = \left\{  {{C}_{1},{C}_{2},\ldots ,{C}_{k}}\right\}$
+
+---
+
+图 9.6 高斯混合聚类算法
+
+---
+
+例如达到最大迭代轮数.
+
+---
+
+以表 9.1 的西瓜数据集 4.0 为例,令高斯混合成分的个数 $k = 3$ . 算法开始时,假定将高斯混合分布的模型参数初始化为: ${\alpha }_{1} = {\alpha }_{2} = {\alpha }_{3} = \frac{1}{3};{\mathbf{\mu }}_{1} = {\mathbf{x}}_{6}$ , ${\mathbf{\mu }}_{2} = {\mathbf{x}}_{22},{\mathbf{\mu }}_{3} = {\mathbf{x}}_{27};{\mathbf{\sum }}_{1} = {\mathbf{\sum }}_{2} = {\mathbf{\sum }}_{3} = \left( \begin{matrix} {0.1} & {0.0} \\  {0.0} & {0.1} \end{matrix}\right) .$
+
+在第一轮迭代中,先计算样本由各混合成分生成的后验概率. 以 ${\mathbf{x}}_{1}$ 为例, 由式(9.30)算出后验概率 ${\gamma }_{11} = {0.219},{\gamma }_{12} = {0.404},{\gamma }_{13} = {0.377}$ . 所有样本的后验概率算完后, 得到如下新的模型参数:
+
+$$
+{\alpha }_{1}^{\prime } = {0.361},{\alpha }_{2}^{\prime } = {0.323},{\alpha }_{3}^{\prime } = {0.316}
+$$
+
+$$
+{\mathbf{\mu }}_{1}^{\prime } = \left( {{0.491};{0.251}}\right) ,{\mathbf{\mu }}_{2}^{\prime } = \left( {{0.571};{0.281}}\right) ,{\mathbf{\mu }}_{3}^{\prime } = \left( {{0.534};{0.295}}\right)
+$$
+
+$$
+{\mathbf{\sum }}_{1}^{\prime } = \left( \begin{matrix} {0.025} & {0.004} \\  {0.004} & {0.016} \end{matrix}\right) ,{\mathbf{\sum }}_{2}^{\prime } = \left( \begin{matrix} {0.023} & {0.004} \\  {0.004} & {0.017} \end{matrix}\right) ,{\mathbf{\sum }}_{3}^{\prime } = \left( \begin{matrix} {0.024} & {0.005} \\  {0.005} & {0.016} \end{matrix}\right)
+$$
+
+模型参数更新后, 不断重复上述过程, 不同轮数之后的聚类结果如图 9.7 所示.
+
+---
+
+EM 算法的 E步.
+
+EM 算法的 M步.
+
+---
+
+![210_621_143_1313_1184_0.jpg](../../images/210_621_143_1313_1184_0.jpg)
+
+图 9.7 高斯混合聚类 $\left( {k = 3}\right)$ 在不同轮数迭代后的聚类结果. 其中样本簇 ${C}_{1},{C}_{2}$ 与 ${C}_{3}$ 中的样本点分别用 “ $\text{ ○ }$ ”，“■” 与 “▲”表示，各高斯混合成分的均值向量用 “+”表示.
+
+## 9.5 密度聚类
+
+密度聚类亦称 “基于密度的聚类” (density-based clustering), 此类算法假设聚类结构能通过样本分布的紧密程度确定. 通常情形下，密度聚类算法从样本密度的角度来考察样本之间的可连接性，并基于可连接样本不断扩展聚类簇以获得最终的聚类结果.
+
+---
+
+全称 “Density-Based Spatial Clustering of Applications with Noise".
+
+---
+
+DBSCAN 是一种著名的密度聚类算法, 它基于一组 “邻域 ” (neighborhood) 参数 $\left( {\epsilon ,\text{ MinPts }}\right)$ 来刻画样本分布的紧密程度. 给定数据集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ ,定义下面这几个概念:
+
+---
+
+在本章后续内容中，距离函数 $\operatorname{dist}\left( {\cdot , \cdot  }\right)$ 在默认情形下设为欧氏距离.
+
+---
+
+- $\epsilon$ -邻域: 对 ${\mathbf{x}}_{j} \in  D$ ,其 $\epsilon$ -邻域包含样本集 $D$ 中与 ${\mathbf{x}}_{j}$ 的距离不大于 $\epsilon$ 的样本，即 ${N}_{\epsilon }\left( {\mathbf{x}}_{j}\right)  = \left\{  {{\mathbf{x}}_{i} \in  D \mid  \operatorname{dist}\left( {{\mathbf{x}}_{i},{\mathbf{x}}_{j}}\right)  \leq  \epsilon }\right\}$ ;
+
+- 核心对象(core object): 若 ${\mathbf{x}}_{j}$ 的 $\epsilon$ -邻域至少包含 ${MinPts}$ 个样本,即 $\left| {{N}_{\epsilon }\left( {\mathbf{x}}_{j}\right) }\right|  \geq  {MinPts}$ ,则 ${\mathbf{x}}_{j}$ 是一个核心对象;
+
+---
+
+密度直达关系通常不满足对称性.
+
+---
+
+- 密度直达(directly density-reachable): 若 ${\mathbf{x}}_{j}$ 位于 ${\mathbf{x}}_{i}$ 的 $\epsilon$ -邻域中,且 ${\mathbf{x}}_{i}$ 是核心对象，则称 ${\mathbf{x}}_{j}$ 由 ${\mathbf{x}}_{i}$ 密度直达；
+
+---
+
+密度可达关系满足直递性，但不满足对称性.
+
+---
+
+- 密度可达(density-reachable): 对 ${\mathbf{x}}_{i}$ 与 ${\mathbf{x}}_{j}$ ,若存在样本序列 ${\mathbf{p}}_{1},{\mathbf{p}}_{2},\ldots ,{\mathbf{p}}_{n}$ , 其中 ${\mathbf{p}}_{1} = {\mathbf{x}}_{i},{\mathbf{p}}_{n} = {\mathbf{x}}_{j}$ 且 ${\mathbf{p}}_{i + 1}$ 由 ${\mathbf{p}}_{i}$ 密度直达,则称 ${\mathbf{x}}_{j}$ 由 ${\mathbf{x}}_{i}$ 密度可达;
+
+---
+
+密度相连关系满足对称性.
+
+---
+
+- 密度相连(density-connected): 对 ${\mathbf{x}}_{i}$ 与 ${\mathbf{x}}_{j}$ ,若存在 ${\mathbf{x}}_{k}$ 使得 ${\mathbf{x}}_{i}$ 与 ${\mathbf{x}}_{j}$ 均由 ${\mathbf{x}}_{k}$ 密度可达,则称 ${\mathbf{x}}_{i}$ 与 ${\mathbf{x}}_{j}$ 密度相连.
+
+图 9.8 给出了上述概念的直观显示.
+
+![211_974_836_609_291_0.jpg](../../images/211_974_836_609_291_0.jpg)
+
+图 9.8 DBSCAN 定义的基本概念 $\left( {{MinPts} = 3}\right)$ : 虚线显示出 $\epsilon$ -邻域, ${\mathbf{x}}_{1}$ 是核心对象, ${\mathbf{x}}_{2}$ 由 ${\mathbf{x}}_{1}$ 密度直达, ${\mathbf{x}}_{3}$ 由 ${\mathbf{x}}_{1}$ 密度可达, ${\mathbf{x}}_{3}$ 与 ${\mathbf{x}}_{4}$ 密度相连.
+
+---
+
+$D$ 中不属于任何簇的样本被认为是噪声(noise)或异常(anomaly)样本.
+
+---
+
+基于这些概念, DBSCAN 将 “簇” 定义为: 由密度可达关系导出的最大的密度相连样本集合. 形式化地说,给定邻域参数 $\left( {\epsilon ,\text{ MinPts }}\right)$ ,簇 $C \subseteq  D$ 是满足以下性质的非空样本子集:
+
+连接性(connectivity): ${\mathbf{x}}_{i} \in  C,{\mathbf{x}}_{j} \in  C \Rightarrow  {\mathbf{x}}_{i}$ 与 ${\mathbf{x}}_{j}$ 密度相连(9.39)
+
+最大性(maximality): ${\mathbf{x}}_{i} \in  C,{\mathbf{x}}_{j}$ 由 ${\mathbf{x}}_{i}$ 密度可达 $\Rightarrow  {\mathbf{x}}_{j} \in  C$(9.40)
+
+那么,如何从数据集 $D$ 中找出满足以上性质的聚类簇呢? 实际上,若 $\mathbf{x}$ 为核心对象,由 $\mathbf{x}$ 密度可达的所有样本组成的集合记为 $X = \left\{  {{\mathbf{x}}^{\prime } \in  D \mid  }\right. \; {\mathbf{x}}^{\prime }$ 由 $\mathbf{x}$ 密度可达 $\}$ ,则不难证明 $X$ 即为满足连接性与最大性的簇.
+
+于是, DBSCAN 算法先任选数据集中的一个核心对象为 “种子” (seed), 再由此出发确定相应的聚类簇,算法描述如图 9.9 所示. 在第 $1 \sim  7$ 行中,算法先根据给定的邻域参数 $\left( {\epsilon ,\text{ MinPts }}\right)$ 找出所有核心对象; 然后在第 ${10} \sim  {24}$ 行中, 以任一核心对象为出发点, 找出由其密度可达的样本生成聚类簇, 直到所有核心对象均被访问过为止.
+
+---
+
+输入: 样本集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ ;
+
+			邻域参数 $\left( {\epsilon ,\text{ MinPts }}\right)$ .
+
+过程:
+
+	初始化核心对象集合: $\Omega  = \varnothing$
+
+	for $j = 1,2,\ldots , m$ do
+
+		确定样本 ${\mathbf{x}}_{j}$ 的 $\epsilon$ -邻域 ${N}_{\epsilon }\left( {\mathbf{x}}_{j}\right)$ ;
+
+		if $\left| {{N}_{\epsilon }\left( {\mathbf{x}}_{j}\right) }\right|  \geq  \operatorname{MinPts}$ then
+
+			将样本 ${\mathbf{x}}_{j}$ 加入核心对象集合: $\Omega  = \Omega  \cup  \left\{  {\mathbf{x}}_{j}\right\}$
+
+		end if
+
+	end for
+
+	初始化聚类簇数: $k = 0$
+
+	初始化未访问样本集合: $\Gamma  = D$
+
+	while $\Omega  \neq  \varnothing$ do
+
+		记录当前未访问样本集合: ${\Gamma }_{\text{ old }} = \Gamma$ ;
+
+		随机选取一个核心对象 $\mathbf{o} \in  \Omega$ ,初始化队列 $Q = \langle \mathbf{o} >$ ;
+
+		$\Gamma  = \Gamma  \smallsetminus  \{ \mathbf{o}\}$
+
+		while $Q \neq  \varnothing$ do
+
+			取出队列 $Q$ 中的首个样本 $\mathbf{q}$ ;
+
+			if $\left| {{N}_{\epsilon }\left( \mathbf{q}\right) }\right|  \geq$ MinPts then
+
+				令 $\Delta  = {N}_{\epsilon }\left( \mathbf{q}\right)  \cap  \Gamma$ ;
+
+				将 $\Delta$ 中的样本加入队列 $Q$ ;
+
+				$\Gamma  = \Gamma  \smallsetminus  \Delta$
+
+			end if
+
+		end while
+
+		$k = k + 1$ ,生成聚类簇 ${C}_{k} = {\Gamma }_{\text{ old }} \smallsetminus  \Gamma$ ;
+
+		$\Omega  = \Omega  \smallsetminus  {C}_{k}$
+
+	end while
+
+输出: 簇划分 $\mathcal{C} = \left\{  {{C}_{1},{C}_{2},\ldots ,{C}_{k}}\right\}$
+
+---
+
+图 9.9 DBSCAN 算法
+
+以表 9.1 的西瓜数据集 4.0 为例,假定邻域参数 $\left( {\epsilon ,\text{ MinPts }}\right)$ 设置为 $\epsilon  = \; {0.11},\operatorname{MinPts} = 5$ . DBSCAN 算法先找出各样本的 $\epsilon$ -邻域并确定核心对象集合: $\Omega  = \left\{  {{\mathbf{x}}_{3},{\mathbf{x}}_{5},{\mathbf{x}}_{6},{\mathbf{x}}_{8},{\mathbf{x}}_{9},{\mathbf{x}}_{13},{\mathbf{x}}_{14},{\mathbf{x}}_{18},{\mathbf{x}}_{19},{\mathbf{x}}_{24},{\mathbf{x}}_{25},{\mathbf{x}}_{28},{\mathbf{x}}_{29}}\right\}$ . 然后,从 $\Omega$ 中随机选取一个核心对象作为种子, 找出由它密度可达的所有样本, 这就构成了第一个聚类簇. 不失一般性,假定核心对象 ${\mathbf{x}}_{8}$ 被选中作为种子,则 DBSCAN 生成的第一个聚类簇为
+
+$$
+{C}_{1} = \left\{  {{\mathbf{x}}_{6},{\mathbf{x}}_{7},{\mathbf{x}}_{8},{\mathbf{x}}_{10},{\mathbf{x}}_{12},{\mathbf{x}}_{18},{\mathbf{x}}_{19},{\mathbf{x}}_{20},{\mathbf{x}}_{23}}\right\}  .
+$$
+
+然后, DBSCAN 将 ${C}_{1}$ 中包含的核心对象从 $\Omega$ 中去除: $\Omega  = \Omega  \smallsetminus  {C}_{1} = \; \left\{  {{\mathbf{x}}_{3},{\mathbf{x}}_{5},{\mathbf{x}}_{9},{\mathbf{x}}_{13},{\mathbf{x}}_{14},{\mathbf{x}}_{24},{\mathbf{x}}_{25},{\mathbf{x}}_{28},{\mathbf{x}}_{29}}\right\}$ . 再从更新后的集合 $\Omega$ 中随机选取一个核心对象作为种子来生成下一个聚类簇. 上述过程不断重复,直至 $\Omega$ 为空. 图 9.10 显示出 DBSCAN 先后生成聚类簇的情况. ${C}_{1}$ 之后生成的聚类簇为
+
+$$
+{C}_{2} = \left\{  {{\mathbf{x}}_{3},{\mathbf{x}}_{4},{\mathbf{x}}_{5},{\mathbf{x}}_{9},{\mathbf{x}}_{13},{\mathbf{x}}_{14},{\mathbf{x}}_{16},{\mathbf{x}}_{17},{\mathbf{x}}_{21}}\right\}
+$$
+
+$$
+{C}_{3} = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},{\mathbf{x}}_{22},{\mathbf{x}}_{26},{\mathbf{x}}_{29}}\right\}
+$$
+
+$$
+{C}_{4} = \left\{  {{\mathbf{x}}_{24},{\mathbf{x}}_{25},{\mathbf{x}}_{27},{\mathbf{x}}_{28},{\mathbf{x}}_{30}}\right\}  .
+$$
+
+![213_605_137_1316_1181_0.jpg](../../images/213_605_137_1316_1181_0.jpg)
+
+图 9.10 DBSCAN 算法 $\left( {\epsilon  = {0.11},{MinPts} = 5}\right)$ 生成聚类簇的先后情况. 核心对象、 非核心对象、噪声样本分别用 “ $\bullet$ ” “ $\circ$ ” “ $*$ ”表示，红色虚线显示出簇划分.
+
+## 9.6 层次聚类
+
+层次聚类(hierarchical clustering)试图在不同层次对数据集进行划分, 从而形成树形的聚类结构. 数据集的划分可采用 “自底向上” 的聚合策略, 也可采用 “自顶向下” 的分拆策略.
+
+AGNES 是 AGglomerative NESting 的简写.
+
+AGNES 是一种采用自底向上聚合策略的层次聚类算法. 它先将数据集中的每个样本看作一个初始聚类簇, 然后在算法运行的每一步中找出距离最近的两个聚类簇进行合并，该过程不断重复，直至达到预设的聚类簇个数. 这里的关键是如何计算聚类簇之间的距离. 实际上, 每个簇是一个样本集合, 因此, 只需采用关于集合的某种距离即可. 例如,给定聚类簇 ${C}_{i}$ 与 ${C}_{j}$ ,可通过下面的式子来计算距离:
+
+$$
+\text{ 最小距离: }{d}_{\min }\left( {{C}_{i},{C}_{j}}\right)  = \mathop{\min }\limits_{{\mathbf{x} \in  {C}_{i},\mathbf{z} \in  {C}_{j}}}\operatorname{dist}\left( {\mathbf{x},\mathbf{z}}\right) \text{ , } \tag{9.41}
+$$
+
+$$
+\text{ 最大距离: }{d}_{\max }\left( {{C}_{i},{C}_{j}}\right)  = \mathop{\max }\limits_{{\mathbf{x} \in  {C}_{i},\mathbf{z} \in  {C}_{j}}}\operatorname{dist}\left( {\mathbf{x},\mathbf{z}}\right) \text{ , } \tag{9.42}
+$$
+
+$$
+\text{ 平均距离: }{d}_{\text{ avg }}\left( {{C}_{i},{C}_{j}}\right)  = \frac{1}{\left| {C}_{i}\right| \left| {C}_{j}\right| }\mathop{\sum }\limits_{{\mathbf{x} \in  {C}_{i}}}\mathop{\sum }\limits_{{\mathbf{z} \in  {C}_{j}}}\operatorname{dist}\left( {\mathbf{x},\mathbf{z}}\right) \text{ . } \tag{9.43}
+$$
+
+---
+
+集合间的距离计算常采用豪斯多夫距离 (Hausdorff distance), 参见习题 9.2.
+
+---
+
+显然, 最小距离由两个簇的最近样本决定, 最大距离由两个簇的最远样本决定, 而平均距离则由两个簇的所有样本共同决定. 当聚类簇距离由 ${d}_{\min }\text{ 、 }{d}_{\max }$ 或 ${d}_{\text{ avg }}$ 计算时, AGNES 算法被相应地称为 “单链接” (single-linkage)、“全链接" (complete-linkage) 或 "均链接" (average-linkage)算法.
+
+---
+
+																	输入: 样本集 $D = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{2},\ldots ,{\mathbf{x}}_{m}}\right\}$ ;
+
+通常使用 ${d}_{\min },{d}_{\max }$ 																				聚类簇距离度量函数 $d$ ;
+
+或 ${d}_{\mathrm{{avg}}}$ . 																				聚类簇数 $k$ .
+
+																	过程:
+
+																			for $j = 1,2,\ldots , m$ do
+
+初始化单样本聚类簇. 																				${C}_{j} = \left\{  {\mathbf{x}}_{j}\right\}$
+
+																			end for
+
+																			for $i = 1,2,\ldots , m$ do
+
+																				for $j = 1,2,\ldots , m$ do
+
+初始化聚类簇距离矩阵. 																					$M\left( {i, j}\right)  = d\left( {{C}_{i},{C}_{j}}\right)$
+
+																					$M\left( {j, i}\right)  = M\left( {i, j}\right)$
+
+																				end for
+
+																			end for
+
+																			设置当前聚类簇个数: $q = m$
+
+																			while $q > k$ do
+
+${i}^{ * } < {j}^{ * }$ . 																				找出距离最近的两个聚类簇 ${C}_{{i}^{ * }}$ 和 ${C}_{{j}^{ * }}$ ;
+
+																				合并 ${C}_{{i}^{ * }}$ 和 ${C}_{{j}^{ * }} : {C}_{{i}^{ * }} = {C}_{{i}^{ * }} \cup  {C}_{{j}^{ * }}$ ;
+
+																				for $j = {j}^{ * } + 1,{j}^{ * } + 2,\ldots , q$ do
+
+																					将聚类簇 ${C}_{j}$ 重编号为 ${C}_{j - 1}$
+
+																				end for
+
+																				删除距离矩阵 $M$ 的第 ${j}^{ * }$ 行与第 ${j}^{ * }$ 列;
+
+																				for $j = 1,2,\ldots , q - 1$ do
+
+																					$M\left( {{i}^{ * }, j}\right)  = d\left( {{C}_{{i}^{ * }},{C}_{j}}\right)$
+
+																					$M\left( {j,{i}^{ * }}\right)  = M\left( {{i}^{ * }, j}\right)$
+
+																				end for
+
+																				$q = q - 1$
+
+																			end while
+
+																	输出: 簇划分 $\mathcal{C} = \left\{  {{C}_{1},{C}_{2},\ldots ,{C}_{k}}\right\}$
+
+																						图 9.11 AGNES 算法
+
+---
+
+AGNES 算法描述如图 9.11 所示. 在第 1-9 行, 算法先对仅含一个样本的初始聚类簇和相应的距离矩阵进行初始化; 然后在第 11-23 行, AGNES 不断合并距离最近的聚类簇, 并对合并得到的聚类簇的距离矩阵进行更新; 上述过程不断重复, 直至达到预设的聚类簇数.
+
+以西瓜数据集 4.0 为例, 令 AGNES 算法一直执行到所有样本出现在同一个簇中，即 $k = 1$ ，则可得到图 9.12 所示的 “树状图” (dendrogram)，其中每层链接一组聚类簇.
+
+![215_737_764_1041_823_0.jpg](../../images/215_737_764_1041_823_0.jpg)
+
+图 9.12 西瓜数据集 4.0 上 AGNES 算法生成的树状图(采用 ${d}_{\max }$ ). 横轴对应于样本编号, 纵轴对应于聚类簇距离.
+
+在树状图的特定层次上进行分割, 则可得到相应的簇划分结果. 例如, 以图 9.12 中所示虚线分割树状图, 将得到包含 7 个聚类簇的结果:
+
+$$
+{C}_{1} = \left\{  {{\mathbf{x}}_{1},{\mathbf{x}}_{26},{\mathbf{x}}_{29}}\right\}  ;{C}_{2} = \left\{  {{\mathbf{x}}_{2},{\mathbf{x}}_{3},{\mathbf{x}}_{4},{\mathbf{x}}_{21},{\mathbf{x}}_{22}}\right\}
+$$
+
+$$
+{C}_{3} = \left\{  {{\mathbf{x}}_{23},{\mathbf{x}}_{24},{\mathbf{x}}_{25},{\mathbf{x}}_{27},{\mathbf{x}}_{28},{\mathbf{x}}_{30}}\right\}  ;{C}_{4} = \left\{  {{\mathbf{x}}_{5},{\mathbf{x}}_{7}}\right\}
+$$
+
+$$
+{C}_{5} = \left\{  {{\mathbf{x}}_{9},{\mathbf{x}}_{13},{\mathbf{x}}_{14},{\mathbf{x}}_{16},{\mathbf{x}}_{17}}\right\}  ;{C}_{6} = \left\{  {{\mathbf{x}}_{6},{\mathbf{x}}_{8},{\mathbf{x}}_{10},{\mathbf{x}}_{15},{\mathbf{x}}_{18},{\mathbf{x}}_{19},{\mathbf{x}}_{20}}\right\}
+$$
+
+$$
+{C}_{7} = \left\{  {{\mathbf{x}}_{11},{\mathbf{x}}_{12}}\right\}
+$$
+
+---
+
+西瓜数据集 4.0 见 p.202 的表 9.1.
+
+---
+
+将分割层逐步提升，则可得到聚类簇逐渐减少的聚类结果. 例如图 9.13 显示出了从图 9.12 中产生 7 至 4 个聚类簇的划分结果.
+
+![216_656_316_1307_1167_0.jpg](../../images/216_656_316_1307_1167_0.jpg)
+
+图 9.13 西瓜数据集 4.0 上 AGNES 算法(采用 ${d}_{\max }$ ) 在不同聚类簇数 $\left( {k = 7,6,5,4}\right)$ 时的簇划分结果. 样本点用 “ $\varepsilon$ ”表示，红色虚线显示出簇划分.
+
+## 9.7 阅读材料
+
+---
+
+例如同一堆水果, 既能按大小，也能按颜色，甚至能按产地聚类.
+
+---
+
+聚类也许是机器学习中 “新算法” 出现最多、最快的领域. 一个重要原因是聚类不存在客观标准; 给定数据集, 总能从某个角度找到以往算法未覆盖的某种标准从而设计出新算法 [Estivill-Castro, 2002]. 相对于机器学习其他分支来说, 聚类的知识还不够系统化, 因此著名教科书 [Mitchell, 1997] 中甚至没有关于聚类的章节. 但聚类技术本身在现实任务中非常重要, 因此本章勉强采用了 “列举式” 的叙述方式, 相较于其他各章给出了更多的算法描述. 关于聚类
+
+距离度量学习参见 10.6 节.
+
+凸形簇结构即形似“椭球”的簇结构.
+
+---
+
+Bregman 距离亦称 Bregman divergence, 是一类不满足对称性和直递性的距离.
+
+---
+
+降维参见第 10 章. 更多的内容, 可参阅这方面的专门书籍和综述文章如 [Jain and Dubes, 1988; Jain et al., 1999; Xu and Wunsch II, 2005; Jain, 2009] 等.
+
+聚类性能度量除 9.2 节的内容外, 常见的还有 F 值、互信息 (mutual information)、平均廓宽 (average silhouette width) [Rousseeuw, 1987] 等, 可参阅 [Jain and Dubes, 1988; Halkidi et al., 2001; Maulik and Bandyopadhyay, 2002].
+
+距离计算是很多学习任务的核心技术. 闵可夫斯基距离提供了距离计算的一般形式. 除闵可夫斯基距离之外, 内积距离、余弦距离等也很常用, 可参阅 [Deza and Deza, 2009]. MinkovDM 在 [Zhou and Yu, 2005] 中正式给出. 模式识别、图像检索等涉及复杂语义的应用中常会涉及非度量距离 [Jacobs et al., 2000; Tan et al., 2009]. 距离度量学习可直接嵌入到聚类学习过程中 [Xing et al., 2003].
+
+$k$ 均值算法可看作高斯混合聚类在混合成分方差相等、且每个样本仅指派给一个混合成分时的特例. 该算法在历史上曾被不同领域的学者多次重新发明, 如 Steinhaus 在 1956 年、Lloyd 在 1957 年、McQueen 在 1967 年等 [Jain and Dubes, 1988; Jain, 2009]. $k$ 均值算法有大量变体, 如 k-medoids 算法 [Kaufman and Rousseeuw, 1987] 强制原型向量必为训练样本, k-modes 算法 [Huang, 1998] 可处理离散属性, Fuzzy $C$ -means (简称 FCM) [Bezdek, 1981] 则是 “软聚类” (soft clustering) 算法, 允许每个样本以不同程度同时属于多个原型. 需注意的是, $k$ 均值类算法仅在凸形簇结构上效果较好. 最近研究表明, 若采用某种 Bregman 距离, 则可显著增强此类算法对更多类型簇结构的适用性 [Banerjee et al.,2005]. 引入核技巧则可得到核 $k$ 均值 (kernel $k$ -means) 算法 [Schölkopf et al., 1998], 这与谱聚类 (spectral clustering) [von Luxburg, 2007] 有密切联系 [Dhillon et al., 2004], 后者可看作在拉普拉斯特征映射 (Laplacian Eigenmap) 降维后执行 $k$ 均值聚类. 聚类簇数 $k$ 通常需由用户提供,有一些启发式用于自动确定 $k$ [Pelleg and Moore,2000; Tibshirani et al.,2001],但常用的仍是基于不同 $k$ 值多次运行后选取最佳结果.
+
+LVQ 算法在每轮迭代中仅更新与当前样本距离最近的原型向量. 同时更新多个原型向量能显著提高收敛速度, 相应的改进算法有 LVQ2、LVQ3 等 [Kohonen, 2001]. [McLachlan and Peel, 2000] 详细介绍了高斯混合聚类, 算法中 EM 迭代优化的推导过程可参阅 [Bilmes, 1998; Jain and Dubes, 1988].
+
+采用不同方式表征样本分布的紧密程度, 可设计出不同的密度聚类算法, 除 DBSCAN [Ester et al., 1996] 外, 较常用的还有 OPTICS [Ankerst et al., 1999]、DENCLUE [Hinneburg and Keim, 1998] 等. AGNES [Kaufman and Rousseeuw, 1990] 采用了自底向上的聚合策略来产生层次聚类结构, 与之相反, DIANA [Kaufman and Rousseeuw, 1990] 则是采用自顶向下的分拆策略. AGNES 和 DIANA 都不能对已合并或已分拆的聚类簇进行回溯调整, 常用的层次聚类算法如 BIRCH [Zhang et al., 1996]、ROCK [Guha et al., 1999] 等对此进行了改进.
+
+聚类集成 (clustering ensemble) 通过对多个聚类学习器进行集成, 能有效降低聚类假设与真实聚类结构不符、聚类过程中的随机性等因素带来的不利影响, 可参阅 [Zhou, 2012] 第 7 章.
+
+异常检测 (anomaly detection) [Hodge and Austin, 2004; Chandola et al., 2009] 常借助聚类或距离计算进行, 如将远离所有簇中心的样本作为异常点, 或将密度极低处的样本作为异常点. 最近有研究提出基于 “隔离性" (isolation)可快速检测出异常点 [Liu et al., 2012].
+
+---
+
+亦称 outlier detection.
+
+---
+
+## 习题
+
+9.1 试证明: $p \geq  1$ 时,闵可夫斯基距离满足距离度量的四条基本性质; $0 \leq  p < 1$ 时，闵可夫斯基距离不满足直递性，但满足非负性、同一性、对称性; $p$ 趋向无穷大时,闵可夫斯基距离等于对应分量的最大绝对距离, 即
+
+$$
+\mathop{\lim }\limits_{{p \mapsto   + \infty }}{\left( \mathop{\sum }\limits_{{u = 1}}^{n}{\left| {x}_{iu} - {x}_{ju}\right| }^{p}\right) }^{\frac{1}{p}} = \mathop{\max }\limits_{u}\left| {{x}_{iu} - {x}_{ju}}\right| .
+$$
+
+9.2 同一样本空间中的集合 $X$ 与 $Z$ 之间的距离可通过 “豪斯多夫距离"(Hausdorff distance)计算:
+
+$$
+{\operatorname{dist}}_{\mathrm{H}}\left( {X, Z}\right)  = \max \left( {{\operatorname{dist}}_{\mathrm{h}}\left( {X, Z}\right) ,{\operatorname{dist}}_{\mathrm{h}}\left( {Z, X}\right) }\right) , \tag{9.44}
+$$
+
+其中
+
+$$
+{\operatorname{dist}}_{\mathrm{h}}\left( {X, Z}\right)  = \mathop{\max }\limits_{{\mathbf{x} \in  X}}\mathop{\min }\limits_{{\mathbf{z} \in  Z}}\parallel \mathbf{x} - \mathbf{z}{\parallel }_{2}. \tag{9.45}
+$$
+
+试证明: 豪斯多夫距离满足距离度量的四条基本性质.
+
+9.3 试析 $k$ 均值算法能否找到最小化式(9.24)的最优解.
+
+9.4 试编程实现 $k$ 均值算法,设置三组不同的 $k$ 值、三组不同初始中心点, 在西瓜数据集 4.0 上进行实验比较, 并讨论什么样的初始中心有利于取得好结果.
+
+9.5 基于 DBSCAN 的概念定义,若 $\mathbf{x}$ 为核心对象,由 $\mathbf{x}$ 密度可达的所有样本构成的集合为 $X$ . 试证明: $X$ 满足连接性 $\left( {9.39}\right)$ 与最大性 $\left( {9.40}\right)$ .
+
+9.6 试析 AGNES 算法使用最小距离和最大距离的区别.
+
+9.7 聚类结果中若每个簇都有一个凸包(包含簇样本的凸多面体), 且这些凸包不相交, 则称为凸聚类. 试析本章介绍的哪些聚类算法只能产生凸聚类, 哪些能产生非凸聚类.
+
+9.8 试设计一个聚类性能度量指标, 并与 9.2 节中的指标比较.
+
+${9.9}^{ * }$ 试设计一个能用于混合属性的非度量距离.
+
+${9.10}^{ * }$ 试设计一个能自动确定聚类数的改进 $k$ 均值算法,编程实现并在西瓜数据集 4.0 上运行.
+
+---
+
+西瓜数据集 4.0 见 p.202 表 9.1.
+
+即凸形簇结构.
+
+---
+
+## 参考文献
+
+Aloise, D., A. Deshpande, P. Hansen, and P. Popat. (2009). "NP-hardness of Euclidean sum-of-squares clustering." Machine Learning, 75(2):245-248.
+
+Ankerst, M., M. Breunig, H.-P. Kriegel, and J. Sander. (1999). "OPTICS: Ordering points to identify the clustering structure." In Proceedings of the ACM SIGMOD International Conference on Management of Data (SIG-MOD), 49-60, Philadelphia, PA.
+
+Banerjee, A., S. Merugu, I. Dhillon, and J. Ghosh. (2005). "Clustering with Bregman divergences." Journal of Machine Learning Research, 6:1705-1749.
+
+Bezdek, J. C. (1981). Pattern Recognition with Fuzzy Objective Function Algorithms. Plenum Press, New York, NY.
+
+Bilmes, J. A. (1998). "A gentle tutorial of the EM algorithm and its applications to parameter estimation for Gaussian mixture and hidden Markov models." Technical Report TR-97-021, Department of Electrical Engineering and Computer Science, University of California at Berkeley, Berkeley, CA.
+
+Chandola, V., A. Banerjee, and V. Kumar. (2009). "Anomaly detection: A survey." ACM Computing Surveys, 41(3):Article 15.
+
+Deza, M. and E. Deza. (2009). Encyclopedia of Distances. Springer, Berlin.
+
+Dhillon, I. S., Y. Guan, and B. Kulis. (2004). "Kernel k-means: Spectral clustering and normalized cuts." In Proceedings of the 10th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD), 551-556, Seattle, WA.
+
+Ester, M., H. P. Kriegel, J. Sander, and X. Xu. (1996). "A density-based algorithm for discovering clusters in large spatial databases." In Proceedings of the 2nd International Conference on Knowledge Discovery and Data Mining (KDD), 226-231, Portland, OR.
+
+Estivill-Castro, V. (2002). "Why so many clustering algorithms - a position paper." SIGKDD Explorations, 1(4):65-75.
+
+Guha, S., R. Rastogi, and K. Shim. (1999). "ROCK: A robust clustering algorithm for categorical attributes." In Proceedings of the 15th International Conference on Data Engineering (ICDE), 512-521, Sydney, Australia.
+
+Halkidi, M., Y. Batistakis, and M. Vazirgiannis. (2001). "On clustering validation techniques." Journal of Intelligent Information Systems, 27(2-3):107- 145.
+
+Hinneburg, A. and D. A. Keim. (1998). "An efficient approach to clustering in large multimedia databases with noise." In Proceedings of the 4th International Conference on Knowledge Discovery and Data Mining (KDD), 58-65, New York, NY.
+
+Hodge, V. J. and J. Austin. (2004). "A survey of outlier detection methodologies." Artificial Intelligence Review, 22(2):85-126.
+
+Huang, Z. (1998). "Extensions to the k-means algorithm for clustering large data sets with categorical values." Data Mining and Knowledge Discovery, 2(3):283-304.
+
+Jacobs, D. W., D. Weinshall, and Y. Gdalyahu. (2000). "Classification with non-metric distances: Image retrieval and class representation." IEEE Transactions on Pattern Analysis and Machine Intelligence, 6(22):583-600.
+
+Jain, A. K. (2009). "Data clustering: 50 years beyond k-means." Pattern Recognition Letters, 31(8):651-666.
+
+Jain, A. K. and R. C. Dubes. (1988). Algorithms for Clustering Data. Prentice Hall, Upper Saddle River, NJ.
+
+Jain, A. K., M. N. Murty, and P. J. Flynn. (1999). "Data clustering: A review." ACM Computing Surveys, 3(31):264-323.
+
+Kaufman, L. and P. J. Rousseeuw. (1987). "Clustering by means of medoids." In Statistical Data Analysis Based on the L1-Norm and Related Methods (Y. Dodge, ed.), 405-416, Elsevier, Amsterdam, The Netherlands.
+
+Kaufman, L. and P. J. Rousseeuw. (1990). Finding Groups in Data: An Introduction to Cluster Analysis. John Wiley & Sons, New York, NY.
+
+Kohonen, T. (2001). Self-Organizing Maps, 3rd edition. Springer, Berlin.
+
+Liu, F. T., K. M. Ting, and Z.-H. Zhou. (2012). "Isolation-based anomaly detection." ACM Transactions on Knowledge Discovery from Data, 6(1):Article 3.
+
+Maulik, U. and S. Bandyopadhyay. (2002). "Performance evaluation of some clustering algorithms and validity indices." IEEE Transactions on Pattern Analysis and Machine Intelligence, 24(12):1650-1654.
+
+McLachlan, G. and D. Peel. (2000). Finite Mixture Models. John Wiley & Sons, New York, NY.
+
+Mitchell, T. (1997). Machine Learning. McGraw Hill, New York, NY.
+
+Pelleg, D. and A. Moore. (2000). "X-means: Extending k-means with efficient estimation of the number of clusters." In Proceedings of the 17th International Conference on Machine Learning (ICML), 727-734, Stanford, CA.
+
+Rousseeuw, P. J. (1987). "Silhouettes: A graphical aid to the interpretation and validation of cluster analysis." Journal of Computational and Applied Mathematics, 20:53-65.
+
+Schölkopf, B., A. Smola, and K.-R. Müller. (1998). "Nonliear component analysis as a kernel eigenvalue problem." Neural Computation, 10(5):1299-1319.
+
+Stanfill, C. and D. Waltz. (1986). "Toward memory-based reasoning." Communications of the ACM, 29(12):1213-1228.
+
+Tan, X., S. Chen, Z.-H. Zhou, and J. Liu. (2009). "Face recognition under occlusions and variant expressions with partial similarity." IEEE Transactions on Information Forensics and Security, 2(4):217-230.
+
+Tibshirani, R., G. Walther, and T. Hastie. (2001). "Estimating the number of clusters in a data set via the gap statistic." Journal of the Royal Statistical Society - Series B, 63(2):411-423.
+
+von Luxburg, U. (2007). "A tutorial on spectral clustering." Statistics and Computing, 17(4):395-416.
+
+Xing, E. P., A. Y. Ng, M. I. Jordan, and S. Russell. (2003). "Distance metric learning, with application to clustering with side-information." In Advances in Neural Information Processing Systems 15 (NIPS) (S. Becker, S. Thrun, and K. Obermayer, eds.), 505-512, MIT Press, Cambridge, MA.
+
+Xu, R. and D. Wunsch II. (2005). "Survey of clustering algorithms." IEEE Transactions on Neural Networks, 3(16):645-678.
+
+Zhang, T., R. Ramakrishnan, and M. Livny. (1996). "BIRCH: An efficient data clustering method for very large databases." In Proceedings of the ACM SIGMOD International Conference on Management of Data (SIGMOD), 103-114, Montreal, Canada.
+
+Zhou, Z.-H. (2012). Ensemble Methods: Foundations and Algorithms. Chapman & Hall/CRC, Boca Raton, FL.
+
+Zhou, Z.-H. and Y. Yu. (2005). "Ensembling local learners through multimodal perturbation." IEEE Transactions on Systems, Man, and Cybernetics - Part B: Cybernetics, 35(4):725-735.
+
+休息一会儿
+
+![223_1635_750_272_359_0.jpg](../../images/223_1635_750_272_359_0.jpg)
+
+## 小故事:曼哈顿距离与赫尔曼·闵可夫斯基
+
+曼哈顿距离(Manhattan distance)亦称“出租车几何”(Taxicab geometry)，是德国大数学家赫尔曼·闵可夫斯基 (Hermann Minkowski, 1864-1909) 所创的词汇, 其得名是由于该距离标明了几何度量空间中两点在标准坐标系上的绝对轴距总和, 这恰是规划为方形区块的城市里两点之间的最短行程，例如从曼哈顿的第五大道与 33 街交点前往第三大道与 23 街交点,需走过 $\left( {5 - 3}\right)  + \left( {{33} - {23}}\right)  = {12}$ 个街区.
+
+闵可夫斯基出生于俄国亚力克索塔斯(Alexotas)的一个犹太人家庭，由于当时俄国政府迫害犹太人，他八岁时随全家移居普鲁士哥尼斯堡，与后来成为大数学家的希尔伯特一河之隔. 闵可夫斯基从小就是著名神童, 他熟读莎士比亚、席勒和歌德的作品，几乎能全文背诵《浮士德》；八岁进入预科学校，仅用五年半就完成了八年的学业；十七岁时建立了 $n$ 元二次型的完整理论体系，解决了法国科学院公开悬赏的数学难题. 1908 年 9 月他在科隆的一次学术会议上做了《空间与时间》的著名演讲，提出了四维时空理论，为广义相对论的建立开辟了道路. 不幸的是，三个月后他死于急性阑尾炎.
+
+1896 年闵可夫斯基在苏黎世大学任教期间, 是爱因斯坦的数学老师. 诺贝尔物理学奖得主玻恩曾说，在闵可夫斯基的数学工作中找到了 “相对论的整个武器库”. 闵可夫斯基去世后，其生前好友希尔伯特整理了他的遗作，于 1911 年出版了《闵可夫斯基全集》. 闵可夫斯基的哥哥奥斯卡是“胰岛素之父”, 侄子鲁道夫是美国著名天文学家.
+
+---
+
+今立陶宛的考纳斯 (Kaunas).
+
+哥尼斯堡是著名的 “七桥问题” 发源地，今俄罗斯加里宁格勒.
+
+四维时空亦称 “闵可夫斯基时空” 或 “闵可夫斯基空间”.
+
+---

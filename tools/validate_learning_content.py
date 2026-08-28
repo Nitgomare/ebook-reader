@@ -52,6 +52,12 @@ def main() -> None:
     resource_downloads = [
         resource for book in catalog["books"] for resource in book.get("resources", [])
     ]
+    machine_learning_book = next(
+        book for book in catalog["books"] if book["slug"] == "zhou-machine-learning"
+    )
+    machine_learning_images = list(
+        (DIST / "files" / "zhou-machine-learning" / "images").glob("*.jpg")
+    )
     report = {
         "stats": catalog["stats"],
         "categories": [item["id"] for item in catalog["site"]["categories"]],
@@ -92,6 +98,12 @@ def main() -> None:
             doc["relPath"] for doc in catalog["docs"]
             if doc["bookSlug"] == "zhou-machine-learning" and "tinyml-lab" in doc["relPath"]
         ],
+        "machine_learning_book": {
+            "documents": machine_learning_book["docCount"],
+            "chapters": machine_learning_book["chapterCount"],
+            "images": len(machine_learning_images),
+            "cover": machine_learning_book["cover"],
+        },
         "resource_book_info": "resource-book-info" in app_js,
         "minimal_navigation": (
             "course-resource-link" in app_js
@@ -139,6 +151,12 @@ def main() -> None:
     assert report["missing_code_downloads"] == 0
     assert report["machine_learning_code"] == 34
     assert not report["machine_learning_lab_pages"]
+    assert report["machine_learning_book"] == {
+        "documents": 18,
+        "chapters": 16,
+        "images": 122,
+        "cover": "files/zhou-machine-learning/assets/cover.jpeg",
+    }
     assert report["resource_book_info"]
     assert report["minimal_navigation"]
     assert report["direct_book_entry"]

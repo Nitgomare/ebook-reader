@@ -239,6 +239,7 @@
       "title": "机器学习",
       "author": "周志华",
       "description": "从基本概念、经典模型到计算学习理论与强化学习的系统教材。",
+      "coverSource": "assets/cover.jpeg",
       "tags": [
         "机器学习",
         "西瓜书",
@@ -255,7 +256,7 @@
         }
       ],
       "sourceSiteName": "周志华《机器学习》· 在线图书",
-      "cover": "files/zhou-machine-learning/00-front-matter/images/cover.jpeg",
+      "cover": "files/zhou-machine-learning/assets/cover.jpeg",
       "docCount": 18,
       "firstDocId": "6d33a12baa08f7cc",
       "chapterCount": 16,
@@ -1978,7 +1979,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "在人工智能界有一种说法，认为机器学习是人工智能领域中最能够体现智能的一个分支。从历史来看，机器学习似乎也是人工智能中发展最快的分支之一。在二十世纪八十年代的时候，符号学习可能还是机器学习的主流，而自从二十世纪九十年代以来，就一直是统计机器学习的天下了。不知道是否可以这样认为：从主",
+      "excerpt": "机器学习是计算机科学的重要分支领域. 本书作为该领域的入门教材, 在内容上尽可能涵盖机器学习基础知识的各方面. 全书共 16 章,大致分为 3 个部分: 第 1 部分 (第 $1 \\sim  3$ 章) 介绍机器学习的基础知识; 第 2 部分 (第 $4 \\sim  {10}$ ",
       "order": 1,
       "previousId": "",
       "nextId": "6d33a12baa08f7cc",
@@ -1992,7 +1993,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "傍晚小街路面上沁出微雨后的湿润，和煦的细风吹来，抬头看看天边的晚霞，嗯，明天又是一个好天气。走到水果摊旁，挑了个根蒂蜷缩、敲起来声音浊响的青绿西瓜，一边满心期待着皮薄肉厚瓤甜的爽落感，一边愉快地想着，这学期狠下了工夫，基础概念弄得清清楚楚，算法作业也是信手拈来，这门课成绩一定差不",
+      "excerpt": "傍晚小街路面上沁出微雨后的湿润，和煦的细风吹来，抬头看看天边的晚霞, 嗯, 明天又是一个好天气. 走到水果摊旁, 挑了个根蒂蜷缩、敲起来声音浊响的青绿西瓜, 一边满心期待着皮薄肉厚瓤甜的爽落感, 一边愉快地想着, 这学期狠下了工夫，基础概念弄得清清楚楚，算法作业也是信手拈来，这门",
       "chapterNumber": 1,
       "order": 2,
       "previousId": "3c7c1612390932f4",
@@ -2007,7 +2008,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "精度常写为百分比形式<img src=\"images/00026.jpeg\" class=\"zaozi\" />。",
+      "excerpt": "通常我们把分类错误的样本数占样本总数的比例称为 “错误率” (error rate),即如果在 $m$ 个样本中有 $a$ 个样本分类错误,则错误率 $E = a/m$ ; 相应的, $1 - a/m$ 称为 “精度” (accuracy),即 “精度 $= 1 -$ 错误率”.",
       "chapterNumber": 2,
       "order": 3,
       "previousId": "6d33a12baa08f7cc",
@@ -2022,7 +2023,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "给定由d个属性描述的示例x=（x<sub>1</sub>；x<sub>2</sub>；...；x<sub>d</sub>），其中x<sub>i</sub>是x在第i个属性上的取值，线性模型（linear model）试图学得一个通过属性的线性组合来进行预测的函数，即",
+      "excerpt": "给定由 $d$ 个属性描述的示例 $\\mathbf{x} = \\left( {{x}{1};{x}{2};\\ldots ;{x}{d}}\\right)$ ,其中 ${x}{i}$ 是 $\\mathbf{x}$ 在第 $i$ 个属性上的取值，线性模型(linear model)试图",
       "chapterNumber": 3,
       "order": 4,
       "previousId": "9cb9cb4551057879",
@@ -2037,7 +2038,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "亦称“判定树”。根据上下文，本书中的“决策树”有时是指学习方法，有时是指学得的树。",
+      "excerpt": "决策树(decision tree) 是一类常见的机器学习方法. 以二分类任务为例, 我们希望从给定训练数据集学得一个模型用以对新示例进行分类, 这个把样本分类的任务, 可看作对 “当前样本属于正类吗?” 这个问题的 “决策” 或 “判定”过程. 顾名思义, 决策树是基于树结构来",
       "chapterNumber": 4,
       "order": 5,
       "previousId": "ad0cb3f93073ee3d",
@@ -2052,7 +2053,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "本书所谈的是“人工神经网络”，不是生物学意义上的神经网络。",
+      "excerpt": "神经网络(neural networks) 方面的研究很早就已出现, 今天 “神经网络” 已是一个相当大的、多学科交叉的学科领域. 各相关学科对神经网络的定义多种多样, 本书采用目前使用得最广泛的一种, 即 “神经网络是由具有适应性的简单单元组成的广泛并行互连的网络, 它的组织能",
       "chapterNumber": 5,
       "order": 6,
       "previousId": "e153a3bb0ee44de3",
@@ -2067,7 +2068,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "给定训练样本集D={（x<sub>1</sub>，y<sub>1</sub>），（x<sub>2</sub>，y<sub>2</sub>），...，（x<sub>m</sub>，y<sub>m</sub>）}，y<sub>i</sub> ∈ {−1，+1}，分类学习最基本的想法就",
+      "excerpt": "给定训练样本集 $D = \\left\\{  {\\left( {{\\mathbf{x}}{1},{y}{1}}\\right) ,\\left( {{\\mathbf{x}}{2},{y}{2}}\\right) ,\\ldots ,\\left( {{\\mathbf{x}}{m},{y}{m",
       "chapterNumber": 6,
       "order": 7,
       "previousId": "76c6f3bc95506b2c",
@@ -2082,7 +2083,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "贝叶斯决策论（Bayesian decision theory）是概率框架下实施决策的基本方法。对分类任务来说，在所有相关概率都已知的理想情形下，贝叶斯决策论考虑如何基于这些概率和误判损失来选择最优的类别标记。下面我们以多分类任务为例来解释其基本原理。",
+      "excerpt": "贝叶斯决策论(Bayesian decision theory)是概率框架下实施决策的基本方法. 对分类任务来说, 在所有相关概率都已知的理想情形下, 贝叶斯决策论考虑如何基于这些概率和误判损失来选择最优的类别标记. 下面我们以多分类任务为例来解释其基本原理.",
       "chapterNumber": 7,
       "order": 8,
       "previousId": "eab96497ad44debf",
@@ -2097,7 +2098,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "ensemble读音似“昂桑宝”而非“因桑宝”。",
+      "excerpt": "ensemble 读音似“昂桑宝”而非“因桑宝”.",
       "chapterNumber": 8,
       "order": 9,
       "previousId": "b6de9a3d6eed7a06",
@@ -2112,7 +2113,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "常见的无监督学习任务还有密度估计（density estimation）、异常检测（anomaly detection）等。",
+      "excerpt": "在 “无监督学习” (unsupervised learning) 中, 训练样本的标记信息是未知的, 目标是通过对无标记训练样本的学习来揭示数据的内在性质及规律, 为进一步的数据分析提供基础. 此类学习任务中研究最多、应用最广的是 “聚类\" (clustering).",
       "chapterNumber": 9,
       "order": 10,
       "previousId": "9abe1b9786918e97",
@@ -2127,7 +2128,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "k近邻（k-Nearest Neighbor，简称kNN）学习是一种常用的监督学习方法，其工作机制非常简单：给定测试样本，基于某种距离度量找出训练集中与其最靠近的k个训练样本，然后基于这k个“邻居”的信息来进行预测。通常，在分类任务中可使用“投票法”，即选择这k个样本中出现最多的",
+      "excerpt": "$k$ 近邻 $\\left( k\\right.$ -Nearest Neighbor,简称 $k$ NN $)$ 学习是一种常用的监督学习方法, 其工作机制非常简单: 给定测试样本, 基于某种距离度量找出训练集中与其最靠近的 $k$ 个训练样本，然后基于这 $k$ 个 “邻居” ",
       "chapterNumber": 10,
       "order": 11,
       "previousId": "bfdec68905380cb1",
@@ -2142,7 +2143,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "我们能用很多属性描述一个西瓜，例如色泽、根蒂、敲声、纹理、触感等，但有经验的人往往只需看看根蒂、听听敲声就知道是否好瓜。换言之，对一个学习任务来说，给定属性集，其中有些属性可能很关键、很有用，另一些属性则可能没什么用。我们将属性称为“特征”（feature），对当前学习任务有用的",
+      "excerpt": "我们能用很多属性描述一个西瓜, 例如色泽、根蒂、敲声、纹理、触感等, 但有经验的人往往只需看看根蒂、听听敲声就知道是否好瓜. 换言之, 对一个学习任务来说, 给定属性集, 其中有些属性可能很关键、很有用, 另一些属性则可能没什么用. 我们将属性称为 “特征” (feature),",
       "chapterNumber": 11,
       "order": 12,
       "previousId": "6bd9a2ecac56b128",
@@ -2157,7 +2158,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "顾名思义，计算学习理论（computational learning theory）研究的是关于通过“计算”来进行“学习”的理论，即关于机器学习的理论基础，其目的是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。",
+      "excerpt": "顾名思义, 计算学习理论(computational learning theory)研究的是关于通过 “计算” 来进行 “学习” 的理论, 即关于机器学习的理论基础, 其目的是分析学习任务的困难本质, 为学习算法提供理论保证, 并根据分析结果指导算法设计.",
       "chapterNumber": 12,
       "order": 13,
       "previousId": "bc1fd3ed914552e4",
@@ -2172,7 +2173,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "我们在丰收季节来到瓜田，满地都是西瓜，瓜农抱来三四个瓜说这都是好瓜，然后再指着地里的五六个瓜说这些还不好，还需再生长若干天。基于这些信息，我们能否构建一个模型，用于判别地里的哪些瓜是已该采摘的好瓜？显然，可将瓜农告诉我们的好瓜、不好的瓜分别作为正例和反例来训练一个分类器。然而，只",
+      "excerpt": "我们在丰收季节来到瓜田，满地都是西瓜，瓜农抱来三四个瓜说这都是好瓜, 然后再指着地里的五六个瓜说这些还不好, 还需再生长若干天. 基于这些信息, 我们能否构建一个模型, 用于判别地里的哪些瓜是已该采摘的好瓜? 显然, 可将瓜农告诉我们的好瓜、不好的瓜分别作为正例和反例来训练一个分",
       "chapterNumber": 13,
       "order": 14,
       "previousId": "f7ae7e0eba00015d",
@@ -2187,7 +2188,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "基于学习器进行预测，例如根据纹理、颜色、根蒂等信息判断一个瓜是否为好瓜就是在做推断；但推断远超出预测范畴，例如在吃到一个不见根蒂的好瓜时，“由果溯因”逆推其根蒂的状态也是推断。",
+      "excerpt": "机器学习最重要的任务，是根据一些已观察到的证据(例如训练样本)来对感兴趣的未知变量(例如类别标记)进行估计和推测. 概率模型(probabilistic model)提供了一种描述框架, 将学习任务归结于计算变量的概率分布. 在概率模型中, 利用已知变量推测未知变量的分布称为 “",
       "chapterNumber": 14,
       "order": 15,
       "previousId": "2ac21e4c5b4e9d38",
@@ -2202,7 +2203,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "所有预测模型在广义上都可称为一个或一组“规则”，但规则学习中的“规则”是狭义的，事实上约定俗成地省略了“逻辑”二字。",
+      "excerpt": "机器学习中的 “规则” (rule)通常是指语义明确、能描述数据分布所隐含的客观规律或领域概念、可写成 “若……，则……”形式的逻辑规则 [Fürnkranz et al., 2012]. “规则学习” (rule learning)是从训练数据中学习出一组能用于对未见示例进行判",
       "chapterNumber": 15,
       "order": 16,
       "previousId": "8492011b9bfee92c",
@@ -2217,7 +2218,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "我们考虑一下如何种西瓜。种瓜有许多步骤，从一开始的选种，到定期浇水、施肥、除草、杀虫，经过一段时间才能收获西瓜。通常要等到收获后，我们才知道种出的瓜好不好。若将得到好瓜作为辛勤种瓜劳动的奖赏，则在种瓜过程中当我们执行某个操作（例如，施肥）时，并不能立即获得这个最终奖赏，甚至难以判",
+      "excerpt": "我们考虑一下如何种西瓜. 种瓜有许多步骤, 从一开始的选种, 到定期浇水、施肥、除草、杀虫, 经过一段时间才能收获西瓜. 通常要等到收获后, 我们才知道种出的瓜好不好. 若将得到好瓜作为辛勤种瓜劳动的奖赏，则在种瓜过程中当我们执行某个操作(例如，施肥)时，并不能立即获得这个最终奖",
       "chapterNumber": 16,
       "order": 17,
       "previousId": "a0a82159f31b0339",
@@ -2232,7 +2233,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "记实矩阵<img src=\"images/01024.jpeg\" class=\"zaozi1\" />第<img src=\"images/00944.jpeg\" class=\"zaozi1\" />行第<img src=\"images/01025.jpeg\" class=\"zaozi",
+      "excerpt": "记实矩阵 $\\mathbf{A} \\in  {\\mathbb{R}}^{m \\times  n}$ 第 $i$ 行第 $j$ 列的元素为 ${\\left( \\mathbf{A}\\right) }{ij} = {A}{ij}$ . 矩阵 $\\mathbf{A}$ 的转置(trans",
       "order": 18,
       "previousId": "25aa0a5c241fce28",
       "nextId": "",
@@ -5699,7 +5700,7 @@
       "name": "NaiveBayesClassifier.py",
       "kind": "source",
       "language": "python",
-      "size": 3814,
+      "size": 3912,
       "downloadUrl": "files/code/zhou-machine-learning/bayes/NaiveBayesClassifier.py",
       "truncated": false
     },
@@ -5710,7 +5711,7 @@
       "name": "AGNES.py",
       "kind": "source",
       "language": "python",
-      "size": 3460,
+      "size": 3571,
       "downloadUrl": "files/code/zhou-machine-learning/cluster/AGNES.py",
       "truncated": false
     },
@@ -5721,7 +5722,7 @@
       "name": "DBSCAN.py",
       "kind": "source",
       "language": "python",
-      "size": 2497,
+      "size": 2568,
       "downloadUrl": "files/code/zhou-machine-learning/cluster/DBSCAN.py",
       "truncated": false
     },
@@ -5732,7 +5733,7 @@
       "name": "GaussianMixture.py",
       "kind": "source",
       "language": "python",
-      "size": 3526,
+      "size": 3624,
       "downloadUrl": "files/code/zhou-machine-learning/cluster/GaussianMixture.py",
       "truncated": false
     },
@@ -5743,7 +5744,7 @@
       "name": "KMeans.py",
       "kind": "source",
       "language": "python",
-      "size": 3095,
+      "size": 3189,
       "downloadUrl": "files/code/zhou-machine-learning/cluster/KMeans.py",
       "truncated": false
     },
@@ -5754,7 +5755,7 @@
       "name": "LVQ.py",
       "kind": "source",
       "language": "python",
-      "size": 2871,
+      "size": 2956,
       "downloadUrl": "files/code/zhou-machine-learning/cluster/LVQ.py",
       "truncated": false
     },
@@ -5765,7 +5766,7 @@
       "name": "compare_classification.py",
       "kind": "source",
       "language": "python",
-      "size": 4679,
+      "size": 4680,
       "downloadUrl": "files/code/zhou-machine-learning/compare/compare_classification.py",
       "truncated": false
     },
@@ -5776,7 +5777,7 @@
       "name": "compare_clustering.py",
       "kind": "source",
       "language": "python",
-      "size": 3794,
+      "size": 3795,
       "downloadUrl": "files/code/zhou-machine-learning/compare/compare_clustering.py",
       "truncated": false
     },
@@ -5787,7 +5788,7 @@
       "name": "compare_dimension_reduction.py",
       "kind": "source",
       "language": "python",
-      "size": 3553,
+      "size": 3554,
       "downloadUrl": "files/code/zhou-machine-learning/compare/compare_dimension_reduction.py",
       "truncated": false
     },
@@ -5798,7 +5799,7 @@
       "name": "compare_regresssor.py",
       "kind": "source",
       "language": "python",
-      "size": 5239,
+      "size": 5240,
       "downloadUrl": "files/code/zhou-machine-learning/compare/compare_regresssor.py",
       "truncated": false
     },
@@ -5809,7 +5810,7 @@
       "name": "Isomap.py",
       "kind": "source",
       "language": "python",
-      "size": 2598,
+      "size": 2667,
       "downloadUrl": "files/code/zhou-machine-learning/dimension_reduction/Isomap.py",
       "truncated": false
     },
@@ -5820,7 +5821,7 @@
       "name": "KernelPCA.py",
       "kind": "source",
       "language": "python",
-      "size": 3181,
+      "size": 3273,
       "downloadUrl": "files/code/zhou-machine-learning/dimension_reduction/KernelPCA.py",
       "truncated": false
     },
@@ -5831,7 +5832,7 @@
       "name": "LLE.py",
       "kind": "source",
       "language": "python",
-      "size": 2154,
+      "size": 2211,
       "downloadUrl": "files/code/zhou-machine-learning/dimension_reduction/LLE.py",
       "truncated": false
     },
@@ -5842,7 +5843,7 @@
       "name": "MDS.py",
       "kind": "source",
       "language": "python",
-      "size": 2304,
+      "size": 2369,
       "downloadUrl": "files/code/zhou-machine-learning/dimension_reduction/MDS.py",
       "truncated": false
     },
@@ -5853,7 +5854,7 @@
       "name": "PCA.py",
       "kind": "source",
       "language": "python",
-      "size": 1386,
+      "size": 1432,
       "downloadUrl": "files/code/zhou-machine-learning/dimension_reduction/PCA.py",
       "truncated": false
     },
@@ -5864,7 +5865,7 @@
       "name": "GDA.py",
       "kind": "source",
       "language": "python",
-      "size": 2527,
+      "size": 2601,
       "downloadUrl": "files/code/zhou-machine-learning/discriminant_analysis/GDA.py",
       "truncated": false
     },
@@ -5875,7 +5876,7 @@
       "name": "LDA.py",
       "kind": "source",
       "language": "python",
-      "size": 2472,
+      "size": 2544,
       "downloadUrl": "files/code/zhou-machine-learning/discriminant_analysis/LDA.py",
       "truncated": false
     },
@@ -5886,7 +5887,7 @@
       "name": "AdaBoostClassifier.py",
       "kind": "source",
       "language": "python",
-      "size": 3322,
+      "size": 3404,
       "downloadUrl": "files/code/zhou-machine-learning/ensemble/AdaBoostClassifier.py",
       "truncated": false
     },
@@ -5897,7 +5898,7 @@
       "name": "GradientBoostingRegressor.py",
       "kind": "source",
       "language": "python",
-      "size": 2129,
+      "size": 2188,
       "downloadUrl": "files/code/zhou-machine-learning/ensemble/GradientBoostingRegressor.py",
       "truncated": false
     },
@@ -5908,7 +5909,7 @@
       "name": "RandomForestRegressor.py",
       "kind": "source",
       "language": "python",
-      "size": 1948,
+      "size": 1993,
       "downloadUrl": "files/code/zhou-machine-learning/ensemble/RandomForestRegressor.py",
       "truncated": false
     },
@@ -5919,7 +5920,7 @@
       "name": "XGBRegressor.py",
       "kind": "source",
       "language": "python",
-      "size": 6581,
+      "size": 6773,
       "downloadUrl": "files/code/zhou-machine-learning/ensemble/XGBRegressor.py",
       "truncated": false
     },
@@ -5941,7 +5942,7 @@
       "name": "ReliefFeatureSelection.py",
       "kind": "source",
       "language": "python",
-      "size": 2459,
+      "size": 2526,
       "downloadUrl": "files/code/zhou-machine-learning/feature_selection/ReliefFeatureSelection.py",
       "truncated": false
     },
@@ -5952,7 +5953,7 @@
       "name": "LinearRegression.py",
       "kind": "source",
       "language": "python",
-      "size": 1497,
+      "size": 1549,
       "downloadUrl": "files/code/zhou-machine-learning/linear_model/LinearRegression.py",
       "truncated": false
     },
@@ -5963,7 +5964,7 @@
       "name": "LocallyWeightedLinearRegression.py",
       "kind": "source",
       "language": "python",
-      "size": 1346,
+      "size": 1390,
       "downloadUrl": "files/code/zhou-machine-learning/linear_model/LocallyWeightedLinearRegression.py",
       "truncated": false
     },
@@ -5974,7 +5975,7 @@
       "name": "LogisticRegression.py",
       "kind": "source",
       "language": "python",
-      "size": 5338,
+      "size": 5491,
       "downloadUrl": "files/code/zhou-machine-learning/linear_model/LogisticRegression.py",
       "truncated": false
     },
@@ -5985,7 +5986,7 @@
       "name": "SGDRegressor.py",
       "kind": "source",
       "language": "python",
-      "size": 2637,
+      "size": 2718,
       "downloadUrl": "files/code/zhou-machine-learning/linear_model/SGDRegressor.py",
       "truncated": false
     },
@@ -5996,7 +5997,7 @@
       "name": "curves.py",
       "kind": "source",
       "language": "python",
-      "size": 2454,
+      "size": 2455,
       "downloadUrl": "files/code/zhou-machine-learning/metrices/curves.py",
       "truncated": false
     },
@@ -6007,7 +6008,7 @@
       "name": "README.md",
       "kind": "text",
       "language": "markdown",
-      "size": 5769,
+      "size": 5941,
       "downloadUrl": "files/code/zhou-machine-learning/README.md",
       "truncated": false
     },
@@ -6018,7 +6019,7 @@
       "name": "requirements.txt",
       "kind": "text",
       "language": "text",
-      "size": 75,
+      "size": 76,
       "downloadUrl": "files/code/zhou-machine-learning/requirements.txt",
       "truncated": false
     },
@@ -6029,7 +6030,7 @@
       "name": "SVC.py",
       "kind": "source",
       "language": "python",
-      "size": 4755,
+      "size": 4889,
       "downloadUrl": "files/code/zhou-machine-learning/svm/SVC.py",
       "truncated": false
     },
@@ -6040,7 +6041,7 @@
       "name": "DecisionTreeClassifier.py",
       "kind": "source",
       "language": "python",
-      "size": 6770,
+      "size": 6995,
       "downloadUrl": "files/code/zhou-machine-learning/tree/DecisionTreeClassifier.py",
       "truncated": false
     },
@@ -6051,7 +6052,7 @@
       "name": "DecisionTreeRegressor.py",
       "kind": "source",
       "language": "python",
-      "size": 3941,
+      "size": 4051,
       "downloadUrl": "files/code/zhou-machine-learning/tree/DecisionTreeRegressor.py",
       "truncated": false
     },
@@ -6062,7 +6063,7 @@
       "name": "treePlotter.py",
       "kind": "source",
       "language": "python",
-      "size": 2917,
+      "size": 2993,
       "downloadUrl": "files/code/zhou-machine-learning/tree/treePlotter.py",
       "truncated": false
     }
