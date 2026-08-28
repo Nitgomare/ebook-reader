@@ -248,6 +248,38 @@
       "category": "artificial-intelligence",
       "type": "reference",
       "codeSource": "code",
+      "codeLinks": {
+        "metrices": [
+          "chapters/02-model-evaluation-and-selection/index.md"
+        ],
+        "linear_model": [
+          "chapters/03-linear-models/index.md"
+        ],
+        "discriminant_analysis": [
+          "chapters/03-linear-models/index.md"
+        ],
+        "tree": [
+          "chapters/04-decision-trees/index.md"
+        ],
+        "svm": [
+          "chapters/06-support-vector-machines/index.md"
+        ],
+        "bayes": [
+          "chapters/07-bayesian-classifiers/index.md"
+        ],
+        "ensemble": [
+          "chapters/08-ensemble-learning/index.md"
+        ],
+        "cluster": [
+          "chapters/09-clustering/index.md"
+        ],
+        "dimension_reduction": [
+          "chapters/10-dimensionality-reduction-and-metric-learning/index.md"
+        ],
+        "feature_selection": [
+          "chapters/11-feature-selection-and-sparse-learning/index.md"
+        ]
+      },
       "resourceLinks": [
         {
           "label": "机器学习配套视频",
@@ -2013,7 +2045,9 @@
       "order": 3,
       "previousId": "6d33a12baa08f7cc",
       "nextId": "ad0cb3f93073ee3d",
-      "codeFiles": []
+      "codeFiles": [
+        "9a77e5d532b24f7c"
+      ]
     },
     {
       "id": "ad0cb3f93073ee3d",
@@ -2028,7 +2062,14 @@
       "order": 4,
       "previousId": "9cb9cb4551057879",
       "nextId": "e153a3bb0ee44de3",
-      "codeFiles": []
+      "codeFiles": [
+        "6a81128066b682fd",
+        "1b9063e9912ab3b8",
+        "b6ba99359ac39751",
+        "5df9f89a939feb43",
+        "a21e078c32271319",
+        "7cd0d50e5546405a"
+      ]
     },
     {
       "id": "e153a3bb0ee44de3",
@@ -2043,7 +2084,11 @@
       "order": 5,
       "previousId": "ad0cb3f93073ee3d",
       "nextId": "76c6f3bc95506b2c",
-      "codeFiles": []
+      "codeFiles": [
+        "c5a2e004cf6baf92",
+        "077156dd07cd73fc",
+        "3097cd37c8aa45ee"
+      ]
     },
     {
       "id": "76c6f3bc95506b2c",
@@ -2073,7 +2118,9 @@
       "order": 7,
       "previousId": "76c6f3bc95506b2c",
       "nextId": "b6de9a3d6eed7a06",
-      "codeFiles": []
+      "codeFiles": [
+        "e5930520f1a13186"
+      ]
     },
     {
       "id": "b6de9a3d6eed7a06",
@@ -2088,7 +2135,9 @@
       "order": 8,
       "previousId": "eab96497ad44debf",
       "nextId": "9abe1b9786918e97",
-      "codeFiles": []
+      "codeFiles": [
+        "174445853646291e"
+      ]
     },
     {
       "id": "9abe1b9786918e97",
@@ -2103,7 +2152,12 @@
       "order": 9,
       "previousId": "b6de9a3d6eed7a06",
       "nextId": "bfdec68905380cb1",
-      "codeFiles": []
+      "codeFiles": [
+        "8fa006e64d1bb187",
+        "fef96c9e37b41e06",
+        "1a0f3d2235d3469a",
+        "07719db632af1c2d"
+      ]
     },
     {
       "id": "bfdec68905380cb1",
@@ -2118,7 +2172,13 @@
       "order": 10,
       "previousId": "9abe1b9786918e97",
       "nextId": "6bd9a2ecac56b128",
-      "codeFiles": []
+      "codeFiles": [
+        "962fa662777a2638",
+        "90160b5fca935d9d",
+        "ae718a3a9fdda0d5",
+        "0e6c48085e814802",
+        "05b793ad1a541eb1"
+      ]
     },
     {
       "id": "6bd9a2ecac56b128",
@@ -2133,7 +2193,13 @@
       "order": 11,
       "previousId": "bfdec68905380cb1",
       "nextId": "bc1fd3ed914552e4",
-      "codeFiles": []
+      "codeFiles": [
+        "ebc690b56c4a903e",
+        "8e76c165198fbbec",
+        "d5d3d25e902cedb8",
+        "5793116b414d4107",
+        "6dedc78fadabc1a3"
+      ]
     },
     {
       "id": "bc1fd3ed914552e4",
@@ -2148,7 +2214,9 @@
       "order": 12,
       "previousId": "6bd9a2ecac56b128",
       "nextId": "f7ae7e0eba00015d",
-      "codeFiles": []
+      "codeFiles": [
+        "b60d6e9975835d70"
+      ]
     },
     {
       "id": "f7ae7e0eba00015d",
