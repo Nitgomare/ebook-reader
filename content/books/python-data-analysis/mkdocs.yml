@@ -1,0 +1,66 @@
+site_name: Python 数据分析 · 教材站
+site_description: 以教材为主线的 NumPy Pandas Matplotlib 学习站
+docs_dir: docs
+site_dir: ../../site/book-sites/python-data-analysis
+theme:
+  name: material
+  language: zh
+  icon: {logo: material/language-python}
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: amber
+      accent: blue
+      toggle: {icon: material/brightness-7, name: 切换深色模式}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: amber
+      accent: blue
+      toggle: {icon: material/brightness-4, name: 切换浅色模式}
+  features: [navigation.sections, navigation.top, navigation.footer, navigation.path, content.code.copy]
+nav:
+  - 课程首页: index.md
+  - 课程资源: course-resources.md
+  - 交互式代码学习器: code-lab.md
+  - 前置内容: 00-front-matter/index.md
+  - 第1章 数据分析基础: chapters/01-chapter/index.md
+  - 第2章 搭建数据分析开发环境: chapters/02-chapter/index.md
+  - 第3章 NumPy模块之数组计算: chapters/03-numpy/index.md
+  - 第4章 Pandas模块基础: chapters/04-pandas/index.md
+  - 第5章 Pandas模块之数据的读取: chapters/05-pandas/index.md
+  - 第6章 Pandas模块之数据的处理: chapters/06-pandas/index.md
+  - 第7章 Pandas模块之数据的清洗: chapters/07-pandas/index.md
+  - 第8章 数据的计算与格式化: chapters/08-chapter/index.md
+  - 第9章 数据统计及透视表: chapters/09-chapter/index.md
+  - 第10章 处理日期与时间: chapters/10-chapter/index.md
+  - 第11章 Scikit-Learn机器学习模块: chapters/11-scikit-learn/index.md
+  - 第12章 Matplotlib模块入门: chapters/12-matplotlib/index.md
+  - 第13章 Matplotlib模块进阶: chapters/13-matplotlib/index.md
+  - 第14章 Seaborn图表: chapters/14-seaborn/index.md
+  - 第15章 Plotly图表: chapters/15-plotly/index.md
+  - 第16章 Bokeh图表: chapters/16-bokeh/index.md
+  - 第17章 Pyecharts图表: chapters/17-pyecharts/index.md
+  - 第18章 股票数据分析: chapters/18-chapter/index.md
+  - 第19章 淘宝网订单分析: chapters/19-chapter/index.md
+  - 第20章 网站用户数据分析: chapters/20-chapter/index.md
+  - 第21章 NBA球员薪资分析: chapters/21-nba/index.md
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      permalink: true
+      toc_depth: 2-3
+extra_css: [assets/stylesheets/study-site.css, assets/stylesheets/course-home.css, assets/stylesheets/course-resources.css, assets/stylesheets/code-lab.css, assets/stylesheets/back-to-main.css]
+extra_javascript: [assets/javascripts/study-progress.js, assets/javascripts/code-lab.js, assets/javascripts/back-to-main.js]
+extra:
+  homepage: /programming/
+copyright: '返回 <a href="/programming/">编程与人工智能学习中心</a>'

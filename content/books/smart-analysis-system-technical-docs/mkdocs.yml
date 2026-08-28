@@ -1,0 +1,68 @@
+site_name: "智能分析与装备寿命预测系统技术文档"
+site_description: "系统梳理平台架构、数据计算、健康诊断、损伤评估、RUL 预测、能耗拆解及预测性维护算法原理。"
+site_url: "https://sskb-cmg.pages.dev/book-sites/smart-analysis-system-technical-docs/"
+docs_dir: docs
+use_directory_urls: true
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: blue
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - scheme: slate
+      primary: blue
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  features:
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
+    - toc.follow
+    - content.code.copy
+
+plugins:
+  - search:
+      lang: [zh, en]
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
+  - toc:
+      permalink: true
+      toc_depth: 2-4
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_css:
+  - assets/stylesheets/reading.css
+  - assets/stylesheets/back-to-main.css
+
+extra_javascript:
+  - assets/javascripts/mathjax.js
+  - assets/javascripts/back-to-main.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - "文档首页": index.md
+  - "第一章 平台总体架构与设计理论": chapters/01/index.md
+  - "第二章 基础运行数据统计与能耗结构拆解理论": chapters/02/index.md
+  - "第三章 机组健康诊断与异常预警算法理论": chapters/03/index.md
+  - "第四章 结构部件损伤评估与剩余寿命（RUL）预测理论": chapters/04/index.md
+  - "第五章 故障关联挖掘与全场能耗损失拆解理论": chapters/05/index.md
+  - "第六章 智能化运维与预测性维护策略理论": chapters/06/index.md
+  - "第七章 诊断报告导出与系统管理理论": chapters/07/index.md

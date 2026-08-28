@@ -1,0 +1,45 @@
+site_name: 动手学深度学习 · 学习站
+site_description: 面向研究生的动手学深度学习课程与教材导航
+docs_dir: docs
+site_dir: ../../site/book-sites/deep-learning
+theme:
+  name: material
+  language: zh
+  icon:
+    logo: material/brain
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: amber
+      toggle: {icon: material/brightness-7, name: 切换深色模式}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle: {icon: material/brightness-4, name: 切换浅色模式}
+  features: [navigation.sections, navigation.top, navigation.footer, navigation.path, content.code.copy]
+nav:
+  - 课程首页: index.md
+  - 课程资源: course-resources.md
+  - 科研复现工作流: research-workflow.md
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      permalink: true
+      toc_depth: 2-3
+extra_css: [assets/stylesheets/study-site.css, assets/stylesheets/course-home.css, assets/stylesheets/back-to-main.css]
+extra_javascript: [assets/javascripts/study-progress.js, assets/javascripts/back-to-main.js]
+extra:
+  homepage: /programming/
+copyright: '返回 <a href="/programming/">编程与人工智能学习中心</a>'
