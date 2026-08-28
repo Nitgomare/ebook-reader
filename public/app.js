@@ -88,8 +88,22 @@
   }
 
   function codeGroupLabel(name) {
-    return name === "shared-data" ? "共享练习数据" :
-      name.replace("chapter-", "第 ").replace(/^第 (\d+)$/, "第 $1 章");
+    var labels = {
+      "shared-data": "共享练习数据",
+      bayes: "贝叶斯分类",
+      cluster: "聚类",
+      compare: "算法对照实验",
+      dimension_reduction: "降维",
+      discriminant_analysis: "判别分析",
+      ensemble: "集成学习",
+      factorization_machine: "因子分解机",
+      feature_selection: "特征选择",
+      linear_model: "线性模型",
+      metrices: "评估指标",
+      svm: "支持向量机",
+      tree: "决策树"
+    };
+    return labels[name] || name.replace("chapter-", "第 ").replace(/^第 (\d+)$/, "第 $1 章").replace(/_/g, " ");
   }
 
   function groupCodeFiles(files) {
@@ -238,6 +252,11 @@
         escapeHtml(resource.path) + ' · ' + formatBytes(resource.size) + '</small><b>下载</b></a>';
     }).join("");
     var files = state.catalog.code.filter(function (file) { return file.bookSlug === book.slug; });
+    var chapterText = book.chapterCount ? book.chapterCount + " 章正文" : book.docCount + " 篇内容";
+    var resourceTotal = (book.resources || []).length + (book.resourceLinks || []).length + files.length;
+    var tags = (book.tags || []).map(function (tag) {
+      return '<span>' + escapeHtml(tag) + '</span>';
+    }).join("");
     var external = (book.resourceLinks || []).map(function (link) {
       return '<a class="resource-file" href="' + escapeHtml(link.url) + '" target="_blank" rel="noopener"><span>' +
         escapeHtml(link.kind || "链接") + '</span><strong>' + escapeHtml(link.label) +
@@ -252,7 +271,11 @@
           '</strong><small>' + group.files.length + ' 个文件</small></summary><div class="inline-code-list">' +
           group.files.map(inlineCodeItem).join("") + '</div></details>';
       }).join("") + '</div></section>';
-    elements.article.innerHTML = '<p class="resource-intro">集中查看本课程可用的教材、课件、代码、数据与外部链接。</p>' +
+    elements.article.innerHTML = '<section class="resource-book-info"><p class="resource-book-kicker">书籍与课程信息</p><h2>' +
+      escapeHtml(book.title) + '</h2><p class="resource-book-author">' + escapeHtml(book.author || "编者信息待补充") +
+      '</p><p>' + escapeHtml(book.description || "本页集中整理课程正文与配套学习资源。") +
+      '</p><div class="resource-book-meta"><strong>' + chapterText + '</strong><strong>' + resourceTotal +
+      ' 项配套资源</strong>' + tags + '</div></section>' +
       (sections || '<p class="empty-resource">本课程暂时没有单独的配套资源。</p>');
     renderSidebar(book, elements.searchInput.value);
     document.title = "课程资源 · " + book.title;

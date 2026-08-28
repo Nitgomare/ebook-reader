@@ -85,6 +85,14 @@ def main() -> None:
             not (DIST / Path(unquote(item["downloadUrl"]))).is_file()
             for item in code_payloads
         ),
+        "machine_learning_code": sum(
+            item["bookSlug"] == "zhou-machine-learning" for item in code_payloads
+        ),
+        "machine_learning_lab_pages": [
+            doc["relPath"] for doc in catalog["docs"]
+            if doc["bookSlug"] == "zhou-machine-learning" and "tinyml-lab" in doc["relPath"]
+        ],
+        "resource_book_info": "resource-book-info" in app_js,
         "minimal_navigation": (
             "course-resource-link" in app_js
             and "renderResources" in app_js
@@ -112,7 +120,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 14, "docs": 201, "code": 187}
+    assert report["stats"] == {"books": 14, "docs": 200, "code": 221}
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
         "robotics", "wind-energy", "engineering-systems",
@@ -129,6 +137,9 @@ def main() -> None:
     assert report["external_resource_links"] >= 6
     assert report["notebooks"] == 7
     assert report["missing_code_downloads"] == 0
+    assert report["machine_learning_code"] == 34
+    assert not report["machine_learning_lab_pages"]
+    assert report["resource_book_info"]
     assert report["minimal_navigation"]
     assert report["direct_book_entry"]
     assert report["inline_code"]
