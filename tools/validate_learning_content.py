@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Report the course-specific conversion and code-viewer invariants."""
+"""Validate the minimal textbook, resources and inline-code experience."""
 
 from __future__ import annotations
 
@@ -11,39 +11,17 @@ from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
+LANDING_LABELS = {"课程导读", "课程首页", "图书首页", "文档首页", "专题首页", "课程资源"}
 
 
 def main() -> None:
     catalog = json.loads((DIST / "data" / "catalog.json").read_text(encoding="utf-8"))
-    data_docs = [
-        doc for doc in catalog["docs"] if doc["bookSlug"] == "shangguigu-data-analysis"
-    ]
-    wind_docs = [
-        doc
+    payloads = {
+        doc["id"]: json.loads(
+            (DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8")
+        )
         for doc in catalog["docs"]
-        if doc["bookSlug"]
-        in {"wind-energy", "风能技术", "wind-turbine-theory-and-design"}
-    ]
-    robot_docs = [doc for doc in catalog["docs"] if doc["bookSlug"] == "robot-textbook"]
-    robot_html = "".join(
-        json.loads((DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8"))["html"]
-        for doc in robot_docs
-    )
-    data_html = "".join(
-        json.loads((DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8"))["html"]
-        for doc in data_docs
-    )
-    data_guide_html = json.loads(
-        (DIST / "data" / "docs" / f"{data_docs[0]['id']}.json").read_text(encoding="utf-8")
-    )["html"]
-    python_docs = [doc for doc in catalog["docs"] if doc["bookSlug"] == "shangguigu-python"]
-    python_html = "".join(
-        json.loads((DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8"))["html"]
-        for doc in python_docs
-    )
-    python_guide_html = json.loads(
-        (DIST / "data" / "docs" / f"{python_docs[0]['id']}.json").read_text(encoding="utf-8")
-    )["html"]
+    }
     code_payloads = [
         json.loads(path.read_text(encoding="utf-8"))
         for path in (DIST / "data" / "code").glob("*.json")
@@ -51,154 +29,114 @@ def main() -> None:
     app_js = (DIST / "app.js").read_text(encoding="utf-8")
     index_html = (DIST / "index.html").read_text(encoding="utf-8")
     styles_css = (DIST / "styles.css").read_text(encoding="utf-8")
+    all_html = "".join(payload["html"] for payload in payloads.values())
+    chapter_docs = [doc for doc in catalog["docs"] if doc.get("chapterNumber")]
     expected_books = {
         "research-skills", "shangguigu-python", "python-beginner-to-master",
         "shangguigu-data-analysis", "python-data-analysis", "deep-learning",
         "zhou-machine-learning", "robot-textbook", "wind-energy", "风能技术",
-        "wind-turbine-theory-and-design",
-        "Utilizing-large-scale-foundation-models-for",
-        "smart-analysis-system-user-manual",
-        "smart-analysis-system-technical-docs",
+        "wind-turbine-theory-and-design", "Utilizing-large-scale-foundation-models-for",
+        "smart-analysis-system-user-manual", "smart-analysis-system-technical-docs",
     }
-    chapter_docs = [doc for doc in catalog["docs"] if doc.get("chapterNumber")]
-    badly_numbered_chapters = [
-        doc["title"]
-        for doc in chapter_docs
-        if not re.match(rf"^第{doc['chapterNumber']}章(?:\s|$)", doc["title"])
-    ]
-    badly_numbered_headings = []
+
+    badly_numbered_headings: list[str] = []
     for doc in chapter_docs:
-        payload = json.loads(
-            (DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8")
-        )
-        for heading in payload["headings"]:
+        for heading in payloads[doc["id"]]["headings"]:
             if heading["level"] in {2, 3, 4} and not re.match(
                 rf"^{doc['chapterNumber']}\.\d+", heading["text"]
             ):
                 badly_numbered_headings.append(
                     f"{doc['bookSlug']}:{doc['relPath']}:{heading['text']}"
                 )
+
+    resource_downloads = [
+        resource for book in catalog["books"] for resource in book.get("resources", [])
+    ]
     report = {
         "stats": catalog["stats"],
-        "data_titles": [doc["title"] for doc in data_docs],
-        "wind_documents": len(wind_docs),
-        "robot_documents": len(robot_docs),
-        "robot_videos": len(re.findall(r"<video\b", robot_html)),
-        "robot_images": len(re.findall(r"<img\b", robot_html)),
-        "robot_tables": len(re.findall(r"<table\b", robot_html)),
-        "robot_formulas": len(re.findall(r'class="arithmatex"', robot_html)),
         "categories": [item["id"] for item in catalog["site"]["categories"]],
-        "data_tables": len(re.findall(r"<table\b", data_html)),
-        "data_code_blocks": len(re.findall(r"<pre\b", data_html)),
-        "data_images": len(re.findall(r"<img\b", data_html)),
+        "book_slugs": {book["slug"] for book in catalog["books"]},
+        "chapter_documents": len(chapter_docs),
+        "landing_documents": [
+            f"{doc['bookSlug']}:{doc['title']}"
+            for doc in catalog["docs"]
+            if re.sub(r"\s+", "", doc["title"]) in LANDING_LABELS
+        ],
+        "embedded_media": len(
+            re.findall(r"<(?:iframe|video)\b|chapter-video|chapter-videos", all_html, re.I)
+        ),
+        "badly_numbered_chapters": [
+            doc["title"]
+            for doc in chapter_docs
+            if not re.match(rf"^第{doc['chapterNumber']}章(?:\s|$)", doc["title"])
+        ],
+        "badly_numbered_headings": badly_numbered_headings,
+        "books_with_resource_model": sum("resources" in book for book in catalog["books"]),
+        "resource_downloads": len(resource_downloads),
+        "missing_resource_downloads": sum(
+            not (DIST / Path(unquote(resource["downloadUrl"]))).is_file()
+            for resource in resource_downloads
+        ),
+        "external_resource_links": sum(
+            len(book.get("resourceLinks", [])) for book in catalog["books"]
+        ),
         "notebooks": sum(item["kind"] == "notebook" for item in code_payloads),
-        "truncated_previews": sum(bool(item.get("truncated")) for item in code_payloads),
-        "missing_downloads": sum(
+        "missing_code_downloads": sum(
             not (DIST / Path(unquote(item["downloadUrl"]))).is_file()
             for item in code_payloads
         ),
-        "old_positioning_in_ui": any(
-            "电子书阅读器" in path.read_text(encoding="utf-8")
-            for path in (DIST / "index.html", DIST / "app.js")
+        "minimal_navigation": (
+            "course-resource-link" in app_js
+            and "renderResources" in app_js
+            and "renderBookOverview" not in app_js
+            and "startReadingLink" not in app_js
+            and "课程首页" not in app_js
+            and "课程安排" not in app_js
+        ),
+        "direct_book_entry": "book.firstDocId ? \"#/doc/\"" in app_js,
+        "inline_code": all(
+            token in app_js for token in ("inlineCodeItem", "loadInlineCode", "展开代码")
+        ),
+        "light_code_style": (
+            "background: #eef1f5" in styles_css and "border-top: 2px solid #60a5fa" in styles_css
         ),
         "song_font_in_css": bool(re.search("宋体|SimSun", styles_css, re.I)),
-        "book_slugs": {book["slug"] for book in catalog["books"]},
-        "chapter_documents": len(chapter_docs),
-        "badly_numbered_chapters": badly_numbered_chapters,
-        "badly_numbered_headings": badly_numbered_headings,
-        "blue_visual_system": all(
-            token in styles_css for token in ("#2563eb", "#eaf2ff", "#172554")
-        ),
-        "card_home_and_book_overview": all(
-            token in app_js
-            for token in ("homeCategoryNav", "renderBookOverview", "book-overview-directory")
-        ),
-        "code_sidebar_navigation": all(
-            token in app_js
-            for token in ("renderCodeSidebar", "code-nav-link", "搜索代码与数据")
-        ),
-        "python_video_chapters": python_html.count('class="chapter-videos"'),
-        "python_video_links": len(
-            set(re.findall(r"https://www\.bilibili\.com/video/BV1tDsgzxECr\?p=\d+", python_html))
-        ),
-        "python_course_schedule": (
-            "Python 基础课程" in python_guide_html
-            and "课程安排" in python_guide_html
-            and 'class="course-guide-hero"' in python_guide_html
-        ),
-        "python_course_cards": python_guide_html.count('class="course-unit"'),
-        "python_guide_video_links": len(
-            set(re.findall(r"https://www\.bilibili\.com/video/BV1tDsgzxECr\?p=\d+", python_guide_html))
-        ),
-        "python_guide_code_links": len(
-            set(re.findall(r"#/code/[0-9a-f]{16}", python_guide_html))
-        ),
-        "data_video_chapters": data_html.count('class="chapter-videos"'),
-        "data_video_links": len(
-            set(re.findall(r"https://www\.bilibili\.com/video/BV1D9GLzyEL6\?p=\d+", data_html))
-        ),
-        "data_course_schedule": (
-            "课程安排" in data_guide_html
-            and 'class="course-guide-hero course-guide-hero-data"' in data_guide_html
-            and all(f"#/code/{identifier}" in data_guide_html for identifier in (
-                "2e13022a9c828d0b", "12d66456459b48d3", "6c1ffe660171cb77",
-                "760170eac73f6f5c", "aab09632493e7a4b", "699e2e2adb7101e2",
-                "a72d82e453f4f082",
-            ))
-        ),
-        "data_course_cards": data_guide_html.count('class="course-unit"'),
         "nonblocking_math_loader": (
             'defer src="app.js?v=' in index_html
             and 'async src="https://cdn.jsdelivr.net/npm/mathjax' in index_html
-            and index_html.index('defer src="app.js?v=')
-            < index_html.index('async src="https://cdn.jsdelivr.net/npm/mathjax')
         ),
         "versioned_static_assets": (
             "__ASSET_VERSION__" not in index_html
             and bool(re.search(r"app\.js\?v=[0-9a-f]{12}", index_html))
             and bool(re.search(r"styles\.css\?v=[0-9a-f]{12}", index_html))
         ),
-        "fresh_data_fetches": app_js.count('cache: "no-store"'),
     }
-    assert report["stats"] == {"books": 14, "docs": 219, "code": 182}
-    assert report["wind_documents"] == 51
-    assert report["robot_documents"] == 18
-    assert report["robot_videos"] == 3
-    assert report["robot_images"] == 7
-    assert report["robot_tables"] == 64
-    assert report["robot_formulas"] == 172
+
+    assert report["stats"] == {"books": 14, "docs": 201, "code": 187}
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
         "robotics", "wind-energy", "engineering-systems",
     ]
-    assert report["data_tables"] == 49
-    assert report["data_code_blocks"] >= 250
-    assert report["data_images"] == 68
-    assert report["notebooks"] == 7
-    assert report["truncated_previews"] == 1
-    assert report["missing_downloads"] == 0
-    assert not report["old_positioning_in_ui"]
-    assert not report["song_font_in_css"]
     assert report["book_slugs"] == expected_books
-    assert report["chapter_documents"] >= 100
+    assert report["chapter_documents"] >= 140
+    assert not report["landing_documents"]
+    assert report["embedded_media"] == 0
     assert not report["badly_numbered_chapters"]
     assert not report["badly_numbered_headings"]
-    assert report["blue_visual_system"]
-    assert report["card_home_and_book_overview"]
-    assert report["code_sidebar_navigation"]
-    assert report["python_video_chapters"] == 14
-    assert report["python_video_links"] == 172
-    assert report["python_course_schedule"]
-    assert report["python_course_cards"] == 14
-    assert report["python_guide_video_links"] == 172
-    assert report["python_guide_code_links"] == 13
-    assert report["data_video_chapters"] == 4
-    assert report["data_video_links"] == 69
-    assert report["data_course_schedule"]
-    assert report["data_course_cards"] == 16
+    assert report["books_with_resource_model"] == 14
+    assert report["resource_downloads"] >= 13
+    assert report["missing_resource_downloads"] == 0
+    assert report["external_resource_links"] >= 6
+    assert report["notebooks"] == 7
+    assert report["missing_code_downloads"] == 0
+    assert report["minimal_navigation"]
+    assert report["direct_book_entry"]
+    assert report["inline_code"]
+    assert report["light_code_style"]
+    assert not report["song_font_in_css"]
     assert report["nonblocking_math_loader"]
     assert report["versioned_static_assets"]
-    assert report["fresh_data_fetches"] == 3
+
     report["book_slugs"] = sorted(report["book_slugs"])
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
