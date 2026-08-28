@@ -1,0 +1,60 @@
+site_name: "Utilizing large scale foundation models for PHM"
+
+docs_dir: docs
+site_dir: "../../site/book-sites/Utilizing-large-scale-foundation-models-for"
+
+theme:
+  name: material
+  language: zh
+
+  icon:
+    logo: material/wind-turbine
+
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.path
+    - content.code.copy
+
+nav:
+  - 图书首页: index.md
+  - 前置内容: 00-front-matter/index.md
+  - "H I G H L I G H T S": chapters/01-h-i-g-h-l-i-g-h-t-s/index.md
+  - "A R T I C L E I N F O": chapters/02-a-r-t-i-c-l-e-i-n-f-o/index.md
+  - "A B S T R A C T": chapters/03-a-b-s-t-r-a-c-t/index.md
+  - "1. Introduction": chapters/04-1-introduction/index.md
+  - "2. Prognostics and health management of wind turbines": chapters/05-2-prognostics-and-health-management-of-wind-turbines/index.md
+  - "3. Overview of LSF-models": chapters/06-3-overview-of-lsf-models/index.md
+  - "4. Wind turbine PHM based on LSF-models": chapters/07-4-wind-turbine-phm-based-on-lsf-models/index.md
+  - "5. Challenges and future directions of wind turbine PHM utilizing LSF-models": chapters/08-5-challenges-and-future-directions-of-wind-turbine-phm-utilizing-lsf-models/index.md
+  - "6. Conclusions": chapters/09-6-conclusions/index.md
+  - "CRediT authorship contribution statement": chapters/10-credit-authorship-contribution-statement/index.md
+  - "Declaration of generative AI and AI-assisted technologies in the writing process": chapters/11-declaration-of-generative-ai-and-ai-assisted-technologies-in-the-writing-process/index.md
+  - "Declaration of competing interest": chapters/12-declaration-of-competing-interest/index.md
+  - "Acknowledgments": chapters/13-acknowledgments/index.md
+  - "Data availability": chapters/14-data-availability/index.md
+  - "References": chapters/15-references/index.md
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      permalink: true
+      toc_depth: "2-3"
+
+extra_javascript:
+  - assets/javascripts/mathjax.js
+  - assets/javascripts/back-to-main.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - assets/stylesheets/back-to-main.css
+
+extra:
+  homepage: "/"
+
+copyright: 'Made by <a href="https://github.com/Nitgomare" target="_blank" rel="noopener">Mike Zheng</a>'

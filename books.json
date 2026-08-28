@@ -1,8 +1,14 @@
 {
   "site": {
-    "title": "公共知识学习中心",
-    "subtitle": "把编程、数据分析、智能机器人与风电工程资料组织成可持续扩展的学习路径",
+    "title": "科研知识学习中心",
+    "subtitle": "将科研工具、编程、人工智能、机器人与风电工程资料整合成简洁、统一、可持续扩展的学习路径",
     "categories": [
+      {
+        "id": "research-skills",
+        "title": "科研工具与实践",
+        "eyebrow": "RESEARCH WORKFLOW",
+        "description": "覆盖文献检索、Zotero、格式转换、知识库搭建与实验复现。"
+      },
       {
         "id": "python",
         "title": "Python 编程",
@@ -16,6 +22,12 @@
         "description": "结合 Notebook、练习数据与完整案例学习分析工具链。"
       },
       {
+        "id": "artificial-intelligence",
+        "title": "机器学习与人工智能",
+        "eyebrow": "AI & MACHINE LEARNING",
+        "description": "从经典机器学习方法到深度学习课程与工程复现。"
+      },
+      {
         "id": "robotics",
         "title": "智能机器人",
         "eyebrow": "INTELLIGENT ROBOTICS",
@@ -26,10 +38,26 @@
         "title": "风电技术",
         "eyebrow": "WIND ENERGY",
         "description": "覆盖风资源、空气动力学、载荷、控制、整机设计与风电场。"
+      },
+      {
+        "id": "engineering-systems",
+        "title": "工程系统与技术文档",
+        "eyebrow": "ENGINEERING SYSTEMS",
+        "description": "面向智能诊断、装备寿命预测与工程软件使用的技术资料。"
       }
     ]
   },
   "books": [
+    {
+      "slug": "research-skills",
+      "title": "科研工具与实践",
+      "author": "科研新手实用培训",
+      "description": "整合文献检索、Zotero、PDF 转换、知识库搭建、Python 实践与实验复现工作流。",
+      "tags": ["科研工具", "文献管理", "实验复现"],
+      "category": "research-skills",
+      "type": "course",
+      "featured": true
+    },
     {
       "slug": "shangguigu-python",
       "title": "Python 系统学习",
@@ -40,6 +68,15 @@
       "type": "course",
       "featured": true,
       "codeSource": "code"
+    },
+    {
+      "slug": "python-beginner-to-master",
+      "title": "Python 从入门到精通",
+      "author": "明日科技",
+      "description": "从基础语法、流程控制和数据结构逐步学习面向对象、文件、数据库及项目开发。",
+      "tags": ["Python", "中文教材", "项目案例"],
+      "category": "python",
+      "type": "reference"
     },
     {
       "slug": "shangguigu-data-analysis",
@@ -54,6 +91,34 @@
       "codeLinks": {
         "shared-data": ["chapter-03.md", "chapter-04.md"]
       }
+    },
+    {
+      "slug": "python-data-analysis",
+      "title": "Python 数据分析",
+      "author": "明日科技",
+      "description": "覆盖 NumPy、Pandas、Matplotlib、Seaborn、机器学习与完整数据分析案例。",
+      "tags": ["数据分析", "中文教材", "案例"],
+      "category": "data-analysis",
+      "type": "reference"
+    },
+    {
+      "slug": "deep-learning",
+      "title": "动手学深度学习",
+      "author": "李沐等",
+      "description": "以在线教材、中文视频和可复现实验构建深度学习课程路线。",
+      "tags": ["深度学习", "PyTorch", "课程导航"],
+      "category": "artificial-intelligence",
+      "type": "course",
+      "featured": true
+    },
+    {
+      "slug": "zhou-machine-learning",
+      "title": "机器学习",
+      "author": "周志华",
+      "description": "从基本概念、经典模型到计算学习理论与强化学习的系统教材。",
+      "tags": ["机器学习", "西瓜书", "中文教材"],
+      "category": "artificial-intelligence",
+      "type": "reference"
     },
     {
       "slug": "robot-textbook",
@@ -90,6 +155,33 @@
       "description": "从能量转换与载荷出发，讲解整机、风轮、传动链、塔架、控制和强度分析。",
       "tags": ["风能", "工程设计", "中文教材"],
       "category": "wind-energy",
+      "type": "reference"
+    },
+    {
+      "slug": "Utilizing-large-scale-foundation-models-for",
+      "title": "大模型在故障预测与健康管理中的应用",
+      "author": "专题研究资料",
+      "description": "梳理大规模基础模型在工业 PHM、风机健康管理与故障预测中的方法和案例。",
+      "tags": ["大模型", "PHM", "风机运维"],
+      "category": "wind-energy",
+      "type": "reference"
+    },
+    {
+      "slug": "smart-analysis-system-user-manual",
+      "title": "智能分析与装备寿命预测系统使用手册",
+      "author": "项目技术文档",
+      "description": "覆盖数据导入、统计分析、智能诊断、能效评估、寿命预测与报告管理。",
+      "tags": ["系统操作", "SCADA", "寿命预测"],
+      "category": "engineering-systems",
+      "type": "reference"
+    },
+    {
+      "slug": "smart-analysis-system-technical-docs",
+      "title": "智能分析与装备寿命预测系统技术文档",
+      "author": "项目技术文档",
+      "description": "介绍平台架构、诊断算法、损伤评估、RUL 预测和预测性维护原理。",
+      "tags": ["系统架构", "诊断算法", "预测维护"],
+      "category": "engineering-systems",
       "type": "reference"
     }
   ]

@@ -27,6 +27,7 @@
   function cacheElements() {
     ["siteTitle", "topMeta", "sidebar", "sidebarTitle", "searchLabel", "searchInput", "catalogStatus", "navTree",
       "libraryHome", "heroTitle", "heroSubtitle", "homeStats", "categorySections",
+      "homeCategoryNav",
       "documentView", "breadcrumb", "docTitle", "article", "relatedCode", "relatedCodeList", "previousLink",
       "nextLink", "outline", "outlineNav", "openNav", "closeNav", "scrim", "outlineToggle", "startReadingLink",
       "codeLibrary", "codeCourseList", "codeView", "codeBreadcrumb", "codeTitle", "codeDownload", "codeMeta",
@@ -34,6 +35,7 @@
   }
 
   function hideViews() {
+    document.body.classList.remove("home-view");
     [elements.libraryHome, elements.documentView, elements.codeLibrary, elements.codeView].forEach(function (view) {
       view.hidden = true;
     });
@@ -169,15 +171,52 @@
     state.activeDoc = null;
     state.activeCode = null;
     elements.libraryHome.hidden = false;
+    document.body.classList.add("home-view");
     var categories = state.catalog.site.categories || [];
     elements.heroTitle.textContent = state.catalog.site.title;
     elements.heroSubtitle.textContent = state.catalog.site.subtitle;
     elements.homeStats.innerHTML = '<span><strong>' + categories.length + '</strong> 个知识领域</span><span><strong>' +
       state.catalog.stats.books + '</strong> 套课程与教材</span><span><strong>' +
       state.catalog.stats.docs + '</strong> 个章节</span><span><strong>' + state.catalog.stats.code + '</strong> 个代码与数据文件</span>';
+    elements.homeCategoryNav.innerHTML = categories.map(function (category) {
+      var count = state.catalog.books.filter(function (book) { return book.category === category.id; }).length;
+      return '<a href="#category-' + escapeHtml(category.id) + '"><span>' + escapeHtml(category.title) +
+        '</span><small>' + count + '</small></a>';
+    }).join("");
     elements.categorySections.innerHTML = categories.map(renderCategory).join("");
     renderSidebar(null, elements.searchInput.value);
     document.title = state.catalog.site.title;
+  }
+
+  function renderBookOverview(book) {
+    hideViews();
+    state.activeBook = book;
+    state.activeDoc = null;
+    state.activeCode = null;
+    elements.documentView.hidden = false;
+    elements.outline.hidden = true;
+    elements.relatedCode.hidden = true;
+    elements.previousLink.hidden = true;
+    elements.nextLink.hidden = true;
+    elements.breadcrumb.textContent = "知识分类 / " + book.title;
+    elements.docTitle.textContent = book.title;
+    var docs = state.catalog.docs.filter(function (doc) { return doc.bookSlug === book.slug; });
+    var tags = (book.tags || []).map(function (tag) { return '<span>' + escapeHtml(tag) + '</span>'; }).join("");
+    var items = docs.map(function (doc) {
+      var label = doc.chapterNumber ? "第" + doc.chapterNumber + "章" : String(doc.order).padStart(2, "0");
+      return '<a class="book-overview-item" href="#/doc/' + doc.id + '"><span class="book-overview-number">' +
+        escapeHtml(label) + '</span><span class="book-overview-copy"><strong>' + escapeHtml(doc.title) +
+        '</strong><small>' + escapeHtml(doc.excerpt || (doc.sections || []).join(" · ")) +
+        '</small></span><b>→</b></a>';
+    }).join("");
+    elements.article.innerHTML = '<section class="book-overview-intro"><p class="book-overview-meta">' +
+      escapeHtml(book.author || "公共知识学习中心") + ' · ' + docs.length + ' 篇内容</p><p>' +
+      escapeHtml(book.description || "") + '</p><div class="book-overview-tags">' + tags +
+      '</div></section><section class="book-overview-directory"><div><p class="eyebrow">CONTENTS</p><h2>目录</h2></div>' +
+      '<div class="book-overview-list">' + items + '</div></section>';
+    renderSidebar(book, elements.searchInput.value);
+    document.title = book.title + " · " + state.catalog.site.title;
+    window.scrollTo(0, 0);
   }
 
   function renderOutline(headings) {
@@ -324,7 +363,7 @@
     if (current.path === "/code") { renderCodeLibrary(); return; }
     if (bookMatch) {
       var book = bookBySlug(decodeURIComponent(bookMatch[1]));
-      if (book && book.firstDocId) { location.replace("#/doc/" + book.firstDocId); return; }
+      if (book) { renderBookOverview(book); return; }
     }
     renderLibrary();
   }

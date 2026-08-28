@@ -1,0 +1,1286 @@
+﻿source,target,src_lang,tgt_lng
+wind turbine,风力机,en,zh
+wind turbine generator system,风力发电机组,en,zh
+WTGS,风力发电机组,en,zh
+wind power station,风电场,en,zh
+wind farm,风电场,en,zh
+horizontal axis wind turbine,水平轴风力机,en,zh
+vertical axis wind turbine,垂直轴风力机,en,zh
+hub (for wind turbines),轮毂(风力机),en,zh
+nacelle,机舱,en,zh
+support structure (for wind turbines),支撑结构(风力机),en,zh
+shutdown (for wind turbines),关机(风力机),en,zh
+normal shutdown (for wind turbines),正常关机(风力机),en,zh
+emergency shutdown (for wind turbines),紧急关机(风力机),en,zh
+idling (for wind turbines),空转(风力机),en,zh
+blocking (for wind turbines),锁定(风力机),en,zh
+parking,停机,en,zh
+standstill,静止,en,zh
+brake (for wind turbines),制动器(风力机),en,zh
+parking brake (for wind turbines),停机制动(风力机),en,zh
+rotor speed (for wind turbines),风轮转速(风力机),en,zh
+control system (for wind turbines),控制系统(风力机),en,zh
+protection system (for WTGS),保护系统(风力发电机组),en,zh
+yawing,偏航,en,zh
+design situation,设计工况,en,zh
+load case,载荷状况,en,zh
+external conditions (for wind turbines),外部条件(风力机),en,zh
+design limits,设计极限,en,zh
+limit state,极限状态,en,zh
+serviceability limit states,使用极限状态,en,zh
+ultimate limit state,最大极限状态,en,zh
+safe life,安全寿命,en,zh
+catastrophic failure (for wind turbines),严重故障(风力机),en,zh
+latent fault,潜伏故障,en,zh
+dormant failure,潜伏故障,en,zh
+wind speed,风速,en,zh
+wind velocity,风矢量,en,zh
+rotationally sampled wind velocity,旋转采样风矢量,en,zh
+rated wind speed (for wind turbines),额定风速(风力机),en,zh
+cut-in wind speed,切入风速,en,zh
+cut-out wind speed,切出风速,en,zh
+annual average,年平均,en,zh
+annual average wind speed,年平均风速,en,zh
+mean wind speed,平均风速,en,zh
+extreme wind speed,极端风速,en,zh
+survival wind speed (deprecated),安全风速(拒用),en,zh
+reference wind speed,参考风速,en,zh
+wind speed distribution,风速分布,en,zh
+Rayleigh distribution,瑞利分布,en,zh
+Weibull distribution,威布尔分布,en,zh
+wind shear,风切变,en,zh
+wind profile,风廓线;风切变律,en,zh
+wind shear law,风廓线;风切变律,en,zh
+wind shear exponent,风切变指数,en,zh
+logarithmic wind shear law,对数风切变律,en,zh
+power law for wind shear,风切变幂律,en,zh
+downwind,下风向,en,zh
+upwind,上风向,en,zh
+gust,阵风,en,zh
+roughness length,粗糙长度,en,zh
+turbulence intensity,湍流强度,en,zh
+turbulence scale parameter,湍流尺度参数,en,zh
+inertial sub-range,湍流惯性负区,en,zh
+interconnection (for WTGS),互联(风力发电机组),en,zh
+output power (for WTGS),输出功率(风力发电机组),en,zh
+rated power (for WTGS),额定功率(风力发电机组),en,zh
+maximum power (for WTGS),最大功率(风力发电机组),en,zh
+network connection point (for WTGS),电网联接点(风力发电机组),en,zh
+power collection system (for WTGS),电力汇集系统(风力发电机组),en,zh
+site electrical facilities,风场电气设备,en,zh
+power performance,功率特性,en,zh
+net electric power output,净电力功率输出,en,zh
+power coefficient,功率系数,en,zh
+freestream wind speed,自由流风速,en,zh
+swept area,扫掠面积,en,zh
+hub height,轮毂高度,en,zh
+measured power curve,测量功率曲线,en,zh
+extrapolated power curve,外推功率曲线,en,zh
+annual energy production,年发电量,en,zh
+availability (for WTGS),可利用率(风力发电机组),en,zh
+data set (for power performance measurement),数据组(功率特性测试),en,zh
+accuracy (for WTGS),精度(风力发电机组),en,zh
+uncertainty in measurement,测量误差,en,zh
+method of bins,分组方法,en,zh
+measurement period,测量周期,en,zh
+measurement sector,测量扇区,en,zh
+diurnal variations,日变化,en,zh
+pitch angle,桨距角,en,zh
+distance constant,距离常数,en,zh
+test site,试验场地,en,zh
+flow distortion,气流畸变,en,zh
+obstacles,障碍物,en,zh
+complex terrain,复杂地形地带,en,zh
+wind break,风障,en,zh
+sound pressure level,声压级,en,zh
+sound level,声级 / 计权声压级,en,zh
+weighted sound pressure level,声级 / 计权声压级,en,zh
+apparent sound power level,视在声功率级,en,zh
+directivity (for WTGS),指向性(风力发电机组),en,zh
+tonality,音值,en,zh
+acoustic reference wind speed,声的基准风速,en,zh
+standardized wind speed,标准风速,en,zh
+reference height,基准高度,en,zh
+reference roughness length,基准粗糙长度,en,zh
+reference distance,基准距离,en,zh
+grazing angle,掠射角,en,zh
+automatic fire protection system for wind turbines,风力发电机组自动消防系统,en,zh
+automatic fire alarm system,火灾自动报警系统,en,zh
+fire alarm control unit,火灾报警控制器,en,zh
+fire control and indicating equipment,火灾报警控制器,en,zh
+image type fire detector,图像型火灾探测器,en,zh
+local application extinguishing way,局部应用灭火方式,en,zh
+wind power,风力发电,en,zh
+greenhouse gas,温室气体,en,zh
+GHG,温室气体,en,zh
+carbon dioxide equivalent,二氧化碳当量,en,zh
+CO2e,二氧化碳当量,en,zh
+carbon footprint of a product,产品碳足迹,en,zh
+CFP,产品碳足迹,en,zh
+life cycle,生命周期,en,zh
+system boundary,系统边界,en,zh
+functional unit,功能单位,en,zh
+activity data,活动数据,en,zh
+on-grid energy,上网电量,en,zh
+cut-off criteria,取舍准则,en,zh
+allocation,分配,en,zh
+environmental conditions,环境条件,en,zh
+yaw system,偏航系统,en,zh
+braking system,制动系统,en,zh
+pitch system,变桨距系统,en,zh
+annual availability,年可利用率,en,zh
+double-fed converter,双馈式变流器,en,zh
+generator-side converter,电机侧变流器,en,zh
+grid-side converter,电网侧变流器,en,zh
+DC link,直流环节,en,zh
+rated power of converter,变流器额定功率,en,zh
+total power factor,总功率因数,en,zh
+efficiency of converter,变流器效率,en,zh
+full-power converter,全功率变流器,en,zh
+grid-side rated voltage,电网侧额定电压,en,zh
+grid-side rated frequency,电网侧额定频率,en,zh
+grid-side rated current,电网侧额定电流,en,zh
+overload capability,过载能力,en,zh
+total harmonic distortion,总谐波畸变率,en,zh
+THD,总谐波畸变率,en,zh
+drive train,传动链,en,zh
+test rig foundation,试验平台基础,en,zh
+support structure,安装支架,en,zh
+driving system,驱动系统,en,zh
+torque pulsation,转矩脉动,en,zh
+distributed wind energy project,分散式风力发电项目,en,zh
+distributed wind energy generation systems,分散式风力发电机组,en,zh
+vortex induced vibration,涡激振动,en,zh
+VIV,涡激振动,en,zh
+tower,塔架,en,zh
+tower section,塔段,en,zh
+longitudinal weld,纵焊缝,en,zh
+tube,筒节,en,zh
+circumferential weld,环焊缝,en,zh
+concrete tower,混凝土塔架,en,zh
+doubly-fed induction generator,双馈异步发电机,en,zh
+rated condition,额定工况,en,zh
+operating speed range,工作转速范围,en,zh
+rated rotation speed,额定转速,en,zh
+ultrasonic pulse-echo contact testing,接触式超声脉冲反射法,en,zh
+penetrating method,穿透法,en,zh
+phased-array ultrasonic testing,相控阵超声波检测,en,zh
+total focusing method,全聚焦,en,zh
+wind turbine blade bonding area,风轮叶片粘接区,en,zh
+wind turbine blade non-bonding area,风轮叶片非粘接区,en,zh
+effective bonding area,有效粘接区,en,zh
+ductile iron,球墨铸铁,en,zh
+nodular graphite iron,球墨铸铁,en,zh
+spheroidal graphite cast iron,球墨铸铁,en,zh
+solid solution strengthened,固溶强化,en,zh
+solid solution strengthened ferrite spheroidal graphite cast iron,固溶强化铁素体球墨铸铁,en,zh
+dross,浮渣,en,zh
+side-by-side cast sample,并排试块,en,zh
+wind turbine fault,机组故障,en,zh
+sub-health,亚健康,en,zh
+reliability,可靠性,en,zh
+maintenance and repair,维修,en,zh
+repair,修理,en,zh
+maintenance,维护,en,zh
+smart wind farm,智能风力发电场,en,zh
+control system of wind turbine,风力发电机组控制系统,en,zh
+supervisory control and data acquisition system of wind farm,风力发电场监控系统,en,zh
+smart terminal of wind turbine,风力发电机组智能终端,en,zh
+wind energy conversion system,风力系统,en,zh
+WECS,风力系统,en,zh
+automatic generation control,自动发电控制,en,zh
+AGC,自动发电控制,en,zh
+automatic voltage control,自动无功电压控制,en,zh
+AVC,自动无功电压控制,en,zh
+sequence of event,事件顺序记录,en,zh
+SOE,事件顺序记录,en,zh
+data acquisition system,数据采集系统,en,zh
+regional centralized control system,区域集控系统,en,zh
+wind turbine main bearing,风力发电机组主轴轴承,en,zh
+yaw bearing,偏航轴承,en,zh
+pitch bearing,变桨轴承,en,zh
+post-evaluation,后评价,en,zh
+retrofitting,改造,en,zh
+reanalysis of meteorological data,再分析气象数据,en,zh
+nacelle wind speed,机舱风速,en,zh
+nacelle transfer function,机舱传递函数,en,zh
+power curve conformance,功率曲线符合度,en,zh
+actual energy production,实际发电量,en,zh
+potential energy production,潜在发电量,en,zh
+lost production,损失发电量,en,zh
+design theoretical energy production,设计理论发电量,en,zh
+levelized cost of energy,平准化度电成本,en,zh
+supervisory control and data acquisition,数据采集与监控系统,en,zh
+SCADA,数据采集与监控系统,en,zh
+baseline evaluation period,基准评估期,en,zh
+optimized evaluation period,优化评估期,en,zh
+test turbines,实验机组,en,zh
+reference turbines,参考机组,en,zh
+ring forgings,环形锻件,en,zh
+nominal thickness of ring forgings,环形锻件公称厚度,en,zh
+inspection batch,炉批次,en,zh
+sampling direction,取样方向,en,zh
+radial forging ratio,径向锻造比,en,zh
+profile rolling,仿形轧制,en,zh
+submarine cable,海底电缆,en,zh
+method of safety checklist,安全检查表,en,zh
+technical transformation,技改升级,en,zh
+short-circuit current,短路电流,en,zh
+recycle,回收,en,zh
+disassembly,拆解,en,zh
+treatment,处理,en,zh
+disposal,处置,en,zh
+physical method,物理方法,en,zh
+crushing method,粉碎法,en,zh
+separation method,分离法,en,zh
+chemical method,化学方法,en,zh
+pyrolysis method,热解法,en,zh
+dissolution method,溶解法,en,zh
+recovery rate,回收利用率,en,zh
+rated voltage,额定电压,en,zh
+routine tests,例行试验,en,zh
+sample tests,抽样试验,en,zh
+type tests,型式试验,en,zh
+electric pitch system,电动变桨距系统,en,zh
+hydraulic pitch system,液压变桨距系统,en,zh
+multi-driver pitch system,多驱变桨距系统,en,zh
+pitch drive equipment,变桨距驱动装置,en,zh
+pitch actuating equipment,变桨距执行装置,en,zh
+the maximum pitch rate,最大变桨距速率,en,zh
+feathering,顺桨,en,zh
+fine,开桨,en,zh
+safety position,安全位置,en,zh
+pitch system target position error,变桨距系统定位误差,en,zh
+pitch system following error,变桨距系统跟随误差,en,zh
+backup power source,后备动力源,en,zh
+safe-chain,安全链,en,zh
+gear steel,齿轮钢,en,zh
+high-strength threaded fasteners,高强螺纹连接副,en,zh
+tension tightening method,拉伸紧固法,en,zh
+corrosion environment,腐蚀环境,en,zh
+corrosion environment control,腐蚀环境控制,en,zh
+micro positive pressure seal,微正压密封,en,zh
+volatile corrosion inhibitor,气相缓蚀剂,en,zh
+VCI,气相缓蚀剂,en,zh
+deleterious gas,有害气体,en,zh
+salt fog,盐雾,en,zh
+ocean wave,海浪,en,zh
+ocean current,海流,en,zh
+salinity,盐度,en,zh
+corrosion,腐蚀,en,zh
+relative humidity,相对湿度,en,zh
+lightning current peak value,雷电流峰值,en,zh
+settlement of salt mist,盐雾沉降量,en,zh
+typical wind turbine,典型机组,en,zh
+typhoon,台风,en,zh
+gust factor,阵风系数,en,zh
+green demolition,绿色拆除,en,zh
+solid waste,固体废物,en,zh
+hazardous waste,危险废物,en,zh
+floating offshore wind turbine systems,漂浮式海上风力发电机组,en,zh
+FOWTS,漂浮式海上风力发电机组,en,zh
+floating substructure,漂浮式基础结构,en,zh
+station-keeping system,锚定系统,en,zh
+mooring system,系泊系统,en,zh
+dynamic cable,动态海缆,en,zh
+integrated analysis,一体化计算,en,zh
+pneumatic braking device,气动制动装置,en,zh
+mechanical braking device,机械制动装置,en,zh
+normal braking,正常制动,en,zh
+quick braking,快速制动,en,zh
+emergency braking,紧急制动,en,zh
+tower structure,塔架结构,en,zh
+safety monitoring,安全监测,en,zh
+monitoring plan,监测方案,en,zh
+monitoring instrument and equipment,监测仪器设备,en,zh
+monitoring system,监测系统,en,zh
+real-time monitoring,实时监测,en,zh
+early warning threshold,预警阈值,en,zh
+modal parameter identification,模态参数识别,en,zh
+alert level,预警等级,en,zh
+integrated commissioning,联合调试,en,zh
+construction phase,建设期,en,zh
+operation phase,营运期,en,zh
+integrated modeling,一体化建模,en,zh
+integrated load analysis,一体化载荷分析,en,zh
+integrated support structure design,一体化支撑结构设计,en,zh
+robustness,鲁棒性,en,zh
+radiative damping,辐射阻尼,en,zh
+support structure,支撑结构,en,zh
+elastic rubber parts,橡胶弹性元件,en,zh
+main shaft,主轴,en,zh
+assembling,装配,en,zh
+installation,安装,en,zh
+busbar trunking systems for wind power (compact insulated busway),风力发电导电轨(密集型母线槽),en,zh
+hydraulic system,液压系统,en,zh
+servo directional valve,伺服方向阀,en,zh
+proportional directional valve,比例方向阀,en,zh
+structural steel plate,结构钢板,en,zh
+lifting appliance,电梯,en,zh
+pitch bearing rubber seals,偏航轴承及变桨轴承橡胶密封圈,en,zh
+III type environmental declaration,III型环境声明,en,zh
+input,输入,en,zh
+output,输出,en,zh
+life cycle assessment,生命周期评价,en,zh
+LCA,生命周期评价,en,zh
+life cycle inventory analysis,生命周期清单分析,en,zh
+LCI,生命周期清单分析,en,zh
+product category rules,产品种类规则,en,zh
+PCR,产品种类规则,en,zh
+global warming potential,全球变暖潜势,en,zh
+GWP,全球变暖潜势,en,zh
+co-product,共生产品,en,zh
+reference flow,基准线,en,zh
+characterization factor,特征化因子,en,zh
+primary data,原始数据,en,zh
+secondary data,次级数据,en,zh
+hoisting of wind turbine,风力发电机组吊装,en,zh
+safety technical regulation,安全技术规程,en,zh
+effective visibility,能见度,en,zh
+main engine assembly unit,主机部件,en,zh
+wind turbines generator systems under high altitude,高海拔型风力发电机组,en,zh
+the difference of temperature in one day,昼夜温差,en,zh
+low-voltage electric equipment,低压电气设备,en,zh
+high-voltage electric equipment,高压电气设备,en,zh
+dew-point temperature,露点温度,en,zh
+ultimate sink,热沉,en,zh
+forced cooling,强迫冷却,en,zh
+thermal current density,热流密度,en,zh
+operation,运行,en,zh
+first maintenance,首次维护,en,zh
+semi-annual maintenance,半年维护,en,zh
+annual maintenance,全年维护,en,zh
+work sheet,工作记录单,en,zh
+flaw,缺陷,en,zh
+consumables,耗品,en,zh
+spare parts,备件,en,zh
+NPL-RSLS,无防护唇旋转轴唇形密封圈,en,zh
+PL-RSLS,带防护唇旋转轴唇形密封圈,en,zh
+SWR,异形防尘圈,en,zh
+FV,端面V形圈,en,zh
+SFV,单体型端面V形圈,en,zh
+AFV,装配型端面V形圈,en,zh
+grid adaptability of wind turbine,风电机组电网适应性,en,zh
+point of connection of wind turbine/point of test of wind turbine,并网点/测试点,en,zh
+no-load testing,空载测试,en,zh
+on-load testing,负载测试,en,zh
+inertia response of wind turbine,风电机组惯量响应,en,zh
+active power-frequency regulation coefficient,有功调频系数,en,zh
+the condition of going to sea,出海条件,en,zh
+captain responsibility,船长责任,en,zh
+fixed foundation,固定式基础,en,zh
+windfarm operation and maintenance vessel,风电运维船,en,zh
+windfarm transport vessel,风电交通船,en,zh
+wind force,风力,en,zh
+rotor,风轮,en,zh
+blade,叶片,en,zh
+blade connection part,叶片连接件,en,zh
+rotor shaft,风轮轴,en,zh
+generator,发电机,en,zh
+operation temperature,运行温度,en,zh
+survival temperature,生存温度,en,zh
+spinner cover,整流罩,en,zh
+nacelle cover,机舱罩,en,zh
+air insulation busbar trunking systems for wind power generation,空气型风力发电导电轨,en,zh
+enclosure,外壳,en,zh
+live part,带电部件,en,zh
+exposed conductive part,裸露导电部件,en,zh
+protective conductor,保护导体,en,zh
+neutral conductor,中性导体,en,zh
+PEN conductor,中性保护导体,en,zh
+clearance,电气间隙,en,zh
+creepage distance,爬电距离,en,zh
+altitude classification for products of electric and electronic,海拔分级,en,zh
+normal wind-power generation equipments,常规型风力发电设备,en,zh
+wind-power generation equipments for plateau,高原型风力发电设备,en,zh
+direct-drive,直驱,en,zh
+direct-drive permanent magnet type wind turbine generator system,直驱永磁风力发电机组,en,zh
+operating speed range,运行转速范围,en,zh
+maximum operating speed,最大运行转速,en,zh
+minimum operating speed,最小运行转速,en,zh
+standard wind turbine,标准型机组,en,zh
+normal temperature type wind turbine,常温型机组,en,zh
+low temperature type wind turbine,低温型机组,en,zh
+high altitude type wind turbine,高海拔型机组,en,zh
+test-bench,试验台,en,zh
+engineering acceptance,工程验收,en,zh
+booster stations start-up,升压站启动,en,zh
+check and acceptance from the build to the operation,移交生产验收,en,zh
+variable speed constant frequency wind turbine,变速恒频风力发电机组,en,zh
+variable speed constant frequency device,变速恒频装置,en,zh
+test in production location,台位试验,en,zh
+towing test,拖动试验,en,zh
+acceptance for installation,安装验收,en,zh
+acceptance for commissioning,试运行验收,en,zh
+acceptance for warranty period,质量保证期验收,en,zh
+commissioning testing,调试,en,zh
+pre-acceptance,预验收,en,zh
+final inspection and acceptance,最终验收,en,zh
+leakage,泄漏,en,zh
+charge control,充电控制,en,zh
+rated input current,额定输入电流,en,zh
+dump load,卸荷,en,zh
+mechanical brake,机械制动,en,zh
+non-control rectifier,不控整流,en,zh
+PWM rectifier,PWM整流,en,zh
+maximum power point tracking,最大功率点跟踪,en,zh
+conversion efficiency,转换效率,en,zh
+field test,现场试验,en,zh
+test on bed,台架试验,en,zh
+operation management,运行管理,en,zh
+safety concept,安全方案,en,zh
+failure,失效,en,zh
+control cabinet,控制柜,en,zh
+redundancy,冗余技术,en,zh
+fail-safe,失效-安全,en,zh
+clearance (fault),排除故障,en,zh
+external power supply,外部动力源,en,zh
+locking device,锁定装置,en,zh
+activation rotational speed,临界转速,en,zh
+maximum rotational speed,最大转速,en,zh
+over power,过载功率(风力机),en,zh
+activation power,临界功率(风力机),en,zh
+short-term cut-out wind speed,短时切出风速,en,zh
+work at heights,高处作业,en,zh
+personal protective equipment,个体防护装备,en,zh
+fall arrest systems,坠落悬挂安全带,en,zh
+lanyard for fall arrest systems,坠落悬挂用安全绳,en,zh
+runaway,飞车,en,zh
+escape,高处逃生,en,zh
+descent rescue device,营救逃生缓降器,en,zh
+rescue,救援,en,zh
+emergency professionals,专业救援人员,en,zh
+excitation system,励磁系统,en,zh
+electric excitation system,电励磁系统,en,zh
+electric excitation direct-drive wind turbine,电励磁直驱风力发电机组,en,zh
+constant excitation,恒定励磁,en,zh
+variable excitation,变励磁,en,zh
+de-excitation system,灭磁系统,en,zh
+irreversible magnetizing loss,不可逆失磁,en,zh
+efficiency curve,效率曲线,en,zh
+lightning protection system,防雷装置,en,zh
+external lightning protection system,外部防雷装置,en,zh
+internal lightning protection system,内部防雷装置,en,zh
+surge protection device,电涌保护器,en,zh
+equipotential bonding,等电位连接,en,zh
+air-termination system,接闪器,en,zh
+down conductor,引下线,en,zh
+earthing resistance,接地电阻,en,zh
+lightning protection level,雷电防护水平,en,zh
+coordinated SPD protection,协调配合的SPD装置,en,zh
+earth electric rode,接地体,en,zh
+earth-termination system,接地装置,en,zh
+mono-pile foundation,单桩基础,en,zh
+multi-pile cap foundation,多桩承台基础,en,zh
+jacket foundation,导管架群桩基础,en,zh
+gravity foundation,重力式基础,en,zh
+bucket foundation,负压筒型基础,en,zh
+floating foundation,浮式基础,en,zh
+co-directional (wind and waves),同向(风和波),en,zh
+current,水流,en,zh
+design wave,设计波浪,en,zh
+designer,设计方,en,zh
+extreme significant wave height,极端有效波高,en,zh
+extreme wave height,极端波高,en,zh
+fast ice cover,固定冰盖,en,zh
+fetch,风距,en,zh
+foundation,基础,en,zh
+highest astronomical tide,最高天文潮,en,zh
+hummocked ice,冰丘,en,zh
+ice floe,浮冰,en,zh
+icing,结冰,en,zh
+load effect,载荷效应,en,zh
+lowest astronomical tide,最低天文潮,en,zh
+manufacturer,制造商,en,zh
+marine conditions,海洋条件,en,zh
+marine growth,海生物,en,zh
+mean sea level,平均海平面,en,zh
+mean zero crossing period,平均跨零周期,en,zh
+metocean,海洋气象,en,zh
+multi-directional (wind and/or wave),多方向(风和/或海浪),en,zh
+offshore wind turbine,海上风力发电机组,en,zh
+offshore wind turbine site,海上风力发电场场址,en,zh
+pile penetration,桩贯入深度,en,zh
+reference period,参考周期,en,zh
+refraction,绕射,en,zh
+residual currents,余流,en,zh
+rotor-nacelle assembly,风轮-机舱组件,en,zh
+sea floor,海底,en,zh
+sea floor slope,海底坡度,en,zh
+sea state,海况,en,zh
+seabed,海床,en,zh
+seabed movement,海床运动,en,zh
+scour,冲刷,en,zh
+significant wave height,有效波高,en,zh
+splash zone,飞溅区,en,zh
+still water level,静水位,en,zh
+storm surge,风暴潮,en,zh
+sub-structure,下部结构,en,zh
+swell,涌浪,en,zh
+tidal current,潮流,en,zh
+tidal range,潮差,en,zh
+tides,潮汐,en,zh
+tsunami,海啸,en,zh
+uni-directional (wind and/or waves),单向(风和/或浪),en,zh
+water depth,水深,en,zh
+wave crest elevation,波峰高度,en,zh
+wave direction,波向,en,zh
+wave height,波高,en,zh
+wave period,波浪周期,en,zh
+wave spectral peak frequency,波谱峰值频率,en,zh
+wave spectrum,波谱,en,zh
+wave steepness,波陡,en,zh
+weather downtime,天气性停工,en,zh
+weather window,天气性工作期,en,zh
+wind profile - wind shear law,风廓线——风切变公式,en,zh
+zero up-crossing wave,上跨零点波,en,zh
+extensible,可扩展性,en,zh
+language,语言,en,zh
+instance,实例,en,zh
+project,项目,en,zh
+backwards compatible,向后兼容,en,zh
+language version,语言版本,en,zh
+control object,控制对象,en,zh
+actor,参与者,en,zh
+mandatory,强制,en,zh
+optional,可选的,en,zh
+conditional,条件的,en,zh
+frequency analysis,频域分析,en,zh
+scalar value,标量值,en,zh
+time waveform,时域波形,en,zh
+root mean square value,均方根值,en,zh
+transformer for wind turbine applications,风力发电用变压器,en,zh
+tower,塔筒,en,zh
+effective cooling medium,有效冷却介质,en,zh
+compartmentalized type transformer,箱式变压器,en,zh
+sealed transformer,密封式变压器,en,zh
+routine samples test,例行抽样试验,en,zh
+declared sound power level,公称的声功率等级,en,zh
+design limit,设计极限,en,zh
+design situation,设计状态,en,zh
+design wind speed,设计风速,en,zh
+emergency shutdown,紧急关机,en,zh
+environmental condition,环境条件,en,zh
+external condition,外部条件,en,zh
+fail-safe,失效保险,en,zh
+furling,折尾,en,zh
+horizontal axis wind turbine,水平轴风力发电机组,en,zh
+hub,轮毂,en,zh
+idling,空转,en,zh
+load case,载荷工况,en,zh
+maximum output current,最大输出电流,en,zh
+maximum output power,最大输出功率,en,zh
+maximum output voltage,最大输出电压,en,zh
+noise label,噪声标签,en,zh
+normal external conditions,正常外部条件,en,zh
+normal operation,正常运行,en,zh
+normal shutdown,正常关机,en,zh
+operating limits,运行极限,en,zh
+overspeed control,超速控制,en,zh
+parked wind turbine,风力发电机组停机,en,zh
+power form,功率型式,en,zh
+power output,功率输出,en,zh
+protection system,保护系统,en,zh
+rated power,额定功率,en,zh
+rated current,额定电流,en,zh
+rated wind speed,额定风速,en,zh
+reduced speed,减速(准备停车),en,zh
+reference annual energy,参考年发电量,en,zh
+reference power,参考功率,en,zh
+resonance,共振,en,zh
+rotor centre,风轮中心,en,zh
+rotor speed,风轮转速,en,zh
+scheduled maintenance,定期维护,en,zh
+shutdown,关机,en,zh
+survival wind speed (deprecated),安全风速(不推荐使用),en,zh
+Small Wind Turbine (SWT),小型风力发电机组,en,zh
+turbine test class,风力发电机组测试等级,en,zh
+unscheduled maintenance,不定期维护,en,zh
+vertical axis wind turbine,垂直轴风力发电机组,en,zh
+wind profile- wind shear law,风廓线-风切变律,en,zh
+yaw rate,偏航速率,en,zh
+yaw misalignment,偏航误差,en,zh
+blocking,锁定,en,zh
+brake,制动器,en,zh
+characteristic value,特征值,en,zh
+complex terrain,复杂地形,en,zh
+control functions,控制功能,en,zh
+control system,控制系统,en,zh
+dormant failure,潜在故障,en,zh
+electrical power network,电网,en,zh
+emergency stop,紧急停机,en,zh
+external conditions,外部条件,en,zh
+extreme wind speed,极大风速,en,zh
+fail-safe,失效安全,en,zh
+inertial sub-range,惯性副区,en,zh
+medium wind turbine,中型风力发电机组,en,zh
+network connection point,电网连接点,en,zh
+network loss,电网掉电,en,zh
+performance level (PL),性能等级,en,zh
+power collection system,电力汇集系统,en,zh
+primary layer protection function,主层保护功能,en,zh
+protection functions,保护功能,en,zh
+resistance partial safety factor,抗力局部安全系数,en,zh
+rotationally sampled wind velocity,旋转采样矢量风速,en,zh
+safe-life,安全寿命,en,zh
+safety integrity level (SIL),安全完整性等级,en,zh
+scheduled maintenance,计划维护,en,zh
+secondary layer protection function,辅助层保护功能,en,zh
+site data,场址数据,en,zh
+survival wind speed,生存风速,en,zh
+turbulence standard deviation,湍流标准偏差,en,zh
+unscheduled maintenance,非计划维护,en,zh
+wind power station,风力发电站,en,zh
+wind profile,风廓线,en,zh
+wind turbine generator system (WTGS),风力发电机组,en,zh
+wind turbine site,风力发电机组场址,en,zh
+wind velocity,矢量风速,en,zh
+wind turbine electrical system,风力发电机组电气系统,en,zh
+wind turbine terminals,风力发电机组终端,en,zh
+data set,数据组,en,zh
+maximum power,最大功率,en,zh
+method of bins,区间法,en,zh
+net active electric power,净有功功率,en,zh
+normal maintenance,正常维护,en,zh
+obstacle,障碍物,en,zh
+rotor equivalent wind speed,风轮等效风速,en,zh
+special maintenance,专项维护,en,zh
+standard uncertainty,标准不确定度,en,zh
+test site,测试场地,en,zh
+uncertainty in measurement,测量不确定度,en,zh
+wind measurement equipment,测风设备,en,zh
+wind veer,风转向,en,zh
+bearing manufacturer,轴承制造商,en,zh
+certification body,认证机构,en,zh
+characteristic load,特征载荷,en,zh
+design lifetime,设计寿命,en,zh
+design load,设计载荷,en,zh
+double-row bearings,双列轴承,en,zh
+equivalent load,等效载荷,en,zh
+extreme load,极限载荷,en,zh
+gearbox manufacturer,齿轮箱制造商,en,zh
+interface,接口,en,zh
+load reserve factor (LRF),载荷裕度系数,en,zh
+local failure,局部失效,en,zh
+locating bearing,定位轴承,en,zh
+lubricant supplier,润滑剂供应商,en,zh
+maximum operating load,最大运行载荷,en,zh
+non-locating bearing,浮动端轴承,en,zh
+paired bearings,配对轴承,en,zh
+rainflow matrices,雨流矩阵,en,zh
+time series,时间序列,en,zh
+wind turbine manufacturer,风力发电机组制造商,en,zh
+wind turbine owner,风力发电机组业主,en,zh
+continuous operation,连续运行,en,zh
+disconnection time,脱网时间,en,zh
+flicker coefficient for continuous operation,连续运行时的闪变系数,en,zh
+flicker step factor,闪变阶跃系数,en,zh
+maximum measured power,最大测量功率,en,zh
+network impedance phase angle,电网阻抗相角,en,zh
+operational mode,运行模式,en,zh
+output power,输出功率,en,zh
+point of common coupling (PCC),公共连接点,en,zh
+nominal apparent power,额定视在功率,en,zh
+nominal current,额定电流,en,zh
+nominal active power,额定有功功率,en,zh
+reactive power capability,无功功率能力,en,zh
+nominal wind speed,额定风速,en,zh
+standstill,停机,en,zh
+start-up,启动,en,zh
+short-circuit ratio (SCR),短路比,en,zh
+switching operation,切换操作,en,zh
+voltage change factor,电压变动系数,en,zh
+wind turbine (WT),风力发电机组,en,zh
+wind turbine terminals,风力发电机组输出端,en,zh
+voltage dip,电压跌落,en,zh
+voltage swell,电压升高,en,zh
+fault ride through (FRT),故障穿越,en,zh
+undervoltage ride through (UVRT),低电压穿越,en,zh
+overvoltage ride through (OVRT),高电压穿越,en,zh
+phasor,相量,en,zh
+positive sequence component of the fundamental,基波正序分量,en,zh
+negative sequence component of the fundamental,基波负序分量,en,zh
+zero-sequence component of the fundamental,基波零序分量,en,zh
+unbalance factor,不平衡度,en,zh
+control interface,控制接口,en,zh
+wind power plant,风力发电场,en,zh
+assessor,评审员,en,zh
+time-series,时间序列,en,zh
+short-circuit apparent power,短路容量,en,zh
+percentile,百分位数,en,zh
+synthetic inertia,综合惯量,en,zh
+static error,静态误差,en,zh
+response time,响应时间,en,zh
+settling time,稳定时间,en,zh
+rise time,上升时间,en,zh
+overshoot,超调量,en,zh
+reaction time,反应时间,en,zh
+ramp-down time,下降时间,en,zh
+recovery time,恢复时间,en,zh
+steady state,稳态,en,zh
+tolerance band,误差带,en,zh
+start of event,事件开始时刻,en,zh
+wind turbine product platform,风力发电机组产品平台,en,zh
+component test,部件测试,en,zh
+sub-system,子系统,en,zh
+sub-system test,子系统测试,en,zh
+available active power,可用有功功率,en,zh
+power factor,功率因数,en,zh
+ramp rate,斜坡速率,en,zh
+reference value,参考值,en,zh
+active power bin,有功功率区间,en,zh
+fictitious grid,虚拟电网,en,zh
+field measurement,现场测量,en,zh
+field test,现场测试,en,zh
+wind speed bin,风速区间,en,zh
+apparent sound power level with reference to wind speed at 10 m height,10m基准高度处风速对应的视在声功率级,en,zh
+audibility criterion,可听度判定标准,en,zh
+A-weighted sound pressure levels,A计权声压级,en,zh
+C-weighted sound pressure levels,C计权声压级,en,zh
+bin centre,风速区间中心,en,zh
+inclination angle,掠射角,en,zh
+measured wind speed at height Z,Z高度的测量风速,en,zh
+measured nacelle wind speed at hub height,轮毂高度的测量机舱风速,en,zh
+normalised nacelle wind speed at hub height,轮毂高度的规格化机舱风速,en,zh
+normalized wind speed derived from power curve,由功率曲线导出的规格化风速,en,zh
+normalized wind speed at hub height during background noise measurements,背景噪声测量时段的轮毂高度规格化风速,en,zh
+normalized wind speed at hub height,轮毂高度的规格化风速,en,zh
+normalized wind speed at height Z,Z高度的规格化风速,en,zh
+tonal audibility,音调可听度,en,zh
+wind speed at 10m height,10m高度的风速,en,zh
+actuator,加载器,en,zh
+blade root,叶根,en,zh
+blade subsystem,叶片子系统,en,zh
+buckling,屈曲,en,zh
+chord,弦长,en,zh
+constant amplitude loading,等幅加载,en,zh
+creep,蠕变,en,zh
+design loads,设计载荷,en,zh
+edgewise,弦摆振方向,en,zh
+elastic axis,弹性轴,en,zh
+fatigue formulation,疲劳公式,en,zh
+fatigue test,疲劳试验,en,zh
+fixture,固定装置,en,zh
+flapwise,挥舞方向,en,zh
+flatwise,弦挥舞方向,en,zh
+full-scale test,全尺寸试验,en,zh
+inboard,内侧,en,zh
+lead-lag,摆振方向,en,zh
+load envelope,载荷包络,en,zh
+natural frequency-eigen frequency,固有频率,en,zh
+partial safety factors,局部安全系数,en,zh
+prebend,预弯,en,zh
+R-value,载荷比,en,zh
+S-N formulation,S-N公式,en,zh
+spanwise,展向,en,zh
+static test,静力试验,en,zh
+stiffness,刚度,en,zh
+strain,应变,en,zh
+sweep,扫掠,en,zh
+tare loads,自重载荷,en,zh
+target load,目标载荷,en,zh
+test load,试验载荷,en,zh
+tested area,测试区域,en,zh
+twist,扭转,en,zh
+variable amplitude loading,变幅加载,en,zh
+whiffle tree,分配梁,en,zh
+alarm,报警,en,zh
+characteristic values,特征值,en,zh
+command,命令,en,zh
+communication function,通信功能,en,zh
+control,控制,en,zh
+counting value,计数值,en,zh
+data retrieval,数据获取,en,zh
+diagnostics,诊断,en,zh
+electrical system,电气系统,en,zh
+event,事件,en,zh
+intelligent electronic device (IED),智能电子设备,en,zh
+information,信息,en,zh
+information exchange,信息交换,en,zh
+information model,信息模型,en,zh
+log,日志,en,zh
+logging,记录,en,zh
+logical device,逻辑设备,en,zh
+management function,管理功能,en,zh
+measured data,测量数据,en,zh
+meteorological system,气象系统,en,zh
+monitoring,监视,en,zh
+operational function,运行功能,en,zh
+optional,可选,en,zh
+parameter,参数,en,zh
+processed data,过程数据,en,zh
+profile,规约,en,zh
+protocol stack,协议栈,en,zh
+report,报表,en,zh
+reporting,报告,en,zh
+supervisory control and data acquisition (SCADA),数据采集与监控系统,en,zh
+status,状态,en,zh
+statistical information,统计信息,en,zh
+timing data,时间数据,en,zh
+synchronization,时间同步,en,zh
+three phase data,三相数据,en,zh
+transient log,暂态日志,en,zh
+user/access management,用户/访问管理,en,zh
+wind power plant,风电场,en,zh
+wind power plant analogue information,风电场模拟量信息,en,zh
+wind power plant component,风电场部件,en,zh
+wind power plant management system,风电场管理系统,en,zh
+wind turbine,风力发电机组,en,zh
+logical node class,逻辑节点类,en,zh
+common data class (CDC),公用数据类,en,zh
+data object,数据对象,en,zh
+data attribute,数据属性,en,zh
+functional constraint (FC),功能约束,en,zh
+trigger options (TrgOp),触发选项,en,zh
+setpoint value (SPV),设定值,en,zh
+status value (STV),状态值,en,zh
+alarm (ALM),报警,en,zh
+command (CMD),命令,en,zh
+event count (CTE),事件计数,en,zh
+status timing (TMS),状态时序,en,zh
+alarm setting status (AST),报警设置状态,en,zh
+function,功能,en,zh
+factory acceptance test (FAT),工厂验收测试,en,zh
+hold point,控制点,en,zh
+interoperability,互操作性,en,zh
+model implementation conformance statement (MICS),模型实现一致性陈述,en,zh
+negative test,否定测试,en,zh
+protocol implementation compliance statement (PICS),协议实现一致性陈述,en,zh
+protocol implementation extra information for testing (PIXIT),用于测试的协议实现额外信息,en,zh
+routine test,常规测试,en,zh
+site acceptance test (SAT),现场验收测试,en,zh
+system test,系统测试,en,zh
+system related test,系统相关测试,en,zh
+test equipment,测试设备,en,zh
+test facility,测试机构,en,zh
+technical issues compliance statement (TICS),技术问题一致性陈述,en,zh
+type test,型式试验,en,zh
+witness point,见证点,en,zh
+air-termination system,接闪器系统,en,zh
+average steepness of the front of short stroke current,短雷击电流前波的平均陡度,en,zh
+bonding bar,等电位连接带,en,zh
+collection area,等效截收面积,en,zh
+connecting leader,连接先导,en,zh
+conventional earthing impedance,冲击接地阻抗,en,zh
+coordinated SPD protection,协调配合的SPD系统,en,zh
+down-conductor system,雷电引下线,en,zh
+downward flash,下行雷击,en,zh
+earth electrode,接地极,en,zh
+earth-termination system,接地系统,en,zh
+effective height,有效高度,en,zh
+external lightning protection system,外部雷电防护系统,en,zh
+flash charge,雷击电荷,en,zh
+foundation earth electrode,基础接地极,en,zh
+ground flash density,地闪密度,en,zh
+internal lightning protection system,内部雷电防护系统,en,zh
+interception efficiency,拦截效率,en,zh
+leader connection point,先导连接点,en,zh
+LEMP protection measures system (LPMS),LEMP防护措施系统,en,zh
+lightning current,雷电流,en,zh
+lightning electromagnetic impulse (LEMP),雷电电磁脉冲,en,zh
+lightning equipotential bonding,雷电等电位连接,en,zh
+lightning flash to a structure,雷电对建(构)筑物的雷击,en,zh
+lightning flash to earth,雷电对地闪击,en,zh
+lightning protection level (LPL),雷电防护等级,en,zh
+lightning protection system (LPS),雷电防护系统,en,zh
+lightning protection zone (LPZ),雷电防护区,en,zh
+lightning stroke,雷击,en,zh
+long stroke,长雷击,en,zh
+magnetic shield,磁屏蔽,en,zh
+metal installations,金属设备,en,zh
+multiple strokes,多重雷击,en,zh
+natural component of LPS,LPS的自然部件,en,zh
+number of dangerous events due to flashes to a structure,因为建(构)筑物受雷击而出现的危险事件次数,en,zh
+peak value,峰值,en,zh
+point of strike,雷击点,en,zh
+receptor,接闪器,en,zh
+risk,风险,en,zh
+separation distance,间隙距离,en,zh
+service line,引入线,en,zh
+short stroke,短雷击,en,zh
+SPD tested with Iimp,使用Iimp试验的SPD,en,zh
+SPD tested with In,使用In试验的SPD,en,zh
+specific energy,单位能量,en,zh
+surge,电涌,en,zh
+surge protective device (SPD),电涌保护器,en,zh
+thunderstorm days,雷暴日,en,zh
+tolerable risk,允许风险,en,zh
+upward flash,上行雷击,en,zh
+voltage protection level,电压保护水平,en,zh
+available aerodynamic power,可用气动功率,en,zh
+generic model,通用模型,en,zh
+integration time step,积分时间步长,en,zh
+negative (sequence) component,负序分量(三相系统),en,zh
+nominal frequency,额定频率,en,zh
+nominal voltage,额定电压,en,zh
+phasor (complex rms value),相量(复数有效值),en,zh
+point of connection,连接点,en,zh
+positive (sequence) component,正序分量(三相系统),en,zh
+power system stability,电力系统稳定,en,zh
+quasi steady state of a system,系统的准稳态,en,zh
+short-circuit power,短路容量,en,zh
+short-circuit ratio,短路比,en,zh
+steady state of a system,系统的稳态,en,zh
+system state variables,系统状态变量,en,zh
+transient time period,暂态区间,en,zh
+under voltage ride through (UVRT),低电压穿越,en,zh
+zero (sequence) component,零序分量(三相系统),en,zh
+anchor,锚,en,zh
+catenary mooring,悬链式系泊,en,zh
+recognized classification society,公认船级社,en,zh
+redundancy check,冗余检查,en,zh
+scantling,结构尺寸,en,zh
+taut-line mooring,张紧式系泊,en,zh
+tendon,张力键,en,zh
+accreditation,认可,en,zh
+applicant,申请人,en,zh
+certificate holder,证书持有人,en,zh
+certification,认证,en,zh
+certification system,认证体系,en,zh
+conformity statement,符合性声明,en,zh
+evaluation for conformity,符合性评估,en,zh
+final evaluation report,最终评估报告,en,zh
+inspection,检查,en,zh
+manufacture,制造,en,zh
+modification,变更,en,zh
+operating body,执行机构,en,zh
+project certificate,项目认证证书,en,zh
+project certification,项目认证,en,zh
+rotor nacelle assembly (RNA),风轮机舱组件,en,zh
+repair,修复,en,zh
+replacement,更换,en,zh
+surveillance,监督,en,zh
+type certificate,型式认证证书,en,zh
+type certification,型式认证,en,zh
+type testing,型式测试,en,zh
+wind turbine type,风力发电机组型号,en,zh
+actual service,实际出力,en,zh
+balance of plant (BOP),风力发电场配套设施,en,zh
+constrained potential service,受限潜在出力,en,zh
+grid,电网,en,zh
+intended function,设计功能,en,zh
+lost service,服务损失,en,zh
+physical potential service,物理潜在出力,en,zh
+potential service,潜在出力,en,zh
+service,服务,en,zh
+transmission system operator (TSO),输电系统运营商,en,zh
+wind power station (WPS),风力发电场,en,zh
+WPS maintenance provider,风力发电场维护供应商,en,zh
+WPS operator,风力发电场运营商,en,zh
+assessment,评估,en,zh
+characteristic buckling resistance,抗力特征值,en,zh
+component class,零件等级,en,zh
+component temperature,零件温度,en,zh
+design resistance,设计抗力,en,zh
+design situation,设计状况,en,zh
+dynamic stiffness for foundation,基础动刚度,en,zh
+effect of actions,作用效应,en,zh
+fatigue limit state,疲劳极限状态,en,zh
+geometrically and materially nonlinear analysis (GMNA),几何和材料非线性分析,en,zh
+geometrically and materially nonlinear analysis with imperfection included (GMNIA),包含缺陷的几何和材料非线性分析,en,zh
+internal loads,内部载荷,en,zh
+materially nonlinear analysis (MNA),材料非线性分析,en,zh
+nominal concrete cover,标称混凝土保护层,en,zh
+nominal ratio,名义比率,en,zh
+nominal value,名义值,en,zh
+partial safety factor for load,载荷局部安全系数,en,zh
+partial safety factor for material,材料局部安全系数,en,zh
+plastic limit load,塑性极限载荷,en,zh
+plastic reference resistance,塑性参考抗力,en,zh
+post-tensioned concrete,后张拉混凝土,en,zh
+prestressed concrete,预应力混凝土,en,zh
+pre-tensioned concrete,先张拉混凝土,en,zh
+primary structure,主体结构,en,zh
+reference standard,参考标准,en,zh
+secondary structure,附属结构,en,zh
+series of standard,系列标准,en,zh
+signed von-Mises stress,带符号的von-Mises应力,en,zh
+SLS characteristic load (S1),SLS特征载荷,en,zh
+SLS 10^-4^ frequent load case (S2),SLS10-4频遇载荷工况,en,zh
+SLS 10^-2^ quasi-permanent load case (S3),SLS10-2准永久载荷工况,en,zh
+serviceability,可用性,en,zh
+serviceability limit state,正常使用极限状态,en,zh
+static stiffness for foundation,基础静刚度,en,zh
+ultimate limit state,承载力极限状态,en,zh
+wind turbine specification,风力发电机组规格,en,zh
+harmonic,谐波,en,zh
+harmonic model,谐波模型,en,zh
+harmonic model terminals,谐波模型端口,en,zh
+negative-sequence component of 3-phase voltages (or current),三相电压(或电流)负序分量,en,zh
+planning level,规划水平,en,zh
+positive-sequence component of 3-phase voltages (or current),三相电压(或电流)正序分量,en,zh
+power bin,功率区间,en,zh
+prevailing angle,主导相位角,en,zh
+prevailing angle ratio,主导相位角比值,en,zh
+short circuit power,短路容量,en,zh
+short circuit ratio,短路比,en,zh
+total harmonic distortion (THD),总谐波畸变率,en,zh
+system operator or responsible,系统运营商或责任主体,en,zh
+acceleration assessment parameter,加速度评估参数,en,zh
+velocity assessment parameter,速度评估参数,en,zh
+capture matrix,俘获矩阵,en,zh
+rotor plane,风轮平面,en,zh
+steady-state operation,稳态运行,en,zh
+transient event,瞬态事件,en,zh
+wind veer,风向切变,en,zh
+yaw misalignment,对风偏差,en,zh
+yaw position,偏航位置,en,zh
+edgewise (blade cross-section),摆振方向(叶片剖面坐标系),en,zh
+flatwise (blade cross-section),挥舞方向(叶片剖面坐标系),en,zh
+outboard,展向,en,zh
+parked wind turbine,停机的风力发电机组,en,zh
+parking brake,停机制动,en,zh
+catastrophic failure,严重故障,en,zh
+availability,可利用率,en,zh
+directivity,指向性,en,zh
+atmospheric boundary layer,大气边界层,en,zh
+geostrophic wind,地转风,en,zh
+friction velocity,摩擦速度,en,zh
+von Karman constant,冯·卡门常数,en,zh
+stable stratification,稳定层结,en,zh
+unstable stratification,不稳定层结,en,zh
+neutral stratification,中性层结,en,zh
+spectral gap,谱隙,en,zh
+integral length scale,积分尺度,en,zh
+Taylor's frozen turbulence hypothesis,泰勒冻结湍流假设,en,zh
+return period,重现期,en,zh
+wind rose,风玫瑰图,en,zh
+wind atlas,风能图谱,en,zh
+Measure-Correlate-Predict,测量-相关-预测法,en,zh
+orographic effect,地形效应,en,zh
+thermal effect,热力效应,en,zh
+actuator disc,致动盘,en,zh
+axial flow induction factor,轴向诱导因子,en,zh
+tangential flow induction factor,切向诱导因子,en,zh
+tip speed ratio,尖速比,en,zh
+Betz limit,Betz极限,en,zh
+blade element momentum theory,叶素动量理论,en,zh
+vortex cylinder model,涡柱模型,en,zh
+wake rotation,尾流旋转,en,zh
+stall delay,失速延迟,en,zh
+tip loss,叶尖损失,en,zh
+pitch control,变桨控制,en,zh
+stall regulation,失速调节,en,zh
+yawed flow,偏航流动,en,zh
+dynamic stall,动态失速,en,zh
+airfoil,翼型/叶型,en,zh
+camber,弯度,en,zh
+chord line,弦线,en,zh
+lift coefficient,升力系数,en,zh
+drag coefficient,阻力系数,en,zh
+lift/drag ratio,升阻比,en,zh
+pressure coefficient,压力系数,en,zh
+boundary layer,边界层,en,zh
+laminar boundary layer,层流边界层,en,zh
+turbulent boundary layer,湍流边界层,en,zh
+separation point,分离点,en,zh
+Kutta condition,库塔条件,en,zh
+Kutta-Joukowski theorem,库塔-茹科夫斯基定理,en,zh
+circulation,环量,en,zh
+bound vortex,附着涡,en,zh
+trailing vortex,尾涡,en,zh
+starting vortex,起动涡,en,zh
+downwash,下洗,en,zh
+induced velocity,诱导速度,en,zh
+vortex theory,涡旋理论,en,zh
+Prandtl tip loss factor,普朗特叶尖损失因子,en,zh
+root vortex,根涡,en,zh
+helicoidal vortex sheet,螺旋涡面,en,zh
+skew angle,偏斜角,en,zh
+flow angle,流动角,en,zh
+reduced frequency,折算频率,en,zh
+Theodorsen function,西奥多森函数,en,zh
+Wagner function,瓦格纳函数,en,zh
+indicial response,阶跃响应,en,zh
+CFD,计算流体动力学,en,zh
+Navier-Stokes equation,纳维-斯托克斯方程,en,zh
+Euler equation,欧拉方程,en,zh
+Reynolds number,雷诺数,en,zh
+NACA airfoil,NACA翼型,en,zh
+NREL airfoil,NREL翼型,en,zh
+Risø airfoil,里瑟翼型,en,zh
+DU airfoil,代尔夫特理工大学翼型,en,zh
+ultimate load,极限载荷,en,zh
+fatigue load,疲劳载荷,en,zh
+design load case,设计载荷工况,en,zh
+partial safety factor,分项安全系数,en,zh
+load factor,载荷系数,en,zh
+material safety factor,材料安全系数,en,zh
+damage equivalent load,损伤等效载荷,en,zh
+rainflow counting,雨流计数法,en,zh
+Miner's rule,迈纳准则,en,zh
+S-N curve,S-N曲线,en,zh
+Goodman diagram,古德曼图,en,zh
+modal analysis,模态分析,en,zh
+mode shape,振型,en,zh
+natural frequency,固有频率,en,zh
+damping ratio,阻尼比,en,zh
+logarithmic decrement,对数衰减率,en,zh
+aerodynamic damping,气动阻尼,en,zh
+structural damping,结构阻尼,en,zh
+centrifugal stiffening,离心刚化,en,zh
+Campbell diagram,坎贝尔图,en,zh
+aeroelastic stability,气动弹性稳定性,en,zh
+flutter,颤振,en,zh
+vortex-induced vibration,涡激振动,en,zh
+critical buckling stress,临界屈曲应力,en,zh
+finite element analysis,有限元分析,en,zh
+composite material,复合材料,en,zh
+GFRP,玻璃纤维增强塑料,en,zh
+CFRP,碳纤维增强塑料,en,zh
+laminate,层合板,en,zh
+sandwich construction,夹层结构,en,zh
+shear web,抗剪腹板,en,zh
+spar,翼梁/主梁,en,zh
+rotor diameter,风轮直径,en,zh
+specific power,比功率,en,zh
+solidity,实度,en,zh
+tower clearance,塔架间隙,en,zh
+overhang,悬垂距离,en,zh
+shaft tilt,主轴倾角,en,zh
+cone angle,锥角,en,zh
+teeter hinge,跷跷板铰链,en,zh
+delta-3 coupling,Delta-3耦合,en,zh
+gearbox ratio,齿轮箱速比,en,zh
+epicyclic gear,行星齿轮,en,zh
+parallel shaft gear,平行轴齿轮,en,zh
+quill shaft,空心传动轴,en,zh
+slip ring,集电环,en,zh
+brushless doubly-fed generator,无刷双馈发电机,en,zh
+permanent magnet generator,永磁发电机,en,zh
+direct drive,直驱,en,zh
+power converter,功率变流器,en,zh
+IGBT,绝缘栅双极型晶体管,en,zh
+PWM,脉宽调制,en,zh
+crowbar circuit,撬棒电路,en,zh
+brake disc,制动盘,en,zh
+brake caliper,制动卡钳,en,zh
+fail-safe brake,失效安全制动器,en,zh
+tubular tower,管式塔架,en,zh
+lattice tower,格构式塔架,en,zh
+slab foundation,筏板基础,en,zh
+pile foundation,桩基础,en,zh
+main bearing,主轴轴承,en,zh
+bedplate,机舱底座,en,zh
+spinner,导流罩,en,zh
+supervisory control,监督控制,en,zh
+closed-loop control,闭环控制,en,zh
+PI controller,比例积分控制器,en,zh
+PID controller,比例积分微分控制器,en,zh
+gain scheduling,增益调度,en,zh
+integrator wind-up,积分饱和,en,zh
+anti-windup,抗积分饱和,en,zh
+notch filter,陷波滤波器,en,zh
+Kalman filter,卡尔曼滤波器,en,zh
+LQG controller,LQG控制器,en,zh
+state-space model,状态空间模型,en,zh
+transfer function,传递函数,en,zh
+root locus,根轨迹,en,zh
+phase margin,相位裕度,en,zh
+gain margin,增益裕度,en,zh
+safety system,安全系统,en,zh
+condition monitoring,状态监测,en,zh
+vibration monitoring,振动监测,en,zh
+oil debris monitoring,油液磨粒监测,en,zh
+HAWT,水平轴风力机,en,zh
+VAWT,垂直轴风力机,en,zh
+upwind turbine,上风向风力机,en,zh
+downwind turbine,下风向风力机,en,zh
+stall-regulated turbine,失速调节型风力机,en,zh
+pitch-regulated turbine,变桨调节型风力机,en,zh
+active stall turbine,主动失速型风力机,en,zh
+fixed-speed turbine,定速风力机,en,zh
+variable-speed turbine,变速风力机,en,zh
+two-speed turbine,双速风力机,en,zh
+DFIG wind turbine,双馈风力发电机组,en,zh
+full converter wind turbine,全功率变流风力发电机组,en,zh
+direct-drive wind turbine,直驱风力发电机组,en,zh
+Pierson-Moskowitz spectrum,皮尔森-莫斯科维茨谱,en,zh
+JONSWAP spectrum,JONSWAP谱,en,zh
+peak spectral period,谱峰周期,en,zh
+mean zero-crossing period,平均跨零周期,en,zh
+wave scatter diagram,波浪散布图,en,zh
+environmental contour,环境等值线,en,zh
+IFORM,逆一次可靠度方法,en,zh
+monopile,单桩基础,en,zh
+jacket structure,导管架结构,en,zh
+tripod structure,三脚架结构,en,zh
+tripile structure,三桩结构,en,zh
+gravity base,重力式基础,en,zh
+suction bucket,吸力筒基础,en,zh
+transition piece,过渡段,en,zh
+grouted joint,灌浆连接,en,zh
+scour protection,防冲刷保护,en,zh
+cathodic protection,阴极保护,en,zh
+Airy wave theory,艾里波理论,en,zh
+Stokes wave theory,斯托克斯波理论,en,zh
+Dean's stream function theory,迪恩流函数理论,en,zh
+Morison equation,莫里森方程,en,zh
+diffraction theory,绕射理论,en,zh
+Keulegan-Carpenter number,克-卡数,en,zh
+Wheeler stretching,惠勒拉伸,en,zh
+constrained wave,约束波,en,zh
+wave breaking,波浪破碎,en,zh
+plunging breaker,卷破波,en,zh
+spilling breaker,溢破波,en,zh
+surging breaker,涌破波,en,zh
+curling factor,卷曲因子,en,zh
+array cable,阵列海缆,en,zh
+export cable,送出海缆,en,zh
+offshore substation,海上升压站,en,zh
+HVDC transmission,高压直流输电,en,zh
+VSC-HVDC,电压源换流器高压直流输电,en,zh
+CSC-HVDC,电网换相高压直流输电,en,zh
+XLPE cable,交联聚乙烯电缆,en,zh
+crew transfer vessel,运维人员交通船,en,zh
+wind farm layout,风电场布局,en,zh
+array efficiency,阵列效率,en,zh
+wake loss,尾流损失,en,zh
+micrositing,微观选址,en,zh
+Environmental Impact Assessment,环境影响评价,en,zh
+Environmental Statement,环境声明,en,zh
+Zone of Theoretical Visibility,理论可视区,en,zh
+photomontage,照片蒙太奇,en,zh
+shadow flicker,阴影闪烁,en,zh
+noise contour,噪声等值线,en,zh
+sound power level,声功率级,en,zh
+A-weighting,A计权,en,zh
+electromagnetic interference,电磁干扰,en,zh
+radar cross section,雷达散射截面,en,zh
+backscattering,后向散射,en,zh
+forward scattering,前向散射,en,zh
+Fresnel zone,菲涅尔区,en,zh
+avian impact,鸟类影响,en,zh
+Grid Code,并网规范,en,zh
+fault ride through,故障穿越,en,zh
+low voltage ride through,低电压穿越,en,zh
+active power control,有功功率控制,en,zh
+reactive power control,无功功率控制,en,zh
+frequency response,频率响应,en,zh
+voltage flicker,电压闪变,en,zh
+harmonics,谐波,en,zh
+power quality,电能质量,en,zh
+point of common coupling,公共连接点,en,zh
+short-circuit level,短路容量,en,zh
+islanding,孤岛运行,en,zh
+loss of mains protection,防孤岛保护,en,zh
+rate of change of frequency relay,频率变化率继电器,en,zh
+vector shift relay,矢量偏移继电器,en,zh
+earthing,接地,en,zh
+lightning protection,防雷保护,en,zh
+capacity credit,容量可信度,en,zh
+Loss of Load Probability,失负荷概率,en,zh
+spinning reserve,旋转备用,en,zh
+tower shadow,塔影效应,en,zh
+gust slicing,切阵风效应,en,zh
+variable speed operation,变速运行,en,zh
+full power converter,全功率变流器,en,zh
+teetering rotor,跷跷板式转子,en,zh
+individual pitch control,独立变桨控制,en,zh
+edgewise vibration,摆振,en,zh
+negative damping,负阻尼,en,zh
+root loss,叶根损失,en,zh
+wake mixing,尾流混合,en,zh
+co-directional,同向,en,zh
+multi-directional,多方向,en,zh
+uni-directional,单向,en,zh

@@ -60,6 +60,18 @@ URL_ATTR_RE = re.compile(r"(?P<attr>href|src)=(?P<quote>['\"])(?P<url>.*?)(?P=qu
 TABLE_RE = re.compile(r"(<table\b[^>]*>.*?</table>)", re.I | re.S)
 ESCAPED_HTML_TAG_RE = re.compile(r"\\<(?P<tag>[^>]+)\\>")
 FRONT_MATTER_RE = re.compile(r"\A---\s*\r?\n.*?\r?\n---\s*(?:\r?\n|\Z)", re.S)
+HTML_HEADING_RE = re.compile(
+    r"<h(?P<level>[1-4])(?P<attrs>[^>]*)>(?P<body>.*?)</h(?P=level)>", re.I | re.S
+)
+HTML_TAG_RE = re.compile(r"<[^>]+>")
+CHAPTER_TITLE_RE = re.compile(r"^\s*第\s*(?P<number>[\d一二三四五六七八九十百零〇两]+)\s*章\s*", re.I)
+DECIMAL_CHAPTER_RE = re.compile(r"^\s*(?P<number>\d+)\s*[.、]\s+(?!\d)")
+DECIMAL_HEADING_RE = re.compile(
+    r"^\s*(?P<number>\d+(?:\.\d+){1,3})(?:\s+|\.(?=\D))"
+)
+LEGACY_SECTION_RE = re.compile(
+    r"^\s*(?:第\s*[\d一二三四五六七八九十百零〇两]+\s*节|[一二三四五六七八九十]+[、.])\s*"
+)
 
 
 class MkDocsConfigLoader(yaml.SafeLoader):
@@ -167,6 +179,92 @@ def title_from_markdown(markdown_text: str, fallback: str) -> str:
         return fallback
     value = re.sub(r"[`*_~\[\]]", "", match.group(1)).strip()
     return value or fallback
+
+
+def chinese_number(value: str) -> int | None:
+    if value.isdigit():
+        return int(value)
+    digits = {"零": 0, "〇": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5,
+              "六": 6, "七": 7, "八": 8, "九": 9}
+    if not value or any(char not in digits and char not in {"十", "百"} for char in value):
+        return None
+    total = 0
+    current = 0
+    for char in value:
+        if char in digits:
+            current = digits[char]
+        elif char == "十":
+            total += (current or 1) * 10
+            current = 0
+        elif char == "百":
+            total += (current or 1) * 100
+            current = 0
+    return total + current
+
+
+def chapter_number(title: str, rel_path: str) -> int | None:
+    match = CHAPTER_TITLE_RE.match(title)
+    if match:
+        return chinese_number(match.group("number"))
+    match = DECIMAL_CHAPTER_RE.match(title)
+    if match:
+        return int(match.group("number"))
+    path_match = re.search(r"(?:^|/)(?:chapter|section)[-_]?0*(\d+)(?:\D|$)", rel_path, re.I)
+    return int(path_match.group(1)) if path_match else None
+
+
+def normalized_chapter_title(title: str, number: int) -> str:
+    clean = CHAPTER_TITLE_RE.sub("", title, count=1)
+    clean = DECIMAL_CHAPTER_RE.sub("", clean, count=1)
+    clean = re.sub(r"\s+", " ", clean).strip(" -—·")
+    return f"第{number}章 {clean}" if clean else f"第{number}章"
+
+
+def normalize_chapter_headings(rendered_html: str, number: int) -> str:
+    counters = [0, 0, 0]
+    removed_h1 = False
+
+    def replace(match: re.Match[str]) -> str:
+        nonlocal removed_h1
+        level = int(match.group("level"))
+        body = match.group("body")
+        text = html.unescape(HTML_TAG_RE.sub("", body)).strip()
+        if level == 1 and not removed_h1:
+            removed_h1 = True
+            return ""
+        if level == 1:
+            return match.group(0)
+
+        existing = DECIMAL_HEADING_RE.match(text)
+        if existing:
+            parts = [int(part) for part in existing.group("number").split(".")]
+            if parts[0] == number:
+                for index, value in enumerate(parts[1:4]):
+                    counters[index] = value
+                for index in range(len(parts) - 1, 3):
+                    counters[index] = 0
+                canonical_prefix = ".".join(str(part) for part in parts)
+                clean_body = re.sub(
+                    r"^\s*\d+(?:\.\d+){1,3}(?:\s+|\.(?=\D))",
+                    "",
+                    body,
+                    count=1,
+                ).lstrip()
+                return (
+                    f'<h{level}{match.group("attrs")}>'
+                    f"{canonical_prefix} {clean_body}</h{level}>"
+                )
+
+        index = level - 2
+        counters[index] += 1
+        for reset_index in range(index + 1, 3):
+            counters[reset_index] = 0
+        prefix_parts = [number, *counters[: index + 1]]
+        prefix = ".".join(str(part) for part in prefix_parts)
+        clean_body = LEGACY_SECTION_RE.sub("", body, count=1)
+        return f'<h{level}{match.group("attrs")}>{prefix} {clean_body}</h{level}>'
+
+    return HTML_HEADING_RE.sub(replace, rendered_html)
 
 
 def excerpt_from_markdown(markdown_text: str) -> str:
@@ -408,6 +506,12 @@ def collect_book_documents(book: dict[str, object]) -> tuple[Path, list[dict[str
             }
         )
 
+    for doc in docs:
+        number = chapter_number(str(doc["title"]), str(doc["relPath"]))
+        if number is not None:
+            doc["chapterNumber"] = number
+            doc["title"] = normalized_chapter_title(str(doc["title"]), number)
+
     for index, doc in enumerate(docs):
         doc["order"] = index + 1
         doc["previousId"] = docs[index - 1]["id"] if index else ""
@@ -436,6 +540,8 @@ def build_book(
             rendered,
         )
         rendered = TABLE_RE.sub(r'<div class="table-wrapper">\1</div>', rendered)
+        if doc.get("chapterNumber") is not None:
+            rendered = normalize_chapter_headings(rendered, int(doc["chapterNumber"]))
         rendered = rewrite_document_urls(
             rendered,
             output=output,
