@@ -1,0 +1,1 @@
+{"id":"128e0a5f1b16775c","bookSlug":"zhou-machine-learning","path":"requirements.txt","name":"requirements.txt","kind":"text","language":"text","size":75,"downloadUrl":"files/code/zhou-machine-learning/requirements.txt","content":"xgboost\r\nnumpy\r\nmatplotlib\r\ntorch\r\nscipy\r\ngraphviz\r\nscikit_learn\r\nskrebate\n","truncated":false}

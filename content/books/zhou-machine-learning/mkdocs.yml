@@ -20,8 +20,6 @@ theme:
   features: [navigation.sections, navigation.top, navigation.footer, navigation.path, content.code.copy]
 nav:
   - 课程首页: index.md
-  - 课程资源: course-resources.md
-  - tiny_ml 算法实验室: tinyml-lab.md
   - 前置内容: 00-front-matter/index.md
   - 第1章 绪论: chapters/01-introduction/index.md
   - 第2章 模型评估与选择: chapters/02-model-evaluation-and-selection/index.md
