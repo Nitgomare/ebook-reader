@@ -72,6 +72,44 @@ DECIMAL_HEADING_RE = re.compile(
 LEGACY_SECTION_RE = re.compile(
     r"^\s*(?:第\s*[\d一二三四五六七八九十百零〇两]+\s*节|[一二三四五六七八九十]+[、.])\s*"
 )
+BILIBILI_PLAYLIST_RE = re.compile(
+    r"<!--\s*bilibili(?:-[\w]+)?-playlist:start\s*-->.*?"
+    r"<!--\s*bilibili(?:-[\w]+)?-playlist:end\s*-->",
+    re.I | re.S,
+)
+CHAPTER_VIDEO_SECTION_RE = re.compile(
+    r'<div\s+class=["\']chapter-video["\'][^>]*>.*?</details>\s*</div>',
+    re.I | re.S,
+)
+UNAVAILABLE_VIDEO_SECTION_RE = re.compile(
+    r'<div\s+class=["\'][^"\']*chapter-video--unavailable[^"\']*["\'][^>]*>.*?</div>',
+    re.I | re.S,
+)
+EMBEDDED_MEDIA_RE = re.compile(
+    r"<(?:iframe|video)\b[^>]*>.*?</(?:iframe|video)>", re.I | re.S
+)
+RESOURCE_EXTENSIONS = {
+    ".pdf": "PDF",
+    ".epub": "EPUB",
+    ".doc": "Word",
+    ".docx": "Word",
+    ".ppt": "课件",
+    ".pptx": "课件",
+    ".xls": "表格",
+    ".xlsx": "表格",
+    ".csv": "数据",
+    ".zip": "压缩包",
+    ".rar": "压缩包",
+    ".7z": "压缩包",
+}
+NAVIGATION_ONLY_TITLES = {
+    "课程导读",
+    "课程首页",
+    "图书首页",
+    "文档首页",
+    "专题首页",
+    "课程资源",
+}
 
 
 class MkDocsConfigLoader(yaml.SafeLoader):
@@ -179,6 +217,29 @@ def title_from_markdown(markdown_text: str, fallback: str) -> str:
         return fallback
     value = re.sub(r"[`*_~\[\]]", "", match.group(1)).strip()
     return value or fallback
+
+
+def clean_markdown_content(markdown_text: str) -> str:
+    """Remove presentation-only video blocks from chapter content."""
+    cleaned = BILIBILI_PLAYLIST_RE.sub("", markdown_text)
+    cleaned = CHAPTER_VIDEO_SECTION_RE.sub("", cleaned)
+    cleaned = UNAVAILABLE_VIDEO_SECTION_RE.sub("", cleaned)
+    return EMBEDDED_MEDIA_RE.sub("", cleaned)
+
+
+def is_navigation_only_doc(book: dict[str, object], rel_path: str, title: str) -> bool:
+    """Hide legacy landing pages; the reader generates its own resource view."""
+    path = PurePosixPath(rel_path)
+    compact_title = re.sub(r"\s+", "", title)
+    if compact_title in NAVIGATION_ONLY_TITLES:
+        return True
+    if path.name.casefold() == "course-resources.md":
+        return True
+    if len(path.parts) == 1 and path.name.casefold() == "index.md":
+        return True
+    if len(path.parts) == 1 and compact_title == re.sub(r"\s+", "", str(book["title"])):
+        return True
+    return False
 
 
 def chinese_number(value: str) -> int | None:
@@ -410,6 +471,35 @@ def build_code_assets(
     return public_files, by_doc
 
 
+def build_download_assets(
+    docs_root: Path, book_slug: str, output: Path
+) -> list[dict[str, object]]:
+    """Publish textbook, slide and exercise downloads for the generated resource page."""
+    resources: list[dict[str, object]] = []
+    for source in sorted(docs_root.rglob("*"), key=lambda path: path.as_posix().casefold()):
+        if not source.is_file() or source.suffix.lower() not in RESOURCE_EXTENSIONS:
+            continue
+        rel_path = source.relative_to(docs_root).as_posix()
+        if any(part in SKIP_DIRS for part in PurePosixPath(rel_path).parts):
+            continue
+        destination = output / "files" / book_slug / Path(*PurePosixPath(rel_path).parts)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+        encoded = "/".join(
+            quote(part) for part in ("files", book_slug, *PurePosixPath(rel_path).parts)
+        )
+        resources.append(
+            {
+                "name": source.name,
+                "path": rel_path,
+                "kind": RESOURCE_EXTENSIONS[source.suffix.lower()],
+                "size": source.stat().st_size,
+                "downloadUrl": encoded,
+            }
+        )
+    return resources
+
+
 def safe_target(source_root: Path, current_rel: str, raw_url: str) -> tuple[Path, str, str] | None:
     parsed = urlsplit(html.unescape(raw_url))
     if parsed.scheme or parsed.netloc or raw_url.startswith(("#", "data:", "mailto:", "tel:")):
@@ -492,13 +582,17 @@ def collect_book_documents(book: dict[str, object]) -> tuple[Path, list[dict[str
         if not source_path.is_file():
             continue
         markdown_text = FRONT_MATTER_RE.sub("", source_path.read_text(encoding="utf-8-sig"), count=1)
+        markdown_text = clean_markdown_content(markdown_text)
         fallback = source_path.stem.replace("-", " ").replace("_", " ")
+        title = str(item.get("title") or title_from_markdown(markdown_text, fallback))
+        if is_navigation_only_doc(book, rel_path, title):
+            continue
         docs.append(
             {
                 "id": doc_id(slug, rel_path),
                 "bookSlug": slug,
                 "relPath": rel_path,
-                "title": str(item.get("title") or title_from_markdown(markdown_text, fallback)),
+                "title": title,
                 "sections": item.get("sections") or ["正文"],
                 "excerpt": excerpt_from_markdown(markdown_text),
                 "source": source_path,
@@ -526,6 +620,7 @@ def build_book(
     slug = str(book["slug"])
     id_map = {str(doc["relPath"]): str(doc["id"]) for doc in docs}
     public_code, code_by_doc = build_code_assets(book, output, docs)
+    public_resources = build_download_assets(docs_root, slug, output)
 
     public_docs: list[dict[str, object]] = []
     for doc in docs:
@@ -581,13 +676,19 @@ def build_book(
         shutil.copy2(cover, destination)
         cover_url = "/".join(quote(part) for part in ("files", slug, *PurePosixPath(rel_cover).parts))
 
+    first_doc = next(
+        (doc for doc in public_docs if doc.get("chapterNumber") is not None),
+        public_docs[0] if public_docs else None,
+    )
     public_book = {
         **book,
         "sourceSiteName": mkdocs_config.get("site_name", book["title"]),
         "cover": cover_url,
         "docCount": len(public_docs),
-        "firstDocId": public_docs[0]["id"] if public_docs else "",
+        "firstDocId": first_doc["id"] if first_doc else "",
+        "chapterCount": sum(doc.get("chapterNumber") is not None for doc in public_docs),
         "codeCount": len(public_code),
+        "resources": public_resources,
     }
     return public_book, public_docs, public_code
 

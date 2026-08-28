@@ -49,8 +49,8 @@
   },
   "stats": {
     "books": 14,
-    "docs": 219,
-    "code": 182
+    "docs": 201,
+    "code": 187
   },
   "books": [
     {
@@ -68,9 +68,26 @@
       "featured": true,
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 22,
-      "firstDocId": "0d9260d2a6c76111",
-      "codeCount": 0
+      "docCount": 19,
+      "firstDocId": "5aae9dc4ade82146",
+      "chapterCount": 0,
+      "codeCount": 0,
+      "resources": [
+        {
+          "name": "wind-power-terminology.csv",
+          "path": "assets/files/wind-power-terminology.csv",
+          "kind": "数据",
+          "size": 54085,
+          "downloadUrl": "files/research-skills/assets/files/wind-power-terminology.csv"
+        },
+        {
+          "name": "metrics.csv",
+          "path": "programming/examples/outputs/metrics.csv",
+          "kind": "数据",
+          "size": 108,
+          "downloadUrl": "files/research-skills/programming/examples/outputs/metrics.csv"
+        }
+      ]
     },
     {
       "slug": "shangguigu-python",
@@ -86,11 +103,20 @@
       "type": "course",
       "featured": true,
       "codeSource": "code",
+      "resourceLinks": [
+        {
+          "label": "尚硅谷 Python 配套视频",
+          "url": "https://www.bilibili.com/video/BV1tDsgzxECr/",
+          "kind": "视频"
+        }
+      ],
       "sourceSiteName": "Python 系统学习",
       "cover": "",
-      "docCount": 15,
-      "firstDocId": "a844d33a9fc54823",
-      "codeCount": 165
+      "docCount": 14,
+      "firstDocId": "9ce085645f85dfab",
+      "chapterCount": 14,
+      "codeCount": 165,
+      "resources": []
     },
     {
       "slug": "python-beginner-to-master",
@@ -107,8 +133,10 @@
       "sourceSiteName": "Python从入门到精通",
       "cover": "",
       "docCount": 26,
-      "firstDocId": "4e235b15f071bc5f",
-      "codeCount": 0
+      "firstDocId": "5d05d680b081c251",
+      "chapterCount": 22,
+      "codeCount": 0,
+      "resources": []
     },
     {
       "slug": "shangguigu-data-analysis",
@@ -124,6 +152,13 @@
       "type": "course",
       "featured": true,
       "codeSource": "code",
+      "resourceLinks": [
+        {
+          "label": "尚硅谷数据分析配套视频",
+          "url": "https://www.bilibili.com/video/BV1D9GLzyEL6/",
+          "kind": "视频"
+        }
+      ],
       "codeLinks": {
         "shared-data": [
           "chapter-03.md",
@@ -132,9 +167,11 @@
       },
       "sourceSiteName": "Python 数据分析",
       "cover": "",
-      "docCount": 5,
-      "firstDocId": "d2804271a6039712",
-      "codeCount": 17
+      "docCount": 4,
+      "firstDocId": "50204d742907b7f6",
+      "chapterCount": 4,
+      "codeCount": 17,
+      "resources": []
     },
     {
       "slug": "python-data-analysis",
@@ -148,11 +185,21 @@
       ],
       "category": "data-analysis",
       "type": "reference",
+      "codeSource": "docs/assets/code",
+      "resourceLinks": [
+        {
+          "label": "数据分析补充视频",
+          "url": "https://www.bilibili.com/video/BV1D9GLzyEL6/",
+          "kind": "视频"
+        }
+      ],
       "sourceSiteName": "Python 数据分析 · 教材站",
       "cover": "files/python-data-analysis/00-front-matter/images/cover.jpg",
-      "docCount": 25,
-      "firstDocId": "0a3308c140f8f4e4",
-      "codeCount": 0
+      "docCount": 23,
+      "firstDocId": "a2cebd9370b2c317",
+      "chapterCount": 21,
+      "codeCount": 5,
+      "resources": []
     },
     {
       "slug": "deep-learning",
@@ -167,11 +214,25 @@
       "category": "artificial-intelligence",
       "type": "course",
       "featured": true,
+      "resourceLinks": [
+        {
+          "label": "《动手学深度学习》第二版中文教材",
+          "url": "https://zh-v2.d2l.ai/",
+          "kind": "教材"
+        },
+        {
+          "label": "李沐中文课程与视频",
+          "url": "https://courses.d2l.ai/zh-v2/",
+          "kind": "课程"
+        }
+      ],
       "sourceSiteName": "动手学深度学习 · 学习站",
       "cover": "",
-      "docCount": 3,
-      "firstDocId": "fddf97053cd983af",
-      "codeCount": 0
+      "docCount": 1,
+      "firstDocId": "4ab69924aecec56e",
+      "chapterCount": 0,
+      "codeCount": 0,
+      "resources": []
     },
     {
       "slug": "zhou-machine-learning",
@@ -185,11 +246,98 @@
       ],
       "category": "artificial-intelligence",
       "type": "reference",
+      "resourceLinks": [
+        {
+          "label": "机器学习配套视频",
+          "url": "https://www.bilibili.com/video/BV1gG411f7zX/",
+          "kind": "视频"
+        }
+      ],
       "sourceSiteName": "周志华《机器学习》· 在线图书",
       "cover": "files/zhou-machine-learning/00-front-matter/images/cover.jpeg",
-      "docCount": 21,
-      "firstDocId": "dc419d2921af03c8",
-      "codeCount": 0
+      "docCount": 19,
+      "firstDocId": "6d33a12baa08f7cc",
+      "chapterCount": 16,
+      "codeCount": 0,
+      "resources": [
+        {
+          "name": "lesson-01-introduction.pdf",
+          "path": "courseware/lesson-01-introduction.pdf",
+          "kind": "PDF",
+          "size": 1290861,
+          "downloadUrl": "files/zhou-machine-learning/courseware/lesson-01-introduction.pdf"
+        },
+        {
+          "name": "lesson-02-model-evaluation.pdf",
+          "path": "courseware/lesson-02-model-evaluation.pdf",
+          "kind": "PDF",
+          "size": 1097692,
+          "downloadUrl": "files/zhou-machine-learning/courseware/lesson-02-model-evaluation.pdf"
+        },
+        {
+          "name": "lesson-03-linear-models.pdf",
+          "path": "courseware/lesson-03-linear-models.pdf",
+          "kind": "PDF",
+          "size": 1656457,
+          "downloadUrl": "files/zhou-machine-learning/courseware/lesson-03-linear-models.pdf"
+        },
+        {
+          "name": "lesson-04-decision-trees.pdf",
+          "path": "courseware/lesson-04-decision-trees.pdf",
+          "kind": "PDF",
+          "size": 2081367,
+          "downloadUrl": "files/zhou-machine-learning/courseware/lesson-04-decision-trees.pdf"
+        },
+        {
+          "name": "lesson-05-support-vector-machines.pdf",
+          "path": "courseware/lesson-05-support-vector-machines.pdf",
+          "kind": "PDF",
+          "size": 1989769,
+          "downloadUrl": "files/zhou-machine-learning/courseware/lesson-05-support-vector-machines.pdf"
+        },
+        {
+          "name": "lesson-06-neural-networks.pdf",
+          "path": "courseware/lesson-06-neural-networks.pdf",
+          "kind": "PDF",
+          "size": 1562963,
+          "downloadUrl": "files/zhou-machine-learning/courseware/lesson-06-neural-networks.pdf"
+        },
+        {
+          "name": "lesson-07-bayesian-classifiers.pdf",
+          "path": "courseware/lesson-07-bayesian-classifiers.pdf",
+          "kind": "PDF",
+          "size": 1232262,
+          "downloadUrl": "files/zhou-machine-learning/courseware/lesson-07-bayesian-classifiers.pdf"
+        },
+        {
+          "name": "lesson-08-ensemble-learning.pdf",
+          "path": "courseware/lesson-08-ensemble-learning.pdf",
+          "kind": "PDF",
+          "size": 2031541,
+          "downloadUrl": "files/zhou-machine-learning/courseware/lesson-08-ensemble-learning.pdf"
+        },
+        {
+          "name": "周志华-机器学习-PDF-上册-第1-221页.pdf",
+          "path": "downloads/周志华-机器学习-PDF-上册-第1-221页.pdf",
+          "kind": "PDF",
+          "size": 20595242,
+          "downloadUrl": "files/zhou-machine-learning/downloads/%E5%91%A8%E5%BF%97%E5%8D%8E-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-PDF-%E4%B8%8A%E5%86%8C-%E7%AC%AC1-221%E9%A1%B5.pdf"
+        },
+        {
+          "name": "周志华-机器学习-PDF-下册-第222-442页.pdf",
+          "path": "downloads/周志华-机器学习-PDF-下册-第222-442页.pdf",
+          "kind": "PDF",
+          "size": 18775372,
+          "downloadUrl": "files/zhou-machine-learning/downloads/%E5%91%A8%E5%BF%97%E5%8D%8E-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-PDF-%E4%B8%8B%E5%86%8C-%E7%AC%AC222-442%E9%A1%B5.pdf"
+        },
+        {
+          "name": "周志华-机器学习.epub",
+          "path": "downloads/周志华-机器学习.epub",
+          "kind": "EPUB",
+          "size": 9862778,
+          "downloadUrl": "files/zhou-machine-learning/downloads/%E5%91%A8%E5%BF%97%E5%8D%8E-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.epub"
+        }
+      ]
     },
     {
       "slug": "robot-textbook",
@@ -206,9 +354,11 @@
       "type": "course",
       "sourceSiteName": "轮腿式智能安保巡逻机器人项目实战",
       "cover": "files/robot-textbook/0.png",
-      "docCount": 18,
-      "firstDocId": "2c0b4b2e2ac4605c",
-      "codeCount": 0
+      "docCount": 17,
+      "firstDocId": "06a82f8c4f3c4a40",
+      "chapterCount": 11,
+      "codeCount": 0,
+      "resources": []
     },
     {
       "slug": "wind-energy",
@@ -224,9 +374,11 @@
       "type": "reference",
       "sourceSiteName": "风能技术",
       "cover": "",
-      "docCount": 13,
-      "firstDocId": "5bd60ae7f9e17d72",
-      "codeCount": 0
+      "docCount": 12,
+      "firstDocId": "4f0d6463d818ca87",
+      "chapterCount": 11,
+      "codeCount": 0,
+      "resources": []
     },
     {
       "slug": "风能技术",
@@ -242,9 +394,11 @@
       "type": "reference",
       "sourceSiteName": "风能技术（第二版）",
       "cover": "",
-      "docCount": 23,
-      "firstDocId": "b4ade889f42702e2",
-      "codeCount": 0
+      "docCount": 22,
+      "firstDocId": "822749e9425d0c37",
+      "chapterCount": 11,
+      "codeCount": 0,
+      "resources": []
     },
     {
       "slug": "wind-turbine-theory-and-design",
@@ -260,9 +414,11 @@
       "type": "reference",
       "sourceSiteName": "风力发电机组理论与设计",
       "cover": "files/wind-turbine-theory-and-design/00-front-matter/images/978-7-111-40451-4-coverpage-1.jpg",
-      "docCount": 15,
-      "firstDocId": "811b8e7782c84de7",
-      "codeCount": 0
+      "docCount": 14,
+      "firstDocId": "2f71b0d12a49352d",
+      "chapterCount": 12,
+      "codeCount": 0,
+      "resources": []
     },
     {
       "slug": "Utilizing-large-scale-foundation-models-for",
@@ -278,9 +434,11 @@
       "type": "reference",
       "sourceSiteName": "Utilizing large scale foundation models for PHM",
       "cover": "",
-      "docCount": 17,
-      "firstDocId": "c21d5195c3cf418f",
-      "codeCount": 0
+      "docCount": 16,
+      "firstDocId": "4189779b66be0b56",
+      "chapterCount": 6,
+      "codeCount": 0,
+      "resources": []
     },
     {
       "slug": "smart-analysis-system-user-manual",
@@ -296,9 +454,11 @@
       "type": "reference",
       "sourceSiteName": "智能分析与装备寿命预测系统使用手册",
       "cover": "files/smart-analysis-system-user-manual/assets/cover.svg",
-      "docCount": 8,
-      "firstDocId": "5099078314117d05",
-      "codeCount": 0
+      "docCount": 7,
+      "firstDocId": "f361ba46b553f2a1",
+      "chapterCount": 7,
+      "codeCount": 0,
+      "resources": []
     },
     {
       "slug": "smart-analysis-system-technical-docs",
@@ -314,26 +474,14 @@
       "type": "reference",
       "sourceSiteName": "智能分析与装备寿命预测系统技术文档",
       "cover": "files/smart-analysis-system-technical-docs/assets/cover.svg",
-      "docCount": 8,
-      "firstDocId": "02f12e0a464bc753",
-      "codeCount": 0
+      "docCount": 7,
+      "firstDocId": "45c6c8a9aa80c65b",
+      "chapterCount": 7,
+      "codeCount": 0,
+      "resources": []
     }
   ],
   "docs": [
-    {
-      "id": "0d9260d2a6c76111",
-      "bookSlug": "research-skills",
-      "relPath": "index.md",
-      "title": "课程导读",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "面向研究生和科研新手的实用工作流，覆盖文献检索、Zotero 管理、格式转换、知识库搭建、Python 数据处理和实验复现。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "5aae9dc4ade82146",
-      "codeFiles": []
-    },
     {
       "id": "5aae9dc4ade82146",
       "bookSlug": "research-skills",
@@ -343,8 +491,8 @@
         "文献检索与管理"
       ],
       "excerpt": "文献的查找与下载属于科研基本技能，上手难度不高。遇到暂时找不到或下载不下来的文献时，不要局限于单一数据库，可以通过更换检索平台、调整关键词、检索 DOI、查找预印本或使用其他渠道继续尝试。",
-      "order": 2,
-      "previousId": "0d9260d2a6c76111",
+      "order": 1,
+      "previousId": "",
       "nextId": "dc672cddb2d0de58",
       "codeFiles": []
     },
@@ -357,7 +505,7 @@
         "文献检索与管理"
       ],
       "excerpt": "文献检索的目标不是下载尽可能多的论文，而是建立一组与研究问题直接相关、方法可靠、能够支撑后续研究的文献集合。本节给出一套适合科研新手的筛选流程。",
-      "order": 3,
+      "order": 2,
       "previousId": "5aae9dc4ade82146",
       "nextId": "7552c636e07dd122",
       "codeFiles": []
@@ -371,7 +519,7 @@
         "文献检索与管理"
       ],
       "excerpt": "Zotero 是一款文献收集、分类、阅读、引用和同步工具。合理配置后，可以完成网页文献一键导入、PDF 管理、标签分类、重复条目合并，以及在 Word 或 LaTeX 中自动插入引文和生成参考文献。",
-      "order": 4,
+      "order": 3,
       "previousId": "dc672cddb2d0de58",
       "nextId": "06c96fded88bf5e0",
       "codeFiles": []
@@ -385,7 +533,7 @@
         "格式转换与术语"
       ],
       "excerpt": "PDF 适合阅读和打印，但不适合直接编辑，也不方便大模型准确读取文章结构、公式、表格和图片。因此，在整理文献或制作教学网页时，通常需要先将 PDF 转换为 Markdown，再根据需要转换为 HTML。",
-      "order": 5,
+      "order": 4,
       "previousId": "7552c636e07dd122",
       "nextId": "a89ce42437fcafc9",
       "codeFiles": []
@@ -399,22 +547,8 @@
         "格式转换与术语"
       ],
       "excerpt": "论文翻译最容易出现的问题不是句子看不懂，而是专业术语前后不统一。同一个术语在不同章节被翻译成不同中文，会直接影响阅读和后续写作。",
-      "order": 6,
+      "order": 5,
       "previousId": "06c96fded88bf5e0",
-      "nextId": "7445bfdfd579b5d0",
-      "codeFiles": []
-    },
-    {
-      "id": "7445bfdfd579b5d0",
-      "bookSlug": "research-skills",
-      "relPath": "03-site-building/index.md",
-      "title": "专题首页",
-      "sections": [
-        "知识库搭建"
-      ],
-      "excerpt": "这套教程带你完整复刻一个与本站结构相同的科研知识库：用 Markdown 写内容，用 MkDocs Material 生成静态网页，把代码上传到 GitHub，最后交给 Cloudflare Pages 自动构建和发布。",
-      "order": 7,
-      "previousId": "a89ce42437fcafc9",
       "nextId": "f9139440d62ab32e",
       "codeFiles": []
     },
@@ -427,8 +561,8 @@
         "知识库搭建"
       ],
       "excerpt": "Windows 安装 Python 时勾选 Add Python to PATH。安装后重新打开 PowerShell，再运行检查命令。",
-      "order": 8,
-      "previousId": "7445bfdfd579b5d0",
+      "order": 6,
+      "previousId": "a89ce42437fcafc9",
       "nextId": "ca9051924dd4f09e",
       "codeFiles": []
     },
@@ -441,7 +575,7 @@
         "知识库搭建"
       ],
       "excerpt": "本站精简后的目录如下。文件夹和文件名建议使用小写英文、数字和连字符，页面显示的中文标题写在 mkdocs.yml 中。",
-      "order": 9,
+      "order": 7,
       "previousId": "f9139440d62ab32e",
       "nextId": "51c12c67c9278755",
       "codeFiles": []
@@ -455,7 +589,7 @@
         "知识库搭建"
       ],
       "excerpt": "例如创建 docs/01-literature/01-search-tools.md：",
-      "order": 10,
+      "order": 8,
       "previousId": "ca9051924dd4f09e",
       "nextId": "2aa4a56fcd2e5e16",
       "codeFiles": []
@@ -469,7 +603,7 @@
         "知识库搭建"
       ],
       "excerpt": "先用 mkdocs.yml 提供的主题选项完成大部分外观设置，只有主题选项无法实现的效果才写 CSS。这样升级 Material 时更稳定。",
-      "order": 11,
+      "order": 9,
       "previousId": "51c12c67c9278755",
       "nextId": "c3bf656e22978bfd",
       "codeFiles": []
@@ -483,7 +617,7 @@
         "知识库搭建"
       ],
       "excerpt": "把几十万字放在一个 Markdown 页面里会导致加载、搜索和编辑都很慢。本站采用“主知识库 + 独立图书站”：每本书按章拆分成自己的 MkDocs 项目，统一构建时再把静态网页放入 site/book-sites/。仓库只保存 books/ 中的图书源文件，不保存重复的图书 H",
-      "order": 12,
+      "order": 10,
       "previousId": "2aa4a56fcd2e5e16",
       "nextId": "2f45d1fbec75e501",
       "codeFiles": []
@@ -497,7 +631,7 @@
         "知识库搭建"
       ],
       "excerpt": "GitHub 保存的是网站源文件。Cloudflare Pages 连接仓库后，每次收到新的提交都会自动构建并部署。",
-      "order": 13,
+      "order": 11,
       "previousId": "c3bf656e22978bfd",
       "nextId": "6b5b155108f2067e",
       "codeFiles": []
@@ -511,7 +645,7 @@
         "知识库搭建"
       ],
       "excerpt": "Cloudflare Pages 会克隆 GitHub 仓库、安装 requirements.txt 中的 Python 包、运行 MkDocs，再把 site/ 发布到全球网络。以后每次推送到生产分支都会自动重复这套流程。",
-      "order": 14,
+      "order": 12,
       "previousId": "2f45d1fbec75e501",
       "nextId": "3558b3a761f1836b",
       "codeFiles": []
@@ -525,22 +659,8 @@
         "知识库搭建"
       ],
       "excerpt": "随后到 Cloudflare Pages 确认最新提交部署成功。",
-      "order": 15,
+      "order": 13,
       "previousId": "6b5b155108f2067e",
-      "nextId": "6afa4d15053922f4",
-      "codeFiles": []
-    },
-    {
-      "id": "6afa4d15053922f4",
-      "bookSlug": "research-skills",
-      "relPath": "programming/index.md",
-      "title": "专题首页",
-      "sections": [
-        "编程实践"
-      ],
-      "excerpt": "完整整理上游 README 中 25 个算法实现、两份公式推导和四类 sklearn 对照实验；同时按教材章节对齐正文、周志华课件与视频，不再只是文末的一条 GitHub 链接。",
-      "order": 16,
-      "previousId": "3558b3a761f1836b",
       "nextId": "2b883da5772cbe45",
       "codeFiles": []
     },
@@ -553,8 +673,8 @@
         "编程实践"
       ],
       "excerpt": "这不是一份“把 Python 语法背一遍”的清单。你的第一个目标是：在一个独立环境中运行脚本，读取一组数据，生成一张图，并且知道出错后去哪里找原因。",
-      "order": 17,
-      "previousId": "6afa4d15053922f4",
+      "order": 14,
+      "previousId": "3558b3a761f1836b",
       "nextId": "6a639d8450b71484",
       "codeFiles": []
     },
@@ -567,7 +687,7 @@
         "编程实践"
       ],
       "excerpt": "实验记录、传感器测量、问卷、时间序列和图像看起来各不相同，进入 Python 后都需要先回答相同的问题：数据是什么形状、每列代表什么、单位是什么、是否存在缺失或异常。下面用一段连续测量信号作为贯穿示例，练习数组、统计和作图。",
-      "order": 18,
+      "order": 15,
       "previousId": "2b883da5772cbe45",
       "nextId": "516ac4962c282277",
       "codeFiles": []
@@ -581,7 +701,7 @@
         "编程实践"
       ],
       "excerpt": "用五个小实验观察 fit() 内部发生了什么。成熟项目仍应优先使用 scikit-learn；这里的重点是理解数值计算、验证实现并解释差异。",
-      "order": 19,
+      "order": 16,
       "previousId": "6a639d8450b71484",
       "nextId": "bc7c6cb9f3ace92b",
       "codeFiles": []
@@ -595,7 +715,7 @@
         "编程实践"
       ],
       "excerpt": "这个练习不依赖外部数据：脚本先生成三类带标签的传感器信号，再提取可解释特征并训练分类器。它选用设备状态作为一个具体案例，但重点是通用流程——定义问题、准备数据、避免泄漏、比较基线、保存结果。换成其他表格或时间序列数据时仍然适用。",
-      "order": 20,
+      "order": 17,
       "previousId": "516ac4962c282277",
       "nextId": "21ad7dda83759bbd",
       "codeFiles": []
@@ -609,7 +729,7 @@
         "编程实践"
       ],
       "excerpt": "“在我电脑上能跑”不是科研复现。合格的项目应该让同门在一台新电脑上，从原始数据和一条命令得到论文中的表格与图片。",
-      "order": 21,
+      "order": 18,
       "previousId": "bc7c6cb9f3ace92b",
       "nextId": "8c723aa568a0e891",
       "codeFiles": []
@@ -623,23 +743,9 @@
         "正文"
       ],
       "excerpt": "按科研任务选择工具或方法，完成后可随时返回总览继续下一步。",
-      "order": 22,
+      "order": 19,
       "previousId": "21ad7dda83759bbd",
       "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "a844d33a9fc54823",
-      "bookSlug": "shangguigu-python",
-      "relPath": "index.md",
-      "title": "课程导读",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "",
-      "order": 1,
-      "previousId": "",
-      "nextId": "9ce085645f85dfab",
       "codeFiles": []
     },
     {
@@ -650,10 +756,10 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "计算机硬件主要由五个部分组成，分别是：运算器、控制器、存储器、输入设备、输出设备。",
       "chapterNumber": 1,
-      "order": 2,
-      "previousId": "a844d33a9fc54823",
+      "order": 1,
+      "previousId": "",
       "nextId": "32475f645b3e70e5",
       "codeFiles": [
         "4dbb805067137e2a"
@@ -667,9 +773,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "主要原因是 Python 具备如下的特点：",
       "chapterNumber": 2,
-      "order": 3,
+      "order": 2,
       "previousId": "9ce085645f85dfab",
       "nextId": "4fb5ff6fc907d54c",
       "codeFiles": [
@@ -684,9 +790,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "来看这样一个场景：老师让学生把：姓名、年龄、体重写在纸上，纸上的文字，就是学生想要表达的内容，这些内容不需要计算、也不需要转换，就是字面上的含义，一看就能理解。",
       "chapterNumber": 3,
-      "order": 4,
+      "order": 3,
       "previousId": "32475f645b3e70e5",
       "nextId": "570078cfb45da8eb",
       "codeFiles": [
@@ -722,9 +828,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "程序并不是简单的“从上到下”执行，很多时候，我们希望程序能根据不同的情况，做出不同的选择，比如：根据情况跳过某些代码，或者重复执行某些代码，那这时就需要用到『流程控制语句』，程序的执行流程大体上可分为三类：顺序、分之、循环。",
       "chapterNumber": 4,
-      "order": 5,
+      "order": 4,
       "previousId": "4fb5ff6fc907d54c",
       "nextId": "0e1c53f893b2e2e8",
       "codeFiles": [
@@ -750,9 +856,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "函数（function）是：组织好的、可重复使用的、用于执行特定任务的代码块。",
       "chapterNumber": 5,
-      "order": 6,
+      "order": 5,
       "previousId": "570078cfb45da8eb",
       "nextId": "31d963e6c8fcab66",
       "codeFiles": [
@@ -781,9 +887,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "在编程中，我们经常需要一次保存多个数据，比如：多个学生的名字、一组商品的价格、或一串测量数据等等，如果把一条数据看作一个“物品”，那这些物品需要被放进“容器”里统一管理，在 Python 中，这种用来存放多个数据的东西，就叫做『数据容器』。",
       "chapterNumber": 6,
-      "order": 7,
+      "order": 6,
       "previousId": "0e1c53f893b2e2e8",
       "nextId": "477324e79fb56fb3",
       "codeFiles": [
@@ -821,9 +927,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "『对象』是一个拥有『属性』和『行为』的个体，它是构成现实世界和程序世界的基本单位。编程领域有这么一句话，叫“万物皆对象！”之所以这么说，是因为任何一个具体存在的人或物，都可以看成是一个对象，例如：一个人、 一辆车、一部手机，都是对象，他们的『属性』和『行为』分别是：",
       "chapterNumber": 7,
-      "order": 8,
+      "order": 7,
       "previousId": "31d963e6c8fcab66",
       "nextId": "a49f0260c4a51ed7",
       "codeFiles": [
@@ -858,9 +964,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "上述代码中welcome函数的内存示意图：",
       "chapterNumber": 8,
-      "order": 9,
+      "order": 8,
       "previousId": "477324e79fb56fb3",
       "nextId": "5036790471830435",
       "codeFiles": [
@@ -892,9 +998,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "错误：代码本身有语法错误，解释器无法执行代码。———— 无法通过异常处理机制解决。",
       "chapterNumber": 9,
-      "order": 10,
+      "order": 9,
       "previousId": "a49f0260c4a51ed7",
       "nextId": "8ba110c3e775bea9",
       "codeFiles": [
@@ -913,9 +1019,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "Python 中的模块分为三类，分别是：标准库模块、自定义模块、第三方模块。",
       "chapterNumber": 10,
-      "order": 11,
+      "order": 10,
       "previousId": "5036790471830435",
       "nextId": "ff72fa6783f9da7e",
       "codeFiles": [
@@ -939,9 +1045,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "先区分两个概念：可迭代对象（iterable）、迭代器（iterator）",
       "chapterNumber": 11,
-      "order": 12,
+      "order": 11,
       "previousId": "8ba110c3e775bea9",
       "nextId": "b9769d19bc4bb197",
       "codeFiles": [
@@ -959,9 +1065,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "从文件系统的『根目录』开始，完整描述文件或目录所在的位置。",
       "chapterNumber": 12,
-      "order": 13,
+      "order": 12,
       "previousId": "ff72fa6783f9da7e",
       "nextId": "3a962756d44d2b97",
       "codeFiles": [
@@ -987,9 +1093,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "🔸概念：在一段时间内，当 CPU 面对多个任务时，会将每个任务交替着执行一段时间。",
       "chapterNumber": 13,
-      "order": 14,
+      "order": 13,
       "previousId": "b9769d19bc4bb197",
       "nextId": "f26986213044e077",
       "codeFiles": [
@@ -1023,9 +1129,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "视频来自尚硅谷 Python 零基础教程；点击分 P 标题可直接播放对应内容。",
+      "excerpt": "概念：协程（Coroutine），是一种线程内部的任务调度机制，它通过事件循环，在用户态中实现任务的挂起与恢复执行，从而在遇到 IO 操作时，不让 CPU 等待，而是继续执行其它需要 CPU 的任务。",
       "chapterNumber": 14,
-      "order": 15,
+      "order": 14,
       "previousId": "3a962756d44d2b97",
       "nextId": "",
       "codeFiles": []
@@ -1417,20 +1523,6 @@
       "codeFiles": []
     },
     {
-      "id": "d2804271a6039712",
-      "bookSlug": "shangguigu-data-analysis",
-      "relPath": "index.md",
-      "title": "课程导读",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "",
-      "order": 1,
-      "previousId": "",
-      "nextId": "50204d742907b7f6",
-      "codeFiles": []
-    },
-    {
       "id": "50204d742907b7f6",
       "bookSlug": "shangguigu-data-analysis",
       "relPath": "chapter-01.md",
@@ -1438,10 +1530,10 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "点击分 P 标题可直接播放对应内容。",
+      "excerpt": "数据从哪里来？公司数据库 | 公开数据集（如政府数据） | 手动爬取",
       "chapterNumber": 1,
-      "order": 2,
-      "previousId": "d2804271a6039712",
+      "order": 1,
+      "previousId": "",
       "nextId": "2d1349bbcbd281d8",
       "codeFiles": []
     },
@@ -1453,9 +1545,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "点击分 P 标题可直接播放对应内容。",
+      "excerpt": "numpy是Python中科学计算的基础包。它是一个Python库，提供多维数组对象、各种派生对象（例如掩码数组和矩阵）以及用于对数组进行快速操作的各种方法，包括数学、逻辑、形状操作、排序、选择、I/O",
       "chapterNumber": 2,
-      "order": 3,
+      "order": 2,
       "previousId": "50204d742907b7f6",
       "nextId": "87998434aad55da5",
       "codeFiles": [
@@ -1470,9 +1562,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "点击分 P 标题可直接播放对应内容。",
+      "excerpt": "Python 数据分析工具链中最核心的库，充当数据读取、清洗、分析、统计、输出的高效工具。",
       "chapterNumber": 3,
-      "order": 4,
+      "order": 3,
       "previousId": "2d1349bbcbd281d8",
       "nextId": "9d712438f21a831c",
       "codeFiles": [
@@ -1499,9 +1591,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "点击分 P 标题可直接播放对应内容。",
+      "excerpt": "Matplotlib是一个Python绘图库，广泛用于创建各种类型的静态、动态和交互式图表。它是数据科学、机器学习、工程和科学计算领域中常用的绘图工具之一。",
       "chapterNumber": 4,
-      "order": 5,
+      "order": 4,
       "previousId": "87998434aad55da5",
       "nextId": "",
       "codeFiles": [
@@ -1521,34 +1613,6 @@
       ]
     },
     {
-      "id": "0a3308c140f8f4e4",
-      "bookSlug": "python-data-analysis",
-      "relPath": "index.md",
-      "title": "课程首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "从 NumPy、Pandas 入门，逐步学习数据清洗、统计、可视化、机器学习和完整分析案例。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "d35d8f93e499f2cf",
-      "codeFiles": []
-    },
-    {
-      "id": "d35d8f93e499f2cf",
-      "bookSlug": "python-data-analysis",
-      "relPath": "course-resources.md",
-      "title": "课程资源",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "第 3～7 章提供与教材三级大纲对应的现代 Python 教学脚本。",
-      "order": 2,
-      "previousId": "0a3308c140f8f4e4",
-      "nextId": "96794d9fbb602ba9",
-      "codeFiles": []
-    },
-    {
       "id": "96794d9fbb602ba9",
       "bookSlug": "python-data-analysis",
       "relPath": "code-lab.md",
@@ -1557,8 +1621,8 @@
         "正文"
       ],
       "excerpt": "在线切换第 3～7 章脚本，并按教材三级大纲查看代码片段；也可搜索关键写法、复制当前片段。在线内容与下载入口读取同一份 .py 文件；需要运行、修改或保存结果时，请下载后在本地 Python 环境中练习。",
-      "order": 3,
-      "previousId": "d35d8f93e499f2cf",
+      "order": 1,
+      "previousId": "",
       "nextId": "0e028fb7c28f0de1",
       "codeFiles": []
     },
@@ -1571,7 +1635,7 @@
         "正文"
       ],
       "excerpt": "书名：Python数据分析从入门到精通（第2版）",
-      "order": 4,
+      "order": 2,
       "previousId": "96794d9fbb602ba9",
       "nextId": "a2cebd9370b2c317",
       "codeFiles": []
@@ -1586,7 +1650,7 @@
       ],
       "excerpt": "数据分析是数学、统计学理论结合科学的统计分析方法（如线性回归分析、聚类分析、方差分析、时间序列分析等）对数据库中的数据、Excel数据、收集的大量数据、网页抓取的数据等进行分析，从中提取有价值的信息形成结论并进行展示的过程。本章将对数据分析的基础知识进行讲解。",
       "chapterNumber": 1,
-      "order": 5,
+      "order": 3,
       "previousId": "0e028fb7c28f0de1",
       "nextId": "07e7f77a2b4c4de4",
       "codeFiles": []
@@ -1601,7 +1665,7 @@
       ],
       "excerpt": "工欲善其事，必先利其器。Python提供的数据处理、绘图、数据可视化、数组计算、机器学习等模块，使得数据可视化工作变得简单、高效。而要使用Python，需要先安装IDE开发环境，以及适合数据分析、数据可视化的Anaconda、Jupyter Notebook、Pycharm等开发",
       "chapterNumber": 2,
-      "order": 6,
+      "order": 4,
       "previousId": "a2cebd9370b2c317",
       "nextId": "e8f6db7585e7bd0e",
       "codeFiles": []
@@ -1616,7 +1680,7 @@
       ],
       "excerpt": "NumPy模块在数据处理、数据清洗、数据过滤、数据转换等方面可以快速实现数据计算，Pandas的底层也是基于NumPy的。因此，这一章内容将介绍NumPy的基础知识，使读者快速了解NumPy并将其应用到实际数据分析工作当中。",
       "chapterNumber": 3,
-      "order": 7,
+      "order": 5,
       "previousId": "07e7f77a2b4c4de4",
       "nextId": "c0c84b750daac4eb",
       "codeFiles": []
@@ -1631,7 +1695,7 @@
       ],
       "excerpt": "Pandas是Python的核心数据分析支持库，它提供了大量快速处理表格数据的函数和方法。本章将讲解Pandas模块的基础知识，主要内容包括安装和了解Pandas模块，Pandas模块的两大数据结构，即Series()对象和DataFrame()对象，还有索引的相关知识。",
       "chapterNumber": 4,
-      "order": 8,
+      "order": 6,
       "previousId": "e8f6db7585e7bd0e",
       "nextId": "844f3c47e72b81c1",
       "codeFiles": []
@@ -1646,7 +1710,7 @@
       ],
       "excerpt": "在实现数据分析的过程中，数据读取与处理是首要任务。拿到数据后需要先读取数据才能对数据进行分析。本章将主要介绍如何读取Excel文件、CSV文件、HTML网页以及数据库中的数据。",
       "chapterNumber": 5,
-      "order": 9,
+      "order": 7,
       "previousId": "c0c84b750daac4eb",
       "nextId": "8d2488105aae38e1",
       "codeFiles": []
@@ -1661,7 +1725,7 @@
       ],
       "excerpt": "数据读取后并不是所有的数据都是我们所需要的，因此还要对数据进行简单的处理，本章将主要介绍如何进行数据的抽取，数据的增、删、改、查以及如何对数据进行排序与排名操作。",
       "chapterNumber": 6,
-      "order": 10,
+      "order": 8,
       "previousId": "844f3c47e72b81c1",
       "nextId": "6b7c418e5bee7f95",
       "codeFiles": []
@@ -1676,7 +1740,7 @@
       ],
       "excerpt": "数据清洗是数据分析的一个重要工作，因为数据的质量直接影响数据分析以及算法模型的结果。本章主要介绍在进行数据清洗时如何处理缺失值、重复值和异常值，以及字符串操作和数据转换。",
       "chapterNumber": 7,
-      "order": 11,
+      "order": 9,
       "previousId": "8d2488105aae38e1",
       "nextId": "2c82daf4b486778a",
       "codeFiles": []
@@ -1691,7 +1755,7 @@
       ],
       "excerpt": "数据分析过程中少不了数据计算、数据的格式化。本章主要介绍数据计算与数据格式化，其中包含常见的数据计算函数（sum()、mean()、max()、min()）、高级的数据计算函数（median()、mode()、var()、std()、quantile()）以及数据的格式化等。",
       "chapterNumber": 8,
-      "order": 12,
+      "order": 10,
       "previousId": "6b7c418e5bee7f95",
       "nextId": "161d4ecb51f1b75e",
       "codeFiles": []
@@ -1706,7 +1770,7 @@
       ],
       "excerpt": "在实现数据分析的过程中，数据分组统计、数据移位、数据合并以及数据透视表都是不可缺少的数据分析技术。本章将通过各种实例来演示以上每种数据分析技术的实现方法。",
       "chapterNumber": 9,
-      "order": 13,
+      "order": 11,
       "previousId": "2c82daf4b486778a",
       "nextId": "4ec00f85d8417264",
       "codeFiles": []
@@ -1721,7 +1785,7 @@
       ],
       "excerpt": "在对时间类型数据进行分析时，需要将字符串时间转换为标准时间类型，而Pandas有着强大的日期数据处理功能。本章主要介绍日期数据的处理，日期范围、频率和移位，时间区间与频率转换，重新采样与频率转换，移动窗口函数等。",
       "chapterNumber": 10,
-      "order": 14,
+      "order": 12,
       "previousId": "161d4ecb51f1b75e",
       "nextId": "1c7faf6a818466b3",
       "codeFiles": []
@@ -1736,7 +1800,7 @@
       ],
       "excerpt": "机器学习，顾名思义就是让机器（计算机）模拟人类学习，从而有效提高工作效率。Python提供的第三方模块Scikit-Learn融入了大量的数学模型算法，使得数据分析、机器学习变得简单高效。本章主要内容包括Scikit-Learn概述、安装，常用的线性回归模型—最小二乘法回归、岭回",
       "chapterNumber": 11,
-      "order": 15,
+      "order": 13,
       "previousId": "4ec00f85d8417264",
       "nextId": "04c3968b9dcc561d",
       "codeFiles": []
@@ -1751,7 +1815,7 @@
       ],
       "excerpt": "在数据分析中，我们经常用到大量的可视化操作。一张精美的图表不仅能够展示大量的信息，更能够直观体现数据之间隐藏的关系。本章主要介绍Matpoltlib模块的入门知识。",
       "chapterNumber": 12,
-      "order": 16,
+      "order": 14,
       "previousId": "1c7faf6a818466b3",
       "nextId": "1625141f5853bc28",
       "codeFiles": []
@@ -1766,7 +1830,7 @@
       ],
       "excerpt": "相信通过上一章的学习，你已经掌握了Matplotlib的基础知识，学会了绘制各种类型的图表。本章是Matplotlib的进阶，包括图表的颜色设置、日期时间处理、次坐标轴图表、多个子图表绘制等内容。",
       "chapterNumber": 13,
-      "order": 17,
+      "order": 15,
       "previousId": "04c3968b9dcc561d",
       "nextId": "84bd101e7dde6eee",
       "codeFiles": []
@@ -1781,7 +1845,7 @@
       ],
       "excerpt": "Seaborn模块与Matplotlib模块相似，也是Python数据可视化分析的第三方模块。由于Seaborn在Matplotlib的基础上进行了更高级的API封装，所以Seaborn可以通过一个高级界面来绘制更加有吸引力的统计图形。",
       "chapterNumber": 14,
-      "order": 18,
+      "order": 16,
       "previousId": "1625141f5853bc28",
       "nextId": "5ab5be053e7b94bd",
       "codeFiles": []
@@ -1796,7 +1860,7 @@
       ],
       "excerpt": "Plotly是一个基于JavaScript的动态绘图模块，绘制出来的图表可以与Web应用集成。该模块不仅提供了丰富而又强大的绘图库，还支持各种类型的绘图方案，绘图的种类丰富、效果美观，方便保存和分享。",
       "chapterNumber": 15,
-      "order": 19,
+      "order": 17,
       "previousId": "84bd101e7dde6eee",
       "nextId": "b9c51f48e9898482",
       "codeFiles": []
@@ -1811,7 +1875,7 @@
       ],
       "excerpt": "Anaconda开发环境中还集成了一个叫作Bokeh的模块，该模块同样可以根据数据集绘制对应的图表，以满足数据可视化的多种需求。本章将介绍如何使用Bokeh模块绘制数据图表。",
       "chapterNumber": 16,
-      "order": 20,
+      "order": 18,
       "previousId": "5ab5be053e7b94bd",
       "nextId": "7457cbd1ff3520f8",
       "codeFiles": []
@@ -1826,7 +1890,7 @@
       ],
       "excerpt": "Echarts是一个由百度开发并开源的数据可视化工具，而Python是一门适用于数据处理和数据分析的语言，为了适应Python的需求，Pyecharts模块诞生了。本章以Pyecharts 2.0.3版本为载体，介绍Pyecharts的安装、链式调用、Pyecharts图表的组成",
       "chapterNumber": 17,
-      "order": 21,
+      "order": 19,
       "previousId": "b9c51f48e9898482",
       "nextId": "f6decdfc5c4f281f",
       "codeFiles": []
@@ -1841,7 +1905,7 @@
       ],
       "excerpt": "Python在处理和分析股票金融类数据时具有其他语言不可比拟的优势，这是因为Pandas的创始人就是一名量化金融分析师，所以Pandas中的很多函数是专门为分析金融数据而设计的。本章介绍如何通过Python获取并分析股票行情数据。",
       "chapterNumber": 18,
-      "order": 22,
+      "order": 20,
       "previousId": "7457cbd1ff3520f8",
       "nextId": "91e3a67828cba3eb",
       "codeFiles": []
@@ -1856,7 +1920,7 @@
       ],
       "excerpt": "淘宝电商每时每刻都会产生大量的订单数据，虽然淘宝后台也提供了数据分析功能，但是很多时候无法满足用户的需求，用户不能按照自己的想法挖掘更有价值的信息进行分析。本章将专门针对淘宝电商订单数据进行挖掘和分析，包括从数据预处理到数据分析的完整过程，掌握了这些分析方法，不但可以大大提高运营",
       "chapterNumber": 19,
-      "order": 23,
+      "order": 21,
       "previousId": "f6decdfc5c4f281f",
       "nextId": "c42d376c497c1704",
       "codeFiles": []
@@ -1871,7 +1935,7 @@
       ],
       "excerpt": "网站App平台注册用户分析，是指获得网站或App等平台用户的注册数据，并对用户注册数据进行统计、分析，从中发现产品推广对新注册用户的影响，以及目前的营销策略中可能存在的问题，为进一步修正或重新制定营销策略提供有效的依据。",
       "chapterNumber": 20,
-      "order": 24,
+      "order": 22,
       "previousId": "91e3a67828cba3eb",
       "nextId": "82d65ec0b0b6781d",
       "codeFiles": []
@@ -1886,37 +1950,9 @@
       ],
       "excerpt": "互联网时代，随处可见的网页表格数据对于数据分析和数据挖掘来说是很好的资源，但如果直接复制和粘贴网页上的数据，不仅费时费力，而且容易漏掉有用的数据或复制了其他没用的数据。Pandas提供了专门获取网页数据的方法，可以轻松地解决这一问题。本案例将使用Pandas实现简单爬虫，爬取NB",
       "chapterNumber": 21,
-      "order": 25,
+      "order": 23,
       "previousId": "c42d376c497c1704",
       "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "fddf97053cd983af",
-      "bookSlug": "deep-learning",
-      "relPath": "index.md",
-      "title": "课程首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "以《动手学深度学习》第二版为教材，用中文课程视频辅助理解，并以可复现实验检验学习结果。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "447436964dc1a742",
-      "codeFiles": []
-    },
-    {
-      "id": "447436964dc1a742",
-      "bookSlug": "deep-learning",
-      "relPath": "course-resources.md",
-      "title": "课程资源",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "",
-      "order": 2,
-      "previousId": "fddf97053cd983af",
-      "nextId": "4ab69924aecec56e",
       "codeFiles": []
     },
     {
@@ -1928,37 +1964,9 @@
         "正文"
       ],
       "excerpt": "反复查看测试集来调参会让测试集变成验证集；只报告最好的一次随机结果也会夸大性能。先写评估协议，再运行实验。",
-      "order": 3,
-      "previousId": "447436964dc1a742",
-      "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "dc419d2921af03c8",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "index.md",
-      "title": "课程首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "系统学习机器学习的基本概念、经典模型、理论基础与主要学习范式。",
       "order": 1,
       "previousId": "",
-      "nextId": "64b8b4f0b203604e",
-      "codeFiles": []
-    },
-    {
-      "id": "64b8b4f0b203604e",
-      "bookSlug": "zhou-machine-learning",
-      "relPath": "course-resources.md",
-      "title": "课程资源",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "课件、tinyml 源码和分 P 视频按教材章节对应整理。正文与课程安排请直接从课程首页进入。",
-      "order": 2,
-      "previousId": "dc419d2921af03c8",
-      "nextId": "7a24220bb8809970",
+      "nextId": "",
       "codeFiles": []
     },
     {
@@ -1970,8 +1978,8 @@
         "正文"
       ],
       "excerpt": "tinyml 用 NumPy 实现西瓜书、Stanford CS229 和部分经典算法，让读者直接看到 fit() 背后的矩阵运算与参数更新；仓库还包含按陈天奇课件思路编写的简化版 XGBRegressor。",
-      "order": 3,
-      "previousId": "64b8b4f0b203604e",
+      "order": 1,
+      "previousId": "",
       "nextId": "3c7c1612390932f4",
       "codeFiles": []
     },
@@ -1984,7 +1992,7 @@
         "正文"
       ],
       "excerpt": "在人工智能界有一种说法，认为机器学习是人工智能领域中最能够体现智能的一个分支。从历史来看，机器学习似乎也是人工智能中发展最快的分支之一。在二十世纪八十年代的时候，符号学习可能还是机器学习的主流，而自从二十世纪九十年代以来，就一直是统计机器学习的天下了。不知道是否可以这样认为：从主",
-      "order": 4,
+      "order": 2,
       "previousId": "7a24220bb8809970",
       "nextId": "6d33a12baa08f7cc",
       "codeFiles": []
@@ -1997,9 +2005,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1235315584&amp;p=3&amp;highquality=1&amp;danmaku=0",
+      "excerpt": "傍晚小街路面上沁出微雨后的湿润，和煦的细风吹来，抬头看看天边的晚霞，嗯，明天又是一个好天气。走到水果摊旁，挑了个根蒂蜷缩、敲起来声音浊响的青绿西瓜，一边满心期待着皮薄肉厚瓤甜的爽落感，一边愉快地想着，这学期狠下了工夫，基础概念弄得清清楚楚，算法作业也是信手拈来，这门课成绩一定差不",
       "chapterNumber": 1,
-      "order": 5,
+      "order": 3,
       "previousId": "3c7c1612390932f4",
       "nextId": "9cb9cb4551057879",
       "codeFiles": []
@@ -2012,9 +2020,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1235726895&amp;p=9&amp;highquality=1&amp;danmaku=0",
+      "excerpt": "精度常写为百分比形式<img src=\"images/00026.jpeg\" class=\"zaozi\" />。",
       "chapterNumber": 2,
-      "order": 6,
+      "order": 4,
       "previousId": "6d33a12baa08f7cc",
       "nextId": "ad0cb3f93073ee3d",
       "codeFiles": []
@@ -2027,9 +2035,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1235925424&amp;p=16&amp;highquality=1&amp;danmaku=",
+      "excerpt": "给定由d个属性描述的示例x=（x<sub>1</sub>；x<sub>2</sub>；...；x<sub>d</sub>），其中x<sub>i</sub>是x在第i个属性上的取值，线性模型（linear model）试图学得一个通过属性的线性组合来进行预测的函数，即",
       "chapterNumber": 3,
-      "order": 7,
+      "order": 5,
       "previousId": "9cb9cb4551057879",
       "nextId": "e153a3bb0ee44de3",
       "codeFiles": []
@@ -2042,9 +2050,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=1236964212&amp;p=26&amp;highquality=1&amp;danmaku=",
+      "excerpt": "亦称“判定树”。根据上下文，本书中的“决策树”有时是指学习方法，有时是指学得的树。",
       "chapterNumber": 4,
-      "order": 8,
+      "order": 6,
       "previousId": "ad0cb3f93073ee3d",
       "nextId": "76c6f3bc95506b2c",
       "codeFiles": []
@@ -2057,9 +2065,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655696620&amp;p=37&amp;highquality=1&amp;danmaku",
+      "excerpt": "本书所谈的是“人工神经网络”，不是生物学意义上的神经网络。",
       "chapterNumber": 5,
-      "order": 9,
+      "order": 7,
       "previousId": "e153a3bb0ee44de3",
       "nextId": "eab96497ad44debf",
       "codeFiles": []
@@ -2072,9 +2080,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655697209&amp;p=31&amp;highquality=1&amp;danmaku",
+      "excerpt": "给定训练样本集D={（x<sub>1</sub>，y<sub>1</sub>），（x<sub>2</sub>，y<sub>2</sub>），...，（x<sub>m</sub>，y<sub>m</sub>）}，y<sub>i</sub> ∈ {−1，+1}，分类学习最基本的想法就",
       "chapterNumber": 6,
-      "order": 10,
+      "order": 8,
       "previousId": "76c6f3bc95506b2c",
       "nextId": "b6de9a3d6eed7a06",
       "codeFiles": []
@@ -2087,9 +2095,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655895389&amp;p=42&amp;highquality=1&amp;danmaku",
+      "excerpt": "贝叶斯决策论（Bayesian decision theory）是概率框架下实施决策的基本方法。对分类任务来说，在所有相关概率都已知的理想情形下，贝叶斯决策论考虑如何基于这些概率和误判损失来选择最优的类别标记。下面我们以多分类任务为例来解释其基本原理。",
       "chapterNumber": 7,
-      "order": 11,
+      "order": 9,
       "previousId": "eab96497ad44debf",
       "nextId": "9abe1b9786918e97",
       "codeFiles": []
@@ -2102,9 +2110,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655957698&amp;p=48&amp;highquality=1&amp;danmaku",
+      "excerpt": "ensemble读音似“昂桑宝”而非“因桑宝”。",
       "chapterNumber": 8,
-      "order": 12,
+      "order": 10,
       "previousId": "b6de9a3d6eed7a06",
       "nextId": "bfdec68905380cb1",
       "codeFiles": []
@@ -2117,9 +2125,9 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "src=\"https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1gG411f7zX&amp;cid=29655958072&amp;p=53&amp;highquality=1&amp;danmaku",
+      "excerpt": "常见的无监督学习任务还有密度估计（density estimation）、异常检测（anomaly detection）等。",
       "chapterNumber": 9,
-      "order": 13,
+      "order": 11,
       "previousId": "9abe1b9786918e97",
       "nextId": "6bd9a2ecac56b128",
       "codeFiles": []
@@ -2134,7 +2142,7 @@
       ],
       "excerpt": "k近邻（k-Nearest Neighbor，简称kNN）学习是一种常用的监督学习方法，其工作机制非常简单：给定测试样本，基于某种距离度量找出训练集中与其最靠近的k个训练样本，然后基于这k个“邻居”的信息来进行预测。通常，在分类任务中可使用“投票法”，即选择这k个样本中出现最多的",
       "chapterNumber": 10,
-      "order": 14,
+      "order": 12,
       "previousId": "bfdec68905380cb1",
       "nextId": "bc1fd3ed914552e4",
       "codeFiles": []
@@ -2149,7 +2157,7 @@
       ],
       "excerpt": "我们能用很多属性描述一个西瓜，例如色泽、根蒂、敲声、纹理、触感等，但有经验的人往往只需看看根蒂、听听敲声就知道是否好瓜。换言之，对一个学习任务来说，给定属性集，其中有些属性可能很关键、很有用，另一些属性则可能没什么用。我们将属性称为“特征”（feature），对当前学习任务有用的",
       "chapterNumber": 11,
-      "order": 15,
+      "order": 13,
       "previousId": "6bd9a2ecac56b128",
       "nextId": "f7ae7e0eba00015d",
       "codeFiles": []
@@ -2164,7 +2172,7 @@
       ],
       "excerpt": "顾名思义，计算学习理论（computational learning theory）研究的是关于通过“计算”来进行“学习”的理论，即关于机器学习的理论基础，其目的是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。",
       "chapterNumber": 12,
-      "order": 16,
+      "order": 14,
       "previousId": "bc1fd3ed914552e4",
       "nextId": "2ac21e4c5b4e9d38",
       "codeFiles": []
@@ -2179,7 +2187,7 @@
       ],
       "excerpt": "我们在丰收季节来到瓜田，满地都是西瓜，瓜农抱来三四个瓜说这都是好瓜，然后再指着地里的五六个瓜说这些还不好，还需再生长若干天。基于这些信息，我们能否构建一个模型，用于判别地里的哪些瓜是已该采摘的好瓜？显然，可将瓜农告诉我们的好瓜、不好的瓜分别作为正例和反例来训练一个分类器。然而，只",
       "chapterNumber": 13,
-      "order": 17,
+      "order": 15,
       "previousId": "f7ae7e0eba00015d",
       "nextId": "8492011b9bfee92c",
       "codeFiles": []
@@ -2194,7 +2202,7 @@
       ],
       "excerpt": "基于学习器进行预测，例如根据纹理、颜色、根蒂等信息判断一个瓜是否为好瓜就是在做推断；但推断远超出预测范畴，例如在吃到一个不见根蒂的好瓜时，“由果溯因”逆推其根蒂的状态也是推断。",
       "chapterNumber": 14,
-      "order": 18,
+      "order": 16,
       "previousId": "2ac21e4c5b4e9d38",
       "nextId": "a0a82159f31b0339",
       "codeFiles": []
@@ -2209,7 +2217,7 @@
       ],
       "excerpt": "所有预测模型在广义上都可称为一个或一组“规则”，但规则学习中的“规则”是狭义的，事实上约定俗成地省略了“逻辑”二字。",
       "chapterNumber": 15,
-      "order": 19,
+      "order": 17,
       "previousId": "8492011b9bfee92c",
       "nextId": "25aa0a5c241fce28",
       "codeFiles": []
@@ -2224,7 +2232,7 @@
       ],
       "excerpt": "我们考虑一下如何种西瓜。种瓜有许多步骤，从一开始的选种，到定期浇水、施肥、除草、杀虫，经过一段时间才能收获西瓜。通常要等到收获后，我们才知道种出的瓜好不好。若将得到好瓜作为辛勤种瓜劳动的奖赏，则在种瓜过程中当我们执行某个操作（例如，施肥）时，并不能立即获得这个最终奖赏，甚至难以判",
       "chapterNumber": 16,
-      "order": 20,
+      "order": 18,
       "previousId": "a0a82159f31b0339",
       "nextId": "311ba24020bc9d0d",
       "codeFiles": []
@@ -2238,23 +2246,9 @@
         "正文"
       ],
       "excerpt": "记实矩阵<img src=\"images/01024.jpeg\" class=\"zaozi1\" />第<img src=\"images/00944.jpeg\" class=\"zaozi1\" />行第<img src=\"images/01025.jpeg\" class=\"zaozi",
-      "order": 21,
+      "order": 19,
       "previousId": "25aa0a5c241fce28",
       "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "2c0b4b2e2ac4605c",
-      "bookSlug": "robot-textbook",
-      "relPath": "robot_textbook.md",
-      "title": "轮腿式智能安保巡逻机器人项目实战",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "肖钊<sup>a</sup>；何志鹏<sup>a</sup>；李学专<sup>b</sup>；朱荣钧<sup>c</sup>；唐咏荷<sup>d</sup>；李慧<sup>b</sup>；吴奥旗<sup>a</sup>；谢浩瑜<sup>b</sup>",
-      "order": 1,
-      "previousId": "",
-      "nextId": "06a82f8c4f3c4a40",
       "codeFiles": []
     },
     {
@@ -2267,8 +2261,8 @@
       ],
       "excerpt": "移动机器人经历了从轮式到腿式，再到轮腿复合式的演进过程。传统轮式机器人结构简单、移动效率高、控制容易，但在台阶、碎石、路缘等非结构化地形中往往无能为力；腿式机器人具备良好的地形适应性和越障能力，却存在能耗大、速度慢、控制复杂等不足。为兼顾高速高效移动与复杂地形通过能力，轮腿复合式",
       "chapterNumber": 1,
-      "order": 2,
-      "previousId": "2c0b4b2e2ac4605c",
+      "order": 1,
+      "previousId": "",
       "nextId": "af316719069585eb",
       "codeFiles": []
     },
@@ -2282,7 +2276,7 @@
       ],
       "excerpt": "MCU运行1 kHz实时控制环，采用STM32F405RGT6，主频168 MHz。",
       "chapterNumber": 2,
-      "order": 3,
+      "order": 2,
       "previousId": "06a82f8c4f3c4a40",
       "nextId": "f2a5b7e528b374aa",
       "codeFiles": []
@@ -2297,7 +2291,7 @@
       ],
       "excerpt": "轮腿复合机器人按腿部数量和轮腿耦合方式可分为多种方案。针对安保巡逻场景，主要候选方案包括四足轮腿式、双足轮腿式和轮腿分离式。各方案对比如下：",
       "chapterNumber": 3,
-      "order": 4,
+      "order": 3,
       "previousId": "af316719069585eb",
       "nextId": "038e1ecb8bec4e7d",
       "codeFiles": []
@@ -2312,7 +2306,7 @@
       ],
       "excerpt": "本平台硬件系统以“上层计算平台 + 底层实时控制板”为核心，配合电源管理、电机驱动、传感器和通信接口组成。总体框架如下：",
       "chapterNumber": 4,
-      "order": 5,
+      "order": 4,
       "previousId": "f2a5b7e528b374aa",
       "nextId": "8e28b40040396839",
       "codeFiles": []
@@ -2327,7 +2321,7 @@
       ],
       "excerpt": "底层控制器选用STM32F405RGT6，主频168 MHz，基于FreeRTOS构建软件框架。为保证1 kHz控制环的严格实时性，控制算法不放在RTOS任务中，而是置于硬件定时器中断服务程序内执行。RTOS负责任务调度、通信和辅助功能。",
       "chapterNumber": 5,
-      "order": 6,
+      "order": 5,
       "previousId": "038e1ecb8bec4e7d",
       "nextId": "c4d47cb6a6f4ed45",
       "codeFiles": []
@@ -2342,7 +2336,7 @@
       ],
       "excerpt": "本平台为双足轮腿机器人，每条腿包含髋关节和膝关节两个旋转自由度，末端为驱动轮。为描述运动，建立以下坐标系：",
       "chapterNumber": 6,
-      "order": 7,
+      "order": 6,
       "previousId": "8e28b40040396839",
       "nextId": "3b4717c53a5d62fd",
       "codeFiles": []
@@ -2357,7 +2351,7 @@
       ],
       "excerpt": "在轮式模式下，机器人依靠两个轮毂电机独立驱动，通过差速实现直线前进和原地转向。设左右轮线速度分别为 $vL$ 和 $vR$，两轮间距为 $d$（本平台 $d = 280$ mm），则机器人质心处的前进速度 $v$ 和转向角速度 $\\omega$ 为：",
       "chapterNumber": 7,
-      "order": 8,
+      "order": 7,
       "previousId": "c4d47cb6a6f4ed45",
       "nextId": "6f025302c26e487b",
       "codeFiles": []
@@ -2372,7 +2366,7 @@
       ],
       "excerpt": "环境感知系统是安保巡逻机器人的“眼睛”，负责实时获取周围环境信息，为自主导航、避障和异常检测提供数据支撑。本平台感知系统由以下传感器组成：",
       "chapterNumber": 8,
-      "order": 9,
+      "order": 8,
       "previousId": "3b4717c53a5d62fd",
       "nextId": "d2d066bc5adb1364",
       "codeFiles": []
@@ -2387,7 +2381,7 @@
       ],
       "excerpt": "自主导航是安保巡逻机器人实现无人化巡逻的核心能力。对于双足轮腿式平台，导航系统不仅需要解决常规移动机器人的建图、定位、规划问题，还需要结合轮腿复合运动的特点，在路径规划与执行过程中合理利用轮式模式的高效性和腿式模式的越障能力。本章将围绕这一主线展开。",
       "chapterNumber": 9,
-      "order": 10,
+      "order": 9,
       "previousId": "6f025302c26e487b",
       "nextId": "041e7a1c7693c617",
       "codeFiles": []
@@ -2402,7 +2396,7 @@
       ],
       "excerpt": "安保巡逻任务系统是机器人实现自主安保服务的顶层应用，负责巡逻任务的组织、调度、异常事件处理以及与远程监控端的交互。本章在导航系统（第9章）的基础上，设计并实现完整的安保巡逻任务管理框架，使机器人能够按照预设策略自主执行巡逻任务，并在发现异常时及时报警。",
       "chapterNumber": 10,
-      "order": 11,
+      "order": 10,
       "previousId": "d2d066bc5adb1364",
       "nextId": "d0867e168446dcbb",
       "codeFiles": []
@@ -2417,7 +2411,7 @@
       ],
       "excerpt": "整机联调是将机械、硬件、嵌入式软件、运动控制、感知、导航、任务系统等全部模块集成为一个可运行整体，并验证各模块协同工作的过程。对于轮腿式安保巡逻机器人，联调重点在于轮腿复合运动的稳定性和多系统数据流的正确性。",
       "chapterNumber": 11,
-      "order": 12,
+      "order": 11,
       "previousId": "041e7a1c7693c617",
       "nextId": "ad44325bf8e14324",
       "codeFiles": []
@@ -2431,7 +2425,7 @@
         "附录"
       ],
       "excerpt": "",
-      "order": 13,
+      "order": 12,
       "previousId": "d0867e168446dcbb",
       "nextId": "06fee700685d148e",
       "codeFiles": []
@@ -2445,7 +2439,7 @@
         "附录"
       ],
       "excerpt": "物理层：CAN 2.0B，标准帧（11位ID），速率1 Mbps，终端电阻120 Ω。",
-      "order": 14,
+      "order": 13,
       "previousId": "ad44325bf8e14324",
       "nextId": "13a556037a3378f3",
       "codeFiles": []
@@ -2459,7 +2453,7 @@
         "附录"
       ],
       "excerpt": "",
-      "order": 15,
+      "order": 14,
       "previousId": "06fee700685d148e",
       "nextId": "1c3f17bf239803fb",
       "codeFiles": []
@@ -2473,7 +2467,7 @@
         "附录"
       ],
       "excerpt": "",
-      "order": 16,
+      "order": 15,
       "previousId": "13a556037a3378f3",
       "nextId": "b9e6c798f895a4e7",
       "codeFiles": []
@@ -2487,7 +2481,7 @@
         "附录"
       ],
       "excerpt": "",
-      "order": 17,
+      "order": 16,
       "previousId": "1c3f17bf239803fb",
       "nextId": "4f46407ebacefb36",
       "codeFiles": []
@@ -2501,23 +2495,9 @@
         "附录"
       ],
       "excerpt": "[1] Craig J J. Introduction to Robotics: Mechanics and Control[M]. 4th ed. Pearson, 2017.",
-      "order": 18,
+      "order": 17,
       "previousId": "b9e6c798f895a4e7",
       "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "5bd60ae7f9e17d72",
-      "bookSlug": "wind-energy",
-      "relPath": "index.md",
-      "title": "课程首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "A systematic reference covering wind resource, turbine aerodynamics, loads, components, control, power systems and offshore wind.",
-      "order": 1,
-      "previousId": "",
-      "nextId": "a08658a81ec757f4",
       "codeFiles": []
     },
     {
@@ -2529,8 +2509,8 @@
         "正文"
       ],
       "excerpt": "Wind Energy Handbook",
-      "order": 2,
-      "previousId": "5bd60ae7f9e17d72",
+      "order": 1,
+      "previousId": "",
       "nextId": "4f0d6463d818ca87",
       "codeFiles": []
     },
@@ -2544,7 +2524,7 @@
       ],
       "excerpt": "Windmills have been used for at least 3000 years, mainly for grinding grain or pumping water; while in sailing ships the wind has been an es",
       "chapterNumber": 1,
-      "order": 3,
+      "order": 2,
       "previousId": "a08658a81ec757f4",
       "nextId": "b6504a0aec0eea5b",
       "codeFiles": []
@@ -2559,7 +2539,7 @@
       ],
       "excerpt": "The energy available in the wind varies as the cube of the wind speed, so an understanding of the characteristics of the wind resource is cr",
       "chapterNumber": 2,
-      "order": 4,
+      "order": 3,
       "previousId": "4f0d6463d818ca87",
       "nextId": "fd4f6f1c88a0862a",
       "codeFiles": []
@@ -2574,7 +2554,7 @@
       ],
       "excerpt": "A wind turbine is a device for extracting kinetic energy from the wind. By removing some of its kinetic energy the wind must slow down but o",
       "chapterNumber": 3,
-      "order": 5,
+      "order": 4,
       "previousId": "b6504a0aec0eea5b",
       "nextId": "a27cd9932333fd1c",
       "codeFiles": []
@@ -2589,7 +2569,7 @@
       ],
       "excerpt": "Chapter 3 deals with the aerodynamic behaviour of wind turbines in steady wind conditions and with the rotor aligned with the wind direction",
       "chapterNumber": 4,
-      "order": 6,
+      "order": 5,
       "previousId": "fd4f6f1c88a0862a",
       "nextId": "19647e9a11be2999",
       "codeFiles": []
@@ -2604,7 +2584,7 @@
       ],
       "excerpt": "The preparation of national and international standards containing rules for the design of wind turbines began in the 1980s. The first publi",
       "chapterNumber": 5,
-      "order": 7,
+      "order": 6,
       "previousId": "a27cd9932333fd1c",
       "nextId": "fa5c7d9bf9f51c5b",
       "codeFiles": []
@@ -2619,7 +2599,7 @@
       ],
       "excerpt": "Within the general category of horizontal axis wind turbines for grid applications there exists a great variety of possible machine configur",
       "chapterNumber": 6,
-      "order": 8,
+      "order": 7,
       "previousId": "19647e9a11be2999",
       "nextId": "eda549fb8849d9e9",
       "codeFiles": []
@@ -2634,7 +2614,7 @@
       ],
       "excerpt": "A successful blade design must satisfy a wide range of objectives, some of which are in conflict. These objectives can be summarised as foll",
       "chapterNumber": 7,
-      "order": 9,
+      "order": 8,
       "previousId": "fa5c7d9bf9f51c5b",
       "nextId": "50ec0043725cb1d4",
       "codeFiles": []
@@ -2649,7 +2629,7 @@
       ],
       "excerpt": "In the most general sense, the wind turbine control system consists of a number of sensors, a number of actuators and a system consisting of",
       "chapterNumber": 8,
-      "order": 10,
+      "order": 9,
       "previousId": "eda549fb8849d9e9",
       "nextId": "644408e6baded7f2",
       "codeFiles": []
@@ -2664,7 +2644,7 @@
       ],
       "excerpt": "For any wind turbine installation, there are certain additional activities, (e.g. construction of foundations and access roads, electrical c",
       "chapterNumber": 9,
-      "order": 11,
+      "order": 10,
       "previousId": "50ec0043725cb1d4",
       "nextId": "fb5c6150dbe78e17",
       "codeFiles": []
@@ -2679,7 +2659,7 @@
       ],
       "excerpt": "As the wind is a diffuse source of energy, wind farms and individual wind turbines are often distributed over wide geographical areas. Hence",
       "chapterNumber": 10,
-      "order": 12,
+      "order": 11,
       "previousId": "644408e6baded7f2",
       "nextId": "65afcf77167c2bbf",
       "codeFiles": []
@@ -2694,23 +2674,9 @@
       ],
       "excerpt": "Offshore wind energy is developing rapidly (Figure 11.1) with a total installed capacity in 2010 of approximately 3000 MW, some 1.5% of worl",
       "chapterNumber": 11,
-      "order": 13,
+      "order": 12,
       "previousId": "fb5c6150dbe78e17",
       "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "b4ade889f42702e2",
-      "bookSlug": "风能技术",
-      "relPath": "index.md",
-      "title": "课程首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "系统介绍风资源、水平轴风力机空气动力学、载荷、部件、控制、电力系统与海上风电。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "2f14a3b7bc723721",
       "codeFiles": []
     },
     {
@@ -2722,8 +2688,8 @@
         "正文"
       ],
       "excerpt": "Tony Burton Nick Jenkins",
-      "order": 2,
-      "previousId": "b4ade889f42702e2",
+      "order": 1,
+      "previousId": "",
       "nextId": "5da5c3fc35befea9",
       "codeFiles": []
     },
@@ -2736,7 +2702,7 @@
         "正文"
       ],
       "excerpt": "Tony Burton: 在早期的职业生涯中, Tony Burton 主要从事桥梁设计和施工。他于 1982 年加入了风能集团，为英国能源部协调海上风能评估项目第二阶段的实施。这是包括英国航空航天公司、GEC 和 CEGB 等多方合作的项目，其主要任务是对大型海上风电场的总体方",
-      "order": 3,
+      "order": 2,
       "previousId": "2f14a3b7bc723721",
       "nextId": "a76e1b87b8230972",
       "codeFiles": []
@@ -2750,7 +2716,7 @@
         "正文"
       ],
       "excerpt": "能源与环境问题已成为可持续发展面临的主要问题, 日益引起国际社会的广泛关注。风能作为一种重要的可再生能源, 具有清洁、无污染、安全、 储量丰富的特点, 受到世界各国的普遍重视。本书全面详细地讲解了水平轴风力机的空气动力学、设计载荷、概念设计、零部件设计、风力机安装和风电场规划等内",
-      "order": 4,
+      "order": 3,
       "previousId": "5da5c3fc35befea9",
       "nextId": "234683cd44ed157b",
       "codeFiles": []
@@ -2764,7 +2730,7 @@
         "正文"
       ],
       "excerpt": "风能技术:第 2 版/(美)Tony Burton, Nick Jenkins, David Sharpe, Ervin Bossanyi 著；武鑫译. 一北京:科学出版社，2014. 1",
-      "order": 5,
+      "order": 4,
       "previousId": "a76e1b87b8230972",
       "nextId": "dc99f98f3764ea68",
       "codeFiles": []
@@ -2778,7 +2744,7 @@
         "正文"
       ],
       "excerpt": "《风能技术》第二版主要得益于为第一版提供持续帮助和支持的单位和个人。 同时也感谢许多没有参与第一版但为第二版提供了建议和专业知识的人，尤其是那些为第二版最新的海上风力发电章节提出建设性意见的人。作者要特别感谢 Rose King, 她基于自己的博士论文对海上电力系统进行了讨论, ",
-      "order": 6,
+      "order": 5,
       "previousId": "234683cd44ed157b",
       "nextId": "bb23ea6832f4fd4c",
       "codeFiles": []
@@ -2792,7 +2758,7 @@
         "正文"
       ],
       "excerpt": "在本书的准备阶段，许多人以不同的方式给予作者大量的帮助。特别需要感谢: David Infield 为本书的第 4 章提供了大量的素材, David Quarton 审阅了本书的第 5 章; Mark Hancock, Martin Ansell, Colin Anderson ",
-      "order": 7,
+      "order": 6,
       "previousId": "dc99f98f3764ea68",
       "nextId": "08eddefddc49930a",
       "codeFiles": []
@@ -2806,7 +2772,7 @@
         "正文"
       ],
       "excerpt": "继《风能技术》第一版(中文版)出版 6 周年之际，《风能技术》第二版与读者见面了。",
-      "order": 8,
+      "order": 7,
       "previousId": "bb23ea6832f4fd4c",
       "nextId": "11dcae63c9bc878d",
       "codeFiles": []
@@ -2820,7 +2786,7 @@
         "正文"
       ],
       "excerpt": "《风能技术》第二版，旨在反映自第一版出版发行近十年来发生在技术方面的主要创新和设计规则的衍变。在此期间, 风能发展的主要新方向是迅速扩张的海上风力发电。因此，本书有机会增加有关海上风力发电机组及海上风电场的新章节。",
-      "order": 9,
+      "order": 8,
       "previousId": "08eddefddc49930a",
       "nextId": "d66c14a1ca981a19",
       "codeFiles": []
@@ -2834,7 +2800,7 @@
         "正文"
       ],
       "excerpt": "2.6.5 长度尺度及其他参数 22",
-      "order": 10,
+      "order": 9,
       "previousId": "11dcae63c9bc878d",
       "nextId": "822749e9425d0c37",
       "codeFiles": []
@@ -2849,7 +2815,7 @@
       ],
       "excerpt": "人类利用风能的历史较为悠久。最早可以追溯到 3000 年前风车的使用。那时候风车的主要用途是磨碎粮食和提水。当然，最早在海上航行的船只依靠的最基本动力源是风能。自中世纪起, 水平轴风车产业是农村经济构成的主要部分。 但是，随着廉价的化石燃料能源的出现以及农村电气化的实现，风车渐渐",
       "chapterNumber": 1,
-      "order": 11,
+      "order": 10,
       "previousId": "d66c14a1ca981a19",
       "nextId": "c783449d867b7cb4",
       "codeFiles": []
@@ -2864,7 +2830,7 @@
       ],
       "excerpt": "可利用的风能与风速的立方成正比, 这一点对于理解风能特性及风能开发利用的诸多方面至关重要。通常, 风能开发利用包括选择合适的地理位置、对风电场工程项目的经济可行性的评估、风力机的设计以及对电网和终端用户的影响。",
       "chapterNumber": 2,
-      "order": 12,
+      "order": 11,
       "previousId": "822749e9425d0c37",
       "nextId": "2972e7a63b78855a",
       "codeFiles": []
@@ -2879,7 +2845,7 @@
       ],
       "excerpt": "风力机是一种从风中吸取动能的装置。通过动能的转移，风速会下降，但是只有那些通过风轮圆盘的空气才会受到影响。假设将受影响的空气从那些没有经过风轮圆盘、没有从减速的空气中分离出来，那么就可以画出一个包含受到影响的空气团的边界面，该边界面分别向上游和下游延伸，从而形成一个横截面为圆形的",
       "chapterNumber": 3,
-      "order": 13,
+      "order": 12,
       "previousId": "c783449d867b7cb4",
       "nextId": "31e8ada49d7aece4",
       "codeFiles": []
@@ -2894,7 +2860,7 @@
       ],
       "excerpt": "第 3 章处理了风力机稳定状态下并且正对风向时的空气动力学特性，但是在实际情况中, 风的状况一般是不稳定的, 并且风力机总是可能会有几度的偏航误差。",
       "chapterNumber": 4,
-      "order": 14,
+      "order": 13,
       "previousId": "2972e7a63b78855a",
       "nextId": "5cb384207725396f",
       "codeFiles": []
@@ -2909,7 +2875,7 @@
       ],
       "excerpt": "国家和国际标准的内容包括始于 20 世纪 80 年代的风力发电机组设计准则。 第一个出版的是 Germanischer Lloyd 在 1986 年草拟的一套认证准则。这些最初的准则随着知识体系的发展而被逐渐完善, 并促成 Germanischer Lloyd 的《风能转换系统的",
       "chapterNumber": 5,
-      "order": 15,
+      "order": 14,
       "previousId": "31e8ada49d7aece4",
       "nextId": "0761e9c08906d3e1",
       "codeFiles": []
@@ -2924,7 +2890,7 @@
       ],
       "excerpt": "一般用于并网发电的水平轴风力机，在机械结构、功率控制策略和制动系统等方面具有多种选择方案。本章着眼于不同的设计选择，并考虑在每种情况下传统选择的利与弊。考虑某个方面所作出的决定会对另一个方面有所影响, 这种影响有时候是不可避免的, 将在后文讲解该内容。",
       "chapterNumber": 6,
-      "order": 16,
+      "order": 15,
       "previousId": "5cb384207725396f",
       "nextId": "a5f5b637c8a8fc7c",
       "codeFiles": []
@@ -2939,7 +2905,7 @@
       ],
       "excerpt": "一个成功的叶片设计必须满足多项技术指标, 其中某些指标之间会相互制约, 具体指标可归纳如下:",
       "chapterNumber": 7,
-      "order": 17,
+      "order": 16,
       "previousId": "0761e9c08906d3e1",
       "nextId": "119f61f7fa3db4c8",
       "codeFiles": []
@@ -2954,7 +2920,7 @@
       ],
       "excerpt": "整机运行状态控制, 即风力发电机组由一种运行状态到另一种运行状态的转换过渡过程控制。风力发电机组的运行状态一般包括以下几种:",
       "chapterNumber": 8,
-      "order": 18,
+      "order": 17,
       "previousId": "a5f5b637c8a8fc7c",
       "nextId": "0046de9582f91c05",
       "codeFiles": []
@@ -2969,7 +2935,7 @@
       ],
       "excerpt": "对于任何风力机的安装，一些辅助工作都是必不可少的(如地基和出入风电场道路的建设、电网架设、场址建设以及项目开发和管理)。对于平坦的陆上场址，如丹麦和德国北部的典型场址, 总投资成本大约是前期工作成本的 1.3 倍 (EUREC 协会，1996)。在英国，场址通常选在比较偏远的丘陵",
       "chapterNumber": 9,
-      "order": 19,
+      "order": 18,
       "previousId": "119f61f7fa3db4c8",
       "nextId": "98b45e56d159b4c4",
       "codeFiles": []
@@ -2984,7 +2950,7 @@
       ],
       "excerpt": "由于风能是一种分散式能源, 风电场和单台风力机通常分布于广阔的地理空间, 因而公共电力系统最开始构建从传统的发电机 (火电和水电) 给个别用户负荷供电，后电网通常扩展来吸收电能。小型的风电场和个别的风电机组连接至配电系统被称为分布式发电 (Jenkins 等, 2010)。大型风",
       "chapterNumber": 10,
-      "order": 20,
+      "order": 19,
       "previousId": "0046de9582f91c05",
       "nextId": "e870790b4ce0eea5",
       "codeFiles": []
@@ -2999,7 +2965,7 @@
       ],
       "excerpt": "海上风力发电正在迅速发展(图 11.1)，在 2010 年，总装机容量约为 3000MW， 约占全世界风电场总容量的 1.5%。许多北欧国家开发大规模的陆上风电场变得很困难，所以将注意力转移到海上风力发电领域，风电场主要在北海和波罗的海沿岸。为了满足其温室气体减排的指标, 英国提",
       "chapterNumber": 11,
-      "order": 21,
+      "order": 20,
       "previousId": "98b45e56d159b4c4",
       "nextId": "e808772724184cbe",
       "codeFiles": []
@@ -3013,7 +2979,7 @@
         "正文"
       ],
       "excerpt": "1. DNV, Vindeby, 5MW. [Online] [Cited: 0805, 2010.] http://www.dnv.com/industry/energy/ segments/windwavetidal/offshorereferences/vindeby.as",
-      "order": 22,
+      "order": 21,
       "previousId": "e870790b4ce0eea5",
       "nextId": "8568f64bd0b3f3e5",
       "codeFiles": []
@@ -3027,23 +2993,9 @@
         "正文"
       ],
       "excerpt": "${a}^{\\prime }\\;$ 切向诱导因子",
-      "order": 23,
+      "order": 22,
       "previousId": "e808772724184cbe",
       "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "811b8e7782c84de7",
-      "bookSlug": "wind-turbine-theory-and-design",
-      "relPath": "index.md",
-      "title": "课程首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "从能量转换和设计要求出发，系统学习整机方案、关键部件、控制、监测与强度分析。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "5c3fe2c4206008a7",
       "codeFiles": []
     },
     {
@@ -3055,8 +3007,8 @@
         "正文"
       ],
       "excerpt": "姚兴佳教授、博士生导师，沈阳工业大学风能技术研究所所长，中国可再生能源学会风能专业委员会副主任，国家科技支撑计划“大功率风电机组研制与示范”项目总体专家组组长，海上风力发电技术与检测国家重点实验室学术委员会主任，辽宁省风力发电技术重点实验室主任。获得国务院政府特殊津贴、“全国优秀",
-      "order": 2,
-      "previousId": "811b8e7782c84de7",
+      "order": 1,
+      "previousId": "",
       "nextId": "2f71b0d12a49352d",
       "codeFiles": []
     },
@@ -3070,7 +3022,7 @@
       ],
       "excerpt": "本章重点介绍了本书涉及的风力发电（风电）机组理论与设计的基本内容，包括风力发电机组的设计依据、设计内容、设计原则和设计步骤。同时还简要介绍了几种风力发电机组的设计软件。",
       "chapterNumber": 1,
-      "order": 3,
+      "order": 2,
       "previousId": "5c3fe2c4206008a7",
       "nextId": "7e4f7bb8c9c1e3a7",
       "codeFiles": []
@@ -3085,7 +3037,7 @@
       ],
       "excerpt": "风力发电机组能量转换和传输理论是风力发电机组设计计算的基础，本章仅介绍其核心部分。包括风能捕获理论、能量传递理论和机电能量转换理论。",
       "chapterNumber": 2,
-      "order": 4,
+      "order": 3,
       "previousId": "2f71b0d12a49352d",
       "nextId": "13727d2a1d766ba7",
       "codeFiles": []
@@ -3100,7 +3052,7 @@
       ],
       "excerpt": "为了保证所设计的风力发电机组安全可靠，国内外的相关标准都规定了风力发电机组设计的技术要求。这些技术要求是设计中必须遵守的内容，设计人员应该掌握和应用。本章根据IEC 61400-1-2005和IEC 61400-3-2009介绍了风力发电机组的外部条件和结构设计的方法。",
       "chapterNumber": 3,
-      "order": 5,
+      "order": 4,
       "previousId": "7e4f7bb8c9c1e3a7",
       "nextId": "cb32a88a2e34adc0",
       "codeFiles": []
@@ -3115,7 +3067,7 @@
       ],
       "excerpt": "本章介绍了风力发电机组的载荷及其分析计算方法。包括载荷及其坐标系、坐标系的转换、载荷分类、载荷源、疲劳载荷分析、极限载荷分析和载荷叠加等。同时介绍了如何使用载荷计算软件。",
       "chapterNumber": 4,
-      "order": 6,
+      "order": 5,
       "previousId": "13727d2a1d766ba7",
       "nextId": "6e361bc0312f7f78",
       "codeFiles": []
@@ -3130,7 +3082,7 @@
       ],
       "excerpt": "风力发电机组的总体设计是相对于局部设计的一个概念，总体设计是设计内容的一部分。主要包括总体参数设计、总体功能设计、总体布局设计、模型试验和总体成本模型等。",
       "chapterNumber": 5,
-      "order": 7,
+      "order": 6,
       "previousId": "cb32a88a2e34adc0",
       "nextId": "fa2d12df61dbc4c1",
       "codeFiles": []
@@ -3145,7 +3097,7 @@
       ],
       "excerpt": "风轮是风力机的核心部件，由叶片和轮毂组成。本章介绍风轮的设计问题。包括风轮设计概述、翼型介绍、叶片气动设计、叶片结构设计和轮毂的设计等。",
       "chapterNumber": 6,
-      "order": 8,
+      "order": 7,
       "previousId": "6e361bc0312f7f78",
       "nextId": "270803e6c5dc4093",
       "codeFiles": []
@@ -3160,7 +3112,7 @@
       ],
       "excerpt": "发电机是风力发电机组的重要部件，它把风力机主轴输出的机械能转换成电能并输送给电网（或储存在蓄电池中）。与其他类型电机一样，风力发电机的工作原理基于电磁感应定律和电磁力定律。电磁感应定律指出，导体在磁场中切割磁力线运动时将感生电动势；电磁力定律指出，处于磁场中的载流导体将产生电磁力",
       "chapterNumber": 7,
-      "order": 9,
+      "order": 8,
       "previousId": "fa2d12df61dbc4c1",
       "nextId": "70454f21f4efd814",
       "codeFiles": []
@@ -3175,7 +3127,7 @@
       ],
       "excerpt": "本章讨论风力发电机组中传递机械能所需的传动链主要部件设计。包括主轴、主轴承、主齿轮箱、联轴器和机舱。",
       "chapterNumber": 8,
-      "order": 10,
+      "order": 9,
       "previousId": "270803e6c5dc4093",
       "nextId": "a5d76fc3318db048",
       "codeFiles": []
@@ -3190,7 +3142,7 @@
       ],
       "excerpt": "塔架与基础是风力发电机组的主要承载结构，要承受机舱重量、风轮作用力以及风作用在塔筒上的弯矩、剪力、转矩等作用，还要承受风轮引起的振动载荷。塔架的重量占风力发电机组总重的50％左右，其造价占风力发电机组造价的15％～50％。目前，国家已经发布了有关标准，如《GB/T 19072—2",
       "chapterNumber": 9,
-      "order": 11,
+      "order": 10,
       "previousId": "70454f21f4efd814",
       "nextId": "ce860997cd85bc1b",
       "codeFiles": []
@@ -3205,7 +3157,7 @@
       ],
       "excerpt": "本章重点介绍风力发电机组控制系统的设计，包括制动机构、变桨距系统、偏航系统、主控系统和安全保障系统等。",
       "chapterNumber": 10,
-      "order": 12,
+      "order": 11,
       "previousId": "a5d76fc3318db048",
       "nextId": "8e6e2afae4517048",
       "codeFiles": []
@@ -3220,7 +3172,7 @@
       ],
       "excerpt": "本章介绍了风力发电机组的常见故障及原因、状态监测及故障诊断的方法，叙述了以双馈式风力发电机组为监测对象的在线监测及故障诊断系统的结构组成、功能模块及应用。",
       "chapterNumber": 11,
-      "order": 13,
+      "order": 12,
       "previousId": "ce860997cd85bc1b",
       "nextId": "9e7e6384ca72b320",
       "codeFiles": []
@@ -3235,7 +3187,7 @@
       ],
       "excerpt": "本章主要介绍以数值计算为主的风力发电机组强度分析方法。包括静强度分析、模态分析、疲劳强度分析和屈曲稳定性分析等。",
       "chapterNumber": 12,
-      "order": 14,
+      "order": 13,
       "previousId": "8e6e2afae4517048",
       "nextId": "3792b6514ebcfb8b",
       "codeFiles": []
@@ -3249,23 +3201,9 @@
         "正文"
       ],
       "excerpt": "\\[1\\] 姚兴佳，宋俊，等.风力发电机组原理与应用\\[M\\].2版.北京：机械工业出版社，2011.",
-      "order": 15,
+      "order": 14,
       "previousId": "9e7e6384ca72b320",
       "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "c21d5195c3cf418f",
-      "bookSlug": "Utilizing-large-scale-foundation-models-for",
-      "relPath": "index.md",
-      "title": "图书首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "",
-      "order": 1,
-      "previousId": "",
-      "nextId": "f6075d4dc4c72133",
       "codeFiles": []
     },
     {
@@ -3277,8 +3215,8 @@
         "正文"
       ],
       "excerpt": "Jiachi Yao \\( {}^{a, b, c, d} \\) C, Te Han \\( {}^{a, b, c, d,  } \\) C",
-      "order": 2,
-      "previousId": "c21d5195c3cf418f",
+      "order": 1,
+      "previousId": "",
       "nextId": "e4d0cbd519fd2dd4",
       "codeFiles": []
     },
@@ -3291,7 +3229,7 @@
         "正文"
       ],
       "excerpt": "",
-      "order": 3,
+      "order": 2,
       "previousId": "f6075d4dc4c72133",
       "nextId": "d0f48ddbe5daf87b",
       "codeFiles": []
@@ -3305,7 +3243,7 @@
         "正文"
       ],
       "excerpt": "Prognostics and health management",
-      "order": 4,
+      "order": 3,
       "previousId": "e4d0cbd519fd2dd4",
       "nextId": "6c6ca5012e78dda5",
       "codeFiles": []
@@ -3319,7 +3257,7 @@
         "正文"
       ],
       "excerpt": "The Paris Agreement has catalyzed global green development, accelerating progress in wind energy. In 2024, new global wind turbine installat",
-      "order": 5,
+      "order": 4,
       "previousId": "d0f48ddbe5daf87b",
       "nextId": "4189779b66be0b56",
       "codeFiles": []
@@ -3334,7 +3272,7 @@
       ],
       "excerpt": "The Paris Agreement highlights the transition to clean energy as a key strategy for addressing climate change and achieving sustainable deve",
       "chapterNumber": 1,
-      "order": 6,
+      "order": 5,
       "previousId": "6c6ca5012e78dda5",
       "nextId": "391a11823a4836df",
       "codeFiles": []
@@ -3349,7 +3287,7 @@
       ],
       "excerpt": "The wind turbine is a complex mechanical system that integrates mechanical, electrical, and hydraulic components. The primary tasks of PHM f",
       "chapterNumber": 2,
-      "order": 7,
+      "order": 6,
       "previousId": "4189779b66be0b56",
       "nextId": "0d6dc41c339629e7",
       "codeFiles": []
@@ -3364,7 +3302,7 @@
       ],
       "excerpt": "LSF-Models are primarily built upon the Transformer architecture [141], which offers distinct advantages over traditional data-driven method",
       "chapterNumber": 3,
-      "order": 8,
+      "order": 7,
       "previousId": "391a11823a4836df",
       "nextId": "bcb4d1f23a97c27c",
       "codeFiles": []
@@ -3379,7 +3317,7 @@
       ],
       "excerpt": "This section analyzes the limitations of traditional wind turbine PHM methods. It then presents the application of LSF-Models in wind turbin",
       "chapterNumber": 4,
-      "order": 9,
+      "order": 8,
       "previousId": "0d6dc41c339629e7",
       "nextId": "63c1368b4e4890ec",
       "codeFiles": []
@@ -3394,7 +3332,7 @@
       ],
       "excerpt": "The application of LSF-Models in wind turbine PHM faces several key challenges, including multimodal data quality and fusion issues, privacy",
       "chapterNumber": 5,
-      "order": 10,
+      "order": 9,
       "previousId": "bcb4d1f23a97c27c",
       "nextId": "f9ebcc664e5beaf4",
       "codeFiles": []
@@ -3409,7 +3347,7 @@
       ],
       "excerpt": "In the era of general artificial intelligence, LSF-Models are revolutionizing multiple industries. However, their application in wind turbin",
       "chapterNumber": 6,
-      "order": 11,
+      "order": 10,
       "previousId": "63c1368b4e4890ec",
       "nextId": "f8b9228aec20686a",
       "codeFiles": []
@@ -3423,7 +3361,7 @@
         "正文"
       ],
       "excerpt": "Jiachi Yao: Conceptualization, Investigation, Methodology, Data curation, Funding acquisition, Writing-original draft. Te Han: Supervision, ",
-      "order": 12,
+      "order": 11,
       "previousId": "f9ebcc664e5beaf4",
       "nextId": "fd5cc5dc2cfef6c0",
       "codeFiles": []
@@ -3437,7 +3375,7 @@
         "正文"
       ],
       "excerpt": "During the preparation of this work the authors used ChatGPT-40 in order to improve readability and language of this work. After using this ",
-      "order": 13,
+      "order": 12,
       "previousId": "f8b9228aec20686a",
       "nextId": "0bb355617c983db8",
       "codeFiles": []
@@ -3451,7 +3389,7 @@
         "正文"
       ],
       "excerpt": "The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence th",
-      "order": 14,
+      "order": 13,
       "previousId": "fd5cc5dc2cfef6c0",
       "nextId": "736c09ae0d9ad9bc",
       "codeFiles": []
@@ -3465,7 +3403,7 @@
         "正文"
       ],
       "excerpt": "This research was supported by the National Natural Science Foundation of China (Grant Nos. 52405146, 72201152 and 72293605), the Beijing Na",
-      "order": 15,
+      "order": 14,
       "previousId": "0bb355617c983db8",
       "nextId": "c73975660733cab9",
       "codeFiles": []
@@ -3479,7 +3417,7 @@
         "正文"
       ],
       "excerpt": "Data will be made available on request.",
-      "order": 16,
+      "order": 15,
       "previousId": "736c09ae0d9ad9bc",
       "nextId": "a3617d2ca541935c",
       "codeFiles": []
@@ -3493,23 +3431,9 @@
         "正文"
       ],
       "excerpt": "[1] Wang Y, Wang R, Tanaka K, Ciais P, Penuelas J, Balkanski Y, Sardans J, Hauglustaine D, Liu W, Xing X, Li J, Xu S, Xiong Y, Yang R, Cao J",
-      "order": 17,
+      "order": 16,
       "previousId": "c73975660733cab9",
       "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "5099078314117d05",
-      "bookSlug": "smart-analysis-system-user-manual",
-      "relPath": "index.md",
-      "title": "文档首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "面向风电场运维人员的系统操作指南，覆盖数据导入、统计分析、智能诊断、能效评估、寿命预测与报告管理。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "f361ba46b553f2a1",
       "codeFiles": []
     },
     {
@@ -3522,8 +3446,8 @@
       ],
       "excerpt": "风电 SCADA 智能分析与装备寿命预测系统是一套面向现代风电场运行监控、设备健康诊断及预测性维护的工程级桌面分析软件。随着我国风电产业的飞速发展，风电场建设规模持续扩大，大量风电机组已相继进入中后期运行阶段，设备部件的疲劳损伤、热退化与气动衰减问题日益突出。传统依靠报警阈值被动",
       "chapterNumber": 1,
-      "order": 2,
-      "previousId": "5099078314117d05",
+      "order": 1,
+      "previousId": "",
       "nextId": "627ed453a2159985",
       "codeFiles": []
     },
@@ -3537,7 +3461,7 @@
       ],
       "excerpt": "在大型风电机组集群的自动化诊断体系中，构建多层次、结构化的数据资产组织架构是保障后续算法精准调优与跨风场对比分析的基础前提。针对风电集团往往同时管理多个不同地理分布风电场、且单个风电场内部混铺多种不同主机构造机型（如直驱式、双馈式、半直驱式风机）的实际工程现状，本系统建立了‘风场",
       "chapterNumber": 2,
-      "order": 3,
+      "order": 2,
       "previousId": "f361ba46b553f2a1",
       "nextId": "dabd5aefd9966a60",
       "codeFiles": []
@@ -3552,7 +3476,7 @@
       ],
       "excerpt": "发电量统计功能作为风电场日常效能监控与捕风品质评估的核心模块，旨在通过对风速-功率响应特性进行标准化修正与拟合，精准量化风机在不同风速区间的实际发电能力与捕风电量损失。按照国际电工委员会 IEC 61400-12 标准要求，机组输出功率深受环境气压、温度及海拔导致的空气密度波动影",
       "chapterNumber": 3,
-      "order": 4,
+      "order": 3,
       "previousId": "627ed453a2159985",
       "nextId": "41974fef4efc89fe",
       "codeFiles": []
@@ -3567,7 +3491,7 @@
       ],
       "excerpt": "风电机组作为大型柔性高耸结构，在大大气湍流、阵风冲击、塔影效应及风切变的共同作用下，长期承受着极其复杂的变幅交变载荷。风轮扫掠面的不均匀气动推力与气动倾覆力矩，会直接传递至主轴、齿轮箱及塔筒结构节点，引发严重的动态应力响应。直接在风机结构上大量贴附应变片进行载荷测量成本极高且耐久",
       "chapterNumber": 4,
-      "order": 5,
+      "order": 4,
       "previousId": "dabd5aefd9966a60",
       "nextId": "f2ffa7d9725ce74f",
       "codeFiles": []
@@ -3582,7 +3506,7 @@
       ],
       "excerpt": "风电机组的变桨系统与偏航系统作为维持风机安全运行与最大化捕风效率的关键辅助执行机构，在频繁的变风向与阵风工况下需要消耗大量的电能。辅助执行机构的自用电电能消耗占到了风机厂用电的绝大部分；更为严重的是，如果变桨轴承、偏航齿圈出现润滑不良、机械干摩擦加剧或驱动电机老化，其辅助功耗将成",
       "chapterNumber": 5,
-      "order": 6,
+      "order": 5,
       "previousId": "41974fef4efc89fe",
       "nextId": "8d10a98e576fbe62",
       "codeFiles": []
@@ -3597,7 +3521,7 @@
       ],
       "excerpt": "主轴承作为风电机组传动链中支撑风轮旋转并承受巨大风载荷的核心低速部件，其运行状态直接决定了整机的结构安全。主轴承一旦发生滚道点蚀剥落或保持架断裂，将引发严重的抱轴事故，造成巨大的吊装维修成本与停机电量损失。由于主轴承转速低（通常在 820 rpm）、载荷波动剧烈，传统振动监控信噪",
       "chapterNumber": 6,
-      "order": 7,
+      "order": 6,
       "previousId": "f2ffa7d9725ce74f",
       "nextId": "54d978d0624509ca",
       "codeFiles": []
@@ -3612,23 +3536,9 @@
       ],
       "excerpt": "在风电场日常运维管理、定期技术分析以及风机健康汇报工作中，将海量 SCADA 计算结果快速汇总为规范化的工程诊断报告是至关重要的一环。传统依靠人工拷贝数据图表与撰写文档的方式，不仅耗时费力，且极易因人工计算误差或复制失误导致汇报数据失真。本系统设计了基于模块化驱动的自动报告生成引",
       "chapterNumber": 7,
-      "order": 8,
+      "order": 7,
       "previousId": "8d10a98e576fbe62",
       "nextId": "",
-      "codeFiles": []
-    },
-    {
-      "id": "02f12e0a464bc753",
-      "bookSlug": "smart-analysis-system-technical-docs",
-      "relPath": "index.md",
-      "title": "文档首页",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "系统梳理平台架构、数据计算、健康诊断、损伤评估、RUL 预测、能耗拆解及预测性维护算法原理。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "45c6c8a9aa80c65b",
       "codeFiles": []
     },
     {
@@ -3641,8 +3551,8 @@
       ],
       "excerpt": "风电 SCADA（Supervisory Control and Data Acquisition）智能分析与设备寿命预测平台旨在为大型风电场站、集团远控运维中心提供工业级的机组健康诊断、寿命预测及能耗损失拆解能力。在现代风力发电工程现场，一个中等规模的风电场通常包含 50 至 ",
       "chapterNumber": 1,
-      "order": 2,
-      "previousId": "02f12e0a464bc753",
+      "order": 1,
+      "previousId": "",
       "nextId": "ea1a640fc85733c4",
       "codeFiles": []
     },
@@ -3656,7 +3566,7 @@
       ],
       "excerpt": "在现代风力发电工程与风电场站资产管理中，发电量是衡量风电场整体运营效率、经济收益以及投资回报率（ROI）的最核心硬指标。大型陆上或海上风电场通常由 50 至 200 台单机容量在 2.0MW 至 8.0MW 以上的现代化风力发电机组组成，整体装机容量达数百兆瓦。在地理选址上，风电",
       "chapterNumber": 2,
-      "order": 3,
+      "order": 2,
       "previousId": "45c6c8a9aa80c65b",
       "nextId": "1f4c66b64c336979",
       "codeFiles": []
@@ -3671,7 +3581,7 @@
       ],
       "excerpt": "在风力发电工程领域，风速-功率特性曲线（Wind Speed - Power Curve）是表征风力发电机组气动捕风效率、机组变桨控制性能以及机械-电气能量转换效率的最关键“心电图”。风电机组制造厂商（OEM）在机组出厂交付时，均会基于标准 IEC 61400-12 标准并在标准",
       "chapterNumber": 3,
-      "order": 4,
+      "order": 3,
       "previousId": "ea1a640fc85733c4",
       "nextId": "6df312aae499c641",
       "codeFiles": []
@@ -3686,7 +3596,7 @@
       ],
       "excerpt": "在现代风力发电机组全生命周期资产管理中，风轮叶片（Rotor Blades）与钢制塔筒（Tubular Steel Tower）是承载全机主要气动与机械载荷的两大最重型柔性结构部件。一座典型的 3.0MW 风力发电机组，其单支叶片长度轻易突破 70 米，重达 15 至 20 吨，",
       "chapterNumber": 4,
-      "order": 5,
+      "order": 4,
       "previousId": "1f4c66b64c336979",
       "nextId": "8dd641af30bb7b02",
       "codeFiles": []
@@ -3701,7 +3611,7 @@
       ],
       "excerpt": "在大型风电场站的常态化运维中，集中控制室 SCADA 系统持续接收全场数十台风电机组的实时监控数据。风电机组作为高度集成的复杂工控系统，包含上千个报警监测节点。当系统遭遇严重外部扰动（如电网网电电压瞬间跌落、强雷暴击中塔筒）或核心零部件发生物理故障（如变频器 IGBT 击穿、变桨",
       "chapterNumber": 5,
-      "order": 6,
+      "order": 5,
       "previousId": "6df312aae499c641",
       "nextId": "1dcc01079f02784a",
       "codeFiles": []
@@ -3716,7 +3626,7 @@
       ],
       "excerpt": "在现代风电场的资产管理与日常运维中，维护策略的选择直接决定了风电场的全生命周期运营成本（LCOE）与设备资产收益。传统的风电运维主要依赖两大流派：其一是“被动纠错性维护”（Corrective Maintenance, CM），即俗称的“坏了才修”。被动维护在设备发生致命故障停机",
       "chapterNumber": 6,
-      "order": 7,
+      "order": 6,
       "previousId": "8dd641af30bb7b02",
       "nextId": "188c33d3c346d0ff",
       "codeFiles": []
@@ -3731,7 +3641,7 @@
       ],
       "excerpt": "在现代大型新能源集团与风电场站的日常运营管理体系中，自动生成专业、严谨、图文并茂的分析诊断报告是连接前线工控数据与后方管理决策的关键纽带。风电场运维团队需要定期向集团生产部、安全监管部门、设备制造厂商（OEM）以及第三方保险公司提交各种不同类型的技术报告，例如：风电场月度综合健康",
       "chapterNumber": 7,
-      "order": 8,
+      "order": 7,
       "previousId": "1dcc01079f02784a",
       "nextId": "",
       "codeFiles": []
@@ -5738,6 +5648,61 @@
       "language": "csv",
       "size": 43323,
       "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/weather_withna.csv",
+      "truncated": false
+    },
+    {
+      "id": "881591ed76c0a768",
+      "bookSlug": "python-data-analysis",
+      "path": "chapter03_numpy_tutorial.py",
+      "name": "chapter03_numpy_tutorial.py",
+      "kind": "source",
+      "language": "python",
+      "size": 40015,
+      "downloadUrl": "files/code/python-data-analysis/chapter03_numpy_tutorial.py",
+      "truncated": false
+    },
+    {
+      "id": "38227e21a12b851f",
+      "bookSlug": "python-data-analysis",
+      "path": "chapter04_pandas_basics_tutorial.py",
+      "name": "chapter04_pandas_basics_tutorial.py",
+      "kind": "source",
+      "language": "python",
+      "size": 17633,
+      "downloadUrl": "files/code/python-data-analysis/chapter04_pandas_basics_tutorial.py",
+      "truncated": false
+    },
+    {
+      "id": "da29f0a9855257fc",
+      "bookSlug": "python-data-analysis",
+      "path": "chapter05_pandas_io_tutorial.py",
+      "name": "chapter05_pandas_io_tutorial.py",
+      "kind": "source",
+      "language": "python",
+      "size": 21830,
+      "downloadUrl": "files/code/python-data-analysis/chapter05_pandas_io_tutorial.py",
+      "truncated": false
+    },
+    {
+      "id": "ca2f285dadd2bbfd",
+      "bookSlug": "python-data-analysis",
+      "path": "chapter06_pandas_processing_tutorial.py",
+      "name": "chapter06_pandas_processing_tutorial.py",
+      "kind": "source",
+      "language": "python",
+      "size": 19235,
+      "downloadUrl": "files/code/python-data-analysis/chapter06_pandas_processing_tutorial.py",
+      "truncated": false
+    },
+    {
+      "id": "1af800164de42872",
+      "bookSlug": "python-data-analysis",
+      "path": "chapter07_pandas_cleaning_tutorial.py",
+      "name": "chapter07_pandas_cleaning_tutorial.py",
+      "kind": "source",
+      "language": "python",
+      "size": 22319,
+      "downloadUrl": "files/code/python-data-analysis/chapter07_pandas_cleaning_tutorial.py",
       "truncated": false
     }
   ]
