@@ -60,6 +60,7 @@ URL_ATTR_RE = re.compile(r"(?P<attr>href|src)=(?P<quote>['\"])(?P<url>.*?)(?P=qu
 TABLE_RE = re.compile(r"(<table\b[^>]*>.*?</table>)", re.I | re.S)
 ESCAPED_HTML_TAG_RE = re.compile(r"\\<(?P<tag>[^>]+)\\>")
 FRONT_MATTER_RE = re.compile(r"\A---\s*\r?\n.*?\r?\n---\s*(?:\r?\n|\Z)", re.S)
+VIDEO_RE = re.compile(r"https?://(?:www\.)?bilibili\.com/video/[^\s)\"']+", re.I)
 HTML_HEADING_RE = re.compile(
     r"<h(?P<level>[1-4])(?P<attrs>[^>]*)>(?P<body>.*?)</h(?P=level)>", re.I | re.S
 )
@@ -582,23 +583,25 @@ def collect_book_documents(book: dict[str, object]) -> tuple[Path, list[dict[str
         if not source_path.is_file():
             continue
         markdown_text = FRONT_MATTER_RE.sub("", source_path.read_text(encoding="utf-8-sig"), count=1)
+        video_match = VIDEO_RE.search(markdown_text)
         markdown_text = clean_markdown_content(markdown_text)
         fallback = source_path.stem.replace("-", " ").replace("_", " ")
         title = str(item.get("title") or title_from_markdown(markdown_text, fallback))
         if is_navigation_only_doc(book, rel_path, title):
             continue
-        docs.append(
-            {
-                "id": doc_id(slug, rel_path),
-                "bookSlug": slug,
-                "relPath": rel_path,
-                "title": title,
-                "sections": item.get("sections") or ["正文"],
-                "excerpt": excerpt_from_markdown(markdown_text),
-                "source": source_path,
-                "markdown": markdown_text,
-            }
-        )
+        doc_payload = {
+            "id": doc_id(slug, rel_path),
+            "bookSlug": slug,
+            "relPath": rel_path,
+            "title": title,
+            "sections": item.get("sections") or ["正文"],
+            "excerpt": excerpt_from_markdown(markdown_text),
+            "source": source_path,
+            "markdown": markdown_text,
+        }
+        if video_match:
+            doc_payload["video"] = video_match.group(0).rstrip(".,;:，。；：")
+        docs.append(doc_payload)
 
     for doc in docs:
         number = chapter_number(str(doc["title"]), str(doc["relPath"]))
