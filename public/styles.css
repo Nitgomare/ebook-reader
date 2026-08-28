@@ -2,7 +2,7 @@
   --paper: #f7f9fc;
   --surface: #ffffff;
   --ink: #17233d;
-  --muted: #667085;
+  --muted: #475467;
   --line: #d9e2f0;
   --accent: #2563eb;
   --accent-soft: #eaf2ff;
@@ -52,7 +52,7 @@ button, input { font: inherit; }
 .nav-group { margin: 0 0 1.25rem; }
 .nav-group h3 { margin: 0 0 .45rem; color: var(--muted); font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .doc-nav-link { display: grid; gap: .55rem; align-items: baseline; margin: 0 -.55rem; padding: .48rem .55rem; border-radius: .42rem; color: var(--muted); grid-template-columns: 1.6rem minmax(0, 1fr); }
-.doc-nav-link span { font-family: var(--font-sans); font-size: .65rem; opacity: .65; }
+.doc-nav-link span { font-family: var(--font-sans); font-size: .65rem; opacity: .85; }
 .doc-nav-link strong { overflow: hidden; font-size: .76rem; font-weight: 550; line-height: 1.45; text-overflow: ellipsis; white-space: nowrap; }
 .doc-nav-link:hover, .doc-nav-link.is-active { color: var(--accent); background: var(--accent-soft); }
 .book-tree { margin: 0 0 .55rem; border: 1px solid var(--line); border-radius: .5rem; background: var(--paper); }
