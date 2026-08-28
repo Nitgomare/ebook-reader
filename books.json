@@ -135,6 +135,18 @@
       "category": "artificial-intelligence",
       "type": "reference",
       "codeSource": "code",
+      "codeLinks": {
+        "metrices": ["chapters/02-model-evaluation-and-selection/index.md"],
+        "linear_model": ["chapters/03-linear-models/index.md"],
+        "discriminant_analysis": ["chapters/03-linear-models/index.md"],
+        "tree": ["chapters/04-decision-trees/index.md"],
+        "svm": ["chapters/06-support-vector-machines/index.md"],
+        "bayes": ["chapters/07-bayesian-classifiers/index.md"],
+        "ensemble": ["chapters/08-ensemble-learning/index.md"],
+        "cluster": ["chapters/09-clustering/index.md"],
+        "dimension_reduction": ["chapters/10-dimensionality-reduction-and-metric-learning/index.md"],
+        "feature_selection": ["chapters/11-feature-selection-and-sparse-learning/index.md"]
+      },
       "resourceLinks": [
         {"label": "机器学习配套视频", "url": "https://www.bilibili.com/video/BV1gG411f7zX/", "kind": "视频"}
       ]
