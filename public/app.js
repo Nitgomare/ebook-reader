@@ -57,6 +57,7 @@
     elements.searchLabel.textContent = "搜索章节";
     elements.searchInput.placeholder = "标题、章节或关键词";
     var needle = normalize(query);
+    if (book) { renderBookSidebar(book, needle); return; }
     var matchedCount = 0;
     var trees = state.catalog.books.map(function (item) {
       var docs = state.catalog.docs.filter(function (doc) {
@@ -118,11 +119,69 @@
     }, []);
   }
 
+  function codeFolders(files, needle, activeFile) {
+    return groupCodeFiles(files).map(function (group) {
+      var isActiveGroup = activeFile && activeFile.path.split("/")[0] === group.name;
+      var open = needle || isActiveGroup ? " open" : "";
+      var links = group.files.map(function (file) {
+        var active = activeFile && activeFile.id === file.id ? " is-active" : "";
+        var label = file.path.split("/").slice(1).join("/") || file.name;
+        return '<a class="code-nav-link' + active + '" href="#/code/' + file.id + '" title="' +
+          escapeHtml(file.path) + '"><span>' + escapeHtml(codeLabel(file)) + '</span><strong>' +
+          escapeHtml(label) + '</strong></a>';
+      }).join("");
+      return '<details class="code-folder"' + open + '><summary><span class="book-tree-marker">›</span><strong>' +
+        escapeHtml(codeGroupLabel(group.name)) + '</strong><small>' + group.files.length + '</small></summary><div>' +
+        links + '</div></details>';
+    }).join("");
+  }
+
+  function renderBookSidebar(book, needle) {
+    var docs = state.catalog.docs.filter(function (doc) {
+      if (doc.bookSlug !== book.slug) return false;
+      return !needle || normalize(doc.title + " " + doc.excerpt + " " + doc.relPath).indexOf(needle) !== -1;
+    });
+    var resourceActive = state.activeResource ? " is-active" : "";
+    var resourceLink = '<a class="course-resource-link' + resourceActive + '" href="#/resources/' +
+      encodeURIComponent(book.slug) + '"><span>↗</span><strong>课程资源</strong></a>';
+    var chapters = groupDocs(docs).map(function (group) {
+      var groupLabel = group.title === "正文" ? "章节" : group.title;
+      return '<section class="nav-group"><h3>' + escapeHtml(groupLabel) + '</h3>' + group.docs.map(function (doc) {
+        var active = state.activeDoc && state.activeDoc.id === doc.id ? " is-active" : "";
+        return '<a class="doc-nav-link' + active + '" href="#/doc/' + doc.id + '"><span>' +
+          String(doc.order).padStart(2, "0") + '</span><strong>' + escapeHtml(doc.title) + '</strong></a>';
+      }).join("") + "</section>";
+    }).join("");
+    var codeNav = "";
+    if (book.codeCount) {
+      var files = state.catalog.code.filter(function (file) { return file.bookSlug === book.slug; });
+      codeNav = '<section class="nav-group book-code-nav"><h3>代码与数据</h3>' +
+        codeFolders(files, needle, state.activeCode) + '</section>';
+    }
+    var nav = resourceLink + chapters + codeNav;
+    elements.sidebarTitle.textContent = book.title;
+    elements.catalogStatus.textContent = needle ? "找到 " + docs.length + " 个章节" :
+      (book.author ? book.author + " · " : "") + docs.length + " 个章节";
+    elements.navTree.innerHTML = nav || '<p class="empty-nav">没有匹配的章节。</p>';
+  }
+
   function renderCodeSidebar(activeFile, query) {
     var needle = normalize(query);
     var matchedCount = 0;
     elements.searchLabel.textContent = "搜索代码与数据";
     elements.searchInput.placeholder = "文件名、路径或类型";
+    if (activeFile) {
+      var files = state.catalog.code.filter(function (file) {
+        if (file.bookSlug !== activeFile.bookSlug) return false;
+        return !needle || normalize(file.name + " " + file.path + " " + file.language + " " + codeLabel(file)).indexOf(needle) !== -1;
+      });
+      var book = bookBySlug(activeFile.bookSlug);
+      elements.sidebarTitle.textContent = book ? book.title + " · 代码" : "代码与数据";
+      elements.catalogStatus.textContent = needle ? "找到 " + files.length + " 个文件" : files.length + " 个文件";
+      elements.navTree.innerHTML = codeFolders(files, needle, activeFile) ||
+        '<p class="empty-nav">没有匹配的代码或数据。</p>';
+      return;
+    }
     var trees = state.catalog.books.map(function (book) {
       var files = state.catalog.code.filter(function (file) {
         if (file.bookSlug !== book.slug) return false;
@@ -131,20 +190,7 @@
       matchedCount += files.length;
       if (!files.length) return "";
       var isActiveBook = activeFile && activeFile.bookSlug === book.slug;
-      var groups = groupCodeFiles(files).map(function (group) {
-        var isActiveGroup = isActiveBook && activeFile.path.split("/")[0] === group.name;
-        var open = needle || isActiveGroup ? " open" : "";
-        var links = group.files.map(function (file) {
-          var active = activeFile && activeFile.id === file.id ? " is-active" : "";
-          var label = file.path.split("/").slice(1).join("/") || file.name;
-          return '<a class="code-nav-link' + active + '" href="#/code/' + file.id + '" title="' +
-            escapeHtml(file.path) + '"><span>' + escapeHtml(codeLabel(file)) + '</span><strong>' +
-            escapeHtml(label) + '</strong></a>';
-        }).join("");
-        return '<details class="code-folder"' + open + '><summary><span class="book-tree-marker">›</span><strong>' +
-          escapeHtml(codeGroupLabel(group.name)) + '</strong><small>' + group.files.length + '</small></summary><div>' +
-          links + '</div></details>';
-      }).join("");
+      var groups = codeFolders(files, needle, activeFile);
       var openBook = needle || isActiveBook || !activeFile && state.catalog.books.filter(function (item) { return item.codeCount; })[0].slug === book.slug ? " open" : "";
       return '<details class="book-tree code-book-tree"' + openBook + '><summary><span class="book-tree-marker">›</span><strong>' +
         escapeHtml(book.title) + '</strong><small>' + files.length + ' 个</small></summary><div class="book-tree-children">' +
@@ -232,20 +278,64 @@
     }
   }
 
-  function renderResources(book) {
-    hideViews();
-    state.activeBook = book;
-    state.activeDoc = null;
-    state.activeCode = null;
-    state.activeResource = true;
-    elements.documentView.hidden = false;
-    elements.outline.hidden = true;
-    elements.outlineToggle.hidden = true;
-    elements.relatedCode.hidden = true;
-    elements.previousLink.hidden = true;
-    elements.nextLink.hidden = true;
-    elements.breadcrumb.textContent = book.title;
-    elements.docTitle.textContent = "课程资源";
+  function resourceAction(href, label, external) {
+    return '<a class="resource-action" href="' + href + '"' + (external ? ' target="_blank" rel="noopener"' : '') + '>' +
+      escapeHtml(label) + '</a>';
+  }
+
+  function renderResourceTable(book, rows) {
+    var docs = state.catalog.docs.filter(function (doc) { return doc.bookSlug === book.slug; });
+    var docByChapter = {};
+    docs.forEach(function (doc) { if (doc.chapterNumber != null) docByChapter[doc.chapterNumber] = doc; });
+    var resourceByName = {};
+    (book.resources || []).forEach(function (resource) { resourceByName[resource.name] = resource; });
+    var lessonNames = rows.filter(function (row) { return row.lesson; }).map(function (row) { return row.lesson; });
+    var downloads = (book.resources || []).filter(function (resource) { return lessonNames.indexOf(resource.name) === -1; });
+    var bodyRows = rows.map(function (row) {
+      var doc = docByChapter[row.chapter];
+      var chapterTitle = doc ? doc.title.replace(/^第\s*\d+\s*章\s*/, "") : "第" + row.chapter + "章";
+      var article = doc ? resourceAction("#/doc/" + doc.id, "正文") : '<span class="resource-empty">—</span>';
+      var lesson = '<span class="resource-empty">—</span>';
+      if (row.lesson && resourceByName[row.lesson]) {
+        lesson = '<a class="resource-action" href="' + resourceByName[row.lesson].downloadUrl + '" download>课件</a>';
+      }
+      var code = '<span class="resource-empty">—</span>';
+      if (doc && (doc.codeFiles || []).length) {
+        code = resourceAction("#/code/" + doc.codeFiles[0], "代码");
+      }
+      var video = row.video ? resourceAction(row.video, "视频", true) : '<span class="resource-empty">—</span>';
+      return '<tr><td class="resource-topic"><b>第 ' + row.chapter + ' 章 · ' + escapeHtml(chapterTitle) + '</b>' +
+        (row.desc ? '<small>' + escapeHtml(row.desc) + '</small>' : '') + '</td>' +
+        '<td>' + article + '</td><td>' + lesson + '</td><td>' + code + '</td><td>' + video + '</td></tr>';
+    }).join("");
+    var external = (book.resourceLinks || []).map(function (link) {
+      return '<a class="resource-file" href="' + escapeHtml(link.url) + '" target="_blank" rel="noopener"><span>' +
+        escapeHtml(link.kind || "链接") + '</span><strong>' + escapeHtml(link.label) +
+        '</strong><small>外部资源</small><b>打开</b></a>';
+    }).join("");
+    var downloadList = downloads.map(function (resource) {
+      return '<a class="resource-file" href="' + resource.downloadUrl + '" download><span>' +
+        escapeHtml(resource.kind) + '</span><strong>' + escapeHtml(resource.name) + '</strong><small>' +
+        escapeHtml(resource.path) + ' · ' + formatBytes(resource.size) + '</small><b>下载</b></a>';
+    }).join("");
+    var tags = (book.tags || []).map(function (tag) { return '<span>' + escapeHtml(tag) + '</span>'; }).join("");
+    var resourceTotal = (book.resources || []).length + (book.resourceLinks || []).length;
+    var info = '<section class="resource-book-info"><p class="resource-book-kicker">TEXTBOOK · SLIDES · CODE · VIDEO</p><h2>' +
+      escapeHtml(book.title) + '</h2><p class="resource-book-author">' + escapeHtml(book.author || "编者信息待补充") +
+      '</p><p>' + escapeHtml(book.description || "正文、课件、代码与视频按章节对应整理。") +
+      '</p><div class="resource-book-meta"><strong>' + (book.chapterCount || docs.length) + ' 章正文</strong><strong>' +
+      resourceTotal + ' 项配套资源</strong>' + tags + '</div></section>';
+    var table = '<section class="resource-group"><h2>章节资源</h2><p>正文、课件、代码与视频按章节对应整理；空白项表示目前没有可靠资源。</p><div class="resource-table-wrap"><table class="resource-table"><thead><tr><th>主题</th><th>正文</th><th>课件</th><th>代码</th><th>视频</th></tr></thead><tbody>' +
+      bodyRows + '</tbody></table></div></section>';
+    var filesSection = (external || downloadList) ? '<section class="resource-group"><h2>教材与课程</h2><div class="resource-file-list">' +
+      external + downloadList + '</div></section>' : '';
+    var steps = '<section class="resource-group"><h2>推荐使用顺序</h2><ol class="resource-steps"><li>用课件快速建立本章结构，记下三个关键词。</li>' +
+      '<li>阅读正文，补齐定义、公式和边界条件。</li><li>打开对应实现，沿着数据形状、目标函数、参数更新和停止条件阅读。</li>' +
+      '<li>最后看视频中仍不清楚的分 P，并用自己的话写一段解释。</li></ol></section>';
+    return info + table + filesSection + steps;
+  }
+
+  function renderLegacyResources(book) {
     var downloads = (book.resources || []).map(function (resource) {
       return '<a class="resource-file" href="' + resource.downloadUrl + '" download><span>' +
         escapeHtml(resource.kind) + '</span><strong>' + escapeHtml(resource.name) + '</strong><small>' +
@@ -271,12 +361,32 @@
           '</strong><small>' + group.files.length + ' 个文件</small></summary><div class="inline-code-list">' +
           group.files.map(inlineCodeItem).join("") + '</div></details>';
       }).join("") + '</div></section>';
-    elements.article.innerHTML = '<section class="resource-book-info"><p class="resource-book-kicker">书籍与课程信息</p><h2>' +
+    return '<section class="resource-book-info"><p class="resource-book-kicker">书籍与课程信息</p><h2>' +
       escapeHtml(book.title) + '</h2><p class="resource-book-author">' + escapeHtml(book.author || "编者信息待补充") +
       '</p><p>' + escapeHtml(book.description || "本页集中整理课程正文与配套学习资源。") +
       '</p><div class="resource-book-meta"><strong>' + chapterText + '</strong><strong>' + resourceTotal +
       ' 项配套资源</strong>' + tags + '</div></section>' +
       (sections || '<p class="empty-resource">本课程暂时没有单独的配套资源。</p>');
+  }
+
+  function renderResources(book) {
+    hideViews();
+    state.activeBook = book;
+    state.activeDoc = null;
+    state.activeCode = null;
+    state.activeResource = true;
+    elements.documentView.hidden = false;
+    elements.outline.hidden = true;
+    elements.outlineToggle.hidden = true;
+    elements.relatedCode.hidden = true;
+    elements.previousLink.hidden = true;
+    elements.nextLink.hidden = true;
+    elements.breadcrumb.textContent = book.title;
+    elements.docTitle.textContent = "课程资源";
+    var rows = book.courseRows;
+    elements.article.innerHTML = (Array.isArray(rows) && rows.length)
+      ? renderResourceTable(book, rows)
+      : renderLegacyResources(book);
     renderSidebar(book, elements.searchInput.value);
     document.title = "课程资源 · " + book.title;
     window.scrollTo(0, 0);
