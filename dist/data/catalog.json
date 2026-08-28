@@ -186,6 +186,23 @@
       "category": "data-analysis",
       "type": "reference",
       "codeSource": "docs/assets/code",
+      "codeLinks": {
+        "chapter03_numpy_tutorial.py": [
+          "chapters/03-numpy/index.md"
+        ],
+        "chapter04_pandas_basics_tutorial.py": [
+          "chapters/04-pandas/index.md"
+        ],
+        "chapter05_pandas_io_tutorial.py": [
+          "chapters/05-pandas/index.md"
+        ],
+        "chapter06_pandas_processing_tutorial.py": [
+          "chapters/06-pandas/index.md"
+        ],
+        "chapter07_pandas_cleaning_tutorial.py": [
+          "chapters/07-pandas/index.md"
+        ]
+      },
       "resourceLinks": [
         {
           "label": "数据分析补充视频",
@@ -874,6 +891,7 @@
         "正文"
       ],
       "excerpt": "计算机硬件主要由五个部分组成，分别是：运算器、控制器、存储器、输入设备、输出设备。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=1",
       "chapterNumber": 1,
       "order": 1,
       "previousId": "",
@@ -891,6 +909,7 @@
         "正文"
       ],
       "excerpt": "主要原因是 Python 具备如下的特点：",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=9",
       "chapterNumber": 2,
       "order": 2,
       "previousId": "9ce085645f85dfab",
@@ -908,6 +927,7 @@
         "正文"
       ],
       "excerpt": "来看这样一个场景：老师让学生把：姓名、年龄、体重写在纸上，纸上的文字，就是学生想要表达的内容，这些内容不需要计算、也不需要转换，就是字面上的含义，一看就能理解。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=15",
       "chapterNumber": 3,
       "order": 3,
       "previousId": "32475f645b3e70e5",
@@ -946,6 +966,7 @@
         "正文"
       ],
       "excerpt": "程序并不是简单的“从上到下”执行，很多时候，我们希望程序能根据不同的情况，做出不同的选择，比如：根据情况跳过某些代码，或者重复执行某些代码，那这时就需要用到『流程控制语句』，程序的执行流程大体上可分为三类：顺序、分之、循环。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=31",
       "chapterNumber": 4,
       "order": 4,
       "previousId": "4fb5ff6fc907d54c",
@@ -974,6 +995,7 @@
         "正文"
       ],
       "excerpt": "函数（function）是：组织好的、可重复使用的、用于执行特定任务的代码块。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=44",
       "chapterNumber": 5,
       "order": 5,
       "previousId": "570078cfb45da8eb",
@@ -1005,6 +1027,7 @@
         "正文"
       ],
       "excerpt": "在编程中，我们经常需要一次保存多个数据，比如：多个学生的名字、一组商品的价格、或一串测量数据等等，如果把一条数据看作一个“物品”，那这些物品需要被放进“容器”里统一管理，在 Python 中，这种用来存放多个数据的东西，就叫做『数据容器』。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=60",
       "chapterNumber": 6,
       "order": 6,
       "previousId": "0e1c53f893b2e2e8",
@@ -1045,6 +1068,7 @@
         "正文"
       ],
       "excerpt": "『对象』是一个拥有『属性』和『行为』的个体，它是构成现实世界和程序世界的基本单位。编程领域有这么一句话，叫“万物皆对象！”之所以这么说，是因为任何一个具体存在的人或物，都可以看成是一个对象，例如：一个人、 一辆车、一部手机，都是对象，他们的『属性』和『行为』分别是：",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=89",
       "chapterNumber": 7,
       "order": 7,
       "previousId": "31d963e6c8fcab66",
@@ -1082,6 +1106,7 @@
         "正文"
       ],
       "excerpt": "上述代码中welcome函数的内存示意图：",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=111",
       "chapterNumber": 8,
       "order": 8,
       "previousId": "477324e79fb56fb3",
@@ -1116,6 +1141,7 @@
         "正文"
       ],
       "excerpt": "错误：代码本身有语法错误，解释器无法执行代码。———— 无法通过异常处理机制解决。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=124",
       "chapterNumber": 9,
       "order": 9,
       "previousId": "a49f0260c4a51ed7",
@@ -1137,6 +1163,7 @@
         "正文"
       ],
       "excerpt": "Python 中的模块分为三类，分别是：标准库模块、自定义模块、第三方模块。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=127",
       "chapterNumber": 10,
       "order": 10,
       "previousId": "5036790471830435",
@@ -1163,6 +1190,7 @@
         "正文"
       ],
       "excerpt": "先区分两个概念：可迭代对象（iterable）、迭代器（iterator）",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=132",
       "chapterNumber": 11,
       "order": 11,
       "previousId": "8ba110c3e775bea9",
@@ -1183,6 +1211,7 @@
         "正文"
       ],
       "excerpt": "从文件系统的『根目录』开始，完整描述文件或目录所在的位置。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=136",
       "chapterNumber": 12,
       "order": 12,
       "previousId": "ff72fa6783f9da7e",
@@ -1211,6 +1240,7 @@
         "正文"
       ],
       "excerpt": "🔸概念：在一段时间内，当 CPU 面对多个任务时，会将每个任务交替着执行一段时间。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=142",
       "chapterNumber": 13,
       "order": 13,
       "previousId": "b9769d19bc4bb197",
@@ -1247,6 +1277,7 @@
         "正文"
       ],
       "excerpt": "概念：协程（Coroutine），是一种线程内部的任务调度机制，它通过事件循环，在用户态中实现任务的挂起与恢复执行，从而在遇到 IO 操作时，不让 CPU 等待，而是继续执行其它需要 CPU 的任务。",
+      "video": "https://www.bilibili.com/video/BV1tDsgzxECr?p=166",
       "chapterNumber": 14,
       "order": 14,
       "previousId": "3a962756d44d2b97",
@@ -1648,6 +1679,7 @@
         "正文"
       ],
       "excerpt": "数据从哪里来？公司数据库 | 公开数据集（如政府数据） | 手动爬取",
+      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6?p=1",
       "chapterNumber": 1,
       "order": 1,
       "previousId": "",
@@ -1663,6 +1695,7 @@
         "正文"
       ],
       "excerpt": "numpy是Python中科学计算的基础包。它是一个Python库，提供多维数组对象、各种派生对象（例如掩码数组和矩阵）以及用于对数组进行快速操作的各种方法，包括数学、逻辑、形状操作、排序、选择、I/O",
+      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6?p=6",
       "chapterNumber": 2,
       "order": 2,
       "previousId": "50204d742907b7f6",
@@ -1680,6 +1713,7 @@
         "正文"
       ],
       "excerpt": "Python 数据分析工具链中最核心的库，充当数据读取、清洗、分析、统计、输出的高效工具。",
+      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6?p=22",
       "chapterNumber": 3,
       "order": 3,
       "previousId": "2d1349bbcbd281d8",
@@ -1709,6 +1743,7 @@
         "正文"
       ],
       "excerpt": "Matplotlib是一个Python绘图库，广泛用于创建各种类型的静态、动态和交互式图表。它是数据科学、机器学习、工程和科学计算领域中常用的绘图工具之一。",
+      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6?p=53",
       "chapterNumber": 4,
       "order": 4,
       "previousId": "87998434aad55da5",
@@ -1796,11 +1831,14 @@
         "正文"
       ],
       "excerpt": "NumPy模块在数据处理、数据清洗、数据过滤、数据转换等方面可以快速实现数据计算，Pandas的底层也是基于NumPy的。因此，这一章内容将介绍NumPy的基础知识，使读者快速了解NumPy并将其应用到实际数据分析工作当中。",
+      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=6",
       "chapterNumber": 3,
       "order": 5,
       "previousId": "07e7f77a2b4c4de4",
       "nextId": "c0c84b750daac4eb",
-      "codeFiles": []
+      "codeFiles": [
+        "881591ed76c0a768"
+      ]
     },
     {
       "id": "c0c84b750daac4eb",
@@ -1811,11 +1849,14 @@
         "正文"
       ],
       "excerpt": "Pandas是Python的核心数据分析支持库，它提供了大量快速处理表格数据的函数和方法。本章将讲解Pandas模块的基础知识，主要内容包括安装和了解Pandas模块，Pandas模块的两大数据结构，即Series()对象和DataFrame()对象，还有索引的相关知识。",
+      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=22",
       "chapterNumber": 4,
       "order": 6,
       "previousId": "e8f6db7585e7bd0e",
       "nextId": "844f3c47e72b81c1",
-      "codeFiles": []
+      "codeFiles": [
+        "38227e21a12b851f"
+      ]
     },
     {
       "id": "844f3c47e72b81c1",
@@ -1826,11 +1867,14 @@
         "正文"
       ],
       "excerpt": "在实现数据分析的过程中，数据读取与处理是首要任务。拿到数据后需要先读取数据才能对数据进行分析。本章将主要介绍如何读取Excel文件、CSV文件、HTML网页以及数据库中的数据。",
+      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=43",
       "chapterNumber": 5,
       "order": 7,
       "previousId": "c0c84b750daac4eb",
       "nextId": "8d2488105aae38e1",
-      "codeFiles": []
+      "codeFiles": [
+        "da29f0a9855257fc"
+      ]
     },
     {
       "id": "8d2488105aae38e1",
@@ -1841,11 +1885,14 @@
         "正文"
       ],
       "excerpt": "数据读取后并不是所有的数据都是我们所需要的，因此还要对数据进行简单的处理，本章将主要介绍如何进行数据的抽取，数据的增、删、改、查以及如何对数据进行排序与排名操作。",
+      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=37",
       "chapterNumber": 6,
       "order": 8,
       "previousId": "844f3c47e72b81c1",
       "nextId": "6b7c418e5bee7f95",
-      "codeFiles": []
+      "codeFiles": [
+        "ca2f285dadd2bbfd"
+      ]
     },
     {
       "id": "6b7c418e5bee7f95",
@@ -1856,11 +1903,14 @@
         "正文"
       ],
       "excerpt": "数据清洗是数据分析的一个重要工作，因为数据的质量直接影响数据分析以及算法模型的结果。本章主要介绍在进行数据清洗时如何处理缺失值、重复值和异常值，以及字符串操作和数据转换。",
+      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=44",
       "chapterNumber": 7,
       "order": 9,
       "previousId": "8d2488105aae38e1",
       "nextId": "2c82daf4b486778a",
-      "codeFiles": []
+      "codeFiles": [
+        "1af800164de42872"
+      ]
     },
     {
       "id": "2c82daf4b486778a",
