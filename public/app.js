@@ -334,7 +334,11 @@
     elements.docTitle.textContent = doc.title;
     elements.article.innerHTML = doc.html;
     renderRelatedCode(doc.codeFiles);
-    renderOutline(doc.headings || []);
+    var outlineHeadings = (doc.headings || []).slice();
+    if ((doc.codeFiles || []).length) {
+      outlineHeadings.push({ level: 2, id: "relatedCode", text: "本章代码" });
+    }
+    renderOutline(outlineHeadings);
     renderPager(doc);
     renderSidebar(book, elements.searchInput.value);
     document.title = doc.title + " · " + state.catalog.site.title;

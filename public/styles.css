@@ -215,6 +215,7 @@ div.arithmatex { overflow-x: auto; overflow-y: hidden; }
 
 .related-code { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--line); }
 .related-code .section-heading h2 { font-size: 1.45rem; }
+.related-code { scroll-margin-top: calc(var(--topbar-height) + 1.5rem); }
 .related-code-list { display: grid; gap: .65rem; }
 .code-kind { margin-bottom: .3rem; color: var(--accent); font-size: .62rem; font-weight: 800; }
 
