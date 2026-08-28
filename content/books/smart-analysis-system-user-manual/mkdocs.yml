@@ -1,0 +1,68 @@
+site_name: "智能分析与装备寿命预测系统使用手册"
+site_description: "面向风电场运维人员的系统操作指南，覆盖数据导入、统计分析、智能诊断、能效评估、寿命预测与报告管理。"
+site_url: "https://sskb-cmg.pages.dev/book-sites/smart-analysis-system-user-manual/"
+docs_dir: docs
+use_directory_urls: true
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: blue
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - scheme: slate
+      primary: blue
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  features:
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
+    - toc.follow
+    - content.code.copy
+
+plugins:
+  - search:
+      lang: [zh, en]
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
+  - toc:
+      permalink: true
+      toc_depth: 2-4
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_css:
+  - assets/stylesheets/reading.css
+  - assets/stylesheets/back-to-main.css
+
+extra_javascript:
+  - assets/javascripts/mathjax.js
+  - assets/javascripts/back-to-main.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - "文档首页": index.md
+  - "第一章 系统概述与界面导览": chapters/01/index.md
+  - "第二章 数据导入与测点映射管理": chapters/02/index.md
+  - "第三章 常规 SCADA 统计分析功能操作": chapters/03/index.md
+  - "第四章 高级智能分析算法操作": chapters/04/index.md
+  - "第五章 风电机组能效与能耗评估操作": chapters/05/index.md
+  - "第六章 剩余寿命预测（RUL）专项操作": chapters/06/index.md
+  - "第七章 诊断报告自动导出与管理操作": chapters/07/index.md

@@ -50,6 +50,34 @@ def main() -> None:
     ]
     app_js = (DIST / "app.js").read_text(encoding="utf-8")
     index_html = (DIST / "index.html").read_text(encoding="utf-8")
+    styles_css = (DIST / "styles.css").read_text(encoding="utf-8")
+    expected_books = {
+        "research-skills", "shangguigu-python", "python-beginner-to-master",
+        "shangguigu-data-analysis", "python-data-analysis", "deep-learning",
+        "zhou-machine-learning", "robot-textbook", "wind-energy", "风能技术",
+        "wind-turbine-theory-and-design",
+        "Utilizing-large-scale-foundation-models-for",
+        "smart-analysis-system-user-manual",
+        "smart-analysis-system-technical-docs",
+    }
+    chapter_docs = [doc for doc in catalog["docs"] if doc.get("chapterNumber")]
+    badly_numbered_chapters = [
+        doc["title"]
+        for doc in chapter_docs
+        if not re.match(rf"^第{doc['chapterNumber']}章(?:\s|$)", doc["title"])
+    ]
+    badly_numbered_headings = []
+    for doc in chapter_docs:
+        payload = json.loads(
+            (DIST / "data" / "docs" / f"{doc['id']}.json").read_text(encoding="utf-8")
+        )
+        for heading in payload["headings"]:
+            if heading["level"] in {2, 3, 4} and not re.match(
+                rf"^{doc['chapterNumber']}\.\d+", heading["text"]
+            ):
+                badly_numbered_headings.append(
+                    f"{doc['bookSlug']}:{doc['relPath']}:{heading['text']}"
+                )
     report = {
         "stats": catalog["stats"],
         "data_titles": [doc["title"] for doc in data_docs],
@@ -73,8 +101,17 @@ def main() -> None:
             "电子书阅读器" in path.read_text(encoding="utf-8")
             for path in (DIST / "index.html", DIST / "app.js")
         ),
-        "song_font_in_css": bool(
-            re.search("宋体|SimSun", (DIST / "styles.css").read_text(encoding="utf-8"), re.I)
+        "song_font_in_css": bool(re.search("宋体|SimSun", styles_css, re.I)),
+        "book_slugs": {book["slug"] for book in catalog["books"]},
+        "chapter_documents": len(chapter_docs),
+        "badly_numbered_chapters": badly_numbered_chapters,
+        "badly_numbered_headings": badly_numbered_headings,
+        "blue_visual_system": all(
+            token in styles_css for token in ("#2563eb", "#eaf2ff", "#172554")
+        ),
+        "card_home_and_book_overview": all(
+            token in app_js
+            for token in ("homeCategoryNav", "renderBookOverview", "book-overview-directory")
         ),
         "code_sidebar_navigation": all(
             token in app_js
@@ -123,14 +160,17 @@ def main() -> None:
         ),
         "fresh_data_fetches": app_js.count('cache: "no-store"'),
     }
-    assert report["stats"] == {"books": 6, "docs": 89, "code": 182}
+    assert report["stats"] == {"books": 14, "docs": 219, "code": 182}
     assert report["wind_documents"] == 51
     assert report["robot_documents"] == 18
     assert report["robot_videos"] == 3
     assert report["robot_images"] == 7
     assert report["robot_tables"] == 64
     assert report["robot_formulas"] == 172
-    assert report["categories"] == ["python", "data-analysis", "robotics", "wind-energy"]
+    assert report["categories"] == [
+        "research-skills", "python", "data-analysis", "artificial-intelligence",
+        "robotics", "wind-energy", "engineering-systems",
+    ]
     assert report["data_tables"] == 49
     assert report["data_code_blocks"] >= 250
     assert report["data_images"] == 68
@@ -139,6 +179,12 @@ def main() -> None:
     assert report["missing_downloads"] == 0
     assert not report["old_positioning_in_ui"]
     assert not report["song_font_in_css"]
+    assert report["book_slugs"] == expected_books
+    assert report["chapter_documents"] >= 100
+    assert not report["badly_numbered_chapters"]
+    assert not report["badly_numbered_headings"]
+    assert report["blue_visual_system"]
+    assert report["card_home_and_book_overview"]
     assert report["code_sidebar_navigation"]
     assert report["python_video_chapters"] == 14
     assert report["python_video_links"] == 172
@@ -153,6 +199,7 @@ def main() -> None:
     assert report["nonblocking_math_loader"]
     assert report["versioned_static_assets"]
     assert report["fresh_data_fetches"] == 3
+    report["book_slugs"] = sorted(report["book_slugs"])
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 

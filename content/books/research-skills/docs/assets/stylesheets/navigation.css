@@ -1,0 +1,43 @@
+/* 一级目录：独立首页和可折叠栏目保持同一视觉层级 */
+.md-sidebar--primary
+.md-nav--primary
+> .md-nav__list
+> .md-nav__item
+> .md-nav__link {
+  margin-top: 0.35rem;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--md-primary-fg-color);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* 一级栏目展开后的内容略微缩进 */
+.md-sidebar--primary
+.md-nav--primary
+> .md-nav__list
+> .md-nav__item--nested
+> .md-nav
+> .md-nav__list {
+  padding-left: 0.35rem;
+}
+
+/* 二级专题作为下一层可折叠标题，和具体教程形成清晰层级 */
+.md-sidebar--primary
+.md-nav--primary
+> .md-nav__list
+> .md-nav__item--nested
+> .md-nav
+> .md-nav__list
+> .md-nav__item--nested
+> .md-nav__link {
+  margin-top: 0.18rem;
+  font-weight: 650;
+  color: var(--md-default-fg-color);
+}
+
+/* 左上角站点标识只用于识别网站，不再表现为可点击控件 */
+.md-header__brand-mark {
+  cursor: default;
+}

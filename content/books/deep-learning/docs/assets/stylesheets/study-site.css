@@ -1,0 +1,19 @@
+:root { --study-radius:.75rem; }
+.md-grid { max-width: 76rem; }
+.md-content__inner { max-width:50rem; }
+.study-hero { margin:.4rem 0 1.8rem; padding:clamp(1.5rem,5vw,2.8rem); border-radius:var(--study-radius); color:#fff; box-shadow:0 .8rem 2rem #0002; }
+.study-hero--dl { background:radial-gradient(circle at 86% 14%,#ffffff20 0 5rem,transparent 5.1rem),linear-gradient(135deg,#34226b,#6246a8 60%,#8b5cf6); }
+.study-hero--ml { background:radial-gradient(circle at 86% 14%,#ffffff20 0 5rem,transparent 5.1rem),linear-gradient(135deg,#172554,#1e40af 58%,#2563eb); }
+.study-hero--python { background:radial-gradient(circle at 86% 14%,#ffffff25 0 5rem,transparent 5.1rem),linear-gradient(135deg,#633806,#b45309 58%,#d97706); }
+.study-hero__eyebrow { color:#ffffffb8; font-size:.6rem; font-weight:800; letter-spacing:.14em; }
+.study-hero h1 { margin:.45rem 0 .6rem; color:#fff; font-size:clamp(1.7rem,5vw,2.55rem); }
+.study-hero p { max-width:42rem; color:#ffffffe3; }.study-hero .md-button { margin:.35rem .35rem 0 0; border-color:#ffffffb8; color:#fff; }.study-hero .md-button--primary { color:#182033; background:#fff; }
+.resource-strip,.principle-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; margin:1rem 0 1.8rem; }
+.resource-strip { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.resource-strip>div,.principle-grid>div { margin:0; padding:1rem; border:1px solid var(--md-default-fg-color--lightest); border-radius:.55rem; background:color-mix(in srgb,var(--md-default-bg-color) 96%,var(--md-primary-fg-color) 4%); }
+.resource-strip p,.principle-grid p { margin:.3rem 0 0; color:var(--md-default-fg-color--light); font-size:.68rem; line-height:1.6; }
+.resource-strip a { display:block; margin-top:.4rem; font-weight:700; }
+.principle-grid strong { display:block; margin-bottom:.3rem; color:var(--md-primary-fg-color); }
+table:not([class]) { font-size:.7rem; }.task-list-control input { cursor:pointer; }
+@media(max-width:44rem){.resource-strip,.principle-grid{grid-template-columns:1fr}.study-hero{border-radius:.55rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}

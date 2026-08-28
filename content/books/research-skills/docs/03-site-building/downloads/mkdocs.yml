@@ -1,0 +1,94 @@
+site_name: "科研知识库"
+site_description: "面向研究生的科研工具与实践教程"
+site_author: "课题组"
+
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+
+theme:
+  name: material
+  language: zh
+  icon:
+    logo: material/school
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: green
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: green
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  features:
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+      separator: '[\s\-\.]+'
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
+  - def_list
+  - toc:
+      permalink: true
+      permalink_title: "复制本节链接"
+      toc_depth: 2-4
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.tilde
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_css:
+  - assets/stylesheets/navigation.css
+  - assets/stylesheets/homepage.css
+
+extra_javascript:
+  - assets/javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - "课程首页": index.md
+  - "1. 文献检索与管理":
+      - "本章介绍": 01-literature/index.md
+      - "1.1 文献检索工具": 01-literature/search.md
+  - "2. 网站制作教程":
+      - "教程总览": 02-site-building/index.md
+      - "2.1 目录与配置": 02-site-building/structure.md
+  - "📚 Library": library/index.md
+
+copyright: 'Copyright &copy; 2026 课题组 · Made by <a href="https://github.com/Nitgomare" target="_blank" rel="noopener">Mike Zheng</a>'
