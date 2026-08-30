@@ -277,28 +277,28 @@
     elements.navTree.innerHTML = trees || '<p class="empty-nav">没有匹配的代码或数据。</p>';
   }
 
-  function renderCourseCard(book, index) {
-    return '<a class="course-card" href="#/book/' + encodeURIComponent(book.slug) + '">' +
-      '<div class="course-index">0' + (index + 1) + '</div><div class="course-copy"><p class="book-tags">' +
-      book.tags.map(escapeHtml).join(" · ") + '</p><h3>' + escapeHtml(book.title) + '</h3><p>' +
-      escapeHtml(book.description) + '</p><div class="course-facts"><span>' + book.docCount + ' 节教程</span><span>' +
-      book.codeCount + ' 个代码/数据文件</span></div><strong>进入学习路径 →</strong></div></a>';
+  function courseMonogram(book) {
+    var labels = {
+      "research-skills": "研", python: "Py", "data-analysis": "DA",
+      "artificial-intelligence": "AI", robotics: "RB", "wind-energy": "WE",
+      "engineering-systems": "EN"
+    };
+    return labels[book.category] || book.title.slice(0, 2);
   }
 
   function renderResourceCard(book) {
-    var cover = book.cover ? '<img src="' + book.cover + '" alt="' + escapeHtml(book.title) + '封面" loading="lazy">' :
-      '<div class="cover-fallback"><span>' + escapeHtml(book.title.slice(0, 2)) + '</span></div>';
     var target = book.firstDocId ? "#/doc/" + book.firstDocId : "#/resources/" + encodeURIComponent(book.slug);
-    return '<a class="book-card" href="' + target + '"><div class="book-cover">' + cover +
-      '</div><div class="book-copy"><p class="book-tags">' + book.tags.map(escapeHtml).join(" · ") + '</p><h3>' +
-      escapeHtml(book.title) + '</h3><p class="book-author">' + escapeHtml(book.author) + '</p><p>' +
-      escapeHtml(book.description) + '</p><div class="book-facts"><span>' + book.docCount + ' 个章节</span>' +
-      (book.codeCount ? '<span>' + book.codeCount + ' 个代码/数据文件</span>' : '') +
-      '</div><span class="book-open">开始阅读 <b>→</b></span></div></a>';
+    return '<article class="book-card"><a class="book-main" href="' + target + '">' +
+      '<span class="book-icon" aria-hidden="true">' + escapeHtml(courseMonogram(book)) + '</span>' +
+      '<span class="book-copy"><span class="book-tags">' + book.tags.map(escapeHtml).join(" · ") + '</span><strong>' +
+      escapeHtml(book.title) + '</strong><span class="book-description">' + escapeHtml(book.description) +
+      '</span></span></a><footer><span>' + book.docCount + ' 个章节' +
+      (book.codeCount ? ' · ' + book.codeCount + ' 个代码/数据' : '') + '</span><a href="#/resources/' +
+      encodeURIComponent(book.slug) + '">课程资源 →</a></footer></article>';
   }
 
-  function renderCategory(category) {
-    var books = state.catalog.books.filter(function (book) { return book.category === category.id; });
+  function renderCategory(category, availableBooks) {
+    var books = availableBooks.filter(function (book) { return book.category === category.id; });
     if (!books.length) return "";
     return '<section class="shelf-section category-section" aria-labelledby="category-' + escapeHtml(category.id) + '">' +
       '<div class="section-heading"><div><p class="eyebrow">' + escapeHtml(category.eyebrow || category.id) +
@@ -307,7 +307,30 @@
       books.map(renderResourceCard).join("") + '</div></section>';
   }
 
-  function renderLibrary() {
+  function renderHomeSidebar(categories, books, query) {
+    elements.sidebarTitle.textContent = "知识分类";
+    elements.searchLabel.textContent = "搜索课程";
+    elements.searchInput.placeholder = "课程、教材或关键词";
+    elements.catalogStatus.textContent = query ? "找到 " + books.length + " 套内容" :
+      categories.length + " 个分类 · " + state.catalog.stats.books + " 套内容";
+    var links = '<a class="home-nav-link is-active" href="#/">' +
+      '<span class="home-nav-icon">⌂</span><strong>首页</strong></a>';
+    links += categories.map(function (category) {
+      var count = books.filter(function (book) { return book.category === category.id; }).length;
+      if (query && !count) return "";
+      return '<a class="home-nav-link home-category-link" href="#category-' + escapeHtml(category.id) +
+        '" data-home-category="' + escapeHtml(category.id) + '"><span class="home-nav-icon">' +
+        escapeHtml(category.title.slice(0, 1)) + '</span><strong>' + escapeHtml(category.title) +
+        '</strong><small>' + count + '</small></a>';
+    }).join("");
+    elements.navTree.innerHTML = links;
+  }
+
+  function renderLibrary(query) {
+    if (typeof query === "undefined") {
+      query = "";
+      elements.searchInput.value = "";
+    }
     hideViews();
     state.activeBook = null;
     state.activeDoc = null;
@@ -316,18 +339,28 @@
     elements.libraryHome.hidden = false;
     document.body.classList.add("home-view");
     var categories = state.catalog.site.categories || [];
+    var needle = normalize(query);
+    var books = state.catalog.books.filter(function (book) {
+      return !needle || normalize([
+        book.title, book.author, book.description, (book.tags || []).join(" ")
+      ].join(" ")).indexOf(needle) !== -1;
+    });
     elements.heroTitle.textContent = state.catalog.site.title;
     elements.heroSubtitle.textContent = state.catalog.site.subtitle;
     elements.homeStats.innerHTML = '<span><strong>' + categories.length + '</strong> 个知识领域</span><span><strong>' +
       state.catalog.stats.books + '</strong> 套课程与教材</span><span><strong>' +
       state.catalog.stats.docs + '</strong> 个章节</span><span><strong>' + state.catalog.stats.code + '</strong> 个代码与数据文件</span>';
     elements.homeCategoryNav.innerHTML = categories.map(function (category) {
-      var count = state.catalog.books.filter(function (book) { return book.category === category.id; }).length;
-      return '<a href="#category-' + escapeHtml(category.id) + '"><span>' + escapeHtml(category.title) +
+      var count = books.filter(function (book) { return book.category === category.id; }).length;
+      if (needle && !count) return "";
+      return '<a class="home-category-link" href="#category-' + escapeHtml(category.id) +
+        '" data-home-category="' + escapeHtml(category.id) + '"><span>' + escapeHtml(category.title) +
         '</span><small>' + count + '</small></a>';
     }).join("");
-    elements.categorySections.innerHTML = categories.map(renderCategory).join("");
-    renderSidebar(null, elements.searchInput.value);
+    elements.categorySections.innerHTML = books.length ? categories.map(function (category) {
+      return renderCategory(category, books);
+    }).join("") : '<div class="empty-home"><strong>没有找到匹配的课程</strong><p>请尝试课程名称、作者或关键词。</p></div>';
+    renderHomeSidebar(categories, books, needle);
     document.title = state.catalog.site.title;
   }
 
@@ -645,6 +678,7 @@
     elements.closeNav.addEventListener("click", closeSidebar);
     elements.scrim.addEventListener("click", closeSidebar);
     elements.searchInput.addEventListener("input", function () {
+      if (!elements.libraryHome.hidden) { renderLibrary(this.value); return; }
       var codeMode = !elements.codeLibrary.hidden || !elements.codeView.hidden;
       if (codeMode) renderCodeSidebar(state.activeCode, this.value);
       else renderSidebar(state.activeBook, this.value);
@@ -663,6 +697,14 @@
       if (details && details.open) loadInlineCode(details);
     }, true);
     document.addEventListener("click", function (event) {
+      var categoryLink = event.target.closest && event.target.closest(".home-category-link");
+      if (categoryLink) {
+        event.preventDefault();
+        var category = document.getElementById("category-" + categoryLink.dataset.homeCategory);
+        if (category) category.scrollIntoView({ behavior: "smooth", block: "start" });
+        closeSidebar();
+        return;
+      }
       var button = event.target.closest && event.target.closest(".code-copy-button");
       if (!button) return;
       var code = button.closest(".code-block").querySelector("pre > code");
