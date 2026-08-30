@@ -130,6 +130,16 @@ def main() -> None:
                 for token in (".code-block", ".code-toolbar", ".code-copy-button")
             )
         ),
+        "home_card_layout": (
+            all(
+                token in app_js
+                for token in ("renderHomeSidebar", "home-category-link", "courseMonogram", "课程资源 →")
+            )
+            and all(
+                token in styles_css
+                for token in ("grid-template-columns: repeat(3", ".book-icon", ".book-card footer", ".home-nav-link")
+            )
+        ),
         "light_code_style": (
             "background: #eef1f5" in styles_css and "border-top: 2px solid #60a5fa" in styles_css
         ),
@@ -175,6 +185,7 @@ def main() -> None:
     assert report["direct_book_entry"]
     assert report["inline_code"]
     assert report["code_copy_controls"]
+    assert report["home_card_layout"]
     assert report["light_code_style"]
     assert not report["song_font_in_css"]
     assert report["nonblocking_math_loader"]
