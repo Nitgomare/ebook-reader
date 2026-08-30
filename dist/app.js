@@ -24,6 +24,82 @@
     return { notebook: "Notebook", dataset: "数据", source: "源码", text: "文本" }[file.kind] || "文件";
   }
 
+  function sourcePreview(content, language) {
+    return '<pre class="source-preview" data-language="' + escapeHtml(language || "text") + '"><code>' +
+      escapeHtml(content || "") + '</code></pre>';
+  }
+
+  function codeLanguage(pre, code) {
+    var raw = pre.dataset.language || "";
+    if (!raw) {
+      Array.prototype.some.call(code.classList, function (name) {
+        if (name.indexOf("language-") !== 0) return false;
+        raw = name.slice(9);
+        return true;
+      });
+    }
+    var key = normalize(raw);
+    var labels = {
+      py: "Python", python: "Python", js: "JavaScript", javascript: "JavaScript",
+      ts: "TypeScript", typescript: "TypeScript", json: "JSON", csv: "CSV",
+      md: "Markdown", markdown: "Markdown", html: "HTML", css: "CSS",
+      sh: "Shell", bash: "Shell", shell: "Shell", powershell: "PowerShell",
+      ps1: "PowerShell", sql: "SQL", yaml: "YAML", yml: "YAML",
+      xml: "XML", text: "代码", plaintext: "代码", txt: "代码"
+    };
+    return labels[key] || (raw ? raw.toUpperCase() : "代码");
+  }
+
+  function enhanceCodeBlocks(root) {
+    var blocks = root.querySelectorAll ? root.querySelectorAll("pre > code") : [];
+    Array.prototype.forEach.call(blocks, function (code) {
+      var pre = code.parentElement;
+      if (!pre || pre.parentElement.classList.contains("code-block")) return;
+      var wrapper = document.createElement("div");
+      wrapper.className = "code-block";
+      wrapper.innerHTML = '<div class="code-toolbar"><span class="code-language">' +
+        escapeHtml(codeLanguage(pre, code)) +
+        '</span><button class="code-copy-button" type="button" aria-label="复制代码">' +
+        '<span class="copy-icon" aria-hidden="true">⧉</span><span class="copy-label">复制</span></button></div>';
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+    });
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    return new Promise(function (resolve, reject) {
+      var helper = document.createElement("textarea");
+      helper.value = text;
+      helper.setAttribute("readonly", "");
+      helper.style.position = "fixed";
+      helper.style.opacity = "0";
+      document.body.appendChild(helper);
+      helper.select();
+      try {
+        if (!document.execCommand("copy")) throw new Error("浏览器不支持自动复制");
+        resolve();
+      } catch (error) {
+        reject(error);
+      } finally {
+        helper.remove();
+      }
+    });
+  }
+
+  function setCopyState(button, label, className) {
+    window.clearTimeout(button.copyResetTimer);
+    button.querySelector(".copy-label").textContent = label;
+    button.classList.remove("is-copied", "is-error");
+    if (className) button.classList.add(className);
+    button.setAttribute("aria-label", label === "复制" ? "复制代码" : label);
+    if (label !== "复制") {
+      button.copyResetTimer = window.setTimeout(function () {
+        setCopyState(button, "复制", "");
+      }, 1800);
+    }
+  }
+
   function cacheElements() {
     ["siteTitle", "topMeta", "sidebar", "sidebarTitle", "searchLabel", "searchInput", "catalogStatus", "navTree",
       "libraryHome", "heroTitle", "heroSubtitle", "homeStats", "categorySections",
@@ -272,7 +348,8 @@
       if (!response.ok) throw new Error("代码加载失败");
       var file = await response.json();
       target.innerHTML = file.kind === "notebook" ? renderNotebook(file.cells) :
-        '<pre class="source-preview"><code>' + escapeHtml(file.content || "") + '</code></pre>';
+        sourcePreview(file.content, file.language);
+      enhanceCodeBlocks(target);
     } catch (error) {
       target.innerHTML = '<p class="error-copy">' + escapeHtml(error.message) + '</p>';
     }
@@ -445,6 +522,7 @@
     elements.breadcrumb.textContent = book.title + " / " + (doc.sections.join(" / ") || "课程内容");
     elements.docTitle.textContent = doc.title;
     elements.article.innerHTML = doc.html;
+    enhanceCodeBlocks(elements.article);
     renderRelatedCode(doc.codeFiles);
     var outlineHeadings = (doc.headings || []).slice();
     if ((doc.codeFiles || []).length) {
@@ -494,7 +572,8 @@
           '</span><div class="notebook-markdown">' + (cell.html || "") + '</div></section>';
       }
       var output = cell.output ? '<div class="cell-output"><span>输出</span><pre>' + escapeHtml(cell.output) + '</pre></div>' : "";
-      return '<section class="notebook-cell"><span class="cell-label">In [' + cell.index + ']</span><pre><code>' +
+      return '<section class="notebook-cell"><span class="cell-label">In [' + cell.index +
+        ']</span><pre data-language="python"><code>' +
         escapeHtml(cell.source) + '</code></pre>' + output + '</section>';
     }).join("");
   }
@@ -519,7 +598,8 @@
     elements.codeMeta.innerHTML = '<span>' + escapeHtml(file.path) + '</span><span>' + formatBytes(file.size) +
       '</span><span>' + escapeHtml(file.language) + '</span>' + (file.truncated ? '<strong>网页仅显示前 256 KB</strong>' : '');
     elements.codeContent.innerHTML = file.kind === "notebook" ? renderNotebook(file.cells) :
-      '<pre class="source-preview"><code>' + escapeHtml(file.content || "") + '</code></pre>';
+      sourcePreview(file.content, file.language);
+    enhanceCodeBlocks(elements.codeContent);
     renderCodeSidebar(file, elements.searchInput.value);
     document.title = file.name + " · " + state.catalog.site.title;
     window.scrollTo(0, 0);
@@ -582,6 +662,17 @@
       var details = event.target.closest && event.target.closest("details.inline-code");
       if (details && details.open) loadInlineCode(details);
     }, true);
+    document.addEventListener("click", function (event) {
+      var button = event.target.closest && event.target.closest(".code-copy-button");
+      if (!button) return;
+      var code = button.closest(".code-block").querySelector("pre > code");
+      if (!code) return;
+      copyText(code.textContent).then(function () {
+        setCopyState(button, "已复制", "is-copied");
+      }).catch(function () {
+        setCopyState(button, "复制失败", "is-error");
+      });
+    });
   }
 
   function showError(error) {
