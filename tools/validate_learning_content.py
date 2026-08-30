@@ -117,6 +117,19 @@ def main() -> None:
         "inline_code": all(
             token in app_js for token in ("inlineCodeItem", "loadInlineCode", "展开代码")
         ),
+        "code_copy_controls": (
+            all(
+                token in app_js
+                for token in (
+                    "enhanceCodeBlocks", "code-copy-button", "navigator.clipboard",
+                    'document.execCommand("copy")', "已复制",
+                )
+            )
+            and all(
+                token in styles_css
+                for token in (".code-block", ".code-toolbar", ".code-copy-button")
+            )
+        ),
         "light_code_style": (
             "background: #eef1f5" in styles_css and "border-top: 2px solid #60a5fa" in styles_css
         ),
@@ -161,6 +174,7 @@ def main() -> None:
     assert report["minimal_navigation"]
     assert report["direct_book_entry"]
     assert report["inline_code"]
+    assert report["code_copy_controls"]
     assert report["light_code_style"]
     assert not report["song_font_in_css"]
     assert report["nonblocking_math_loader"]
