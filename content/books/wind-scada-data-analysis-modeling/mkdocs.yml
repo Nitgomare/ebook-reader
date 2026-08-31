@@ -1,0 +1,24 @@
+site_name: 风电SCADA数据分析与智能建模
+
+docs_dir: docs
+
+nav:
+  - "前置内容": 00-front-matter.md
+  - "第1章 绪 论": chapters/01/index.md
+  - "第2章 风电机组SCADA数据预处理": chapters/02/index.md
+  - "第3章 风电机组风功率参数特征SCADA数据分析": chapters/03/index.md
+  - "第4章 风电机组变桨行为特性SCADA数据分析": chapters/04/index.md
+  - "第5章 风电机组偏航行为特性SCADA数据分析": chapters/05/index.md
+  - "第6章 风电机组运行状态SCADA数据分析": chapters/06/index.md
+  - "第7章 风电机组SCADA数据智能识别": chapters/07/index.md
+  - "第8章 风电机组SCADA运行参数智能预测": chapters/08/index.md
+  - "第9章 风电机组SCADA运行状态智能监测": chapters/09/index.md
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      toc_depth: "2-4"

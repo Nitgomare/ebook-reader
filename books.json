@@ -223,6 +223,15 @@
       "type": "reference"
     },
     {
+      "slug": "wind-scada-data-analysis-modeling",
+      "title": "风电SCADA数据分析与智能建模",
+      "author": "戴巨川、赵前程、刘德顺",
+      "description": "围绕风电机组SCADA数据，系统介绍数据预处理、参数与行为特征分析、运行状态评估、智能识别、参数预测和健康监测。",
+      "tags": ["风电SCADA", "数据分析", "智能建模"],
+      "category": "wind-energy",
+      "type": "reference"
+    },
+    {
       "slug": "smart-analysis-system-user-manual",
       "title": "智能分析与装备寿命预测系统使用手册",
       "author": "项目技术文档",

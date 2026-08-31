@@ -163,6 +163,10 @@ button, input { font: inherit; }
 .article p { margin: 1rem 0; }
 .article a { color: var(--accent); text-decoration: underline; text-underline-offset: .18em; }
 .article img, .article video { display: block; max-width: 100%; height: auto; margin: 1.5rem auto; border-radius: .35rem; }
+.article img.formula-inline { display: inline-block; width: auto; max-width: min(100%, 32rem); margin: 0 .12em; border-radius: 0; vertical-align: -.18em; }
+.article img.formula-display { display: block; max-width: 100%; margin: 1rem auto; border-radius: 0; }
+.article .image-row { display: flex; align-items: flex-start; justify-content: center; gap: 1rem; margin: 1.25rem 0; }
+.article .image-row img { min-width: 0; max-width: calc(50% - .5rem); margin: 0; }
 .table-wrapper { width: 100%; margin: 1.5rem 0; overflow-x: auto; }
 .article table { width: max-content; min-width: 100%; border-spacing: 0; border-collapse: collapse; font-family: var(--font-sans); font-size: .82rem; line-height: 1.5; }
 .article th, .article td { max-width: 30rem; padding: .55rem .8rem; border: 1px solid var(--line); text-align: left; vertical-align: top; }

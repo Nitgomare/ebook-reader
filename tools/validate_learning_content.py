@@ -37,6 +37,7 @@ def main() -> None:
         "shangguigu-data-analysis", "python-data-analysis", "deep-learning",
         "zhou-machine-learning", "robot-textbook", "wind-energy", "风能技术",
         "wind-turbine-theory-and-design", "Utilizing-large-scale-foundation-models-for",
+        "wind-scada-data-analysis-modeling",
         "smart-analysis-system-user-manual", "smart-analysis-system-technical-docs",
     }
 
@@ -58,6 +59,19 @@ def main() -> None:
     )
     machine_learning_images = list(
         (DIST / "files" / "zhou-machine-learning" / "images").glob("*.jpg")
+    )
+    scada_book = next(
+        book for book in catalog["books"]
+        if book["slug"] == "wind-scada-data-analysis-modeling"
+    )
+    scada_payloads = [
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "wind-scada-data-analysis-modeling"
+    ]
+    scada_image_urls = re.findall(
+        r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
+        "".join(payload["html"] for payload in scada_payloads),
+        re.I,
     )
     report = {
         "stats": catalog["stats"],
@@ -114,7 +128,22 @@ def main() -> None:
             and "课程首页" not in app_js
             and "课程安排" not in app_js
         ),
-        "direct_book_entry": "book.firstDocId ? \"#/doc/\"" in app_js,
+        "resource_first_entry": (
+            'var target = "#/resources/" + encodeURIComponent(book.slug)' in app_js
+            and 'location.replace("#/resources/" + encodeURIComponent(book.slug))' in app_js
+            and 'book.firstDocId ? "#/doc/"' not in app_js
+        ),
+        "scada_book": {
+            "documents": scada_book["docCount"],
+            "chapters": scada_book["chapterCount"],
+            "images": len(list((DIST / "files" / scada_book["slug"] / "images").iterdir())),
+            "missing_images": sum(
+                not (DIST / Path(unquote(url))).is_file() for url in scada_image_urls
+            ),
+            "legacy_vector_images": sum(
+                Path(url).suffix.lower() in {".wmf", ".emf"} for url in scada_image_urls
+            ),
+        },
         "inline_code": all(
             token in app_js for token in ("inlineCodeItem", "loadInlineCode", "展开代码")
         ),
@@ -172,7 +201,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 14, "docs": 200, "code": 221}
+    assert report["stats"] == {"books": 15, "docs": 210, "code": 221}
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
         "robotics", "wind-energy", "engineering-systems",
@@ -183,7 +212,7 @@ def main() -> None:
     assert report["embedded_media"] == 0
     assert not report["badly_numbered_chapters"]
     assert not report["badly_numbered_headings"]
-    assert report["books_with_resource_model"] == 14
+    assert report["books_with_resource_model"] == 15
     assert report["resource_downloads"] >= 13
     assert report["missing_resource_downloads"] == 0
     assert report["external_resource_links"] >= 6
@@ -199,7 +228,14 @@ def main() -> None:
     }
     assert report["resource_book_info"]
     assert report["minimal_navigation"]
-    assert report["direct_book_entry"]
+    assert report["resource_first_entry"]
+    assert report["scada_book"] == {
+        "documents": 10,
+        "chapters": 9,
+        "images": 1514,
+        "missing_images": 0,
+        "legacy_vector_images": 0,
+    }
     assert report["inline_code"]
     assert report["code_copy_controls"]
     assert report["home_card_layout"]

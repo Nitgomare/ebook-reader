@@ -48,8 +48,8 @@
     ]
   },
   "stats": {
-    "books": 14,
-    "docs": 200,
+    "books": 15,
+    "docs": 210,
     "code": 221
   },
   "books": [
@@ -571,6 +571,26 @@
       "docCount": 16,
       "firstDocId": "4189779b66be0b56",
       "chapterCount": 6,
+      "codeCount": 0,
+      "resources": []
+    },
+    {
+      "slug": "wind-scada-data-analysis-modeling",
+      "title": "风电SCADA数据分析与智能建模",
+      "author": "戴巨川、赵前程、刘德顺",
+      "description": "围绕风电机组SCADA数据，系统介绍数据预处理、参数与行为特征分析、运行状态评估、智能识别、参数预测和健康监测。",
+      "tags": [
+        "风电SCADA",
+        "数据分析",
+        "智能建模"
+      ],
+      "category": "wind-energy",
+      "type": "reference",
+      "sourceSiteName": "风电SCADA数据分析与智能建模",
+      "cover": "",
+      "docCount": 10,
+      "firstDocId": "54976067e1e3669b",
+      "chapterCount": 9,
       "codeCount": 0,
       "resources": []
     },
@@ -3622,6 +3642,155 @@
       "excerpt": "[1] Wang Y, Wang R, Tanaka K, Ciais P, Penuelas J, Balkanski Y, Sardans J, Hauglustaine D, Liu W, Xing X, Li J, Xu S, Xiong Y, Yang R, Cao J",
       "order": 16,
       "previousId": "c73975660733cab9",
+      "nextId": "",
+      "codeFiles": []
+    },
+    {
+      "id": "3c7968604873af86",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "00-front-matter.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本书以风电SCADA数据分析与智能建模为主线，系统梳理总结作者团队在风电SCADA数据特点、数据分析模式、数据预处理和风电机组运行参数特征、行为规律、性能预测和状态监测等方面取得的研究成果。全书共9章，第1章介绍风电SCADA系统数据特点、分析模式、研究现状与面临的挑问题，第2章",
+      "order": 1,
+      "previousId": "",
+      "nextId": "54976067e1e3669b",
+      "codeFiles": []
+    },
+    {
+      "id": "54976067e1e3669b",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "chapters/01/index.md",
+      "title": "第1章 绪 论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "人类对气候变化越来越关注和焦虑，推动了风电等绿色可再生能源技术发展；而风电技术的快速发展，又吸引了学术界越来越浓厚的兴趣。风电SCADA数据蕴藏着关于风电机组全寿命周期的信息、知识和价值，基于风电SCADA数据的决策与优化已经被普遍认为是提升风电机组性能最为有效的途径，风电SCA",
+      "chapterNumber": 1,
+      "order": 2,
+      "previousId": "3c7968604873af86",
+      "nextId": "86295e0f0c10daf9",
+      "codeFiles": []
+    },
+    {
+      "id": "86295e0f0c10daf9",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "chapters/02/index.md",
+      "title": "第2章 风电机组SCADA数据预处理",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "数据预处理是指在数据挖掘分析之前对数据进行的一些预备性处理。一般现实数据都存在不完整、不一致问题，而导致无法直接进行数据挖掘，或者数据挖掘分析结论不正确。数据预处理工作贯穿于数据挖掘分析全过程，因而必须基于数据理解、结合数据探究、数据挖掘目标要求来展开。数据预处理虽然只是数据挖掘",
+      "chapterNumber": 2,
+      "order": 3,
+      "previousId": "54976067e1e3669b",
+      "nextId": "7f2589bdc2b8fa32",
+      "codeFiles": []
+    },
+    {
+      "id": "7f2589bdc2b8fa32",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "chapters/03/index.md",
+      "title": "第3章 风电机组风功率参数特征SCADA数据分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风电SCADA数据是风电机组运行过程中空间与物理参数、状态变化的反映，因而从数据中揭示这些参数和状态变化规律，对于风电机组设计、控制、运维具有重要意义。风能(风速、风向)和输出功率无疑是风电SCADA数据中最为关键的参数。从系统论角度而言，一方面，风能代表输入，功率代表输出，没有",
+      "chapterNumber": 3,
+      "order": 4,
+      "previousId": "86295e0f0c10daf9",
+      "nextId": "c5c73967d792d362",
+      "codeFiles": []
+    },
+    {
+      "id": "c5c73967d792d362",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "chapters/04/index.md",
+      "title": "第4章 风电机组变桨行为特性SCADA数据分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "变桨距系统是风电机组实现变桨距控制，获得稳定的电能输出和安全运行的重要保证之一，在2009年以后世界上新安装的大型风电机组中，95%以上采用变桨距控制方式。有关统计表明，变桨距系统故障在陆地风电场风电机组所有故障中占比高达40%以上，变桨距系统故障导致的停机时间在风电机组总停机时",
+      "chapterNumber": 4,
+      "order": 5,
+      "previousId": "7f2589bdc2b8fa32",
+      "nextId": "ea2910f8d9df80e1",
+      "codeFiles": []
+    },
+    {
+      "id": "ea2910f8d9df80e1",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "chapters/05/index.md",
+      "title": "第5章 风电机组偏航行为特性SCADA数据分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "偏航系统是风电机组的重要组成部分，其主要功能是调整风轮机舱迎风角以便有效地跟踪风向。一方面，偏航系统性能是影响风电机组发电效率的关键因素，如果偏航系统能够准确、快速地响应任何风向的变化，有利于提高风电机组发电效率。另一方面，偏航系统对风电机组的寿命和安全产生重要影响，偏航系统频繁",
+      "chapterNumber": 5,
+      "order": 6,
+      "previousId": "c5c73967d792d362",
+      "nextId": "1ade1a31760d3e8a",
+      "codeFiles": []
+    },
+    {
+      "id": "1ade1a31760d3e8a",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "chapters/06/index.md",
+      "title": "第6章 风电机组运行状态SCADA数据分析",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风电机组运行状态直接影响风电场发电量和维护成本，因而风电机组状态识别、故障诊断与预警一直是风电机组领域研究重点。特别是，随着近年来世界风电产业迅速发展，风电机组单机容量不断增加，装机区位也在向更加偏远陆地、海洋地区发展，维护困难引发风电场运行效率降低、运行成本增加越来越明显。基于",
+      "chapterNumber": 6,
+      "order": 7,
+      "previousId": "ea2910f8d9df80e1",
+      "nextId": "48d1fc76eae8acc0",
+      "codeFiles": []
+    },
+    {
+      "id": "48d1fc76eae8acc0",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "chapters/07/index.md",
+      "title": "第7章 风电机组SCADA数据智能识别",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "聚类、分类是数据挖掘的重要任务，也是两类常用的智能算法与模型。前者是自动寻找并建立分组规则，通过判断数据样本之间的相似性，把相似数据样本划分在一个簇中，属于无监督的智能学习方法；后者是从数据样本中选出已经分好类的训练集，并建立一个分类模型，再将该模型用于对没有分类的数据样本进行分",
+      "chapterNumber": 7,
+      "order": 8,
+      "previousId": "1ade1a31760d3e8a",
+      "nextId": "e4c8ee88e2b77966",
+      "codeFiles": []
+    },
+    {
+      "id": "e4c8ee88e2b77966",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "chapters/08/index.md",
+      "title": "第8章 风电机组SCADA运行参数智能预测",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "预测是数据挖掘的重要任务之一，预测分析属于有监督的智能学习方法。风电机组SCADA数据是时间序列数据，根据运行状态参数的历史数据预测其未来变化，这对于风电场运行调度，风电机组运行状态控制、预警与维护都具有重要意义。在风电机组SCADA运行参数数据中，转速、功率等参数是需要随着环境",
+      "chapterNumber": 8,
+      "order": 9,
+      "previousId": "48d1fc76eae8acc0",
+      "nextId": "ac7116b8fd48fcd3",
+      "codeFiles": []
+    },
+    {
+      "id": "ac7116b8fd48fcd3",
+      "bookSlug": "wind-scada-data-analysis-modeling",
+      "relPath": "chapters/09/index.md",
+      "title": "第9章 风电机组SCADA运行状态智能监测",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "风电机组运行状态监测是其预测性维护的前提基础，直接影响风电机组发电效率和运行维护成本，而基于SCADA数据进行风电机组状态监测又是目前最为简便和经济的途径。基于风电SCADA数据对风电机组及其部件的运行状态进行智能建模与监测引起了广泛关注<sup>\\[1-6\\]</sup>，从风",
+      "chapterNumber": 9,
+      "order": 10,
+      "previousId": "e4c8ee88e2b77966",
       "nextId": "",
       "codeFiles": []
     },
