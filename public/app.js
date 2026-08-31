@@ -287,7 +287,7 @@
   }
 
   function renderResourceCard(book) {
-    var target = book.firstDocId ? "#/doc/" + book.firstDocId : "#/resources/" + encodeURIComponent(book.slug);
+    var target = "#/resources/" + encodeURIComponent(book.slug);
     return '<article class="book-card"><a class="book-main" href="' + target + '">' +
       '<span class="book-icon" aria-hidden="true">' + escapeHtml(courseMonogram(book)) + '</span>' +
       '<span class="book-copy"><span class="book-tags">' + book.tags.map(escapeHtml).join(" · ") + '</span><strong>' +
@@ -661,8 +661,7 @@
     if (bookMatch) {
       var book = bookBySlug(decodeURIComponent(bookMatch[1]));
       if (book) {
-        if (book.firstDocId) { location.replace("#/doc/" + book.firstDocId); return; }
-        renderResources(book); return;
+        location.replace("#/resources/" + encodeURIComponent(book.slug)); return;
       }
     }
     renderLibrary();
