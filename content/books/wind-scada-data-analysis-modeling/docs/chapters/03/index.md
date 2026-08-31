@@ -1,1475 +1,743 @@
-# 第3章 风电机组风功率参数特征SCADA数据分析
+# 第3章 风电机组风功率参数特征 SCADA 数据分析
 
-风电SCADA数据是风电机组运行过程中空间与物理参数、状态变化的反映，因而从数据中揭示这些参数和状态变化规律，对于风电机组设计、控制、运维具有重要意义。风能(风速、风向)和输出功率无疑是风电SCADA数据中最为关键的参数。从系统论角度而言，一方面，风能代表输入，功率代表输出，没有输入，就不可能有输出，风能决定输出电能；另一方面，功率代表输出，反映了风电机组系统的运行状态，输出电能直接决定了风电机组生产效益。而且，所谓天有不测风云，风具有间歇性、随机性大，风速和风向不稳定的特点。所以，风电机组的风速、风向和功率等参数一直是风电SCADA数据参数特征研究的重点。事实上，包括风速、风向的风能资源分析评估是先于风电场的风电机组运行<sup>\[1,2\]</sup>，但是，风电SCADA数据是现场风电机组实际地理位置与环境中采集获取的，最小采样周期可达1秒甚至更短，可以揭示风电机组运行参数更微观、更精准的时空变化规律。为了表征风能及其输出电能的波动性和随机性特征，尝试了众多的概率模型，通过参数估计和非参数估计来描述风电场的波动和随机特性<sup>\[3-11\]</sup>；有的采用混合分布模型，通过调整混合的模型数量和模型参数，可以得到符合不同概率分布的大量数据的更好的拟合效果<sup>\[12,13\]</sup>。
+风电 SCADA 数据是风电机组运行过程中空间与物理参数、状态变化的反映, 因而从数据中揭示这些参数和状态变化规律, 对于风电机组设计、控制、运维具有重要意义。风能(风速、风向)和输出功率无疑是风电 SCADA 数据中最为关键的参数。从系统论角度而言, 一方面，风能代表输入，功率代表输出，没有输入，就不可能有输出，风能决定输出电能；另一方面, 功率代表输出, 反映了风电机组系统的运行状态, 输出电能直接决定了风电机组生产效益。而且，所谓天有不测风云，风具有间歇性、随机性大，风速和风向不稳定的特点。 所以, 风电机组的风速、风向和功率等参数一直是风电 SCADA 数据参数特征研究的重点。 事实上,包括风速、风向的风能资源分析评估是先于风电场的风电机组运行 ${}^{\left\lbrack  1,2\right\rbrack  }$ ,但是,风电 SCADA 数据是现场风电机组实际地理位置与环境中采集获取的, 最小采样周期可达 1 秒甚至更短, 可以揭示风电机组运行参数更微观、更精准的时空变化规律。为了表征风能及其输出电能的波动性和随机性特征, 尝试了众多的概率模型, 通过参数估计和非参数估计来描述风电场的波动和随机特性 ${}^{\left\lbrack  3 - {11}\right\rbrack  }$ ; 有的采用混合分布模型,通过调整混合的模型数量和模型参数,可以得到符合不同概率分布的大量数据的更好的拟合效果 ${}^{\left\lbrack  {12},{13}\right\rbrack  }$ 。
 
-本章应用SCADA数据，基于风电机组能量转换机制，采用核密度方法统计分析山地风电场风电机组风速、风向、功率、风能利用系数分布特征及其影响规律<sup>\[14-18\]</sup>。
+本章应用 SCADA 数据, 基于风电机组能量转换机制, 采用核密度方法统计分析山地风电场风电机组风速、风向、功率、风能利用系数分布特征及其影响规律[14-18]。
 
-## 3.1 山地风电场风资源特性SCADA数据分析
+## 3.1 山地风电场风资源特性 SCADA 数据分析
 
 ### 3.1.1 山地风电场
 
-风资源不仅与地区气候条件有关，而且还与其地形地貌有关。选取位于中国南方亚热带气候区风电场进行研究，风电场地形整体由东南向西北倾斜，东部高于西部，南部高于北部。该地区从东北部到西南部的几座主要山脉，阻挡并提升了北部的冷空气，是西南部暖流的屏障。因此，该地区除具有亚热带湿润气候的主要特征外，还具有明显的局部小气候特征。近年来的观测数据表明，最冷的月份是1月，平均气温3℃，最低气温-8℃。最热的月份是七月，平均气温28℃，最高气温37℃。随着春季到来，3月和4月的气温迅速上升。夏季过后，气温下降；从9月到12月，每月气温下降超过5℃。这种温度变化反映了大陆性气候的特征。根据开放气象资料显示，从2011年1月1日至2016年9月1日，该地区风向为南风的时间有836天，北风834天，非持续风向175天，东风1天，西风9天，其他风向157天。显然，南风和北风占主导地位，占比达到83%。风力小于3级的时间有1471天；风力等于3级的时间有418天；风力为3级和4级之间的时间有72天；风力为大于4级和小于6级的时间有6天。然而，应该注意的是，这些数据是一般的气象观测结果，而不是作用在风电机组上的实际风力。山地风场由于局部气流差异较大，而且风电机组通常安装在山顶上，风电机组之间存在明显差异。
+风资源不仅与地区气候条件有关，而且还与其地形地貌有关。选取位于中国南方亚热带气候区风电场进行研究，风电场地形整体由东南向西北倾斜，东部高于西部，南部高于北部。 该地区从东北部到西南部的几座主要山脉，阻挡并提升了北部的冷空气，是西南部暖流的屏障。因此，该地区除具有亚热带湿润气候的主要特征外，还具有明显的局部小气候特征。近年来的观测数据表明，最冷的月份是 1 月，平均气温 ${3}^{ \circ  }\mathrm{C}$ ，最低气温 $- {8}^{ \circ  }\mathrm{C}$ 。最热的月份是七月, 平均气温 28°C, 最高气温 37°C。随着春季到来, 3 月和 4 月的气温迅速上升。夏季过后，气温下降；从 9 月到 12 月，每月气温下降超过 5°C。这种温度变化反映了大陆性气候的特征。根据开放气象资料显示, 从 2011 年 1 月 1 日至 2016 年 9 月 1 日, 该地区风向为南风的时间有 836 天, 北风 834 天, 非持续风向 175 天, 东风 1 天, 西风 9 天, 其他风向 157 天。显然, 南风和北风占主导地位, 占比达到 83%。风力小于 3 级的时间有 1471 天; 风力等于 3 级的时间有 418 天；风力为 3 级和 4 级之间的时间有 72 天；风力为大于 4 级和小于 6 级的时间有 6 天。然而, 应该注意的是, 这些数据是一般的气象观测结果, 而不是作用在风电机组上的实际风力。山地风场由于局部气流差异较大, 而且风电机组通常安装在山顶上, 风电机组之间存在明显差异。
 
-选取这个山地风电场中四台风电机组收集的风速数据。其中，1号风电机组（WT1）与2号风电机组（WT2）相距约为5900m；2号风电机组（WT2）与3号风电机组（WT3）相距约为6100m；3号风电机组（WT3）与4号风电机组（WT4）相距约为3300m。四台风电机组的海拔高度依次为450m、440m、400m和500m。所有选定的风电机组都是同一2 MW机型，其结构完全相同。在这座山地风场中，每台风电机组都安装了SCADA系统并集成于风电场控制室。因此，可以监测实时运行参数，包括安装在距地面80米高度机舱上的风速仪测得的风速数据。
+选取这个山地风电场中四台风电机组收集的风速数据。其中, 1 号风电机组 (WT1) 与 2 号风电机组 (WT2) 相距约为 5900m; 2 号风电机组 (WT2) 与 3 号风电机组 (WT3) 相距约为 6100m; 3 号风电机组 (WT3) 与 4 号风电机组 (WT4) 相距约为 3300m。四台风电机组的海拔高度依次为 ${450}\mathrm{\;m}\text{ 、 }{440}\mathrm{\;m}\text{ 、 }{400}\mathrm{\;m}$ 和 ${500}\mathrm{\;m}$ 。所有选定的风电机组都是同一 $2\mathrm{{MW}}$ 机型, 其结构完全相同。在这座山地风场中, 每台风电机组都安装了 SCADA 系统并集成于风电场控制室。因此, 可以监测实时运行参数, 包括安装在距地面 80 米高度机舱上的风速仪测得的风速数据。
 
-图3.1给出了其中一台风电机组(WT4)2.5h内从SCADA系统获取的风速和发电机输出功率数据。从图3.1中可以看出，输出功率随风速的变化而相应变化。由于四台风电机组分布在不同的位置，风信号能够充分反映风资源的局部特征。图3.2给出了基于风电机组SCADA数据的风电场风资源特性分析评估过程<sup>\[14\]</sup>。
+图 3.1 给出了其中一台风电机组(WT4)2.5h 内从 SCADA 系统获取的风速和发电机输出功率数据。从图 3.1 中可以看出, 输出功率随风速的变化而相应变化。由于四台风电机组分布在不同的位置, 风信号能够充分反映风资源的局部特征。图 3.2 给出了基于风电机组 SCADA 数据的风电场风资源特性分析评估过程[14]。
 
-<img class="content-image" src="../../images/p1-image241.png" style="width:1452px" alt="">
+![68_244_773_1154_372_0.jpg](../../images/p1-68_244_773_1154_372_0.jpg)
 
-\(a\) 风速和功率随时间变化趋势 (b) 功率与风速三次方关系
+图 3.1 风电机组 SCADA 数据中的风速与功率(WT4)
 
-图3.1 风电机组SCADA数据中的风速与功率(WT4)
+![68_244_1203_1158_714_0.jpg](../../images/p1-68_244_1203_1158_714_0.jpg)
 
-<img class="content-image" src="../../images/p1-image242.png" style="width:710px" alt="">
-
-图3.2 风资源特性分析
+图 3.2 风资源特性分析
 
 ### 3.1.2 评估指标与流程
 
-不同地区气候条件和地形地貌孕育着不同的风资源。为了对风电场的风资源特征进行可靠、全面的研究，除SCADA数据外，合理的制定评估指标非常重要，这要求评估指标的选择与研究目标的相适应。从风电机组的风能利用角度，采用以下五个评估指标进行分析评估：风速的频率分布，平均风速，风速波动；风向的频率分布，风向波动，如图3.3所示。
+不同地区气候条件和地形地貌孕育着不同的风资源。为了对风电场的风资源特征进行可靠、全面的研究，除 SCADA 数据外，合理的制定评估指标非常重要，这要求评估指标的选择与研究目标的相适应。从风电机组的风能利用角度, 采用以下五个评估指标进行分析评估: 风速的频率分布, 平均风速, 风速波动; 风向的频率分布, 风向波动, 如图 3.3 所示。
 
-<img class="content-image" src="../../images/p1-image243.png" style="width:641px" alt="">
+![69_423_338_860_610_0.jpg](../../images/p1-69_423_338_860_610_0.jpg)
 
-图3.3 评估指标与流程
+图 3.3 评估指标与流程
 
-从评估指标来看，风速的频率分布(风速的概率密度函数)是评价风资源的一个重要且最常用的标准，它能反映被测地点风速的一致性。风速的频率分布较窄，说明一致性较好；相反，就意味着风速变化很大。分析风资源的基本特征，通常需要年度分析和月度分析，这需要很长时间的样本数据。除了风速和平均风速的频率分布外，短期风速波动也很显著，主要集中在风扰动分量的大小上。对于风电机组来说，较大的风速波动意味着较大的疲劳负荷。在风向方面，只要稳定，对风电机组没有明显的影响。因此，与长期的风向频率分布相比，短期的风向波动更为重要。在现代大型风电机组中，偏航误差不仅会影响风能捕获，还会影响偏航机构的疲劳寿命，因为当偏航角大于设定的临界值时，偏航机构将不得不调整风轮转轴方向。
+从评估指标来看, 风速的频率分布(风速的概率密度函数)是评价风资源的一个重要且最常用的标准, 它能反映被测地点风速的一致性。风速的频率分布较窄, 说明一致性较好; 相反，就意味着风速变化很大。分析风资源的基本特征，通常需要年度分析和月度分析，这需要很长时间的样本数据。除了风速和平均风速的频率分布外, 短期风速波动也很显著, 主要集中在风扰动分量的大小上。对于风电机组来说, 较大的风速波动意味着较大的疲劳负荷。 在风向方面, 只要稳定, 对风电机组没有明显的影响。因此, 与长期的风向频率分布相比, 短期的风向波动更为重要。在现代大型风电机组中, 偏航误差不仅会影响风能捕获, 还会影响偏航机构的疲劳寿命，因为当偏航角大于设定的临界值时，偏航机构将不得不调整风轮转轴方向。
 
-在风资源评估中，在对上述评价标准进行物理意义分析后，有必要了解风电场数据的基本情况。由SCADA系统中的风数据（风速和风向）通过固定在机舱上的风速计和风向标进行测量，采样频率为1Hz。由于传感系统误差，SCADA数据集中存在一些空值，以及一些大于或小于相邻数据2倍的异常值。同时，对于不同的评估标准，所需的SCADA数据采样长度也可能不同。例如，年度风速频率分布研究需要一整年的SCADA数据，而风速波动研究仅需要一小时的SCADA数据即可。通常，提取的原始SCADA数据不能直接用于数据计算，应有效剔除异常值和填充空值。此外，由于采样频率为1Hz，风速年频率分布的数据量太大，分析耗时，因此取10分钟平均值。选择10分钟平均值还有如下两个原因：一是所研究的SCADA数据每10分钟有一个数据包，因此处理10分钟数据比较方便；二是在实际风电机组控制中，10分钟也是常见的控制观测时间单元，如偏航控制。所以，在开展风资源分析评估计算之前，进行数据预处理非常重要，合理的数据预处理方法能够保证结果的可靠性、准确性和可识别性。通过这些准备工作，数据计算和结果分析才可靠、准确。
+在风资源评估中, 在对上述评价标准进行物理意义分析后, 有必要了解风电场数据的基本情况。由 SCADA 系统中的风数据 (风速和风向) 通过固定在机舱上的风速计和风向标进行测量, 采样频率为 1Hz。由于传感系统误差, SCADA 数据集中存在一些空值, 以及一些大于或小于相邻数据 2 倍的异常值。同时, 对于不同的评估标准, 所需的 SCADA 数据采样长度也可能不同。例如, 年度风速频率分布研究需要一整年的 SCADA 数据, 而风速波动研究仅需要一小时的 SCADA 数据即可。通常, 提取的原始 SCADA 数据不能直接用于数据计算,应有效剔除异常值和填充空值。此外,由于采样频率为 $1\mathrm{\;{Hz}}$ ,风速年频率分布的数据量太大, 分析耗时, 因此取 10 分钟平均值。选择 10 分钟平均值还有如下两个原因: 一是所研究的 SCADA 数据每 10 分钟有一个数据包, 因此处理 10 分钟数据比较方便; 二是在实际风电机组控制中, 10 分钟也是常见的控制观测时间单元, 如偏航控制。所以, 在开展风资源分析评估计算之前, 进行数据预处理非常重要, 合理的数据预处理方法能够保证结果的可靠性、准确性和可识别性。通过这些准备工作, 数据计算和结果分析才可靠、准确。
 
 ### 3.1.3 风速特征研究
 
-1\. 风速分布
+#### 3.1.3.1 风速分布
 
-为准确描述不同区域、不同风电场的风速分布，采用不同的概率密度函数进行研究，概括起来主要分为两类：一是具有显式表达式的密度函数，包括Weibull分布、Beta分布、正态分布、Gamma分布、Erlang分布、逆高斯分布、Rayleigh分布等，以及这些典型分布的混合型，由于这些分布具有确定的函数形式，一般只需求得少数几个参数就可以获得风速概率密度函数，这类方法也称之为参数估计方法，该方法需要有关于分布函数的先验知识；二是没有显式表达式的密度函数，包括最大熵原理MEP分布、核密度函数KDE分布等，其密度函数由一系列函数构成，通过样本计算出一系列相关系数来拟合各种数据样本分布，这类方法又称之为非参数估计法，该方法无需有关分布函数的先验知识。显然，前者计算简单明了，但有时精度不高；后者精度高，但计算较为复杂。为了获得高精度分布函数，这里采用核密度函数KDE估计法来描述风电场风速分布。
+为准确描述不同区域、不同风电场的风速分布, 采用不同的概率密度函数进行研究, 概括起来主要分为两类:一是具有显式表达式的密度函数，包括 Weibull 分布、Beta 分布、正态分布、Gamma 分布、Erlang 分布、逆高斯分布、Rayleigh 分布等, 以及这些典型分布的混合型, 由于这些分布具有确定的函数形式, 一般只需求得少数几个参数就可以获得风速概率密度函数，这类方法也称之为参数估计方法，该方法需要有关于分布函数的先验知识；二是没有显式表达式的密度函数，包括最大熵原理 MEP 分布、核密度函数 KDE 分布等，其密度函数由一系列函数构成, 通过样本计算出一系列相关系数来拟合各种数据样本分布, 这类方法又称之为非参数估计法, 该方法无需有关分布函数的先验知识。显然, 前者计算简单明了, 但有时精度不高; 后者精度高, 但计算较为复杂。为了获得高精度分布函数, 这里采用核密度函数 KDE 估计法来描述风电场风速分布。
 
-对SCADA数据进行预处理后，应用核密度估计法，得到四台风电机组的年度风速频率分布，如图3.4所示，图中包括四台风电机组的KDE曲线和频率直方图。不同风电机组的KDE曲线差异明显，WT1、WT2、WT3和WT4最大概率密度相对应的风速分别为2.2m/s、1.9m/s、4.3m/s和6.6m/s。WT1的概率密度最大为0.224，这意味着它的风速频率分布比其他的更集中。虽然WT2具有最小的概率密度波峰，但它有两个概率密度波峰，这意味着它的密度分布比其他风电机组的分布更均匀。相对而言，WT3和WT4之间的差异较小。从风力发电的角度来看，WT3和WT4的风速频率分布优于WT1和WT2。
+对 SCADA 数据进行预处理后, 应用核密度估计法, 得到四台风电机组的年度风速频率分布, 如图 3.4 所示, 图中包括四台风电机组的 KDE 曲线和频率直方图。不同风电机组的 KDE 曲线差异明显, WT1、WT2、WT3 和 WT4 最大概率密度相对应的风速分别为 2.2m/s、 1.9m/s、4.3m/s 和 6.6m/s。WT1 的概率密度最大为 0.224，这意味着它的风速频率分布比其他的更集中。虽然 WT2 具有最小的概率密度波峰, 但它有两个概率密度波峰, 这意味着它的密度分布比其他风电机组的分布更均匀。相对而言, WT3 和 WT4 之间的差异较小。从风力发电的角度来看, WT3 和 WT4 的风速频率分布优于 WT1 和 WT2。
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image244.png" style="width:699px" alt=""><img class="content-image" src="../../images/p1-image245.png" style="width:695px" alt=""></div>
+![70_268_1283_1119_635_0.jpg](../../images/p1-70_268_1283_1119_635_0.jpg)
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image246.png" style="width:702px" alt=""> <img class="content-image" src="../../images/p1-image247.png" style="width:685px" alt=""></div>
+图 3.4 年度风速频率分布
 
-图3.4 年度风速频率分布
+风速的季节频率分布 KDE 曲线, 如图 3.5 所示。图 3.5(a)-(d)中的密度分布曲线分别对应于 WT1、WT2、WT3 和 WT4。春季数据来自 2 月、 3 月和 4 月；夏季数据来自 5 月、 6 月和 7 月; 秋季数据来自 8 月、9 月和 10 月; 冬季数据来自 11 月、12 月和 1 月。不同季节的概率密度曲线也不同, 在不同的风电机组上也不同。对于 WT1 和 WT2, 与概率密度峰值相对应的最大风速出现在冬季, 而 WT3 出现在春季, WT4 出现在夏季。对于 WT1, 夏季风速的频率分布较为集中,其对应概率密度峰值的风速为 ${2.3}\mathrm{\;m}/\mathrm{s}$ ,冬季为 $5\mathrm{\;m}/\mathrm{s}$ ; 春季和秋季的概率密度分布相似。对于 WT2，春季、夏季和秋季的概率密度峰值对应的风速在 $2\mathrm{\;m}/\mathrm{s}$ 附近基本一致; 冬季的第一个概率密度峰值对应的风速也在 $2\mathrm{\;m}/\mathrm{s}$ 左右,第二个概率密度峰值对应的风速在 ${7.5}\mathrm{m}/\mathrm{s}$ 左右；而且春季、夏季和秋季的概率密度曲线非常相似。对于 WT3, 除秋季外，概率密度分布很接近，概率密度波峰也相对平坦；就风力发电而言，秋季风速的频率分布似乎不如其他季节，因为低风速在分布曲线上的概率更大。对于 WT4，四个季节的概率密度分布差异相对较小，其概率密度峰值对应的最小风速为秋季的 ${4.8}\mathrm{\;m}/\mathrm{s}$ ，对应的最大风速为夏季的 ${7.4}\mathrm{\;m}/\mathrm{s}$ ,相差 ${2.6}\mathrm{\;m}/\mathrm{s}$ 。
 
-风速的季节频率分布KDE曲线，如图3.5所示。图3.5(a)~(d)中的密度分布曲线分别对应于WT1、WT2、WT3和WT4。春季数据来自2月、3月和4月；夏季数据来自5月、6月和7月；秋季数据来自8月、9月和10月；冬季数据来自11月、12月和1月。不同季节的概率密度曲线也不同，在不同的风电机组上也不同。对于WT1和WT2，与概率密度峰值相对应的最大风速出现在冬季，而WT3出现在春季，WT4出现在夏季。对于WT1，夏季风速的频率分布较为集中，其对应概率密度峰值的风速为2.3m/s，冬季为5m/s；春季和秋季的概率密度分布相似。对于WT2，春季、夏季和秋季的概率密度峰值对应的风速在2m/s附近基本一致；冬季的第一个概率密度峰值对应的风速也在2m/s左右，第二个概率密度峰值对应的风速在7.5m/s左右；而且春季、夏季和秋季的概率密度曲线非常相似。对于WT3，除秋季外，概率密度分布很接近，概率密度波峰也相对平坦；就风力发电而言，秋季风速的频率分布似乎不如其他季节，因为低风速在分布曲线上的概率更大。对于WT4，四个季节的概率密度分布差异相对较小，其概率密度峰值对应的最小风速为秋季的4.8m/s，对应的最大风速为夏季的7.4m/s，相差2.6m/s。
+![71_492_685_686_1240_0.jpg](../../images/p1-71_492_685_686_1240_0.jpg)
 
-<img class="content-image" src="../../images/p1-image248.png" style="width:694px" alt="">
+![72_493_197_661_406_0.jpg](../../images/p1-72_493_197_661_406_0.jpg)
 
-(a)WT1
+图 3.5 不同季度风速频率分布
 
-<img class="content-image" src="../../images/p1-image249.png" style="width:697px" alt="">
+#### 3.1.3.2 平均风速
 
-(b)WT2
+对年度、季度、月度以及日度的平均风速进行计算。为了量化风速的变化量, SCADA 风速数据进行处理,分别求得平均风速及其标准差。设 $X = \left\{  {x}_{i, i = 1,2,\ldots , n}\right\}$ 为风速数据样本,那么, 平均风速和标准差分别为
 
-<img class="content-image" src="../../images/p1-image250.png" style="width:698px" alt="">
+$$
+\bar{x} = \frac{1}{n}\mathop{\sum }\limits_{{i = 1}}^{n}{x}_{i} \tag{3.1}
+$$
 
-(c)WT3
+$$
+\widehat{\sigma } = {\left\lbrack  \frac{1}{n - 1}\mathop{\sum }\limits_{{i = 1}}^{n}{\left( {x}_{i} - \bar{x}\right) }^{2}\right\rbrack  }^{\frac{1}{2}} \tag{3.2}
+$$
 
-<img class="content-image" src="../../images/p1-image251.png" style="width:697px" alt="">
+根据某年度 SCADA 数据，年度、季度、月度的平均风速及其标准差见表 3.1。
 
-(d)WT4
+表 3.1 年度、季度、月度的平均风速及其标准差
 
-图3.5 不同季度风速频率分布
+<table><tr><td colspan="18">均值/(m/s)</td></tr><tr><td rowspan="2">型号</td><td rowspan="2">年</td><td colspan="16">季节月份</td></tr><tr><td>春</td><td>夏</td><td>秋</td><td>冬</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr><tr><td>WT1</td><td>3.8</td><td>3.9</td><td>3.2</td><td>3.6</td><td>4.4</td><td>4.6</td><td>4.0</td><td>3.9</td><td>3.8</td><td>3.1</td><td>2.8</td><td>3.8</td><td>3.2</td><td>3.5</td><td>4.1</td><td>3.8</td><td>4.9</td></tr><tr><td>WT2</td><td>5.1</td><td>5.2</td><td>4.2</td><td>4.7</td><td>6.1</td><td>6.3</td><td>5.5</td><td>5.3</td><td>5.0</td><td>3.9</td><td>4.0</td><td>4.8</td><td>4.0</td><td>4.4</td><td>5.6</td><td>5.1</td><td>6.9</td></tr><tr><td>WT3</td><td>5.4</td><td>6.1</td><td>5.4</td><td>4.5</td><td>5.6</td><td>5.8</td><td>5.4</td><td>5.8</td><td>7.2</td><td>5.5</td><td>5.4</td><td>5.2</td><td>4.3</td><td>4.4</td><td>4.9</td><td>5.0</td><td>6.0</td></tr><tr><td>WT4</td><td>5.6</td><td>6.0</td><td>6.0</td><td>5.0</td><td>5.3</td><td>5.7</td><td>5.6</td><td>6.1</td><td>6.2</td><td>5.5</td><td>6.6</td><td>5.9</td><td>4.9</td><td>4.8</td><td>5.1</td><td>4.8</td><td>5.6</td></tr><tr><td colspan="18">标准差/(m/s)</td></tr><tr><td rowspan="2">型号</td><td rowspan="2">年</td><td></td><td></td><td>季节</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>月份</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>春</td><td>夏</td><td>秋</td><td>冬</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr><tr><td>WT1</td><td>1.9</td><td>2.0</td><td>1.7</td><td>1.8</td><td>2.0</td><td>2.0</td><td>2.1</td><td>1.9</td><td>1.9</td><td>1.6</td><td>1.1</td><td>2.0</td><td>1.6</td><td>1.8</td><td>1.9</td><td>2.2</td><td>1.9</td></tr><tr><td>WT2</td><td>2.9</td><td>3.0</td><td>2.5</td><td>2.8</td><td>3.0</td><td>2.9</td><td>3.3</td><td>3.1</td><td>2.9</td><td>2.5</td><td>2.2</td><td>2.7</td><td>2.5</td><td>2.7</td><td>2.9</td><td>3.1</td><td>2.7</td></tr><tr><td>WT3</td><td>2.3</td><td>2.6</td><td>2.3</td><td>2.0</td><td>2.2</td><td>2.0</td><td>2.4</td><td>2.1</td><td>2.9</td><td>2.8</td><td>2.0</td><td>2.1</td><td>1.8</td><td>2.0</td><td>2.0</td><td>2.3</td><td>2.1</td></tr><tr><td>WT4</td><td>2.4</td><td>2.7</td><td>2.4</td><td>2.0</td><td>2.1</td><td>2.0</td><td>2.7</td><td>2.5</td><td>3.0</td><td>2.7</td><td>2.3</td><td>2.0</td><td>2.0</td><td>2.1</td><td>1.8</td><td>2.2</td><td>1.8</td></tr></table>
 
-2\. 平均风速
+从表可见, WT1 机组的年平均风速明显小于其他机组, 并且其标准偏差也较小。不同季节平均风速的最大差值为 WT2 的 1.9m/s，最小差值为 WT1 的 0.5m/s。对于 WT1 和 WT2， 春季和冬季的标准差大于夏季和秋季。对于 WT3 和 WT4，春季和夏季的标准差大于秋季和冬季。WT1 和 WT2 的最大平均风速出现在 12 月, WT3 和 WT4 的最大平均风速分布出现在 4 月和 6 月。不同月份平均风速的极差分别为 ${2.1}\mathrm{\;m}/\mathrm{s}\text{ 、 }3\mathrm{\;m}/\mathrm{s}\text{ 、 }{2.9}\mathrm{\;m}/\mathrm{s}$ 和 ${1.8}\mathrm{\;m}/\mathrm{s}\left( {\mathrm{{WT}}1\text{ 、 }\mathrm{{WT}}2}\right.$ 、 WT3 和 WT4)。WT1 的最大标准偏差出现在 11 月, WT2 的最大标准偏差出现在 2 月, WT3 和 WT4 的最大标准偏差出现在 4 月。
 
-对年度、季度、月度以及日度的平均风速进行计算。为了量化风速的变化量，SCADA风速数据进行处理，分别求得平均风速及其标准差。设*X*={*x<sub>i,i=</sub>*<sub>1,2,...,*n*</sub>}为风速数据样本，那么，平均风速和标准差分别为
+为了研究四台风电机组的日平均风速和小时平均风速, 仅使用选定月份的数据。筛选条件包括两个:平均风速最相似，标准差最相似。换句话说，在所选月份期间，四台风电机组之间的平均值的差值与标准差的差值最小。通过比较, 9 月和 11 月较为合适, 以下选择用 9 月份的数据,其中平均差约为 ${1.3}\mathrm{\;m}/\mathrm{s}$ ,标准差约为 ${0.9}\mathrm{\;m}/\mathrm{s}$ 。
 
-<img class="formula-display" src="../../images/p1-image252.png" style="width:50px" alt=""> (3.1)
+![73_485_297_683_1696_0.jpg](../../images/p1-73_485_297_683_1696_0.jpg)
 
-<img class="formula-display" src="../../images/p1-image253.png" style="width:113px" alt=""> (3.2)
+图 3.6 日平均风速与小时平均风速
 
-根据某年度SCADA数据，年度、季度、月度的平均风速及其标准差见表3.1。
+图 3.6(a)为 9 月份 4 台机组日平均风速,对应标准差见图 3.6(b); 图 3.6(c)为 9 月 1 日至 9 月 3 日三天的小时平均风速, 相应的标准偏差如图 3.6(d)所示。虽然图 3.6(a)中的日平均风速不同, 但四台风电机组的风速趋势具有相似性。一般来说, WT1 的日平均风速比其他风电机组小, 其标准差也较小。从表 3.2 可以看出, WT2 的月平均风速等于 WT3, 但其日变化大于 WT3。WT2 的最大标准偏差出现在 9 月 25 日。根据小时平均风速和标准差, 除了 WT3 的突变点, WT1 和 WT2 比较接近, 然后 WT3 和 WT4 比较接近。如果将这种突变视为异常现象而忽略不计，则图中 WT4 具有最大平均风速与标准差。
 
-表3.1 年度、季度、月度的平均风速及其标准差
+#### 3.1.3.3 风速波动
 
-<table>
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 6%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 4%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-</colgroup>
-<thead>
-<tr>
-<th colspan="18" style="text-align: center;">均值/(m/s)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="2" style="text-align: center;">型号</td>
-<td rowspan="2" style="text-align: center;">年</td>
-<td colspan="4" style="text-align: center;">季节</td>
-<td colspan="12" style="text-align: center;">月份</td>
-</tr>
-<tr>
-<td style="text-align: center;">春</td>
-<td style="text-align: center;">夏</td>
-<td style="text-align: center;">秋</td>
-<td style="text-align: center;">冬</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">12</td>
-</tr>
-<tr>
-<td style="text-align: center;">WT1</td>
-<td style="text-align: center;">3.8</td>
-<td style="text-align: center;">3.9</td>
-<td style="text-align: center;">3.2</td>
-<td style="text-align: center;">3.6</td>
-<td style="text-align: center;">4.4</td>
-<td style="text-align: center;">4.6</td>
-<td style="text-align: center;">4.0</td>
-<td style="text-align: center;">3.9</td>
-<td style="text-align: center;">3.8</td>
-<td style="text-align: center;">3.1</td>
-<td style="text-align: center;">2.8</td>
-<td style="text-align: center;">3.8</td>
-<td style="text-align: center;">3.2</td>
-<td style="text-align: center;">3.5</td>
-<td style="text-align: center;">4.1</td>
-<td style="text-align: center;">3.8</td>
-<td style="text-align: center;">4.9</td>
-</tr>
-<tr>
-<td style="text-align: center;">WT2</td>
-<td style="text-align: center;">5.1</td>
-<td style="text-align: center;">5.2</td>
-<td style="text-align: center;">4.2</td>
-<td style="text-align: center;">4.7</td>
-<td style="text-align: center;">6.1</td>
-<td style="text-align: center;">6.3</td>
-<td style="text-align: center;">5.5</td>
-<td style="text-align: center;">5.3</td>
-<td style="text-align: center;">5.0</td>
-<td style="text-align: center;">3.9</td>
-<td style="text-align: center;">4.0</td>
-<td style="text-align: center;">4.8</td>
-<td style="text-align: center;">4.0</td>
-<td style="text-align: center;">4.4</td>
-<td style="text-align: center;">5.6</td>
-<td style="text-align: center;">5.1</td>
-<td style="text-align: center;">6.9</td>
-</tr>
-<tr>
-<td style="text-align: center;">WT3</td>
-<td style="text-align: center;">5.4</td>
-<td style="text-align: center;">6.1</td>
-<td style="text-align: center;">5.4</td>
-<td style="text-align: center;">4.5</td>
-<td style="text-align: center;">5.6</td>
-<td style="text-align: center;">5.8</td>
-<td style="text-align: center;">5.4</td>
-<td style="text-align: center;">5.8</td>
-<td style="text-align: center;">7.2</td>
-<td style="text-align: center;">5.5</td>
-<td style="text-align: center;">5.4</td>
-<td style="text-align: center;">5.2</td>
-<td style="text-align: center;">4.3</td>
-<td style="text-align: center;">4.4</td>
-<td style="text-align: center;">4.9</td>
-<td style="text-align: center;">5.0</td>
-<td style="text-align: center;">6.0</td>
-</tr>
-<tr>
-<td style="text-align: center;">WT4</td>
-<td style="text-align: center;">5.6</td>
-<td style="text-align: center;">6.0</td>
-<td style="text-align: center;">6.0</td>
-<td style="text-align: center;">5.0</td>
-<td style="text-align: center;">5.3</td>
-<td style="text-align: center;">5.7</td>
-<td style="text-align: center;">5.6</td>
-<td style="text-align: center;">6.1</td>
-<td style="text-align: center;">6.2</td>
-<td style="text-align: center;">5.5</td>
-<td style="text-align: center;">6.6</td>
-<td style="text-align: center;">5.9</td>
-<td style="text-align: center;">4.9</td>
-<td style="text-align: center;">4.8</td>
-<td style="text-align: center;">5.1</td>
-<td style="text-align: center;">4.8</td>
-<td style="text-align: center;">5.6</td>
-</tr>
-<tr>
-<td colspan="18" style="text-align: center;">标准差/(m/s)</td>
-</tr>
-<tr>
-<td rowspan="2" style="text-align: center;">型号</td>
-<td rowspan="2" style="text-align: center;">年</td>
-<td colspan="4" style="text-align: center;">季节</td>
-<td colspan="12" style="text-align: center;">月份</td>
-</tr>
-<tr>
-<td style="text-align: center;">春</td>
-<td style="text-align: center;">夏</td>
-<td style="text-align: center;">秋</td>
-<td style="text-align: center;">冬</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">12</td>
-</tr>
-<tr>
-<td style="text-align: center;">WT1</td>
-<td style="text-align: center;">1.9</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">1.7</td>
-<td style="text-align: center;">1.8</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.1</td>
-<td style="text-align: center;">1.9</td>
-<td style="text-align: center;">1.9</td>
-<td style="text-align: center;">1.6</td>
-<td style="text-align: center;">1.1</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">1.6</td>
-<td style="text-align: center;">1.8</td>
-<td style="text-align: center;">1.9</td>
-<td style="text-align: center;">2.2</td>
-<td style="text-align: center;">1.9</td>
-</tr>
-<tr>
-<td style="text-align: center;">WT2</td>
-<td style="text-align: center;">2.9</td>
-<td style="text-align: center;">3.0</td>
-<td style="text-align: center;">2.5</td>
-<td style="text-align: center;">2.8</td>
-<td style="text-align: center;">3.0</td>
-<td style="text-align: center;">2.9</td>
-<td style="text-align: center;">3.3</td>
-<td style="text-align: center;">3.1</td>
-<td style="text-align: center;">2.9</td>
-<td style="text-align: center;">2.5</td>
-<td style="text-align: center;">2.2</td>
-<td style="text-align: center;">2.7</td>
-<td style="text-align: center;">2.5</td>
-<td style="text-align: center;">2.7</td>
-<td style="text-align: center;">2.9</td>
-<td style="text-align: center;">3.1</td>
-<td style="text-align: center;">2.7</td>
-</tr>
-<tr>
-<td style="text-align: center;">WT3</td>
-<td style="text-align: center;">2.3</td>
-<td style="text-align: center;">2.6</td>
-<td style="text-align: center;">2.3</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.2</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.4</td>
-<td style="text-align: center;">2.1</td>
-<td style="text-align: center;">2.9</td>
-<td style="text-align: center;">2.8</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.1</td>
-<td style="text-align: center;">1.8</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.3</td>
-<td style="text-align: center;">2.1</td>
-</tr>
-<tr>
-<td style="text-align: center;">WT4</td>
-<td style="text-align: center;">2.4</td>
-<td style="text-align: center;">2.7</td>
-<td style="text-align: center;">2.4</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.1</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.7</td>
-<td style="text-align: center;">2.5</td>
-<td style="text-align: center;">3.0</td>
-<td style="text-align: center;">2.7</td>
-<td style="text-align: center;">2.3</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.0</td>
-<td style="text-align: center;">2.1</td>
-<td style="text-align: center;">1.8</td>
-<td style="text-align: center;">2.2</td>
-<td style="text-align: center;">1.8</td>
-</tr>
-</tbody>
-</table>
+风速波动描述了采样频率较高(如 1Hz)的实时风速变化特性，也是风资源评估的重要依据, 因为风速波动对风电机组有着重要的影响, 例如会影响风电机组的气动载荷, 进而影响风电机组及其部件疲劳寿命。从另一个角度来看, 风速波动可以看作是对风资源特征的微观评估, 因为采用的样本数据是一秒钟采集一次的 SCADA 数据。为了比较四台风电机组风速波动的同步差, 引入风速波动系数, 其表达式为 ${}^{\left\lbrack  {15}\right\rbrack  }$
 
-从表可见，WT1机组的年平均风速明显小于其他机组，并且其标准偏差也较小。不同季节平均风速的最大差值为WT2的1.9m/s，最小差值为WT1的0.5m/s。对于WT1和WT2，春季和冬季的标准差大于夏季和秋季。对于WT3和WT4，春季和夏季的标准差大于秋季和冬季。WT1和WT2的最大平均风速出现在12月，WT3和WT4的最大平均风速分布出现在4月和6月。不同月份平均风速的极差分别为2.1m/s、3m/s、2.9m/s和1.8 m/s(WT1、WT2、WT3和WT4)。WT1的最大标准偏差出现在11月，WT2的最大标准偏差出现在2月，WT3和WT4的最大标准偏差出现在4月。
+$$
+{w}_{s}\left( i\right)  = \left\{  \begin{matrix} \frac{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {{x}_{k} - {x}_{k + 1}}\right| }{\sqrt{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {{x}_{k}^{2} - {x}_{k + 1}^{2}}\right| }}, & \mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {{x}_{k}^{2} - {x}_{k + 1}^{2}}\right|  \neq  0 \\  0, & \mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {{x}_{k}^{2} - {x}_{k + 1}^{2}}\right|  = 0 \end{matrix}\right. \tag{3.3}
+$$
 
-为了研究四台风电机组的日平均风速和小时平均风速，仅使用选定月份的数据。筛选条件包括两个：平均风速最相似，标准差最相似。换句话说，在所选月份期间，四台风电机组之间的平均值的差值与标准差的差值最小。通过比较，9月和11月较为合适，以下选择用9月份的数据，其中平均差约为1.3m/s，标准差约为0.9m/s。
+式中, ${w}_{s}$ 为风速波动系数; ${x}_{k}$ 为风速数据(每秒采样一次); $i = 1,2,3\ldots$ 。
 
-<img class="content-image" src="../../images/p1-image254.png" style="width:689px" alt="">
+利用式(3.3)可将风速波动系数限制在 $\left\lbrack  {0,1}\right\rbrack$ 的范围内,从而便于评价风速的相对波动。 根据方程的定义，要求数据必须在时间上连续。换句话说，为了保持时间场中数据的连续性， 在研究风速波动时不应消除零值。因此, 提出式(3.4)所示的零值预处理方法。此外, 还应确保所选数据集中不包含连续的两个或多个零值。
 
-\(a\) 每日风速平均值
+$$
+\left\{  \begin{matrix} {x}_{i} = 0, & {x}_{i}\text{ 为空值 } \\  {x}_{i} = \frac{{x}_{i - 1} + {x}_{i + 1}}{2}, & {x}_{i} \geq  2{x}_{i - 1}\& {x}_{i} \geq  2{x}_{i + 1},\text{ 或 }{x}_{i} = 0 \end{matrix}\right. \tag{3.4}
+$$
 
-<img class="content-image" src="../../images/p1-image255.png" style="width:689px" alt="">
+利用 9 月 1 日至 9 月 3 日中第 39 小时的 SCADA 数据分析风速波动, 其中, WT1 和 WT2 的平均风速相同, 为 4.8m/s; WT3 和 WT4 的平均风速接近 8m/s，如图 3.7 所示。图 3.7(a)显示了 WT1 和 WT2 的风速，图 3.7(b)显示了相应的波动系数；图 3.7(c)显示了 WT3 和 WT4 的风速, 图 3.7(d)显示了相应的波动系数。WT2 风速标准差大于 WT1, 如图 3.6(d) 所示; 但是 WT2 风速波动系数小于 WT1, WT1 最大风速波动系数为 0.95, WT2 最大风速波动系数为 0.55 , 如图 3.7(b)。WT3 和 WT4 的平均风速及其标准差都很接近, 但 WT4 的风速波动系数比 WT3 大得多, 如图 3.7(d)。WT1、WT2、WT3 和 WT4 波动系数的方差范围分别为 ${0.36}\text{ 、 }{0.74}\text{ 、 }{0.45}$ 和 0.84,波动系数平均值分别为 0.36、0.49、0.30 和 0.60。显然, 除了频率分布和平均风速外，不同地点的风速波动也有显著差异。
 
-\(b\) 每日风速标准差
+![74_255_1830_1130_303_0.jpg](../../images/p1-74_255_1830_1130_303_0.jpg)
 
-<img class="content-image" src="../../images/p1-image256.png" style="width:692px" alt="">
+![75_241_192_1161_386_0.jpg](../../images/p1-75_241_192_1161_386_0.jpg)
 
-\(c\) 每小时风速平均值
-
-<img class="content-image" src="../../images/p1-image257.png" style="width:697px" alt="">
-
-\(d\) 每小时风速标准差
-
-图3.6 日平均风速与小时平均风速
-
-图3.6(a)为9月份4台机组日平均风速，对应标准差见图3.6(b)；图3.6(c)为9月1日至9月3日三天的小时平均风速，相应的标准偏差如图3.6(d)所示。虽然图3.6(a)中的日平均风速不同，但四台风电机组的风速趋势具有相似性。一般来说，WT1的日平均风速比其他风电机组小，其标准差也较小。从表3.2可以看出，WT2的月平均风速等于WT3，但其日变化大于WT3。WT2的最大标准偏差出现在9月25日。根据小时平均风速和标准差，除了WT3的突变点，WT1和WT2比较接近，然后WT3和WT4比较接近。如果将这种突变视为异常现象而忽略不计，则图中WT4具有最大平均风速与标准差。
-
-3\. 风速波动
-
-风速波动描述了采样频率较高(如1Hz)的实时风速变化特性，也是风资源评估的重要依据，因为风速波动对风电机组有着重要的影响，例如会影响风电机组的气动载荷，进而影响风电机组及其部件疲劳寿命。从另一个角度来看，风速波动可以看作是对风资源特征的微观评估，因为采用的样本数据是一秒钟采集一次的SCADA数据。为了比较四台风电机组风速波动的同步差，引入风速波动系数，其表达式为<sup>\[15\]</sup>
-
-<img class="formula-display" src="../../images/p1-image258.png" style="width:241px" alt=""> (3.3)
-
-式中，<img class="formula-inline" src="../../images/p1-image259.png" style="width:13px" alt="">为风速波动系数；<img class="formula-inline" src="../../images/p1-image260.png" style="width:12px" alt="">为风速数据(每秒采样一次)；*i*=1, 2, 3…。
-
-利用式(3.3)可将风速波动系数限制在\[0, 1\]的范围内，从而便于评价风速的相对波动。根据方程的定义，要求数据必须在时间上连续。换句话说，为了保持时间场中数据的连续性，在研究风速波动时不应消除零值。因此，提出式(3.4)所示的零值预处理方法。此外，还应确保所选数据集中不包含连续的两个或多个零值。
-
-<img class="formula-display" src="../../images/p1-image261.png" style="width:206px" alt=""> (3.4)
-
-利用9月1日至9月3日中第39小时的SCADA数据分析风速波动，其中，WT1和WT2的平均风速相同，为4.8m/s；WT3和WT4的平均风速接近8m/s，如图3.7所示。图3.7(a)显示了WT1和WT2的风速，图3.7(b)显示了相应的波动系数；图3.7(c)显示了WT3和WT4的风速，图3.7(d)显示了相应的波动系数。WT2风速标准差大于WT1，如图3.6(d)所示；但是WT2风速波动系数小于WT1，WT1最大风速波动系数为0.95，WT2最大风速波动系数为0.55，如图3.7(b)。WT3和WT4的平均风速及其标准差都很接近，但WT4的风速波动系数比WT3大得多，如图3.7(d)。WT1、WT2、WT3和WT4波动系数的方差范围分别为0.36、0.74、0.45和0.84，波动系数平均值分别为0.36、0.49、0.30和0.60。显然，除了频率分布和平均风速外，不同地点的风速波动也有显著差异。
-
-<div class="image-row"><img class="content-image" src="../../images/p1-image262.png" style="width:686px" alt=""> <img class="content-image" src="../../images/p1-image263.png" style="width:696px" alt=""></div>
-
-\(a\) WT1和WT2的风速随时间变化趋势 (b) WT1和WT2的风速波动系数
-
-<div class="image-row"><img class="content-image" src="../../images/p1-image264.png" style="width:688px" alt=""> <img class="content-image" src="../../images/p1-image265.png" style="width:696px" alt=""></div>
-
-\(c\) WT3和WT4的风速随时间变化趋势 (d) WT3和WT4的风速波动系数
-
-图3.7 风速波动
+图 3.7 风速波动
 
 ### 3.1.4 风向特征研究
 
-1\. 风向分布
+#### 3.1.4.1 风向分布
 
-在实际风电机组控制中，偏航机构一般以10分钟风向均值作为动作依据。因此，本节使用10分钟平均风向数据来对风向的年、季、月频率分布进行分析。为了获得可靠的10分钟平均值，需要对1Hz采样频率的SCADA数据进行预处理。除空值外，如果一个数据比它的相邻数据大90°，它也被认为是异常数据，这可能是由传感信号误差引起的。此外，0°的风向实际上相当于360°的风向。
+在实际风电机组控制中，偏航机构一般以 10 分钟风向均值作为动作依据。因此，本节使用 10 分钟平均风向数据来对风向的年、季、月频率分布进行分析。为了获得可靠的 10 分钟平均值,需要对 $1\mathrm{\;{Hz}}$ 采样频率的 SCADA 数据进行预处理。除空值外,如果一个数据比它的相邻数据大 ${90}^{ \circ  }$ ,它也被认为是异常数据,这可能是由传感信号误差引起的。此外, ${0}^{ \circ  }$ 的风向实际上相当于 ${360}^{ \circ  }$ 的风向。
 
-设*X*＝{*x<sub>i</sub>*}为风向数据样本，数据采用下述方法进行预处理：
+设 $X = \left\{  {x}_{i}\right\}$ 为风向数据样本,数据采用下述方法进行预处理:
 
-<img class="formula-display" src="../../images/p1-image266.png" style="width:380px" alt="">
+$$
+\left\{  \begin{array}{l} \text{ if }{x}_{i}\text{ is null, }{x}_{i} = 0 \\  \text{ if }\left\{  \begin{array}{l} \left| {{x}_{i} - {x}_{i - 1}}\right|  > {90}^{ \circ  } \\  \left| {{x}_{i} - {x}_{i - 1}}\right|  - {360}^{ \circ  } > {90}^{ \circ  } \\  \left| {{x}_{i} - {x}_{i + 1}}\right|  > {90}^{ \circ  } \\  \left| {{x}_{i} - {x}_{i + 1}}\right|  > {90}^{ \circ  } \end{array}\right. \text{ , then }\left\{  \begin{array}{l} {x}_{i} = {\;\operatorname{mod}\;\left( {\frac{{x}_{i - 1} + {x}_{i + 1}}{2} + {180}^{ \circ  },{360}^{ \circ  }}\right) },\left| {{x}_{i - 1} - {x}_{i + 1}}\right|  > {180}^{ \circ  } \\  {x}_{i} = \frac{{x}_{i - 1} + {x}_{i + 1}}{2}, \\  \end{array}\right. \\  \end{array}\right.
+$$
 
-式中，mod表示取余运算，<img class="formula-inline" src="../../images/p1-image267.png" style="width:144px" alt="">表示<img class="formula-inline" src="../../images/p1-image268.png" style="width:70px" alt="">除以360°后再取余数。
+式中, ${\;\operatorname{mod}\;\text{ 表示取余运算, }\;}{x}_{i} = {\;\operatorname{mod}\;\left( {\frac{{x}_{i - 1} + {x}_{i + 1}}{2} + {180}^{ \circ  },{360}^{ \circ  }}\right) }$ 表示 $\frac{{x}_{i - 1} + {x}_{i + 1}}{2} + {180}^{ \circ  }$ 除以 ${360}^{ \circ  }$ 后再取余数。
 
-在上面处理过程中，为了保持采样数据的连续性，所有空值都设置为零。但是，计算平均值时不应涉及空值。因此，在对风向数据进行预处理后，还应消除所有空值。如果一个风向数据与对应的风速数据同时等于零，则认为是异常数据予以剔除。然后，根据下面的公式，可以得到每10分钟的风向数据：
+在上面处理过程中, 为了保持采样数据的连续性, 所有空值都设置为零。但是, 计算平均值时不应涉及空值。因此, 在对风向数据进行预处理后, 还应消除所有空值。如果一个风向数据与对应的风速数据同时等于零, 则认为是异常数据予以剔除。然后, 根据下面的公式, 可以得到每 10 分钟的风向数据:
 
-<img class="content-image" src="../../images/p1-image269.png" style="width:231px" alt=""> (3.5)
+$$
+\begin{array}{l}  = \frac{1}{x} \cdot  {x}^{2} + {x}^{3} + {x}^{4} + {x}^{5} - {x}^{6} \\  \end{array} \tag{3.5}
+$$
 
-式中，*n*为样本*X<sub>a</sub>*的大小；*m*为样本*X<sub>b</sub>*的大小。
+式中, $n$ 为样本 ${X}_{a}$ 的大小; $m$ 为样本 ${X}_{b}$ 的大小。
 
-风电机组风向频率分布如图3.8(a)~(d)所示，分别对应于WT1、WT2、WT3和WT4。从图中可以看出不同风电机组风向分布的明显差异。对于WT1，观测到一个接近0/360°的主导风向；6°风向具有最大概率分布，0°~10°风向数据占总数据的20%。对于WT2，在310°、290°和140°附近有三个风向分布波峰；尤其是在310°附近的风向分布占主导地位，其中305°到315°之间的风数据占总数据的19%。对于WT3，出现明显的两个主导风向，且几乎分布在两个相反的方向，一个接近40°方向，另一个接近210°方向；205°~215°的风向数据占总数据的22%。对于WT4，也出现了两个方向上的主导风向，即15°附近和175°附近，而175°风向的概率分布最大，其中170°~180°的风向数据占总数据的19%。通过对年平均风向数据的比较，四台风电机组的共同点是都有明显的主导风向；不同点是四台风电机组的主导风向不同。这是因为四台风电机组安装在不同地理位置上，山区风电场的局部风向特征差异明显。
+风电机组风向频率分布如图 ${3.8}\left( \mathrm{a}\right)  \sim  \left( \mathrm{d}\right)$ 所示,分别对应于 WT1、WT2、WT3 和 WT4。 从图中可以看出不同风电机组风向分布的明显差异。对于 WT1,观测到一个接近 $0/{360}^{ \circ  }$ 的主导风向; ${6}^{ \circ  }$ 风向具有最大概率分布, ${0}^{ \circ  } \sim  {10}^{ \circ  }$ 风向数据占总数据的 20%。对于 WT2,在 ${310}^{ \circ  }$ 、 ${290}^{ \circ  }$ 和 ${140}^{ \circ  }$ 附近有三个风向分布波峰; 尤其是在 ${310}^{ \circ  }$ 附近的风向分布占主导地位,其中 ${305}^{ \circ  }$ 到 ${315}^{ \circ  }$ 之间的风数据占总数据的 19%。对于 WT3，出现明显的两个主导风向，且几乎分布在两个相反的方向，一个接近 ${40}^{ \circ  }$ 方向，另一个接近 ${210}^{ \circ  }$ 方向； ${205}^{ \circ  } \sim  {215}^{ \circ  }$ 的风向数据占总数据的 22%。对于 WT4，也出现了两个方向上的主导风向，即 ${15}^{ \circ  }$ 附近和 ${175}^{ \circ  }$ 附近，而 ${175}^{ \circ  }$ 风向的概率分布最大,其中 ${170}^{ \circ  } \sim  {180}^{ \circ  }$ 的风向数据占总数据的 19%。通过对年平均风向数据的比较, 四台风电机组的共同点是都有明显的主导风向; 不同点是四台风电机组的主导风向不同。这是因为四台风电机组安装在不同地理位置上，山区风电场的局部风向特征差异明显。
 
-<img class="content-image" src="../../images/p1-image270.png" style="width:1039px" alt="">
+![76_343_1364_958_757_0.jpg](../../images/p1-76_343_1364_958_757_0.jpg)
 
-图3.8 年度风向频率分布
+图 3.8 年度风向频率分布
 
-四台风电机组风向的季节性频率分布如图3.9所示。为了便于分析，将春夏两季的风向数据分别整理成一组，秋冬两季的风向数据分别整理成另一组，从图中可以观察到风速频率分布的明显季节性差异。一般来说，春夏季频率分布比较接近，秋冬季频率分布比较接近。此外，不同季节或风电机组也会出现局部差异。具体来说，对于WT1，春季和夏季出现两个接近150°和0°的主导风向，秋季和冬季出现两个接近0°的主导风向；四个季节的最大频率分布在0°附近，显然，秋季和冬季的风向比春季和夏季更稳定。对于WT2，在四个季节观测到三个主要风向，分别为140°、290°和310°；邻近310°的风向是春季、秋季和冬季的最大频率分布，邻近140°的风向是夏季的最大频率分布。对于WT3，所有季节都会出现两个大致相反方向的主导风向，一个接近40°，另一个接近210°；春季、秋季和冬季主导风向为210°左右，夏季主导风向为40°左右；尤其在冬季，210°附近的风向分布有一个比较显著的波峰，205°~215°的数据占总数据的34%。对于WT4，与WT3中的规律相似，在所有季节中，两个主要风向出现在近邻15°和175°的这两个大致相反的方向上；春季时，175°和15°附近的风向频率分布比较接近；夏季时，15°附近的风向有一个显著的频率分布波峰，其中，10°~20°的数据占总数据的31%。在秋冬季节，175°附近的风向频率分布最大。一般来说，WT3和WT4之间的季节风向分布规律比较接近，主导风向在不同季节或不同风电机组上可能出现明显的变化。
+四台风电机组风向的季节性频率分布如图 3.9 所示。为了便于分析, 将春夏两季的风向数据分别整理成一组, 秋冬两季的风向数据分别整理成另一组, 从图中可以观察到风速频率分布的明显季节性差异。一般来说, 春夏季频率分布比较接近, 秋冬季频率分布比较接近。 此外, 不同季节或风电机组也会出现局部差异。具体来说, 对于 WT1, 春季和夏季出现两个接近 ${150}^{ \circ  }$ 和 ${0}^{ \circ  }$ 的主导风向,秋季和冬季出现两个接近 ${0}^{ \circ  }$ 的主导风向; 四个季节的最大频率分布在 ${0}^{ \circ  }$ 附近,显然,秋季和冬季的风向比春季和夏季更稳定。对于 WT2,在四个季节观测到三个主要风向,分别为 ${140}^{ \circ  }\text{ 、 }{290}^{ \circ  }$ 和 ${310}^{ \circ  }$ ; 邻近 ${310}^{ \circ  }$ 的风向是春季、秋季和冬季的最大频率分布,邻近 ${140}^{ \circ  }$ 的风向是夏季的最大频率分布。对于 WT3,所有季节都会出现两个大致相反方向的主导风向,一个接近 ${40}^{ \circ  }$ ,另一个接近 ${210}^{ \circ  }$ ; 春季、秋季和冬季主导风向为 ${210}^{ \circ  }$ 左右,夏季主导风向为 ${40}^{ \circ  }$ 左右; 尤其在冬季, ${210}^{ \circ  }$ 附近的风向分布有一个比较显著的波峰, ${205}^{ \circ  } \sim  {215}^{ \circ  }$ 的数据占总数据的 34%。对于 WT4,与 WT3 中的规律相似,在所有季节中，两个主要风向出现在近邻 ${15}^{ \circ  }$ 和 ${175}^{ \circ  }$ 的这两个大致相反的方向上; 春季时, ${175}^{ \circ  }$ 和 ${15}^{ \circ  }$ 附近的风向频率分布比较接近; 夏季时, ${15}^{ \circ  }$ 附近的风向有一个显著的频率分布波峰,其中, ${10}^{ \circ  } \sim  {20}^{ \circ  }$ 的数据占总数据的 31%。在秋冬季节， ${175}^{ \circ  }$ 附近的风向频率分布最大。一般来说, WT3 和 WT4 之间的季节风向分布规律比较接近, 主导风向在不同季节或不同风电机组上可能出现明显的变化。
 
-<img class="content-image" src="../../images/p1-image271.png" style="width:1136px" alt="">
+![77_283_1013_1097_782_0.jpg](../../images/p1-77_283_1013_1097_782_0.jpg)
 
-<img class="content-image" src="../../images/p1-image272.png" style="width:1133px" alt="">
+![78_288_195_1085_786_0.jpg](../../images/p1-78_288_195_1085_786_0.jpg)
 
-图3.9 风向的季节性频率分布
+图 3.9 风向的季节性频率分布
 
-利用KDE方法处理每月10分钟平均风向数据后，可以得到4台风电机组的KDE风向分布曲线，如图3.10所示。对于WT1、WT3和WT4，在所有月份中出现两个概率分布波峰，但对于WT2，出现了三个概率分布波峰。对于WT1，最高分布峰值出现在10月；对于WT2，最高分布峰值出现在12月；对于WT3，最高分布峰值出现在9月；对于WT4，最高分布峰值出现在6月。换句话说，这些月的风向分布相对集中，最低分布峰出现在WT1的2月，WT2、WT3和WT4的7月。此外，尽管不同风电机组的风向分布有所不同，但6月份各风电机组的风向分布与其他月份也明显不同。对于同一台风电机组，不同月份间的风向分布规律有一定的相似性，但也存在显著差异。例如，不同月份的分布波峰数量大致相同，但分布密度差异很大。
+利用 KDE 方法处理每月 10 分钟平均风向数据后, 可以得到 4 台风电机组的 KDE 风向分布曲线, 如图 3.10 所示。对于 WT1、WT3 和 WT4, 在所有月份中出现两个概率分布波峰, 但对于 WT2, 出现了三个概率分布波峰。对于 WT1, 最高分布峰值出现在 10 月; 对于 WT2, 最高分布峰值出现在 12 月; 对于 WT3, 最高分布峰值出现在 9 月; 对于 WT4, 最高分布峰值出现在 6 月。换句话说，这些月的风向分布相对集中，最低分布峰出现在 WT1 的 2 月, WT2、WT3 和 WT4 的 7 月。此外, 尽管不同风电机组的风向分布有所不同, 但 6 月份各风电机组的风向分布与其他月份也明显不同。对于同一台风电机组, 不同月份间的风向分布规律有一定的相似性, 但也存在显著差异。例如, 不同月份的分布波峰数量大致相同, 但分布密度差异很大。
 
-<img class="content-image" src="../../images/p1-image273.png" style="width:1415px" alt="">
+![79_241_205_1166_703_0.jpg](../../images/p1-79_241_205_1166_703_0.jpg)
 
-图3.10 风向的月频率分布
+图 3.10 风向的月频率分布
 
-2\. 风向波动
+#### 3.1.4.2 风向波动
 
 为了描述采样频率较高(如1Hz)的实时风向变化特性，提出了风向波动的概念。下面通过定义波动系数对风向波动进行研究分析。
 
-定义两次采样之间的风向差如下：
+定义两次采样之间的风向差如下:
 
-<img class="formula-display" src="../../images/p1-image274.png" style="width:76px" alt=""> (3.6)
+$$
+\Delta {x}_{k} = \left| {{x}_{k} - {x}_{k + 1}}\right| \tag{3.6}
+$$
 
-式中，<img class="formula-inline" src="../../images/p1-image275.png" style="width:12px" alt="">表示风向数据。
+式中, ${x}_{k}$ 表示风向数据。
 
-由于风向的0°与360°等效，因此将式(3.6)改写为
+由于风向的 ${0}^{ \circ  }$ 与 ${360}^{ \circ  }$ 等效,因此将式(3.6)改写为
 
-<img class="formula-display" src="../../images/p1-image276.png" style="width:135px" alt=""> (3.7)
+$$
+\Delta {x}_{e} = \min \left( {\Delta {x}_{k},\left| {\Delta {x}_{k} - {360}^{ \circ  }}\right| }\right) \tag{3.7}
+$$
 
-为了构造风向波动系数，引入风向差基数如下：
+为了构造风向波动系数，引入风向差基数如下:
 
-<img class="formula-display" src="../../images/p1-image277.png" style="width:113px" alt=""> (3.8)
+$$
+\Delta {x}_{b} = \max \left( {\frac{1}{n}\mathop{\sum }\limits_{{k = i + 1}}^{{n + i}}\Delta {x}_{e}}\right) \tag{3.8}
+$$
 
-式中，*i*=1, 2, …,*n*，*n*表示一次计算中数据点的数量。
+式中, $i = 1,2,\ldots , n, n$ 表示一次计算中数据点的数量。
 
-风向波动系数*w<sub>d</sub>*由下式计算：
+风向波动系数 ${w}_{d}$ 由下式计算:
 
-<img class="formula-display" src="../../images/p1-image278.png" style="width:157px" alt=""> (3.9)
+$$
+{w}_{d}\left( i\right)  = \left\{  \begin{matrix} \frac{1}{n}\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\Delta {x}_{e} & , & \Delta {x}_{b} \neq  0 \\  \Delta {x}_{b} & , & \Delta {x}_{b} = 0 \end{matrix}\right. \tag{3.9}
+$$
 
-与使用风速波动系数一样，风向波动同样要求数据在时间上连续，因此，根据等式(3.4)对数据进行预处理。利用图3.7中风速数据对应的风向数据，得到了风向波动曲线(图3.11)。图3.11(a)显示了WT1和WT2的风向时变曲线，图3.11(b)显示了相应的波动系数；图3.11(c)显示了WT3和WT4的风向时变曲线，相应的波动系数如图3.11(d)所示。为了便于分析，在图3.11(c)中大于300°的风向数据用负数表示。从图中可以看出，WT1和WT2的风向分布较近，WT3和WT4的风向分布较近。所有风电机组的风向波动系数都显出了跳跃性特征。此外，WT1和WT2的风向波动系数远大于WT3和WT4。尤其是WT3风向波动系数很低。从总体上看，不同风电机组的风向波动存在显著差异，这也反映了山地风场的特点。
+与使用风速波动系数一样, 风向波动同样要求数据在时间上连续, 因此, 根据等式(3.4) 对数据进行预处理。利用图3.7中风速数据对应的风向数据，得到了风向波动曲线(图3.11)。 图3.11(a)显示了WT1和WT2的风向时变曲线，图3.11(b)显示了相应的波动系数；图3.11(c)显示了WT3和WT4的风向时变曲线, 相应的波动系数如图3.11(d)所示。为了便于分析, 在图 3.11(c)中大于300°的风向数据用负数表示。从图中可以看出，WT1和WT2的风向分布较近， WT3和WT4的风向分布较近。所有风电机组的风向波动系数都显出了跳跃性特征。此外， WT1和WT2的风向波动系数远大于WT3和WT4。尤其是WT3风向波动系数很低。从总体上看, 不同风电机组的风向波动存在显著差异, 这也反映了山地风场的特点。
 
-<img class="content-image" src="../../images/p1-image279.png" style="width:1445px" alt="">
+![80_238_292_1176_661_0.jpg](../../images/p1-80_238_292_1176_661_0.jpg)
 
-图3.11 风向波动
+图 3.11 风向波动
 
 ### 3.1.5 风速和风向联合分布
 
-风速和风向的联合分布是一个多维核密度估计。将式(2.17)改写为<sup>\[19\]</sup>
+风速和风向的联合分布是一个多维核密度估计。将式(2.17)改写为[19]
 
-<img class="formula-display" src="../../images/p1-image280.png" style="width:138px" alt=""> (3.11)
+$$
+\widehat{f}\left( x\right)  = \frac{1}{n}\mathop{\sum }\limits_{{i = 1}}^{n}\left\lbrack  {\mathop{\prod }\limits_{{j = 1}}^{d}\frac{1}{{h}_{j}}K\left( \frac{{x}_{j} - {x}_{ij}}{{h}_{j}}\right) }\right\rbrack \tag{3.11}
+$$
 
-式中，*x*为风速和风向样本；*N*为样本量；*K*为有*d*个参数的多元核函数，这里取*d*=2。
+式中, $x$ 为风速和风向样本; $N$ 为样本量; $K$ 为有 $d$ 个参数的多元核函数,这里取 $d = 2$ 。
 
-图3.12为风速和风向的年联合分布。从图中可以看出，风速和风向的联合分布面有突出的分布峰，这意味着存在一个风速和风向最大概率的数据点。WT3和WT4的风向分布比WT1和WT2更为集中。特别是WT1，风向分布明显非常分散。其中，WT1出现三个分布峰，WT2、WT3、WT4出现两个分布峰。当风速为2.6m/s、风向为170°时，WT1出现最大联合分布峰。当风速为7.5m/s，风向为314°时，WT2出现最大联合分布峰。当风速为6.3m/s、风向为214°时，WT3出现最大联合分布峰。当风速为4.8m/s、风向为173°时，WT4出现最大联合分布峰。相对而言，WT2的风速和风向联合分布似乎更有利于风力发电，因为其最大风速对应最大联合分布峰。
+图 3.12 为风速和风向的年联合分布。从图中可以看出, 风速和风向的联合分布面有突出的分布峰, 这意味着存在一个风速和风向最大概率的数据点。WT3 和 WT4 的风向分布比 WT1 和 WT2 更为集中。特别是 WT1, 风向分布明显非常分散。其中, WT1 出现三个分布峰, WT2、WT3、WT4 出现两个分布峰。当风速为 2.6m/s、风向为 170°时, WT1 出现最大联合分布峰。当风速为 ${7.5}\mathrm{m}/\mathrm{s}$ ，风向为 ${314}^{ \circ  }$ 时，WT2 出现最大联合分布峰。当风速为 ${6.3}\mathrm{m}/\mathrm{s}$ 、 风向为 ${214}^{ \circ  }$ 时, WT3 出现最大联合分布峰。当风速为 ${4.8}\mathrm{\;m}/\mathrm{s}$ 、风向为 ${173}^{ \circ  }$ 时, WT4 出现最大联合分布峰。相对而言, WT2 的风速和风向联合分布似乎更有利于风力发电, 因为其最大风速对应最大联合分布峰。
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image281.png" style="width:748px" alt=""><img class="content-image" src="../../images/p1-image282.png" style="width:748px" alt=""></div>
+![80_280_1758_1067_365_0.jpg](../../images/p1-80_280_1758_1067_365_0.jpg)
 
-(a)WT1 (b)WT2
+![81_282_213_1061_347_0.jpg](../../images/p1-81_282_213_1061_347_0.jpg)
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image283.png" style="width:748px" alt=""><img class="content-image" src="../../images/p1-image284.png" style="width:748px" alt=""></div>
+图 3.12 风速和风向一年期联合分布
 
-\(c\) WT3 (d) WT4
+四台风电机组风速和风向季节性联合分布如图 3.13 所示。WT1 的季节联合分布如图 3.13(a) $\sim  \left( \mathrm{d}\right)$ 所示，WT2 的季节联合分布如图 3.13(e) $\sim  \left( \mathrm{h}\right)$ 所示，WT3 的季节联合分布如图 3.13(i) $\sim$ (l)所示，WT4 的季节联合分布如图 ${3.13}\left( \mathrm{\;m}\right)  \sim$ (p)所示。除 WT1 外，WT2、WT3、 WT4 在每个季节都有两个明显的联合分布峰。也就是说, 对于 WT1, 风速和风向的联合分布比较杂乱; 在 WT2、WT3 和 WT4 中出现更规律的分布。不同季节的联合分布也有明显差异。与春、夏、冬相比，WT1 的风速和风向联合分布在秋季更为集中。当风速为 ${4.2}\mathrm{m}/\mathrm{s}$ 、 风向为 ${14}^{ \circ  }$ 时,节理分布高峰出现在秋季。对于 WT2,风速和风向的联合分布在冬季最为集中。对应最大峰值,风速为 ${8.3}\mathrm{\;m}/\mathrm{s}$ ,风向为 ${309}^{ \circ  }$ 。冬季似乎具有最佳的风能利用潜力,不仅风速和风向集中联合分布，而且最大峰值对应的风速比其他季节最大。对于 WT3，与 WT2 一样,联合分布在冬季最为集中。对应最大峰值,风速为 ${6.8}\mathrm{\;m}/\mathrm{s}$ ,风向为 ${213}^{ \circ  }$ 。对于 WT4, 无论是夏季还是冬季,都出现相对集中的节理分布。对应最大峰值,风速为 ${7.6}\mathrm{\;m}/\mathrm{s}$ ,夏季风向为 13 度; 风速 ${6.4}\mathrm{\;m}/\mathrm{s}$ ,冬季风向 ${173}^{ \circ  }$ 。以上分析可知,就所研究的山地风电场而言,风速和风向的联合分布规律会随着位置的变化而变化。
 
-图3.12 风速和风向一年期联合分布
+![81_260_1242_1106_694_0.jpg](../../images/p1-81_260_1242_1106_694_0.jpg)
 
-四台风电机组风速和风向季节性联合分布如图3.13所示。WT1的季节联合分布如图3.13(a) ~(d)所示，WT2的季节联合分布如图3.13(e) ~(h)所示，WT3的季节联合分布如图3.13(i) ~(l)所示，WT4的季节联合分布如图3.13(m) ~(p)所示。除WT1外，WT2、WT3、WT4在每个季节都有两个明显的联合分布峰。也就是说，对于WT1，风速和风向的联合分布比较杂乱；在WT2、WT3和WT4中出现更规律的分布。不同季节的联合分布也有明显差异。与春、夏、冬相比，WT1的风速和风向联合分布在秋季更为集中。当风速为4.2m/s、风向为14°时，节理分布高峰出现在秋季。对于WT2，风速和风向的联合分布在冬季最为集中。对应最大峰值，风速为8.3m/s，风向为309°。冬季似乎具有最佳的风能利用潜力，不仅风速和风向集中联合分布，而且最大峰值对应的风速比其他季节最大。对于WT3，与WT2一样，联合分布在冬季最为集中。对应最大峰值，风速为6.8m/s，风向为213°。对于WT4，无论是夏季还是冬季，都出现相对集中的节理分布。对应最大峰值，风速为7.6m/s，夏季风向为13度；风速6.4m/s，冬季风向173°。以上分析可知，就所研究的山地风电场而言，风速和风向的联合分布规律会随着位置的变化而变化。
+![82_250_188_1124_1673_0.jpg](../../images/p1-82_250_188_1124_1673_0.jpg)
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image285.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image286.png" style="width:748px" alt=""></div>
+![83_263_201_1094_331_0.jpg](../../images/p1-83_263_201_1094_331_0.jpg)
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image287.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image288.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image289.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image290.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image291.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image292.png" style="width:748px" alt=""></div>
+图 3.13 风速和风向季节联合分布
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image293.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image294.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image295.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image296.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image297.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image298.png" style="width:748px" alt=""></div>
-
-<div class="image-row"><img class="content-image" src="../../images/p1-image299.png" style="width:748px" alt=""> <img class="content-image" src="../../images/p1-image300.png" style="width:748px" alt=""></div>
-
-图3.13 风速和风向季节联合分布
-
-## 3.2 风电机组功率波动SCADA数据分析
+## 3.2 风电机组功率波动 SCADA 数据分析
 
 ### 3.2.1 风能与风电机组输出功率关系模型
 
-1\. 风能与风电机组功率关系分析
+#### 3.2.1.1 风能与风电机组功率关系分析
 
-风能是空气流动所具有的动能，风电机组将风能转换为电能，考虑到气流的气压、密度、温度变化，在风轮扫掠面积上风的功率可表示为
+风能是空气流动所具有的动能，风电机组将风能转换为电能，考虑到气流的气压、密度、 温度变化, 在风轮扫掠面积上风的功率可表示为
 
-<img class="formula-display" src="../../images/p1-image301.png" style="width:155px" alt=""> (3.12)
+$$
+{W}_{P} = \frac{1}{2}\rho {v}^{3}\pi {R}^{2} = \frac{1}{2}\rho \left( {{P}_{a},{T}_{C}}\right) {v}^{3}\pi {R}^{2} \tag{3.12}
+$$
 
-风电机组从风中吸收的能量可以用下式表示：
+风电机组从风中吸收的能量可以用下式表示:
 
-<img class="formula-display" src="../../images/p1-image302.png" style="width:81px" alt=""> (3.13)
+$$
+P = {C}_{\mathrm{P}}\left( {\lambda ,\beta }\right) {W}_{P} \tag{3.13}
+$$
 
-从上面两式可以看出，风电机组功率与风速三次方成正比，还与叶尖速比、叶片桨距角等有关。运行过程中，叶尖速比、叶片桨距角等运行参数基本上是根据风速控制调整的，因而风速的波动对风电机组功率波动具有很大的影响。某2MW直驱式风电机组SCADA系统每隔1秒储存一次(采样频率为1Hz)，图3.14是基于SCADA数据的风速-功率曲线。从图中可以看出，在额定风速以下，随着风速的增加，风电机组输出功率快速增加，在额定风速以上，输出功率被限定在额定值附近。
+从上面两式可以看出, 风电机组功率与风速三次方成正比, 还与叶尖速比、叶片桨距角等有关。运行过程中，叶尖速比、叶片桨距角等运行参数基本上是根据风速控制调整的，因而风速的波动对风电机组功率波动具有很大的影响。某 2MW 直驱式风电机组 SCADA 系统每隔 1 秒储存一次(采样频率为 $1\mathrm{{Hz}}$ )，图 3.14 是基于 SCADA 数据的风速-功率曲线。从图中可以看出, 在额定风速以下, 随着风速的增加, 风电机组输出功率快速增加, 在额定风速以上，输出功率被限定在额定值附近。
 
-<img class="content-image" src="../../images/p1-image303.png" style="width:887px" alt="">
+![83_416_1416_844_431_0.jpg](../../images/p1-83_416_1416_844_431_0.jpg)
 
-图3.14 基于SCADA数据的风速-功率曲线
+图 3.14 基于 SCADA 数据的风速-功率曲线
 
-在风速一定时，输出的功率不是唯一值，根本原因是风的波动以及由此带来的风电机组内部状态参数的改变，风的波动包括风速的波动和风向的波动。但是风速波动与功率波动之间的关系非常复杂，为了更好地描述两种之间的关系，以下采用核密度估计法来构建两种的概率分布，其中核函数选择Gaussian型。
+在风速一定时, 输出的功率不是唯一值, 根本原因是风的波动以及由此带来的风电机组内部状态参数的改变, 风的波动包括风速的波动和风向的波动。但是风速波动与功率波动之间的关系非常复杂, 为了更好地描述两种之间的关系, 以下采用核密度估计法来构建两种的概率分布, 其中核函数选择 Gaussian 型。
 
-图3.15(a)是风电场风速分布的直方图和核密度估计图，图3.15(b)是风电机组功率分布的直方图和核密度估计图。从图可见，风速在5m/s附近具有最大分布值，功率分布具有两个峰值，第一个峰值出现在200kW附近，与5m/s风速对应；第二个峰值出现在2100kW附近，这与在额定风速以上时采用变桨距控制功率输出策略相对应。
+图 3.15(a)是风电场风速分布的直方图和核密度估计图, 图 3.15(b)是风电机组功率分布的直方图和核密度估计图。从图可见,风速在 $5\mathrm{m}/\mathrm{s}$ 附近具有最大分布值,功率分布具有两个峰值,第一个峰值出现在 ${200}\mathrm{\;{kW}}$ 附近,与 $5\mathrm{\;m}/\mathrm{s}$ 风速对应; 第二个峰值出现在 ${2100}\mathrm{\;{kW}}$ 附近, 这与在额定风速以上时采用变桨距控制功率输出策略相对应。
 
-<img class="content-image" src="../../images/p1-image304.png" style="width:1996px" alt="">
+![84_251_412_1140_374_0.jpg](../../images/p1-84_251_412_1140_374_0.jpg)
 
-\(a\) 风速分布直方图和核密度估计图 (b) 功率分布直方图和核密度估计图
+图 3.15 风速、功率分布直方图和核密度估计图
 
-图3.15 风速、功率分布直方图和核密度估计图
+#### 3.2.1.2 风能对风电机组输出功率影响
 
-2\. 风能对风电机组输出功率影响
+风电机组 SCADA 系统的采样频率为 $1\mathrm{\;{Hz}}$ ,每十分钟产生一个数据包,一台机组一年将超过 3000 万组数据。为了统计分析风电机组的停机时间, 采用其发电机电流来进行判断: 发电机电流为零时, 风电机组处于停机状态。并且, 如果每十分钟 (一个数据包) 风速的平均值大于 $5\mathrm{\;m}/\mathrm{s}$ 且发电机电流为零,则判断为停机维护,即
 
-风电机组SCADA系统的采样频率为1 Hz，每十分钟产生一个数据包，一台机组一年将超过3000万组数据。为了统计分析风电机组的停机时间，采用其发电机电流来进行判断：发电机电流为零时，风电机组处于停机状态。并且，如果每十分钟（一个数据包）风速的平均值大于5m/s且发电机电流为零，则判断为停机维护，即
+$$
+\left\{  {\begin{array}{l} \frac{1}{n}\mathop{\sum }\limits_{{i = 1}}^{n}{x}_{vi} \geq  5\mathrm{\;m}/\mathrm{s} \\  \frac{1}{m}\mathop{\sum }\limits_{{i = 1}}^{m}{x}_{ci} = 0 \end{array} \Rightarrow  {T}_{\text{ downtime }} = {10}\mathrm{\;{min}}}\right. \tag{3.14}
+$$
 
-<img class="formula-display" src="../../images/p1-image305.png" style="width:148px" alt=""> (3.14)
+四台风电机组的月平均风速、标准偏差、停机时间和输出功率, 如图 3.16 和表 6.3 所示, 其中平均风速及其标准偏差数据引自 3.1 节研究分析。从图 3.16(a)中可以看出, WT1 的月平均风速比其他风电机组都要低; 从图 3.16(b)中可以看出, WT1 的风速目标准偏差也较低。 从图 3.16(c)中可以看出, 一般而言, WT1 和 WT2、WT3 与 WT4 相比有较长的停机时间, 但是在四月和五月, WT3 的停机时间异常长, 而且这两个月的停机时间主要用于维护。
 
-四台风电机组的月平均风速、标准偏差、停机时间和输出功率，如图3.16和表6.3所示，其中平均风速及其标准偏差数据引自3.1节研究分析。从图3.16(a)中可以看出，WT1的月平均风速比其他风电机组都要低；从图3.16(b)中可以看出，WT1的风速月标准偏差也较低。从图3.16(c)中可以看出，一般而言，WT1和WT2、WT3与WT4相比有较长的停机时间，但是在四月和五月，WT3的停机时间异常长，而且这两个月的停机时间主要用于维护。
+![84_253_1501_1135_641_0.jpg](../../images/p1-84_253_1501_1135_641_0.jpg)
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image306.png" style="width:680px" alt=""> <img class="content-image" src="../../images/p1-image307.png" style="width:761px" alt=""></div>
+(c) 月停机时间 (d) 月能量输出
 
-(a)月平均风速 (b) 风速标准差
+图 3.16 风速、停机时间和输出功率
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image308.png" style="width:765px" alt=""> <img class="content-image" src="../../images/p1-image309.png" style="width:762px" alt=""></div>
+从图 3.16(d)中可以看出，WT1 的输出电量在某些月份高于其他机组(WT3 和 WT4)。 例如, 在 4 月和 5 月, WT1 的电量输出高于 WT3。尽管在 4 月和 5 月, WT3 的平均风速远高于 WT1，但 WT3 在这两个月的停机时间也更长，分别是 400 小时和 408 小时。这可以理解为长时间的停机导致了 WT3 在这两个月的输出电量较低。然而, 从 10 月到 12 月, WT1 的输出电量高于 WT3 和 WT4。在这三个月中, WT1 的平均风速低于 WT3 和 WT4, 而且, WT1 的停机时间高于 WT3 和 WT4, WT1、WT2 和 WT3 的风速标准差接近。这意味着平均风速、标准偏差和停机时间不能完全决定输出电量, 影响风电机组电量输出还有风速的时间分布等其他因素。
 
-\(c\) 月停机时间 (d) 月能量输出
+表 6.3 月平均风速与输出功率
 
-图3.16 风速、停机时间和输出功率
+<table><tr><td rowspan="2"></td><td colspan="5">1月</td><td colspan="5">2月</td><td colspan="5">3 月</td><td colspan="5">4月</td><td colspan="5">5月</td><td colspan="5">6 月</td></tr><tr><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td></tr><tr><td>WT1</td><td>4.6</td><td>2.0</td><td>0</td><td>127</td><td>345</td><td>4.0</td><td>2.1</td><td>2</td><td>191</td><td>241</td><td>3.9</td><td>1.9</td><td>0</td><td>189</td><td>252</td><td>3.8</td><td>1.9</td><td>19</td><td>187</td><td>206</td><td>3.1</td><td>1.6</td><td>2</td><td>249</td><td>124</td><td>2.8</td><td>1.1</td><td>0</td><td>225</td><td>75</td></tr><tr><td>WT2</td><td>6.3</td><td>2.9</td><td>4</td><td>101</td><td>586</td><td>5.5</td><td>3.3</td><td>2</td><td>169</td><td>412</td><td>5.3</td><td>3.1</td><td>0</td><td>152</td><td>429</td><td>5.0</td><td>2.9</td><td>1</td><td>131</td><td>399</td><td>3.9</td><td>2.5</td><td>1</td><td>206</td><td>228</td><td>4.0</td><td>2.2</td><td>0</td><td>176</td><td>217</td></tr><tr><td>WT3</td><td>5.8</td><td>2.0</td><td>16</td><td>81</td><td>317</td><td>5.4</td><td>2.4</td><td>17</td><td>98</td><td>269</td><td>5.8</td><td>2.1</td><td>20</td><td>82</td><td>331</td><td>7.2</td><td>2.9</td><td>300</td><td>400</td><td>38</td><td>5.5</td><td>2.8</td><td>228</td><td>408</td><td>57</td><td>5.4</td><td>2.0</td><td>22</td><td>90</td><td>283</td></tr><tr><td>WT4</td><td>5.7</td><td>2.0</td><td>13</td><td>100</td><td>263</td><td>5.6</td><td>2.7</td><td>8</td><td>99</td><td>327</td><td>6.1</td><td>2.5</td><td>11</td><td>78</td><td>432</td><td>6.2</td><td>3.0</td><td>6</td><td>67</td><td>392</td><td>5.5</td><td>2.7</td><td>4</td><td>111</td><td>385</td><td>6.6</td><td>2.3</td><td>0</td><td>40</td><td>522</td></tr><tr><td rowspan="2"></td><td></td><td></td><td>7 月</td><td></td><td></td><td></td><td></td><td>8 月</td><td></td><td></td><td colspan="5">9 月</td><td colspan="5">10 月</td><td colspan="5">11 月</td><td colspan="5">12 月</td></tr><tr><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td><td>MW</td><td>SD</td><td>DM</td><td>DT</td><td>EO</td></tr><tr><td>WT1</td><td>3.8</td><td>2.0</td><td>0</td><td>181</td><td>279</td><td>3.2</td><td>1.6</td><td>0</td><td>247</td><td>157</td><td>3.5</td><td>1.8</td><td>4</td><td>217</td><td>187</td><td>4.1</td><td>1.9</td><td>4</td><td>155</td><td>283</td><td>3.8</td><td>2.2</td><td>0</td><td>204</td><td>251</td><td>4.9</td><td>1.9</td><td>0</td><td>93</td><td>434</td></tr><tr><td>WT2</td><td>4.8</td><td>2.7</td><td>2</td><td>142</td><td>366</td><td>4.0</td><td>2.5</td><td>0</td><td>195</td><td>233</td><td>4.4</td><td>2.7</td><td>20</td><td>218</td><td>258</td><td>5.6</td><td>2.9</td><td>4</td><td>119</td><td>420</td><td>5.1</td><td>3.1</td><td>29</td><td>193</td><td>345</td><td>6.9</td><td>2.7</td><td>9</td><td>75</td><td>614</td></tr><tr><td>WT3</td><td>5.2</td><td>2.1</td><td>29</td><td>145</td><td>275</td><td>4.3</td><td>1.8</td><td>23</td><td>120</td><td>97</td><td>4.4</td><td>2.0</td><td>2</td><td>5</td><td>119</td><td>4.9</td><td>2.0</td><td>0</td><td>0</td><td>225</td><td>5.0</td><td>2.3</td><td>0</td><td>0</td><td>195</td><td>6.0</td><td>2.1</td><td>19</td><td>25</td><td>205</td></tr><tr><td>WT4</td><td>5.9</td><td>2.0</td><td>2</td><td>40</td><td>391</td><td>4.9</td><td>2.0</td><td>7</td><td>117</td><td>221</td><td>4.8</td><td>2.1</td><td>35</td><td>137</td><td>186</td><td>5.1</td><td>1.8</td><td>8</td><td>78</td><td>220</td><td>4.8</td><td>2.2</td><td>12</td><td>133</td><td>220</td><td>5.6</td><td>1.8</td><td>20</td><td>59</td><td>255</td></tr></table>
 
-从图3.16(d)中可以看出，WT1的输出电量在某些月份高于其他机组（WT3和WT4）。例如，在4月和5月，WT1的电量输出高于WT3。尽管在4月和5月，WT3的平均风速远高于WT1，但WT3在这两个月的停机时间也更长，分别是400小时和408小时。这可以理解为长时间的停机导致了WT3在这两个月的输出电量较低。然而，从10月到12月，WT1的输出电量高于WT3和WT4。在这三个月中，WT1的平均风速低于WT3和WT4，而且，WT1的停机时间高于WT3和WT4，WT1、WT2和WT3的风速标准差接近。这意味着平均风速、标准偏差和停机时间不能完全决定输出电量，影响风电机组电量输出还有风速的时间分布等其他因素。
+MW 为平均风速(m/s), SD 为风速标准差(m/s), DM 为停机维护时间(h), DT 为停机时间(h), EO 为输出电量(MWh)。
 
-表6.3 月平均风速与输出功率
-
-<table>
-<colgroup>
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 3%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"></th>
-<th colspan="5" style="text-align: center;">1月</th>
-<th colspan="5" style="text-align: center;">2月</th>
-<th colspan="5" style="text-align: center;">3月</th>
-<th colspan="5" style="text-align: center;">4月</th>
-<th colspan="5" style="text-align: center;">5月</th>
-<th colspan="5" style="text-align: center;">6月</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-</tr>
-<tr>
-<td style="text-align: left;">WT1</td>
-<td style="text-align: left;">4.6</td>
-<td style="text-align: left;">2.0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">127</td>
-<td style="text-align: left;">345</td>
-<td style="text-align: left;">4.0</td>
-<td style="text-align: left;">2.1</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">191</td>
-<td style="text-align: left;">241</td>
-<td style="text-align: left;">3.9</td>
-<td style="text-align: left;">1.9</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">189</td>
-<td style="text-align: center;">252</td>
-<td style="text-align: left;">3.8</td>
-<td style="text-align: left;">1.9</td>
-<td style="text-align: center;">19</td>
-<td style="text-align: center;">187</td>
-<td style="text-align: center;">206</td>
-<td style="text-align: left;">3.1</td>
-<td style="text-align: left;">1.6</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">249</td>
-<td style="text-align: center;">124</td>
-<td style="text-align: left;">2.8</td>
-<td style="text-align: left;">1.1</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">225</td>
-<td style="text-align: center;">75</td>
-</tr>
-<tr>
-<td style="text-align: left;">WT2</td>
-<td style="text-align: left;">6.3</td>
-<td style="text-align: left;">2.9</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">101</td>
-<td style="text-align: left;">586</td>
-<td style="text-align: left;">5.5</td>
-<td style="text-align: left;">3.3</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">169</td>
-<td style="text-align: left;">412</td>
-<td style="text-align: left;">5.3</td>
-<td style="text-align: left;">3.1</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">152</td>
-<td style="text-align: center;">429</td>
-<td style="text-align: left;">5.0</td>
-<td style="text-align: left;">2.9</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">131</td>
-<td style="text-align: center;">399</td>
-<td style="text-align: left;">3.9</td>
-<td style="text-align: left;">2.5</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">206</td>
-<td style="text-align: center;">228</td>
-<td style="text-align: left;">4.0</td>
-<td style="text-align: left;">2.2</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">176</td>
-<td style="text-align: center;">217</td>
-</tr>
-<tr>
-<td style="text-align: left;">WT3</td>
-<td style="text-align: left;">5.8</td>
-<td style="text-align: left;">2.0</td>
-<td style="text-align: center;">16</td>
-<td style="text-align: center;">81</td>
-<td style="text-align: left;">317</td>
-<td style="text-align: left;">5.4</td>
-<td style="text-align: left;">2.4</td>
-<td style="text-align: center;">17</td>
-<td style="text-align: center;">98</td>
-<td style="text-align: left;">269</td>
-<td style="text-align: left;">5.8</td>
-<td style="text-align: left;">2.1</td>
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">82</td>
-<td style="text-align: center;">331</td>
-<td style="text-align: left;">7.2</td>
-<td style="text-align: left;">2.9</td>
-<td style="text-align: center;">300</td>
-<td style="text-align: center;">400</td>
-<td style="text-align: center;">38</td>
-<td style="text-align: left;">5.5</td>
-<td style="text-align: left;">2.8</td>
-<td style="text-align: center;">228</td>
-<td style="text-align: center;">408</td>
-<td style="text-align: center;">57</td>
-<td style="text-align: left;">5.4</td>
-<td style="text-align: left;">2.0</td>
-<td style="text-align: center;">22</td>
-<td style="text-align: center;">90</td>
-<td style="text-align: center;">283</td>
-</tr>
-<tr>
-<td style="text-align: left;">WT4</td>
-<td style="text-align: left;">5.7</td>
-<td style="text-align: left;">2.0</td>
-<td style="text-align: center;">13</td>
-<td style="text-align: center;">100</td>
-<td style="text-align: left;">263</td>
-<td style="text-align: left;">5.6</td>
-<td style="text-align: left;">2.7</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">99</td>
-<td style="text-align: left;">327</td>
-<td style="text-align: left;">6.1</td>
-<td style="text-align: left;">2.5</td>
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">78</td>
-<td style="text-align: center;">432</td>
-<td style="text-align: left;">6.2</td>
-<td style="text-align: left;">3.0</td>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">67</td>
-<td style="text-align: center;">392</td>
-<td style="text-align: left;">5.5</td>
-<td style="text-align: left;">2.7</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">111</td>
-<td style="text-align: center;">385</td>
-<td style="text-align: left;">6.6</td>
-<td style="text-align: left;">2.3</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">522</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td colspan="5" style="text-align: center;">7月</td>
-<td colspan="5" style="text-align: center;">8月</td>
-<td colspan="5" style="text-align: center;">9月</td>
-<td colspan="5" style="text-align: center;">10月</td>
-<td colspan="5" style="text-align: center;">11月</td>
-<td colspan="5" style="text-align: center;">12月</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-<td style="text-align: left;">MW</td>
-<td style="text-align: left;">SD</td>
-<td style="text-align: left;">DM</td>
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">EO</td>
-</tr>
-<tr>
-<td style="text-align: left;">WT1</td>
-<td style="text-align: left;">3.8</td>
-<td style="text-align: left;">2.0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">181</td>
-<td style="text-align: center;">279</td>
-<td style="text-align: left;">3.2</td>
-<td style="text-align: left;">1.6</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">247</td>
-<td style="text-align: center;">157</td>
-<td style="text-align: left;">3.5</td>
-<td style="text-align: left;">1.8</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">217</td>
-<td style="text-align: center;">187</td>
-<td style="text-align: left;">4.1</td>
-<td style="text-align: left;">1.9</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">155</td>
-<td style="text-align: center;">283</td>
-<td style="text-align: left;">3.8</td>
-<td style="text-align: left;">2.2</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">204</td>
-<td style="text-align: center;">251</td>
-<td style="text-align: left;">4.9</td>
-<td style="text-align: left;">1.9</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">93</td>
-<td style="text-align: center;">434</td>
-</tr>
-<tr>
-<td style="text-align: left;">WT2</td>
-<td style="text-align: left;">4.8</td>
-<td style="text-align: left;">2.7</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">142</td>
-<td style="text-align: center;">366</td>
-<td style="text-align: left;">4.0</td>
-<td style="text-align: left;">2.5</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">195</td>
-<td style="text-align: center;">233</td>
-<td style="text-align: left;">4.4</td>
-<td style="text-align: left;">2.7</td>
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">218</td>
-<td style="text-align: center;">258</td>
-<td style="text-align: left;">5.6</td>
-<td style="text-align: left;">2.9</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">119</td>
-<td style="text-align: center;">420</td>
-<td style="text-align: left;">5.1</td>
-<td style="text-align: left;">3.1</td>
-<td style="text-align: center;">29</td>
-<td style="text-align: center;">193</td>
-<td style="text-align: center;">345</td>
-<td style="text-align: left;">6.9</td>
-<td style="text-align: left;">2.7</td>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">75</td>
-<td style="text-align: center;">614</td>
-</tr>
-<tr>
-<td style="text-align: left;">WT3</td>
-<td style="text-align: left;">5.2</td>
-<td style="text-align: left;">2.1</td>
-<td style="text-align: center;">29</td>
-<td style="text-align: center;">145</td>
-<td style="text-align: center;">275</td>
-<td style="text-align: left;">4.3</td>
-<td style="text-align: left;">1.8</td>
-<td style="text-align: center;">23</td>
-<td style="text-align: center;">120</td>
-<td style="text-align: center;">97</td>
-<td style="text-align: left;">4.4</td>
-<td style="text-align: left;">2.0</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">119</td>
-<td style="text-align: left;">4.9</td>
-<td style="text-align: left;">2.0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">225</td>
-<td style="text-align: left;">5.0</td>
-<td style="text-align: left;">2.3</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">195</td>
-<td style="text-align: left;">6.0</td>
-<td style="text-align: left;">2.1</td>
-<td style="text-align: center;">19</td>
-<td style="text-align: center;">25</td>
-<td style="text-align: center;">205</td>
-</tr>
-<tr>
-<td style="text-align: left;">WT4</td>
-<td style="text-align: left;">5.9</td>
-<td style="text-align: left;">2.0</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">391</td>
-<td style="text-align: left;">4.9</td>
-<td style="text-align: left;">2.0</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">117</td>
-<td style="text-align: center;">221</td>
-<td style="text-align: left;">4.8</td>
-<td style="text-align: left;">2.1</td>
-<td style="text-align: center;">35</td>
-<td style="text-align: center;">137</td>
-<td style="text-align: center;">186</td>
-<td style="text-align: left;">5.1</td>
-<td style="text-align: left;">1.8</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">78</td>
-<td style="text-align: center;">220</td>
-<td style="text-align: left;">4.8</td>
-<td style="text-align: left;">2.2</td>
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">133</td>
-<td style="text-align: center;">220</td>
-<td style="text-align: left;">5.6</td>
-<td style="text-align: left;">1.8</td>
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">59</td>
-<td style="text-align: center;">255</td>
-</tr>
-</tbody>
-</table>
-
-MW为平均风速(m/s)，SD为风速标准差(m/s)， DM为停机维护时间(h)，DT为停机时间(h)， EO为输出电量(MWh)。
-
-对于风电机组来说，如果风速标准偏差和停机时间在不同月份变化不大，输出电量的趋势就类似于平均风速的趋势。例如，在图3.16(d)中，WT1、WT2和WT4的输出电量趋势接近于图3.16 (a)中的平均风速趋势；WT1和WT2的最大输出电量出现在十二月，而WT4的出现在六月，这都与平均风速趋势相吻合。即使是WT3，虽然四月和五月的停机时间过长导致1~12月的输出电量总趋势与平均风速的趋势不同，但是在其他月份，输出电量的趋势也与平均风速趋势相一致。
+对于风电机组来说, 如果风速标准偏差和停机时间在不同月份变化不大, 输出电量的趋势就类似于平均风速的趋势。例如，在图 3.16(d)中，WT1、WT2 和 WT4 的输出电量趋势接近于图 3.16(a)中的平均风速趋势；WT1 和 WT2 的最大输出电量出现在十二月，而 WT4 的出现在六月，这都与平均风速趋势相吻合。 即使是 WT3，虽然四月和五月的停机时间过长导致 1~12 月的输出电量总趋势与平均风速的趋势不同，但是在其他月份，输出电量的趋势也与平均风速趋势相一致。
 
 ### 3.2.2 风速波动与功率波动一维评价模型
 
-1\. 风电机组运行工况
+1. 风电机组运行工况
 
-在不同工况下，风电机组功率波动特征不同。由于自然界风具有随机性，在制定风电机组控制策略时，理想情况下可以大致划分为三个区域，风能利用系数<img class="formula-inline" style="width:0.20903in;height:0.20903in" / src="../../images/p1-image310.png">恒定区、过渡区和功率恒定区。<img class="formula-inline" style="width:0.20903in;height:0.20903in" / src="../../images/p1-image311.png">恒定区指在低于额定风速区域，风电机组在给定的转速-功率曲线控制下，使风电机组风能利用系数达到最大，即保持<img class="formula-inline" style="width:0.20903in;height:0.20903in" / src="../../images/p1-image312.png">恒定，也称为最大风能跟踪区(maximum power point tracking，MPPT)。转速恒定区指保持<img class="formula-inline" style="width:0.20903in;height:0.20903in" / src="../../images/p1-image313.png">为最大值，没有达到额定功率但转速达到其极限值。功率恒定区指风速大于额定风速，需要通过变桨距限制功率为额定值的区域。在风电机组控制策略中，在由启动过渡到<img class="formula-inline" style="width:0.20903in;height:0.20903in" / src="../../images/p1-image314.png">恒定区，以及由<img class="formula-inline" style="width:0.20903in;height:0.20903in" / src="../../images/p1-image315.png">恒定区过渡到功率恒定区时，会设计转矩、转速成线性关系的区域以实现过渡，如图3.17所示。在图3.17(a)中，阶段1是风电机组尚未并网，此时风能利用系数为0；阶段2是风电机组并网到最大风能跟踪的过渡阶段；阶段3为<img class="formula-inline" style="width:0.20903in;height:0.20903in" / src="../../images/p1-image316.png">恒定区，该阶段为最优转矩；阶段4为过渡阶段，确保风电机组转速在最大值范围内；阶段5为恒功率阶段。图3.17(b)是风电机组转速-转矩关系SCADA数据散点图。
+在不同工况下, 风电机组功率波动特征不同。由于自然界风具有随机性, 在制定风电机组控制策略时, 理想情况下可以大致划分为三个区域,风能利用系数 ${C}_{\mathrm{P}}$ 恒定区、过渡区和功率恒定区。 ${C}_{\mathrm{P}}$ 恒定区指在低于额定风速区域,风电机组在给定的转速-功率曲线控制下,使风电机组风能利用系数达到最大,即保持 ${C}_{\mathrm{P}}$ 恒定,也称为最大风能跟踪区(maximum power point tracking, MPPT)。转速恒定区指保持 ${C}_{\mathrm{P}}$ 为最大值,没有达到额定功率但转速达到其极限值。功率恒定区指风速大于额定风速, 需要通过变桨距限制功率为额定值的区域。在风电机组控制策略中,在由启动过渡到 ${C}_{\mathrm{P}}$ 恒定区,以及由 ${C}_{\mathrm{P}}$ 恒定区过渡到功率恒定区时,会设计转矩、转速成线性关系的区域以实现过渡, 如图 3.17 所示。在图 3.17(a)中, 阶段 1 是风电机组尚未并网, 此时风能利用系数为 0 ; 阶段 2 是风电机组并网到最大风能跟踪的过渡阶段; 阶段 3 为 ${C}_{\mathrm{P}}$ 恒定区,该阶段为最优转矩; 阶段 4 为过渡阶段, 确保风电机组转速在最大值范围内; 阶段 5 为恒功率阶段。图 3.17(b)是风电机组转速-转矩关系 SCADA 数据散点图。
 
-<img class="content-image" src="../../images/p1-image317.png" style="width:2647px" alt="">
+![87_156_1156_1353_443_0.jpg](../../images/p1-87_156_1156_1353_443_0.jpg)
 
-\(a\) 转速-转矩关系理论曲线 (b) 基于SCADA数据的转速-转矩曲线
+图 3.17 转速与转矩、功率的曲线
 
-图3.17 转速与转矩、功率的曲线
+#### 3.2.2.2 风速波动系数
 
-2\. 风速波动系数
+为了更好地描述风速变化对功率波动的影响, 首先定义风速波动系数以描述风速波动。风的典型特性是随机性, 即风速随时间和空间的变化是随机的, 通常认为瞬时风速包含了平均风速和脉动风速, 传统的描述方法为
 
-为了更好地描述风速变化对功率波动的影响，首先定义风速波动系数以描述风速波动。风的典型特性是随机性，即风速随时间和空间的变化是随机的，通常认为瞬时风速包含了平均风速和脉动风速，传统的描述方法为
+$$
+v\left( t\right)  = \bar{v} + {v}^{\prime }\left( t\right) \tag{3.15}
+$$
 
-<img class="formula-display" src="../../images/p1-image318.png" style="width:70px" alt=""> (3.15)
+式中, $\bar{v}$ 为平均风速,是某个时间段内、空间某点上各瞬时风速的平均值。对 SCADA 系统中数据,该点即为安装在机舱的风速计位置。因此, 平均风速可以表示为
 
-式中，<img class="formula-inline" src="../../images/p1-image319.png" style="width:10px" alt="">为平均风速，是某个时间段内、空间某点上各瞬时风速的平均值。对SCADA系统中数据，该点即为安装在机舱的风速计位置。因此，平均风速可以表示为
+$$
+\bar{v} = \frac{1}{{t}_{2} - {t}_{1}}{\int }_{{t}_{1}}^{{t}_{2}}v\left( t\right) \mathrm{d}t \tag{3.16}
+$$
 
-<img class="formula-display" src="../../images/p1-image320.png" style="width:88px" alt=""> (3.16)
+式中, ${t}_{2} - {t}_{1}$ 是时间段。
 
-式中，<img class="formula-inline" src="../../images/p1-image321.png" style="width:24px" alt="">是时间段。
+在该时间段内, 任一时刻风速波动可用下式表述为
 
-在该时间段内，任一时刻风速波动可用下式表述为
+$$
+a\left( t\right)  = \frac{\left| v\left( t\right)  - v\left( t + \Delta t\right) \right| }{\frac{1}{{t}_{2} - {t}_{1}}{\int }_{{t}_{1}}^{{t}_{2}}v\left( t\right) \mathrm{d}t} \tag{3.17}
+$$
 
-<img class="formula-display" src="../../images/p1-image322.png" style="width:103px" alt=""> (3.17)
+式中, $a\left( t\right)$ 为波动系数; ${\Delta t}$ 表示瞬时。
 
-式中，<img class="formula-inline" src="../../images/p1-image323.png" style="width:21px" alt="">为波动系数；Δ*t*表示瞬时。
+由于 SCADA 数据是离散的, 将风速波动式(3.17)改写为离散形式:
 
-由于SCADA数据是离散的，将风速波动式(3.17)改写为离散形式：
+$$
+a\left( k\right)  = \frac{\left| v\left( kT\right)  - v\left( \left( k + 1\right) T\right) \right| }{\frac{1}{n}\mathop{\sum }\limits_{{k = 1}}^{n}v\left( {kT}\right) } \tag{3.18}
+$$
 
-<img class="formula-display" src="../../images/p1-image324.png" style="width:121px" alt=""> (3.18)
+式中, SCADA 数据采样周期 $T$ 为 $1\mathrm{\;s};1 \leq  k < n, n$ 为时间段采样点数,也为数据窗口宽度。
 
-式中， SCADA数据采样周期*T*为1s；<img class="formula-inline" src="../../images/p1-image325.png" style="width:37px" alt="">，*n*为时间段采样点数，也为数据窗口宽度。
+基于式(3.18)计算风速波动系数是常用的方法,但由该式求得的风速波动系数 $a$ 会出现大于 1 的情况, 特别是在低风速阶段。为此,对风速波动系数的计算方法进行改进,将其变化范围控制在 $0 \sim  1$ 范围内,即
 
-基于式(3.18)计算风速波动系数是常用的方法，但由该式求得的风速波动系数*a*会出现大于1的情况，特别是在低风速阶段。为此，对风速波动系数的计算方法进行改进，将其变化范围控制在0~1范围内，即
+$$
+a\left( k\right)  = \frac{\mathop{\sum }\limits_{{k = 1}}^{n}\left| {v\left( {kT}\right)  - v\left( {\left( {k + 1}\right) T}\right) }\right| }{\sqrt{\mathop{\sum }\limits_{{k = 1}}^{n}\left| {{v}^{2}\left( {kT}\right)  - {v}^{2}\left( {\left( {k + 1}\right) T}\right) }\right| }} \tag{3.19}
+$$
 
-<img class="formula-display" src="../../images/p1-image326.png" style="width:158px" alt=""> (3.19)
+式(3.19)事实上只计算了一段时间内的风速波动系数。为了计算实时的波动系数, 需要将数据不断向前推进, 相应地, 式(3.19)改写为
 
-式(3.19)事实上只计算了一段时间内的风速波动系数。为了计算实时的波动系数，需要将数据不断向前推进，相应地，式(3.19)改写为
+$$
+a\left( k\right)  = \frac{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {v\left( {kT}\right)  - v\left( {\left( {k + 1}\right) T}\right) }\right| }{\sqrt{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {{v}^{2}\left( {kT}\right)  - {v}^{2}\left( {\left( {k + 1}\right) T}\right) }\right| }} \tag{3.20}
+$$
 
-<img class="formula-display" src="../../images/p1-image327.png" style="width:138px" alt=""> (3.20)
+式中, $i = 0,1,2,\ldots$ 。
 
-式中，*i*=0,1,2,...。
+#### 3.2.2.3 风速波动与功率波动分析
 
-3\. 风速波动与功率波动分析
+风电机组功率波动用 $\delta$ 表示，与风速波动相对应地，采用标准差形式:
 
-风电机组功率波动用*δ*表示，与风速波动相对应地，采用标准差形式：
+$$
+\delta \left( k\right)  = \sqrt{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left( {{P}^{2}\left( {kT}\right)  - {\left( \frac{1}{n}\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}P\left( kT\right) \right) }^{2}}\right) } \tag{3.21}
+$$
 
-<img class="formula-display" src="../../images/p1-image328.png" style="width:165px" alt=""> (3.21)
+功率标准差 $\delta$ 表示功率波动的绝对值,在式(3.21)的基础上改进,提出功率相对波动表达式如下:
 
-功率标准差*δ*表示功率波动的绝对值，在式(3.21)的基础上改进，提出功率相对波动表达式如下：
+$$
+\Delta \left( k\right)  = \frac{\sqrt{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left( {{P}^{2}\left( {kT}\right)  - {\left( \frac{1}{n}\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}P\left( kT\right) \right) }^{2}}\right) }}{\frac{1}{n}\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}P\left( {kT}\right) } \tag{3.22}
+$$
 
-<img class="formula-display" src="../../images/p1-image329.png" style="width:177px" alt=""> (3.22)
+通过式(3.20) 式(3.22)可以得到风速波动系数和功率波动值，但上述公式计算时需要确定参数 $i$ 的取值。 由于风速变化到功率变化有一定滞后,受风轮惯性影响, $i$ 的取值主要考虑风轮惯性时间常数。 风轮-发电机转子的动力学模型可用图 3.18 近似表示。
 
-通过式(3.20)~式(3.22)可以得到风速波动系数和功率波动值，但上述公式计算时需要确定参数*i*的取值。由于风速变化到功率变化有一定滞后，受风轮惯性影响，*i* 的取值主要考虑风轮惯性时间常数。
-
-风轮-发电机转子的动力学模型可用图3.18近似表示。
-
-<img class="content-image" src="../../images/p1-image330.png" style="width:1471px" alt="">
+![89_563_244_536_232_0.jpg](../../images/p1-89_563_244_536_232_0.jpg)
 
 图 3.18 风轮和发电机转子的动力学模型
 
-不考虑扭转刚度和阻尼的影响，忽略轴承摩擦的影响，转子动力学方程可简化为
+不考虑扭转刚度和阻尼的影响, 忽略轴承摩擦的影响, 转子动力学方程可简化为
 
-<img class="formula-display" src="../../images/p1-image331.png" style="width:99px" alt=""> (3.23)
+$$
+{T}_{rt} = {T}_{eg} + \left( {{J}_{rt} + {J}_{eg}}\right) \frac{\mathrm{d}\omega }{\mathrm{d}t} \tag{3.23}
+$$
 
 式(3.23)可以变为
 
-<img class="formula-display" src="../../images/p1-image332.png" style="width:119px" alt=""> (3.24)
+$$
+\frac{\mathrm{d}\omega }{\mathrm{d}t} = \left( {{T}_{rt} - {T}_{eg}}\right) /\left( {{J}_{rt} + {J}_{eg}}\right) \tag{3.24}
+$$
 
-若将风轮转速从0上升至最大允许转速*ω*<sub>0</sub>的时间定义为风轮-发电机转子系统的机械时间常数*t*<sub>0</sub>，则有
+若将风轮转速从 0 上升至最大允许转速 ${\omega }_{0}$ 的时间定义为风轮-发电机转子系统的机械时间常数 ${t}_{0}$ ,则有
 
-<img class="formula-display" src="../../images/p1-image333.png" style="width:69px" alt=""> (3.25)
+$$
+{t}_{0} = {\omega }_{0}\frac{{J}_{\mathrm{{rt}}} + {J}_{\mathrm{{eg}}}}{{T}_{\mathrm{{rt}}} - {T}_{\mathrm{{eg}}}} \tag{3.25}
+$$
 
-图3.19为风速波动-功率波动分析计算流程，具体做法如下。
+图 3.19 为风速波动-功率波动分析计算流程, 具体做法如下。
 
-<img class="content-image" src="../../images/p1-image334.png" style="width:906px" alt="">
+![89_461_1113_730_961_0.jpg](../../images/p1-89_461_1113_730_961_0.jpg)
 
-图3.19 风速波动-功率波动分析计算流程
+图 3.19 风速波动-功率波动分析计算流程
 
-首先从SCADA数据中提取出风速和功率数据，然后选择样本区间，用于计算的样本区间应无停机、发电机输出功率为0、空值以及偏航角大于45°的数据，因为风电机组运行过程中在偏航角超过20°时便会进行偏航对风控制，大于45°可认为是异常状态。用于计算的数据按转速划分为*C*<sub>p</sub>恒定区、过渡区和功率恒定区三个工况数据，即图3.17中的3、4、5这三个阶段，因为1、2阶段只在启动时出现而不予考虑。对于某2MW直驱式风电机组，*C*<sub>p</sub>恒定区指的是风轮转速在6r/min到15.5r/min的区域，功率恒定区指的是风轮转速大于17r/min的区域，过渡区指的是风轮转速在15.5r/min到17r/min的区域。对于不同的工况数据，根据式(3.18)和式(3.19)计算出风速动态波动系数和风电机组功率标准差。需要指出的是，对于同一风速波动系数，计算出的功率标准差有多个，为便于分析，对功率标准差采用均值法进行单值化处理，即一个风速波动数据对应一个功率标准差。
+首先从 SCADA 数据中提取出风速和功率数据，然后选择样本区间，用于计算的样本区间应无停机、发电机输出功率为 0 、空值以及偏航角大于 45°的数据，因为风电机组运行过程中在偏航角超过 20°时便会进行偏航对风控制，大于 ${45}^{ \circ  }$ 可认为是异常状态。用于计算的数据按转速划分为 ${C}_{\mathrm{p}}$ 恒定区、过渡区和功率恒定区三个工况数据, 即图 3.17 中的 3、4、5 这三个阶段, 因为 1、2 阶段只在启动时出现而不予考虑。对于某 $2\mathrm{{MW}}$ 直驱式风电机组， ${C}_{\mathrm{p}}$ 恒定区指的是风轮转速在 $6\mathrm{r}/\mathrm{{min}}$ 到 ${15.5}\mathrm{r}/\mathrm{{min}}$ 的区域，功率恒定区指的是风轮转速大于 ${17}\mathrm{r}/\mathrm{{min}}$ 的区域，过渡区指的是风轮转速在 ${15.5}\mathrm{r}/\mathrm{{min}}$ 到 ${17}\mathrm{r}/\mathrm{{min}}$ 的区域。对于不同的工况数据，根据式(3.18)和式(3.19)计算出风速动态波动系数和风电机组功率标准差。需要指出的是，对于同一风速波动系数, 计算出的功率标准差有多个, 为便于分析, 对功率标准差采用均值法进行单值化处理, 即一个风速波动数据对应一个功率标准差。
 
-图3.20为计算得到的风速波动-功率波动关系图。图3.20(a)和(b)是*C*<sub>p</sub>恒定区内的风速、轮毂转速曲线以及风速波动与功率波动的曲线；图3.20(c)和(d)是过渡区内的风速、轮毂转速曲线以及风速波动与功率波动的曲线；图3.20(e)和(f)是功率恒定区内的风速、轮毂转速曲线以及风速波动与功率波动的曲线。风速波动系数为无量纲值，大小在0~1范围变化，功率标准差单位为kW，相对功率波动为无量纲值。从图中可以看出，三个区域内风速波动系数变化都接近到1。在*C*<sub>p</sub>恒定区，随着风速波动系数的增加，功率标准差也增加，整体呈单调上升趋势，风速波动系数在0.15附近时，功率标准差接近0；风速波动系数在0.85附近时，功率标准差约为175kW。在该区域，相对功率波动在0.1~0.25范围变化，变化趋势先是随着风速波动系数增加而缓慢下降，然后随风速波动系数增加而增加。在过渡区和功率恒定区，风速波动系数的变化对功率波动的影响不大，特别是在功率恒定区域，风速波动系数从0.3增加到0.95，功率标准差维持在215~220kW范围内波动，波动幅度很小；相对功率波动值在0.11附近基本不变。通过对比不难发现，在*C*<sub>p</sub>恒定区，风速的波动对功率波动有很大的影响；在功率恒定区，风速的波动并不是引起功率波动的主要原因，因为该阶段是通过变桨距技术限制功率捕获，所以风速波动系数的大小并没有直接影响功率波动值。
+图 3.20 为计算得到的风速波动一功率波动关系图。图 3.20(a)和(b)是 ${C}_{\mathrm{p}}$ 恒定区内的风速、轮毂转速曲线以及风速波动与功率波动的曲线; 图 3.20(c)和(d)是过渡区内的风速、轮毂转速曲线以及风速波动与功率波动的曲线; 图 3.20(e)和(f)是功率恒定区内的风速、轮毂转速曲线以及风速波动与功率波动的曲线。风速波动系数为无量纲值,大小在 $0 \sim  1$ 范围变化,功率标准差单位为 $\mathrm{{kW}}$ ,相对功率波动为无量纲值。从图中可以看出,三个区域内风速波动系数变化都接近到 1 。在 ${C}_{\mathrm{p}}$ 恒定区,随着风速波动系数的增加,功率标准差也增加, 整体呈单调上升趋势, 风速波动系数在 0.15 附近时, 功率标准差接近 0 ; 风速波动系数在 0.85 附近时,功率标准差约为 ${175}\mathrm{{kW}}$ 。在该区域,相对功率波动在 ${0.1} \sim  {0.25}$ 范围变化,变化趋势先是随着风速波动系数增加而缓慢下降, 然后随风速波动系数增加而增加。在过渡区和功率恒定区, 风速波动系数的变化对功率波动的影响不大, 特别是在功率恒定区域, 风速波动系数从 0.3 增加到 0.95, 功率标准差维持在 215~220kW 范围内波动，波动幅度很小；相对功率波动值在 0.11 附近基本不变。通过对比不难发现，在 ${C}_{\mathrm{p}}$ 恒定区, 风速的波动对功率波动有很大的影响; 在功率恒定区, 风速的波动并不是引起功率波动的主要原因, 因为该阶段是通过变桨距技术限制功率捕获, 所以风速波动系数的大小并没有直接影响功率波动值。
 
-<img class="content-image" src="../../images/p1-image335.png" style="width:2579px" alt="">
+![90_148_1415_1368_765_0.jpg](../../images/p1-90_148_1415_1368_765_0.jpg)
 
-<img class="content-image" src="../../images/p1-image336.png" style="width:2590px" alt="">
+![91_150_163_1362_376_0.jpg](../../images/p1-91_150_163_1362_376_0.jpg)
 
-<img class="content-image" src="../../images/p1-image337.png" style="width:2611px" alt="">
-
-图3.20 风速波动-功率波动关系
+图 3.20 风速波动-功率波动关系
 
 ### 3.2.3 风向波动与功率波动一维评价模型
 
-1\. 风向波动系数
+#### 3.2.3.1 风向波动系数
 
-风向就是风的方向，通常用不同的方位来描述，如图3.21所示。风的方向变化是连续的，风电机组风轮轴线和风向通常处于不平行状态。显然，处于偏航状态的风轮比没有偏航的风轮效率低。根据空气动力学理论，风轮轴线与风向平行时，理论上风轮圆盘上的诱导速度相同，而当风轮轴线与风向不平行时(夹角称为偏航角<img class="formula-inline" src="../../images/p1-image338.png" style="width:8px" alt="">)，诱导速度将发生变化。偏航状态下的风轮特性非常复杂，还缺乏精确的物理计算模型。已有研究表明，受偏航角的影响，气流流经风轮后形成的尾流中心线与转轴会形成一个如图3.22所示的偏斜角<img class="formula-inline" src="../../images/p1-image339.png" style="width:10px" alt="">，这个偏斜角<img class="formula-inline" src="../../images/p1-image340.png" style="width:10px" alt="">会比偏航角<img class="formula-inline" src="../../images/p1-image341.png" style="width:8px" alt="">还大。有关文献从作用在风轮上的速度分量对偏斜角进行了定义<sup>\[20\]</sup>：
+风向就是风的方向，通常用不同的方位来描述，如图 3.21 所示。风的方向变化是连续的，风电机组风轮轴线和风向通常处于不平行状态。显然, 处于偏航状态的风轮比没有偏航的风轮效率低。根据空气动力学理论, 风轮轴线与风向平行时, 理论上风轮圆盘上的诱导速度相同, 而当风轮轴线与风向不平行时(夹角称为偏航角 $\gamma$ ),诱导速度将发生变化。偏航状态下的风轮特性非常复杂,还缺乏精确的物理计算模型。已有研究表明, 受偏航角的影响, 气流流经风轮后形成的尾流中心线与转轴会形成一个如图 3.22 所示的偏斜角 $\chi$ ，这个偏斜角 $\chi$ 会比偏航角 $\gamma$ 还大。有关文献从作用在风轮上的速度分量对偏斜角进行了定义 ${}^{\left\lbrack  {20}\right\rbrack  }$ :
 
-<img class="formula-display" src="../../images/p1-image342.png" style="width:93px" alt=""> (3.26)
+$$
+\tan \chi  = \frac{\sin \gamma  - a\tan \frac{\chi }{2}}{\cos \gamma  - a} \tag{3.26}
+$$
 
-根据风电机组空气动力学理论，处于偏航状态下的风电机组推力系数*C<sub>T</sub>*和风能利用系数*C<sub>P</sub>*可表达为
+根据风电机组空气动力学理论,处于偏航状态下的风电机组推力系数 ${C}_{T}$ 和风能利用系数 ${C}_{P}$ 可表达为
 
-<img class="formula-display" src="../../images/p1-image343.png" style="width:204px" alt=""> (3.27)
+$$
+\left\{  \begin{array}{l} {C}_{T} = {4a}\left( {\cos \gamma  + \tan \frac{\chi }{2}\sin \gamma  - a{\sec }^{2}\frac{\chi }{2}}\right) \\  {C}_{P} = {4a}\left( {\cos \gamma  + \tan \frac{\chi }{2}\sin \gamma  - a{\sec }^{2}\frac{\chi }{2}}\right) \left( {\cos \gamma  - a}\right)  \end{array}\right. \tag{3.27}
+$$
 
 偏航状态下的功率表达式为
 
-<img class="formula-display" src="../../images/p1-image344.png" style="width:230px" alt=""> (3.28)
+$$
+P = {2a}\left( {\cos \gamma  + \tan \frac{\chi }{2}\sin \gamma  - a{\sec }^{2}\frac{\chi }{2}}\right) \left( {\cos \gamma  - a}\right) {\rho \pi }{R}^{2}{v}^{3} \tag{3.28}
+$$
 
-<img class="content-image" src="../../images/p1-image345.png" style="width:625px" alt="">
+![92_551_159_553_552_0.jpg](../../images/p1-92_551_159_553_552_0.jpg)
 
-图3.21 风向方位图
+图 3.21 风向方位图
 
-从式(3.28)可以看出，偏航状态下的功率特性非常复杂。与风速、偏航角、尾流偏斜角、诱导因子均有关系，并且，这种解析描述是由静态条件演变而来，在风电机组动态运行过程中，其准确性还需要进一步完善。需要说明的是，式(3.28)中，在现场环境中能够测量的参数只有风速、偏航角和功率。因此，从风电机组实际运行SCADA数据中，提取风电机组功率和偏航数据，统计分析、定性定量描述偏航波动对功率波动的影响是必须的。
+从式(3.28)可以看出, 偏航状态下的功率特性非常复杂。与风速、偏航角、尾流偏斜角、诱导因子均有关系, 并且, 这种解析描述是由静态条件演变而来, 在风电机组动态运行过程中, 其准确性还需要进一步完善。需要说明的是, 式(3.28)中, 在现场环境中能够测量的参数只有风速、偏航角和功率。因此, 从风电机组实际运行 SCADA 数据中, 提取风电机组功率和偏航数据, 统计分析、定性定量描述偏航波动对功率波动的影响是必须的。
 
-<img class="content-image" src="../../images/p1-image346.png" style="width:295px" alt="">
+![92_509_1076_628_290_0.jpg](../../images/p1-92_509_1076_628_290_0.jpg)
 
-图3.22 偏航状态下风轮上速度分量
+图 3.22 偏航状态下风轮上速度分量
 
-在风电机组实际运行过程中，当偏航角大于设定的临界值时，偏航电机就会启动，转动机舱对风。为了定量描述风向变化对功率变化的影响，提出风向波动系数，其计算方法如下。
+在风电机组实际运行过程中，当偏航角大于设定的临界值时，偏航电机就会启动，转动机舱对风。为了定量描述风向变化对功率变化的影响, 提出风向波动系数, 其计算方法如下。
 
-首先，确定最大偏航角变化值：
+首先，确定最大偏航角变化值:
 
-<img class="formula-display" src="../../images/p1-image347.png" style="width:146px" alt=""> (3.29)
+$$
+{\gamma }_{\max } = \max \frac{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {\gamma \left( {kT}\right)  - \gamma \left( {\left( {k + 1}\right) T}\right) }\right| }{n} \tag{3.29}
+$$
 
-式中，<img class="formula-inline" src="../../images/p1-image348.png" style="width:49px" alt="">。
+式中, $i = 1,2,3,\cdots$ 。
 
-然后，定义动态偏航波动系数<img class="formula-inline" src="../../images/p1-image349.png" style="width:9px" alt="">为
+然后,定义动态偏航波动系数 ${b}_{i}$ 为
 
-<img class="formula-display" src="../../images/p1-image350.png" style="width:126px" alt=""> (3.30)
+$$
+{b}_{i} = \frac{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {\gamma \left( {kT}\right)  - \gamma \left( {\left( {k + 1}\right) T}\right) }\right| }{n{\gamma }_{\max }} \tag{3.30}
+$$
 
-2\. 风向波动与功率波动分析
+#### 3.2.3.2 风向波动与功率波动分析
 
-图3.23为得到的风向波动-功率波动关系图。图3.23(a)和图3.23(b)是*C*<sub>p</sub>恒定区内的偏航对风角、轮毂转速曲线以及风向波动与功率波动的曲线；图3.23(c)和图3.23(d)是过渡区内的偏航对风角、轮毂转速曲线以及风向波动与功率波动的曲线；图3.23(e)和图3.23(f)是功率恒定区内的偏航对风角、轮毂转速曲线以及风向波动与功率波动的曲线。从图可见，由于样本数据主要集中在额定风速以下，在*C*<sub>p</sub>恒定区风向波动较大且变化较快；在过渡区和功率恒定区，偏航对风角基本上都在±20°范围内。偏航波动系数在*C*<sub>p</sub>恒定区变化范围较大，在0.05~1范围内；在过渡区，变化范围较小，在0.03~0.18范围内；在功率恒定区，变化范围为0.03~0.15。在*C*<sub>p</sub>恒定区，功率标准差较小，最大值为60 kW，整体上随着偏航波动系数增加而减小，相对功率波动值随偏航波动系数增加则呈现先升后降的过程。这与图3.20(b)中风速波动系数对功率标准差的影响不同，这也说明风电机组功率波动的主要因素是风速变化而非偏航角的变化。在过渡区随着偏航波动系数的增加，风电机组功率标准差和相对波动值略有变化；在功率恒定区，偏航波动系数的变化对风电机组功率波动基本上无影响。
+图 3.23 为得到的风向波动-功率波动关系图。图 3.23(a)和图 3.23(b)是 ${C}_{\mathrm{p}}$ 恒定区内的偏航对风角、轮毂转速曲线以及风向波动与功率波动的曲线；图 3.23(c)和图 3.23(d)是过渡区内的偏航对风角、轮毂转速曲线以及风向波动与功率波动的曲线; 图 3.23(e)和图 3.23(f)是功率恒定区内的偏航对风角、轮毂转速曲线以及风向波动与功率波动的曲线。从图可见,由于样本数据主要集中在额定风速以下,在 ${C}_{\mathrm{p}}$ 恒定区风向波动较大且变化较快; 在过渡区和功率恒定区,偏航对风角基本上都在 $\pm  {20}^{ \circ  }$ 范围内。偏航波动系数在 ${C}_{\mathrm{p}}$ 恒定区变化范围较大，在 0.05~1 范围内；在过渡区，变化范围较小，在 0.03~0.18 范围内；在功率恒定区，变化范围为 0.03~0.15。在 ${C}_{\mathrm{p}}$ 恒定区，功率标准差较小，最大值为 60kW，整体上随着偏航波动系数增加而减小， 相对功率波动值随偏航波动系数增加则呈现先升后降的过程。这与图 3.20(b)中风速波动系数对功率标准差的影响不同, 这也说明风电机组功率波动的主要因素是风速变化而非偏航角的变化。在过渡区随着偏航波动系数的增加, 风电机组功率标准差和相对波动值略有变化; 在功率恒定区, 偏航波动系数的变化对风电机组功率波动基本上无影响。
 
-<img class="content-image" src="../../images/p1-image351.png" style="width:1931px" alt="">
+![93_149_643_1366_1156_0.jpg](../../images/p1-93_149_643_1366_1156_0.jpg)
 
-<img class="content-image" src="../../images/p1-image352.png" style="width:2029px" alt="">
-
-<img class="content-image" src="../../images/p1-image353.png" style="width:2024px" alt="">
-
-图3.23 风向波动-功率波动关系
+图 3.23 风向波动-功率波动关系
 
 ### 3.2.4 风速、风向波动与功率波动二维评价模型
 
-1\. 综合影响因子(幅值、相位)定义
+#### 3.2.4.1 综合影响因子(幅值、相位)定义
 
-风速波动的同时也存在风向波动，两者共同作用影响着风电机组功率波动，三者之间关系如图3.24所示。用*x*轴表示风速波动系数，*y*轴表示偏航波动系数，*z*轴表示功率波动系数，SCADA系统每一次采样，便有一个坐标<img class="formula-inline" src="../../images/p1-image354.png" style="width:44px" alt="">。
+风速波动的同时也存在风向波动，两者共同作用影响着风电机组功率波动，三者之间关系如图 3.24 所示。用 $x$ 轴表示风速波动系数， $y$ 轴表示偏航波动系数， $z$ 轴表示功率波动系数，SCADA 系统每一次采样， 便有一个坐标 $\left( {{a}_{i},{b}_{i},{\delta }_{i}}\right)$ 。
 
-<img class="content-image" src="../../images/p1-image355.png" style="width:590px" alt="">
+![94_551_249_557_293_0.jpg](../../images/p1-94_551_249_557_293_0.jpg)
 
-图3.24 风速、风向、功率波动系数
+图 3.24 风速、风向、功率波动系数
 
-在<img class="formula-inline" src="../../images/p1-image356.png" style="width:13px" alt="">平面内，原点到点<img class="formula-inline" src="../../images/p1-image357.png" style="width:29px" alt="">的距离<img class="formula-inline" src="../../images/p1-image358.png" style="width:9px" alt="">反映了风速波动系数与偏航波动系数对功率波动综合影响的大小，称<img class="formula-inline" src="../../images/p1-image359.png" style="width:8px" alt="">为综合影响因子幅值；<img class="formula-inline" src="../../images/p1-image360.png" style="width:8px" alt="">与<img class="formula-inline" src="../../images/p1-image361.png" style="width:8px" alt="">轴的夹角<img class="formula-inline" src="../../images/p1-image362.png" style="width:14px" alt="">反映了风速波动系数与偏航波动系数的主导关系，<img class="formula-inline" src="../../images/p1-image363.png" style="width:12px" alt="">为0°表示仅有风速波动，<img class="formula-inline" src="../../images/p1-image363.png" style="width:12px" alt="">为90°表示仅有偏航波动，称<img class="formula-inline" src="../../images/p1-image364.png" style="width:11px" alt="">为综合影响因子相位。<img class="formula-inline" src="../../images/p1-image358.png" style="width:9px" alt="">和<img class="formula-inline" src="../../images/p1-image363.png" style="width:12px" alt="">可表示为
+在 ${xy}$ 平面内，原点到点 $\left( {{a}_{i},{b}_{i}}\right)$ 的距离 ${r}_{i}$ 反映了风速波动系数与偏航波动系数对功率波动综合影响的大小， 称 $r$ 为综合影响因子幅值; ${r}_{i}$ 与 $x$ 轴的夹角 ${\theta }_{Pi}$ 反映了风速波动系数与偏航波动系数的主导关系, ${\theta }_{Pi}$ 为 ${0}^{ \circ  }$ 表示仅有风速波动, ${\theta }_{{P}_{i}}$ 为 ${90}^{ \circ  }$ 表示仅有偏航波动,称 ${\theta }_{P}$ 为综合影响因子相位。 ${r}_{i}$ 和 ${\theta }_{{P}_{i}}$ 可表示为
 
-<img class="formula-display" src="../../images/p1-image365.png" style="width:292px" alt=""> (3.31)
+$$
+{r}_{i} = \sqrt{{a}_{i}^{2} + {b}_{i}^{2}}
+$$
 
-<img class="content-image" src="../../images/p1-image366.png" style="width:282px" alt=""> (3.32)
+$$
+= \sqrt{\frac{{\left( \mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| v\left( kT\right)  - v\left( \left( k + 1\right) T\right) \right| \right) }^{2}}{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {{v}^{2}\left( {kT}\right)  - {v}^{2}\left( {\left( {k + 1}\right) T}\right) }\right| } + \frac{{\left( \mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| \gamma \left( kT\right)  - \gamma \left( \left( k + 1\right) T\right) \right| \right) }^{2}}{{\left( n{\gamma }_{\max }\right) }^{2}}} \tag{3.31}
+$$
 
-2\. 风向、风向波动与功率波动分析
+$$
+{\theta }_{Pi} = \arctan \frac{{b}_{i}}{{a}_{i}}
+$$
 
-图3.25为风向、偏航波动—功率波动关系。图3.25(a)为一段时间内风速与偏航角曲线，可以看出风速的波动与风向的波动是随机的，两者之间无可见变化规律，图3.25(b)为对应的风速波动系数和偏航波动系数，分别由式(3.31)和式(3.32)计算得到。图3.25(c)、(d)和(e)分别是在*C*<sub>p</sub>恒定区、过渡区和功率恒定区得到的风速波动系数、偏航波动系数和功率标准差之间的关系。由图可以看出，在*C*<sub>p</sub>恒定区数据点最为分散，这一阶段的工况特征是无变桨距动作，风轮转速变化范围大，属于最大风能利用区，计算得到的功率标准差也最为分散。理论上，偏航波动系数与风电机组运行阶段无关，只取决于风向变化的快慢，由外部环境所左右，属于典型的随机过程。由图不难发现，在过渡区和功率恒定区，偏航波动系数较*C*<sub>p</sub>恒定区小而集中，这与该风场风资源特性和采样时间有关。图3.25(f)显示了综合影响因子幅值、相位和功率标准差之间的关系。基于SCADA数据，计算出来的幅值在0.1~1范围变化；相位在0~70°范围变化，图中数据分布呈现两个集中区域。图3.25(g)和(h)分别表示了综合影响因子相位和幅值变化对功率标准差的影响。随着角度的增加，功率标准差呈现逐步下降趋势，根据前面定义，相位越大，表明偏航波动的主导性越强，也就是说当综合影响因素不变，而风速波动逐渐弱化，偏航波动逐渐加强时，风电机组功率波动是逐渐减小的。随着幅值的增加，功率标准差是逐渐增加的，相位角越大，这种趋势就越明显，这更进一步表明风速变化是功率波动的主要影响因素。
+$$
+= \arctan \frac{\sqrt{\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {{v}^{2}\left( {kT}\right)  - {v}^{2}\left( {\left( {k + 1}\right) T}\right) }\right| }\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {\gamma \left( {kT}\right)  - \gamma \left( {\left( {k + 1}\right) T}\right) }\right| }{n{\gamma }_{\max }\mathop{\sum }\limits_{{k = 1 + i}}^{{n + i}}\left| {v\left( {kT}\right)  - v\left( {\left( {k + 1}\right) T}\right) }\right| } \tag{3.32}
+$$
 
-<img class="content-image" src="../../images/p1-image367.png" style="width:2233px" alt="">
+#### 3.2.4.2 风向、风向波动与功率波动分析
 
-<img class="content-image" src="../../images/p1-image368.png" style="width:2142px" alt="">
+图 3.25 为风向、偏航波动一功率波动关系。图 3.25(a)为一段时间内风速与偏航角曲线, 可以看出风速的波动与风向的波动是随机的，两者之间无可见变化规律，图 3.25(b)为对应的风速波动系数和偏航波动系数,分别由式(3.31)和式(3.32)计算得到。图 3.25(c)、(d)和(e)分别是在 ${C}_{\mathrm{p}}$ 恒定区、过渡区和功率恒定区得到的风速波动系数、偏航波动系数和功率标准差之间的关系。由图可以看出,在 ${C}_{\mathrm{p}}$ 恒定区数据点最为分散, 这一阶段的工况特征是无变桨距动作, 风轮转速变化范围大, 属于最大风能利用区, 计算得到的功率标准差也最为分散。理论上, 偏航波动系数与风电机组运行阶段无关, 只取决于风向变化的快慢, 由外部环境所左右，属于典型的随机过程。由图不难发现，在过渡区和功率恒定区，偏航波动系数较 ${C}_{\mathrm{p}}$ 恒定区小而集中，这与该风场风资源特性和采样时间有关。图 3.25(f)显示了综合影响因子幅值、相位和功率标准差之间的关系。基于 SCADA 数据,计算出来的幅值在 ${0.1} \sim  1$ 范围变化; 相位在 $0 \sim  {70}^{ \circ  }$ 范围变化,图中数据分布呈现两个集中区域。图 3.25(g)和(h)分别表示了综合影响因子相位和幅值变化对功率标准差的影响。随着角度的增加, 功率标准差呈现逐步下降趋势, 根据前面定义, 相位越大, 表明偏航波动的主导性越强, 也就是说当综合影响因素不变，而风速波动逐渐弱化，偏航波动逐渐加强时，风电机组功率波动是逐渐减小的。 随着幅值的增加, 功率标准差是逐渐增加的, 相位角越大, 这种趋势就越明显, 这更进一步表明风速变化是功率波动的主要影响因素。
 
-<img class="content-image" src="../../images/p1-image369.png" style="width:2165px" alt="">
+![95_140_278_1389_1487_0.jpg](../../images/p1-95_140_278_1389_1487_0.jpg)
 
-<img class="content-image" src="../../images/p1-image370.png" style="width:2204px" alt="">
+图 3.25 风向、偏航波动-功率波动关系
 
-图3.25 风向、偏航波动-功率波动关系
-
-## 3.3 风电机组风能利用系数SCADA数据分析
+## 3.3 风电机组风能利用系数 SCADA 数据分析
 
 ### 3.3.1 基于数据拟合的风能利用系数计算
 
-1\. 计算方法
+1. 计算方法
 
-在分析风电机组控制策略时，其控制过程大致可分为三个区域：<img class="formula-inline" src="../../images/p1-image371.png" style="width:13px" alt="">恒定区，恒转速区和恒功率区。<img class="formula-inline" src="../../images/p1-image371.png" style="width:13px" alt="">恒定区是指风速低于其额定值，风电机组遵循给定的速度转矩曲线来控制，风能利用系数达到最大值(恒<img class="formula-inline" src="../../images/p1-image372.png" style="width:24px" alt="">)。恒转速区是功率小于其额定值，但转速达到了最大值。恒功率区是风速大于额定值，需要调节桨距角，将输出功率稳定于额定值。当风速大于额定值时，输出功率需要通过调节桨距角来限制其额定值，这时风能利用系数随风速的增大而减小。因此，对风能利用系数的更多关注是额定风速以下，如何通过调整转速来保持<img class="formula-inline" src="../../images/p1-image371.png" style="width:13px" alt="">的最大值，风速、转矩和功率之间的关系如图3.26所示。
+在分析风电机组控制策略时,其控制过程大致可分为三个区域: ${C}_{p}$ 恒定区,恒转速区和恒功率区。 ${C}_{p}$ 恒定区是指风速低于其额定值,风电机组遵循给定的速度转矩曲线来控制,风能利用系数达到最大值 (恒 ${C}_{p\max }$ )。 恒转速区是功率小于其额定值, 但转速达到了最大值。恒功率区是风速大于额定值, 需要调节桨距角, 将输出功率稳定于额定值。当风速大于额定值时, 输出功率需要通过调节桨距角来限制其额定值, 这时风能利用系数随风速的增大而减小。因此, 对风能利用系数的更多关注是额定风速以下, 如何通过调整转速来保持 ${C}_{p}$ 的最大值,风速、转矩和功率之间的关系如图 3.26 所示。
 
-<div class="image-row"><img class="content-image" src="../../images/p1-image373.png" style="width:642px" alt=""><img class="content-image" src="../../images/p1-image374.png" style="width:629px" alt=""></div>
+![96_214_534_1212_378_0.jpg](../../images/p1-96_214_534_1212_378_0.jpg)
 
-\(a\) 转速-转矩曲线 (b) 风速-功率曲线
-
-图3.26 风速、转速和功率的关系
+图 3.26 风速、转速和功率的关系
 
 风轮获得的机械能与风能利用系数的关系可表示为
 
-<img class="formula-display" src="../../images/p1-image375.png" style="width:206px" alt=""> (3.33)
+$$
+{P}_{rt} = {T}_{rt}{\omega }_{rt} = {0.5}{C}_{p}{\rho \pi }{R}^{2}{v}^{3} = {0.5\rho A}{C}_{p}{\left( \left( R/\lambda \right) {\omega }_{rt}\right) }^{3} \tag{3.33}
+$$
 
-在<img class="formula-inline" src="../../images/p1-image371.png" style="width:13px" alt="">恒定区，<img class="formula-inline" src="../../images/p1-image371.png" style="width:13px" alt="">达到最大值，叶尖速比达到最优值，机械能是转速的三次方，所以扭矩和转速之间的关系可以表示为
+在 ${C}_{p}$ 恒定区, ${C}_{p}$ 达到最大值,叶尖速比达到最优值,机械能是转速的三次方,所以扭矩和转速之间的关系可以表示为
 
-<img class="formula-display" src="../../images/p1-image376.png" style="width:114px" alt=""> (3.34)
+$$
+{T}_{rt} = {0.5\rho A}{C}_{p}{\left( R/\lambda \right) }^{3}{\left( {\omega }_{rt}\right) }^{2} \tag{3.34}
+$$
 
-在风电机组实际控制中，最大功率点的跟踪由式（3.34）根据准确测量的转速值实现的。
+在风电机组实际控制中, 最大功率点的跟踪由式 (3.34) 根据准确测量的转速值实现的。
 
-考虑到风轮的机械能难以直接测量，在SCADA系统中实际测量的功率就是发电机功率。因此，方程(3.33)可以改写为
+考虑到风轮的机械能难以直接测量, 在 SCADA 系统中实际测量的功率就是发电机功率。因此, 方程(3.33) 可以改写为
 
-<img class="formula-display" src="../../images/p1-image377.png" style="width:162px" alt=""> (3.35)
+$$
+{P}_{\text{ gen }} = {0.5\eta \rho A}{C}_{p}{\left( \left( R/\lambda \right) {\omega }_{rt}\right) }^{3} = {k}_{0}{\left( {\omega }_{rt}\right) }^{3} \tag{3.35}
+$$
 
-根据空气动力学理论，气流通过风轮如图3.27所示。在图3.27中，<img class="formula-inline" src="../../images/p1-image378.png" style="width:9px" alt=""> 为风轮前的风速值，<img class="formula-inline" src="../../images/p1-image379.png" style="width:11px" alt="">为通过风轮的风速值，<img class="formula-inline" src="../../images/p1-image380.png" style="width:10px" alt="">为风轮后面的风速值，且它们之间存在这样的关系<img class="formula-inline" src="../../images/p1-image381.png" style="width:51px" alt=""> 。
+根据空气动力学理论,气流通过风轮如图 3.27 所示。在图 3.27 中, ${v}_{1}$ 为风轮前的风速值, ${v}_{d}$ 为通过风轮的风速值， ${v}_{2}$ 为风轮后面的风速值，且它们之间存在这样的关系 ${v}_{2} = 2{v}_{d} - {v}_{1}$ 。
 
-<img class="content-image" src="../../images/p1-image382.png" style="width:291px" alt="">
+![96_510_1728_641_377_0.jpg](../../images/p1-96_510_1728_641_377_0.jpg)
 
-图3.27 通过风轮的气流
+图 3.27 通过风轮的气流
 
-由图3.27可知
+由图 3.27 可知
 
-<img class="formula-display" src="../../images/p1-image383.png" style="width:110px" alt=""> (3.36)
+$$
+{v}_{d} + {\Delta v} = \left( {R/\lambda }\right) {\omega }_{rt} = {k}_{1}{\omega }_{rt} \tag{3.36}
+$$
 
-在SACDA系统中由于发电机的功率和转速能够准确测量，所以式(3.35)中的参数<img class="formula-inline" src="../../images/p1-image384.png" style="width:11px" alt="">可以用曲线拟合的方法得到。因此，风能利用系数可以表示为
+在 SACDA 系统中由于发电机的功率和转速能够准确测量,所以式(3.35)中的参数 ${k}_{0}$ 可以用曲线拟合的方法得到。因此，风能利用系数可以表示为
 
-<img class="formula-display" src="../../images/p1-image385.png" style="width:218px" alt=""> (3.37)
+$$
+{C}_{P} = 2{k}_{0}{\left( {\omega }_{rt}R/{v}_{1}\right) }^{3}/\left( {{\eta \rho A}{R}^{3}}\right)  = 2{k}_{0}{\left( {\omega }_{rt}/{v}_{1}\right) }^{3}/\left( {\eta \rho A}\right) \tag{3.37}
+$$
 
-根据气动理论，气团被吸收的动能可以表示为
+根据气动理论, 气团被吸收的动能可以表示为
 
-<img class="formula-display" src="../../images/p1-image386.png" style="width:157px" alt=""> (3.38)
+$$
+{P}_{rt} = {\rho A}{v}_{d}^{2}\left( {{v}_{1} - {v}_{2}}\right)  = {0.5\rho A}{v}_{d}\left( {{v}_{1}^{2} - {v}_{2}^{2}}\right) \tag{3.38}
+$$
 
-由于<img class="formula-inline" src="../../images/p1-image387.png" style="width:51px" alt="">，式(3.39)可以改写为
+由于 ${v}_{2} = 2{v}_{d} - {v}_{1}$ ,式(3.39)可以改写为
 
-<img class="formula-display" src="../../images/p1-image388.png" style="width:84px" alt=""> (3.39)
+$$
+{P}_{rt} = {2\rho A}{v}_{d}^{2}\left( {{v}_{1} - {v}_{d}}\right) \tag{3.39}
+$$
 
-忽略了机械能与发电机功率之间的差异，可将(3.35)式代入式(3.39)，可得
+忽略了机械能与发电机功率之间的差异, 可将(3.35)式代入式(3.39), 可得
 
-<img class="formula-display" src="../../images/p1-image389.png" style="width:105px" alt=""> (3.40)
+$$
+{k}_{0}{\left( {\omega }_{rt}\right) }^{3} = {2\rho A}{v}_{d}^{2}\left( {{v}_{1} - {v}_{d}}\right) \tag{3.40}
+$$
 
 根据式(3.40)和式(3.35)可得
 
-<img class="formula-display" src="../../images/p1-image390.png" style="width:184px" alt=""> (3.41)
+$$
+{v}_{1} = {k}_{0}{\omega }_{rt}^{3}/\left( {{2\rho A}{v}_{d}^{2}}\right)  + {v}_{d} = {P}_{gen}/\left( {{2\rho A}{v}_{d}^{2}}\right)  + {v}_{d} \tag{3.41}
+$$
 
 式(3.41)给出其中风速修正模型得到了风轮前的风速。将式(3.36)代入式(3.41)得到
 
-<img class="formula-display" src="../../images/p1-image391.png" style="width:128px" alt=""> (3.42)
+$$
+{v}_{1} = {k}_{0}{\omega }_{rt}^{3}/\left( {{2\rho A}{v}_{d}^{2}}\right)  + {v}_{d} = {k}_{1}{\omega }_{rt} \tag{3.42}
+$$
 
-在式(3.42)中，利用式(3.36)采用基于曲线拟合的方法得到<img class="formula-inline" src="../../images/p1-image392.png" style="width:11px" alt="">，对于<img class="formula-inline" src="../../images/p1-image393.png" style="width:14px" alt="">和<img class="formula-inline" src="../../images/p1-image394.png" style="width:11px" alt="">可以实测到。因此，<img class="formula-inline" src="../../images/p1-image395.png" style="width:10px" alt="">可通过曲线拟合得到。将式(3.42)代入式(3.37)，可得
+在式(3.42)中,利用式(3.36)采用基于曲线拟合的方法得到 ${k}_{0}$ ,对于 ${\omega }_{n}$ 和 ${v}_{d}$ 可以实测到。因此, ${k}_{1}$ 可通过曲线拟合得到。将式(3.42)代入式(3.37)，可得
 
-<img class="formula-display" src="../../images/p1-image396.png" style="width:99px" alt=""> (3.43)
+$$
+{C}_{P} = 2{k}_{0}{\left( 1/{k}_{1}\right) }^{3}/\left( {\eta \rho A}\right) \tag{3.43}
+$$
 
-式(3.43)为<img class="formula-inline" src="../../images/p1-image397.png" style="width:13px" alt="">恒定区风能利用系数的计算表达式(图3.26中区域3)。对于区域2和区域4，<img class="formula-inline" src="../../images/p1-image397.png" style="width:13px" alt="">的计算表达式分别为
+式(3.43)为 ${C}_{p}$ 恒定区风能利用系数的计算表达式(图 3.26 中区域 3)。对于区域 2 和区域 4, ${C}_{p}$ 的计算表达式分别为
 
-<img class="formula-display" src="../../images/p1-image398.png" style="width:240px" alt=""> （3.44）
+$$
+\left\{  \begin{matrix} {C}_{P} = \left( {{k}_{2or4}{\omega }_{rt} + {b}_{2or4}}\right) {\omega }_{rt}/\left( {{0.5\eta \rho S}{v}_{1}^{3}}\right) , \boxtimes  \text{ 域 }2 \\  {C}_{P} = 2\left( {{k}_{2or4}{\omega }_{rt} + {b}_{2or4}}\right) {\omega }_{rt}/\left( {\eta {P}_{gen}/\left( {2{v}_{d}^{2}}\right)  + {\eta \rho S}{v}_{d}}\right) {}^{3}, \boxtimes  \text{ 域 }4 \end{matrix}\right. \tag{3.44}
+$$
 
-由式(3.42)可知，区域2和区域4的风能利用系数不为常数，表现出了与风轮的转速和风速之间的复杂关系。
+由式(3.42)可知, 区域 2 和区域 4 的风能利用系数不为常数, 表现出了与风轮的转速和风速之间的复杂关系。
 
-2\. 风能利用系数计算与分析
+2. 风能利用系数计算与分析
 
-以山地风电场某2MW风电机组为例，选取其SCADA数据开展风能利用系数计算与分析。为了计算式(3.36)中的参数<img class="formula-inline" src="../../images/p1-image384.png" style="width:11px" alt="">，选择转速区间\[7.6r/min, 13.5r/min\]的数据，采用最小二乘拟合方法可得到风电机组的输出功率与转速函数关系为
+以山地风电场某 2MW 风电机组为例, 选取其 SCADA 数据开展风能利用系数计算与分析。为了计算式 (3.36)中的参数 ${k}_{0}$ ,选择转速区间[7.6r/min,13.5r/min]的数据,采用最小二乘拟合方法可得到风电机组的输出功率与转速函数关系为
 
-<img class="formula-display" src="../../images/p1-image399.png" style="width:117px" alt=""> (3.45)
+$$
+{P}_{\text{ gen }} = {k}_{0}{\omega }_{n}^{3} = {2.8141} \times  {10}^{5}{\omega }_{n}^{3} \tag{3.45}
+$$
 
-图3.28为风电机组风轮转速与风轮前方风速的关系。
+图 3.28 为风电机组风轮转速与风轮前方风速的关系。
 
-<img class="content-image" src="../../images/p1-image400.png" style="width:695px" alt="">
+![98_500_163_663_336_0.jpg](../../images/p1-98_500_163_663_336_0.jpg)
 
-图3.28 转速与风速的关系
+图 3.28 转速与风速的关系
 
-空气密度设置为1.2 kg/m<sup>3</sup>，采用最小二乘法拟合，可得
+空气密度设置为 ${1.2}\mathrm{\;{kg}}/{\mathrm{m}}^{3}$ ,采用最小二乘法拟合,可得
 
-<img class="formula-display" src="../../images/p1-image401.png" style="width:56px" alt=""> (3.46)
+$$
+{v}_{1} = {5.517}{\omega }_{rt} \tag{3.46}
+$$
 
 将式(3.45)和式(3.46)代入式(3.43)，可得
 
-<img class="formula-display" src="../../images/p1-image402.png" style="width:144px" alt=""> (3.47)
+$$
+{C}_{P} = 2{k}_{0}{\left( 1/{k}_{1}\right) }^{3}/\left( {\eta \rho S}\right)  = {0.397}/\eta \tag{3.47}
+$$
 
-上式表明，当风速小于11m/s时，<img class="formula-inline" src="../../images/p1-image403.png" style="width:13px" alt="">在区间\[7.6 r/min, 13.5 r/min\]中的值为<img class="formula-inline" src="../../images/p1-image404.png" style="width:36px" alt="">。若风电机组发电机效率<img class="formula-inline" src="../../images/p1-image405.png" style="width:32px" alt="">，则<img class="formula-inline" src="../../images/p1-image403.png" style="width:13px" alt="">为0.42。如果采用原始的风能利用系数计算方法，即直接利用机舱上的测风值，计算出风速与转速间的关系是<img class="formula-inline" src="../../images/p1-image406.png" style="width:62px" alt="">，<img class="formula-inline" src="../../images/p1-image407.png" style="width:47px" alt="">。这样，如果<img class="formula-inline" src="../../images/p1-image408.png" style="width:33px" alt="">，则<img class="formula-inline" src="../../images/p1-image409.png" style="width:14px" alt="">为0.6，显然，若不进行风速修正，计算出的风能利用系数大于理论计算的最大值0.593，这与实际情况不符。
+上式表明,当风速小于 $1\mathrm{{lm}}/\mathrm{s}$ 时, ${C}_{P}$ 在区间 $\left\lbrack  {{7.6}\mathrm{r}/\mathrm{{min}},{13.5}\mathrm{r}/\mathrm{{min}}}\right\rbrack$ 中的值为 ${0.397}/\eta$ 。若风电机组发电机效率 $\eta  = {0.95}$ ,则 ${C}_{P}$ 为 0.42。如果采用原始的风能利用系数计算方法,即直接利用机舱上的测风值,计算出风速与转速间的关系是 ${v}_{d} = {4.9025}{\omega }_{n},{C}_{P} = {0.57}/\eta$ 。这样,如果 $\eta  = {0.95}$ ,则 ${C}_{P}$ 为 0.6,显然,若不进行风速修正, 计算出的风能利用系数大于理论计算的最大值 0.593 , 这与实际情况不符。
 
 ### 3.3.2 基于实时数据的风能利用系数计算
 
-1\. 计算方法
+#### 3.3.2.1 计算方法
 
-上述风能利用系数计算与分析是基于风电机组风速、转速、功率数据拟合进行的。为了获得实时风能利用系数，考虑到风电机组运动动能，定义风能利用系数为总输出功率与通过风轮的气流总动能之比，即
+上述风能利用系数计算与分析是基于风电机组风速、转速、功率数据拟合进行的。为了获得实时风能利用系数, 考虑到风电机组运动动能, 定义风能利用系数为总输出功率与通过风轮的气流总动能之比, 即
 
-<img class="formula-display" src="../../images/p1-image410.png" style="width:378px" alt=""> (3.48)
+$$
+{C}_{P} = \left( {{\int }_{0}^{{t}_{2}}{P}_{\text{ gen }}\mathrm{d}t - {\int }_{0}^{{t}_{1}}{P}_{\text{ gen }}\mathrm{d}t + {\left. \frac{1}{2}{J}_{rt}{\omega }_{rt}\right| }_{t = {t}_{2}}^{2} - {\left. \frac{1}{2}{J}_{rt}{\omega }_{rt}\right| }_{t = {t}_{1}}^{2}}\right) /\left( {{\int }_{0}^{{t}_{2}}\frac{1}{2}{\rho \pi }{R}^{2}{v}_{1}^{3}\mathrm{\;d}t - {\int }_{0}^{{t}_{1}}\frac{1}{2}{\rho \pi }{R}^{2}{v}_{1}^{3}\mathrm{\;d}t}\right) \tag{3.48}
+$$
 
-式中，<img class="formula-inline" src="../../images/p1-image411.png" style="width:25px" alt="">；<img class="formula-inline" src="../../images/p1-image412.png" style="width:45px" alt="">。
+式中, ${t}_{2} > {t}_{1};{\Delta t} = {t}_{2} - {t}_{1}$ 。
 
-式（3.48）中分子代表的是<img class="formula-inline" src="../../images/p1-image413.png" style="width:13px" alt=""> 时间内发电机总输出功率与风轮中存储的机械能之和，分母代表的是<img class="formula-inline" src="../../images/p1-image414.png" style="width:12px" alt=""> 时间内气流通过风轮的总的动能。因为SCADA数据是离散数据，这里采用梯形积分法计算风能利用系数，如图3.29所示。为了消除风轮-发电机转子系统惯性影响，选取的时间段窗口宽度<img class="formula-inline" src="../../images/p1-image415.png" style="width:13px" alt=""> 也必须远大于系统机械时间常数。
+式 (3.48) 中分子代表的是 ${\Delta t}$ 时间内发电机总输出功率与风轮中存储的机械能之和,分母代表的是 ${\Delta t}$ 时间内气流通过风轮的总的动能。因为 SCADA 数据是离散数据, 这里采用梯形积分法计算风能利用系数, 如图 3.29 所示。为了消除风轮-发电机转子系统惯性影响,选取的时间段窗口宽度 ${\Delta t}$ 也必须远大于系统机械时间常数。
 
-<img class="content-image" src="../../images/p1-image416.png" style="width:629px" alt="">
+![99_394_171_881_621_0.jpg](../../images/p1-99_394_171_881_621_0.jpg)
 
-图3.29 风能利用系数计算流程图
+图 3.29 风能利用系数计算流程图
 
-2\. 风能利用系数计算与分析
+#### 3.3.2.2 风能利用系数计算与分析
 
-图3.30显示了实时的风能利用系数。风能利用系数曲线1~3分别对应<img class="formula-inline" src="../../images/p1-image417.png" style="width:13px" alt="">为<img class="formula-inline" src="../../images/p1-image418.png" style="width:8px" alt="">、<img class="formula-inline" src="../../images/p1-image419.png" style="width:16px" alt="">、<img class="formula-inline" src="../../images/p1-image420.png" style="width:22px" alt="">时的取值。风能利用系数曲线1的最小值为0.211，其最大值为0.508，平均值为0.366。风能利用系数曲线2的最小值为0.268，最大值为0.427，平均值为0.364。风能利用系数曲线3的最小值为0.280，最大值为0.416，平均值为0.363。很明显，随着时间间隔的增加，风能利用系数的波动幅度减小，但滞后时间增加。而且，时间间隔<img class="formula-inline" src="../../images/p1-image421.png" style="width:12px" alt="">的变化对风能利用系数平均值几乎没有影响。曲线1、曲线2和曲线3之间的差值随着时间间隔增加而减小，说明风能利用系数的计算结果是稳定的。这意味着式(3.48)适用于计算考虑了风轮-发电机转动惯量的基于实时数据的风能利用系数。
+图 3.30 显示了实时的风能利用系数。风能利用系数曲线 1~3 分别对应 ${\Delta t}$ 为 ${t}_{0}$ 、 $5{t}_{0}$ 、 ${10}{t}_{0}$ 时的取值。风能利用系数曲线 1 的最小值为 0.211，其最大值为 0.508，平均值为 0.366。风能利用系数曲线 2 的最小值为 0.268 , 最大值为 0.427 , 平均值为 0.364 。风能利用系数曲线 3 的最小值为 0.280 , 最大值为 0.416 , 平均值为 0.363 。很明显, 随着时间间隔的增加, 风能利用系数的波动幅度减小, 但滞后时间增加。而且, 时间间隔 ${\Delta t}$ 的变化对风能利用系数平均值几乎没有影响。曲线 1、曲线 2 和曲线 3 之间的差值随着时间间隔增加而减小, 说明风能利用系数的计算结果是稳定的。这意味着式(3.48)适用于计算考虑了风轮-发电机转动惯量的基于实时数据的风能利用系数。
 
-<img class="content-image" src="../../images/p1-image422.png" style="width:719px" alt="">
+![99_486_1402_686_315_0.jpg](../../images/p1-99_486_1402_686_315_0.jpg)
 
-图3.30 风能利用系数间接计算
+图 3.30 风能利用系数间接计算
 
 ### 3.3.3 基于工况分区的风能利用系数计算
 
-1\. 风电机组工况分区
+#### 3.3.3.1 风电机组工况分区
 
-风能利用系数是衡量风电机组风能捕获、转换效率的重要指标。前节3.3.1基于能量转换机制和数据拟合，对风电机组启动区、<img class="formula-inline" src="../../images/p1-image423.png" style="width:13px" alt="">恒定区、恒转速区等三个控制区风能利用系数进行了计算分析。这一节将以四台风电机组为对象，基于工况分区和分箱单值处理，对风电机组的风能利用系数进行深入研究。
+风能利用系数是衡量风电机组风能捕获、转换效率的重要指标。前节 3.3.1 基于能量转换机制和数据拟合,对风电机组启动区、 ${C}_{p}$ 恒定区、恒转速区等三个控制区风能利用系数进行了计算分析。这一节将以四台风电机组为对象, 基于工况分区和分箱单值处理, 对风电机组的风能利用系数进行深入研究。
 
-WT1、WT2、WT3、WT4的功率与转子转速曲线如图3.31所示。从图可见，四台风电机组功率和转子速度的曲线非常接近。根据曲线特征，风电机组可分为5个运行区域。区域A是启动区，功率和转子速度之间的关系近似线性；区域B是最大风跟踪阶段，区域C和D是区域B和E的过渡区；E区是恒功率区，发电机功率被限制在其额定值。一般来说，转速与功率之间呈现出明显的规律性。在一定速度下，相应的功率散点相对集中；随着转子转速的增加，输出功率逐渐增大；当转子转速上升到某个临界值（例如17r/min）后，功率输出保持平缓趋势。同时，转速也不能无限制的上升，也不会超过其最大值。此外，从区域B到区域E的过渡有两种模式，即C和D。当风速上升时，会出现区域C，换句话说，就是转速调节到桨距角调节的过渡；区域D出现在风速下降时，是桨距角调节向转速调节的过渡。这里考察的都是在额定功率以下风电机组运行区域，一般也视为最大风能利用区域，此区域内风电机组依据风轮转速来控制功率输出以获取最大风能，转速与功率曲线就是风电机组控制策略。
+WT1、WT2、WT3、WT4 的功率与转子转速曲线如图 3.31 所示。从图可见，四台风电机组功率和转子速度的曲线非常接近。根据曲线特征, 风电机组可分为 5 个运行区域。区域 A 是启动区, 功率和转子速度之间的关系近似线性; 区域 B 是最大风跟踪阶段, 区域 C 和 D 是区域 B 和 E 的过渡区; E 区是恒功率区, 发电机功率被限制在其额定值。一般来说，转速与功率之间呈现出明显的规律性。在一定速度下，相应的功率散点相对集中；随着转子转速的增加，输出功率逐渐增大；当转子转速上升到某个临界值(例如 ${17}\mathrm{r}/\mathrm{{min}}$ ) 后,功率输出保持平缓趋势。同时,转速也不能无限制的上升,也不会超过其最大值。此外,从区域 $\mathrm{B}$ 到区域 $\mathrm{E}$ 的过渡有两种模式,即 $\mathrm{C}$ 和 $\mathrm{D}$ 。当风速上升时,会出现区域 $\mathrm{C}$ ,换句话说,就是转速调节到桨距角调节的过渡; 区域 $\mathrm{D}$ 出现在风速下降时,是桨距角调节向转速调节的过渡。这里考察的都是在额定功率以下风电机组运行区域，一般也视为最大风能利用区域，此区域内风电机组依据风轮转速来控制功率输出以获取最大风能，转速与功率曲线就是风电机组控制策略。
 
-<img class="content-image" src="../../images/p1-image424.png" style="width:1517px" alt="">
+![100_162_630_1358_734_0.jpg](../../images/p1-100_162_630_1358_734_0.jpg)
 
-图3.31 功率与转速曲线
+图 3.31 功率与转速曲线
 
-2\. 转速与能量输出关系
+#### 3.3.3.2 转速与能量输出关系
 
-为了定量研究不同风电机组之间的差异，这里给出风电机组五个运行区域的功率和转速的一般关系表达式。在A、C、D、E四个区域中，采用线性表达式；对于区域B，由于它是最大风能利用阶段，功率与转速立方成正比，这些表达式为
+为了定量研究不同风电机组之间的差异, 这里给出风电机组五个运行区域的功率和转速的一般关系表达式。在 $\mathrm{A}\text{ 、 }\mathrm{C}\text{ 、 }\mathrm{D}\text{ 、 }\mathrm{E}$ 四个区域中,采用线性表达式; 对于区域 $\mathrm{B}$ ,由于它是最大风能利用阶段,功率与转速立方成正比, 这些表达式为
 
-<img class="formula-inline" src="../../images/p1-image425.png" style="width:7px" alt=""><img class="formula-inline" src="../../images/p1-image426.png" style="width:109px" alt=""> (3.49)
+$$
+\left\{  \begin{array}{ll} P = {k}_{A}\omega  + {b}_{A}, & \text{ 区域 }A \\  P = {k}_{B}{\omega }^{3} + {b}_{B}, & \text{ 区域 }B \\  P = {k}_{C}\omega  + {b}_{C}, & \text{ 区域 }C \\  P = {k}_{D}\omega  + {b}_{D}, & \text{ 区域 }D \\  P = {k}_{F}\omega  + {b}_{F}, & \text{ 区域 }E \end{array}\right. \tag{3.49}
+$$
 
-式中， *k<sub>x</sub>* 和 *b<sub>x</sub>* (*x*=*A*, *B*, *C*, *D*, *E*)为待定系数。
+式中, ${k}_{x}$ 和 ${b}_{x}\left( {x = A, B, C, D, E}\right)$ 为待定系数。
 
-估计未知参数 *k<sub>x</sub>* 和 *b<sub>x</sub>* 有许多方法，这里采用常用的最小二乘法，即
+估计未知参数 ${k}_{x}$ 和 ${b}_{x}$ 有许多方法,这里采用常用的最小二乘法,即
 
-<img class="formula-display" src="../../images/p1-image427.png" style="width:127px" alt=""> (3.50)
+$$
+H = \min \mathop{\sum }\limits_{{i = 1}}^{n}{\left( {P}_{i} - \left( {k}_{x}{\omega }_{i} + {b}_{x}\right) \right) }^{2} \tag{3.50}
+$$
 
-式中，*H* 是最小平方和； *n* 是数据集样本数。
+式中, $H$ 是最小平方和; $n$ 是数据集样本数。
 
-在求解式（3.50）问题时，采用 Levenberg-Marquardt（L-M）算法。L-M算法与其他最小化算法一样，是一个迭代过程。L-M 算法结合了梯度下降的鲁棒性与高斯-牛顿的快速收敛性。这意味着在许多情况下，即使一开始远离最终最小值，L-M 也可以找到解决方案。由此，可以获得每台风电机组五个区域待定系数 *k<sub>x</sub>* 和 *b<sub>x</sub>*，结果如图3.32和表3.4所示。
+在求解式 (3.50) 问题时, 采用 Levenberg-Marquardt (L-M) 算法。L-M 算法与其他最小化算法一样, 是一个迭代过程。L-M 算法结合了梯度下降的鲁棒性与高斯-牛顿的快速收敛性。这意味着在许多情况下， 即使一开始远离最终最小值，L-M 也可以找到解决方案。由此，可以获得每台风电机组五个区域待定系数 ${k}_{x}$ 和 ${b}_{x}$ ,结果如图 3.32 和表 3.4 所示。
 
-<img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image428.png"> <img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image429.png"> <img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image430.png"> <img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image431.png"> <img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image432.png">
+![101_186_326_1292_996_0.jpg](../../images/p1-101_186_326_1292_996_0.jpg)
 
-<img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image433.png"> <img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image434.png"> <img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image435.png"> <img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image436.png"> <img style="width:1.20897in;height:2.41739in" / src="../../images/p1-image437.png">
+(#1 为 WT1, #2 为 WT2, #3 为 WT3, #4 为 WT4)
 
-(#1为WT1， \#2为WT2，#3为WT3， \#4为WT4)
+图 3.32 拟合系数 (95%置信区间)
 
-图3.32 拟合系数( 95%置信区间)
+表 3.4 拟合系数(95% 置信区间)
 
-表3.4 拟合系数( 95% 置信区间)
+<table><tr><td colspan="3">区域 A</td><td colspan="2">区域 B</td><td colspan="2">区域 C</td><td colspan="2">区域 D</td><td colspan="2">区域 <span class="arithmatex">\(E\)</span></td></tr><tr><td rowspan="3">WT1</td><td><span class="arithmatex">\({k}_{A} = {255.6}\)</span></td><td><span class="arithmatex">\({b}_{A} =  - {1785}\)</span></td><td><span class="arithmatex">\({k}_{B} = {0.324}\)</span></td><td><span class="arithmatex">\({b}_{B} =  - {0.441}\)</span></td><td><span class="arithmatex">\({k}_{C} = {628.1}\)</span></td><td><span class="arithmatex">\({b}_{C} =  - {8533}\)</span></td><td><span class="arithmatex">\({k}_{D} = {375}\)</span></td><td><span class="arithmatex">\({b}_{D} =  - {4231}\)</span></td><td><span class="arithmatex">\({k}_{E} = {71.85}\)</span></td><td><span class="arithmatex">\({b}_{E} = {897.2}\)</span></td></tr><tr><td>(253.5, 257.7)</td><td>(-1800, -1769)</td><td>(0.3239, 0.3241)</td><td>(-0.6207, -0.2609)</td><td>(625.9, 630.2)</td><td>(-8568, -8498)</td><td>(373.9, 376.2)</td><td>(-4249, -4212)</td><td>(69.66, 74.04)</td><td>(859.3, 935)</td></tr><tr><td colspan="2"><span class="arithmatex">\({6.9} \leq  \omega  \leq  {7.5}\)</span></td><td colspan="2"><span class="arithmatex">\({7.5} \leq  \omega  \leq  {15.5}\)</span></td><td colspan="2"><span class="arithmatex">\({15.5} \leq  \omega  \leq  {17}\)</span></td><td colspan="2"><span class="arithmatex">\({13.5} \leq  \omega  \leq  {17}\)</span></td><td colspan="2"><span class="arithmatex">\({17} \leq  \omega  \leq  {18.6}\)</span></td></tr><tr><td rowspan="3">WT2</td><td><span class="arithmatex">\({k}_{A} = {268.7}\)</span></td><td><span class="arithmatex">\({b}_{A} =  - {1881}\)</span></td><td><span class="arithmatex">\({k}_{B} = {0.324}\)</span></td><td><span class="arithmatex">\({b}_{B} = {0.0114}\)</span></td><td><span class="arithmatex">\({k}_{C} = {665}\)</span></td><td><span class="arithmatex">\({b}_{C} =  - {9114}\)</span></td><td><span class="arithmatex">\({k}_{D} = {388.8}\)</span></td><td><span class="arithmatex">\({b}_{D} =  - {4453}\)</span></td><td><span class="arithmatex">\({k}_{E} = {80.99}\)</span></td><td><span class="arithmatex">\({b}_{E} = {721.9}\)</span></td></tr><tr><td>(268.1, 269.3)</td><td>(-1885, -1877)</td><td>(0.3239, 0.324)</td><td>(-0.07698, 0.09978)</td><td>(664,666)</td><td>(-9130, -9098)</td><td>(388.5, 389.1)</td><td>(-4457, -4448)</td><td>(78.66, 83.31)</td><td>(681.8, 762.1)</td></tr><tr><td colspan="2"><span class="arithmatex">\({6.9} \leq  \omega  \leq  {7.5}\)</span></td><td colspan="2"><span class="arithmatex">\({7.5} \leq  \omega  \leq  {15.5}\)</span></td><td colspan="2"><span class="arithmatex">\({15.5} \leq  \omega  \leq  {17}\)</span></td><td colspan="2"><span class="arithmatex">\({13.5} \leq  \omega  \leq  {17}\)</span></td><td colspan="2"><span class="arithmatex">\({17} \leq  \omega  \leq  {18.5}\)</span></td></tr><tr><td rowspan="3">WT3</td><td><span class="arithmatex">\({k}_{A} = {268.2}\)</span></td><td><span class="arithmatex">\({b}_{A} =  - {1879}\)</span></td><td><span class="arithmatex">\({k}_{B} = {0.312}\)</span></td><td><span class="arithmatex">\({b}_{B} = {3.188}\)</span></td><td><span class="arithmatex">\({k}_{C} = {637.5}\)</span></td><td><span class="arithmatex">\({b}_{C} =  - {8736}\)</span></td><td><span class="arithmatex">\({k}_{D} = {353.4}\)</span></td><td><span class="arithmatex">\({b}_{D} =  - {4012}\)</span></td><td><span class="arithmatex">\({k}_{E} = {145.1}\)</span></td><td><span class="arithmatex">\({b}_{E} =  - {541.6}\)</span></td></tr><tr><td>(267.3, 269.3)</td><td>(-1886, -1872)</td><td>(0.3124, 0.3125)</td><td>(3.113, 3.262)</td><td>(634.9, 640.1)</td><td>(-8778, -8694)</td><td>(352.9, 353.9)</td><td>(-4019, -4005)</td><td>(131.7, 158.5)</td><td>(-768.2, -315)</td></tr><tr><td colspan="2"><span class="arithmatex">\(7 \leq  \omega  \leq  {7.4}\)</span></td><td colspan="2"><span class="arithmatex">\({7.4} \leq  \omega  \leq  {15.5}\)</span></td><td colspan="2"><span class="arithmatex">\({15.5} \leq  \omega  \leq  {16.7}\)</span></td><td colspan="2"><span class="arithmatex">\({13.5} \leq  \omega  \leq  {16.7}\)</span></td><td colspan="2"><span class="arithmatex">\({16.7} \leq  \omega  \leq  {17.8}\)</span></td></tr><tr><td rowspan="3">WT4</td><td><span class="arithmatex">\({k}_{A} = {215.1}\)</span></td><td><span class="arithmatex">\({b}_{A} =  - {1488}\)</span></td><td><span class="arithmatex">\({k}_{B} = {0.324}\)</span></td><td><span class="arithmatex">\({b}_{B} =  - {0.6118}\)</span></td><td><span class="arithmatex">\({k}_{C} = {661.4}\)</span></td><td><span class="arithmatex">\({b}_{C} =  - {9061}\)</span></td><td><span class="arithmatex">\({k}_{D} = {385.6}\)</span></td><td><span class="arithmatex">\({b}_{D} =  - {4426}\)</span></td><td><span class="arithmatex">\({k}_{E} = {95.96}\)</span></td><td><span class="arithmatex">\({b}_{E} = {424.2}\)</span></td></tr><tr><td>(213.5, 216.6)</td><td>(-1499, -1477)</td><td>(0.3239, 0.324)</td><td>(-0.72, -0.5036)</td><td>(659.6, 663.2)</td><td>(-9090, -9032)</td><td>(384.3, 386.9)</td><td>(-4446, -4406)</td><td>(91.85, 100.1)</td><td>(354.4, 493.9)</td></tr><tr><td colspan="2"><span class="arithmatex">\({6.6} \leq  \omega  \leq  {7.5}\)</span></td><td colspan="2"><span class="arithmatex">\({7.5} \leq  \omega  \leq  {15.5}\)</span></td><td colspan="2"><span class="arithmatex">\({15.5} \leq  \omega  \leq  {16.7}\)</span></td><td colspan="2"><span class="arithmatex">\({13.5} \leq  \omega  \leq  {16.7}\)</span></td><td colspan="2"><span class="arithmatex">\({16.7} \leq  \omega  \leq  {17.6}\)</span></td></tr></table>
 
-<table style="width:100%;">
-<colgroup>
-<col style="width: 4%" />
-<col style="width: 10%" />
-<col style="width: 9%" />
-<col style="width: 10%" />
-<col style="width: 10%" />
-<col style="width: 8%" />
-<col style="width: 10%" />
-<col style="width: 8%" />
-<col style="width: 9%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
-<thead>
-<tr>
-<th colspan="3" style="text-align: center;">区域A</th>
-<th colspan="2" style="text-align: center;">区域B</th>
-<th colspan="2" style="text-align: center;">区域C</th>
-<th colspan="2" style="text-align: center;">区域D</th>
-<th colspan="2" style="text-align: center;">区域E</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="3" style="text-align: center;">WT1</td>
-<td style="text-align: center;"><em>k<sub>A</sub></em>=255.6</td>
-<td style="text-align: center;"><em>b<sub>A</sub></em>=-1785</td>
-<td style="text-align: center;"><em>k<sub>B</sub></em> =0.324</td>
-<td style="text-align: center;"><em>b<sub>B</sub></em>=-0.441</td>
-<td style="text-align: center;"><em>k<sub>C</sub></em> =628.1</td>
-<td style="text-align: center;"><em>b<sub>C</sub></em>=-8533</td>
-<td style="text-align: center;"><em>k<sub>D</sub></em> =375</td>
-<td style="text-align: center;"><em>b<sub>D</sub></em>=-4231</td>
-<td style="text-align: center;"><em>k<sub>E</sub></em> =71.85</td>
-<td style="text-align: center;"><em>b<sub>E</sub></em>=897.2</td>
-</tr>
-<tr>
-<td style="text-align: center;">(253.5, 257.7)</td>
-<td style="text-align: center;">(-1800, -1769)</td>
-<td style="text-align: center;">(0.3239, 0.3241)</td>
-<td style="text-align: center;">(-0.6207, -0.2609)</td>
-<td style="text-align: center;">(625.9, 630.2)</td>
-<td style="text-align: center;">(-8568, -8498)</td>
-<td style="text-align: center;">(373.9, 376.2)</td>
-<td style="text-align: center;">(-4249, -4212)</td>
-<td style="text-align: center;">(69.66, 74.04)</td>
-<td style="text-align: center;">(859.3, 935)</td>
-</tr>
-<tr>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:49px" src="../../images/p1-image438.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:54px" src="../../images/p1-image439.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:50px" src="../../images/p1-image440.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:50px" src="../../images/p1-image441.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:50px" src="../../images/p1-image442.png"></td>
-</tr>
-<tr>
-<td rowspan="3" style="text-align: center;">WT2</td>
-<td style="text-align: center;"><em>k<sub>A</sub></em>=<img class="formula-inline" / style="width:23px" src="../../images/p1-image443.png"></td>
-<td style="text-align: center;"><em>b<sub>A</sub></em>=-1881</td>
-<td style="text-align: center;"><em>k<sub>B</sub></em> =0.324</td>
-<td style="text-align: center;"><em>b<sub>B</sub></em>=0.0114</td>
-<td style="text-align: center;"><em>k<sub>C</sub></em> =665</td>
-<td style="text-align: center;"><em>b<sub>C</sub></em>=-9114</td>
-<td style="text-align: center;"><em>k<sub>D</sub></em> =388.8</td>
-<td style="text-align: center;"><em>b<sub>D</sub></em>=-4453</td>
-<td style="text-align: center;"><em>k<sub>E</sub></em> =80.99</td>
-<td style="text-align: center;"><em>b<sub>E</sub></em>=721.9</td>
-</tr>
-<tr>
-<td style="text-align: center;">(268.1, 269.3)</td>
-<td style="text-align: center;">(-1885, -1877)</td>
-<td style="text-align: center;">(0.3239, 0.324)</td>
-<td style="text-align: right;">(-0.07698, 0.09978)</td>
-<td style="text-align: center;">(664, 666)</td>
-<td style="text-align: center;">(-9130, -9098)</td>
-<td style="text-align: center;">(388.5, 389.1)</td>
-<td style="text-align: center;">(-4457, -4448)</td>
-<td style="text-align: center;">(78.66, 83.31)</td>
-<td style="text-align: center;">(681.8, 762.1)</td>
-</tr>
-<tr>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:49px" src="../../images/p1-image438.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:54px" src="../../images/p1-image439.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:57px" src="../../images/p1-image444.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:50px" src="../../images/p1-image441.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:50px" src="../../images/p1-image445.png"></td>
-</tr>
-<tr>
-<td rowspan="3" style="text-align: center;">WT3</td>
-<td style="text-align: center;"><em>k<sub>A</sub></em>=268.2</td>
-<td style="text-align: center;"><em>b<sub>A</sub></em>=-1879</td>
-<td style="text-align: center;"><em>k<sub>B</sub></em> =0.312</td>
-<td style="text-align: center;"><em>b<sub>B</sub></em>=3.188</td>
-<td style="text-align: center;"><em>k<sub>C</sub></em> =637.5</td>
-<td style="text-align: center;"><em>b<sub>C</sub></em>=-8736</td>
-<td style="text-align: center;"><em>k<sub>D</sub></em> =353.4</td>
-<td style="text-align: center;"><em>b<sub>D</sub></em>=-4012</td>
-<td style="text-align: center;"><em>k<sub>E</sub></em> =145.1</td>
-<td style="text-align: center;"><em>b<sub>E</sub></em>=-541.6</td>
-</tr>
-<tr>
-<td style="text-align: center;">(267.3, 269.3)</td>
-<td style="text-align: center;">(-1886, -1872)</td>
-<td style="text-align: center;">(0.3124, 0.3125)</td>
-<td style="text-align: center;">(3.113, 3.262)</td>
-<td style="text-align: center;">(634.9, 640.1)</td>
-<td style="text-align: center;">(-8778, -8694)</td>
-<td style="text-align: center;">(352.9, 353.9)</td>
-<td style="text-align: center;">(-4019, -4005)</td>
-<td style="text-align: center;">(131.7, 158.5)</td>
-<td style="text-align: center;">(-768.2, -315)</td>
-</tr>
-<tr>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:43px" src="../../images/p1-image446.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:61px" src="../../images/p1-image447.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:58px" src="../../images/p1-image448.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:58px" src="../../images/p1-image449.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:58px" src="../../images/p1-image450.png"></td>
-</tr>
-<tr>
-<td rowspan="3" style="text-align: center;">WT4</td>
-<td style="text-align: center;"><em>k<sub>A</sub></em>=215.1</td>
-<td style="text-align: center;"><em>b<sub>A</sub></em>=-1488</td>
-<td style="text-align: center;"><em>k<sub>B</sub></em> =0.324</td>
-<td style="text-align: center;"><em>b<sub>B</sub></em>=-0.6118</td>
-<td style="text-align: center;"><em>k<sub>C</sub></em> =661.4</td>
-<td style="text-align: center;"><em>b<sub>C</sub></em>=-9061</td>
-<td style="text-align: center;"><em>k<sub>D</sub></em> =385.6</td>
-<td style="text-align: center;"><em>b<sub>D</sub></em>=-4426</td>
-<td style="text-align: center;"><em>k<sub>E</sub></em> =95.96</td>
-<td style="text-align: center;"><em>b<sub>E</sub></em>=424.2</td>
-</tr>
-<tr>
-<td style="text-align: center;">(213.5, 216.6)</td>
-<td style="text-align: center;">(-1499, -1477)</td>
-<td style="text-align: center;">(0.3239, 0.324)</td>
-<td style="text-align: center;">(-0.72, -0.5036)</td>
-<td style="text-align: center;">(659.6, 663.2)</td>
-<td style="text-align: center;">(-9090, -9032)</td>
-<td style="text-align: center;">(384.3, 386.9)</td>
-<td style="text-align: center;">(-4446, -4406)</td>
-<td style="text-align: center;">(91.85, 100.1)</td>
-<td style="text-align: center;">(354.4, 493.9)</td>
-</tr>
-<tr>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:57px" src="../../images/p1-image451.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:61px" src="../../images/p1-image452.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:65px" src="../../images/p1-image453.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:65px" src="../../images/p1-image454.png"></td>
-<td colspan="2" style="text-align: center;"><img class="formula-inline" / style="width:58px" src="../../images/p1-image455.png"></td>
-</tr>
-</tbody>
-</table>
+#### 3.3.3.3 风能利用系数比较分析
 
-3\. 风能利用系数比较分析
+风电机组控制策略是依据转速调节来控制输出功率。根据工况分区分别统计拟合求得转速与功率的曲线后，就可以分区计算风能利用系数。在计算风能利用系数时，考虑到式 (3.48) 中, ${\int }_{0}^{{t}_{2}}P\mathrm{\;d}t - {\int }_{0}^{{t}_{1}}P\mathrm{\;d}t$ 表示在时间段 ${\Delta t}\left( {{t}_{2} - {t}_{1}}\right)$ 发电机总功率输出， ${\left. \frac{1}{2}{J}_{\mathrm{{rt}}}{\omega }^{2}\right| }_{t = {t}_{2}} - {\left. \frac{1}{2}{J}_{\mathrm{{rt}}}{\omega }^{2}\right| }_{t = {t}_{1}}$ 表示在此时间段 ${\Delta t}$ 储存在风电机组转子系统机械能变化量。根据前文 3.1 节分析,这种类型的风电机组的机械时间常数可以估计 ${t}_{0}$ 为 ${15}\mathrm{\;s}$ ，在应用式 (3.48) 计算风能利用系数时，时间段 ${\Delta t}$ 取值应大于或者等于 ${t}_{0}$ 。在 SCADA 系统中,风速信息由安装在机舱上的风速计测量,其风速值低于实际风轮风速, 因为部分风能已转化为电能。因此, 式 (3.48) 进一步改进为
 
-风电机组控制策略是依据转速调节来控制输出功率。根据工况分区分别统计拟合求得转速与功率的曲线后，就可以分区计算风能利用系数。在计算风能利用系数时，考虑到式（3.48）中，<img class="formula-inline" src="../../images/p1-image456.png" style="width:37px" alt=""><img class="formula-inline" src="../../images/p1-image457.png" style="width:29px" alt="">表示在时间段<img class="formula-inline" src="../../images/p1-image458.png" style="width:44px" alt=""> 发电机总功率输出，<img class="formula-inline" src="../../images/p1-image459.png" style="width:46px" alt=""><img class="formula-inline" src="../../images/p1-image460.png" style="width:52px" alt="">表示在此时间段<img class="formula-inline" src="../../images/p1-image461.png" style="width:12px" alt="">储存在风电机组转子系统机械能变化量。根据前文3.1节分析，这种类型的风电机组的机械时间常数可以估计<img class="formula-inline" src="../../images/p1-image462.png" style="width:9px" alt="">为15s，在应用式（3.48）计算风能利用系数时，时间段<img class="formula-inline" src="../../images/p1-image463.png" style="width:15px" alt="">取值应大于或者等于<img class="formula-inline" src="../../images/p1-image464.png" style="width:9px" alt="">。在SCADA系统中，风速信息由安装在机舱上的风速计测量，其风速值低于实际风轮风速，因为部分风能已转化为电能。因此，式（3.48）进一步改进为
+$$
+{C}_{P} = \frac{{\int }_{0}^{{t}_{2}}P\mathrm{\;d}t - {\int }_{0}^{{t}_{1}}P\mathrm{\;d}t + {\left. \frac{1}{2}{J}_{\mathrm{{rt}}}{\omega }^{2}\right| }_{t = {t}_{2}} - {\left. \frac{1}{2}{J}_{\mathrm{{rt}}}{\omega }^{2}\right| }_{t = {t}_{1}}}{{\int }_{0}^{{t}_{2}}\frac{1}{2}{\rho \pi }{R}^{2}{v}^{3}\mathrm{\;d}t - {\int }_{0}^{{t}_{1}}\frac{1}{2}{\rho \pi }{R}^{2}{v}^{3}\mathrm{\;d}t + {\int }_{0}^{{t}_{2}}P\mathrm{\;d}t - {\left. {\int }_{0}^{{t}_{1}}P\mathrm{\;d}t + {\left. \frac{1}{2}{J}_{\mathrm{{rt}}}{\omega }^{2}\right| }_{t = {t}_{2}} - \frac{1}{2}{J}_{\mathrm{{rt}}}{\omega }^{2}\right| }_{t = {t}_{1}}} \tag{3.51}
+$$
 
-<img class="formula-display" src="../../images/p1-image465.png" style="width:340px" alt=""> (3.51)
+在分区计算时, 首先需要将 SCADA 数据分解为不同区域子集。具体方法是根据不同区域的转速范围划分数据集。由于转速在不同区域有交叉, 很难完全区分。因此, 这时需要通过式 (3.52) 来判断。假如 WT1 $\left( {i = 1,2,3,\ldots }\right)$ 的数据集 ${\Gamma }_{i} = \left\{  {{\omega }_{\mathrm{i}},{v}_{i},{P}_{i},\cdots }\right\}$ 属于一个区域,则有:
 
-在分区计算时，首先需要将SCADA 数据分解为不同区域子集。具体方法是根据不同区域的转速范围划分数据集。由于转速在不同区域有交叉，很难完全区分。因此，这时需要通过式（3.52）来判断。假如WT1(*i*=1,2,3, …)的数据集<img class="formula-inline" src="../../images/p1-image466.png" style="width:78px" alt="">属于一个区域，则有：
+$$
+\left\{  \begin{array}{ll} {\omega }_{i} \leq  {\omega }_{\text{ Amax }}, & \text{ 区域 }\mathrm{A} \\  \left\{  \begin{array}{l} {\omega }_{\text{ Bmin }} \leq  {\omega }_{i} \leq  {\omega }_{\text{ Bmax }}, \\  {0.95}\left( {{k}_{B}{\omega }_{i}{}^{3} + {b}_{B}}\right)  \leq  {P}_{i} \leq  {1.05}\left( {{k}_{B}{\omega }_{i}{}^{3} + {b}_{B}}\right) , \end{array}\right. & \text{ 区域 B } \\  \left\{  \begin{array}{l} {\omega }_{\text{ Cmin }} \leq  {\omega }_{i} \leq  {\omega }_{\text{ Cmax }}, \\  {0.95}\left( {{k}_{C}{\omega }_{i} + {b}_{C}}\right)  \leq  {P}_{i} \leq  {1.05}\left( {{k}_{C}{\omega }_{i} + {b}_{C}}\right) , \\  {\omega }_{\text{ Dmin }} \leq  {\omega }_{i} \leq  {\omega }_{\text{ Bmax }}, \\  {0.95}\left( {{k}_{D}{\omega }_{i} + {b}_{D}}\right)  \leq  {P}_{i} \leq  {1.05}\left( {{k}_{D}{\omega }_{i} + {b}_{D}}\right) , \end{array}\right. & \text{ 区域 } \\  {\omega }_{i} \geq  {\omega }_{i} \geq  {\omega }_{i} \geq  0, & \text{ 因为 } \end{array}\right. \tag{3.52}
+$$
 
-<img class="content-image" src="../../images/p1-image467.png" style="width:264px" alt=""> (3.52)
+对于一定的转速或风速, 计算出的风能利用系数数据可能具有多个值。为了获得风能利用系数与转速或风速之间的单值映射关系, 使用前述介绍的核密度估计 (KDE) 方法用于单值处理。然而, 数据分箱与单值处理方式不同, 相同的 SCADA 数据获得的风能利用系数有所不同, 这里考虑了如图 3.33 所示的三种方法。方法 I 是从转速直接分区、并进行分箱单值处理获得风能利用系数；方法 II 从转速分区、并分箱单值处理求得风速，然后由风速再分箱单值处理获得风能利用系数；方法 III 直接由风速分箱单值处理获得风能利用系数。
 
-对于一定的转速或风速，计算出的风能利用系数数据可能具有多个值。为了获得风能利用系数与转速或风速之间的单值映射关系，使用前述介绍的核密度估计（KDE）方法用于单值处理。然而，数据分箱与单值处理方式不同，相同的SCADA数据获得的风能利用系数有所不同，这里考虑了如图3.33所示的三种方法。方法I是从转速直接分区、并进行分箱单值处理获得风能利用系数；方法II从转速分区、并分箱单值处理求得风速，然后由风速再分箱单值处理获得风能利用系数；方法III直接由风速分箱单值处理获得风能利用系数。
+![103_404_1692_857_405_0.jpg](../../images/p1-103_404_1692_857_405_0.jpg)
 
-<img class="content-image" src="../../images/p1-image468.png" style="width:899px" alt="">
+图 3.33 风能利用系数三种分析方法
 
-图3.33 风能利用系数三种分析方法
+应用第一种方法 I，所研究的四台风电机组的转速与风能利用系数的曲线如图 3.34 所示。 结果表明, WT1、WT2 和 WT3 的曲线非常接近, 但 WT1 的曲线与其他三台风电机组的曲线相差较大, 尤其是在图 11(b)、(c)和(d)中。另一个现象是, 当转速大于 7.1r/min 时, 曲线随着转速的变化而在较小的范围内波动。
 
-应用第一种方法I，所研究的四台风电机组的转速与风能利用系数的曲线如图3.34所示。结果表明，WT1、WT2和WT3的曲线非常接近，但WT1的曲线与其他三台风电机组的曲线相差较大，尤其是在图11(b)、(c)和(d)中。另一个现象是，当转速大于7.1r/min时，曲线随着转速的变化而在较小的范围内波动。
+![104_239_414_1166_638_0.jpg](../../images/p1-104_239_414_1166_638_0.jpg)
 
-<img class="content-image" src="../../images/p1-image469.png" style="width:1434px" alt="">
+图 3.34 单值处理后的风能利用系数
 
-图3.34 单值处理后的风能利用系数
+为了比较分析不同方法获得的风能利用系数，图 3.35 给出了基于三种方法的结果。为了便于分析和观察，图 3.35(a)-(d)给出了基于图 3.33 中方法 I、方法 II 的计算结果，图 3.35(e)~(h)给出了基于图 3.33 中方法 III 的计算结果。从图 3.35(a)~(d)中可以看出，风能利用系数在区域 A 中总体呈上升趋势。在区域 B 中，所研究的四台风电机组的风能利用系数曲线的变化趋势不同。对于 WT1, 随着转速的增加, 风能利用系数曲线呈现缓慢上升的趋势；对于 WT2、WT3 和 WT4，风能利用系数曲线在开始时有明显的下降趋势，然后逐渐趋于稳定。还可以看出，通过第二种方法 (II) 获得的曲线比通过第一种方法 (I) 获得的更平滑。由此可以推论,方法 II 优于方法 I。此外,区域 $\mathrm{C}$ 和区域 $\mathrm{D}$ 中的风能利用系数接近但不同, 一般区域 C 中的风能利用系数略大于区域 D 中的风能利用系数。区域 B 是风电机组的最大风能利用区或者最大功率跟踪区域, 也是风电机组最频繁运行的区域。这里根据方法 II 的结果, 将分别给出区域 B 中的风能利用系数的最大值、最小值和平均值。对于 WT1, 最小风能利用系数为 0.43 ，最大值为 0.5 ，平均值为 0.464 ；对于 WT2 ，最小风能利用系数为 0.33 ，最大值为 0.44 ，平均值为 0.358 ；对于 WT3 ，最小风能利用系数为 0.28 ，最大值为 0.36 , 平均值为 0.299 ; 对于 WT4 , 最小风能利用系数为 0.3 , 最大值为 0.33 , 平均值为 0.310 。
 
-为了比较分析不同方法获得的风能利用系数，图3.35给出了基于三种方法的结果。为了便于分析和观察，图3.35(a)~(d)给出了基于图3.33中方法I、方法II的计算结果，图3.35(e)~(h)给出了基于图3.33中方法III 的计算结果。从图3.35(a)~(d)中可以看出，风能利用系数在区域A中总体呈上升趋势。在区域B中，所研究的四台风电机组的风能利用系数曲线的变化趋势不同。对于WT1，随着转速的增加，风能利用系数曲线呈现缓慢上升的趋势；对于WT2、WT3和WT4，风能利用系数曲线在开始时有明显的下降趋势，然后逐渐趋于稳定。还可以看出，通过第二种方法（II）获得的曲线比通过第一种方法（I）获得的更平滑。由此可以推论，方法II优于方法I。此外，区域C和区域D中的风能利用系数接近但不同，一般区域C中的风能利用系数略大于区域D中的风能利用系数。区域B是风电机组的最大风能利用区或者最大功率跟踪区域，也是风电机组最频繁运行的区域。这里根据方法II的结果，将分别给出区域B中的风能利用系数的最大值、最小值和平均值。对于WT1，最小风能利用系数为0.43，最大值为0.5，平均值为0.464；对于WT2，最小风能利用系数为0.33，最大值为0.44，平均值为0.358；对于WT3，最小风能利用系数为0.28，最大值为0.36，平均值为0.299；对于WT4，最小风能利用系数为0.3，最大值为0.33，平均值为0.310。
+![105_229_186_1318_1440_0.jpg](../../images/p1-105_229_186_1318_1440_0.jpg)
 
-<img class="content-image" src="../../images/p1-image470.png" style="width:1520px" alt="">
+图 3.35 三种风能利用系数计算方法
 
-图3.35 三种风能利用系数计算方法
-
-一个值得探讨的现象是：在式（3.50）中假设区域B中的风能利用系数*C*<sub>p</sub>是一个常数，但从图3.35中可见，区域B中实际的风能利用系数会发生变化。在风电机组的实际控制中，速度控制是根据给定的转速-功率曲线进行的。这里，功率是与转速的三次方成正比给出的。该控制策略基于区域B（最大功率跟踪点（MPPT）区域）中的恒定风能利用系数和恒定叶尖速比。由于控制是基于转速-功率曲线，因此实际的转速-功率曲线非常接近其理想曲线。因此，在式（3.52）中区域B的风能利用系数<img class="formula-inline" src="../../images/p1-image471.png" style="width:14px" alt="">被假定为常数。在另一种情况下，图3.35中的实际功率系数是基于式（3.51）计算的，所考虑的是实时随机风速。由于风速变化迅速且随机，转速是一个相对较慢的变量，因此无法始终保持叶尖速比恒定。因此，区域B中的实际风能利用系数将是改变的。图3.35(e)~(h)显示了风速和风能利用系数之间关系散点图，图中风速以0.5m/s（±0.05m/s）的间隔分箱，获得了风速与风能利用系数的单值映射关系。这里，风速和风能利用系数样本没有考虑区域差异，或者换言之，数据集包括了来自五个区域（区域A~区域E）的所有数据。由于3m/s是风电机组的切入风速，因此在随后的风能利用系数特性分析中仅考虑该风速以上的区域。对于WT1，最大风能利用系数出现在风速为6m/s时；对于WT2和WT3，它们都在风速为4m/s时具有最大风能利用系数；对于WT4，最大风能利用系数出现在三个风速点，即8.5m/s、9m/s和10m/s。相应地，WT1、WT2、WT3和WT4的最大风能利用系数的值分别为0.49、0.41、0.34和0.33。换一种情况来看，在高风速阶段，风能利用系数随着风速的增加而减小。特别是对于WT1来说，这种现象更加明显。具体地，当风速大于8m/s时，WT1的风能利用系数具有显著的下降趋势。但对于其他三台风电机组，风能利用系数的下降趋势相对平缓。
+一个值得探讨的现象是:在式 (3.50) 中假设区域 B 中的风能利用系数 ${C}_{\mathrm{p}}$ 是一个常数， 但从图 3.35 中可见，区域 B 中实际的风能利用系数会发生变化。在风电机组的实际控制中， 速度控制是根据给定的转速-功率曲线进行的。这里, 功率是与转速的三次方成正比给出的。 该控制策略基于区域 B (最大功率跟踪点 (MPPT) 区域) 中的恒定风能利用系数和恒定叶尖速比。由于控制是基于转速-功率曲线, 因此实际的转速-功率曲线非常接近其理想曲线。 因此，在式 (3.52) 中区域 B 的风能利用系数 ${C}_{P}$ 被假定为常数。在另一种情况下，图 3.35 中的实际功率系数是基于式 (3.51) 计算的, 所考虑的是实时随机风速。由于风速变化迅速且随机，转速是一个相对较慢的变量，因此无法始终保持叶尖速比恒定。因此，区域 B 中的实际风能利用系数将是改变的。图 3.35(e)~(h)显示了风速和风能利用系数之间关系散点图, 图中风速以 ${0.5}\mathrm{\;m}/\mathrm{s}\left( {\pm {0.05}\mathrm{\;m}/\mathrm{s}}\right)$ 的间隔分箱,获得了风速与风能利用系数的单值映射关系。 这里, 风速和风能利用系数样本没有考虑区域差异, 或者换言之, 数据集包括了来自五个区域 (区域 A~区域 E)的所有数据。由于 $3\mathrm{m}/\mathrm{s}$ 是风电机组的切入风速，因此在随后的风能利用系数特性分析中仅考虑该风速以上的区域。对于 WT1，最大风能利用系数出现在风速为 6m/s 时；对于 WT2 和 WT3，它们都在风速为 $4\mathrm{m}/\mathrm{s}$ 时具有最大风能利用系数；对于 WT4， 最大风能利用系数出现在三个风速点，即 ${8.5}\mathrm{\;m}/\mathrm{s}$ 、 $9\mathrm{\;m}/\mathrm{s}$ 和 ${10}\mathrm{\;m}/\mathrm{s}$ 。相应地，WT1、WT2、 WT3 和 WT4 的最大风能利用系数的值分别为 0.49、0.41、0.34 和 0.33。换一种情况来看, 在高风速阶段, 风能利用系数随着风速的增加而减小。特别是对于 WT1 来说, 这种现象更加明显。具体地,当风速大于 $8\mathrm{\;m}/\mathrm{s}$ 时, WT1 的风能利用系数具有显著的下降趋势。但对于其他三台风电机组, 风能利用系数的下降趋势相对平缓。
 
 ## 3.4 参考文献
 
-1.  Akpinar E K, Akpinar S. A statistical analysis of wind speed data used in installation of wind energy conversion systems\[J\]. Energy Conversion and Management, 2005, 46(4): 515-532.
+[1] Akpinar E K, Akpinar S. A statistical analysis of wind speed data used in installation of wind energy conversion systems[J]. Energy Conversion and Management, 2005, 46(4): 515-532.
 
-2.  He G, Kammen D M. Where, when and how much wind is available? A provincial-scale wind resource assessment for China\[J\]. Energy Policy, 2014, 74: 116-122.
+[2] He G, Kammen D M. Where, when and how much wind is available? A provincial-scale wind resource assessment for China[J]. Energy Policy, 2014, 74: 116-122.
 
-3.  Weisser D. A wind energy analysis of grenada: An estimation using the ‘Weibull’density function\[J\]. Renewable energy, 2003, 28(11): 1803-1812.
+[3] Weisser D. A wind energy analysis of grenada: An estimation using the 'Weibull'density function[J]. Renewable energy, 2003, 28(11): 1803-1812.
 
-4.  Akdag S, Bagiorgas H, Mihalakakou G. Use of two-component Weibull mixtures in the analysis of wind speed in the Eastern Mediterranean\[J\]. Applied Energy, 2010, 87(8): 2566-2573.
+[4] Akdag S, Bagiorgas H, Mihalakakou G. Use of two-component Weibull mixtures in the analysis of wind speed in the Eastern Mediterranean[J]. Applied Energy, 2010, 87(8): 2566-2573.
 
-5.  Katinas V, Gecevicius G, Marciukaitis M. An investigation of wind power density distribution at location with low and high wind speeds using statistical model\[J\]. Applied Energy, 2018, 218:442-451.
+[5] Katinas V, Gecevicius G, Marciukaitis M. An investigation of wind power density distribution at location with low and high wind speeds using statistical model[J]. Applied Energy, 2018, 218:442-451.
 
-6.  Chang T P. Performance comparison of six numerical methods in estimating Weibull parameters for wind energy application\[J\]. Applied Energy, 2011, 88(1): 272-282.
+[6] Chang T P. Performance comparison of six numerical methods in estimating Weibull parameters for wind energy application[J]. Applied Energy, 2011, 88(1): 272-282.
 
-7.  Kantar Y M, Usta I. Analysis of wind speed distributions: Wind distribution function derived from minimum cross entropy principles as better alternative to Weibull function\[J\]. Energy Conversion and Management, 2008, 49(5): 962-973.
+[7] Kantar Y M, Usta I. Analysis of wind speed distributions: Wind distribution function derived from minimum cross entropy principles as better alternative to Weibull function[J]. Energy Conversion and Management, 2008, 49(5): 962-973.
 
-8.  Morgan E C, Lackner M, Vogel R M, et al. Probability distributions for offshore wind speeds\[J\]. Energy Conversion and Management, 2011, 52(1): 15-26.
+[8] Morgan E C, Lackner M, Vogel R M, et al. Probability distributions for offshore wind speeds[J]. Energy Conversion and Management, 2011, 52(1): 15-26.
 
-9.  Qin Z, Li W, Xiong X. Estimating wind speed probability distribution using kernel density method\[J\]. Electric Power Systems Research, 2011, 81(12): 2139-2146.
+[9] Qin Z, Li W, Xiong X. Estimating wind speed probability distribution using kernel density method[J]. Electric Power Systems Research, 2011, 81(12): 2139-2146.
 
-10. Zhang J, Chowdhury S, Messac A, et al. A multivariate and multimodal wind distribution model\[J\]. Renewable Energy, 2013, 51: 436-447.
+[10] Zhang J, Chowdhury S, Messac A, et al. A multivariate and multimodal wind distribution model[J]. Renewable Energy, 2013, 51: 436-447.
 
-11. Carta J A, Ramirez P, Velazquez S. A review of wind speed probability distributions used in wind energy analysis: Case studies in the Canary Islands\[J\]. Renewable and Sustainable Energy Reviews, 2009, 13(5): 933-955.
+[11] Carta J A, Ramirez P, Velazquez S. A review of wind speed probability distributions used in wind energy analysis: Case studies in the Canary Islands[J]. Renewable and Sustainable Energy Reviews, 2009, 13(5): 933-955.
 
-12. Cui M, Feng C, Wang Z, et al. Statistical representation of wind power ramps using a generalized Gaussian mixture model\[J\]. IEEE Transactions on Sustainable Energy, 2017, 9(1): 261-272.
+[12] Cui M, Feng C, Wang Z, et al. Statistical representation of wind power ramps using a generalized Gaussian mixture model[J]. IEEE Transactions on Sustainable Energy, 2017, 9(1): 261-272.
 
-13. Zeren Z, Yinbiao S, Cun D, et al. Statistical Analysis of Wind Energy Distribution Based on Mixture Weibull Distribution Model\[J\]. Journal of Applied Statistics and Management, 2020, 39(4): 584-594.
+[13] Zeren Z, Yinbiao S, Cun D, et al. Statistical Analysis of Wind Energy Distribution Based on Mixture Weibull Distribution Model[J]. Journal of Applied Statistics and Management, 2020, 39(4): 584-594.
 
-14. Dai J, Tan Y, Yang W, et al. Investigation of wind resource characteristics in mountain wind farm using multiple-unit SCADA data in Chenzhou: A case study\[J\]. Energy Conversion and Management，2017, 148: 378-393.
+[14] Dai J, Tan Y, Yang W, et al. Investigation of wind resource characteristics in mountain wind farm using multiple-unit SCADA data in Chenzhou: A case study[J]. Energy Conversion and Management, 2017, 148: 378-393.
 
-15. Dai J, Cao J, Liu D, Li Wen, et al. Power fluctuation evaluation of large scale wind turbines based on SCADA data\[J\]. IET Renewable Power Generation, 2017, 11(4): 395-402.
+[15] Dai J, Cao J, Liu D, Li Wen, et al. Power fluctuation evaluation of large scale wind turbines based on SCADA data[J]. IET Renewable Power Generation, 2017, 11(4): 395-402.
 
-16. Dai J, Liu D, Wen L, et al. Research on power coefficient of wind turbines based on SCADA data\[J\]. Renewable Energy, 2016, 86, 206-215.
+[16] Dai J, Liu D, Wen L, et al. Research on power coefficient of wind turbines based on SCADA data[J]. Renewable Energy, 2016, 86, 206-215.
 
-17. Dai J, Tan Y, Shen X. Investigation of energy output in mountain wind farm using multiple-units SCADA data\[J\]. Applied Energy, 2019, 239: 225-238.
+[17] Dai J, Tan Y, Shen X. Investigation of energy output in mountain wind farm using multiple-units SCADA data[J]. Applied Energy, 2019, 239: 225-238.
 
-18. Dai J, He T, Li M, et al. Performance study of multi-source driving yaw system for aiding yaw control of wind turbines\[J\]. Renewable Energy, 2021, 163: 154-171.
+[18] Dai J, He T, Li M, et al. Performance study of multi-source driving yaw system for aiding yaw control of wind turbines[J]. Renewable Energy, 2021, 163: 154-171.
 
-19. Duong T. ks: Kernel density estimation and kernel discriminant analysis for multivariate data in R\[J\]. Journal of Statistical Software, 2007, 21(7): 1-16
+[19] Duong T. ks: Kernel density estimation and kernel discriminant analysis for multivariate data in R[J]. Journal of Statistical Software, 2007, 21(7): 1-16
 
-20. Burton T, Sharpe D, Jenkins N, et al., Wind energy handbook\[M\].New York: John Wiley & Sons Ltd, 2005.
+[20] Burton T, Sharpe D, Jenkins N, et al., Wind energy handbook[M].New York: John Wiley & Sons Ltd, 2005.
 
-21. Dai J, Yang X, Hu W, Wen L, et al. Effect investigation of yaw on wind turbine performance based on SCADA data\[J\]. Energy, 2018, 149: 684-696.
+[21] Dai J, Yang X, Hu W, Wen L, et al. Effect investigation of yaw on wind turbine performance based on SCADA data[J]. Energy, 2018, 149: 684-696.

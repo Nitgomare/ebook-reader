@@ -73,6 +73,7 @@ def main() -> None:
         "".join(payload["html"] for payload in scada_payloads),
         re.I,
     )
+    scada_html = "".join(payload["html"] for payload in scada_payloads)
     report = {
         "stats": catalog["stats"],
         "categories": [item["id"] for item in catalog["site"]["categories"]],
@@ -136,13 +137,16 @@ def main() -> None:
         "scada_book": {
             "documents": scada_book["docCount"],
             "chapters": scada_book["chapterCount"],
-            "images": len(list((DIST / "files" / scada_book["slug"] / "images").iterdir())),
+            "images": len(set(scada_image_urls)),
             "missing_images": sum(
                 not (DIST / Path(unquote(url))).is_file() for url in scada_image_urls
             ),
             "legacy_vector_images": sum(
                 Path(url).suffix.lower() in {".wmf", ".emf"} for url in scada_image_urls
             ),
+            "math_fragments": scada_html.count('class="arithmatex"'),
+            "formula_images": len(re.findall(r"formula-(?:inline|display)", scada_html)),
+            "raw_dollar_delimiters": scada_html.count("$"),
         },
         "inline_code": all(
             token in app_js for token in ("inlineCodeItem", "loadInlineCode", "展开代码")
@@ -232,9 +236,12 @@ def main() -> None:
     assert report["scada_book"] == {
         "documents": 10,
         "chapters": 9,
-        "images": 1514,
+        "images": 259,
         "missing_images": 0,
         "legacy_vector_images": 0,
+        "math_fragments": 2418,
+        "formula_images": 0,
+        "raw_dollar_delimiters": 0,
     }
     assert report["inline_code"]
     assert report["code_copy_controls"]

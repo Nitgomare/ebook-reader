@@ -1,554 +1,499 @@
-# 第8章 风电机组SCADA运行参数智能预测
+# 第8章 风电机组 SCADA 运行参数智能预测
 
-预测是数据挖掘的重要任务之一，预测分析属于有监督的智能学习方法。风电机组SCADA数据是时间序列数据，根据运行状态参数的历史数据预测其未来变化，这对于风电场运行调度，风电机组运行状态控制、预警与维护都具有重要意义。在风电机组SCADA运行参数数据中，转速、功率等参数是需要随着环境参数变化而实时控制的，而温度、振动等体征参数是风电机组运行状态的一种体现。风速、风向等环境参数和转速、功率等控制参数等需要进行预测，以便对风电机组实施控制和调度；温度、振动等体征参数需要进行预测，以便对风电机组运行状态进行预警与维护。在风电SCADA数据分析研究中，可以将预测分为两类，一类是对SCADA数据所包含的运行参数未来趋势预测，进而对风电机组实施控制、调度、预警与维护；另一类是对基于SCADA数据提取出来的特征参数未来变化进行预测，实质上是用于预警、维护与监测的风电机组运行状态预测。近年来，风电机组SCADA运行参数智能预测从单一的智能算法向融合算法、从机器学习向深度学习方向发展<sup>\[1-9\]</sup>，特别是采用信号分解技术和优化算法，与深度神经网络模型进行融合，有效地提升了预测精度<sup>\[10-22\]</sup>。
+预测是数据挖掘的重要任务之一, 预测分析属于有监督的智能学习方法。风电机组 SCADA 数据是时间序列数据, 根据运行状态参数的历史数据预测其未来变化, 这对于风电场运行调度, 风电机组运行状态控制、预警与维护都具有重要意义。在风电机组 SCADA 运行参数数据中, 转速、功率等参数是需要随着环境参数变化而实时控制的, 而温度、振动等体征参数是风电机组运行状态的一种体现。风速、风向等环境参数和转速、功率等控制参数等需要进行预测，以便对风电机组实施控制和调度；温度、振动等体征参数需要进行预测， 以便对风电机组运行状态进行预警与维护。在风电 SCADA 数据分析研究中, 可以将预测分为两类, 一类是对 SCADA 数据所包含的运行参数未来趋势预测, 进而对风电机组实施控制、 调度、预警与维护; 另一类是对基于 SCADA 数据提取出来的特征参数未来变化进行预测, 实质上是用于预警、维护与监测的风电机组运行状态预测。近年来, 风电机组 SCADA 运行参数智能预测从单一的智能算法向融合算法、从机器学习向深度学习方向发展 ${}^{\left\lbrack  1 - 9\right\rbrack  }$ ，特别是采用信号分解技术和优化算法, 与深度神经网络模型进行融合, 有效地提升了预测精度 ${}^{\left\lbrack  {10} - {22}\right\rbrack  }$ 。
 
-本章聚焦于第一类预测问题，提出基于互补集合经验模态分解鲸鱼优化算法神经网络模(Complementary ensemble empirical mode decomposition-whale optimization algorithm-Elman，CEEMD-WOA-Elman)的超短期风电功率组合预测方法、基于堆叠式稀疏自动编码-多层感知器（stacked sparse autoencoder-multilayer perception，SSAE-MLP）的机舱振动预测方法和提出基于深度学习网络与核主成分分析融合（kornel principal component analysis-convolutional neural networks-long short-term memory，KPCA-CNN-LSTM）的风电机组发电机温度预测方法。
+本章聚焦于第一类预测问题, 提出基于互补集合经验模态分解鲸鱼优化算法神经网络模 (Complementary ensemble empirical mode decomposition-whale optimization algorithm-Elman, CEEMD-WOA-Elman)的超短期风电功率组合预测方法、基于堆叠式稀疏自动编码-多层感知器 (stacked sparse autoencoder-multilayer perception, SSAE-MLP) 的机舱振动预测方法和提出基于深度学习网络与核主成分分析融合 (kornel principal component analysis-convolutional neural networks-long short-term memory, KPCA-CNN-LSTM) 的风电机组发电机温度预测方法。
 
-## 8.1 基于CEEMD-WOA-Elman网络的风电机组输出功率预测
+## 8.1 基于 CEEMD-WOA-Elman 网络的风电机组输出功率预测
 
-风电机组输出功率是机组关键运行数据之一。准确的风电机组输出功率预测既是风电场运行调度的重要依据，也是评价、控制风电机组运行状态的重要指标。然而，由于风的随机波动特性，功率预测具有很大的挑战性，为此，提出了一种基于互补集合经验模态分解（CEEMD）、鲸鱼优化算法（WOA）和埃尔曼(Elman)神经网络模型的新超短期风电功率组合预测方法。该模型可以解决模态分解中出现的模态混叠现象；同时，引入鲸鱼优化算法对模型参数进行优化，有利于提高风电功率预测精度<sup>\[20\]</sup>。
+风电机组输出功率是机组关键运行数据之一。准确的风电机组输出功率预测既是风电场运行调度的重要依据, 也是评价、控制风电机组运行状态的重要指标。然而, 由于风的随机波动特性, 功率预测具有很大的挑战性, 为此, 提出了一种基于互补集合经验模态分解 (CEEMD)、鲸鱼优化算法 (WOA) 和埃尔曼 (Elman)神经网络模型的新超短期风电功率组合预测方法。该模型可以解决模态分解中出现的模态混叠现象; 同时, 引入鲸鱼优化算法对模型参数进行优化, 有利于提高风电功率预测精度[20]。
 
-### 8.1.1 CEEMD方法
+### 8.1.1 CEEMD 方法
 
-经验模态分解(empirical mode decomposition, EMD)能够自适应地将原始时间序列*x*(*t*)分解为若干不同尺度相互独立的本征模态函数(intrinsic mode function，IMF)和1个残余分量(residual, Re)<sup>\[21\]</sup>。EMD处理后的信号为
+经验模态分解(empirical mode decomposition, EMD)能够自适应地将原始时间序列 $x\left( t\right)$ 分解为若干不同尺度相互独立的本征模态函数(intrinsic mode function, IMF)和 1 个残余分量 (residual, Re) ${}^{\left\lbrack  {21}\right\rbrack  }$ 。EMD 处理后的信号为
 
-<img class="formula-display" src="../../images/p2-image585.png" style="width:100px" alt=""> （8.1）
+$$
+x\left( t\right)  = \mathop{\sum }\limits_{{i = 1}}^{n}{C}_{i}\left( t\right)  + {r}_{n}\left( t\right) \tag{8.1}
+$$
 
-式中，*C<sub>i</sub>*(*t*)为IMF分量；*r<sub>n</sub>*(*t*)为Re分量。
+式中, ${C}_{i}\left( t\right)$ 为 IMF 分量; ${r}_{n}\left( t\right)$ 为 Re 分量。
 
-集合经验模态分解（ensemble empirical mode decomposition，EEMD）针对 EMD 存在的模态混叠现象，将高斯白噪声多次添加到整个时频空间，然后进行 EMD 分解，得到多个均值IMF分量，作为最终分解结果。
+集合经验模态分解 (ensemble empirical mode decomposition, EEMD) 针对 EMD 存在的模态混叠现象，将高斯白噪声多次添加到整个时频空间，然后进行 EMD 分解，得到多个均值 IMF 分量,作为最终分解结果。
 
-为了减小EEMD的残余辅助噪声，互补集合经验模态分解首先在原始序列 *x*(*t*)中分别添加*k*次正、负一对的随机高斯白噪声<sup>\[22\]</sup>：
+为了减小 EEMD 的残余辅助噪声,互补集合经验模态分解首先在原始序列 $x\left( t\right)$ 中分别添加 $k$ 次正、负一对的随机高斯白噪声 ${}^{\left\lbrack  {22}\right\rbrack  }$ :
 
-<img class="formula-display" src="../../images/p2-image586.png" style="width:95px" alt=""> （8.2）
+$$
+\left\{  \begin{array}{l} {x}_{i}^{ + }\left( t\right)  = x\left( t\right)  + {\mu }_{i}^{ + }\left( t\right) \\  {x}_{i}^{ - }\left( t\right)  = x\left( t\right)  + {\mu }_{i}^{ - }\left( t\right)  \end{array}\right. \tag{8.2}
+$$
 
-式中，*x+ i*(*t*)、*x- i*(*t*)分别为第*i*次加入正、负随机高斯白噪声*μ+ i*(*t*)、*μ- i*(*t*)后的序列。
+式中, ${x}_{i}^{ + }\left( t\right) \text{ 、 }{x}_{i}\left( t\right)$ 分别为第 $i$ 次加入正、负随机高斯白噪声 ${\mu }_{i}^{ + }\left( t\right) \text{ 、 }{\mu }_{i}^{ - }\left( t\right)$ 后的序列。
 
-采用 EMD 对每次添加白噪声后的序列分解，得到预设个数的各IMF分量和Re分量，*x+ i*(*t*)、*x- i*(*t*)分解得到的第*j*个IMF分量分别为<img class="formula-inline" src="../../images/p2-image587.png" style="width:11px" alt="">、<img class="formula-inline" src="../../images/p2-image588.png" style="width:15px" alt="">。
+采用 EMD 对每次添加白噪声后的序列分解, 得到预设个数的各 IMF 分量和 Re 分量, ${x}_{i}^{ + }\left( t\right) \text{ 、 }{x}_{i}\left( t\right)$ 分解得到的第 $j$ 个 IMF 分量分别为 ${\mathcal{C}}_{ij}\text{ 、 }{\mathcal{C}}_{-{ij}}$ 。
 
-再计算各个IMF分量和残余分量的平均值，作为CEEMD的结果：
+再计算各个 IMF 分量和残余分量的平均值, 作为 CEEMD 的结果:
 
-<img class="formula-display" src="../../images/p2-image589.png" style="width:90px" alt=""> （8.3）
+$$
+{c}_{j} = \frac{1}{2k}\mathop{\sum }\limits_{{i = 1}}^{k}\left( {{c}_{ij} + {c}_{-{ij}}}\right) \tag{8.3}
+$$
 
 ### 8.1.2 鲸鱼优化算法
 
-鲸鱼优化算法（whale optimization algorithm, WOA）是一种智能元启发优化算法，该算法通过模拟鲸鱼猎物捕食机制来表示算法的寻优过程<sup>\[23\]</sup>。WOA的优点是收敛速度快和全局搜索能力强。具体捕猎步骤如下：
+鲸鱼优化算法 (whale optimization algorithm, WOA) 是一种智能元启发优化算法, 该算法通过模拟鲸鱼猎物捕食机制来表示算法的寻优过程[23]。WOA 的优点是收敛速度快和全局搜索能力强。具体捕猎步骤如下:
 
-（1）搜寻猎物。鲸鱼在寻找猎物时通过不断更新自己的位置来达到捕食的目的，位置更新迭代公式如下：
+(1)搜寻猎物。鲸鱼在寻找猎物时通过不断更新自己的位置来达到捕食的目的，位置更新迭代公式如下:
 
-<img class="formula-display" src="../../images/p2-image590.png" style="width:69px" alt=""> （8.4）
+$$
+D = \left| {C{X}_{\text{ rand }} - X}\right| \tag{8.4}
+$$
 
-<img class="formula-display" src="../../images/p2-image591.png" style="width:92px" alt=""> （8.5）
+$$
+X\left( {t + 1}\right)  = {X}_{\text{ rand }} - {AD} \tag{8.5}
+$$
 
-式中，<img class="formula-inline" src="../../images/p2-image592.png" style="width:11px" alt="">为鲸鱼与猎物之间的距离；*t*为当前迭代的次数；*X*<sub>rand</sub>为鲸鱼随机的位置向量；*X*为位置向量；*A*和*C*为系数，其计算公式如下：
+式中, $D$ 为鲸鱼与猎物之间的距离; $t$ 为当前迭代的次数; ${X}_{\text{ rand }}$ 为鲸鱼随机的位置向量; $X$ 为位置向量; $A$ 和 $C$ 为系数,其计算公式如下:
 
-<img class="formula-display" src="../../images/p2-image593.png" style="width:47px" alt=""> （8.6）
+$$
+A = {2ar} - a \tag{8.6}
+$$
 
-<img class="formula-display" src="../../images/p2-image594.png" style="width:27px" alt=""> （8.7）
+$$
+C = {2r} \tag{8.7}
+$$
 
-式中，*a*从2到0逐渐递减；*r*为0和1之间的随机值。
+式中, $a$ 从 2 到 0 逐渐递减; $r$ 为 0 和 1 之间的随机值。
 
-（2）包围猎物。鲸鱼可以识别并覆盖猎物的位置，但由于不可能预先知道最优解在搜索空间中的位置，故WOA假设目标猎物位置为初始最优解或最接近最优解位置。一旦确定了最优个体位置，其他鲸鱼就尝试向最优位置靠近，并更新它们的位置。鲸鱼包围捕猎方式如下：
+(2)包围猎物。鲸鱼可以识别并覆盖猎物的位置，但由于不可能预先知道最优解在搜索空间中的位置, 故 WOA 假设目标猎物位置为初始最优解或最接近最优解位置。一旦确定了最优个体位置，其他鲸鱼就尝试向最优位置靠近，并更新它们的位置。鲸鱼包围捕猎方式如下:
 
-<img class="formula-display" src="../../images/p2-image595.png" style="width:84px" alt=""> （8.8）
+$$
+D = \left| {C{X}^{ * }\left( t\right)  - X\left( t\right) }\right| \tag{8.8}
+$$
 
-<img class="formula-display" src="../../images/p2-image596.png" style="width:95px" alt=""> （8.9）
+$$
+X\left( {t + 1}\right)  = {X}^{ * }\left( t\right)  - {AD} \tag{8.9}
+$$
 
-式中，<img class="formula-inline" src="../../images/p2-image597.png" style="width:27px" alt="">为当前最佳位置向量，且在每次迭代中更新；<img class="formula-inline" src="../../images/p2-image598.png" style="width:22px" alt="">为当前位置向量。
+式中, ${X}^{ * }\left( t\right)$ 为当前最佳位置向量,且在每次迭代中更新; $X\left( t\right)$ 为当前位置向量。
 
-鲸鱼包围捕猎的收缩环绕机制如图8.1所示。由图可知，收缩环绕机制的目的在于不断缩小范围，能更精确地围捕猎物。
+鲸鱼包围捕猎的收缩环绕机制如图 8.1 所示。由图可知, 收缩环绕机制的目的在于不断缩小范围，能更精确地围捕猎物。
 
-<img class="content-image" src="../../images/p2-image599.png" style="width:393px" alt="">
+![98_519_205_670_615_0.jpg](../../images/p2-98_519_205_670_615_0.jpg)
 
-图8.1 包围捕猎收缩环绕机制
+图 8.1 包围捕猎收缩环绕机制
 
-（3）螺旋气泡网捕猎。鲸鱼螺旋气泡网捕猎方式如下：
+(3)螺旋气泡网捕猎。鲸鱼螺旋气泡网捕猎方式如下:
 
-<img class="formula-display" src="../../images/p2-image600.png" style="width:139px" alt=""> （8.10）
+$$
+X\left( {t + 1}\right)  = {D}^{\prime }{e}^{bl}\cos \left( {2\pi l}\right)  + {X}^{ * }\left( t\right) \tag{8.10}
+$$
 
-<img class="formula-display" src="../../images/p2-image601.png" style="width:78px" alt=""> （8.11）
+$$
+{D}^{\prime } = \left| {{X}^{ * }\left( t\right)  - X\left( t\right) }\right| \tag{8.11}
+$$
 
-式中，<img class="formula-inline" src="../../images/p2-image602.png" style="width:13px" alt="">为位置最佳鲸鱼与猎物（目前最佳解）之间的距离；*b*为一个定义螺旋线形状的常数；*l*为-1和1之间的随机值。
+式中， ${D}^{\prime }$ 为位置最佳鲸鱼与猎物(目前最佳解)之间的距离； $b$ 为一个定义螺旋线形状的常数; $l$ 为 -1 和 1 之间的随机值。
 
-鲸鱼螺旋更新位置捕猎方式，如图8.2所示。由图可知，鲸鱼螺旋气泡网捕猎方式，主要计算位置最佳鲸鱼与猎物（目前最佳解）之间的距离。
+鲸鱼螺旋更新位置捕猎方式，如图 8.2 所示。由图可知，鲸鱼螺旋气泡网捕猎方式，主要计算位置最佳鲸鱼与猎物 (目前最佳解) 之间的距离。
 
-<img class="content-image" src="../../images/p2-image603.png" style="width:887px" alt="">
+![98_554_1266_623_441_0.jpg](../../images/p2-98_554_1266_623_441_0.jpg)
 
-图8.2 螺旋气泡网捕猎
+图 8.2 螺旋气泡网捕猎
 
-鲸鱼捕猎时，分别以50%的概率选择上述2种捕猎方式如下：
+鲸鱼捕猎时，分别以 50%的概率选择上述 2 种捕猎方式如下:
 
-<img class="formula-display" src="../../images/p2-image604.png" style="width:181px" alt=""> （8.12）
+$$
+X\left( {t + 1}\right)  = \left\{  \begin{array}{l} {X}^{ * }\left( t\right)  - {AD}, p \leq  {0.5} \\  {D}^{\prime }{\mathrm{e}}^{bl}\cos \left( {2\pi l}\right)  + {X}^{ * }\left( t\right) , p \geq  {0.5} \end{array}\right. \tag{8.12}
+$$
 
-由式(8.6)可计算出*A*的取值范围\[-2,2\]。WOA的优势在于操作简单，主要调节参数*A*和*C*，通过对*A*的设定，WOA有更好的搜索开发能力，提高了收敛速度。
+由式(8.6)可计算出 $A$ 的取值范围[-2,2]。WOA 的优势在于操作简单,主要调节参数 $A$ 和 $C$ ,通过对 $A$ 的设定, WOA 有更好的搜索开发能力,提高了收敛速度。
 
-### 8.1.3 CEEMD-WOA-Elman预测建模
+### 8.1.3 CEEMD-WOA-Elman 预测建模
 
-Elman神经网络是一个具有记忆单元和局部反馈连接的递归神经网络，其结构一般分为4层：输入层、输出层、隐含层和承接层，输入层的单元仅起信号传输作用，输出层单元起线性加权作用，如图8.3所示。Elman神经网络的独特之处在于通过承接层的延迟与存储，将隐含层的输出自联到隐含层的输入，这种自联方式使其对历史数据更加敏感，网络内部的反馈调节增强了网络本身对动态信息的处理能力。承接层相当于具有记忆特性的延时算子，能够很好的解决静态建模问题，同时还能够实现动态系统的映射，具有适应时变特性的能力，可以更加直接的反映系统动态过程特性。
+Elman 神经网络是一个具有记忆单元和局部反馈连接的递归神经网络, 其结构一般分为 4 层:输入层、输出层、隐含层和承接层，输入层的单元仅起信号传输作用，输出层单元起线性加权作用, 如图 8.3 所示。Elman 神经网络的独特之处在于通过承接层的延迟与存储, 将隐含层的输出自联到隐含层的输入, 这种自联方式使其对历史数据更加敏感, 网络内部的反馈调节增强了网络本身对动态信息的处理能力。承接层相当于具有记忆特性的延时算子, 能够很好的解决静态建模问题, 同时还能够实现动态系统的映射, 具有适应时变特性的能力, 可以更加直接的反映系统动态过程特性。
 
-<img class="content-image" src="../../images/p2-image605.png" style="width:1054px" alt="">
+![99_459_631_731_459_0.jpg](../../images/p2-99_459_631_731_459_0.jpg)
 
-图8.3 Elman网络结构图
+图 8.3 Elman 网络结构图
 
-由于原始风电功率时间序列的随机波动性，直接采用原始功率数据采用Elman模型预测，难以实现高精度风电功率预测。因此，为了降低预测难度，采用CEEMD将随机波动原始风电功率序列分解为多个较平缓的子序列分量。
+由于原始风电功率时间序列的随机波动性, 直接采用原始功率数据采用 Elman 模型预测, 难以实现高精度风电功率预测。因此, 为了降低预测难度, 采用 CEEMD 将随机波动原始风电功率序列分解为多个较平缓的子序列分量。
 
-将CEEMD处理的所有分量划分为训练集与测试集两部分，用各分量的训练集建立各自的Elman模型，采用WOA分别优化Elman神经网络的权值及阈值，得到各分量预测模型。利用各分量的测试集预测未来时刻的风电功率值，将各分量预测值叠加，得到最终预测值，并验证所建预测模型的性能。本节提出的基于CEEMD-WOA-Elman的超短期风电功率组合预测方法，具体步骤如下：
+将 CEEMD 处理的所有分量划分为训练集与测试集两部分，用各分量的训练集建立各自的 Elman 模型, 采用 WOA 分别优化 Elman 神经网络的权值及阈值, 得到各分量预测模型。 利用各分量的测试集预测未来时刻的风电功率值, 将各分量预测值叠加, 得到最终预测值, 并验证所建预测模型的性能。本节提出的基于 CEEMD-WOA-Elman 的超短期风电功率组合预测方法, 具体步骤如下:
 
-（1）利用CEEMD对原始的风功率信号进行分解，得到*n*个IMF分量和1个残余分量*r<sub>n</sub>*(*t*)，选择合适的IMF。
+(1)利用 CEEMD 对原始的风功率信号进行分解，得到 $n$ 个 IMF 分量和 1 个残余分量 ${r}_{n}\left( t\right)$ ,选择合适的 IMF。
 
-（2）将训练集分解后的各IMF分量和残余分量作为各分量Elman风电功率模型的输入量，采用WOA分别优化各分量模型的权值和阈值，得到优化后各分量预测模型。
+(2)将训练集分解后的各 IMF 分量和残余分量作为各分量 Elman 风电功率模型的输入量, 采用 WOA 分别优化各分量模型的权值和阈值, 得到优化后各分量预测模型。
 
-（3）在预测时，将测试集分解后的各IMF分量和残余分量送入训练好的各分量Elman模型进行预测，得到各分量的预测值。
+(3)在预测时，将测试集分解后的各 IMF 分量和残余分量送入训练好的各分量 Elman 模型进行预测, 得到各分量的预测值。
 
-（4）将各分量的预测值进行叠加，得到某时刻的最终风电功率预测值。
+(4)将各分量的预测值进行叠加，得到某时刻的最终风电功率预测值。
 
-（5）对得到的预测风电功率与实际风电功率数据进行误差分析。
+(5)对得到的预测风电功率与实际风电功率数据进行误差分析。
 
 ### 8.1.4 风电机组实例分析
 
-> 1\. WOA优化性能分析
+#### 8.1.4.1 WOA 优化性能分析
 
-为了检验鲸鱼优化算法的性能，将其与粒子群算法PSO和遗传算法GA进行对比分析，各优化算法的适应度值迭代变化过程如图8.4所示。设置WOA初始化种群为30，迭代次数为35；GA初始化种群为30，迭代次数为35；PSO初始化种群为30，迭代次数为35。定义适应度函数以训练的平均绝对误差作为准则。从图8.4可知，3种优化算法在迭代初期都快速下降，WOA迭代次数最少，4次就能达到全局最优收敛；GA算法在优化参数时适应度值较大，达到收敛需要迭代20多次；PSO算法优化参数最终也能够得到较好的适应度值，达到全局最优，但达到稳定收敛需要迭代16次左右。因此，在3种优化算法中，WOA的寻优性能最佳。
+为了检验鲸鱼优化算法的性能，将其与粒子群算法 PSO 和遗传算法 GA 进行对比分析， 各优化算法的适应度值迭代变化过程如图 8.4 所示。设置 WOA 初始化种群为 30 , 迭代次数为 35 ; GA 初始化种群为 30, 迭代次数为 35 ; PSO 初始化种群为 30, 迭代次数为 35 。定义适应度函数以训练的平均绝对误差作为准则。从图 8.4 可知, 3 种优化算法在迭代初期都快速下降, WOA 迭代次数最少, 4 次就能达到全局最优收敛; GA 算法在优化参数时适应度值较大，达到收敛需要迭代 20 多次；PSO 算法优化参数最终也能够得到较好的适应度值， 达到全局最优, 但达到稳定收敛需要迭代 16 次左右。因此, 在 3 种优化算法中, WOA 的寻优性能最佳。
 
-<img class="content-image" src="../../images/p2-image606.png" style="width:1165px" alt="">
+![100_470_547_686_541_0.jpg](../../images/p2-100_470_547_686_541_0.jpg)
 
-图8.4 算法优化参数的适应度曲线
+图 8.4 算法优化参数的适应度曲线
 
-分别以某风电场2号风电机组和3号风电机组共计2880个数据点进行建模分析。滚动建立Elman模型会使模型充分学习风力发电功率系统最新的变化规律，因此选取时间窗口为10个时间点的数据，例如用1~10点来预测第11点，用2~11点来预测第12点。组成输入变量与输出变量共计2870组，选取前2820组为训练样本集，之后的50组为测试样本集。
+分别以某风电场 2 号风电机组和 3 号风电机组共计 2880 个数据点进行建模分析。滚动建立 Elman 模型会使模型充分学习风力发电功率系统最新的变化规律, 因此选取时间窗口为 10 个时间点的数据,例如用 1~10 点来预测第11 点,用 2~11 点来预测第12 点。组成输入变量与输出变量共计 2870 组，选取前 2820 组为训练样本集，之后的 50 组为测试样本集。
 
-为了定量分析模型性能，采用均方根误差（root mean square error，RMSE）、平均绝对误差（mean absolute error，MAE）和平均绝对百分比误差（mean absolute percentage error，MAPE）作为性能指标，相应计算公式如下：
+为了定量分析模型性能, 采用均方根误差 (root mean square error, RMSE)、平均绝对误差 (mean absolute error, MAE) 和平均绝对百分比误差 (mean absolute percentage error, MAPE)作为性能指标，相应计算公式如下:
 
-<img class="formula-display" src="../../images/p2-image607.png" style="width:112px" alt=""> (8.13)
+$$
+\text{ RMSE } = \sqrt{\frac{1}{n}\mathop{\sum }\limits_{{i = 1}}^{n}{\left( {y}_{i} - {y}_{i}\right) }^{2}} \tag{8.13}
+$$
 
-<img class="formula-display" src="../../images/p2-image608.png" style="width:90px" alt=""> (8.14)
+$$
+\mathrm{{MAE}} = \frac{1}{n}\mathop{\sum }\limits_{{i = 1}}^{n}\left| {{y}_{i} - {y}_{i}}\right| \tag{8.14}
+$$
 
-<img class="formula-display" src="../../images/p2-image609.png" style="width:130px" alt=""> (8.15)
+$$
+\text{ MAPE } = \frac{1}{n}\mathop{\sum }\limits_{{i = 1}}^{n}\left| \frac{{y}_{i} - {y}_{i}}{{y}_{i}}\right|  \times  {100}\% \tag{8.15}
+$$
 
-式中，*n*表示预测的点；*y<sub>i</sub>*是实际值；<img class="formula-inline" src="../../images/p2-image610.png" style="width:11px" alt="">表示预测值。
+式中, $n$ 表示预测的点; ${y}_{i}$ 是实际值; ${y}_{i}$ 表示预测值。
 
-为了定量衡量3种优化算法的优劣，将它们分别融合Elman模型进行参数寻优并预测功率，用以上3个误差评价指标对比分析其预测效果，如表8.1所示。从表可见，在Elman模型的风电功率预测效果方面，WOA比GA和PSO算法的预测误差更小，预测精度更高。
+为了定量衡量 3 种优化算法的优劣, 将它们分别融合 Elman 模型进行参数寻优并预测功率, 用以上 3 个误差评价指标对比分析其预测效果, 如表 8.1 所示。从表可见, 在 Elman 模型的风电功率预测效果方面, WOA 比 GA 和 PSO 算法的预测误差更小, 预测精度更高。
 
-表8.1 不同优化算法下各预测模型的误差指标值
+表 8.1 不同优化算法下各预测模型的误差指标值
 
-| 预测方法  | RMSE  |  MAE  | MAPE/% |
-|:---------:|:-----:|:-----:|:------:|
-| GA-Elman  | 35.51 | 30.68 |  4.85  |
-| PSO-Elman | 30.32 | 27.42 |  4.57  |
-| WOA-Elman | 28.45 | 25.16 |  4.11  |
+<table id="cross-table-3"><tr><td>预测方法</td><td>RMSE</td><td>MAE</td><td>MAPE/%</td></tr><tr><td>GA-Elman</td><td>35.51</td><td>30.68</td><td>4.85</td></tr><tr><td>PSO-Elman</td><td>30.32</td><td>27.42</td><td>4.57</td></tr><tr><td>WOA-Elman</td><td>28.45</td><td>25.16</td><td>4.11</td></tr></table>
 
-> 2\. 风电功率CEEMD处理
+#### 8.1.4.2 风电功率 CEEMD 处理
 
-EEMD处理和CEEMD处理通常取0.1~0.3倍原噪声标准差，添加白噪声次数为100~300次。EEMD和CEEMD处理均选择加入标准差为0.2、集合次数为200的白噪声。通过CEEMD将风电机组功率数据进行模态分解，为了避免过分解导致模型训练慢和预测复杂度的增大，选择8个IMF分量（IMF1~IMF8）和1个残余分量。
+EEMD 处理和 CEEMD 处理通常取 0.1~0.3 倍原噪声标准差，添加白噪声次数为 100~300 次。EEMD 和 CEEMD 处理均选择加入标准差为 0.2、集合次数为 200 的白噪声。通过 CEEMD 将风电机组功率数据进行模态分解, 为了避免过分解导致模型训练慢和预测复杂度的增大, 选择 8 个 IMF 分量 (IMF1~IMF8) 和 1 个残余分量。
 
-> 3\. 基于CEEMD-WOA-Elman的超短期风电功率预测
+#### 8.1.4.3 基于 CEEMD-WOA-Elman 的超短期风电功率预测
 
-风电功率数据经过CEEMD处理得到的8个IMF分量和1个残余分量，鲸鱼算法优化9个Elman模型的权值和阈值，最终建立基于CEEMD-WOA-Elman的风功率预测模型。为了验证模型预测精度，选取风电场2号、3号风电机组SCADA数据，并与Elman、EEMD-Elman、CEEMD-Elman、CEEMD-GA-Elman和CEEMD-PSO-Elman等模型进行风电功率超短期预测进行比较，两台风电机组的6种风电功率预测结果如图8.5和图8.6所示。从图可知，基于CEEMD-WOA-Elman模型预测的精度更高，准确性更好。
+风电功率数据经过 CEEMD 处理得到的 8 个 IMF 分量和 1 个残余分量, 鲸鱼算法优化 9 个 Elman 模型的权值和阈值，最终建立基于 CEEMD-WOA-Elman 的风功率预测模型。为了验证模型预测精度, 选取风电场 2 号、 3 号风电机组 SCADA 数据, 并与 Elman、EEMD-Elman、 CEEMD-Elman、CEEMD-GA-Elman 和 CEEMD-PSO-Elman 等模型进行风电功率超短期预测进行比较, 两台风电机组的 6 种风电功率预测结果如图 8.5 和图 8.6 所示。从图可知, 基于 CEEMD-WOA-Elman 模型预测的精度更高, 准确性更好。
 
-<img class="content-image" src="../../images/p2-image611.png" style="width:3473px" alt="">
+![101_258_931_1144_409_0.jpg](../../images/p2-101_258_931_1144_409_0.jpg)
 
-图8.5 2号风电机组6种模型风电功率预测结果
+图 8.5 2 号风电机组 6 种模型风电功率预测结果
 
-<img style="width:5.59055in;height:2.04331in" / src="../../images/p2-image613.svg">
+![101_265_1400_1119_402_0.jpg](../../images/p2-101_265_1400_1119_402_0.jpg)
 
-图8.6 3号风电机组6种模型风电功率预测结果
+图 8.6 3 号风电机组 6 种模型风电功率预测结果
 
-为更好地比较6种模型的预测效果，分别对这6种模型进行误差分析来评价风电功率预测精度，如表8.2和表8.3所示。由表可知，相对于没有模态分解的优化模型Elman，基于EEMD和CEEMD的各组合模型预测精度均有大幅度提升，说明采用信号分解技术可以降低风电功率序列的波动性，有效挖掘信号的局部特征信息，改善预测性能；而且，CEEMD的预测效果优于EEMD，验证了CEEMD有助于解决重构误差大的问题。从表中的误差指标还可知，同样采用CEEMD处理方式，CEEMD-WOA-Elman组合模型比CEEMD-GA-Elman和CEEMD-PSO-Elman的预测准确度更高，这也验证了WOA对组合模型有更好的优化性能。
+为更好地比较 6 种模型的预测效果, 分别对这 6 种模型进行误差分析来评价风电功率预测精度, 如表 8.2 和表 8.3 所示。由表可知, 相对于没有模态分解的优化模型 Elman，基于 EEMD 和 CEEMD 的各组合模型预测精度均有大幅度提升, 说明采用信号分解技术可以降低风电功率序列的波动性, 有效挖掘信号的局部特征信息, 改善预测性能; 而且, CEEMD 的预测效果优于 EEMD, 验证了 CEEMD 有助于解决重构误差大的问题。从表中的误差指标还可知, 同样采用 CEEMD 处理方式, CEEMD-WOA-Elman 组合模型比 CEEMD-GA-Elman 和 CEEMD-PSO-Elman 的预测准确度更高, 这也验证了 WOA 对组合模型有更好的优化性能。
 
-表8.2 2号风电机组6种模型的误差指标
+表 8.2 2 号风电机组 6 种模型的误差指标
 
-|    预测模型     | RMSE  |  MAE  | MAPE(%) |
-|:---------------:|:-----:|:-----:|:-------:|
-|      Elman      | 62.63 | 55.41 |  8.12   |
-|   EEMD-Elman    | 48.96 | 42.12 |  6.67   |
-|   CEEMD-Elman   | 38.36 | 34.25 |  5.28   |
-| CEEMD-GA-Elman  | 26.92 | 22.28 |  3.81   |
-| CEEMD-PSO-Elman | 23.63 | 20.04 |  3.56   |
-| CEEMD-WOA-Elman | 16.13 | 14.37 |  2.63   |
+<table><tr><td>预测模型</td><td>RMSE</td><td>MAE</td><td>MAPE(%)</td></tr><tr><td>Elman</td><td>62.63</td><td>55.41</td><td>8.12</td></tr><tr><td>EEMD-Elman</td><td>48.96</td><td>42.12</td><td>6.67</td></tr><tr><td>CEEMD-Elman</td><td>38.36</td><td>34.25</td><td>5.28</td></tr><tr><td>CEEMD-GA-Elman</td><td>26.92</td><td>22.28</td><td>3.81</td></tr><tr><td>CEEMD-PSO-Elman</td><td>23.63</td><td>20.04</td><td>3.56</td></tr><tr><td>CEEMD-WOA-Elman</td><td>16.13</td><td>14.37</td><td>2.63</td></tr></table>
 
-表8.3 3号风电机组6种模型的误差指标
+表 8.3 3 号风电机组 6 种模型的误差指标
 
-|    预测模型     | RMSE  |  MAE  | MAPE(%) |
-|:---------------:|:-----:|:-----:|:-------:|
-|      Elman      | 56.15 | 49.13 |  7.52   |
-|   EEMD-Elman    | 43.52 | 40.23 |  6.35   |
-|   CEEMD-Elman   | 37.73 | 35.53 |  5.16   |
-| CEEMD-GA-Elman  | 24.65 | 21.52 |  3.62   |
-| CEEMD-PSO-Elman | 21.82 | 19.33 |  3.45   |
-| CEEMD-WOA-Elman | 13.26 | 11.64 |  2.41   |
+<table><tr><td>预测模型</td><td>RMSE</td><td>MAE</td><td>MAPE(%)</td></tr><tr><td>Elman</td><td>56.15</td><td>49.13</td><td>7.52</td></tr><tr><td>EEMD-Elman</td><td>43.52</td><td>40.23</td><td>6.35</td></tr><tr><td>CEEMD-Elman</td><td>37.73</td><td>35.53</td><td>5.16</td></tr><tr><td>CEEMD-GA-Elman</td><td>24.65</td><td>21.52</td><td>3.62</td></tr><tr><td>CEEMD-PSO-Elman</td><td>21.82</td><td>19.33</td><td>3.45</td></tr><tr><td>CEEMD-WOA-Elman</td><td>13.26</td><td>11.64</td><td>2.41</td></tr></table>
 
-## 8.2 基于SSAE-MLP模型的风电机组机舱振动预测
+## 8.2 基于 SSAE-MLP 模型的风电机组机舱振动预测
 
-机舱是风电机组的关键部件之一，承载风电机组几乎所有的运动部件。机舱振动都是由这些运动部件引发的，过大的振动会造成疲劳损伤甚至引起安全风险，是SCADA系统监测的重要数据，精准的机舱振动预测是风电机组运行状态监测与预警的前提。为此，本节提出一种基于堆叠式稀疏自动编码-多层感知器（stacked sparse autoencoder-multilayer perception，SSAE-MLP）的机舱振动预测方法。选取2MW直驱式风电机组SCADA数据，其中包括机舱*x*方向振动和*y*方向振动数据。通过物理机制和数据相关性分析，选取风速、转速、风向绝对值、5秒偏航对风平均值等SCADA数据及其计算获得的变化率（风速变化率、轮毂转速变化率、风向绝对值变化率、5秒偏航对风平均值变化率），作为机舱振动预测网络模型的输入变量<sup>\[24\]</sup>。
+机舱是风电机组的关键部件之一, 承载风电机组几乎所有的运动部件。机舱振动都是由这些运动部件引发的，过大的振动会造成疲劳损伤甚至引起安全风险，是 SCADA 系统监测的重要数据, 精准的机舱振动预测是风电机组运行状态监测与预警的前提。为此, 本节提出一种基于堆叠式稀疏自动编码-多层感知器 (stacked sparse autoencoder-multilayer perception, SSAE-MLP)的机舱振动预测方法。选取 2MW 直驱式风电机组 SCADA 数据，其中包括机舱 $x$ 方向振动和 $y$ 方向振动数据。通过物理机制和数据相关性分析,选取风速、转速、风向绝对值、 5 秒偏航对风平均值等 SCADA 数据及其计算获得的变化率 (风速变化率、轮毂转速变化率、风向绝对值变化率、 5 秒偏航对风平均值变化率)，作为机舱振动预测网络模型的输入变量[24]。
 
-### 8.2.1 SSAE模型
+### 8.2.1 SSAE 模型
 
-基本自编码器（autoencoder, AE），又称自动关联器，是一个全连接的三层前馈人工神经网络，网络的最下面一层称为输入层，最上面一层称为输出层，中间层称为隐藏层，自编码器的基本架构如图8.7所示<sup>\[25\]</sup>。自编码器是一种无监督的特征学习算法，主要用于降维或特征提取。自编码器由编码器和解码器两部分组成：编码器利用式(8.16)将一个*n*维的输入向量<img class="formula-inline" src="../../images/p2-image614.png" style="width:46px" alt="">变换为一个*s*维的隐藏层表示向量<img class="formula-inline" src="../../images/p2-image615.png" style="width:46px" alt="">，*h*表示了输入向量*x*的特征，这个过程相当于完成了特征提取（即输入数据的特征表示）；解码器利用式(8.17)将隐藏层表示*h*转换为重构数据<img class="formula-inline" src="../../images/p2-image616.png" style="width:44px" alt="">，这个过程相当于完成了原始数据的重构。编码器、解码器数学模型为
+基本自编码器 (autoencoder, AE), 又称自动关联器, 是一个全连接的三层前馈人工神经网络, 网络的最下面一层称为输入层, 最上面一层称为输出层, 中间层称为隐藏层, 自编码器的基本架构如图 8.7 所示 ${}^{\left\lbrack  {25}\right\rbrack  }$ 。自编码器是一种无监督的特征学习算法,主要用于降维或特征提取。自编码器由编码器和解码器两部分组成: 编码器利用式(8.16)将一个 $n$ 维的输入向量 $x\left( {{x}_{i} \in  {\mathbf{R}}^{n}}\right)$ 变换为一个 $s$ 维的隐藏层表示向量 $h\left( {{h}_{i} \in  {\mathbf{R}}^{s}}\right) , h$ 表示了输入向量 $x$ 的特征, 这个过程相当于完成了特征提取 (即输入数据的特征表示); 解码器利用式(8.17)将隐藏层表示 $h$ 转换为重构数据 $r\left( {{r}_{i} \in  {\mathbf{R}}^{n}}\right)$ ,这个过程相当于完成了原始数据的重构。编码器、解码器数学模型为
 
-<img class="formula-display" src="../../images/p2-image617.png" style="width:125px" alt=""> (8.16)
+$$
+h = {f}_{{\theta }_{1}}\left( x\right)  = \sigma \left( {{W}^{\left( 1\right) } \times  x + {b}^{\left( 1\right) }}\right) \tag{8.16}
+$$
 
-<img class="formula-display" src="../../images/p2-image618.png" style="width:186px" alt=""> (8.17)
+$$
+r = {h}_{w, b}\left( x\right)  = {g}_{{\theta }_{2}}\left( {{f}_{{\theta }_{1}}\left( x\right) }\right)  = g\left( {{W}^{\left( 2\right) } \times  h + {b}^{\left( 2\right) }}\right) \tag{8.17}
+$$
 
-式中，参数集<img class="formula-inline" src="../../images/p2-image619.png" style="width:64px" alt="">分别为输入层到隐藏层的权值矩阵和偏置向量；参数集<img class="formula-inline" src="../../images/p2-image620.png" style="width:66px" alt="">分别为隐藏层到输出层的权值矩阵和偏置向量；自编码参数记为<img class="formula-inline" src="../../images/p2-image621.png" style="width:160px" alt="">；函数<img class="formula-inline" src="../../images/p2-image622.png" style="width:24px" alt="">和<img class="formula-inline" src="../../images/p2-image623.png" style="width:21px" alt="">是非线性激活函数，通常是sigmoid函数或tanh函数。
+式中,参数集 ${\theta }_{1} = \left\{  {{W}^{\left( 1\right) },{b}^{\left( 1\right) }}\right\}$ 分别为输入层到隐藏层的权值矩阵和偏置向量; 参数集 ${\theta }_{2} = \left\{  {{W}^{\left( 2\right) },{b}^{\left( 2\right) }}\right\}$ 分别为隐藏层到输出层的权值矩阵和偏置向量; 自编码参数记为 $\left( {W, b}\right)  = \left\{  {{\theta }_{1},{\theta }_{2}}\right\}   = \left\{  {{W}^{\left( 1\right) },{b}^{\left( 1\right) },{W}^{\left( 2\right) },{b}^{\left( 2\right) }}\right\}$ ; 函数 $f\left( \text{ . }\right) {\text{ 和 }g}\left( \cdot \right)$ 是非线性激活函数，通常是 sigmoid 函数或 tanh 函数。
 
-<img class="content-image" src="../../images/p2-image624.png" style="width:383px" alt="">
+![103_500_366_618_387_0.jpg](../../images/p2-103_500_366_618_387_0.jpg)
 
-图8.7 自编码器基本结构
+图 8.7 自编码器基本结构
 
-自编码器的训练目标是保证输出端<img class="formula-inline" src="../../images/p2-image625.png" style="width:8px" alt="">尽可能接近输入端，即<img class="formula-inline" src="../../images/p2-image626.png" style="width:26px" alt="">。为了测量重构的质量（包含尽可能多的输入数据的特征），有必要减少重构向量<img class="formula-inline" src="../../images/p2-image627.png" style="width:8px" alt="">和输入向量<img class="formula-inline" src="../../images/p2-image628.png" style="width:8px" alt="">之间的误差（也称为重构误差）。通常用平方误差损失函数来训练模型，其被定义为
+自编码器的训练目标是保证输出端 $r$ 尽可能接近输入端,即 $x \approx  r$ 。为了测量重构的质量 (包含尽可能多的输入数据的特征),有必要减少重构向量 $r$ 和输入向量 $x$ 之间的误差 (也称为重构误差)。通常用平方误差损失函数来训练模型, 其被定义为
 
-<img class="formula-display" src="../../images/p2-image629.png" style="width:144px" alt=""> (8.18)
+$$
+{J}_{AE}\left( {W, b;x, x}\right)  = \frac{1}{2}\mathrm{P}{h}_{W, b}\left( x\right)  - x{\mathrm{P}}^{2} \tag{8.18}
+$$
 
-对于给定的*m*个样本的训练集，总体损失函数定义为
+对于给定的 $m$ 个样本的训练集,总体损失函数定义为
 
-<img class="formula-display" src="../../images/p2-image630.png" style="width:243px" alt=""> (8.19)
+$$
+{J}_{\mathrm{{AE}}}\left( {W, b}\right)  = \left\lbrack  {\frac{1}{m}\mathop{\sum }\limits_{{i = 1}}^{m}J\left( {W, b;{x}^{\left( i\right) },{x}^{\left( i\right) }}\right) }\right\rbrack   + \frac{\lambda }{2}\mathop{\sum }\limits_{{l = 1}}^{{{n}_{l} - 1}}\mathop{\sum }\limits_{{i = 1}}^{{s}_{l}}\mathop{\sum }\limits_{{j = 1}}^{{{s}_{l} + 1}}{\left( {W}_{ji}^{\left( l\right) }\right) }^{2} \tag{8.19}
+$$
 
-式中第一项为均方和误差，第二项为防止过拟合的加权衰减项；<img class="formula-inline" src="../../images/p2-image631.png" style="width:11px" alt="">为层数，<img class="formula-inline" src="../../images/p2-image632.png" style="width:9px" alt="">为*l*层中的节点数。
+式中第一项为均方和误差,第二项为防止过拟合的加权衰减项; ${n}_{l}$ 为层数, ${s}_{l}$ 为 $l$ 层中的节点数。
 
-显然，当输入数据向量<img class="formula-inline" src="../../images/p2-image633.png" style="width:9px" alt="">与重构数据向量<img class="formula-inline" src="../../images/p2-image634.png" style="width:8px" alt="">满足相同的分布时，重构误差最小。因此，学习到的特征包含了输入数据的几乎所有信息。然而，如果上述自编码只是简单地学会恒等式映射，即<img class="formula-inline" src="../../images/p2-image635.png" style="width:54px" alt="">，那么它是没有用的。为了避免恒等式映射，尽可能找到更多有用的结构特点，经常采用在公式(8.25)的隐藏层*h*中设定一定的约束限制项办法。也就是说，使隐层*h*尽可能变得稀疏（许多神经元被设置为0，处于不激活状态），这种自动编码器称为稀疏自动编码器（sparse autoencoder, SAE）<sup>\[26\]</sup>。稀疏自动编码器的约束和总体损失函数可定义为
+显然,当输入数据向量 $x$ 与重构数据向量 $r$ 满足相同的分布时,重构误差最小。因此, 学习到的特征包含了输入数据的几乎所有信息。然而, 如果上述自编码只是简单地学会恒等式映射,即 $g\left( {f\left( x\right) }\right)  = x$ ,那么它是没有用的。为了避免恒等式映射,尽可能找到更多有用的结构特点,经常采用在公式(8.25)的隐藏层 $h$ 中设定一定的约束限制项办法。也就是说, 使隐层 $h$ 尽可能变得稀疏 (许多神经元被设置为 0,处于不激活状态),这种自动编码器称为稀疏自动编码器 (sparse autoencoder, SAE) [26]。稀疏自动编码器的约束和总体损失函数可定义为
 
-<img class="formula-display" src="../../images/p2-image636.png" style="width:102px" alt=""> (8.20)
+$$
+\rho  = {\widehat{\rho }}_{j} = \frac{1}{m}\mathop{\sum }\limits_{{i = 1}}^{m}{a}_{j}^{\left( 2\right) }\left( {x}^{\left( i\right) }\right) \tag{8.20}
+$$
 
-<img class="formula-display" src="../../images/p2-image637.png" style="width:182px" alt="">
+$$
+{J}_{\text{ sparse }}\left( {W, b}\right)  = {J}_{\mathrm{{AE}}}\left( {W, b}\right)  + \beta \mathop{\sum }\limits_{{j = 1}}^{{s}_{2}}{KL}\left( {\rho \mathrm{P}{\widehat{\rho }}_{j}}\right)
+$$
 
-<img class="formula-display" src="../../images/p2-image638.png" style="width:219px" alt=""> (8.21)
+$$
+= {J}_{\mathrm{{AE}}}\left( {W, b}\right)  + \beta \mathop{\sum }\limits_{{j = 1}}^{{s}_{2}}\left( {\rho \ln \frac{p}{{\widehat{\rho }}_{j}} + \left( {1 - \rho }\right) \ln \frac{1 - p}{1 - {\widehat{\rho }}_{j}}}\right) \tag{8.21}
+$$
 
-式中，<img class="formula-inline" src="../../images/p2-image639.png" style="width:19px" alt="">表示隐藏层单元<img class="formula-inline" src="../../images/p2-image640.png" style="width:9px" alt="">在输入向量<img class="formula-inline" src="../../images/p2-image641.png" style="width:9px" alt="">下的平均输出；*m*为总样本数；<img class="formula-inline" src="../../images/p2-image642.png" style="width:10px" alt="">表示一个很小的参数，通常是0.05；<img class="formula-inline" src="../../images/p2-image643.png" style="width:11px" alt="">为稀疏惩罚项的权值。
+式中, ${a}_{j}^{\left( 2\right) }$ 表示隐藏层单元 $j$ 在输入向量 $x$ 下的平均输出; $m$ 为总样本数; $\rho$ 表示一个很小的参数,通常是 0.05; $\beta$ 为稀疏惩罚项的权值。
 
-堆叠稀疏自动编码器（stacked sparse autoencoders, SSAE）由多个稀疏自动编码器组成。SSAE将第<img class="formula-inline" src="../../images/p2-image644.png" style="width:6px" alt="">层的输出作为第<img class="formula-inline" src="../../images/p2-image645.png" style="width:19px" alt="">层的输入，逐层连接形成深度网络，其堆叠过程如图8.8所示。首先，对未标记的原始数据训练最底层的SAE，得到其最终的隐表示形式<img class="formula-inline" src="../../images/p2-image646.png" style="width:11px" alt="">。其次，对第一个SAE进行训练后，将得到的隐式表示<img class="formula-inline" src="../../images/p2-image647.png" style="width:10px" alt="">第二个SAE的输入数据，根据相同的原理，训练第二个SAE，得到其最终隐藏表示<img class="formula-inline" src="../../images/p2-image648.png" style="width:12px" alt="">。如此这般，用第（*k*-1）个SAE的输出对第*k*个SAE进行训练，直到训练出最高的SAE。当训练完所有的SAE后，得到了代表整个隐藏表示的SSAE，即<img class="formula-inline" src="../../images/p2-image649.png" style="width:65px" alt="">，以及所有SAE的权值和参数值<img class="formula-inline" src="../../images/p2-image650.png" style="width:102px" alt="">，这些权重和参数值可用于后续的微调过程。
+堆叠稀疏自动编码器 (stacked sparse autoencoders, SSAE) 由多个稀疏自动编码器组成。 SSAE 将第 $i$ 层的输出作为第 $i + 1$ 层的输入,逐层连接形成深度网络,其堆叠过程如图 8.8 所示。首先，对未标记的原始数据训练最底层的 SAE，得到其最终的隐表示形式 ${h}_{1}$ 。其次， 对第一个 SAE 进行训练后,将得到的隐式表示 ${h}_{1}$ 第二个 SAE 的输入数据,根据相同的原理, 训练第二个 SAE,得到其最终隐藏表示 ${h}_{2}$ 。如此这般,用第 $\left( {k - 1}\right)$ 个 SAE 的输出对第 $k$ 个 SAE 进行训练，直到训练出最高的 SAE。当训练完所有的 SAE 后，得到了代表整个隐藏表示的 SSAE,即 $\left\lbrack  {{h}_{1},{h}_{2},\mathrm{\;L},{h}_{n}}\right\rbrack$ ,以及所有 SAE 的权值和参数值 $\left\{  {\left( {{w}_{i},{b}_{i}}\right) , i = 1,2\mathrm{\;L}, n}\right\}$ ,这些权重和参数值可用于后续的微调过程。
 
-<img class="content-image" src="../../images/p2-image651.png" style="width:412px" alt="">
+![104_608_572_432_581_0.jpg](../../images/p2-104_608_572_432_581_0.jpg)
 
-图8.8 堆叠稀疏自编码器
+图 8.8 堆叠稀疏自编码器
 
-### 8.2.2 SSAE-MLP机舱振动预测模型构建
+### 8.2.2 SSAE-MLP 机舱振动预测模型构建
 
-基于堆叠稀疏自编码器多层感知器（SSAE-MLP）的机舱振动预测模型（包括轴向振动和径向振动），其框架如图8.9所示。该框架包括三个主要部分：历史正常数据的采集、相关状态参数变量的选择；基于堆叠稀疏自编码器的深度网络（SSAE）无监督特征学习和权值共享表征融合；在最顶层增加了一个多层感知回归层（MLP）进行有监督微调，来提高风电机组机舱振动预测精度。SSAE-MLP模型的代价函数可以定义为
+基于堆叠稀疏自编码器多层感知器 (SSAE-MLP) 的机舱振动预测模型 (包括轴向振动和径向振动), 其框架如图 8.9 所示。该框架包括三个主要部分: 历史正常数据的采集、相关状态参数变量的选择; 基于堆叠稀疏自编码器的深度网络 (SSAE) 无监督特征学习和权值共享表征融合; 在最顶层增加了一个多层感知回归层 (MLP) 进行有监督微调, 来提高风电机组机舱振动预测精度。SSAE-MLP 模型的代价函数可以定义为
 
-<img class="formula-display" src="../../images/p2-image652.png" style="width:262px" alt=""> (8.22)
+$$
+\text{ SSAE-MLP\_ Loss }{}_{\theta ,{\theta }^{\prime }}\left( {{Y}_{\text{ act }} - {Y}_{\text{ pre }}}\right)  = \frac{1}{N}\mathop{\sum }\limits_{{i = 1}}^{N}\frac{1}{2}{\left( {y}_{\text{ act }, i},{y}_{\text{ pre }, i}\right) }^{2} \tag{8.22}
+$$
 
-式中，<img class="formula-inline" src="../../images/p2-image653.png" style="width:22px" alt="">和<img class="formula-inline" src="../../images/p2-image654.png" style="width:20px" alt="">分别为第<img class="formula-inline" src="../../images/p2-image655.png" style="width:6px" alt="">个数据样本的标签值和预测值，<img class="formula-inline" src="../../images/p2-image656.png" style="width:13px" alt="">为训练样本总数。
+式中, ${y}_{\mathrm{{act}}, i}$ 和 ${y}_{\mathrm{{pre}}, i}$ 分别为第 $i$ 个数据样本的标签值和预测值, $N$ 为训练样本总数。
 
-<img class="content-image" src="../../images/p2-image657.png" style="width:1244px" alt="">
+![105_540_187_566_714_0.jpg](../../images/p2-105_540_187_566_714_0.jpg)
 
-图8.9 SSAE-MLP模型框架
+图 8.9 SSAE-MLP 模型框架
 
-SSAE-MLP机舱振动预测模型构建步骤如下：
+SSAE-MLP 机舱振动预测模型构建步骤如下:
 
-（1）收集风电机组SCADA系统的历史正常数据、清洗数据、重采样数据、选择关键的参数变量和归一化参数变量。
+(1)收集风电机组 SCADA 系统的历史正常数据、清洗数据、重采样数据、选择关键的参数变量和归一化参数变量。
 
-（2）采用无监督学习的方式对SAE模型进行逐个训练，逐步获得特征表示：<img class="formula-inline" src="../../images/p2-image658.png" style="width:56px" alt="">。对于每个SAE，需要多次迭代来满足期望的精度或预定阈值。
+(2)采用无监督学习的方式对 $\mathrm{{SAE}}$ 模型进行逐个训练，逐步获得特征表示: ${h}_{1}$ ， ${h}_{2}$ ， $\mathrm{L}$ ， ${h}_{n}$ 。 对于每个 SAE，需要多次迭代来满足期望的精度或预定阈值。
 
-（3）将所有表示层<img class="formula-inline" src="../../images/p2-image659.png" style="width:49px" alt="">叠加到SSAE模型中，并在顶层<img class="formula-inline" src="../../images/p2-image660.png" style="width:12px" alt="">上添加回归层，形成深度模型SSAE-MLP。使用步骤（2）中已经预训练好的参数值<img class="formula-inline" src="../../images/p2-image661.png" style="width:32px" alt="">初始化SSAE-MLP模型中的参数。
+(3)将所有表示层 ${h}_{1},{h}_{2},\mathrm{L},{h}_{n}$ 叠加到 SSAE 模型中，并在顶层 ${h}_{n}$ 上添加回归层，形成深度模型 SSAE-MLP。使用步骤(2)中已经预训练好的参数值(W，b)初始化 SSAE-MLP 模型中的参数。
 
-（4）利用反向传播算法和梯度下降方法对SSAE-MLP的所有参数进行微调。
+(4)利用反向传播算法和梯度下降方法对 SSAE-MLP 的所有参数进行微调。
 
-（5）与步骤（4）的迭代方式一样训练整个模型，直至满足SSAE-MLP模型的期望精度或设定的最大迭代次数，然后将其用于预测或状态监测。
+(5)与步骤(4)的迭代方式一样训练整个模型，直至满足 SSAE-MLP 模型的期望精度或设定的最大迭代次数，然后将其用于预测或状态监测。
 
 ### 8.2.3 风电机组实例分析
 
-> 1\. 机舱*X*轴向和*Y*轴向振动预测模型结构参数
+1. 机舱 $X$ 轴向和 $Y$ 轴向振动预测模型结构参数
 
-就SSAE-MLP机舱振动预测模型而言，输入层选择8个参数变量：风速、转速、风向绝对值、5秒偏航对风平均值、风速变化率、转速变化率、风向绝对值变化率、5秒偏航对风平均值变化率；隐藏层从1到4层进行选择；隐藏单元的数量从10到70，步长为10，训练迭代次数为50，训练的最小批处理大小为8、16和32，稀疏值为2，学习率为\[0.1,0.01,0.001\]。对于不同的隐藏层数量，得到机舱*X*、*Y*轴向振动的SSAE-MLP预测模型最佳结构，分别如表8.4和表8.5所示。
+就 SSAE-MLP 机舱振动预测模型而言, 输入层选择 8 个参数变量: 风速、转速、风向绝对值、5 秒偏航对风平均值、风速变化率、转速变化率、风向绝对值变化率、 5 秒偏航对风平均值变化率; 隐藏层从 1 到 4 层进行选择; 隐藏单元的数量从 10 到 70，步长为 10，训练迭代次数为 50 , 训练的最小批处理大小为 8、16 和 32 , 稀疏值为 2 , 学习率为 [0.1,0.01,0.001]。 对于不同的隐藏层数量,得到机舱 $X\text{ 、 }Y$ 轴向振动的 SSAE-MLP 预测模型最佳结构,分别如表 8.4 和表 8.5 所示。
 
-表8.4 机舱X轴向振动SSAE-MLP模型结构
+表 8.4 机舱 X 轴向振动 SSAE-MLP 模型结构
 
-| 隐层数 |      最优结构       | 平均绝对误差MAE | 均方误差MSE |
-|:------:|:-------------------:|:---------------:|:-----------:|
-|   1    |     \[8,50,1\]      |    0.015585     |  0.001039   |
-|   2    |    \[8,70,70,1\]    |    0.015588     |  0.001042   |
-|   3    |  \[8,30,30,30,1\]   |    0.015473     |  0.001031   |
-|   4    | \[8,10,10,10,10,1\] |    0.015689     |  0.001043   |
+<table><tr><td>隐层数</td><td>最优结构</td><td>平均绝对误差 MAE</td><td>均方误差 MSE</td></tr><tr><td>1</td><td><span class="arithmatex">\(\left\lbrack  {8,{50},1}\right\rbrack\)</span></td><td>0.015585</td><td>0.001039</td></tr><tr><td>2</td><td><span class="arithmatex">\(\left\lbrack  {8,{70},{70},1}\right\rbrack\)</span></td><td>0.015588</td><td>0.001042</td></tr><tr><td>3</td><td><span class="arithmatex">\(\left\lbrack  {8,{30},{30},{30},1}\right\rbrack\)</span></td><td>0.015473</td><td>0.001031</td></tr><tr><td>4</td><td><span class="arithmatex">\(\left\lbrack  {8,{10},{10},{10},{10},1}\right\rbrack\)</span></td><td>0.015689</td><td>0.001043</td></tr></table>
 
-从表8.4可以看出，就机舱*X*轴向振动的SSAE-MLP预测而言，最优模型为三个隐藏层，包含30个神经元。在具有三个隐藏层的*X*轴向SSAE-MLP模型中，两个参数指标保持了最佳值。对比一个隐藏层、两个隐藏层和四个隐藏层，具有三个隐藏层的*X*轴向SSAE-MLP模型在MAE方面分别下降了约0.72%、0.74%和1.38%，在MSE方面分别下降了0.77%、1.06%和1.15%。从表中可以看出，*X*轴向SSAE-MLP模型性能随着隐藏层达到一定的层数之后，性能并没有提高反而下降了。机舱*X*轴向振动SSAE-MLP模型预测值和残差值如图8.10和图8.11所示，趋势表明具有三个隐藏层的*X*轴向振动SSAE-MLP预测模型性能更好。
+从表 8.4 可以看出，就机舱 $X$ 轴向振动的 SSAE-MLP 预测而言，最优模型为三个隐藏层, 包含 30 个神经元。在具有三个隐藏层的 $X$ 轴向 SSAE-MLP 模型中,两个参数指标保持了最佳值。对比一个隐藏层、两个隐藏层和四个隐藏层, 具有三个隐藏层的 $X$ 轴向 SSAE-MLP 模型在 MAE 方面分别下降了约 0.72%、0.74% 和 1.38%，在 MSE 方面分别下降了 0.77%、 1.06%和 1.15%。从表中可以看出, $X$ 轴向 SSAE-MLP 模型性能随着隐藏层达到一定的层数之后,性能并没有提高反而下降了。机舱 $X$ 轴向振动 SSAE-MLP 模型预测值和残差值如图 8.10 和图 8.11 所示,趋势表明具有三个隐藏层的 $X$ 轴向振动 SSAE-MLP 预测模型性能更好。
 
-<img class="content-image" src="../../images/p2-image662.png" style="width:2895px" alt="">图8.10 机舱*X*轴向振动预测模型预测结果
+![106_243_854_1171_711_0.jpg](../../images/p2-106_243_854_1171_711_0.jpg)
 
-<img class="content-image" src="../../images/p2-image663.png" style="width:3288px" alt="">
+图 8.10 机舱 $X$ 轴向振动预测模型预测结果
 
-图8.11 机舱*X*轴向振动预测模型预测残差
+![107_240_189_1176_703_0.jpg](../../images/p2-107_240_189_1176_703_0.jpg)
 
-表8.5 机舱Y轴向振动SSAE-MLP模型结构
+图 8.11 机舱 $X$ 轴向振动预测模型预测残差
 
-| 隐层数 |      最优结构       | 平均绝对误差MAE | 均方误差MSE |
-|:------:|:-------------------:|:---------------:|:-----------:|
-|   1    |     \[8,10,1\]      |    0.008733     |  0.000388   |
-|   2    |    \[8,30,30,1\]    |    0.008623     |  0.000385   |
-|   3    |  \[8,10,10,10,1\]   |    0.008631     |  0.000385   |
-|   4    | \[8,10,10,10,10,1\] |    0.008679     |  0.000386   |
+表 8.5 机舱 Y 轴向振动 SSAE-MLP 模型结构
 
-从表8.5可知，就机舱*Y*轴向振动的SSAE-MLP预测而言，最佳结构具有两个隐藏层，包含30个神经元。在具有两个隐藏层的机舱*Y*轴向振动SSAE-MLP预测模型中，两个参数指标值保持了最佳值。对比一个隐藏层、三个隐藏层和四个隐藏层，具有两个隐藏层的*Y*轴向振动SSAE-MLP预测模型在MAE方面分别下降了约1.26%、0.09%和0.65%，而在MSE方面除具有的三个隐层的模型外，最优模型比其他两个模型分别下降了0.77%和0.26%。从表还可看出，类似*X*轴向振动SSAE-MLP预测模型，机舱*Y*轴向振动SSAE-MLP预测模型性能随着隐藏层的增加而先降后升，达到一定的层数之后，性能并未再提高，反而下降了。不同结构的机舱*Y*轴向振动SSAE-MLP模型的预测结果值和对应的预测残差如图8.12和图8.13所示，趋势表明具有两个隐藏层的机舱*Y*轴向振动SSAE-MLP预测模型性能更好。
+<table><tr><td>隐层数</td><td>最优结构</td><td>平均绝对误差 MAE</td><td>均方误差 MSE</td></tr><tr><td>1</td><td><span class="arithmatex">\(\left\lbrack  {8,{10},1}\right\rbrack\)</span></td><td>0.008733</td><td>0.000388</td></tr><tr><td>2</td><td><span class="arithmatex">\(\left\lbrack  {8,{30},{30},1}\right\rbrack\)</span></td><td>0.008623</td><td>0.000385</td></tr><tr><td>3</td><td><span class="arithmatex">\(\left\lbrack  {8,{10},{10},{10},1}\right\rbrack\)</span></td><td>0.008631</td><td>0.000385</td></tr><tr><td>4</td><td><span class="arithmatex">\(\left\lbrack  {8,{10},{10},{10},{10},1}\right\rbrack\)</span></td><td>0.008679</td><td>0.000386</td></tr></table>
 
-<img class="content-image" src="../../images/p2-image664.png" style="width:6146px" alt="">
+从表 8.5 可知,就机舱 $Y$ 轴向振动的 SSAE-MLP 预测而言,最佳结构具有两个隐藏层, 包含 30 个神经元。在具有两个隐藏层的机舱 $Y$ 轴向振动 SSAE-MLP 预测模型中，两个参数指标值保持了最佳值。对比一个隐藏层、三个隐藏层和四个隐藏层，具有两个隐藏层的 $Y$ 轴向振动 SSAE-MLP 预测模型在 MAE 方面分别下降了约 1.26%、0.09%和 0.65%，而在 MSE 方面除具有的三个隐层的模型外, 最优模型比其他两个模型分别下降了 0.77% 和 0.26%。从表还可看出,类似 $X$ 轴向振动 SSAE-MLP 预测模型,机舱 $Y$ 轴向振动 SSAE-MLP 预测模型性能随着隐藏层的增加而先降后升, 达到一定的层数之后, 性能并未再提高, 反而下降了。 不同结构的机舱 Y 轴向振动 SSAE-MLP 模型的预测结果值和对应的预测残差如图 8.12 和图 8.13 所示,趋势表明具有两个隐藏层的机舱 $Y$ 轴向振动 SSAE-MLP 预测模型性能更好。
 
-图8.12 机舱*Y*轴向振动预测模型预测结果
+![108_238_189_1179_728_0.jpg](../../images/p2-108_238_189_1179_728_0.jpg)
 
-<img class="content-image" src="../../images/p2-image665.png" style="width:2198px" alt="">
+图 8.12 机舱 $Y$ 轴向振动预测模型预测结果
 
-图8.13 机舱*Y*轴向振动预测模型预测残差结果
+![108_243_968_1169_741_0.jpg](../../images/p2-108_243_968_1169_741_0.jpg)
 
-> 2\. 智能预测模型性能比较分析
+图 8.13 机舱 $Y$ 轴向振动预测模型预测残差结果
 
-为了分析评估所提SSAE-MLP预测模型性能，将其与多层感知器（multilayer perceptron，MLP）、随机梯度下降回归（stochastic gradient descent with restarts, SGDR）和支持向量机回归（support vector regression, SVR）等模型进行比较。这些模型都使用相同的数据集和相同的损失函数，最终的模型性能比较结果如表8.6和表8.7所示。
+#### 8.2.3.2 智能预测模型性能比较分析
 
-表8.6 机舱*X*轴向振动智能预测模型性能比较
+为了分析评估所提 SSAE-MLP 预测模型性能, 将其与多层感知器 (multilayer perceptron, MLP)、随机梯度下降回归 (stochastic gradient descent with restarts, SGDR) 和支持向量机回归(support vector regression, SVR)等模型进行比较。这些模型都使用相同的数据集和相同的损失函数, 最终的模型性能比较结果如表 8.6 和表 8.7 所示。
 
-| 指标 | SSAE-MLP |   MLP    |   SGDR   |   SVR    |
-|:----:|:--------:|:--------:|:--------:|:--------:|
-| MAE  | 0.015473 | 0.018851 | 0.017626 | 0.029877 |
-| MSE  | 0.001031 | 0.001165 | 0.001106 | 0.001893 |
+表 8.6 机舱 $X$ 轴向振动智能预测模型性能比较
 
-表8.7 机舱*Y*轴向振动智能预测模型性能比较
+<table><tr><td>指标</td><td>SSAE-MLP</td><td>MLP</td><td>SGDR</td><td>SVR</td></tr><tr><td>MAE</td><td>0.015473</td><td>0.018851</td><td>0.017626</td><td>0.029877</td></tr><tr><td>MSE</td><td>0.001031</td><td>0.001165</td><td>0.001106</td><td>0.001893</td></tr></table>
 
-| 指标 | SSAE-MLP |   MLP    |   SGDR   |   SVR    |
-|:----:|:--------:|:--------:|:--------:|:--------:|
-| MAE  | 0.008623 | 0.009617 | 0.011637 | 0.023518 |
-| MSE  | 0.000385 | 0.000409 | 0.000460 | 0.001112 |
+表 8.7 机舱 $Y$ 轴向振动智能预测模型性能比较
 
-从表8.6可以看出，机舱X轴向振动SSAE-MLP模型具有最低的MAE和MSE值。具体来说，与MLP、SGDR和SVR相比，SSAE-MLP模型在MAE方面分别下降了约17.92%、12.21%和48.21%，在MSE方面分别下降了约11.5%、6.78%和45.54%。从表8.7可以看出，机舱*Y*轴向振动SSAE-MLP模型也具有最低的MAE和MSE值。具体来说，与MLP、SGDR和SVR相比，SSAE-MLP模型在MAE方面分别下降了约10.34%、25.9%和63.33%，在MSE方面分别下降了约5.87%、16.3%和65.38%。这些分析说明，与MLP、SGDR和SVR等传统的浅层机器学习模型相比，属于深度学习模型的SSAE-MLP堆叠稀疏自编码器可以捕捉到隐藏在风电机组SCADA数据中的更丰富的有用特征信息。无论是*X*轴向振动还是*Y*轴向振动，SSAE-MLP模型由于堆叠稀疏自编码器的无监督特征和表征学习能力，为振动预测提供了更高的精度。另外，对比机舱*X*轴向和*Y*轴向振动可以看出，*X*轴向振动值的波动范围要大于*Y*轴向振动值。这是因为风电机组*X*轴向对着风轮迎风面，受到剧烈变化的风速影响就更加明显一些。
+<table><tr><td>指标</td><td>SSAE-MLP</td><td>MLP</td><td>SGDR</td><td>SVR</td></tr><tr><td>MAE</td><td>0.008623</td><td>0.009617</td><td>0.011637</td><td>0.023518</td></tr><tr><td>MSE</td><td>0.000385</td><td>0.000409</td><td>0.000460</td><td>0.001112</td></tr></table>
 
-## 8.3 基于KPCA-CNN-LSTM模型的风电机组发电机温度预测预警
+从表 8.6 可以看出，机舱 X 轴向振动 SSAE-MLP 模型具有最低的 MAE 和 MSE 值。具体来说, 与 MLP、SGDR 和 SVR 相比, SSAE-MLP 模型在 MAE 方面分别下降了约 17.92%、 12.21%和 48.21%，在 MSE 方面分别下降了约 11.5%、 6.78%和 45.54%。从表 8.7 可以看出， 机舱 Y 轴向振动 SSAE-MLP 模型也具有最低的 MAE 和 MSE 值。具体来说, 与 MLP、SGDR 和 SVR 相比, SSAE-MLP 模型在 MAE 方面分别下降了约 10.34%、25.9%和 63.33%，在 MSE 方面分别下降了约 5.87%、16.3%和 65.38%。这些分析说明，与 MLP、SGDR 和 SVR 等传统的浅层机器学习模型相比, 属于深度学习模型的 SSAE-MLP 堆叠稀疏自编码器可以捕捉到隐藏在风电机组 SCADA 数据中的更丰富的有用特征信息。无论是 $X$ 轴向振动还是 $Y$ 轴向振动, SSAE-MLP 模型由于堆叠稀疏自编码器的无监督特征和表征学习能力, 为振动预测提供了更高的精度。另外,对比机舱 $X$ 轴向和 $Y$ 轴向振动可以看出, $X$ 轴向振动值的波动范围要大于 $Y$ 轴向振动值。这是因为风电机组 $X$ 轴向对着风轮迎风面,受到剧烈变化的风速影响就更加明显一些。
 
-发电机是风电机组的核心部件，温度是其运行状态的重要指标。本节提出基于深度学习网络与核主成分分析相融合的风电机组发电机温度预测方法，既结合了深度学习网络和核主成分分析（kornel principal component analysis，KPCA）的非线性特征提取和数据分离能力，又结合了卷积神经网络(convolutional neural networks，CNN)的特征提取能力与长短期记忆（long short-term memory，LSTM）的时间特征提取能力。首先，介绍核主成分分析KPCA算法及其检测原理；然后，建立KPCA-CNN-LSTM深度神经网络模型，并分析评价模型性能；最后，以风电场风电机组SCADA数据为例，应用KPCA-CNN-LSTM模型进行发电机温度预测预警与分析验证<sup>\[27\]</sup>。
+## 8.3 基于 KPCA-CNN-LSTM 模型的风电机组发电机温度预测预警
 
-### 8.3.1 KPCA模型
+发电机是风电机组的核心部件, 温度是其运行状态的重要指标。本节提出基于深度学习网络与核主成分分析相融合的风电机组发电机温度预测方法, 既结合了深度学习网络和核主成分分析 (kornel principal component analysis, KPCA) 的非线性特征提取和数据分离能力, 又结合了卷积神经网络(convolutional neural networks, CNN)的特征提取能力与长短期记忆 (long short-term memory, LSTM) 的时间特征提取能力。首先, 介绍核主成分分析 KPCA 算法及其检测原理; 然后, 建立 KPCA-CNN-LSTM 深度神经网络模型, 并分析评价模型性能; 最后, 以风电场风电机组 SCADA 数据为例, 应用 KPCA-CNN-LSTM 模型进行发电机温度预测预警与分析验证[27]。
 
-核主成分分析（KPCA）的基本原理是通过非线性映射函数将输入空间中的数据映射到高维空间中，对高维空间的数据进行处理并进行相应的线性运算<sup>\[28\]</sup>。
+### 8.3.1 KPCA 模型
 
-对于输入空间中的*M*个样本<img class="formula-inline" src="../../images/p2-image666.png" style="width:122px" alt="">，为零均值，即<img class="formula-inline" src="../../images/p2-image667.png" style="width:40px" alt="">，则其协方差矩阵为
+核主成分分析 (KPCA) 的基本原理是通过非线性映射函数将输入空间中的数据映射到高维空间中, 对高维空间的数据进行处理并进行相应的线性运算 ${}^{\left\lbrack  {28}\right\rbrack  }$ 。
 
-<img class="formula-display" src="../../images/p2-image668.png" style="width:66px" alt=""> (8.23)
+对于输入空间中的 $M$ 个样本 ${x}_{k}\left( {k = 1,2,\mathrm{\;L}, M}\right) ,{x}_{k} \in  {\mathbf{R}}^{N}$ ,为零均值,即 $\mathop{\sum }\limits_{{k = 1}}^{M}{x}_{k} = 0$ ,则其协方差矩阵为
 
-PCA方法就是通过求特征方程<img class="formula-inline" src="../../images/p2-image669.png" style="width:37px" alt="">获得贡献率大的特征值及与之对应的特征向量。现引入非线性映射函数<img class="formula-inline" src="../../images/p2-image670.png" style="width:11px" alt="">，使输入空间中的样本点<img class="formula-inline" src="../../images/p2-image671.png" style="width:54px" alt="">变换为特征空间中的样本点<img class="formula-inline" src="../../images/p2-image672.png" style="width:106px" alt="">，则有
+$$
+C = \frac{1}{M}\mathop{\sum }\limits_{{j = 1}}^{M}{x}_{j}{x}_{j}^{\mathrm{T}} \tag{8.23}
+$$
 
-<img class="formula-display" src="../../images/p2-image673.png" style="width:60px" alt=""> (8.24)
+PCA 方法就是通过求特征方程 $\lambda \mathbf{v} = \mathbf{{Cv}}$ 获得贡献率大的特征值及与之对应的特征向量。 现引入非线性映射函数 $\Phi$ ，使输入空间中的样本点 ${x}_{1},{x}_{2}$ , L , ${x}_{M}$ 变换为特征空间中的样本点 $\Phi \left( {x}_{1}\right) ,\Phi \left( {x}_{2}\right) ,\mathrm{L},\Phi \left( {x}_{M}\right)$ ,则有
+
+$$
+\mathop{\sum }\limits_{{k = 1}}^{M}\Phi \left( {x}_{k}\right)  = 0 \tag{8.24}
+$$
 
 可得其特征空间的协方差矩阵为
 
-<img class="formula-display" src="../../images/p2-image674.png" style="width:101px" alt=""> (8.25)
+$$
+\overline{\mathbf{C}} = \frac{1}{n}\mathop{\sum }\limits_{{i = 1}}^{n}\Phi \left( {x}_{i}\right) \Phi {\left( {x}_{i}\right) }^{\mathrm{T}} \tag{8.25}
+$$
 
-其特征向量***v***就是原样本集的非线性主成分方向，满足<img class="formula-inline" src="../../images/p2-image675.png" style="width:37px" alt="">。将每个样本与该式作内积，可得
+其特征向量 $\mathbf{v}$ 就是原样本集的非线性主成分方向,满足 $\lambda \mathbf{v} = \overline{\mathbf{C}}\mathbf{v}$ 。将每个样本与该式作内积, 可得
 
-<img class="formula-display" src="../../images/p2-image676.png" style="width:164px" alt=""> (8.26)
+$$
+{\lambda \Phi }\left( {x}_{k}\right)  \cdot  \mathbf{v} = \Phi \left( {x}_{k}\right)  \cdot  \overline{\mathbf{C}}\mathbf{v}, k = 1,2,\mathrm{\;L}, n \tag{8.26}
+$$
 
-特征向量***v***，可以写成<img class="formula-inline" src="../../images/p2-image677.png" style="width:67px" alt="">，将它代入式(8.32)，定义矩阵
+特征向量 $\mathbf{v}$ ,可以写成 $\mathbf{v} = \mathop{\sum }\limits_{{i = 1}}^{n}{a}_{i}\Phi \left( {x}_{i}\right)$ ,将它代入式(8.32),定义矩阵
 
-<img class="formula-display" src="../../images/p2-image678.png" style="width:185px" alt=""> (8.27)
+$$
+K = \left\{  {K}_{ij}\right\}   = \left\{  {\Phi \left( {x}_{i}\right)  \cdot  \Phi \left( {x}_{j}\right) }\right\}   = \left\{  {K\left( {{x}_{i},{x}_{j}}\right) }\right\} \tag{8.27}
+$$
 
-式中，*K<sub>ij</sub>*为矩阵的第*i*行第*j*列的元素，则可以得到<img class="formula-inline" src="../../images/p2-image679.png" style="width:123px" alt="">，从矩阵***K***的特征向量***a***即可求出<img class="formula-inline" src="../../images/p2-image680.png" style="width:12px" alt="">的特征向量***v***和<img class="formula-inline" src="../../images/p2-image681.png" style="width:27px" alt="">空间的主成分方向。
+式中, ${K}_{ij}$ 为矩阵的第 $i$ 行第 $j$ 列的元素,则可以得到 ${n\lambda }\mathbf{a} = \mathbf{K}\mathbf{a},\mathbf{a} = {\left\lbrack  {a}_{1},{a}_{2},\mathrm{L},{a}_{n}\right\rbrack  }^{\mathrm{T}}$ ,从矩阵 $\mathbf{K}$ 的特征向量 $\mathbf{a}$ 即可求出 $\overline{\mathbf{C}}$ 的特征向量 $\mathbf{v}$ 和 $\Phi \left( x\right)$ 空间的主成分方向。
 
-对于原空间中的任意向量*x*，它在变换空间中的主成分是<img class="formula-inline" src="../../images/p2-image682.png" style="width:27px" alt="">在主成分方向*v*上的投影，即
+对于原空间中的任意向量 $x$ ,它在变换空间中的主成分是 $\Phi \left( x\right)$ 在主成分方向 $v$ 上的投影, 即
 
-<img class="formula-display" src="../../images/p2-image683.png" style="width:192px" alt=""> (8.28)
+$$
+\mathbf{v} \cdot  \Phi \left( x\right)  = \mathop{\sum }\limits_{{i = 1}}^{n}{a}_{i}\Phi \left( {x}_{i}\right)  \cdot  \Phi \left( x\right)  = \mathop{\sum }\limits_{{i = 1}}^{n}{a}_{i}K\left( {{x}_{i}, x}\right) \tag{8.28}
+$$
 
-### 8.3.2 KPCA-CNN-LSTM模型
+### 8.3.2 KPCA-CNN-LSTM 模型
 
-> 1\. CNN模型
+#### 8.3.2.1 CNN 模型
 
-卷积神经网络CNN是深度学习领域的经典算法之一。由于其内部采用权值共享、局部连接的结构，因此，CNN在减少算法复杂度的情况下还可以有效提取数据中蕴含的深层次特征。卷积神经网络主要由卷积层、池化层和全连接层等构成，通过局部连接和共享权值的模式，交替运用卷积层、池化层和全连接层获得原始序列数据中的表征，提取数据中的局部特征，从而建立特征向量，此结构减少权重数量，降低模型复杂度。CNN结构如图8.14所示，包括输入层、卷积层、池化层、全连接层和输出层。
+卷积神经网络 CNN 是深度学习领域的经典算法之一。由于其内部采用权值共享、局部连接的结构，因此，CNN 在减少算法复杂度的情况下还可以有效提取数据中蕴含的深层次特征。卷积神经网络主要由卷积层、池化层和全连接层等构成, 通过局部连接和共享权值的模式, 交替运用卷积层、池化层和全连接层获得原始序列数据中的表征, 提取数据中的局部特征, 从而建立特征向量, 此结构减少权重数量, 降低模型复杂度。CNN 结构如图 8.14 所示, 包括输入层、卷积层、池化层、全连接层和输出层。
 
-<img class="content-image" src="../../images/p2-image684.png" style="width:512px" alt="">
+![111_372_201_835_406_0.jpg](../../images/p2-111_372_201_835_406_0.jpg)
 
-图8.14 CNN的结构
+图 8.14 CNN 的结构
 
-> 2\. KPCA-CNN-LSTM模型结构
+#### 8.3.2.2 KPCA-CNN-LSTM 模型结构
 
-在KPCA-CNN-LSTM模型中，首先，将经过预处理的SCADA数据利用KPCA特征提取相关联数据的主元信息作为输入；其次，CNN提取SCADA数据每个时间点空间特征并输入到下一层；然后，LSTM层提取隐藏在空间特征序列中的时间特征，将时间和空间特征输入下一层，神经网络可以对SCADA数据序列进行非线性变换确定输入与输出参数之间的逻辑关系；最后，全连通层输出目标参数的预测值。
+在 KPCA-CNN-LSTM 模型中, 首先, 将经过预处理的 SCADA 数据利用 KPCA 特征提取相关联数据的主元信息作为输入；其次，CNN 提取 SCADA 数据每个时间点空间特征并输入到下一层；然后，LSTM 层提取隐藏在空间特征序列中的时间特征，将时间和空间特征输入下一层，神经网络可以对 SCADA 数据序列进行非线性变换确定输入与输出参数之间的逻辑关系; 最后, 全连通层输出目标参数的预测值。
 
-CNN层将卷积核数设置为64，卷积核的长度设置为1。原则上，LSTM层隐藏越多，拟合度就越好。然而，随着层数的增加，训练时间将显著增加，因此LSTM的层数设置为2。第一层LSTM神经元数量为128个，第二层LSTM神经元数量为64个。
+CNN 层将卷积核数设置为 64 ，卷积核的长度设置为 1 。原则上，LSTM 层隐藏越多， 拟合度就越好。然而, 随着层数的增加, 训练时间将显著增加, 因此 LSTM 的层数设置为 2 。 第一层 LSTM 神经元数量为 128 个，第二层 LSTM 神经元数量为 64 个。
 
-> 3\. 模型性能比较分析
+#### 8.3.2.3 模型性能比较分析
 
-某风电场风电机组6月1日至7月10日的SCADA数据，数据收集间隔为10分钟，通过滑动窗口选取数据，滑动窗口宽度为5，时间增量为1。由于风电机组的发电机定子温度过高发生故障，风电机组于7月10日停机维护。选取6月1日到6月30日之间的数据作为训练样本集，7月10日发电机定子高温故障停机前400个采样点作为测试样本集进行分析。首先对数据进行预处理，剔除停机数据点。选择目标变量发电机定子的温度作为输出，通过Pearson相关性分析，选择与目标变量相关性高的变量作为输入变量，输入变量选取如表8.8所示。
+某风电场风电机组 6 月 1 日至 7 月 10 日的 SCADA 数据，数据收集间隔为 10 分钟，通过滑动窗口选取数据，滑动窗口宽度为 5 ，时间增量为 1 。由于风电机组的发电机定子温度过高发生故障, 风电机组于 7 月 10 日停机维护。选取 6 月 1 日到 6 月 30 日之间的数据作为训练样本集, 7 月 10 日发电机定子高温故障停机前 400 个采样点作为测试样本集进行分析。 首先对数据进行预处理，剔除停机数据点。选择目标变量发电机定子的温度作为输出，通过 Pearson 相关性分析, 选择与目标变量相关性高的变量作为输入变量, 输入变量选取如表 8.8 所示。
 
-表8.8 输入参数与目标变量相关系数
+表 8.8 输入参数与目标变量相关系数
 
-| 序号 |    变量    | 变量值 |
-|:----:|:----------:|:------:|
-|  1   | 发电机电流 | 0.804  |
-|  2   |    风速    | 0.628  |
-|  3   |  输出功率  | 0.813  |
-|  4   |  环境温度  | 0.687  |
-|  5   | 主轴承温度 | 0.879  |
-|  6   |  机舱温度  | 0.827  |
-|  7   | 控制柜温度 | 0.851  |
-|  8   | 发电机转矩 | 0.802  |
+<table><tr><td>序号</td><td>变量</td><td>变量值</td></tr><tr><td>1</td><td>发电机电流</td><td>0.804</td></tr><tr><td>2</td><td>风速</td><td>0.628</td></tr><tr><td>3</td><td>输出功率</td><td>0.813</td></tr><tr><td>4</td><td>环境温度</td><td>0.687</td></tr><tr><td>5</td><td>主轴承温度</td><td>0.879</td></tr><tr><td>6</td><td>机舱温度</td><td>0.827</td></tr><tr><td>7</td><td>控制柜温度</td><td>0.851</td></tr><tr><td>8</td><td>发电机转矩</td><td>0.802</td></tr></table>
 
-为了定量分析模型性能，采用RMSE、MAE和MAPE作为性能指标。将KPCA-CNN-LSTM模型与CNN-LSTM模型和LSTM模型比较，各个模型性能指标如表8.9和表8.10所示，RMSE随时间变化趋势如图8.15所示。从表中可以看出，在正常运行状态下KPCA-CNN-LSTM模型的性能指标值最小，在异常运行状态下KPCA-CNN-LSTM模型的性能指标值最大，这表明该模型能够更好地提取输入向量和输出向量之间的特征关系。从图8.15可以得出，在风电机组发电机正常运行情况下，所有模型的RMSE值都在一定的幅度范围内波动，但KPCA-CNN-LSTM模型的RMSE值更小且更稳定；在风电机组发电机出现异常状态下，所有模型的RMSE值都有一定程度的突变，但KPCA-CNN-LSTM模型的RMSE值突变更加显著。这些说明在风电机组故障停机前的一段时间内，所有模型的RMSE并保持在一个较高的幅度范围内波动。从RMSE值的整体变化趋势来看，KPCA-CNN-LSTM模型在检测到故障时表现出更明显的变化。因此KPCA-CNN-LSTM模型在预测风电机组运行状态方面更准确和可靠。
+为了定量分析模型性能，采用 RMSE、MAE 和 MAPE 作为性能指标。将 KPCA-CNN-LSTM 模型与 CNN-LSTM 模型和 LSTM 模型比较, 各个模型性能指标如表 8.9 和表 8.10 所示, RMSE 随时间变化趋势如图 8.15 所示。从表中可以看出, 在正常运行状态下 KPCA-CNN-LSTM 模型的性能指标值最小, 在异常运行状态下 KPCA-CNN-LSTM 模型的性能指标值最大, 这表明该模型能够更好地提取输入向量和输出向量之间的特征关系。从图 8.15 可以得出, 在风电机组发电机正常运行情况下, 所有模型的 RMSE 值都在一定的幅度范围内波动, 但 KPCA-CNN-LSTM 模型的 RMSE 值更小且更稳定; 在风电机组发电机出现异常状态下, 所有模型的 RMSE 值都有一定程度的突变, 但 KPCA-CNN-LSTM 模型的 RMSE 值突变更加显著。这些说明在风电机组故障停机前的一段时间内，所有模型的 RMSE 并保持在一个较高的幅度范围内波动。从 RMSE 值的整体变化趋势来看, KPCA-CNN-LSTM 模型在检测到故障时表现出更明显的变化。因此 KPCA-CNN-LSTM 模型在预测风电机组运行状态方面更准确和可靠。
 
-表8.9 发电机定子模型故障发生前评价指标比较
+表 8.9 发电机定子模型故障发生前评价指标比较
 
-<table>
-<colgroup>
-<col style="width: 23%" />
-<col style="width: 23%" />
-<col style="width: 23%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th rowspan="2" style="text-align: center;">指标</th>
-<th colspan="3" style="text-align: center;">模型</th>
-</tr>
-<tr>
-<th style="text-align: center;">LSTM</th>
-<th style="text-align: center;">CNN-LSTM</th>
-<th style="text-align: center;">KPCA-CNN-LSTM</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">RMSE</td>
-<td style="text-align: center;">3.0375</td>
-<td style="text-align: center;">1.5357</td>
-<td style="text-align: center;">0.6949</td>
-</tr>
-<tr>
-<td style="text-align: center;">MAE</td>
-<td style="text-align: center;">2.9044</td>
-<td style="text-align: center;">1.4381</td>
-<td style="text-align: center;">0.6438</td>
-</tr>
-<tr>
-<td style="text-align: center;">MAPE</td>
-<td style="text-align: center;">6.4481</td>
-<td style="text-align: center;">2.6114</td>
-<td style="text-align: center;">1.4532</td>
-</tr>
-</tbody>
-</table>
+<table><tr><td rowspan="2">指标</td><td colspan="3">模型</td></tr><tr><td>LSTM</td><td>CNN-LSTM</td><td>KPCA-CNN-LSTM</td></tr><tr><td>RMSE</td><td>3.0375</td><td>1.5357</td><td>0.6949</td></tr><tr><td>MAE</td><td>2.9044</td><td>1.4381</td><td>0.6438</td></tr><tr><td>MAPE</td><td>6.4481</td><td>2.6114</td><td>1.4532</td></tr></table>
 
-表8.10 发电机定子模型故障发生后评价指标比较
+表 8.10 发电机定子模型故障发生后评价指标比较
 
-<table>
-<colgroup>
-<col style="width: 23%" />
-<col style="width: 23%" />
-<col style="width: 23%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th rowspan="2" style="text-align: center;">指标</th>
-<th colspan="3" style="text-align: center;">模型</th>
-</tr>
-<tr>
-<th style="text-align: center;">LSTM</th>
-<th style="text-align: center;">CNN-LSTM</th>
-<th style="text-align: center;">KPCA-CNN-LSTM</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">RMSE</td>
-<td style="text-align: center;">9.1578</td>
-<td style="text-align: center;">10.6111</td>
-<td style="text-align: center;">12.1062</td>
-</tr>
-<tr>
-<td style="text-align: center;">MAE</td>
-<td style="text-align: center;">9.0949</td>
-<td style="text-align: center;">10.5606</td>
-<td style="text-align: center;">12.0628</td>
-</tr>
-<tr>
-<td style="text-align: center;">MAPE</td>
-<td style="text-align: center;">10.7166</td>
-<td style="text-align: center;">11.8964</td>
-<td style="text-align: center;">13.1012</td>
-</tr>
-</tbody>
-</table>
+<table><tr><td rowspan="2">指标</td><td colspan="3">模型</td></tr><tr><td>LSTM</td><td>CNN-LSTM</td><td>KPCA-CNN-LSTM</td></tr><tr><td>RMSE</td><td>9.1578</td><td>10.6111</td><td>12.1062</td></tr><tr><td>MAE</td><td>9.0949</td><td>10.5606</td><td>12.0628</td></tr><tr><td>MAPE</td><td>10.7166</td><td>11.8964</td><td>13.1012</td></tr></table>
 
-<img class="content-image" src="../../images/p2-image685.png" style="width:1661px" alt="">
+![112_427_1096_791_496_0.jpg](../../images/p2-112_427_1096_791_496_0.jpg)
 
-图8.15 预测结果比较.
+图 8.15 预测结果比较.
 
-> 4\. 状态监测方法
+#### 8.3.2.4 状态监测方法
 
-计算预测值与实际值之间的残差，识别出风电机组发电机的运行状态。通过相关性分析选择相关联的数据，采用的检测统计量是残差空间统计量平方预测误差*E*<sub>SP</sub>，其反映的是某一时刻模型预测值和实际值之间的偏离程度。*E*<sub>SP</sub>统计量计算如下：
+计算预测值与实际值之间的残差, 识别出风电机组发电机的运行状态。通过相关性分析选择相关联的数据,采用的检测统计量是残差空间统计量平方预测误差 ${E}_{\mathrm{{SP}}}$ ,其反映的是某一时刻模型预测值和实际值之间的偏离程度。 ${E}_{\mathrm{{SP}}}$ 统计量计算如下:
 
-<img class="formula-display" src="../../images/p2-image686.png" style="width:138px" alt=""> (8.29)
+$$
+{E}_{\mathrm{{SP}}i} = {E}_{i}{E}_{i}^{T} = {t}_{i}\left( {I - {P}_{\mathrm{R}}{P}_{\mathrm{R}}^{\mathrm{T}}}\right) {t}_{i}^{\mathrm{T}} \tag{8.29}
+$$
 
-式中：*t<sub>i</sub>* 为输入向量*x*在特征空间中第*i*个核主元；*P*<sub>R</sub>为KPCA提取的特征向量。
+式中: ${t}_{i}$ 为输入向量 $x$ 在特征空间中第 $i$ 个核主元; ${P}_{\mathrm{R}}$ 为 KPCA 提取的特征向量。
 
-当置信水平为*α*时，*E*<sub>SP</sub>统计量的控制限为
+当置信水平为 $\alpha$ 时, ${E}_{\mathrm{{SP}}}$ 统计量的控制限为
 
-<img class="formula-display" src="../../images/p2-image687.png" style="width:167px" alt=""> (8.30)
+$$
+{E}_{\mathrm{{SP}}\alpha } = {\theta }_{1}{\left\lbrack  \frac{{c}_{\alpha }\sqrt{2{\theta }_{2}{h}^{2}}}{{\theta }_{1}} + 1 + \frac{{\theta }_{2}h\left( {h - 1}\right) }{{\theta }_{1}^{2}}\right\rbrack  }^{\frac{1}{h}} \tag{8.30}
+$$
 
-式中，<img class="formula-inline" src="../../images/p2-image688.png" style="width:106px" alt="">；<img class="formula-inline" src="../../images/p2-image689.png" style="width:55px" alt="">；<img class="formula-inline" src="../../images/p2-image690.png" style="width:11px" alt="">为正态分布检验水平为*α*的临界值。
+式中, ${\theta }_{i} = \mathop{\sum }\limits_{{j = p + 1}}^{n}{\lambda }_{j}^{i}, i = 1,2,3;h = 1 - \frac{2{\theta }_{1}{\theta }_{3}}{{\theta }_{2}^{2}};{c}_{a}$ 为正态分布检验水平为 $\alpha$ 的临界值。
 
 ### 8.3.3 风电机组实例分析
 
-首先，单独采用KPCA算法，提取正常训练数据样本中的主元建立监测模型，并计算*E*<sub>SP</sub>统计量，分析其与统计限的关系，如图8.16所示。从图可见，在发电机处于正常工作状态期间，通过模型计算得到的*E*<sub>SP</sub>统计量都在阈值以下，但是存在虚警点，图中虚线代表99%的控制限。提取测试数据样本中的主元建立监测模型，并计算*E*<sub>SP</sub>统计量，分析其与统计限的关系，如图8.17所示。由实际情况可知，此风电机组在7月10日因发电机高温故障停机。从图可见，在正常状态时出现了一些采样点超过了阈值，说明存在虚警点；在第300个采样点后超出控制限的异常点明显增多，说明第300个采样点之后有异常发生，且异常程度持续变大。这些表明采用KPCA监测风电机组发电机状态与实际情况基本相符，由于出现了一些虚警点，说明只用KPCA算法对风电机组发电机进行状态监测效果有待提高。
+首先, 单独采用 KPCA 算法, 提取正常训练数据样本中的主元建立监测模型, 并计算 ${E}_{\mathrm{{SP}}}$ 统计量,分析其与统计限的关系,如图 8.16 所示。从图可见,在发电机处于正常工作状态期间，通过模型计算得到的 ${E}_{\mathrm{{SP}}}$ 统计量都在阈值以下，但是存在虚警点，图中虚线代表 99% 的控制限。提取测试数据样本中的主元建立监测模型,并计算 ${E}_{\mathrm{{SP}}}$ 统计量,分析其与统计限的关系，如图 8.17 所示。由实际情况可知，此风电机组在 7 月 10 日因发电机高温故障停机。 从图可见, 在正常状态时出现了一些采样点超过了阈值, 说明存在虚警点; 在第 300 个采样点后超出控制限的异常点明显增多, 说明第 300 个采样点之后有异常发生, 且异常程度持续变大。这些表明采用 KPCA 监测风电机组发电机状态与实际情况基本相符, 由于出现了一些虚警点, 说明只用 KPCA 算法对风电机组发电机进行状态监测效果有待提高。
 
-<img class="content-image" src="../../images/p2-image691.png" style="width:1741px" alt="">
+![113_406_969_842_526_0.jpg](../../images/p2-113_406_969_842_526_0.jpg)
 
-图8.16 KPCA模型正常状态监测
+图 8.16 KPCA 模型正常状态监测
 
-<img class="content-image" src="../../images/p2-image692.png" style="width:1995px" alt="">
+![113_407_1568_838_523_0.jpg](../../images/p2-113_407_1568_838_523_0.jpg)
 
-图8.17 KPCA模型异常状态监测
+图 8.17 KPCA 模型异常状态监测
 
-然后，联合KPCA和CNN-LSTM模型分析评估风电机组发电机的运行状态。通过RMSE计算预测值与实际值之间的偏差，并使用EWMA来设置阈值。图8.18显示了风电机组发电机定子温度RMSE趋势变化。从图可见，在第300个采样点后RMSE首次大幅度超出阈值；随后，设定的阈值被多次超过，并在发生故障时出现较大突变，在7月10日风电机组停机之前达到最大值。预测的时间与实际故障时间一致，因此，所提出的模型可以有效地检测风电机组的异常状态。
+然后, 联合 KPCA 和 CNN-LSTM 模型分析评估风电机组发电机的运行状态。通过 RMSE 计算预测值与实际值之间的偏差, 并使用 EWMA 来设置阈值。图 8.18 显示了风电机组发电机定子温度 RMSE 趋势变化。从图可见，在第 300 个采样点后 RMSE 首次大幅度超出阈值； 随后, 设定的阈值被多次超过, 并在发生故障时出现较大突变, 在 7 月 10 日风电机组停机之前达到最大值。预测的时间与实际故障时间一致，因此，所提出的模型可以有效地检测风电机组的异常状态。
 
-<img class="content-image" src="../../images/p2-image693.png" style="width:1992px" alt="">
+![114_325_493_1006_627_0.jpg](../../images/p2-114_325_493_1006_627_0.jpg)
 
-图8.18 KPCA-CNN-LSTM模型监测结果
+图 8.18 KPCA-CNN-LSTM 模型监测结果
 
 ## 8.4 参考文献
 
-1.  Carta J A, Velázquez S, Cabrera P. A review of measure-correlate-predict (MCP) methods used to estimate long-term wind characteristics at a target site\[J\]. Renewable and Sustainable Energy Reviews, 2013, 27: 362-400.
+[1] Carta J A, Velázquez S, Cabrera P. A review of measure-correlate-predict (MCP) methods used to estimate long-term wind characteristics at a target site[J]. Renewable and Sustainable Energy Reviews, 2013, 27: 362-400.
 
-2.  Tascikaraoglu A, Uzunoglu M. A review of combined approaches for prediction of short-term wind speed and power\[J\]. Renewable and Sustainable Energy Reviews, 2014, 34: 243-254.
+[2] Tascikaraoglu A, Uzunoglu M. A review of combined approaches for prediction of short-term wind speed and power[J]. Renewable and Sustainable Energy Reviews, 2014, 34: 243-254.
 
-3.  Sarwat A I, Amini M, Domijan A, et al. Weather-based interruption prediction in the smart grid utilizing chronological data\[J\]. Journal of Modern Power Systems and Clean Energy, 2016, 4(2): 1-8.
+[3] Sarwat A I, Amini M, Domijan A, et al. Weather-based interruption prediction in the smart grid utilizing chronological data[J]. Journal of Modern Power Systems and Clean Energy, 2016, 4(2): 1-8.
 
-4.  Okumus I, Dinler A. Current status of wind energy forecasting and a hybrid method for hourly predictions\[J\]. Energy Conversion and Management, 2016, 123: 362-371.
+[4] Okumus I, Dinler A. Current status of wind energy forecasting and a hybrid method for hourly predictions[J]. Energy Conversion and Management, 2016, 123: 362-371.
 
-5.  Taylor J W, McSharry P E, Buizza R. Wind power density forecasting using ensemble predictions and time series models\[J\]. IEEE Transactions on Energy conversion, 2009, 24(3): 775-782.
+[5] Taylor J W, McSharry P E, Buizza R. Wind power density forecasting using ensemble predictions and time series models[J]. IEEE Transactions on Energy conversion, 2009, 24(3): 775-782.
 
-6.  Khosravi A, Machado L, Nunes R. Time-series prediction of wind speed using machine learning algorithms: A case study Osorio wind farm, Brazil\[J\]. Applied Energy, 2018, 224: 550-566.
+[6] Khosravi A, Machado L, Nunes R. Time-series prediction of wind speed using machine learning algorithms: A case study Osorio wind farm, Brazil[J]. Applied Energy, 2018, 224: 550-566.
 
-7.  Heinermann J, Kramer O. Machine learning ensembles for wind power prediction\[J\]. Renewable Energy, 2016, 89: 671-679.
+[7] Heinermann J, Kramer O. Machine learning ensembles for wind power prediction[J]. Renewable Energy, 2016, 89: 671-679.
 
-8.  Xiao X, Liu J, Liu D, et al. Condition monitoring of wind turbine main bearing based on multivariate time series forecasting\[J\]. Energies, 2022, 15(5): 1951.
+[8] Xiao X, Liu J, Liu D, et al. Condition monitoring of wind turbine main bearing based on multivariate time series forecasting[J]. Energies, 2022, 15(5): 1951.
 
-9.  Kurbatskii V G, Sidorov D N, Spiryaev V A, et al. On the neural network approach for forecasting of nonstationary time series on the basis of the Hilbert-Huang transform\[J\]. Automation and Remote Control, 2011, 72: 1405-1414.
+[9] Kurbatskii V G, Sidorov D N, Spiryaev V A, et al. On the neural network approach for forecasting of nonstationary time series on the basis of the Hilbert-Huang transform[J]. Automation and Remote Control, 2011, 72: 1405-1414.
 
-10. Liu H, Mi X, Li Y. Wind speed forecasting method based on deep learning strategy using empirical wavelet transform, long short term memory neural network and Elman neural network\[J\]. Energy Conversion and Management, 2018, 156: 498-514.
+[10] Liu H, Mi X, Li Y. Wind speed forecasting method based on deep learning strategy using empirical wavelet transform, long short term memory neural network and Elman neural network[J]. Energy Conversion and Management, 2018, 156: 498-514.
 
-11. Liu Y, Guan L, Hou C, et al. Wind power short-term prediction based on LSTM and discrete wavelet transform\[J\]. Applied Sciences, 2019, 9(6): 1108.
+[11] Liu Y, Guan L, Hou C, et al. Wind power short-term prediction based on LSTM and discrete wavelet transform[J]. Applied Sciences, 2019, 9(6): 1108.
 
-12. Wang C, Zhang H, Fan W, et al. A new chaotic time series hybrid prediction method of wind power based on EEMD-SE and full-parameters continued fraction\[J\]. Energy, 2017, 138: 977-990.
+[12] Wang C, Zhang H, Fan W, et al. A new chaotic time series hybrid prediction method of wind power based on EEMD-SE and full-parameters continued fraction[J]. Energy, 2017, 138: 977-990.
 
-13. Huang C Y. Analysis on application of wavelet neural network in wind electricity power prediction\[J\]. Applied Mechanics and Materials, 2014, 686: 627-633.
+[13] Huang C Y. Analysis on application of wavelet neural network in wind electricity power prediction[J]. Applied Mechanics and Materials, 2014, 686: 627-633.
 
-14. Fang B, Liu D, Wang B, et al. Forecast of short-term wind speed based on wavelet transform and improved fireﬂy LSSVM algorithm\[J\]. Protection, Control and Power Systems, 2016, 44: 37-43.
+[14] Fang B, Liu D, Wang B, et al. Forecast of short-term wind speed based on wavelet transform and improved firefly LSSVM algorithm[J]. Protection, Control and Power Systems, 2016, 44: 37-43.
 
-15. Lv S X, Wang L. Deep learning combined wind speed forecasting with hybrid time series decomposition and multi-objective parameter optimization\[J\]. Applied Energy, 2022, 311: 118674.
+[15] Lv S X, Wang L. Deep learning combined wind speed forecasting with hybrid time series decomposition and multi-objective parameter optimization[J]. Applied Energy, 2022, 311: 118674.
 
-16. Wang J, Wang S, Zeng B, et al. A novel ensemble probabilistic forecasting system for uncertainty in wind speed\[J\]. Applied Energy, 2022, 313: 118796.
+[16] Wang J, Wang S, Zeng B, et al. A novel ensemble probabilistic forecasting system for uncertainty in wind speed[J]. Applied Energy, 2022, 313: 118796.
 
-17. Zhang G, Wu Y, Wong K P, et al. An advanced approach for construction of optimal wind power prediction intervals\[J\]. IEEE Transactions on Power Systems, 2014, 30(5): 2706-2715.
+[17] Zhang G, Wu Y, Wong K P, et al. An advanced approach for construction of optimal wind power prediction intervals[J]. IEEE Transactions on Power Systems, 2014, 30(5): 2706-2715.
 
-18. Yu C, Li Y, Zhang M. Comparative study on three new hybrid models using Elman neural network and empirical mode decomposition based technologies improved by singular spectrum analysis for hour-ahead wind speed forecasting\[J\]. Energy Conversion and Management, 2017, 147: 75-85.
+[18] Yu C, Li Y, Zhang M. Comparative study on three new hybrid models using Elman neural network and empirical mode decomposition based technologies improved by singular spectrum analysis for hour-ahead wind speed forecasting[J]. Energy Conversion and Management, 2017, 147: 75-85.
 
-19. Wang K, Niu D, Sun L, et al. Wind power short-term forecasting hybrid model based on CEEMD-SE method\[J\]. Processes, 2019, 7(11): 843.
+[19] Wang K, Niu D, Sun L, et al. Wind power short-term forecasting hybrid model based on CEEMD-SE method[J]. Processes, 2019, 7(11): 843.
 
-20. Zhu A, Zhao Q, Wang X, et al. Ultra-short-term wind power combined prediction based on complementary ensemble empirical mode decomposition, whale optimisation algorithm, and Elman network\[J\]. Energies, 2022, 15(9): 3055.
+[20] Zhu A, Zhao Q, Wang X, et al. Ultra-short-term wind power combined prediction based on complementary ensemble empirical mode decomposition, whale optimisation algorithm, and Elman network[J]. Energies, 2022, 15(9): 3055.
 
-21. Huang N, Shen Z, Long S, et al. The empirical mode decomposition and the Hilbert spectrum for nonlinear and non-stationary time series analysis\[J\]. Proceedings of the Royal Society of London, Series A: Mathematical, Physical and Engineering Sciences, 1998, 454(1971): 903-995.
+[21] Huang N, Shen Z, Long S, et al. The empirical mode decomposition and the Hilbert spectrum for nonlinear and non-stationary time series analysis[J]. Proceedings of the Royal Society of London, Series A: Mathematical, Physical and Engineering Sciences, 1998, 454(1971): 903-995.
 
-22. Zhou X, Tong X. Ultra-short-term wind power combined prediction based on CEEMD-SBO-LSSVR\[J\]. Power System Technology, 2021, 45(3): 855-864.
+[22] Zhou X, Tong X. Ultra-short-term wind power combined prediction based on CEEMD-SBO-LSSVR[J]. Power System Technology, 2021, 45(3): 855-864.
 
-23. 谢丽蓉,王斌,包洪印,等.基于EEMD-WOA-LSSVM的超短期风电功率预测\[J\].太阳能学报,2021,42(07):290-296.
+[23] 谢丽蓉, 王斌, 包洪印, 等. 基于 EEMD-WOA-LSSVM 的超短期风电功率预测[J]. 太阳能学报, 2021,42(07):290-296.
 
-24. Xiao X, Liu J, Liu D, et al. SSAE-MLP: Stacked sparse autoencoders-based multi-layer perceptron for main bearing temperature prediction of large-scale wind turbines\[J\]. Concurrency and Computation: Practice and Experience, 2021, 33(17): e6315.
+[24] Xiao X, Liu J, Liu D, et al. SSAE-MLP: Stacked sparse autoencoders-based multi-layer perceptron for main bearing temperature prediction of large-scale wind turbines[J]. Concurrency and Computation: Practice and Experience, 2021, 33(17): e6315.
 
-25. Hinton G E, Zemel R. Autoencoders, minimum description length and Helmholtz free energy\[C\]. Proceedings of the 7th International Conference on Neural Information Processing Systems, Denver, Colorado 1993: 3-10.
+[25] Hinton G E, Zemel R. Autoencoders, minimum description length and Helmholtz free energy[C]. Proceedings of the 7th International Conference on Neural Information Processing Systems, Denver, Colorado 1993: 3-10.
 
-26. Ranzato M A, Poultney C, Chopra S, et al. Efficient learning of sparse representations with an energy-based model \[J\]. Advances in Neural Information Processing Systems, 2006, 19: 1-8.
+[26] Ranzato M A, Poultney C, Chopra S, et al. Efficient learning of sparse representations with an energy-based model [J]. Advances in Neural Information Processing Systems, 2006, 19: 1-8.
 
-27. Zhu A, Zhao Q, Yang T, et al. Condition monitoring of wind turbine based on deep learning networks and kernel principal component analysis\[J\]. Computers and Electrical Engineering, 2023, 105: 108538.
+[27] Zhu A, Zhao Q, Yang T, et al. Condition monitoring of wind turbine based on deep learning networks and kernel principal component analysis[J]. Computers and Electrical Engineering, 2023, 105: 108538.
 
-28. Tian X M, Zhang X L. Multi-way kernel independent component analysis based on feature samples for batch process monitoring\[J\]. Neurocomputing, 2009, 72(7-9): 1584-1596.
+[28] Tian X M, Zhang X L. Multi-way kernel independent component analysis based on feature samples for batch process monitoring[J]. Neurocomputing, 2009, 72(7-9): 1584-1596.
