@@ -33,6 +33,10 @@ button, input { font: inherit; }
 .brand strong, .brand small { display: block; }
 .brand strong { font-size: .94rem; letter-spacing: .02em; }
 .brand small { margin-top: .08rem; color: var(--muted); font-size: .68rem; }
+.logout-form { display: none; margin: 0; }
+.logout-form.is-active { display: block; }
+.logout-button { border: 1px solid var(--line); border-radius: .5rem; padding: .45rem .75rem; color: var(--muted); background: var(--surface); font: inherit; font-size: .72rem; cursor: pointer; }
+.logout-button:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .top-links { display: flex; gap: 1.3rem; margin-right: auto; color: var(--muted); font-size: .82rem; }
 .top-links a:hover { color: var(--accent); }
 .top-meta { color: var(--muted); font-size: .74rem; }
