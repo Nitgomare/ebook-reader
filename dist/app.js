@@ -725,6 +725,19 @@
     elements.article.innerHTML = '<div class="error-card"><p>' + escapeHtml(error.message) + '</p><a href="#/">返回学习中心</a></div>';
   }
 
+  async function loadAuthStatus() {
+    try {
+      var response = await fetch("/__auth/status", { cache: "no-store", credentials: "same-origin" });
+      if (!response.ok) return;
+      var account = await response.json();
+      var form = byId("logoutForm");
+      form.classList.add("is-active");
+      form.title = account.email ? "当前账号：" + account.email : "退出当前账号";
+    } catch (_error) {
+      // Local static previews and the migration fallback do not expose this endpoint.
+    }
+  }
+
   async function initialize() {
     cacheElements();
     bindEvents();
@@ -735,6 +748,7 @@
     elements.siteTitle.textContent = state.catalog.site.title;
     elements.topMeta.textContent = state.catalog.stats.docs + " 个章节 · " + state.catalog.stats.code + " 个代码/数据文件";
     document.body.classList.remove("is-loading");
+    loadAuthStatus();
     await route();
   }
 

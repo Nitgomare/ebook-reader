@@ -161,6 +161,15 @@ def main() -> None:
                 "secureEqual", "env.ASSETS.fetch(request)", '"Cache-Control": "no-store"',
             )
         ),
+        "managed_account_auth": all(
+            token in worker_js
+            for token in (
+                "SUPABASE_URL", "SUPABASE_PUBLISHABLE_KEY", "__Host-rkh_access",
+                "__Host-rkh_refresh", "/__auth/login", "/__auth/logout",
+                "/auth/v1/.well-known/jwks.json", "HttpOnly; Secure; SameSite=Lax",
+                "TURNSTILE_SECRET_KEY", "ALLOW_LEGACY_BASIC",
+            )
+        ),
     }
 
     assert report["stats"] == {"books": 14, "docs": 200, "code": 221}
@@ -199,6 +208,7 @@ def main() -> None:
     assert report["nonblocking_math_loader"]
     assert report["versioned_static_assets"]
     assert report["server_side_access_gate"]
+    assert report["managed_account_auth"]
 
     report["book_slugs"] = sorted(report["book_slugs"])
     print(json.dumps(report, ensure_ascii=False, indent=2))

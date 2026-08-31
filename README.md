@@ -27,7 +27,7 @@ ebook-reader/dist/
   └─ files/...                      图片、源码和数据下载文件
 ```
 
-运行时不需要 Python、Node、数据库或后端服务，浏览器只读取静态 HTML、CSS、JavaScript 和 JSON，适合 GitHub Pages、Cloudflare Pages 等静态托管平台。
+正文仍是静态 HTML、CSS、JavaScript 和 JSON；线上由 Cloudflare Worker 在返回任何文件前执行访问控制。共享密码与 Supabase 独立账号两种模式可以安全切换，账号配置见 [AUTHENTICATION.md](AUTHENTICATION.md)。
 
 ## 本地运行
 
@@ -62,8 +62,8 @@ python -m venv .venv
 5. Python 视频分 P 目录可用 `..\.venv\Scripts\python.exe tools\sync_bilibili_playlist.py` 从 Bilibili 官方接口同步，并按既定章节范围更新。
 6. 在 `books.json` 中设置课程所属 `category`；首页会按 `site.categories` 的顺序自动分区。
 7. 发布前运行 `manage.py check`，检查章节路由、图片、代码关联、下载文件和 GitHub 单文件上限。
-8. 提交源码配置和 `dist/`；推送到 `main` 后，GitHub Actions 自动部署 Pages。
+8. 提交源码配置和 `dist/`，再部署到受访问控制保护的 Cloudflare Pages。
 
 ## 部署
 
-`.github/workflows/pages.yml` 直接上传构建完成的 `dist/`。课程源文件同时保存在 `content/books/`，因此仓库克隆后可以独立重建；线上仍只发布静态产物，不运行任何动态代码。
+Cloudflare Pages 发布构建完成的 `dist/`，其中 `_worker.js` 负责登录和内容访问保护。课程源文件同时保存在 `content/books/`，因此仓库克隆后可以独立重建；GitHub 仓库保持私密且不启用 GitHub Pages。
