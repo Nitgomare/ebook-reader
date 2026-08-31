@@ -29,6 +29,7 @@ def main() -> None:
     app_js = (DIST / "app.js").read_text(encoding="utf-8")
     index_html = (DIST / "index.html").read_text(encoding="utf-8")
     styles_css = (DIST / "styles.css").read_text(encoding="utf-8")
+    worker_js = (DIST / "_worker.js").read_text(encoding="utf-8")
     all_html = "".join(payload["html"] for payload in payloads.values())
     chapter_docs = [doc for doc in catalog["docs"] if doc.get("chapterNumber")]
     expected_books = {
@@ -153,6 +154,13 @@ def main() -> None:
             and bool(re.search(r"app\.js\?v=[0-9a-f]{12}", index_html))
             and bool(re.search(r"styles\.css\?v=[0-9a-f]{12}", index_html))
         ),
+        "server_side_access_gate": all(
+            token in worker_js
+            for token in (
+                "SITE_ACCESS_USERNAME", "SITE_ACCESS_PASSWORD", "WWW-Authenticate",
+                "secureEqual", "env.ASSETS.fetch(request)", '"Cache-Control": "no-store"',
+            )
+        ),
     }
 
     assert report["stats"] == {"books": 14, "docs": 200, "code": 221}
@@ -190,6 +198,7 @@ def main() -> None:
     assert not report["song_font_in_css"]
     assert report["nonblocking_math_loader"]
     assert report["versioned_static_assets"]
+    assert report["server_side_access_gate"]
 
     report["book_slugs"] = sorted(report["book_slugs"])
     print(json.dumps(report, ensure_ascii=False, indent=2))
