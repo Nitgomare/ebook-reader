@@ -52,6 +52,10 @@ MARKDOWN_EXTENSIONS = [
     "pymdownx.arithmatex",
 ]
 MARKDOWN_EXTENSION_CONFIGS = {
+    "pymdownx.highlight": {
+        "use_pygments": True,
+        "css_class": "highlight",
+    },
     "pymdownx.arithmatex": {
         "generic": True,
     },
