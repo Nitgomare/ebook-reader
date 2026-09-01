@@ -49,7 +49,7 @@
   },
   "stats": {
     "books": 15,
-    "docs": 210,
+    "docs": 211,
     "code": 221
   },
   "books": [
@@ -66,13 +66,27 @@
       "category": "research-skills",
       "type": "course",
       "featured": true,
+      "resourceLinks": [
+        {
+          "label": "Python 科研计算基础与环境搭建课程视频",
+          "url": "https://www.bilibili.com/video/BV1pVt363EZy/",
+          "kind": "视频"
+        }
+      ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 19,
+      "docCount": 20,
       "firstDocId": "5aae9dc4ade82146",
       "chapterCount": 0,
       "codeCount": 0,
       "resources": [
+        {
+          "name": "Python科研计算基础与环境搭建.pptx",
+          "path": "04-python-research-computing/Python科研计算基础与环境搭建.pptx",
+          "kind": "课件",
+          "size": 2712044,
+          "downloadUrl": "files/research-skills/04-python-research-computing/Python%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.pptx"
+        },
         {
           "name": "wind-power-terminology.csv",
           "path": "assets/files/wind-power-terminology.csv",
@@ -885,6 +899,21 @@
       "excerpt": "“在我电脑上能跑”不是科研复现。合格的项目应该让同门在一台新电脑上，从原始数据和一条命令得到论文中的表格与图片。",
       "order": 18,
       "previousId": "bc7c6cb9f3ace92b",
+      "nextId": "b57cb861bf19c527",
+      "codeFiles": []
+    },
+    {
+      "id": "b57cb861bf19c527",
+      "bookSlug": "research-skills",
+      "relPath": "04-python-research-computing/index.md",
+      "title": "科研计算基础与环境搭建",
+      "sections": [
+        "Python 科研计算"
+      ],
+      "excerpt": "本专题面向需要使用 Python 完成科研数据处理、可视化与建模的学习者。建议先结合课件和视频了解工具链，再按正文步骤完成环境配置与示例实践。",
+      "video": "https://www.bilibili.com/video/BV1pVt363EZy/",
+      "order": 19,
+      "previousId": "21ad7dda83759bbd",
       "nextId": "8c723aa568a0e891",
       "codeFiles": []
     },
@@ -897,8 +926,8 @@
         "正文"
       ],
       "excerpt": "按科研任务选择工具或方法，完成后可随时返回总览继续下一步。",
-      "order": 19,
-      "previousId": "21ad7dda83759bbd",
+      "order": 20,
+      "previousId": "b57cb861bf19c527",
       "nextId": "",
       "codeFiles": []
     },

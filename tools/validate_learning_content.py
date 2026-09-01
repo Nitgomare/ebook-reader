@@ -74,6 +74,14 @@ def main() -> None:
         re.I,
     )
     scada_html = "".join(payload["html"] for payload in scada_payloads)
+    research_book = next(
+        book for book in catalog["books"] if book["slug"] == "research-skills"
+    )
+    research_computing_doc = next(
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "research-skills"
+        and doc["relPath"] == "04-python-research-computing/index.md"
+    )
     report = {
         "stats": catalog["stats"],
         "categories": [item["id"] for item in catalog["site"]["categories"]],
@@ -148,6 +156,20 @@ def main() -> None:
             "formula_images": len(re.findall(r"formula-(?:inline|display)", scada_html)),
             "raw_dollar_delimiters": scada_html.count("$"),
         },
+        "python_research_computing": {
+            "title": research_computing_doc["title"],
+            "code_blocks": research_computing_doc["html"].count("<pre"),
+            "tables": research_computing_doc["html"].count("<table"),
+            "slide_download": any(
+                resource["name"] == "Python科研计算基础与环境搭建.pptx"
+                and (DIST / Path(unquote(resource["downloadUrl"]))).is_file()
+                for resource in research_book.get("resources", [])
+            ),
+            "bilibili_video_link": any(
+                link.get("url") == "https://www.bilibili.com/video/BV1pVt363EZy/"
+                for link in research_book.get("resourceLinks", [])
+            ),
+        },
         "inline_code": all(
             token in app_js for token in ("inlineCodeItem", "loadInlineCode", "展开代码")
         ),
@@ -205,7 +227,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 15, "docs": 210, "code": 221}
+    assert report["stats"] == {"books": 15, "docs": 211, "code": 221}
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
         "robotics", "wind-energy", "engineering-systems",
@@ -243,6 +265,11 @@ def main() -> None:
         "formula_images": 0,
         "raw_dollar_delimiters": 0,
     }
+    assert report["python_research_computing"]["title"] == "科研计算基础与环境搭建"
+    assert report["python_research_computing"]["code_blocks"] >= 80
+    assert report["python_research_computing"]["tables"] >= 6
+    assert report["python_research_computing"]["slide_download"]
+    assert report["python_research_computing"]["bilibili_video_link"]
     assert report["inline_code"]
     assert report["code_copy_controls"]
     assert report["home_card_layout"]
