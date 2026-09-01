@@ -11,7 +11,7 @@
   --sidebar-width: 18rem;
   --outline-width: 15rem;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, "Microsoft YaHei", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  --font-mono: "JetBrains Mono", "Cascadia Code", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   color-scheme: light;
   font-family: var(--font-sans);
 }
@@ -177,19 +177,29 @@ span.arithmatex { display: inline-block; vertical-align: middle; }
 div.arithmatex { overflow-x: auto; overflow-y: hidden; }
 .arithmatex mjx-container[display="true"] { margin: 1.5rem 0 !important; overflow-x: auto; overflow-y: hidden; }
 .article blockquote { margin: 1.4rem 0; padding: .25rem 1.1rem; border-left: 3px solid var(--accent); color: var(--muted); background: var(--accent-soft); }
-.article pre { overflow: auto; padding: 1rem; border-top: 2px solid #60a5fa; border-radius: .35rem; color: #17233d; background: #eef1f5; font: .78rem/1.65 var(--font-mono); }
+.article pre { overflow: auto; padding: 1.15rem 1.25rem; border: 1px solid #d8dde6; border-radius: .4rem; color: #080808; background: #f7f8fa; font: .88rem/1.72 var(--font-mono); tab-size: 4; }
 .article code { padding: .12rem .3rem; border-radius: .25rem; background: #eceee9; font: .86em var(--font-mono); }
 .article pre code { padding: 0; background: none; }
-.code-block { overflow: hidden; margin: 1rem 0; border-top: 2px solid #60a5fa; border-radius: .42rem; background: #eef1f5; }
-.code-toolbar { display: flex; min-height: 2.25rem; align-items: center; justify-content: space-between; padding: .28rem .38rem .28rem .78rem; border-bottom: 1px solid #d5deea; background: #e7edf5; }
-.code-language { color: #52647c; font: 600 .66rem/1 var(--font-mono); letter-spacing: .025em; }
-.code-copy-button { display: inline-flex; min-height: 1.72rem; align-items: center; gap: .34rem; padding: .28rem .52rem; border: 1px solid transparent; border-radius: .34rem; color: #3f5876; background: transparent; font: 650 .65rem/1 var(--font-sans); cursor: pointer; }
-.code-copy-button:hover { border-color: #bfdbfe; color: var(--accent); background: #f7faff; }
+.code-block { overflow: hidden; margin: 1.2rem 0; border: 1px solid #d8dde6; border-radius: .45rem; background: #f7f8fa; box-shadow: 0 1px 2px rgb(15 23 42 / 4%); }
+.code-toolbar { display: flex; min-height: 2.5rem; align-items: center; justify-content: space-between; padding: .32rem .48rem .32rem .9rem; border-bottom: 1px solid #dfe3e8; background: #f0f2f5; }
+.code-language { color: #4e5969; font: 650 .72rem/1 var(--font-mono); letter-spacing: .02em; }
+.code-copy-button { display: inline-flex; min-height: 1.85rem; align-items: center; gap: .36rem; padding: .3rem .58rem; border: 1px solid transparent; border-radius: .34rem; color: #44546a; background: transparent; font: 650 .7rem/1 var(--font-sans); cursor: pointer; }
+.code-copy-button:hover { border-color: #c6d0dc; color: #174ea6; background: #fff; }
 .code-copy-button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .code-copy-button.is-copied { color: #176b45; background: #e8f5ee; }
 .code-copy-button.is-error { color: #9b3c36; background: #fbeceb; }
 .copy-icon { font: 1rem/1 var(--font-mono); }
-.code-block > pre { margin: 0 !important; border-top: 0 !important; border-radius: 0 !important; }
+.code-block > pre { margin: 0 !important; border: 0 !important; border-radius: 0 !important; background: #f7f8fa !important; font-size: .88rem !important; line-height: 1.72 !important; }
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs { color: #8c8c8c; font-style: italic; }
+.highlight .k, .highlight .kc, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: #0033b3; font-weight: 600; }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sa, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .si, .highlight .sr, .highlight .ss, .highlight .sx { color: #067d17; }
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .mo { color: #1750eb; }
+.highlight .nb, .highlight .bp { color: #00627a; }
+.highlight .nc, .highlight .ne, .highlight .nf, .highlight .fm { color: #00627a; }
+.highlight .na, .highlight .nd, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi { color: #871094; }
+.highlight .o, .highlight .ow { color: #080808; }
+.highlight .gd { color: #b91c1c; }
+.highlight .gi { color: #067d17; }
 .admonition { margin: 1.4rem 0; padding: .2rem 1rem .7rem; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: .4rem; background: var(--surface); }
 .admonition-title { font-family: var(--font-sans); font-size: .82rem; font-weight: 750; }
 .resource-book-info { max-width: 48rem; padding: 0 0 1.6rem; border-bottom: 1px solid var(--line); }
@@ -275,7 +285,7 @@ div.arithmatex { overflow-x: auto; overflow-y: hidden; }
 .code-meta { display: flex; flex-wrap: wrap; gap: .45rem; margin: -1.4rem 0 1.4rem; }
 .code-meta span, .code-meta strong { padding: .28rem .48rem; border-radius: .35rem; color: var(--muted); background: var(--accent-soft); font-size: .64rem; font-weight: 500; }
 .code-meta strong { color: #8b4a2b; background: #f7e7dc; }
-.source-preview, .notebook-cell > pre, .cell-output pre { max-height: 75vh; overflow: auto; margin: 0; padding: 1rem; border-top: 2px solid #60a5fa; border-radius: .35rem; color: #17233d; background: #eef1f5; font: .78rem/1.65 var(--font-mono); white-space: pre; tab-size: 4; }
+.source-preview, .notebook-cell > pre, .cell-output pre { max-height: 75vh; overflow: auto; margin: 0; padding: 1.15rem 1.25rem; border: 1px solid #d8dde6; border-radius: .4rem; color: #080808; background: #f7f8fa; font: .88rem/1.72 var(--font-mono); white-space: pre; tab-size: 4; }
 .notebook-cell { position: relative; margin: 1rem 0; padding-left: 4.6rem; }
 .notebook-cell > .code-block { margin: 0; }
 .cell-label { position: absolute; top: .8rem; left: 0; width: 4rem; color: var(--muted); font: .65rem var(--font-mono); text-align: right; }

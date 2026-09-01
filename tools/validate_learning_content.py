@@ -205,7 +205,15 @@ def main() -> None:
             )
         ),
         "light_code_style": (
-            "background: #eef1f5" in styles_css and "border-top: 2px solid #60a5fa" in styles_css
+            '"JetBrains Mono"' in styles_css
+            and "background: #f7f8fa" in styles_css
+            and ".highlight .k" in styles_css
+            and ".highlight .s" in styles_css
+            and "font-size: .88rem" in styles_css
+        ),
+        "server_side_syntax_highlighting": (
+            '"pymdownx.highlight"' in (ROOT / "build.py").read_text(encoding="utf-8")
+            and bool(re.search(r'<span class="(?:k|kn|n|s1|s2)">', all_html))
         ),
         "scrollable_outline": all(
             token in styles_css
@@ -290,6 +298,7 @@ def main() -> None:
     assert report["code_copy_controls"]
     assert report["home_card_layout"]
     assert report["light_code_style"]
+    assert report["server_side_syntax_highlighting"]
     assert report["scrollable_outline"]
     assert not report["song_font_in_css"]
     assert report["nonblocking_math_loader"]
