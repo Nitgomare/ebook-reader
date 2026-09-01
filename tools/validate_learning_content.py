@@ -170,6 +170,14 @@ def main() -> None:
                 for link in research_book.get("resourceLinks", [])
             ),
         },
+        "removed_research_skill_pages": [
+            doc["relPath"] for doc in catalog["docs"]
+            if doc["bookSlug"] == "research-skills"
+            and (
+                doc["relPath"].startswith("programming/")
+                or doc["relPath"].startswith("research-tools/")
+            )
+        ],
         "inline_code": all(
             token in app_js for token in ("inlineCodeItem", "loadInlineCode", "展开代码")
         ),
@@ -234,7 +242,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 15, "docs": 211, "code": 221}
+    assert report["stats"] == {"books": 15, "docs": 205, "code": 221}
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
         "robotics", "wind-energy", "engineering-systems",
@@ -277,6 +285,7 @@ def main() -> None:
     assert report["python_research_computing"]["tables"] >= 6
     assert report["python_research_computing"]["slide_download"]
     assert report["python_research_computing"]["bilibili_video_link"]
+    assert not report["removed_research_skill_pages"]
     assert report["inline_code"]
     assert report["code_copy_controls"]
     assert report["home_card_layout"]

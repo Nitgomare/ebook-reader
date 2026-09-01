@@ -49,7 +49,7 @@
   },
   "stats": {
     "books": 15,
-    "docs": 211,
+    "docs": 205,
     "code": 221
   },
   "books": [
@@ -75,7 +75,7 @@
       ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 20,
+      "docCount": 14,
       "firstDocId": "5aae9dc4ade82146",
       "chapterCount": 0,
       "codeCount": 0,
@@ -93,13 +93,6 @@
           "kind": "数据",
           "size": 54085,
           "downloadUrl": "files/research-skills/assets/files/wind-power-terminology.csv"
-        },
-        {
-          "name": "metrics.csv",
-          "path": "programming/examples/outputs/metrics.csv",
-          "kind": "数据",
-          "size": 108,
-          "downloadUrl": "files/research-skills/programming/examples/outputs/metrics.csv"
         }
       ]
     },
@@ -829,76 +822,6 @@
       "excerpt": "随后到 Cloudflare Pages 确认最新提交部署成功。",
       "order": 13,
       "previousId": "6b5b155108f2067e",
-      "nextId": "2b883da5772cbe45",
-      "codeFiles": []
-    },
-    {
-      "id": "2b883da5772cbe45",
-      "bookSlug": "research-skills",
-      "relPath": "programming/start-here.md",
-      "title": "从这里开始",
-      "sections": [
-        "编程实践"
-      ],
-      "excerpt": "这不是一份“把 Python 语法背一遍”的清单。你的第一个目标是：在一个独立环境中运行脚本，读取一组数据，生成一张图，并且知道出错后去哪里找原因。",
-      "order": 14,
-      "previousId": "3558b3a761f1836b",
-      "nextId": "6a639d8450b71484",
-      "codeFiles": []
-    },
-    {
-      "id": "6a639d8450b71484",
-      "bookSlug": "research-skills",
-      "relPath": "programming/python-basics.md",
-      "title": "Python 基础与数据处理",
-      "sections": [
-        "编程实践"
-      ],
-      "excerpt": "实验记录、传感器测量、问卷、时间序列和图像看起来各不相同，进入 Python 后都需要先回答相同的问题：数据是什么形状、每列代表什么、单位是什么、是否存在缺失或异常。下面用一段连续测量信号作为贯穿示例，练习数组、统计和作图。",
-      "order": 15,
-      "previousId": "2b883da5772cbe45",
-      "nextId": "516ac4962c282277",
-      "codeFiles": []
-    },
-    {
-      "id": "516ac4962c282277",
-      "bookSlug": "research-skills",
-      "relPath": "programming/ml-from-scratch.md",
-      "title": "NumPy 算法实践",
-      "sections": [
-        "编程实践"
-      ],
-      "excerpt": "用五个小实验观察 fit() 内部发生了什么。成熟项目仍应优先使用 scikit-learn；这里的重点是理解数值计算、验证实现并解释差异。",
-      "order": 16,
-      "previousId": "6a639d8450b71484",
-      "nextId": "bc7c6cb9f3ace92b",
-      "codeFiles": []
-    },
-    {
-      "id": "bc7c6cb9f3ace92b",
-      "bookSlug": "research-skills",
-      "relPath": "programming/first-project.md",
-      "title": "第一个机器学习项目",
-      "sections": [
-        "编程实践"
-      ],
-      "excerpt": "这个练习不依赖外部数据：脚本先生成三类带标签的传感器信号，再提取可解释特征并训练分类器。它选用设备状态作为一个具体案例，但重点是通用流程——定义问题、准备数据、避免泄漏、比较基线、保存结果。换成其他表格或时间序列数据时仍然适用。",
-      "order": 17,
-      "previousId": "516ac4962c282277",
-      "nextId": "21ad7dda83759bbd",
-      "codeFiles": []
-    },
-    {
-      "id": "21ad7dda83759bbd",
-      "bookSlug": "research-skills",
-      "relPath": "programming/reproducible-research.md",
-      "title": "实验复现与项目整理",
-      "sections": [
-        "编程实践"
-      ],
-      "excerpt": "“在我电脑上能跑”不是科研复现。合格的项目应该让同门在一台新电脑上，从原始数据和一条命令得到论文中的表格与图片。",
-      "order": 18,
-      "previousId": "bc7c6cb9f3ace92b",
       "nextId": "b57cb861bf19c527",
       "codeFiles": []
     },
@@ -912,22 +835,8 @@
       ],
       "excerpt": "本专题面向需要使用 Python 完成科研数据处理、可视化与建模的学习者。建议先结合课件和视频了解工具链，再按正文步骤完成环境配置与示例实践。",
       "video": "https://www.bilibili.com/video/BV1pVt363EZy/",
-      "order": 19,
-      "previousId": "21ad7dda83759bbd",
-      "nextId": "8c723aa568a0e891",
-      "codeFiles": []
-    },
-    {
-      "id": "8c723aa568a0e891",
-      "bookSlug": "research-skills",
-      "relPath": "research-tools/index.md",
-      "title": "科研工具专题总览",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "按科研任务选择工具或方法，完成后可随时返回总览继续下一步。",
-      "order": 20,
-      "previousId": "b57cb861bf19c527",
+      "order": 14,
+      "previousId": "3558b3a761f1836b",
       "nextId": "",
       "codeFiles": []
     },
