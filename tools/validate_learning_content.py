@@ -199,6 +199,13 @@ def main() -> None:
         "light_code_style": (
             "background: #eef1f5" in styles_css and "border-top: 2px solid #60a5fa" in styles_css
         ),
+        "scrollable_outline": all(
+            token in styles_css
+            for token in (
+                "overflow-y: auto", "overscroll-behavior: contain",
+                "scrollbar-gutter: stable", ".outline-inner { position: static; }",
+            )
+        ),
         "song_font_in_css": bool(re.search("宋体|SimSun", styles_css, re.I)),
         "nonblocking_math_loader": (
             'defer src="app.js?v=' in index_html
@@ -274,6 +281,7 @@ def main() -> None:
     assert report["code_copy_controls"]
     assert report["home_card_layout"]
     assert report["light_code_style"]
+    assert report["scrollable_outline"]
     assert not report["song_font_in_css"]
     assert report["nonblocking_math_loader"]
     assert report["versioned_static_assets"]
