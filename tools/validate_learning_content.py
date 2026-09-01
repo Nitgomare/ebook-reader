@@ -169,6 +169,13 @@ def main() -> None:
                 link.get("url") == "https://www.bilibili.com/video/BV1pVt363EZy/"
                 for link in research_book.get("resourceLinks", [])
             ),
+            "creator_credit": (
+                "内容制作：李锦瑞" in research_computing_doc["html"]
+                and any(
+                    "李锦瑞" in link.get("label", "")
+                    for link in research_book.get("resourceLinks", [])
+                )
+            ),
         },
         "removed_research_skill_pages": [
             doc["relPath"] for doc in catalog["docs"]
@@ -293,6 +300,7 @@ def main() -> None:
     assert report["python_research_computing"]["tables"] >= 6
     assert report["python_research_computing"]["slide_download"]
     assert report["python_research_computing"]["bilibili_video_link"]
+    assert report["python_research_computing"]["creator_credit"]
     assert not report["removed_research_skill_pages"]
     assert report["inline_code"]
     assert report["code_copy_controls"]
