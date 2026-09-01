@@ -56,7 +56,14 @@
       "tags": ["科研工具", "文献管理", "实验复现"],
       "category": "research-skills",
       "type": "course",
-      "featured": true
+      "featured": true,
+      "resourceLinks": [
+        {
+          "label": "Python 科研计算基础与环境搭建课程视频",
+          "url": "https://www.bilibili.com/video/BV1pVt363EZy/",
+          "kind": "视频"
+        }
+      ]
     },
     {
       "slug": "shangguigu-python",

@@ -26,4 +26,6 @@ nav:
       - "NumPy 算法实践": programming/ml-from-scratch.md
       - "第一个机器学习项目": programming/first-project.md
       - "实验复现与项目整理": programming/reproducible-research.md
+  - "Python 科研计算":
+      - "科研计算基础与环境搭建": 04-python-research-computing/index.md
   - "科研工具专题总览": research-tools/index.md
