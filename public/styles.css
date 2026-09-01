@@ -286,8 +286,14 @@ div.arithmatex { overflow-x: auto; overflow-y: hidden; }
 .cell-output > span { display: block; margin-bottom: .25rem; color: var(--muted); font-size: .62rem; }
 .cell-output pre { max-height: 24rem; color: var(--ink); background: #eef2ed; }
 
-.outline { position: sticky; top: var(--topbar-height); height: calc(100vh - var(--topbar-height)); padding: 1.7rem 1.2rem; border-left: 1px solid var(--line); }
-.outline-inner { position: sticky; top: calc(var(--topbar-height) + 1.5rem); }
+.outline {
+  position: sticky; top: var(--topbar-height); height: calc(100vh - var(--topbar-height));
+  overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable;
+  padding: 1.7rem 1.2rem; border-left: 1px solid var(--line); scrollbar-color: #b8c7dc transparent; scrollbar-width: thin;
+}
+.outline::-webkit-scrollbar { width: .45rem; }
+.outline::-webkit-scrollbar-thumb { border-radius: 999px; background: #b8c7dc; }
+.outline-inner { position: static; }
 .outline nav { display: flex; flex-direction: column; }
 .outline a { padding: .32rem 0; color: var(--muted); font-size: .7rem; line-height: 1.45; }
 .outline a:hover { color: var(--accent); }
