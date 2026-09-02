@@ -82,6 +82,11 @@ def main() -> None:
         if doc["bookSlug"] == "research-skills"
         and doc["relPath"] == "04-python-research-computing/index.md"
     )
+    ai_translation_doc = next(
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "research-skills"
+        and doc["relPath"] == "05-ai-paper-translation/index.md"
+    )
     report = {
         "stats": catalog["stats"],
         "categories": [item["id"] for item in catalog["site"]["categories"]],
@@ -185,6 +190,19 @@ def main() -> None:
                 or doc["relPath"].startswith("research-tools/")
             )
         ],
+        "ai_translation_guide": {
+            "title": ai_translation_doc["title"],
+            "images": len(re.findall(r'<img\b[^>]*\bsrc=', ai_translation_doc["html"], re.I)),
+            "missing_images": sum(
+                not (DIST / Path(unquote(url))).is_file()
+                for url in re.findall(
+                    r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
+                    ai_translation_doc["html"], re.I,
+                )
+            ),
+            "creator_credit": "内容制作：李东" in ai_translation_doc["html"],
+            "video_placeholder": "课程视频：待上传 B 站（链接位已预留）" in ai_translation_doc["html"],
+        },
         "inline_code": all(
             token in app_js for token in ("inlineCodeItem", "loadInlineCode", "展开代码")
         ),
@@ -257,7 +275,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 15, "docs": 205, "code": 221}
+    assert report["stats"] == {"books": 15, "docs": 206, "code": 221}
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
         "robotics", "wind-energy", "engineering-systems",
@@ -302,6 +320,13 @@ def main() -> None:
     assert report["python_research_computing"]["bilibili_video_link"]
     assert report["python_research_computing"]["creator_credit"]
     assert not report["removed_research_skill_pages"]
+    assert report["ai_translation_guide"] == {
+        "title": "Kimi 论文翻译操作指南",
+        "images": 7,
+        "missing_images": 0,
+        "creator_credit": True,
+        "video_placeholder": True,
+    }
     assert report["inline_code"]
     assert report["code_copy_controls"]
     assert report["home_card_layout"]
