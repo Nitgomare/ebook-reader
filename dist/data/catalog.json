@@ -49,7 +49,7 @@
   },
   "stats": {
     "books": 15,
-    "docs": 205,
+    "docs": 206,
     "code": 221
   },
   "books": [
@@ -75,7 +75,7 @@
       ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 14,
+      "docCount": 15,
       "firstDocId": "5aae9dc4ade82146",
       "chapterCount": 0,
       "codeCount": 0,
@@ -837,6 +837,20 @@
       "video": "https://www.bilibili.com/video/BV1pVt363EZy/",
       "order": 14,
       "previousId": "3558b3a761f1836b",
+      "nextId": "1c6bd541db1e6a8a",
+      "codeFiles": []
+    },
+    {
+      "id": "1c6bd541db1e6a8a",
+      "bookSlug": "research-skills",
+      "relPath": "05-ai-paper-translation/index.md",
+      "title": "Kimi 论文翻译操作指南",
+      "sections": [
+        "AI 论文翻译"
+      ],
+      "excerpt": "利用 AI 工具，将论文翻译参考模板和论文原文提供给 AI，输入提示词。",
+      "order": 15,
+      "previousId": "b57cb861bf19c527",
       "nextId": "",
       "codeFiles": []
     },

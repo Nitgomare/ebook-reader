@@ -21,3 +21,5 @@ nav:
       - "更新与排错": 03-site-building/08-maintenance.md
   - "Python 科研计算":
       - "科研计算基础与环境搭建": 04-python-research-computing/index.md
+  - "AI 论文翻译":
+      - "Kimi 论文翻译操作指南": 05-ai-paper-translation/index.md
