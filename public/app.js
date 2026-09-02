@@ -221,8 +221,11 @@
     var resourceLink = '<a class="course-resource-link' + resourceActive + '" href="#/resources/' +
       encodeURIComponent(book.slug) + '"><span>↗</span><strong>课程资源</strong></a>';
     var chapters = groupDocs(docs).map(function (group) {
+      var isStandaloneKnowledgeBase = book.slug === "research-skills" && group.title === "正文" &&
+        group.docs.length === 1 && group.docs[0].relPath === "03-site-building/index.md";
       var groupLabel = group.title === "正文" ? "章节" : group.title;
-      return '<section class="nav-group"><h3>' + escapeHtml(groupLabel) + '</h3>' + group.docs.map(function (doc) {
+      var groupHeading = isStandaloneKnowledgeBase ? "" : '<h3>' + escapeHtml(groupLabel) + '</h3>';
+      return '<section class="nav-group">' + groupHeading + group.docs.map(function (doc) {
         var active = state.activeDoc && state.activeDoc.id === doc.id ? " is-active" : "";
         return '<a class="doc-nav-link' + active + '" href="#/doc/' + doc.id + '"><span>' +
           String(doc.order).padStart(2, "0") + '</span><strong>' + escapeHtml(doc.title) + '</strong></a>';

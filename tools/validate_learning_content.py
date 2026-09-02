@@ -223,6 +223,14 @@ def main() -> None:
                 for heading in payloads[site_building_docs[0]["id"]]["headings"]
             ),
         },
+        "standalone_site_building_nav": all(
+            token in app_js
+            for token in (
+                "isStandaloneKnowledgeBase",
+                'group.docs[0].relPath === "03-site-building/index.md"',
+                'var groupHeading = isStandaloneKnowledgeBase ? ""',
+            )
+        ),
         "inline_code": all(
             token in app_js for token in ("inlineCodeItem", "loadInlineCode", "展开代码")
         ),
@@ -352,6 +360,7 @@ def main() -> None:
         "title": "知识库搭建",
         "sections": 12,
     }
+    assert report["standalone_site_building_nav"]
     assert report["inline_code"]
     assert report["code_copy_controls"]
     assert report["home_card_layout"]
