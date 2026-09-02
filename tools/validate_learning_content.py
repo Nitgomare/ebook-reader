@@ -87,6 +87,11 @@ def main() -> None:
         if doc["bookSlug"] == "research-skills"
         and doc["relPath"] == "05-ai-paper-translation/index.md"
     )
+    site_building_docs = [
+        doc for doc in catalog["docs"]
+        if doc["bookSlug"] == "research-skills"
+        and doc["relPath"].startswith("03-site-building/")
+    ]
     report = {
         "stats": catalog["stats"],
         "categories": [item["id"] for item in catalog["site"]["categories"]],
@@ -201,7 +206,22 @@ def main() -> None:
                 )
             ),
             "creator_credit": "内容制作：李东" in ai_translation_doc["html"],
-            "video_placeholder": "课程视频：待上传 B 站（链接位已预留）" in ai_translation_doc["html"],
+            "bilibili_video_link": (
+                "https://www.bilibili.com/video/BV1JmtU6kE9T/"
+                in ai_translation_doc["html"]
+                and any(
+                    link.get("url") == "https://www.bilibili.com/video/BV1JmtU6kE9T/"
+                    for link in research_book.get("resourceLinks", [])
+                )
+            ),
+        },
+        "site_building_guide": {
+            "documents": len(site_building_docs),
+            "title": payloads[site_building_docs[0]["id"]]["title"],
+            "sections": sum(
+                heading["level"] == 2
+                for heading in payloads[site_building_docs[0]["id"]]["headings"]
+            ),
         },
         "inline_code": all(
             token in app_js for token in ("inlineCodeItem", "loadInlineCode", "展开代码")
@@ -275,7 +295,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 15, "docs": 206, "code": 221}
+    assert report["stats"] == {"books": 15, "docs": 199, "code": 221}
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
         "robotics", "wind-energy", "engineering-systems",
@@ -325,7 +345,12 @@ def main() -> None:
         "images": 7,
         "missing_images": 0,
         "creator_credit": True,
-        "video_placeholder": True,
+        "bilibili_video_link": True,
+    }
+    assert report["site_building_guide"] == {
+        "documents": 1,
+        "title": "知识库搭建",
+        "sections": 12,
     }
     assert report["inline_code"]
     assert report["code_copy_controls"]

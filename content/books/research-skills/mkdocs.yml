@@ -9,16 +9,7 @@ nav:
   - "格式转换与术语":
       - "PDF 转 Markdown 和 HTML": 02-format-trans/01-pdf-to-markdown.md
       - "翻译与术语整理": 02-format-trans/02-translation.md
-  - "知识库搭建":
-      - "专题首页": 03-site-building/index.md
-      - "准备环境与工具": 03-site-building/01-environment.md
-      - "建立目录与共享配置": 03-site-building/02-structure-and-yml.md
-      - "编写页面与导航": 03-site-building/03-writing-and-nav.md
-      - "主题与样式": 03-site-building/04-styling.md
-      - "拆分大型书籍": 03-site-building/05-split-large-books.md
-      - "上传到 GitHub": 03-site-building/06-github.md
-      - "Cloudflare Pages 部署": 03-site-building/07-cloudflare-pages.md
-      - "更新与排错": 03-site-building/08-maintenance.md
+  - "知识库搭建": 03-site-building/index.md
   - "Python 科研计算":
       - "科研计算基础与环境搭建": 04-python-research-computing/index.md
   - "AI 论文翻译":

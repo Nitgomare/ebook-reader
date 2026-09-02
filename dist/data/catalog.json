@@ -49,7 +49,7 @@
   },
   "stats": {
     "books": 15,
-    "docs": 206,
+    "docs": 199,
     "code": 221
   },
   "books": [
@@ -71,11 +71,16 @@
           "label": "Python 科研计算基础与环境搭建课程视频（李锦瑞）",
           "url": "https://www.bilibili.com/video/BV1pVt363EZy/",
           "kind": "视频"
+        },
+        {
+          "label": "使用 Kimi 翻译论文课程视频（李东）",
+          "url": "https://www.bilibili.com/video/BV1JmtU6kE9T/",
+          "kind": "视频"
         }
       ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 15,
+      "docCount": 8,
       "firstDocId": "5aae9dc4ade82146",
       "chapterCount": 0,
       "codeCount": 0,
@@ -710,118 +715,20 @@
       "excerpt": "论文翻译最容易出现的问题不是句子看不懂，而是专业术语前后不统一。同一个术语在不同章节被翻译成不同中文，会直接影响阅读和后续写作。",
       "order": 5,
       "previousId": "06c96fded88bf5e0",
-      "nextId": "f9139440d62ab32e",
+      "nextId": "7445bfdfd579b5d0",
       "codeFiles": []
     },
     {
-      "id": "f9139440d62ab32e",
+      "id": "7445bfdfd579b5d0",
       "bookSlug": "research-skills",
-      "relPath": "03-site-building/01-environment.md",
-      "title": "准备环境与工具",
+      "relPath": "03-site-building/index.md",
+      "title": "知识库搭建",
       "sections": [
-        "知识库搭建"
+        "正文"
       ],
-      "excerpt": "Windows 安装 Python 时勾选 Add Python to PATH。安装后重新打开 PowerShell，再运行检查命令。",
+      "excerpt": "这套教程带你完整复刻一个与本站结构相同的科研知识库：用 Markdown 写内容，用 MkDocs Material 生成静态网页，把代码上传到 GitHub，最后交给 Cloudflare Pages 自动构建和发布。",
       "order": 6,
       "previousId": "a89ce42437fcafc9",
-      "nextId": "ca9051924dd4f09e",
-      "codeFiles": []
-    },
-    {
-      "id": "ca9051924dd4f09e",
-      "bookSlug": "research-skills",
-      "relPath": "03-site-building/02-structure-and-yml.md",
-      "title": "建立目录与共享配置",
-      "sections": [
-        "知识库搭建"
-      ],
-      "excerpt": "本站精简后的目录如下。文件夹和文件名建议使用小写英文、数字和连字符，页面显示的中文标题写在 mkdocs.yml 中。",
-      "order": 7,
-      "previousId": "f9139440d62ab32e",
-      "nextId": "51c12c67c9278755",
-      "codeFiles": []
-    },
-    {
-      "id": "51c12c67c9278755",
-      "bookSlug": "research-skills",
-      "relPath": "03-site-building/03-writing-and-nav.md",
-      "title": "编写页面与导航",
-      "sections": [
-        "知识库搭建"
-      ],
-      "excerpt": "例如创建 docs/01-literature/01-search-tools.md：",
-      "order": 8,
-      "previousId": "ca9051924dd4f09e",
-      "nextId": "2aa4a56fcd2e5e16",
-      "codeFiles": []
-    },
-    {
-      "id": "2aa4a56fcd2e5e16",
-      "bookSlug": "research-skills",
-      "relPath": "03-site-building/04-styling.md",
-      "title": "主题与样式",
-      "sections": [
-        "知识库搭建"
-      ],
-      "excerpt": "先用 mkdocs.yml 提供的主题选项完成大部分外观设置，只有主题选项无法实现的效果才写 CSS。这样升级 Material 时更稳定。",
-      "order": 9,
-      "previousId": "51c12c67c9278755",
-      "nextId": "c3bf656e22978bfd",
-      "codeFiles": []
-    },
-    {
-      "id": "c3bf656e22978bfd",
-      "bookSlug": "research-skills",
-      "relPath": "03-site-building/05-split-large-books.md",
-      "title": "拆分大型书籍",
-      "sections": [
-        "知识库搭建"
-      ],
-      "excerpt": "把几十万字放在一个 Markdown 页面里会导致加载、搜索和编辑都很慢。本站采用“主知识库 + 独立图书站”：每本书按章拆分成自己的 MkDocs 项目，统一构建时再把静态网页放入 site/book-sites/。仓库只保存 books/ 中的图书源文件，不保存重复的图书 H",
-      "order": 10,
-      "previousId": "2aa4a56fcd2e5e16",
-      "nextId": "2f45d1fbec75e501",
-      "codeFiles": []
-    },
-    {
-      "id": "2f45d1fbec75e501",
-      "bookSlug": "research-skills",
-      "relPath": "03-site-building/06-github.md",
-      "title": "上传到 GitHub",
-      "sections": [
-        "知识库搭建"
-      ],
-      "excerpt": "GitHub 保存的是网站源文件。Cloudflare Pages 连接仓库后，每次收到新的提交都会自动构建并部署。",
-      "order": 11,
-      "previousId": "c3bf656e22978bfd",
-      "nextId": "6b5b155108f2067e",
-      "codeFiles": []
-    },
-    {
-      "id": "6b5b155108f2067e",
-      "bookSlug": "research-skills",
-      "relPath": "03-site-building/07-cloudflare-pages.md",
-      "title": "Cloudflare Pages 部署",
-      "sections": [
-        "知识库搭建"
-      ],
-      "excerpt": "Cloudflare Pages 会克隆 GitHub 仓库、安装 requirements.txt 中的 Python 包、运行 MkDocs，再把 site/ 发布到全球网络。以后每次推送到生产分支都会自动重复这套流程。",
-      "order": 12,
-      "previousId": "2f45d1fbec75e501",
-      "nextId": "3558b3a761f1836b",
-      "codeFiles": []
-    },
-    {
-      "id": "3558b3a761f1836b",
-      "bookSlug": "research-skills",
-      "relPath": "03-site-building/08-maintenance.md",
-      "title": "更新与排错",
-      "sections": [
-        "知识库搭建"
-      ],
-      "excerpt": "随后到 Cloudflare Pages 确认最新提交部署成功。",
-      "order": 13,
-      "previousId": "6b5b155108f2067e",
       "nextId": "b57cb861bf19c527",
       "codeFiles": []
     },
@@ -835,8 +742,8 @@
       ],
       "excerpt": "本专题面向需要使用 Python 完成科研数据处理、可视化与建模的学习者。建议先结合课件和视频了解工具链，再按正文步骤完成环境配置与示例实践。",
       "video": "https://www.bilibili.com/video/BV1pVt363EZy/",
-      "order": 14,
-      "previousId": "3558b3a761f1836b",
+      "order": 7,
+      "previousId": "7445bfdfd579b5d0",
       "nextId": "1c6bd541db1e6a8a",
       "codeFiles": []
     },
@@ -849,7 +756,8 @@
         "AI 论文翻译"
       ],
       "excerpt": "利用 AI 工具，将论文翻译参考模板和论文原文提供给 AI，输入提示词。",
-      "order": 15,
+      "video": "https://www.bilibili.com/video/BV1JmtU6kE9T/",
+      "order": 8,
       "previousId": "b57cb861bf19c527",
       "nextId": "",
       "codeFiles": []
