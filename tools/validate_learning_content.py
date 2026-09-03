@@ -92,6 +92,18 @@ def main() -> None:
         if doc["bookSlug"] == "research-skills"
         and doc["relPath"].startswith("03-site-building/")
     ]
+    pdf_conversion_doc = next(
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "research-skills"
+        and doc["relPath"] == "08-pdf-to-markdown/index.md"
+    )
+    peer_tutorial_paths = {
+        "04-python-research-computing/index.md",
+        "05-ai-paper-translation/index.md",
+        "06-paper-figure-reproduction/index.md",
+        "07-research-presentation/index.md",
+        "08-pdf-to-markdown/index.md",
+    }
     figure_doc = next(
         payloads[doc["id"]] for doc in catalog["docs"]
         if doc["bookSlug"] == "research-skills"
@@ -123,6 +135,17 @@ def main() -> None:
     )
     report = {
         "stats": catalog["stats"],
+        "pdf_conversion_tutorial": {
+            "creator_credit": "内容制作：刘航" in pdf_conversion_doc["html"],
+            "video_linked": pdf_conversion_doc.get("video") == "https://www.bilibili.com/video/BV16stf6MESW/",
+            "missing_images_explained": "原文配图未随文档提供" in pdf_conversion_doc["html"],
+            "no_broken_image_elements": "<img" not in pdf_conversion_doc["html"],
+            "peer_tutorials_grouped": all(
+                doc.get("sections") == ["同门分享"]
+                for doc in catalog["docs"]
+                if doc["bookSlug"] == "research-skills" and doc["relPath"] in peer_tutorial_paths
+            ),
+        },
         "paper_figure_reproduction": {
             "title": figure_doc["title"],
             "sections": sum(h["level"] == 2 for h in figure_doc["headings"]),
@@ -368,7 +391,8 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 16, "docs": 213, "code": 221}
+    assert report["stats"] == {"books": 16, "docs": 214, "code": 221}
+    assert all(report["pdf_conversion_tutorial"].values())
     assert report["paper_figure_reproduction"] == {
         "title": "论文图片复现",
         "sections": 17,
