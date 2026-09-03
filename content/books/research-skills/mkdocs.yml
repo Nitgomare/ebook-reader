@@ -8,12 +8,15 @@ nav:
       - "Zotero 文献管理": 01-literature/03-zotero.md
   - "格式转换与术语":
       - "PDF 转 Markdown 和 HTML": 02-format-trans/01-pdf-to-markdown.md
+      - "PDF 转 Markdown 操作教程": 08-pdf-to-markdown/index.md
       - "翻译与术语整理": 02-format-trans/02-translation.md
   - "知识库搭建": 03-site-building/index.md
-  - "同门分享":
+  - "Python 科研计算":
       - "科研计算基础与环境搭建": 04-python-research-computing/index.md
+  - "AI 论文翻译":
       - "Kimi 论文翻译操作指南": 05-ai-paper-translation/index.md
+  - "科研绘图":
       - "论文图片复现": 06-paper-figure-reproduction/index.md
+  - "科研汇报":
       - "科研汇报 PPT 制作": 07-research-presentation/index.md
       - "案例参考文章": 07-research-presentation/reference.md
-      - "PDF 转 Markdown 操作教程": 08-pdf-to-markdown/index.md

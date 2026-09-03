@@ -744,6 +744,21 @@
       "excerpt": "PDF 适合阅读和打印，但不适合直接编辑，也不方便大模型准确读取文章结构、公式、表格和图片。因此，在整理文献或制作教学网页时，通常需要先将 PDF 转换为 Markdown，再根据需要转换为 HTML。",
       "order": 4,
       "previousId": "7552c636e07dd122",
+      "nextId": "153190f72f2eaa1c",
+      "codeFiles": []
+    },
+    {
+      "id": "153190f72f2eaa1c",
+      "bookSlug": "research-skills",
+      "relPath": "08-pdf-to-markdown/index.md",
+      "title": "PDF 转 Markdown 操作教程",
+      "sections": [
+        "格式转换与术语"
+      ],
+      "excerpt": "介绍使用 DeepSeek 和 Doc2X 将 PDF 文献整理为 Markdown 的操作流程，并说明图片文件的组织方式。",
+      "video": "https://www.bilibili.com/video/BV16stf6MESW/",
+      "order": 5,
+      "previousId": "06c96fded88bf5e0",
       "nextId": "a89ce42437fcafc9",
       "codeFiles": []
     },
@@ -756,8 +771,8 @@
         "格式转换与术语"
       ],
       "excerpt": "论文翻译最容易出现的问题不是句子看不懂，而是专业术语前后不统一。同一个术语在不同章节被翻译成不同中文，会直接影响阅读和后续写作。",
-      "order": 5,
-      "previousId": "06c96fded88bf5e0",
+      "order": 6,
+      "previousId": "153190f72f2eaa1c",
       "nextId": "7445bfdfd579b5d0",
       "codeFiles": []
     },
@@ -770,7 +785,7 @@
         "正文"
       ],
       "excerpt": "这套教程带你完整复刻一个与本站结构相同的科研知识库：用 Markdown 写内容，用 MkDocs Material 生成静态网页，把代码上传到 GitHub，最后交给 Cloudflare Pages 自动构建和发布。",
-      "order": 6,
+      "order": 7,
       "previousId": "a89ce42437fcafc9",
       "nextId": "b57cb861bf19c527",
       "codeFiles": []
@@ -781,11 +796,11 @@
       "relPath": "04-python-research-computing/index.md",
       "title": "科研计算基础与环境搭建",
       "sections": [
-        "同门分享"
+        "Python 科研计算"
       ],
       "excerpt": "本专题面向需要使用 Python 完成科研数据处理、可视化与建模的学习者。建议先结合课件和视频了解工具链，再按正文步骤完成环境配置与示例实践。",
       "video": "https://www.bilibili.com/video/BV1pVt363EZy/",
-      "order": 7,
+      "order": 8,
       "previousId": "7445bfdfd579b5d0",
       "nextId": "1c6bd541db1e6a8a",
       "codeFiles": []
@@ -796,11 +811,11 @@
       "relPath": "05-ai-paper-translation/index.md",
       "title": "Kimi 论文翻译操作指南",
       "sections": [
-        "同门分享"
+        "AI 论文翻译"
       ],
       "excerpt": "利用 AI 工具，将论文翻译参考模板和论文原文提供给 AI，输入提示词。",
       "video": "https://www.bilibili.com/video/BV1JmtU6kE9T/",
-      "order": 8,
+      "order": 9,
       "previousId": "b57cb861bf19c527",
       "nextId": "7dba8d9e50dad83a",
       "codeFiles": []
@@ -811,10 +826,10 @@
       "relPath": "06-paper-figure-reproduction/index.md",
       "title": "论文图片复现",
       "sections": [
-        "同门分享"
+        "科研绘图"
       ],
       "excerpt": "论文中的流程图、框架图、机制图和系统结构图通常以位图形式存在，直接截图虽然能够保留视觉效果，但难以满足后续修改文字、调整排版、移动元素和重新配色等需求。本教程介绍一种结合多模态大模型与 Draw.io 的论文图片重构方法：先利用豆包、GPT 等模型理解原图的结构、布局和视觉元素，",
-      "order": 9,
+      "order": 10,
       "previousId": "1c6bd541db1e6a8a",
       "nextId": "e191a923adeef00f",
       "video": "files/research-skills/06-paper-figure-reproduction/paper-figure-reproduction.mp4",
@@ -826,10 +841,10 @@
       "relPath": "07-research-presentation/index.md",
       "title": "科研汇报 PPT 制作",
       "sections": [
-        "同门分享"
+        "科研汇报"
       ],
       "excerpt": "选择一个合适的PPT模板（初步可以先借鉴博士答辩等优质PPT进行模仿）",
-      "order": 10,
+      "order": 11,
       "previousId": "7dba8d9e50dad83a",
       "nextId": "79d93f7889060e95",
       "video": "files/research-skills/07-research-presentation/research-presentation.mp4",
@@ -841,26 +856,11 @@
       "relPath": "07-research-presentation/reference.md",
       "title": "案例参考文章",
       "sections": [
-        "同门分享"
+        "科研汇报"
       ],
       "excerpt": "Djayr Alves Bispo Junior, Gustavo de Novaes Pires Leite, Alvaro Antonio Ochoa Villa, Alexandre Carlos Araújo da Costa, Olga de Castro Vilela",
-      "order": 11,
-      "previousId": "e191a923adeef00f",
-      "nextId": "153190f72f2eaa1c",
-      "codeFiles": []
-    },
-    {
-      "id": "153190f72f2eaa1c",
-      "bookSlug": "research-skills",
-      "relPath": "08-pdf-to-markdown/index.md",
-      "title": "PDF 转 Markdown 操作教程",
-      "sections": [
-        "同门分享"
-      ],
-      "excerpt": "介绍使用 DeepSeek 和 Doc2X 将 PDF 文献整理为 Markdown 的操作流程，并说明图片文件的组织方式。",
-      "video": "https://www.bilibili.com/video/BV16stf6MESW/",
       "order": 12,
-      "previousId": "79d93f7889060e95",
+      "previousId": "e191a923adeef00f",
       "nextId": "",
       "codeFiles": []
     },
