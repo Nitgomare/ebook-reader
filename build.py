@@ -94,6 +94,7 @@ EMBEDDED_MEDIA_RE = re.compile(
     r"<(?:iframe|video)\b[^>]*>.*?</(?:iframe|video)>", re.I | re.S
 )
 RESOURCE_EXTENSIONS = {
+    ".mp4": "视频",
     ".pdf": "PDF",
     ".epub": "EPUB",
     ".doc": "Word",
@@ -477,7 +478,7 @@ def build_code_assets(
 
 
 def build_download_assets(
-    docs_root: Path, book_slug: str, output: Path
+    docs_root: Path, book_slug: str, output: Path, video_paths: set[str] | None = None
 ) -> list[dict[str, object]]:
     """Publish textbook, slide and exercise downloads for the generated resource page."""
     resources: list[dict[str, object]] = []
@@ -485,6 +486,8 @@ def build_download_assets(
         if not source.is_file() or source.suffix.lower() not in RESOURCE_EXTENSIONS:
             continue
         rel_path = source.relative_to(docs_root).as_posix()
+        if source.suffix.lower() == ".mp4" and rel_path not in (video_paths or set()):
+            continue
         if any(part in SKIP_DIRS for part in PurePosixPath(rel_path).parts):
             continue
         destination = output / "files" / book_slug / Path(*PurePosixPath(rel_path).parts)
@@ -627,7 +630,17 @@ def build_book(
     slug = str(book["slug"])
     id_map = {str(doc["relPath"]): str(doc["id"]) for doc in docs}
     public_code, code_by_doc = build_code_assets(book, output, docs)
-    public_resources = build_download_assets(docs_root, slug, output)
+    local_videos = book.get("localVideos", {})
+    if not isinstance(local_videos, dict):
+        raise ValueError(f"{slug}: localVideos must map document paths to video paths")
+    if set(local_videos) - set(id_map):
+        raise ValueError(f"{slug}: localVideos references a missing document")
+    public_resources = build_download_assets(docs_root, slug, output, set(local_videos.values()))
+    video_resources = {
+        resource["path"]: resource for resource in public_resources if resource["kind"] == "视频"
+    }
+    if set(local_videos.values()) - set(video_resources):
+        raise ValueError(f"{slug}: localVideos references a missing MP4 file")
 
     public_docs: list[dict[str, object]] = []
     for doc in docs:
@@ -654,6 +667,9 @@ def build_book(
         )
         collector = HeadingCollector()
         collector.feed(rendered)
+        video_path = local_videos.get(str(doc["relPath"]))
+        if video_path:
+            doc["video"] = video_resources[video_path]["downloadUrl"]
         payload = {key: value for key, value in doc.items() if key != "source"}
         payload["html"] = rendered
         payload["headings"] = collector.headings

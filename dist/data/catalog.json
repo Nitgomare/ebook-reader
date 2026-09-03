@@ -49,12 +49,15 @@
   },
   "stats": {
     "books": 15,
-    "docs": 199,
+    "docs": 200,
     "code": 221
   },
   "books": [
     {
       "slug": "research-skills",
+      "localVideos": {
+        "06-paper-figure-reproduction/index.md": "06-paper-figure-reproduction/paper-figure-reproduction.mp4"
+      },
       "title": "科研工具与实践",
       "author": "科研新手实用培训",
       "description": "整合文献检索、Zotero、PDF 转换、知识库搭建、Python 实践与实验复现工作流。",
@@ -80,7 +83,7 @@
       ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 8,
+      "docCount": 9,
       "firstDocId": "5aae9dc4ade82146",
       "chapterCount": 0,
       "codeCount": 0,
@@ -91,6 +94,13 @@
           "kind": "课件",
           "size": 2712044,
           "downloadUrl": "files/research-skills/04-python-research-computing/Python%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.pptx"
+        },
+        {
+          "name": "paper-figure-reproduction.mp4",
+          "path": "06-paper-figure-reproduction/paper-figure-reproduction.mp4",
+          "kind": "视频",
+          "size": 10379955,
+          "downloadUrl": "files/research-skills/06-paper-figure-reproduction/paper-figure-reproduction.mp4"
         },
         {
           "name": "wind-power-terminology.csv",
@@ -759,7 +769,22 @@
       "video": "https://www.bilibili.com/video/BV1JmtU6kE9T/",
       "order": 8,
       "previousId": "b57cb861bf19c527",
+      "nextId": "7dba8d9e50dad83a",
+      "codeFiles": []
+    },
+    {
+      "id": "7dba8d9e50dad83a",
+      "bookSlug": "research-skills",
+      "relPath": "06-paper-figure-reproduction/index.md",
+      "title": "论文图片复现",
+      "sections": [
+        "科研绘图"
+      ],
+      "excerpt": "论文中的流程图、框架图、机制图和系统结构图通常以位图形式存在，直接截图虽然能够保留视觉效果，但难以满足后续修改文字、调整排版、移动元素和重新配色等需求。本教程介绍一种结合多模态大模型与 Draw.io 的论文图片重构方法：先利用豆包、GPT 等模型理解原图的结构、布局和视觉元素，",
+      "order": 9,
+      "previousId": "1c6bd541db1e6a8a",
       "nextId": "",
+      "video": "files/research-skills/06-paper-figure-reproduction/paper-figure-reproduction.mp4",
       "codeFiles": []
     },
     {

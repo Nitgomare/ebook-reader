@@ -14,3 +14,5 @@ nav:
       - "科研计算基础与环境搭建": 04-python-research-computing/index.md
   - "AI 论文翻译":
       - "Kimi 论文翻译操作指南": 05-ai-paper-translation/index.md
+  - "科研绘图":
+      - "论文图片复现": 06-paper-figure-reproduction/index.md

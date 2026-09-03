@@ -45,6 +45,45 @@ test("managed auth renders a styled login form without exposing content", async 
   assert.equal(response.headers.get("Cache-Control"), "private, no-store");
 });
 
+test("video URLs reject anonymous full, range, and HEAD requests", async () => {
+  for (const method of ["GET", "HEAD"]) {
+    for (const headers of [{}, { Range: "bytes=0-1023" }]) {
+      const response = await worker.fetch(new Request(
+        "https://example.test/files/research-skills/06-paper-figure-reproduction/paper-figure-reproduction.mp4",
+        { method, headers },
+      ), env({
+        SUPABASE_URL: "https://project.supabase.co",
+        SUPABASE_PUBLISHABLE_KEY: "publishable-key",
+        ASSETS: { fetch: async () => assert.fail("Anonymous video request reached assets") },
+      }));
+      assert.equal(response.status, 302);
+      assert.match(response.headers.get("Location"), /__auth\/login/);
+    }
+  }
+});
+
+test("protected video responses preserve byte ranges and private caching", async () => {
+  const response = await worker.fetch(new Request("https://example.test/files/tutorial.mp4", {
+    headers: { Authorization: `Basic ${btoa("reader:secret")}`, Range: "bytes=0-3" },
+  }), env({
+    SUPABASE_URL: "https://project.supabase.co",
+    SUPABASE_PUBLISHABLE_KEY: "publishable-key",
+    ALLOW_LEGACY_BASIC: "true",
+    ASSETS: { fetch: async (request) => {
+      assert.equal(request.headers.get("Range"), "bytes=0-3");
+      return new Response("test", { status: 206, headers: {
+        "Content-Type": "video/mp4", "Accept-Ranges": "bytes",
+        "Content-Range": "bytes 0-3/10379955", "Content-Length": "4",
+      } });
+    } },
+  }));
+  assert.equal(response.status, 206);
+  assert.equal(response.headers.get("Content-Type"), "video/mp4");
+  assert.equal(response.headers.get("Content-Range"), "bytes 0-3/10379955");
+  assert.equal(response.headers.get("Cache-Control"), "private, no-store");
+  assert.equal(await response.text(), "test");
+});
+
 test("successful login stores tokens only in secure HttpOnly cookies", async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async () => new Response(JSON.stringify({

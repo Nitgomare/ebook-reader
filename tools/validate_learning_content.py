@@ -92,8 +92,26 @@ def main() -> None:
         if doc["bookSlug"] == "research-skills"
         and doc["relPath"].startswith("03-site-building/")
     ]
+    figure_doc = next(
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "research-skills"
+        and doc["relPath"] == "06-paper-figure-reproduction/index.md"
+    )
+    figure_video = next(
+        resource for resource in research_book["resources"]
+        if resource["path"] == "06-paper-figure-reproduction/paper-figure-reproduction.mp4"
+    )
     report = {
         "stats": catalog["stats"],
+        "paper_figure_reproduction": {
+            "title": figure_doc["title"],
+            "sections": sum(h["level"] == 2 for h in figure_doc["headings"]),
+            "video_present": (DIST / figure_video["downloadUrl"]).is_file(),
+            "video_size": (DIST / figure_video["downloadUrl"]).stat().st_size,
+            "video_linked": figure_doc.get("video") == figure_video["downloadUrl"],
+            "video_actions": figure_doc["html"].count(figure_video["downloadUrl"]),
+            "download_action": 'download="论文图片复现教学视频.mp4"' in figure_doc["html"],
+        },
         "categories": [item["id"] for item in catalog["site"]["categories"]],
         "book_slugs": {book["slug"] for book in catalog["books"]},
         "chapter_documents": len(chapter_docs),
@@ -303,7 +321,16 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 15, "docs": 199, "code": 221}
+    assert report["stats"] == {"books": 15, "docs": 200, "code": 221}
+    assert report["paper_figure_reproduction"] == {
+        "title": "论文图片复现",
+        "sections": 17,
+        "video_present": True,
+        "video_size": 10379955,
+        "video_linked": True,
+        "video_actions": 2,
+        "download_action": True,
+    }
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
         "robotics", "wind-energy", "engineering-systems",
