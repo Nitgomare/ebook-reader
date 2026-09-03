@@ -97,12 +97,12 @@ def main() -> None:
         if doc["bookSlug"] == "research-skills"
         and doc["relPath"] == "08-pdf-to-markdown/index.md"
     )
-    peer_tutorial_paths = {
-        "04-python-research-computing/index.md",
-        "05-ai-paper-translation/index.md",
-        "06-paper-figure-reproduction/index.md",
-        "07-research-presentation/index.md",
-        "08-pdf-to-markdown/index.md",
+    tutorial_topics = {
+        "04-python-research-computing/index.md": "Python 科研计算",
+        "05-ai-paper-translation/index.md": "AI 论文翻译",
+        "06-paper-figure-reproduction/index.md": "科研绘图",
+        "07-research-presentation/index.md": "科研汇报",
+        "08-pdf-to-markdown/index.md": "格式转换与术语",
     }
     figure_doc = next(
         payloads[doc["id"]] for doc in catalog["docs"]
@@ -140,10 +140,10 @@ def main() -> None:
             "video_linked": pdf_conversion_doc.get("video") == "https://www.bilibili.com/video/BV16stf6MESW/",
             "missing_images_explained": "原文配图未随文档提供" in pdf_conversion_doc["html"],
             "no_broken_image_elements": "<img" not in pdf_conversion_doc["html"],
-            "peer_tutorials_grouped": all(
-                doc.get("sections") == ["同门分享"]
+            "tutorials_grouped_by_topic": all(
+                doc.get("sections") == [tutorial_topics[doc["relPath"]]]
                 for doc in catalog["docs"]
-                if doc["bookSlug"] == "research-skills" and doc["relPath"] in peer_tutorial_paths
+                if doc["bookSlug"] == "research-skills" and doc["relPath"] in tutorial_topics
             ),
         },
         "paper_figure_reproduction": {
