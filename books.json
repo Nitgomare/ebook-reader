@@ -50,6 +50,9 @@
   "books": [
     {
       "slug": "research-skills",
+      "localVideos": {
+        "06-paper-figure-reproduction/index.md": "06-paper-figure-reproduction/paper-figure-reproduction.mp4"
+      },
       "title": "科研工具与实践",
       "author": "科研新手实用培训",
       "description": "整合文献检索、Zotero、PDF 转换、知识库搭建、Python 实践与实验复现工作流。",
