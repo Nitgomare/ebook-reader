@@ -56,7 +56,7 @@
       },
       "title": "科研工具与实践",
       "author": "科研新手实用培训",
-      "description": "整合文献检索、Zotero、PDF 转换、知识库搭建、Python 实践与实验复现工作流。",
+      "description": "整合文献检索、Zotero、PDF 转换与知识库搭建，并集中收录同门制作的科研计算、论文翻译、图片复现和汇报教程。",
       "tags": ["科研工具", "文献管理", "实验复现"],
       "category": "research-skills",
       "type": "course",
@@ -70,6 +70,11 @@
         {
           "label": "使用 Kimi 翻译论文课程视频（李东）",
           "url": "https://www.bilibili.com/video/BV1JmtU6kE9T/",
+          "kind": "视频"
+        },
+        {
+          "label": "PDF 转 Markdown 教学视频（刘航）",
+          "url": "https://www.bilibili.com/video/BV16stf6MESW/",
           "kind": "视频"
         }
       ]
