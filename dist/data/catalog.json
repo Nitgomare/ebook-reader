@@ -48,15 +48,16 @@
     ]
   },
   "stats": {
-    "books": 15,
-    "docs": 200,
+    "books": 16,
+    "docs": 213,
     "code": 221
   },
   "books": [
     {
       "slug": "research-skills",
       "localVideos": {
-        "06-paper-figure-reproduction/index.md": "06-paper-figure-reproduction/paper-figure-reproduction.mp4"
+        "06-paper-figure-reproduction/index.md": "06-paper-figure-reproduction/paper-figure-reproduction.mp4",
+        "07-research-presentation/index.md": "07-research-presentation/research-presentation.mp4"
       },
       "title": "科研工具与实践",
       "author": "科研新手实用培训",
@@ -83,7 +84,7 @@
       ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 9,
+      "docCount": 11,
       "firstDocId": "5aae9dc4ade82146",
       "chapterCount": 0,
       "codeCount": 0,
@@ -101,6 +102,13 @@
           "kind": "视频",
           "size": 10379955,
           "downloadUrl": "files/research-skills/06-paper-figure-reproduction/paper-figure-reproduction.mp4"
+        },
+        {
+          "name": "research-presentation.mp4",
+          "path": "07-research-presentation/research-presentation.mp4",
+          "kind": "视频",
+          "size": 14423915,
+          "downloadUrl": "files/research-skills/07-research-presentation/research-presentation.mp4"
         },
         {
           "name": "wind-power-terminology.csv",
@@ -496,6 +504,26 @@
       ]
     },
     {
+      "slug": "machine-vision",
+      "title": "机器视觉入门与实战",
+      "author": "夏东、周波",
+      "description": "系统介绍机器视觉、人脸识别、人体姿态识别、索引技术、目标检测及嵌入式应用。",
+      "tags": [
+        "机器视觉",
+        "人脸识别",
+        "人体姿态识别"
+      ],
+      "category": "artificial-intelligence",
+      "type": "reference",
+      "sourceSiteName": "机器视觉入门与实战 · 在线图书",
+      "cover": "",
+      "docCount": 11,
+      "firstDocId": "fbacd0afdabdb0dd",
+      "chapterCount": 10,
+      "codeCount": 0,
+      "resources": []
+    },
+    {
       "slug": "robot-textbook",
       "title": "轮腿式智能安保巡逻机器人项目实战",
       "author": "湖南科技大学智能机器人设计与控制微专业教学团队",
@@ -783,8 +811,37 @@
       "excerpt": "论文中的流程图、框架图、机制图和系统结构图通常以位图形式存在，直接截图虽然能够保留视觉效果，但难以满足后续修改文字、调整排版、移动元素和重新配色等需求。本教程介绍一种结合多模态大模型与 Draw.io 的论文图片重构方法：先利用豆包、GPT 等模型理解原图的结构、布局和视觉元素，",
       "order": 9,
       "previousId": "1c6bd541db1e6a8a",
-      "nextId": "",
+      "nextId": "e191a923adeef00f",
       "video": "files/research-skills/06-paper-figure-reproduction/paper-figure-reproduction.mp4",
+      "codeFiles": []
+    },
+    {
+      "id": "e191a923adeef00f",
+      "bookSlug": "research-skills",
+      "relPath": "07-research-presentation/index.md",
+      "title": "科研汇报 PPT 制作",
+      "sections": [
+        "科研汇报"
+      ],
+      "excerpt": "选择一个合适的PPT模板（初步可以先借鉴博士答辩等优质PPT进行模仿）",
+      "order": 10,
+      "previousId": "7dba8d9e50dad83a",
+      "nextId": "79d93f7889060e95",
+      "video": "files/research-skills/07-research-presentation/research-presentation.mp4",
+      "codeFiles": []
+    },
+    {
+      "id": "79d93f7889060e95",
+      "bookSlug": "research-skills",
+      "relPath": "07-research-presentation/reference.md",
+      "title": "案例参考文章",
+      "sections": [
+        "科研汇报"
+      ],
+      "excerpt": "Djayr Alves Bispo Junior, Gustavo de Novaes Pires Leite, Alvaro Antonio Ochoa Villa, Alexandre Carlos Araújo da Costa, Olga de Castro Vilela",
+      "order": 11,
+      "previousId": "e191a923adeef00f",
+      "nextId": "",
       "codeFiles": []
     },
     {
@@ -2342,6 +2399,170 @@
       "excerpt": "记实矩阵 $\\mathbf{A} \\in  {\\mathbb{R}}^{m \\times  n}$ 第 $i$ 行第 $j$ 列的元素为 ${\\left( \\mathbf{A}\\right) }{ij} = {A}{ij}$ . 矩阵 $\\mathbf{A}$ 的转置(trans",
       "order": 18,
       "previousId": "25aa0a5c241fce28",
+      "nextId": "",
+      "codeFiles": []
+    },
+    {
+      "id": "9ab73bee8c48e01c",
+      "bookSlug": "machine-vision",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "《机器视觉入门与实战：人脸识别与人体识别》",
+      "order": 1,
+      "previousId": "",
+      "nextId": "fbacd0afdabdb0dd",
+      "codeFiles": []
+    },
+    {
+      "id": "fbacd0afdabdb0dd",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/01-machine-vision-overview/index.md",
+      "title": "第1章 机器视觉概述",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "随着光学、人工智能技术不断迭代，以及现代制造业产业结构调整和转型的不断深入, 机器视觉领域的技术和产品呈现翻天覆地的变化, 从过去实验室探索阶段进入市场化产品研发与生产阶段，各类基于深度学习的机器视觉产品层出不穷，人工智能技术为人们在图像视频方面开拓了无限的想象力。回顾发展，冷静",
+      "chapterNumber": 1,
+      "order": 2,
+      "previousId": "9ab73bee8c48e01c",
+      "nextId": "f2eb63168fd9c286",
+      "codeFiles": []
+    },
+    {
+      "id": "f2eb63168fd9c286",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/02-indexing/index.md",
+      "title": "第2章 机器视觉中的索引技术",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在基于内容的相似性检索技术中，索引技术的地位非常高。建立高效的索引结构始终是一个重要的任务。传统的索引结构不能直接应用于机器视觉检索中，比如B(Balance，平衡)树可以建立一维索引，但是不能搜索多维空间；哈希表虽然可以实现精确查找，但是不能进行范围查询，因此研究高维空间索引技",
+      "chapterNumber": 2,
+      "order": 3,
+      "previousId": "fbacd0afdabdb0dd",
+      "nextId": "d5a5c0c4fb37ce16",
+      "codeFiles": []
+    },
+    {
+      "id": "d5a5c0c4fb37ce16",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/03-face-recognition/index.md",
+      "title": "第3章 机器视觉中的人脸识别技术",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "人脸识别技术在20世纪50年代开始逐渐进入人们的视野，经过半个多世纪的发展，如今已经得到广泛的应用。本章将介绍深度学习技术背景下机器视觉中的人脸识别技术，并从人脸检测、人脸对齐和人脸特征提取3个方面分类阐述。",
+      "chapterNumber": 3,
+      "order": 4,
+      "previousId": "f2eb63168fd9c286",
+      "nextId": "58b6da8a5ce3942b",
+      "codeFiles": []
+    },
+    {
+      "id": "58b6da8a5ce3942b",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/04-human-pose-recognition/index.md",
+      "title": "第4章 机器视觉中的人体姿态识别技术",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "人体姿态识别一直是计算机视觉中备受关注的研究热点，在智能安防、人机交互、动作识别等领域有着重要的研究价值。近年来，随着深度学习技术的快速发展，人体姿态识别的效果不断提升，已经广泛应用于计算机视觉的相关领域。",
+      "chapterNumber": 4,
+      "order": 5,
+      "previousId": "d5a5c0c4fb37ce16",
+      "nextId": "365eff552b326295",
+      "codeFiles": []
+    },
+    {
+      "id": "365eff552b326295",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/05-high-dimensional-indexing/index.md",
+      "title": "第5章 面向人脸检索的高维空间快速索引技术",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在信息检索领域，已经有很多技术用于解决基于文本或矢量的数据检索，然而，这些技术对于高维空间的数据并不总是适用的，例如维数灾难对数据检索的性能会带来较大的影响。",
+      "chapterNumber": 5,
+      "order": 6,
+      "previousId": "58b6da8a5ce3942b",
+      "nextId": "c3bb3f1a9a4c9587",
+      "codeFiles": []
+    },
+    {
+      "id": "c3bb3f1a9a4c9587",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/06-embedded-face-recognition/index.md",
+      "title": "第6章 嵌入式设备中的人脸精准识别技术",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "人脸识别技术是一项非常重要的身份授权技术。近年来，该技术越来越多地应用于基于ARM芯片的移动设备和嵌入式设备中，如设备解锁、应用登录、移动支付等。一些移动设备、嵌入式设备已经配置了人脸识别技术，比如智能手机解锁、高铁站入口闸机、社区人脸门禁等。",
+      "chapterNumber": 6,
+      "order": 7,
+      "previousId": "365eff552b326295",
+      "nextId": "2ca09d80d0ae4b78",
+      "codeFiles": []
+    },
+    {
+      "id": "2ca09d80d0ae4b78",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/07-object-detection-evaluation/index.md",
+      "title": "第7章 面向姿态识别的目标检测算法与性能测评",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "机器视觉中人体识别应用的核心技术之一就是目标检测算法。针对现有目标检测算法种类较多而在实际应用中选取困难的问题，作者团队在实际工作中复现了相关目标检测算法并进行了性能测评。",
+      "chapterNumber": 7,
+      "order": 8,
+      "previousId": "c3bb3f1a9a4c9587",
+      "nextId": "05c5fb6bc6ee5fbd",
+      "codeFiles": []
+    },
+    {
+      "id": "05c5fb6bc6ee5fbd",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/08-embedded-face-applications/index.md",
+      "title": "第8章 嵌入式人脸设备的应用",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "随着科学技术的快速发展，人工智能技术得到普及。其中人脸识别技术最为突出，广泛应用于人们日常生活所接触到的人工智能产品中。",
+      "chapterNumber": 8,
+      "order": 9,
+      "previousId": "2ca09d80d0ae4b78",
+      "nextId": "fc134d281118703c",
+      "codeFiles": []
+    },
+    {
+      "id": "fc134d281118703c",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/09-pose-recognition-applications/index.md",
+      "title": "第9章 人体姿态识别技术的应用",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "人体姿势估计的研究目标是根据图像和视频等输入数据来定位人体部位并建立人体的表现形式。在过去的十年中，这项技术引发了非常多的关注，如今已被广泛用于包括人机交互、运动分析、增强现实和虚拟现实等领域。",
+      "chapterNumber": 9,
+      "order": 10,
+      "previousId": "05c5fb6bc6ee5fbd",
+      "nextId": "c59ee56f40ed9b16",
+      "codeFiles": []
+    },
+    {
+      "id": "c59ee56f40ed9b16",
+      "bookSlug": "machine-vision",
+      "relPath": "chapters/10-challenges-and-future/index.md",
+      "title": "第10章 问题、挑战与发展",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "通过前面9章的学习，我们了解了机器视觉在人体识别中的概念、技术和应用。本章主要从面临的问题和挑战、未来发展趋势两部分对机器视觉技术在人体识别领域的应用进行总结与展望。",
+      "chapterNumber": 10,
+      "order": 11,
+      "previousId": "fc134d281118703c",
       "nextId": "",
       "codeFiles": []
     },

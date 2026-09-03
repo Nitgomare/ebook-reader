@@ -16,3 +16,6 @@ nav:
       - "Kimi 论文翻译操作指南": 05-ai-paper-translation/index.md
   - "科研绘图":
       - "论文图片复现": 06-paper-figure-reproduction/index.md
+  - "科研汇报":
+      - "科研汇报 PPT 制作": 07-research-presentation/index.md
+      - "案例参考文章": 07-research-presentation/reference.md

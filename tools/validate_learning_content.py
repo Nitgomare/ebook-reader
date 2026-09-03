@@ -35,7 +35,7 @@ def main() -> None:
     expected_books = {
         "research-skills", "shangguigu-python", "python-beginner-to-master",
         "shangguigu-data-analysis", "python-data-analysis", "deep-learning",
-        "zhou-machine-learning", "robot-textbook", "wind-energy", "风能技术",
+        "zhou-machine-learning", "machine-vision", "robot-textbook", "wind-energy", "风能技术",
         "wind-turbine-theory-and-design", "Utilizing-large-scale-foundation-models-for",
         "wind-scada-data-analysis-modeling",
         "smart-analysis-system-user-manual", "smart-analysis-system-technical-docs",
@@ -101,6 +101,26 @@ def main() -> None:
         resource for resource in research_book["resources"]
         if resource["path"] == "06-paper-figure-reproduction/paper-figure-reproduction.mp4"
     )
+    presentation_docs = [
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "research-skills"
+        and doc["relPath"].startswith("07-research-presentation/")
+    ]
+    presentation_video = next(
+        resource for resource in research_book["resources"]
+        if resource["path"] == "07-research-presentation/research-presentation.mp4"
+    )
+    machine_vision_book = next(
+        book for book in catalog["books"] if book["slug"] == "machine-vision"
+    )
+    machine_vision_docs = [
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "machine-vision"
+    ]
+    machine_vision_image_urls = re.findall(
+        r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
+        "".join(doc["html"] for doc in machine_vision_docs), re.I,
+    )
     report = {
         "stats": catalog["stats"],
         "paper_figure_reproduction": {
@@ -111,6 +131,33 @@ def main() -> None:
             "video_linked": figure_doc.get("video") == figure_video["downloadUrl"],
             "video_actions": figure_doc["html"].count(figure_video["downloadUrl"]),
             "download_action": 'download="论文图片复现教学视频.mp4"' in figure_doc["html"],
+            "creator_credit": "内容制作：窦丽露" in figure_doc["html"],
+        },
+        "research_presentation": {
+            "documents": len(presentation_docs),
+            "images": len(re.findall(
+                r'<img\b[^>]*\bsrc=', "".join(doc["html"] for doc in presentation_docs), re.I,
+            )),
+            "missing_images": sum(
+                not (DIST / Path(unquote(url))).is_file()
+                for url in re.findall(
+                    r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
+                    "".join(doc["html"] for doc in presentation_docs), re.I,
+                )
+            ),
+            "video_present": (DIST / presentation_video["downloadUrl"]).is_file(),
+            "video_size": (DIST / presentation_video["downloadUrl"]).stat().st_size,
+            "video_linked": presentation_docs[0].get("video") == presentation_video["downloadUrl"],
+            "creator_credit": "内容制作：戴琼" in presentation_docs[0]["html"],
+        },
+        "machine_vision_book": {
+            "documents": machine_vision_book["docCount"],
+            "chapters": machine_vision_book["chapterCount"],
+            "images": len(machine_vision_image_urls),
+            "missing_images": sum(
+                not (DIST / Path(unquote(url))).is_file()
+                for url in machine_vision_image_urls
+            ),
         },
         "categories": [item["id"] for item in catalog["site"]["categories"]],
         "book_slugs": {book["slug"] for book in catalog["books"]},
@@ -321,7 +368,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 15, "docs": 200, "code": 221}
+    assert report["stats"] == {"books": 16, "docs": 213, "code": 221}
     assert report["paper_figure_reproduction"] == {
         "title": "论文图片复现",
         "sections": 17,
@@ -330,6 +377,22 @@ def main() -> None:
         "video_linked": True,
         "video_actions": 2,
         "download_action": True,
+        "creator_credit": True,
+    }
+    assert report["research_presentation"] == {
+        "documents": 2,
+        "images": 11,
+        "missing_images": 0,
+        "video_present": True,
+        "video_size": 14423915,
+        "video_linked": True,
+        "creator_credit": True,
+    }
+    assert report["machine_vision_book"] == {
+        "documents": 11,
+        "chapters": 10,
+        "images": 70,
+        "missing_images": 0,
     }
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
@@ -341,7 +404,7 @@ def main() -> None:
     assert report["embedded_media"] == 0
     assert not report["badly_numbered_chapters"]
     assert not report["badly_numbered_headings"]
-    assert report["books_with_resource_model"] == 15
+    assert report["books_with_resource_model"] == 16
     assert report["resource_downloads"] >= 13
     assert report["missing_resource_downloads"] == 0
     assert report["external_resource_links"] >= 6
