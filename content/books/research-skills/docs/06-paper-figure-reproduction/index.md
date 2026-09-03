@@ -6,6 +6,8 @@
 > - <a href="paper-figure-reproduction.mp4" download="论文图片复现教学视频.mp4">下载教学视频（MP4，约 9.9 MB）</a>
 >
 > 视频与本文一样，需要登录后访问。
+>
+> **内容制作：窦丽露**
 
 ## 1. 教程概述
 

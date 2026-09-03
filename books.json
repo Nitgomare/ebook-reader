@@ -51,7 +51,8 @@
     {
       "slug": "research-skills",
       "localVideos": {
-        "06-paper-figure-reproduction/index.md": "06-paper-figure-reproduction/paper-figure-reproduction.mp4"
+        "06-paper-figure-reproduction/index.md": "06-paper-figure-reproduction/paper-figure-reproduction.mp4",
+        "07-research-presentation/index.md": "07-research-presentation/research-presentation.mp4"
       },
       "title": "科研工具与实践",
       "author": "科研新手实用培训",
@@ -190,6 +191,15 @@
       "resourceLinks": [
         {"label": "机器学习配套视频", "url": "https://www.bilibili.com/video/BV1gG411f7zX/", "kind": "视频"}
       ]
+    },
+    {
+      "slug": "machine-vision",
+      "title": "机器视觉入门与实战",
+      "author": "夏东、周波",
+      "description": "系统介绍机器视觉、人脸识别、人体姿态识别、索引技术、目标检测及嵌入式应用。",
+      "tags": ["机器视觉", "人脸识别", "人体姿态识别"],
+      "category": "artificial-intelligence",
+      "type": "reference"
     },
     {
       "slug": "robot-textbook",
