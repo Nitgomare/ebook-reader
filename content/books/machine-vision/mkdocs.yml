@@ -6,9 +6,9 @@ nav:
   - "第1章 机器视觉概述": chapters/01-machine-vision-overview/index.md
   - "第2章 机器视觉中的索引技术": chapters/02-indexing/index.md
   - "第3章 机器视觉中的人脸识别技术": chapters/03-face-recognition/index.md
-  - "第4章 机器视觉中的人体姿态识别技术": chapters/04-human-pose-recognition/index.md
-  - "第5章 面向人脸检索的高维空间快速索引技术": chapters/05-high-dimensional-indexing/index.md
-  - "第6章 嵌入式设备中的人脸精准识别技术": chapters/06-embedded-face-recognition/index.md
+  - "第4章 人体姿态识别技术": chapters/04-human-pose-recognition/index.md
+  - "第5章 高维空间快速索引方法与实验": chapters/05-high-dimensional-indexing/index.md
+  - "第6章 嵌入式人脸识别": chapters/06-embedded-face-recognition/index.md
   - "第7章 面向姿态识别的目标检测算法与性能测评": chapters/07-object-detection-evaluation/index.md
   - "第8章 嵌入式人脸设备的应用": chapters/08-embedded-face-applications/index.md
   - "第9章 人体姿态识别技术的应用": chapters/09-pose-recognition-applications/index.md

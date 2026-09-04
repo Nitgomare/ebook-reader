@@ -133,6 +133,7 @@ def main() -> None:
         r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
         "".join(doc["html"] for doc in machine_vision_docs), re.I,
     )
+    machine_vision_html = "".join(doc["html"] for doc in machine_vision_docs)
     report = {
         "stats": catalog["stats"],
         "pdf_conversion_tutorial": {
@@ -181,6 +182,9 @@ def main() -> None:
                 not (DIST / Path(unquote(url))).is_file()
                 for url in machine_vision_image_urls
             ),
+            "math_fragments": machine_vision_html.count('class="arithmatex"'),
+            "raw_dollar_delimiters": machine_vision_html.count("$$"),
+            "tables": machine_vision_html.count("<table>"),
         },
         "categories": [item["id"] for item in catalog["site"]["categories"]],
         "book_slugs": {book["slug"] for book in catalog["books"]},
@@ -417,6 +421,9 @@ def main() -> None:
         "chapters": 10,
         "images": 70,
         "missing_images": 0,
+        "math_fragments": 373,
+        "raw_dollar_delimiters": 0,
+        "tables": 8,
     }
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",

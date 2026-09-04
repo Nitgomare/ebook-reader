@@ -2430,7 +2430,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "《机器视觉入门与实战：人脸识别与人体识别》",
+      "excerpt": "资深机器视觉技术专家撰写，结合多年研究成果和实践经验零基础快速掌握人脸识别和人体姿态识别的技术、算法和应用智能系统与技术丛书",
       "order": 1,
       "previousId": "",
       "nextId": "fbacd0afdabdb0dd",
@@ -2444,7 +2444,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "随着光学、人工智能技术不断迭代，以及现代制造业产业结构调整和转型的不断深入, 机器视觉领域的技术和产品呈现翻天覆地的变化, 从过去实验室探索阶段进入市场化产品研发与生产阶段，各类基于深度学习的机器视觉产品层出不穷，人工智能技术为人们在图像视频方面开拓了无限的想象力。回顾发展，冷静",
+      "excerpt": "机器视觉概述随着光学、人工智能技术不断迭代，以及现代制造业产业结构调整和转型的不断深入, 机器视觉领域的技术和产品呈现翻天覆地的变化, 从过去实验室探索阶段进入市场化产品研发与生产阶段，各类基于深度学习的机器视觉产品层出不穷，人工智能技术为人们在图像视频方面开拓了无限的想象力。回",
       "chapterNumber": 1,
       "order": 2,
       "previousId": "9ab73bee8c48e01c",
@@ -2485,7 +2485,7 @@
       "id": "58b6da8a5ce3942b",
       "bookSlug": "machine-vision",
       "relPath": "chapters/04-human-pose-recognition/index.md",
-      "title": "第4章 机器视觉中的人体姿态识别技术",
+      "title": "第4章 人体姿态识别技术",
       "sections": [
         "正文"
       ],
@@ -2500,7 +2500,7 @@
       "id": "365eff552b326295",
       "bookSlug": "machine-vision",
       "relPath": "chapters/05-high-dimensional-indexing/index.md",
-      "title": "第5章 面向人脸检索的高维空间快速索引技术",
+      "title": "第5章 高维空间快速索引方法与实验",
       "sections": [
         "正文"
       ],
@@ -2515,7 +2515,7 @@
       "id": "c3bb3f1a9a4c9587",
       "bookSlug": "machine-vision",
       "relPath": "chapters/06-embedded-face-recognition/index.md",
-      "title": "第6章 嵌入式设备中的人脸精准识别技术",
+      "title": "第6章 嵌入式人脸识别",
       "sections": [
         "正文"
       ],
@@ -2549,7 +2549,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "随着科学技术的快速发展，人工智能技术得到普及。其中人脸识别技术最为突出，广泛应用于人们日常生活所接触到的人工智能产品中。",
+      "excerpt": "嵌入式人脸设备的应用随着科学技术的快速发展，人工智能技术得到普及。其中人脸识别技术最为突出，广泛应用于人们日常生活所接触到的人工智能产品中。",
       "chapterNumber": 8,
       "order": 9,
       "previousId": "2ca09d80d0ae4b78",

@@ -1,8 +1,26 @@
-# 前置内容
+# 前言与出版信息
 
-《机器视觉入门与实战：人脸识别与人体识别》
+资深机器视觉技术专家撰写，结合多年研究成果和实践经验零基础快速掌握人脸识别和人体姿态识别的技术、算法和应用智能系统与技术丛书
 
-**作者：夏东、周波**
+夏东 周波©著
+
+Introduction to Machine Vision
+
+Face Recognition and Human Body Recognition
+
+机械工业出版社
+
+china machine press
+
+资深机器视觉技术专家撰写，结合多年研究成果和实践经验零基础快速掌握人脸识别和人体姿态识别的技术、算法和应用智能系统与技术丛书
+
+夏东 周波0著
+
+Introduction to Machine Vision
+
+Face Recognition and Human Body Recognition
+
+(*)机械工业出版社
 
 ## 版权信息
 
@@ -99,5 +117,3 @@ ISBN:9787111721475
 谨以此书献给众多热爱人工智能的朋友！
 
 夏东
-
-CHAPTER 1
