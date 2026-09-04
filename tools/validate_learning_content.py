@@ -97,6 +97,10 @@ def main() -> None:
         if doc["bookSlug"] == "research-skills"
         and doc["relPath"] == "08-pdf-to-markdown/index.md"
     )
+    pdf_conversion_image_urls = re.findall(
+        r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
+        pdf_conversion_doc["html"], re.I,
+    )
     tutorial_topics = {
         "04-python-research-computing/index.md": "Python 科研计算",
         "05-ai-paper-translation/index.md": "AI 论文翻译",
@@ -139,8 +143,11 @@ def main() -> None:
         "pdf_conversion_tutorial": {
             "creator_credit": "内容制作：刘航" in pdf_conversion_doc["html"],
             "video_linked": pdf_conversion_doc.get("video") == "https://www.bilibili.com/video/BV16stf6MESW/",
-            "missing_images_explained": "原文配图未随文档提供" in pdf_conversion_doc["html"],
-            "no_broken_image_elements": "<img" not in pdf_conversion_doc["html"],
+            "images": len(pdf_conversion_image_urls) == 8,
+            "images_available": all(
+                (DIST / Path(unquote(url))).is_file()
+                for url in pdf_conversion_image_urls
+            ),
             "tutorials_grouped_by_topic": all(
                 doc.get("sections") == [tutorial_topics[doc["relPath"]]]
                 for doc in catalog["docs"]
@@ -367,6 +374,11 @@ def main() -> None:
                 "scrollbar-gutter: stable", ".outline-inner { position: static; }",
             )
         ),
+        "centered_figure_captions": (
+            all_html.count('class="figure-caption"') >= 100
+            and ".article .figure-caption" in styles_css
+            and "text-align: center" in styles_css
+        ),
         "song_font_in_css": bool(re.search("宋体|SimSun", styles_css, re.I)),
         "nonblocking_math_loader": (
             'defer src="app.js?v=' in index_html
@@ -488,6 +500,7 @@ def main() -> None:
     assert report["light_code_style"]
     assert report["server_side_syntax_highlighting"]
     assert report["scrollable_outline"]
+    assert report["centered_figure_captions"]
     assert not report["song_font_in_css"]
     assert report["nonblocking_math_loader"]
     assert report["versioned_static_assets"]

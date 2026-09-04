@@ -163,6 +163,7 @@ button, input { font: inherit; }
 .article p { margin: 1rem 0; }
 .article a { color: var(--accent); text-decoration: underline; text-underline-offset: .18em; }
 .article img, .article video { display: block; max-width: 100%; height: auto; margin: 1.5rem auto; border-radius: .35rem; }
+.article .figure-caption { margin: -.75rem auto 1.5rem; color: var(--muted); font-size: .88em; line-height: 1.6; text-align: center; }
 .article img.formula-inline { display: inline-block; width: auto; max-width: min(100%, 32rem); margin: 0 .12em; border-radius: 0; vertical-align: -.18em; }
 .article img.formula-display { display: block; max-width: 100%; margin: 1rem auto; border-radius: 0; }
 .article .image-row { display: flex; align-items: flex-start; justify-content: center; gap: 1rem; margin: 1.25rem 0; }

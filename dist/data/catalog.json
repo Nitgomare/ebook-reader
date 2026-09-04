@@ -755,7 +755,7 @@
       "sections": [
         "格式转换与术语"
       ],
-      "excerpt": "介绍使用 DeepSeek 和 Doc2X 将 PDF 文献整理为 Markdown 的操作流程，并说明图片文件的组织方式。",
+      "excerpt": "将需要的文献（风电）从官网下载为 PDF 格式。",
       "video": "https://www.bilibili.com/video/BV16stf6MESW/",
       "order": 5,
       "previousId": "06c96fded88bf5e0",

@@ -1,4 +1,4 @@
-# PDF 转 Markdown 操作教程
+# PDF 转 Markdown 格式
 
 > **配套资源**
 >
@@ -6,62 +6,68 @@
 >
 > **内容制作：刘航**
 
-介绍使用 DeepSeek 和 Doc2X 将 PDF 文献整理为 Markdown 的操作流程，并说明图片文件的组织方式。
-
-> 配图说明：原文配图未随文档提供，操作画面请参见教学视频。
-
-## 一、使用 DeepSeek 整理文献
+## 一、使用 DeepSeek
 
 ### 1. 下载 PDF 文献
 
-从文献官方网站下载需要处理的 PDF 文件。教学示例使用风电相关文献。
+将需要的文献（风电）从官网下载为 PDF 格式。
+
+![从官网下载 PDF 文献](images/Fig1.png)
 
 ### 2. 上传 PDF 文件
 
-将下载的 PDF 文件上传到 DeepSeek。
+将下载的 PDF 文件放入 DeepSeek 大模型中。
 
 ### 3. 提供 Markdown 模板
 
-将准备好的 Markdown 格式模板一并提供给 DeepSeek，作为输出格式参考。
+将标准的 Markdown 模板同步放入 DeepSeek 大模型中。
 
-### 4. 输入转换提示词
+![向 DeepSeek 提供 Markdown 模板](images/fig2.png)
 
-原教程中的提示词示例：
+### 4. 输入提示词
+
+将标准提示词同时放入 DeepSeek 大模型中。
 
 > 把这篇文章转为 md 格式，然后图片按照 1.jpeg、2.jpeg，以此类推，以右边为模板。
 
-### 5. 整理图片文件
+### 5. 整理复现图片
 
-将需要复现或保存的图片单独放入 `image` 文件夹。
+复现的图片需要单独放在一个文件夹中，并将文件夹命名为 `image`。
 
-### 6. 整理文档目录
+![整理复现图片](images/fig3.png)
 
-将 Markdown 文件与 `image` 文件夹放在同一个项目文件夹中。外层文件夹可自行命名，保持文档与图片的相对位置不变。
+### 6. 整理 Markdown 和图片目录
 
-### 7. 在 Markdown 中引用图片
+将 Markdown 文件和 `image` 文件夹放在同一个文件夹中，并将外层文件夹命名为 `images`。
 
-在正文对应位置插入图片，使用相对于 Markdown 文件的路径。例如，图片保存在 `image/fig2.png` 时：
+### 7. 引用图片
 
-```markdown
-![图片说明](image/fig2.png)
-```
+在 Markdown 中需要显示图片的位置插入对应的图片引用。
 
-不要使用作者电脑上的 `C:\Users\…` 等绝对路径，否则上传到网站或发送给他人后无法显示。
+![在 Markdown 中引用图片](images/fig4.png)
 
-## 二、使用 Doc2X 转换文献
+## 二、使用 Doc2X
 
 ### 1. 打开 Doc2X
 
-在浏览器中搜索并进入 Doc2X。
+在浏览器中搜索 Doc2X。
+
+![在浏览器中搜索 Doc2X](images/fig5.png)
 
 ### 2. 上传并解析文件
 
-上传需要转换的 PDF 文件，等待解析完成。
+上传文件，等待解析完成。
 
-### 3. 生成 Markdown
+![上传并解析 PDF 文件](images/fig6.png)
 
-查看生成的 Markdown 内容，核对正文、标题、表格和公式是否与原文一致。
+### 3. 生成 Markdown 文件
 
-### 4. 导出 Markdown
+生成 Markdown 文件。
 
-导出 Markdown 文件，并保留配套图片文件夹。移动或分享教程时，将文档与图片一起打包。
+![生成 Markdown 文件](images/fig7.png)
+
+### 4. 导出 Markdown 文件
+
+导出 Markdown 文件。
+
+![导出 Markdown 文件](images/fig8.png)

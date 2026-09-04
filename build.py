@@ -62,6 +62,15 @@ MARKDOWN_EXTENSION_CONFIGS = {
 }
 URL_ATTR_RE = re.compile(r"(?P<attr>href|src)=(?P<quote>['\"])(?P<url>.*?)(?P=quote)", re.I)
 TABLE_RE = re.compile(r"(<table\b[^>]*>.*?</table>)", re.I | re.S)
+IMAGE_FOLLOWED_BY_PARAGRAPH_RE = re.compile(
+    r"(?P<image><p(?P<image_attrs>[^>]*)>(?P<image_body>(?:(?!</p>).)*?<img\b(?:(?!</p>).)*)</p>)"
+    r"(?P<gap>\s*)"
+    r"<p(?P<caption_attrs>[^>]*)>(?P<caption_body>.*?)</p>",
+    re.I | re.S,
+)
+FIGURE_CAPTION_RE = re.compile(
+    r"^(?:图\s*[A-Za-z]?\d|(?:Figure|Fig\.?)[\s\u00a0]+\d)", re.I,
+)
 ESCAPED_HTML_TAG_RE = re.compile(r"\\<(?P<tag>[^>]+)\\>")
 FRONT_MATTER_RE = re.compile(r"\A---\s*\r?\n.*?\r?\n---\s*(?:\r?\n|\Z)", re.S)
 VIDEO_RE = re.compile(r"https?://(?:www\.)?bilibili\.com/video/[^\s)\"']+", re.I)
@@ -231,6 +240,28 @@ def clean_markdown_content(markdown_text: str) -> str:
     cleaned = CHAPTER_VIDEO_SECTION_RE.sub("", cleaned)
     cleaned = UNAVAILABLE_VIDEO_SECTION_RE.sub("", cleaned)
     return EMBEDDED_MEDIA_RE.sub("", cleaned)
+
+
+def mark_figure_captions(rendered_html: str) -> str:
+    """Mark conventional figure captions immediately following an image paragraph."""
+    def replace(match: re.Match[str]) -> str:
+        caption_text = html.unescape(HTML_TAG_RE.sub("", match.group("caption_body"))).strip()
+        if not FIGURE_CAPTION_RE.match(caption_text):
+            return match.group(0)
+        attrs = match.group("caption_attrs")
+        class_match = re.search(r'\bclass=(["\'])(?P<value>.*?)\1', attrs, re.I | re.S)
+        if class_match:
+            classes = class_match.group("value").split()
+            if "figure-caption" not in classes:
+                classes.append("figure-caption")
+            quote = class_match.group(1)
+            replacement = f'class={quote}{" ".join(classes)}{quote}'
+            attrs = attrs[:class_match.start()] + replacement + attrs[class_match.end():]
+        else:
+            attrs += ' class="figure-caption"'
+        return match.group("image") + match.group("gap") + f"<p{attrs}>{match.group('caption_body')}</p>"
+
+    return IMAGE_FOLLOWED_BY_PARAGRAPH_RE.sub(replace, rendered_html)
 
 
 def is_navigation_only_doc(book: dict[str, object], rel_path: str, title: str) -> bool:
@@ -665,6 +696,7 @@ def build_book(
             current_rel=str(doc["relPath"]),
             id_map=id_map,
         )
+        rendered = mark_figure_captions(rendered)
         collector = HeadingCollector()
         collector.feed(rendered)
         video_path = local_videos.get(str(doc["relPath"]))
