@@ -363,6 +363,11 @@ def main() -> None:
             and ".highlight .s" in styles_css
             and "font-size: .88rem" in styles_css
         ),
+        "home_category_scroll_offset": (
+            'categoryHeading.closest(".category-section")' in app_js
+            and ".shelf-section" in styles_css
+            and "scroll-margin-top: calc(var(--topbar-height) + 1rem)" in styles_css
+        ),
         "server_side_syntax_highlighting": (
             '"pymdownx.highlight"' in (ROOT / "build.py").read_text(encoding="utf-8")
             and bool(re.search(r'<span class="(?:k|kn|n|s1|s2)">', all_html))
@@ -497,6 +502,7 @@ def main() -> None:
     assert report["inline_code"]
     assert report["code_copy_controls"]
     assert report["home_card_layout"]
+    assert report["home_category_scroll_offset"]
     assert report["light_code_style"]
     assert report["server_side_syntax_highlighting"]
     assert report["scrollable_outline"]

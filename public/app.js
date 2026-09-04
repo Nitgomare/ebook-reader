@@ -702,7 +702,8 @@
       var categoryLink = event.target.closest && event.target.closest(".home-category-link");
       if (categoryLink) {
         event.preventDefault();
-        var category = document.getElementById("category-" + categoryLink.dataset.homeCategory);
+        var categoryHeading = document.getElementById("category-" + categoryLink.dataset.homeCategory);
+        var category = categoryHeading && categoryHeading.closest(".category-section");
         if (category) category.scrollIntoView({ behavior: "smooth", block: "start" });
         closeSidebar();
         return;
