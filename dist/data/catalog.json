@@ -48,8 +48,8 @@
     ]
   },
   "stats": {
-    "books": 18,
-    "docs": 246,
+    "books": 19,
+    "docs": 264,
     "code": 221
   },
   "books": [
@@ -602,6 +602,26 @@
       "docCount": 15,
       "firstDocId": "7d08118550e61fb8",
       "chapterCount": 13,
+      "codeCount": 0,
+      "resources": []
+    },
+    {
+      "slug": "ros-robotics-practice",
+      "title": "ROS 机器人编程与机器人学导论实战",
+      "author": "机器人学与 ROS 融合学习资料",
+      "description": "融合机器人学基础理论与 ROS 2 工程实践，覆盖运动学、动力学、控制、通信、传感器、仿真、SLAM、导航及自主巡逻机器人综合项目。",
+      "tags": [
+        "ROS 2",
+        "机器人学",
+        "项目实战"
+      ],
+      "category": "robotics",
+      "type": "reference",
+      "sourceSiteName": "ROS 机器人编程与机器人学导论实战",
+      "cover": "",
+      "docCount": 18,
+      "firstDocId": "839c87682d314fd9",
+      "chapterCount": 16,
       "codeCount": 0,
       "resources": []
     },
@@ -3365,6 +3385,274 @@
       "excerpt": "刚体绕 $X, Y, Z$ 轴旋转 $\\theta$ 角的公式:",
       "order": 15,
       "previousId": "17f913b4025ac384",
+      "nextId": "",
+      "codeFiles": []
+    },
+    {
+      "id": "3e454d5ef0981a3e",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "基于《ROS机器人编程》(ROBOTIS)与《机器人学导论》(John J. Craig 第3版)融合编写",
+      "order": 1,
+      "previousId": "",
+      "nextId": "839c87682d314fd9",
+      "codeFiles": []
+    },
+    {
+      "id": "839c87682d314fd9",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/01/index.md",
+      "title": "第1章 绪论",
+      "sections": [
+        "第一篇 机器人学基础理论"
+      ],
+      "excerpt": "bauaire Mehamot Seaignmidizing Romorgas Mondabelial Ramierus",
+      "chapterNumber": 1,
+      "order": 2,
+      "previousId": "3e454d5ef0981a3e",
+      "nextId": "96dbd02976b7a31a",
+      "codeFiles": []
+    },
+    {
+      "id": "96dbd02976b7a31a",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/02/index.md",
+      "title": "第2章 空间描述和变换",
+      "sections": [
+        "第一篇 机器人学基础理论"
+      ],
+      "excerpt": "图2-1 坐标系空间变换与齐次变换矩阵",
+      "chapterNumber": 2,
+      "order": 3,
+      "previousId": "839c87682d314fd9",
+      "nextId": "ec81da8af0dc45fb",
+      "codeFiles": []
+    },
+    {
+      "id": "ec81da8af0dc45fb",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/03/index.md",
+      "title": "第3章 操作臂运动学",
+      "sections": [
+        "第一篇 机器人学基础理论"
+      ],
+      "excerpt": "3-1 六自由度机械臂D-H参数坐标系",
+      "chapterNumber": 3,
+      "order": 4,
+      "previousId": "96dbd02976b7a31a",
+      "nextId": "8f712d86d4f2954d",
+      "codeFiles": []
+    },
+    {
+      "id": "8f712d86d4f2954d",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/04/index.md",
+      "title": "第4章 操作臂逆运动学",
+      "sections": [
+        "第一篇 机器人学基础理论"
+      ],
+      "excerpt": "图4-1 逆运动学多解示意图(肘上/肘下)",
+      "chapterNumber": 4,
+      "order": 5,
+      "previousId": "ec81da8af0dc45fb",
+      "nextId": "549a741df3ac1b27",
+      "codeFiles": []
+    },
+    {
+      "id": "549a741df3ac1b27",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/05/index.md",
+      "title": "第5章 雅可比：速度和静力",
+      "sections": [
+        "第一篇 机器人学基础理论"
+      ],
+      "excerpt": "第3章和第4章研究了操作臂的静态定位问题，即给定关节角如何确定末端位姿(正运动学)，以及给定期望位姿如何求解关节角(逆运动学)。本章将运动学的研究范围扩展到速度和静力方面。",
+      "chapterNumber": 5,
+      "order": 6,
+      "previousId": "8f712d86d4f2954d",
+      "nextId": "f09bc57de73c1ccd",
+      "codeFiles": []
+    },
+    {
+      "id": "f09bc57de73c1ccd",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/06/index.md",
+      "title": "第6章 操作臂动力学",
+      "sections": [
+        "第一篇 机器人学基础理论"
+      ],
+      "excerpt": "前几章讨论了运动学问题，即操作臂的位置和速度与关节变量之间的关系，不考虑引起运动的力和力矩。本章开始研究引起操作臂运动的力和力矩，这就是操作臂动力学(Dynamics)问题。",
+      "chapterNumber": 6,
+      "order": 7,
+      "previousId": "549a741df3ac1b27",
+      "nextId": "3fd62e79f4ca94a3",
+      "codeFiles": []
+    },
+    {
+      "id": "3fd62e79f4ca94a3",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/07/index.md",
+      "title": "第7章 轨迹生成",
+      "sections": [
+        "第一篇 机器人学基础理论"
+      ],
+      "excerpt": "图7-1 轨迹规划曲线对比(三次/五次多项式)",
+      "chapterNumber": 7,
+      "order": 8,
+      "previousId": "f09bc57de73c1ccd",
+      "nextId": "b92dfa2d34fb4e2d",
+      "codeFiles": []
+    },
+    {
+      "id": "b92dfa2d34fb4e2d",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/08/index.md",
+      "title": "第8章 操作臂的控制",
+      "sections": [
+        "第一篇 机器人学基础理论"
+      ],
+      "excerpt": "前面几章讨论了操作臂的运动学、动力学和轨迹生成，本章讨论如何控制操作臂使其沿期望轨迹运动。 控制是机器人学的核心问题之一，目标是设计控制算法，使操作臂在存在不确定性、扰动和建模误差的情况下，精确、稳定地跟踪期望轨迹。",
+      "chapterNumber": 8,
+      "order": 9,
+      "previousId": "3fd62e79f4ca94a3",
+      "nextId": "30c133ebc2142422",
+      "codeFiles": []
+    },
+    {
+      "id": "30c133ebc2142422",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/09/index.md",
+      "title": "第9章 ROS 概述与环境搭建",
+      "sections": [
+        "第二篇 ROS 机器人编程实战"
+      ],
+      "excerpt": "机器人是一个复杂的系统，包含机械、电子、嵌入式、感知、决策、控制等多个技术领域。为了降低开发难度、提高代码复用率，需要一个统一的软件平台来管理机器人的各个组件。",
+      "chapterNumber": 9,
+      "order": 10,
+      "previousId": "b92dfa2d34fb4e2d",
+      "nextId": "1ce374ce9727debc",
+      "codeFiles": []
+    },
+    {
+      "id": "1ce374ce9727debc",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/10/index.md",
+      "title": "第10章 ROS 核心概念与通信机制",
+      "sections": [
+        "第二篇 ROS 机器人编程实战"
+      ],
+      "excerpt": "图10-1 ROS节点与话题通信机制",
+      "chapterNumber": 10,
+      "order": 11,
+      "previousId": "30c133ebc2142422",
+      "nextId": "4057ae8912383880",
+      "codeFiles": []
+    },
+    {
+      "id": "4057ae8912383880",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/11/index.md",
+      "title": "第11章 ROS 命令与工具",
+      "sections": [
+        "第二篇 ROS 机器人编程实战"
+      ],
+      "excerpt": "图11-1 RViz三维可视化工具界面",
+      "chapterNumber": 11,
+      "order": 12,
+      "previousId": "1ce374ce9727debc",
+      "nextId": "e8f0293797b038a1",
+      "codeFiles": []
+    },
+    {
+      "id": "e8f0293797b038a1",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/12/index.md",
+      "title": "第12章 ROS 编程基础",
+      "sections": [
+        "第二篇 ROS 机器人编程实战"
+      ],
+      "excerpt": "ROS中使用标准国际单位制(SI):",
+      "chapterNumber": 12,
+      "order": 13,
+      "previousId": "4057ae8912383880",
+      "nextId": "506b318011cd2ff2",
+      "codeFiles": []
+    },
+    {
+      "id": "506b318011cd2ff2",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/13/index.md",
+      "title": "第13章 机器人传感器与执行器",
+      "sections": [
+        "第二篇 ROS 机器人编程实战"
+      ],
+      "excerpt": "根据《ROS机器人编程》第8章，机器人传感器可以分为以下几类:",
+      "chapterNumber": 13,
+      "order": 14,
+      "previousId": "e8f0293797b038a1",
+      "nextId": "eda1c601546ec5f4",
+      "codeFiles": []
+    },
+    {
+      "id": "eda1c601546ec5f4",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/14/index.md",
+      "title": "第14章 移动机器人与仿真",
+      "sections": [
+        "第二篇 ROS 机器人编程实战"
+      ],
+      "excerpt": "图14-1 TurtleBot3在Gazebo仿真环境中",
+      "chapterNumber": 14,
+      "order": 15,
+      "previousId": "506b318011cd2ff2",
+      "nextId": "3997211368b6b969",
+      "codeFiles": []
+    },
+    {
+      "id": "3997211368b6b969",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/15/index.md",
+      "title": "第15章 SLAM 与导航",
+      "sections": [
+        "第二篇 ROS 机器人编程实战"
+      ],
+      "excerpt": "根据《ROS机器人编程》第11章，移动机器人导航(Navigation)需要以下核心功能:",
+      "chapterNumber": 15,
+      "order": 16,
+      "previousId": "eda1c601546ec5f4",
+      "nextId": "756589c715cceb62",
+      "codeFiles": []
+    },
+    {
+      "id": "756589c715cceb62",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "chapters/16/index.md",
+      "title": "第16章 综合项目实战：自主巡逻机器人",
+      "sections": [
+        "第三篇 综合实战"
+      ],
+      "excerpt": "本项目综合运用前面章节所学的机器人学理论和ROS编程知识，构建一个能够在室内环境自主巡逻的移动机器人。项目目标:",
+      "chapterNumber": 16,
+      "order": 17,
+      "previousId": "3997211368b6b969",
+      "nextId": "1c5695e3ade06724",
+      "codeFiles": []
+    },
+    {
+      "id": "1c5695e3ade06724",
+      "bookSlug": "ros-robotics-practice",
+      "relPath": "appendices/index.md",
+      "title": "附录与资源索引",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "1. 《机器人学导论》(Introduction to Robotics: Mechanics and Control, 3rd Edition)— John J. Craig",
+      "order": 18,
+      "previousId": "756589c715cceb62",
       "nextId": "",
       "codeFiles": []
     },

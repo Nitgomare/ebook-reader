@@ -37,6 +37,7 @@ def main() -> None:
         "shangguigu-data-analysis", "python-data-analysis", "deep-learning",
         "zhou-machine-learning", "machine-vision", "robot-textbook", "wind-energy", "风能技术",
         "ros-robot-programming", "craig-introduction-to-robotics",
+        "ros-robotics-practice",
         "wind-turbine-theory-and-design", "Utilizing-large-scale-foundation-models-for",
         "wind-scada-data-analysis-modeling",
         "smart-analysis-system-user-manual", "smart-analysis-system-technical-docs",
@@ -159,7 +160,11 @@ def main() -> None:
     )
     machine_vision_html = "".join(doc["html"] for doc in machine_vision_docs)
     robotics_reference_metrics = {}
-    for slug in ("ros-robot-programming", "craig-introduction-to-robotics"):
+    for slug in (
+        "ros-robot-programming",
+        "craig-introduction-to-robotics",
+        "ros-robotics-practice",
+    ):
         book = next(book for book in catalog["books"] if book["slug"] == slug)
         docs = [doc for doc in catalog["docs"] if doc["bookSlug"] == slug]
         html_content = "".join(payloads[doc["id"]]["html"] for doc in docs)
@@ -179,6 +184,7 @@ def main() -> None:
             "math_fragments": html_content.count("arithmatex"),
             "raw_dollar_delimiters": html_content.count("$$"),
             "tables": html_content.count("<table>"),
+            "code_blocks": html_content.count("<pre"),
             "cover": book.get("cover", ""),
         }
     report = {
@@ -491,7 +497,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 18, "docs": 246, "code": 221}
+    assert report["stats"] == {"books": 19, "docs": 264, "code": 221}
     assert all(report["research_video_tutorial"].values())
     assert all(report["zotero_new_tutorial"].values())
     assert all(report["wind_scada_tutorial"].values())
@@ -534,6 +540,7 @@ def main() -> None:
             "math_fragments": 411,
             "raw_dollar_delimiters": 0,
             "tables": 54,
+            "code_blocks": 320,
             "cover": "files/ros-robot-programming/images/0_0_0_1829_1430_0.jpg",
         },
         "craig-introduction-to-robotics": {
@@ -545,6 +552,19 @@ def main() -> None:
             "math_fragments": 4574,
             "raw_dollar_delimiters": 0,
             "tables": 6,
+            "code_blocks": 11,
+            "cover": "",
+        },
+        "ros-robotics-practice": {
+            "documents": 18,
+            "chapters": 16,
+            "images": 56,
+            "external_images": 0,
+            "missing_images": 0,
+            "math_fragments": 223,
+            "raw_dollar_delimiters": 0,
+            "tables": 16,
+            "code_blocks": 297,
             "cover": "",
         },
     }
@@ -558,7 +578,7 @@ def main() -> None:
     assert report["embedded_media"] == 0
     assert not report["badly_numbered_chapters"]
     assert not report["badly_numbered_headings"]
-    assert report["books_with_resource_model"] == 18
+    assert report["books_with_resource_model"] == 19
     assert report["resource_downloads"] >= 13
     assert report["missing_resource_downloads"] == 0
     assert report["external_resource_links"] >= 6

@@ -251,6 +251,15 @@
       "type": "reference"
     },
     {
+      "slug": "ros-robotics-practice",
+      "title": "ROS 机器人编程与机器人学导论实战",
+      "author": "机器人学与 ROS 融合学习资料",
+      "description": "融合机器人学基础理论与 ROS 2 工程实践，覆盖运动学、动力学、控制、通信、传感器、仿真、SLAM、导航及自主巡逻机器人综合项目。",
+      "tags": ["ROS 2", "机器人学", "项目实战"],
+      "category": "robotics",
+      "type": "reference"
+    },
+    {
       "slug": "wind-energy",
       "title": "Wind Energy Handbook",
       "author": "Tony Burton 等",
