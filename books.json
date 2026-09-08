@@ -76,6 +76,21 @@
           "label": "PDF 转 Markdown 教学视频（刘航）",
           "url": "https://www.bilibili.com/video/BV16stf6MESW/",
           "kind": "视频"
+        },
+        {
+          "label": "科研教学视频制作教程（辛庆浩）",
+          "url": "https://www.bilibili.com/video/BV1G1bG6wEsm/",
+          "kind": "视频"
+        },
+        {
+          "label": "Zotero 使用教学视频（张衡）",
+          "url": "https://www.bilibili.com/video/BV1L6bG6vEA2/",
+          "kind": "视频"
+        },
+        {
+          "label": "风电 SCADA 数据分析教学视频（庄锦良）",
+          "url": "https://www.bilibili.com/video/BV1VCbG6YEp5/",
+          "kind": "视频"
         }
       ]
     },
