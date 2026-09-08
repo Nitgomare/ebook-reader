@@ -49,7 +49,7 @@
   },
   "stats": {
     "books": 16,
-    "docs": 215,
+    "docs": 217,
     "code": 221
   },
   "books": [
@@ -85,11 +85,26 @@
           "label": "PDF 转 Markdown 教学视频（刘航）",
           "url": "https://www.bilibili.com/video/BV16stf6MESW/",
           "kind": "视频"
+        },
+        {
+          "label": "科研教学视频制作教程（辛庆浩）",
+          "url": "https://www.bilibili.com/video/BV1G1bG6wEsm/",
+          "kind": "视频"
+        },
+        {
+          "label": "Zotero 使用教学视频（张衡）",
+          "url": "https://www.bilibili.com/video/BV1L6bG6vEA2/",
+          "kind": "视频"
+        },
+        {
+          "label": "风电 SCADA 数据分析教学视频（庄锦良）",
+          "url": "https://www.bilibili.com/video/BV1VCbG6YEp5/",
+          "kind": "视频"
         }
       ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 13,
+      "docCount": 15,
       "firstDocId": "5aae9dc4ade82146",
       "chapterCount": 0,
       "codeCount": 0,
@@ -730,6 +745,21 @@
       "excerpt": "Zotero 是一款文献收集、分类、阅读、引用和同步工具。合理配置后，可以完成网页文献一键导入、PDF 管理、标签分类、重复条目合并，以及在 Word 或 LaTeX 中自动插入引文和生成参考文献。",
       "order": 3,
       "previousId": "dc672cddb2d0de58",
+      "nextId": "75a2d21641c4856a",
+      "codeFiles": []
+    },
+    {
+      "id": "75a2d21641c4856a",
+      "bookSlug": "research-skills",
+      "relPath": "01-literature/04-zotero-new/index.md",
+      "title": "Zotero 使用讲义（新）",
+      "sections": [
+        "文献检索与管理"
+      ],
+      "excerpt": "从软件安装、文献抓取与 PDF 阅读到参考文献生成",
+      "video": "https://www.bilibili.com/video/BV1L6bG6vEA2/",
+      "order": 4,
+      "previousId": "7552c636e07dd122",
       "nextId": "06c96fded88bf5e0",
       "codeFiles": []
     },
@@ -742,8 +772,8 @@
         "格式转换与术语"
       ],
       "excerpt": "PDF 适合阅读和打印，但不适合直接编辑，也不方便大模型准确读取文章结构、公式、表格和图片。因此，在整理文献或制作教学网页时，通常需要先将 PDF 转换为 Markdown，再根据需要转换为 HTML。",
-      "order": 4,
-      "previousId": "7552c636e07dd122",
+      "order": 5,
+      "previousId": "75a2d21641c4856a",
       "nextId": "153190f72f2eaa1c",
       "codeFiles": []
     },
@@ -757,7 +787,7 @@
       ],
       "excerpt": "将需要的文献（风电）从官网下载为 PDF 格式。",
       "video": "https://www.bilibili.com/video/BV16stf6MESW/",
-      "order": 5,
+      "order": 6,
       "previousId": "06c96fded88bf5e0",
       "nextId": "a89ce42437fcafc9",
       "codeFiles": []
@@ -771,7 +801,7 @@
         "格式转换与术语"
       ],
       "excerpt": "论文翻译最容易出现的问题不是句子看不懂，而是专业术语前后不统一。同一个术语在不同章节被翻译成不同中文，会直接影响阅读和后续写作。",
-      "order": 6,
+      "order": 7,
       "previousId": "153190f72f2eaa1c",
       "nextId": "7445bfdfd579b5d0",
       "codeFiles": []
@@ -785,7 +815,7 @@
         "正文"
       ],
       "excerpt": "这套教程带你完整复刻一个与本站结构相同的科研知识库：用 Markdown 写内容，用 MkDocs Material 生成静态网页，把代码上传到 GitHub，最后交给 Cloudflare Pages 自动构建和发布。",
-      "order": 7,
+      "order": 8,
       "previousId": "a89ce42437fcafc9",
       "nextId": "b57cb861bf19c527",
       "codeFiles": []
@@ -800,8 +830,23 @@
       ],
       "excerpt": "本专题面向需要使用 Python 完成科研数据处理、可视化与建模的学习者。建议先结合课件和视频了解工具链，再按正文步骤完成环境配置与示例实践。",
       "video": "https://www.bilibili.com/video/BV1pVt363EZy/",
-      "order": 8,
+      "order": 9,
       "previousId": "7445bfdfd579b5d0",
+      "nextId": "49bdc37e9eb20bc3",
+      "codeFiles": []
+    },
+    {
+      "id": "49bdc37e9eb20bc3",
+      "bookSlug": "research-skills",
+      "relPath": "10-wind-scada-data-analysis/index.md",
+      "title": "风电 SCADA 数据分析（新）",
+      "sections": [
+        "Python 科研计算"
+      ],
+      "excerpt": "1. 掌握用 pandas 进行数据清洗（去重、按建模列去空值、物理边界过滤）",
+      "video": "https://www.bilibili.com/video/BV1VCbG6YEp5/",
+      "order": 10,
+      "previousId": "b57cb861bf19c527",
       "nextId": "1c6bd541db1e6a8a",
       "codeFiles": []
     },
@@ -815,8 +860,8 @@
       ],
       "excerpt": "利用 AI 工具，将论文翻译参考模板和论文原文提供给 AI，输入提示词。",
       "video": "https://www.bilibili.com/video/BV1JmtU6kE9T/",
-      "order": 9,
-      "previousId": "b57cb861bf19c527",
+      "order": 11,
+      "previousId": "49bdc37e9eb20bc3",
       "nextId": "7dba8d9e50dad83a",
       "codeFiles": []
     },
@@ -829,7 +874,7 @@
         "科研绘图"
       ],
       "excerpt": "论文中的流程图、框架图、机制图和系统结构图通常以位图形式存在，直接截图虽然能够保留视觉效果，但难以满足后续修改文字、调整排版、移动元素和重新配色等需求。本教程介绍一种结合多模态大模型与 Draw.io 的论文图片重构方法：先利用豆包、GPT 等模型理解原图的结构、布局和视觉元素，",
-      "order": 10,
+      "order": 12,
       "previousId": "1c6bd541db1e6a8a",
       "nextId": "e191a923adeef00f",
       "video": "files/research-skills/06-paper-figure-reproduction/paper-figure-reproduction.mp4",
@@ -844,7 +889,7 @@
         "科研汇报"
       ],
       "excerpt": "选择一个合适的PPT模板（初步可以先借鉴博士答辩等优质PPT进行模仿）",
-      "order": 11,
+      "order": 13,
       "previousId": "7dba8d9e50dad83a",
       "nextId": "79d93f7889060e95",
       "video": "files/research-skills/07-research-presentation/research-presentation.mp4",
@@ -859,7 +904,7 @@
         "科研汇报"
       ],
       "excerpt": "Djayr Alves Bispo Junior, Gustavo de Novaes Pires Leite, Alvaro Antonio Ochoa Villa, Alexandre Carlos Araújo da Costa, Olga de Castro Vilela",
-      "order": 12,
+      "order": 14,
       "previousId": "e191a923adeef00f",
       "nextId": "855f59fcfcf0d31b",
       "codeFiles": []
@@ -873,7 +918,8 @@
         "科研视频制作"
       ],
       "excerpt": "本套流程面向课题组内部科研技能教学，适合以下场景：",
-      "order": 13,
+      "video": "https://www.bilibili.com/video/BV1G1bG6wEsm/",
+      "order": 15,
       "previousId": "79d93f7889060e95",
       "nextId": "",
       "codeFiles": []

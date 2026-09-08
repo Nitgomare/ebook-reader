@@ -6,6 +6,7 @@ nav:
       - "文献检索工具": 01-literature/01-search-tools.md
       - "文献筛选方法": 01-literature/02-literature-screening.md
       - "Zotero 文献管理": 01-literature/03-zotero.md
+      - "Zotero 使用讲义（新）": 01-literature/04-zotero-new/index.md
   - "格式转换与术语":
       - "PDF 转 Markdown 和 HTML": 02-format-trans/01-pdf-to-markdown.md
       - "PDF 转 Markdown 操作教程": 08-pdf-to-markdown/index.md
@@ -13,6 +14,7 @@ nav:
   - "知识库搭建": 03-site-building/index.md
   - "Python 科研计算":
       - "科研计算基础与环境搭建": 04-python-research-computing/index.md
+      - "风电 SCADA 数据分析（新）": 10-wind-scada-data-analysis/index.md
   - "AI 论文翻译":
       - "Kimi 论文翻译操作指南": 05-ai-paper-translation/index.md
   - "科研绘图":

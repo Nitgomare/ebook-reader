@@ -102,6 +102,20 @@ def main() -> None:
         if doc["bookSlug"] == "research-skills"
         and doc["relPath"] == "09-research-video-production/index.md"
     )
+    zotero_new_doc = next(
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "research-skills"
+        and doc["relPath"] == "01-literature/04-zotero-new/index.md"
+    )
+    zotero_new_image_urls = re.findall(
+        r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
+        zotero_new_doc["html"], re.I,
+    )
+    wind_scada_doc = next(
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "research-skills"
+        and doc["relPath"] == "10-wind-scada-data-analysis/index.md"
+    )
     pdf_conversion_image_urls = re.findall(
         r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
         pdf_conversion_doc["html"], re.I,
@@ -148,12 +162,37 @@ def main() -> None:
         "research_video_tutorial": {
             "title": research_video_doc["title"] == "科研教学视频制作",
             "creator_credit": "内容制作：辛庆浩" in research_video_doc["html"],
-            "video_placeholder": "教学视频：待补充链接" in research_video_doc["html"],
+            "video_linked": research_video_doc.get("video") == "https://www.bilibili.com/video/BV1G1bG6wEsm/",
             "topic": next(
                 doc["sections"] for doc in catalog["docs"]
                 if doc["bookSlug"] == "research-skills"
                 and doc["relPath"] == "09-research-video-production/index.md"
             ) == ["科研视频制作"],
+        },
+        "zotero_new_tutorial": {
+            "title": zotero_new_doc["title"] == "Zotero 使用讲义（新）",
+            "creator_credit": "内容制作：张衡" in zotero_new_doc["html"],
+            "video_linked": zotero_new_doc.get("video") == "https://www.bilibili.com/video/BV1L6bG6vEA2/",
+            "images": len(zotero_new_image_urls) == 16,
+            "images_available": all(
+                (DIST / Path(unquote(url))).is_file()
+                for url in zotero_new_image_urls
+            ),
+            "topic": next(
+                doc["sections"] for doc in catalog["docs"]
+                if doc["bookSlug"] == "research-skills"
+                and doc["relPath"] == "01-literature/04-zotero-new/index.md"
+            ) == ["文献检索与管理"],
+        },
+        "wind_scada_tutorial": {
+            "title": wind_scada_doc["title"] == "风电 SCADA 数据分析（新）",
+            "creator_credit": "内容制作：庄锦良" in wind_scada_doc["html"],
+            "video_linked": wind_scada_doc.get("video") == "https://www.bilibili.com/video/BV1VCbG6YEp5/",
+            "topic": next(
+                doc["sections"] for doc in catalog["docs"]
+                if doc["bookSlug"] == "research-skills"
+                and doc["relPath"] == "10-wind-scada-data-analysis/index.md"
+            ) == ["Python 科研计算"],
         },
         "pdf_conversion_tutorial": {
             "creator_credit": "内容制作：刘航" in pdf_conversion_doc["html"],
@@ -427,8 +466,10 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 16, "docs": 215, "code": 221}
+    assert report["stats"] == {"books": 16, "docs": 217, "code": 221}
     assert all(report["research_video_tutorial"].values())
+    assert all(report["zotero_new_tutorial"].values())
+    assert all(report["wind_scada_tutorial"].values())
     assert all(report["pdf_conversion_tutorial"].values())
     assert report["paper_figure_reproduction"] == {
         "title": "论文图片复现",
