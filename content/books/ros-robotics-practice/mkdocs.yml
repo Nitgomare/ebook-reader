@@ -1,0 +1,24 @@
+site_name: "ROS 机器人编程与机器人学导论实战"
+docs_dir: docs
+nav:
+  - "前置内容": 00-front-matter/index.md
+  - "第一篇 机器人学基础理论":
+      - "第1章 绪论": chapters/01/index.md
+      - "第2章 空间描述和变换": chapters/02/index.md
+      - "第3章 操作臂运动学": chapters/03/index.md
+      - "第4章 操作臂逆运动学": chapters/04/index.md
+      - "第5章 雅可比：速度和静力": chapters/05/index.md
+      - "第6章 操作臂动力学": chapters/06/index.md
+      - "第7章 轨迹生成": chapters/07/index.md
+      - "第8章 操作臂的控制": chapters/08/index.md
+  - "第二篇 ROS 机器人编程实战":
+      - "第9章 ROS 概述与环境搭建": chapters/09/index.md
+      - "第10章 ROS 核心概念与通信机制": chapters/10/index.md
+      - "第11章 ROS 命令与工具": chapters/11/index.md
+      - "第12章 ROS 编程基础": chapters/12/index.md
+      - "第13章 机器人传感器与执行器": chapters/13/index.md
+      - "第14章 移动机器人与仿真": chapters/14/index.md
+      - "第15章 SLAM 与导航": chapters/15/index.md
+  - "第三篇 综合实战":
+      - "第16章 综合项目实战：自主巡逻机器人": chapters/16/index.md
+  - "附录与资源索引": appendices/index.md
