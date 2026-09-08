@@ -1,0 +1,18 @@
+site_name: "机器人学导论（第3版）"
+docs_dir: docs
+nav:
+  - "前置内容": 00-front-matter/index.md
+  - "第1章 绪论": chapters/01/index.md
+  - "第2章 空间描述和变换": chapters/02/index.md
+  - "第3章 操作臂运动学": chapters/03/index.md
+  - "第4章 操作臂逆运动学": chapters/04/index.md
+  - "第5章 速度和静力": chapters/05/index.md
+  - "第6章 操作臂动力学": chapters/06/index.md
+  - "第7章 轨迹的生成": chapters/07/index.md
+  - "第8章 操作臂的机械设计": chapters/08/index.md
+  - "第9章 操作臂的线性控制": chapters/09/index.md
+  - "第10章 操作臂的非线性控制": chapters/10/index.md
+  - "第11章 操作臂的力控制": chapters/11/index.md
+  - "第12章 机器人编程语言及编程系统": chapters/12/index.md
+  - "第13章 离线编程系统": chapters/13/index.md
+  - "附录、习题答案与索引": appendices/index.md

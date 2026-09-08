@@ -232,6 +232,25 @@
       "type": "course"
     },
     {
+      "slug": "ros-robot-programming",
+      "title": "ROS 机器人编程",
+      "author": "表允皙、赵汉哲、郑黎蝹、林泰勋",
+      "description": "从 ROS 平台、开发环境和通信机制出发，系统讲解 ROS 命令、工具、编程基础、移动机器人、SLAM、导航与机械臂应用。",
+      "coverSource": "images/0_0_0_1829_1430_0.jpg",
+      "tags": ["ROS", "机器人编程", "SLAM 与导航"],
+      "category": "robotics",
+      "type": "reference"
+    },
+    {
+      "slug": "craig-introduction-to-robotics",
+      "title": "机器人学导论（第3版）",
+      "author": "John J. Craig · 贠超等译",
+      "description": "经典机器人学教材，系统介绍空间描述、操作臂运动学与动力学、轨迹生成、机械设计、位置与力控制以及机器人编程。",
+      "tags": ["机器人学", "运动学与动力学", "控制"],
+      "category": "robotics",
+      "type": "reference"
+    },
+    {
       "slug": "wind-energy",
       "title": "Wind Energy Handbook",
       "author": "Tony Burton 等",

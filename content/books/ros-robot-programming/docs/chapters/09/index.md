@@ -1,0 +1,1512 @@
+# 第9章 嵌入式系统
+
+
+嵌入式系统的定义如下:嵌入在需要控制的系统中的专用计算机系统。
+
+嵌入式系统1
+
+嵌入式系统(英文:embedded system)是指，在机器或其他需要控制的系统中，执行控制功能的计算机系统。换句话说，一个嵌入式系统是整个系统中的一部分，是特定目的的计算机系统，是作为控制系统的大脑。
+
+如图9-1所示，为了实现机器人的功能，机器人使用了很多嵌入式设备。具体而言，为了使用机器人的舵机或传感器，采用了可以进行实时控制的微控制器，并且在利用相机的视频处理或导航过程中需要采用配备高性能处理器的计算机。
+
+![263_182_842_680_646_0.jpg](../../images/263_182_842_680_646_0.jpg)
+
+图 9-1 机器人的嵌入式系统配置
+
+图9-2中列举子了从8位微控制器到高性能的PC，在实际应用中要根据需要选择适当性能的嵌入式系统。以ROS为例，它需要在PC或ARM Cortex-A系列的高性能CPU中运行，并且需要类似Linux的操作系统。
+
+---
+
+1 https://en.wikipedia.org/wiki/Embedded_system
+
+2 https://roscon.ros.org/2015/presentations/ros2_on_small_embedded_systems.pdf
+
+---
+
+![264_284_185_1354_594_0.jpg](../../images/264_284_185_1354_594_0.jpg)
+
+图 9-2 各种嵌入式控制板
+
+由于Linux等操作系统不能保证实时性，所以为了控制舵机或传感器，使用适合实时控制的微控制器。
+
+TurtleBot3 Burger和TurtleBot3 Waffle中，Cortex-M7系列微控制器用于控制舵机和传感器，而使用Linux和ROS操作系统的Raspberry Pi 3控制板则通过USB连接，配置结构如图9-3。
+
+![264_283_1251_875_342_0.jpg](../../images/264_283_1251_875_342_0.jpg)
+
+图 9-3 TurtleBot3嵌入式系统配置
+
+## 9.1. OpenCR
+
+OpenCR (Open-source Control Module for ROS) ${}^{3}$ 是一个支持ROS的嵌入式控制板，被用作TurtleBot3的主控制器。诸如电路/固件/ Gerber数据等硬件信息 ${}^{4}$ 和用于 TurtleBot3的OpenCR源代码 ${}^{5}$ 均已公开，并且用户可以修改和重新分发。
+
+主控MCU使用STM32F746 ${}^{6}$ ，它内嵌ARM Cortex-M7内核，硬件支持浮点运算，适合实现需要高性能的场合。
+
+![265_196_664_1330_856_0.jpg](../../images/265_196_664_1330_856_0.jpg)
+
+图 9-4 OpenCR的接口
+
+![266_277_176_1059_774_0.jpg](../../images/266_277_176_1059_774_0.jpg)
+
+图 9-5 OpenCR框图
+
+### 9.1.1. 特点
+
+**高性能**
+
+OpenCR是一款高性能微控制器，采用了意法半导体的STM32F746，是ARM微控制器中最高端的Cortex-M7内核，工作频率高达216MHz。它也可以用来实现高速运算算法或利用多种外围设备来处理大量数据的任务。
+
+**支持Arduino**
+
+OpenCR的基本开发环境采用Arduino IDE ${}^{7}$ ，因此那些不熟悉嵌入式开发环境的人们也可以容易地使用。支持与Arduino UNO ${}^{8}$ 引脚头兼容的接口，因此可以直接使用那些在现有的Arduino开发环境中开发出来的很多库和源代码以及大部分Arduino扩展模块。由于OpenCR控制板是通过Arduino IDE控制板管理器添加和管理的，所以很容易处理固件的更新。
+
+---
+
+7 https://www.arduino.cc/en/Main/Software
+
+8 https://store.arduino.cc/usa/arduino-uno-rev3
+
+---
+
+**多种接口**
+
+OpenCR支持ROBOTIS公司的舵机接口TTL和RS485，因此，可以使用ROBOTIS公司的大部分型号的舵机。此外，它还支持UART/SPI/I2C/CAN等通信接口，并具有额外的GPIO。调试接口使用JTAG ${}^{9}$ ，因此可以使用STLink或JLink等专业JTAG设备来开发和调试固件。
+
+**IMU传感器**
+
+由于OpenCR控制板包含了具有集成陀螺仪/加速度计/地磁传感器的MPU9250 ${}^{10}$ ，因此无需额外的传感器, 也可以实现IMU传感器的各种应用。由于通过SPI通信接口处理传感器数据，因此可以进行高速读/写操作。
+
+**电压输出**
+
+输入电压为7V~24V时提供12V/5V/3.3V等电压输出。它可以用作树莓派等SBC的电源，因为OpenCR支持5V/4A的高电流输出。
+
+![267_195_1127_973_306_0.jpg](../../images/267_195_1127_973_306_0.jpg)
+
+图 9-6 电源输出示意图
+
+**电源热插拔**
+
+连接了电池的情况下连接SMPS(开关模式电源，通常称为将交流电转换为直流电的电源装置)，会自动将控制板电源从电池转换为开关电源。相反，如果您在使用SMPS作为电源时接上电池，之后拔出SMPS电源，则会使用电池作为供电源，而OpenCR控制板不会断电。这使得OpenCR在换电池时无需关闭电源。
+
+---
+
+9 https://en.wikipedia.org/wiki/JTAG
+
+10 https://www.invensense.com/products/motion-tracking/9-axis/mpu-9250/
+
+---
+
+![268_293_196_733_194_0.jpg](../../images/268_293_196_733_194_0.jpg)
+
+图 9-7 热插拔示意图
+
+**开源代码**
+
+OpenCR控制板生产所需的所有资料都已开放。提供了硬件生产所需的PCB Gerber和引导加载程序/固件也都已在github上公开。因此，用户可以根据需要改变它并重新制作。
+
+- https://github.com/ROBOTIS-GIT/OpenCR
+
+- https://github.com/ROBOTIS-GIT/OpenCR-Hardware
+
+### 9.1.2. 控制板规格
+
+**硬件规格**
+
+表9-1显示了OpenCR的硬件规格。
+
+<table id="cross-table-3"><tr><td>Items</td><td>Specifications</td></tr><tr><td>Microcontroller</td><td>STM32F746ZGT6 / 32-bit ARM Cortex®-M7 with FPU (216MHz, 462DMIPS)</td></tr><tr><td>Sensors</td><td>Gyroscope 3Axis, Accelerometer 3Axis, Magnetometer 3Axis (MPU9250)</td></tr><tr><td rowspan="3">Programmer</td><td>ARM Cortex 10pin JTAG/SWD connector</td></tr><tr><td>USB Device Firmware Upgrade (DFU)</td></tr><tr><td>USB (Virtual COM Port)</td></tr><tr><td rowspan="3">Extension pins</td><td>32 pins (L 14, R 18) *Arduino connectivity</td></tr><tr><td>Sensor module x 4 pins</td></tr><tr><td>Extension connector x 18 pins</td></tr><tr><td rowspan="6">Communication circuits</td><td>USB</td></tr><tr><td>TTL (JST 3pin / Dynamixel)</td></tr><tr><td>RS485 (JST 4pin / Dynamixel)</td></tr><tr><td>UART x 2</td></tr><tr><td>CAN</td></tr><tr><td>SPI</td></tr><tr></tr><tr><td rowspan="4">LED <br>  Button <br>  Switch</td><td>LD2 (red/green) : USB communication</td></tr><tr><td>User LED x 4 : LD3 (red), LD4 (green), LD5 (blue)</td></tr><tr><td>User Button x 2</td></tr><tr><td>User Switch x 2</td></tr><tr><td rowspan="10">Powers</td><td>External input source</td></tr><tr><td>– 5 V (USB VBUS), 7-24 V (Battery or SMPS)</td></tr><tr><td>${}^{L}$ Default battery: LI-PO 11.1V 1,800mAh 19.98Wh</td></tr><tr><td>└ Default SMPS: 12V 5A</td></tr><tr><td>External output source</td></tr><tr><td>└12V@1A, 5V@4A, 3.3V@800mA</td></tr><tr><td>External battery connect for RTC (Real Time Clock)</td></tr><tr><td>Power LED: LD1 (red, 3.3 V power on)</td></tr><tr><td>Reset button x 1 (for power reset of board)</td></tr><tr><td>Power on/off switch x 1</td></tr><tr><td>Dimensions</td><td>105(W) X 75(D) mm</td></tr><tr><td>Mass</td><td>60g</td></tr></table>
+
+表 9-1 OpenCR的硬件规格
+
+**闪存映射(闪存布局)**
+
+OpenCR的闪存总共为1MB, 由引导加载程序区域、Arduino中使用的模拟EEPROM的区域以及固件区域组成。为了用闪存来模拟Arduino中使用的EEPROM库，同时又为了增加闪存的写入寿命， 我们使用两个闪存扇区。
+
+![269_1019_1344_522_611_0.jpg](../../images/269_1019_1344_522_611_0.jpg)
+
+图 9-8 闪存映射 (闪存布局)
+
+**IMU传感器**
+
+OpenCR使用InvenSense公司的 MPU9250传感器, 为了精确的测量, 将它位于 OpenCR控制板的中心。MPU9250中内置陀螺仪/加速度/地磁传感器，传感器的方向和控制板的方向如下图9-9和9-10所示。
+
+![270_276_648_444_389_0.jpg](../../images/270_276_648_444_389_0.jpg)
+
+._ i ●
+
+BRAZIS
+
+The
+
+apuado
+
+20000000000000
+
+100000
+
+$+ \mathrm{Z}$
+
+图 9-9 陀螺仪/加速度传感器方向
+
+![270_277_1582_368_311_0.jpg](../../images/270_277_1582_368_311_0.jpg)
+
+图 9-10 地磁传感器的方向
+
+![270_788_1280_864_687_0.jpg](../../images/270_788_1280_864_687_0.jpg)
+
+### 9.1.3. 搭建开发环境
+
+OpenCR的基本开发环境是Arduino IDE。OpenCR是一个与Arduino兼容的控制板，附加的硬件通过提供附加的库函数来扩展功能。在Arduino IDE中安装OpenCR并完成设置。Arduino IDE利用Arduino.cc中发布的版本，并通过控制板管理器(Board Manager)添加和管理控制板。让我们用如下过程搭建一个开发环境。
+
+**设置USB端口权限**
+
+为了从Arduino IDE下载固件到OpenCR，可以通过以下命令更改对USB的管理员访问权限。下面的说明是在开发环境是Linux的前提下的说明。打开一个新的终端窗口 (Ctrl + Alt + t) ，并输入以下命令。
+
+---
+
+\$ wget https://raw.githubusercontent.com/ROBOTIS-GIT/OpenCR/master/99-opencr-cdc.rules
+
+\$ sudo cp ./99-opencr-cdc.rules /etc/udev/rules.d/
+
+\$ sudo udevadm control --reload-rules
+
+\$ sudo udevadm trigger
+
+---
+
+99-opencr-cdc.rules文件包含更改USB端口的访问权限的选项和不将OpenCR识别为调制解调器的选项。在Linux中，当连有串行通信设备时，Linux会向设备发送特定的命令，以判断设备是不是调制解调器。但这个命令可能会造成问题，因此通过上述选项防止发生这种情况。
+
+---
+
+ATTRS\{idVendor\}==" 0483" ATTRS\{idProduct\}==" 5740", ENV\{ID_MM_DEVICE_IGNORE\}=" 1", MODE:=" 0666"
+
+---
+
+**设置编译环境**
+
+OpenCR中使用的GCC使用32位可执行文件，所以如果您安装了64位操作系统，需要添加与32位库的兼容性。
+
+\$ sudo apt-get install libncurses5-dev:i386
+
+**安装Arduino IDE**
+
+从Arduino下载站下载最新版本的Arduino IDE。OpenCR已经在版本1.6.12及以上的版本上测试过, 并且已经确认它在最新版本1.8.2上运行。如果您的Arduino IDE的版本超过此版本，则仍然可以使用最新版本，因为它保持版本兼容性。
+
+---
+
+- https://www.arduino.cc/en/Main/Software
+
+---
+
+下载最新版本，将其解压到~/tools目录并继续安装。如果没有tools目录，请使用命令 “cd ~/ && mkdir tools” 创建一个新目录。
+
+---
+
+	\$ cd ~/tools/arduino-1.8.2
+
+\$./install.sh
+
+---
+
+将Arduino IDE路径添加到您的shell配置文件，以便您可以从任何位置运行它。 shell配置文件可以使用gedit或其他文本编辑程序加载。
+
+---
+
+\$ gedit ~/.bashrc
+
+---
+
+将解压的路径添加到PATH中，并添加以下命令以实际反映它。
+
+---
+
+export PATH=\$PATH:\$HOME/tools/arduino-1.8.2
+
+\$ source ~/.bashrc
+
+---
+
+**运行Ardunino IDE**
+
+现在安装完成，可以使用以下命令在终端窗口中运行Arduino。
+
+---
+
+\$ arduino
+
+---
+
+---
+
+![273_178_178_798_951_0.jpg](../../images/273_178_178_798_951_0.jpg)
+
+	图 9-11 Adunino IDE运行界面
+
+---
+
+**OpenCR设置**
+
+Arduino IDE安装完成后，需要添加控制板，以便可以使用OpenCR进行构建固件和下载固件。从Arduino IDE的菜单中选择File $\rightarrow$ Preferences,在图9-12的Additional Boards Manager URLs字段中输入下面的控制板配置文件链接，然后按 “OK”。
+
+- https://raw.githubusercontent.com/ROBOTIS-GIT/OpenCR/master/arduino/opencr_release/ package_opencr_index.json
+
+![274_286_183_958_718_0.jpg](../../images/274_286_183_958_718_0.jpg)
+
+图 9-12 输入控制板管理器配置文件
+
+输入控制板配置文件链接后，从Arduino IDE菜单中选择Tools $\rightarrow$ Board $\rightarrow$ Boards Manager, 如图9-13所示。
+
+![274_280_1163_944_607_0.jpg](../../images/274_280_1163_944_607_0.jpg)
+
+图 9-13 启动控制板管理器
+
+可以在控制板列表的末尾看到有OpenCR。如果选择 “ROBOTIS OpenCR” 并安装, 则控制板相关的文件将被自动安装。如果有已经安装的版本，则可以删除现有版本， 或者如果版本已升级，则可以更新它。
+
+![275_191_190_1207_685_0.jpg](../../images/275_191_190_1207_685_0.jpg)
+
+图 9-14 控制器列表
+
+到目前为止，我们通过控制板管理器安装了OpenCR。要使用已安装的OpenCR，请在Arduino IDE的菜单中选择Tools $\rightarrow$ Board $\rightarrow$ OpenCR Board，如图9-15所示。
+
+![275_182_1138_941_853_0.jpg](../../images/275_182_1138_941_853_0.jpg)
+
+图 9-15 选择控制器
+
+当OpenCR控制板连接到PC时，它会被识别为串行设备。 如果您从Tools→Port中选择串行端口名称，如图9-16所示，那么我们已经做好了使用OpenCR控制板的准备。
+
+![276_283_345_792_868_0.jpg](../../images/276_283_345_792_868_0.jpg)
+
+图 9-16 选择通讯端口
+
+**确认固件下载**
+
+如图9-17所示，选择File $\rightarrow$ New创建一个新文件。选择控制板和通讯端口，然后点击上方的向右箭头的图标来构建源代码并下载。
+
+---
+
+![277_182_181_731_870_0.jpg](../../images/277_182_181_731_870_0.jpg)
+
+	图 9-17 构建和下载固件
+
+---
+
+一旦源代码被构建完毕，Arduino IDE将调用OpenCR的下载程序并下载构建好的固件。在消息窗口的底部，将显示以下消息，并在下载完后执行下载的固件。
+
+---
+
+![277_194_1332_996_662_0.jpg](../../images/277_194_1332_996_662_0.jpg)
+
+---
+
+图 9-18 下载消息
+
+**固件修复模式**
+
+如果下载的固件不正常工作，则无法用上述方法下载别的固件，则需要在强制执行引导加载程序之后下载固件。要执行引导加载程序，如图9-19所示，请按住控制板上的 PUSH SW2按键, 并使用RESET按键重置控制板, 如此操作将运行引导加载程序。在这种状态下，您可以下载正常的固件。
+
+![278_283_542_867_457_0.jpg](../../images/278_283_542_867_457_0.jpg)
+
+图 9-19 运行固件修复模式
+
+**更新引导加载程序**
+
+如果需要更新OpenCR的引导加载程序，请使用STM32F746内置的引导加载程序的DFU功能。借助DFU功能，OpenCR的引导加载程序可以在没有任何附加设备(如 JTAG)的情况下进行更新。作为参考，在制作控制板时已经下载了引导加载程序，所以用户更新它的情况很少见。在用USB将OpenCR连接到PC的情况下，同时按下BOOT0键和RESET键, 则执行内置在STM32F746中的引导加载程序并使MCU进入DFU模式。
+
+![278_284_1559_871_486_0.jpg](../../images/278_284_1559_871_486_0.jpg)
+
+图 9-20 DFU模式按键
+
+您可以使用lsusb命令检查是否已正常进入DFU模式。如图9-21所示，在USB设备列表中要有 “STMicroelectronics STM Device in DFU Mode”。
+
+![279_185_330_1339_643_0.jpg](../../images/279_185_330_1339_643_0.jpg)
+
+图 9-21 确认DFU设备
+
+为了使用DFU模式,请从Arduino IDE菜单中选择Tools $\rightarrow$ Programmer $\rightarrow$ DFU_ UTIL，如图9-22所示。
+
+![279_184_1246_955_655_0.jpg](../../images/279_184_1246_955_655_0.jpg)
+
+图 9-22 选择Programmer(下载程序)
+
+选择下载程序后，通过选择Tools $\rightarrow$ Burn Bootloader来更新引导加载程序，如图 9-23所示。更新完成后，您必须重置控制板。
+
+![280_281_342_715_1019_0.jpg](../../images/280_281_342_715_1019_0.jpg)
+
+图 9-23 更新引导程序
+
+### 9.1.4. OpenCR例程
+
+通过控制板管理器将OpenCR添加到Arduino IDE后,可以使用File $\rightarrow$ Example菜单中的OpenCR例程。有很多例程可以帮助您控制和学习OpenCR的硬件。我们来看看 OpenCR提供的一些主要附加组件的例程。
+
+![281_190_185_699_375_0.jpg](../../images/281_190_185_699_375_0.jpg)
+
+图 9-24 OpenCR例程
+
+LED
+
+OpenCR有4个可供用户控制的LED，位置如下图9-25所示。让我们使用用户可控的 LED显示信息。
+
+![281_186_939_505_456_0.jpg](../../images/281_186_939_505_456_0.jpg)
+
+图 9-25 用户LED的位置
+
+四个LED被定义为BDPIN_LED_USER_1 ~ BDPIN_LED_USER_4，以下例程按顺序闪烁LED。
+
+---
+
+	blink_led
+
+int led_pin = 13;
+
+int led_pin_user[4] = \{ BDPIN_LED_USER_1, BDPIN_LED_USER_2, BDPIN_LED_USER_3, BDPIN_LED_USER_4 \};
+
+void setup() \{
+
+pinMode(led_pin, OUTPUT);
+
+pinMode(led_pin_user[0], OUTPUT);
+
+pinMode(led_pin_user[1], OUTPUT);
+
+			pinMode(led_pin_user[2], OUTPUT);
+
+		pinMode(led_pin_user[3], OUTPUT);
+
+\}
+
+void loop() \{
+
+			int i;
+
+					digitalWrite(led_pin, HIGH);
+
+					delay(100);
+
+					digitalWrite(led_pin, LOW);
+
+					delay(100);
+
+					for(i=0;i<4;i++)
+
+				\{
+
+																digitalWrite(led_pin_user[i], HIGH);
+
+																delay(100);
+
+\}
+
+					for(i=0;i<4;i++)
+
+			\{
+
+																digitalWrite(led_pin_user[i], LOW);
+
+																delay(100);
+
+\}
+
+\}
+
+---
+
+**Buzzer**
+
+OpenCR内置有蜂鸣器。可以使用Arduino的基本功能之一的tone()函数控制蜂鸣器。Buzzer连接的引脚定义为BDPIN_BUZZER。tone()函数的参数是引脚号、频率 (Hz) 和持续时间(ms)。
+
+buzzer
+
+---
+
+		void setup()
+
+\{
+
+\}
+
+			void loop() \{
+
+														tone(BDPIN_BUZZER, 1000, 100);
+
+														delay(200);
+
+\}
+
+---
+
+**电压测量**
+
+可以测量电池或SMPS等输入电源的电压。可以使用getPowerInVoltage()函数进行测量, 该函数返回输入电压, 单位为Voltage。
+
+read_voltage
+
+void setup() \{
+
+Serial.begin(115200);
+
+\}
+
+void loop() \{
+
+float voltage;
+
+voltage = getPowerInVoltage();
+
+Serial.print("Voltage: ");
+
+Serial.println(voltage);
+
+\}
+
+**IMU传感器**
+
+通过传感器融合将加速度/陀螺仪传感器的值转换为控制板的Roll/Pitch/Yaw值。当创建cIMU类作为对象并调用update()函数时，定期读取加速度/陀螺仪值来计算姿态值。 默认的计算周期是200赫兹，但可以更改。
+
+read_roll_pitch_yaw
+
+---
+
+#include <IMU.h>
+
+			CIMU IMU;
+
+			void setup()
+
+		\{
+
+													Serial.begin(115200);
+
+														IMU.begin();
+
+\}
+
+		void loop()
+
+	\{
+
+---
+
+---
+
+												static uint32_t pre_time;
+
+													IMU.update();
+
+												if( (millis()-pre_time) >= 50 )
+
+										\{
+
+																						pre_time = millis();
+
+																							Serial.print(IMU.rpy[0]);
+
+																								Serial.print("");
+
+																								Serial.print(IMU.rpy[1]);
+
+																								Serial.print(" ");
+
+																								Serial.println(IMU.rpy[2]);
+
+			\}
+
+\}
+
+---
+
+**Dynamixel SDK**
+
+为了控制ROBOTIS公司的Dynamixel舵机，OpenCR使用C++版DynamixelSDK 的Arduino定制版。Arduino定制版支持原版DynamixelSDK的用法, 且利用原版 DynamixelSDK编写的源代码也只需修改一部分就可以在Arduino中使用。
+
+DynamixelSDK可以在以下地址获取，出厂时OpenCR中内置修改后的版本。
+
+https://github.com/ROBOTIS-GIT/DynamixelSDK
+
+DynamixelSDK例程中的一部分包含在OpenCR库中，并支持协议1.0和2.0。
+
+<table><tr><td>Firmata <br> LiquidCrystal</td><td>01. Basics > <br> 02. Digital ></td><td></td><td></td></tr><tr><td>SD</td><td>03. Communication</td><td></td><td></td></tr><tr><td>Stepper</td><td>04. Interrupt ></td><td></td><td></td></tr><tr><td>Temboo</td><td>05. Sensors ></td><td></td><td></td></tr><tr><td>TFT</td><td>06. Dynamixel ></td><td></td><td></td></tr><tr><td>WiFi</td><td>07. DynamixelSDK</td><td>dxl_monitor</td><td></td></tr><tr><td>Examples for OpenCR Board</td><td>08. IMU</td><td>protocol1.0</td><td>bulk_read</td></tr><tr><td>OP3</td><td>09. RC100</td><td>protocol2.0</td><td>ping</td></tr><tr><td>OpenCR</td><td>10. Etc</td><td>protocol_combined</td><td>read_write</td></tr><tr><td>ROS ></td><td></td><td></td><td>reset</td></tr><tr><td>turtlebot3 ></td><td></td><td></td><td>sync_write</td></tr></table>
+
+图 9-26 DynamixelSDK 的协议1.0的例程
+
+![285_184_187_1107_612_0.jpg](../../images/285_184_187_1107_612_0.jpg)
+
+图 9-27 DynamixelSDK协议2.0的例程
+
+## 9.2. rosserial
+
+rosserial ${}^{11}$ 是一个可以将ROS的消息、话题和服务转换为串行通信方式的功能包。通常，微控制器使用串行通信，如UART，而不是ROS中的基本通信方式TCP / IP。因此， 对于使用ROS的微控制器和计算机之间的消息通信，需要诸如rosserial的中介作用。
+
+![285_187_1296_871_274_0.jpg](../../images/285_187_1296_871_274_0.jpg)
+
+图 9-28 rosserial server和client
+
+运行ROS的PC是一个rosserial server ${}^{12}$ ,连接到PC的微控制器作为rosserial client ${}^{13}$ 。由于server和client使用rosserial协议发送和接收数据，因此所有能够发送和接收数据的硬件都可以使用。因此微控制器中常用的UART也可以用于ROS消息或话题。
+
+---
+
+11 http://wiki.ros.org/rosserial
+
+12 http://wiki.ros.org/rosserial_server
+
+13 http://wiki.ros.org/rosserial_client
+
+---
+
+例如, 如果将连接到微控制器的传感器的值先进行ADC数字化, 然后通过URAT传输, 那么计算机的rosserial_server节点将接收串行值并将其转换为ROS中使用的话题 (Topic)。相反，如果ROS的另一个节点将电机速度控制值发送给话题，则rosserial_ server节点会将其发送到单片机，并直接控制连接的电机。
+
+包括SBC在内的通用计算机不能保证实时控制，但如果将微控制器作为辅助硬件控制器来使用，就可以保证实时性。
+
+### 9.2.1. rosserial server
+
+rosserial server是运行ROS的PC机上的一个节点，它通过rosserial protocol ${}^{14}$ 做为 PC与嵌入式设备之间的中介。根据所使用的编程语言，目前为止可以使用三种节点。
+
+**rosserial_python**
+
+它是用Python语言实现的，使用rosserial时经常用到。
+
+**rosserial_server**
+
+因为使用了C++语言, 性能相对有所提升, 但相比于rosserial_python, 功能上还是有一些限制。
+
+**rosserial_java**
+
+当需要基于Java语言的模块时，或者在与Android SDK一起使用时用到。
+
+### 9.2.2. rosserial client
+
+这是作为rosserial的client功能的库，是将rosserial_client库移植到微控制器所使用的平台上。由于它支持Arduino平台, 因此用户可以使用任何支持Arduino的开发板, 并且源代码已公开，所以可以轻松移植到其他平台。
+
+---
+
+14 http://wiki.ros.org/rosserial/Overview/Protocol
+
+---
+
+**rosserial_arduino**
+
+它用于Arduino板, 支持Arduino UNO和Leonardo开发板, 但可以通过修改源码在其他开发板上使用。TurtleBot3中使用的OpenCR控制板使用经过部分修改的 rosserial_arduino。
+
+**rosserial_embeddedlinux**
+
+这是一个可以在嵌入式Linux上使用的库。
+
+**rosserial_windows**
+
+它支持Windows操作系统并支持与Windows应用程序的通信。
+
+rosserial_mbed
+
+支持嵌入式开发环境mbed平台，因此可以使用mbed开发板。
+
+rosserial_tivac
+
+这是用于TI生产的Launchpad板的库。
+
+### 9.2.3. rosserial协议
+
+rosserial server和client通过基于串行通信的数据包的形式发送和接收数据。 rosserial协议是以字节为单位定义的，包含了数据包同步和数据验证所需的信息。
+
+**数据包结构**
+
+rosserial数据包通过数据包的头部分(为了进行ROS标准消息数据发送/接收而附加)来验证有效性，而各个数据则通过“校验和”来验证数据的有效性。
+
+![287_183_1683_1365_258_0.jpg](../../images/287_183_1683_1365_258_0.jpg)
+
+图 9-29 rosserial数据包的结构
+
+**Sync Flag**
+
+用于标志数据包的起始位置，始终是0xFF。
+
+**Sync Flag / Protocol version**
+
+协议版本，ROS Groovy是0xFF，ROS Hydro、Indigo、Jade和Kineic是0xFE。
+
+**Message Length**
+
+通过数据包传输的消息的数据长度，由2个字节组成。低字节先传输，后接高字节。
+
+**Checksum over message length**
+
+用于验证消息长度的校验和，计算如下。
+
+---
+
+255 - (Message Length Low Byte + Message Length High Byte)%256
+
+---
+
+**Topic ID**
+
+识别消息类型的ID，由2个字节组成。话题ID 0到100为用于系统功能而保留。系统使用的主要的话题ID如下。这可以在rosserial_msgs/TopicInfo ${}^{15}$ 查看。
+
+uint16 ID_PUBLISHER=0
+
+uint16 ID_SUBSCRIBER=1
+
+uint16 ID_SERVICE_SERVER=2
+
+uint16 ID_SERVICE_CLIENT=4
+
+uint16 ID_PARAMETER_REQUEST=6
+
+uint16 ID_LOG=7
+
+uint16 ID_TIME=10
+
+uint16 ID_TX_STOP=11
+
+**Serialized Message Data**
+
+它是以串行形式传输发送/接收消息的数据。
+
+**Checksum over topic ID and Message Data**
+
+话题ID和消息数据的校验和，计算如下。
+
+---
+
+15 https://github.com/ros-drivers/rosserial/blob/jade-devel/rosserial_msgs/msg/TopicInfo.msg
+
+---
+
+---
+
+255 - ((Topic ID Low Byte + Topic ID High Byte + data byte values) % 256)
+
+---
+
+**查询包**
+
+当rosserial server启动后，向client请求话题名称和话题类型等信息。此时发送的就是查询包。查询包的话题ID为0，数据长度为0。查询包的内容如下。
+
+---
+
+0xff0xfe0x000x000xff0x000x000xff
+
+---
+
+收到查询包的client向server发送具有以下内容的消息, 之后server会基于该信息发送和接收消息。
+
+---
+
+uint16 topic_id
+
+string topic_name
+
+string message_type
+
+	string md5sum
+
+	int32 buffer_size
+
+---
+
+### 9.2.4. rosserial的约束条件
+
+使用rosserial可以发送和接收ROS标准消息, 但由于嵌入式系统的硬件限制, 在使用rosserial时存在一些差异。因此，创建使用rosserial的节点时，必须考虑这些约束条件。
+
+**内存约束**
+
+嵌入式系统中使用的微控制器具有有限的内存空间，并且比常规PC容量小得多。因此, 考虑到内存容量, 必须预先定义要使用的发布者、订阅者的数量和发送/接收缓冲区的大小。应该注意的是, 超过发送/接收缓冲区大小的消息数据是不能被传送的。
+
+**Float64**
+
+将rosserial_arduino用作rosserial client时, Arduino开发板的微控制器不支持64 位实数运算，因此在创建库时会自动更改为32位类型。如果微控制器支持64位实数，则需要修改make_libraries.py中的数据类型转换部分。
+
+**Strings**
+
+由于微控制器的存储空间的限制，字符串数据不存储在String消息中，而是只将外部定义的字符串数据的指针值存储在消息中。要使用String消息，需要如下操作。
+
+---
+
+	std_msgs::String str_msg;
+
+	unsigned char hello[13] = "hello world!";
+
+str_msg.data = hello;
+
+---
+
+**Arrays**
+
+像字符串一样，由于内存的限制，仅用指向数组数据的指针是无法知道数组的尾端的。因此，添加了有关数组大小的信息，并用于发送和接收消息。
+
+**通讯速度**
+
+在UART通讯的情况下，如果使用115200bps的速率，当消息的数量增多时，会拖慢响应和处理速度。但是在OpenCR中，通过使用USB进行虚拟串行通信，可以实现高速通信。
+
+### 9.2.5. 安装rosserial
+
+为了使用rosserial，需要安装ROS所需的功能包，并使用您要使用的设备的平台 client库。请按照以下步骤安装功能包。我们下面将了解如何在Arduino平台上使用它。
+
+**安装功能包**
+
+使用以下命令安装支持rosserial和arunino系列的功能包。此外, 还有ros-kinetic-rosserial-windows、ros-kinetic-rosserial-xbee和ros-kinetic-rosserial-embeddedlinux, 根据需要安装即可。
+
+---
+
+\$ sudo apt-get install ros-kinetic-rosserial ros-kinetic-rosserial-server ros-kinetic-rosserial-
+
+arduino
+
+---
+
+**创建库**
+
+为了在Arduino中使用它, 需要创建一个用于Arduino的rosserial库。移动到 Arduino IDE个人目录中的库目录，如果存在之前生成的库，则删除现有的库。运行 rosserial_arduino功能包中的make_libraries.py文件来创建ros_lib。由于OpenCR基本上已经添加了用于TurtleBot3的ros_lib库，所以在使用TurtleBot3时不需要执行以下步骤。
+
+\$cd ~/Arduino/libraries/
+
+\$rm-rfros_lib
+
+\$ rosrun rosserial_arduino make_libraries.py .
+
+**更改通讯端口**
+
+创建Arduino ROS库时，使用默认通信端口。对于一般的Arduino开发板，会使用 HardwareSerial类的Serial对象, 因此为了改变通信端口, 必须修改生成的库的源代码。如果查看库目录中的ros.h文件的内容，可以看到是用ArduinoHardware类来定义 NodeHandle。因此，用户可以在ArduinoHardware类中更改要使用的端口的硬件功能。
+
+#include "ros/node_handle.h"
+
+#include "ArduinoHardware.h"
+
+namespace ros
+
+\{
+
+/* Publishers, Subscribers, Buffer Sizes */
+
+typedef NodeHandle_<ArduinoHardware, 25, 25, 1024, 1024> NodeHandle;
+
+\}
+
+在使用OpenCR的情况下，ArduinoHardware.h文件中的SERIAL_CLASS被更改为 USBSerial，以便它可以通过USB进行通信。如果要改为别的端口，则可以更改串口类和对象。
+
+#define SERIAL_CLASS USBSerial
+
+___省略___
+
+class ArduinoHardware
+
+\{
+
+iostream = &Serial;
+
+___省略___
+
+\}
+
+### 9.2.6. rosserial例程
+
+OpenCR提供rosserial库以及利用OpenCR的基本的rosserial例程。如图9-30所示, 有一些像LED和Button等输入/输出例程, 也有IMU传感器的例程。例程会在后续版本中继续添加。
+
+![292_285_972_671_266_0.jpg](../../images/292_285_972_671_266_0.jpg)
+
+图 9-30 OpenCR的rosserial例程
+
+在继续下面的例程之前, 必须先运行roscore。
+
+LED
+
+通过使用ROS标准数据类型std_msg/Byte将四个LED定义为led_out订阅者。当订阅者的后台函数被调用时，如果传递的消息值的0~3位bit值为1，则打开相应的LED，反之关闭相应的LED。
+
+#include <ros.h>
+
+#include <std_msgs/String.h>
+
+#include <std_msgs/Byte.h>
+
+int led_pin_user[4] = \{ BDPIN_LED_USER_1, BDPIN_LED_USER_2, BDPIN_LED_USER_3, BDPIN_LED_USER_4 \};
+
+---
+
+ros::NodeHandle nh;
+
+void messageCb( const std_msgs::Byte& led_msg) \{
+
+int i;
+
+for (i=0; i<4; i++)
+
+\{
+
+	if (led_msg.data & (1<<i))
+
+	\{
+
+	digitalWrite(led_pin_user[i], LOW);
+
+\}
+
+	else
+
+	\{
+
+	digitalWrite(led_pin_user[i], HIGH);
+
+\}
+
+\}
+
+\}
+
+ros::Subscriber<std_msgs::Byte> sub("led_out", messageCb );
+
+void setup() \{
+
+pinMode(led_pin_user[0], OUTPUT);
+
+pinMode(led_pin_user[1], 0UTPUT);
+
+pinMode(led_pin_user[2], 0UTPUT);
+
+pinMode(led_pin_user[3], 0UTPUT);
+
+nh.initNode();
+
+nh.subscribe(sub);
+
+\}
+
+void loop() \{
+
+nh.spinOnce();
+
+\}
+
+---
+
+通过Arduino IDE下载创建的固件, 然后使用rosserial_python运行rosserial server，如下所示。如果OpenCR被识别为不同的USB设备，请修改并执行_port:=/dev/ ttyACM0部分。从此刻起，rosserial server和OpenCR client通过USB发送和接收数据包并传递消息。
+
+\$ rosrun rosserial_python serial_node.py ___name:=opencr_port:=/dev/ttyACM0_baud:=115200
+
+[INFO] [1495609829.326019]: ROS Serial Python Node
+
+[INFO] [1495609829.336151]: Connecting to /dev/ttyACM0 at 115200 baud
+
+[INFO] [1495609831.454144]: Note: subscribe buffer size is 1024 bytes
+
+[INFO] [1495609831.454994]: Setup subscriber on led_out [std_msgs/Byte]
+
+打开一个新终端并使用rostopic列表来验证是否有led_out话题。
+
+---
+
+	\$rostopic list
+
+	/diagnostics
+
+	/led_out
+
+	/rosout
+
+/rosout_agg
+
+---
+
+如果使用rostopic pub将LED控制值输入到led_out，则LED会根据该值亮起或灭掉。
+
+---
+
+\$ rostopic pub -1 led_out std_msgs/Byte 1 → USER1 LED On
+
+	\$ rostopic pub -1 led_out std_msgs/Byte 2 → USER2 LED On
+
+	\$ rostopic pub -1 led_out std_msgs/Byte 4 → USER3 LED On
+
+	\$ rostopic pub -1 led_out std_msgs/Byte 8 → USER4 LED 0n
+
+	\$ rostopic pub -1 led_out std_msgs/Byte 0 → LED all 0ff
+
+---
+
+**Button**
+
+与LED例程一样, Button例程也使用std_msgs/Byte 数据类型, 但为了向server发送按键的输入，将Button声明为发布者。它发布OpenCR控制板的SW1/SW2按键被按下的状态值。按键值会周期性地发布，在下面的例程中，每50ms发送一次。
+
+b_Button.ino
+
+#include <ros.h>
+
+#include <std_msgs/Byte.h>
+
+ros::NodeHandle nh;
+
+std_msgs::Byte button_msg;
+
+ros::Publisher pub_button("button", &button_msg);
+
+void setup()
+
+\{
+
+---
+
+														nh.initNode();
+
+													nh.advertise(pub_button);
+
+														pinMode(BDPIN_PUSH_SW_1, INPUT);
+
+													pinMode(BDPIN_PUSH_SW_2, INPUT);
+
+\}
+
+		void loop()
+
+		\{
+
+													uint8_t reading = 0;
+
+														static uint32_tpre_time;
+
+														if (digitalRead(BDPIN_PUSH_SW_1) == HIGH)
+
+													\{
+
+																								reading $\mid   = 0 \times  {01}$ ;
+
+											\}
+
+															if (digitalRead(BDPIN_PUSH_SW_2) == HIGH)
+
+													\{
+
+																								reading $\mid   = 0 \times  {02}$ ;
+
+									\}
+
+														if (millis()-pre_time >= 50)
+
+													\{
+
+																								button_msg.data = reading;
+
+																									pub_button.publish(&button_msg);
+
+																										pre_time = millis();
+
+									\}
+
+													nh.spinOnce();
+
+\}
+
+---
+
+下载Button例程并如下运行rosserial_python，可以从输出的信息中看到button发布者已完成设置。
+
+---
+
+	\$ rosrun rosserial_python serial_node.py ___name:=Opencr_port:=/dev/ttyACMO_baud:=115200
+
+[INFO] [1495609931.875745]: ROS Serial Python Node
+
+	[INFO] [1495609931.885488]: Connecting to /dev/ttyACM0 at 115200 baud
+
+	[INFO] [1495609934.000344]: Note: publish buffer size is 1024 bytes
+
+[INFO] [1495609934.001180]: Setup publisher on button [std_msgs/Byte]
+
+---
+
+用rostopic list命令确认是否有button话题。
+
+---
+
+	\$rostopic list
+
+	/button
+
+	/diagnostics
+
+	/rosout
+
+/rosout_agg
+
+---
+
+打开一个新的终端窗口并输入以下命令，以实时显示发布的按键值。
+
+---
+
+\$ rostopic echo button
+
+	data: 1
+
+---
+
+data: 1
+
+---
+
+	data: 1
+
+---
+
+data: 1
+
+---
+
+data: 1
+
+---
+
+测量输入电压
+
+如图9-31所示，通过分压电阻将输入电压以特定比例缩小，然后可以通过ADC进行测量。根据分压公式，输入到ADC的电压是Vout =输入电压 x(10 / 57)。因此，可以测量 Vout电压并将其换算为输入电压。在OpenCR中，由getPowerInVoltage()函数执行换算操作, 因此用户可以使用此函数来测量输入电压。
+
+![296_305_1570_1305_259_0.jpg](../../images/296_305_1570_1305_259_0.jpg)
+
+图 9-31 电压测量电路
+
+为了表达准确的电压值，测量输入电压的例程使用std_msgs/Float32数据类型。声明一个叫做voltage的发布者，每50ms测量一次输入电压并发布。
+
+---
+
+	#include <ros.h>
+
+	#include <std_msgs/Float32.h>
+
+		ros::NodeHandle nh;
+
+		std_msgs::Float32 voltage_msg;
+
+	ros::Publisher pub_voltage("voltage", &voltage_msg);
+
+		void setup()
+
+		\{
+
+													nh.initNode();
+
+													nh.advertise(pub_voltage);
+
+\}
+
+		void loop()
+
+	\{
+
+													static uint32_t pre_time;
+
+														if (millis()-pre_time >= 50)
+
+													\{
+
+																								voltage_msg, data = getPowerInVoltage();
+
+																								pub_voltage.publish(&voltage_msg);
+
+																									pre_time = millis();
+
+									\}
+
+													nh.spinOnce();
+
+\}
+
+---
+
+使用以下命令运行rosserial server。
+
+\$ rosrun rosserial_python serial_node.py ___name:=opencr_port:=/dev/ttyACM0_baud:=115200
+
+[INFO] [1495609160.098041]: ROS Serial Python Node
+
+[INFO] [1495609160.108219]: Connecting to /dev/ttyACM0 at 115200 baud
+
+[INFO] [1495609162,224307]: Note: publish buffer size is 1024 bytes
+
+[INFO] [1495609162,225184]: Setup publisher on voltage [std_msgs/Float32]
+
+打开一个新的终端窗口, 用rostopic命令输出voltage话题值, 则可以看到OpenCR的输入电压值。
+
+\$ rostopic echo voltage
+
+data: 12.1300001144
+
+---
+
+data: 12.1099996567
+
+---
+
+data: 12.1300001144
+
+---
+
+data: 12.1099996567
+
+IMU
+
+为了用ROS的标准消息类型支持IMU传感器，这里使用sensor_msgs/Imu。以下例程将由IMU传感器库计算出的姿态值转换为sensor_msgs/Imu消息类型并发布。作为 IMU传感器的参考的tf由base_link生成，并将base_link与IMU传感器连接，从base_ link检查姿态值的变化。
+
+d_IMU.ino
+
+#include <ros.h>
+
+#include <sensor_msgs/Imu.h>
+
+#include <tf/tf.h>
+
+#include <tf/transform_broadcaster.h>
+
+#include <IMU.h>
+
+ros::NodeHandle nh;
+
+sensor_msgs::Imu imu_msg;
+
+ros::Publisher imu_pub("imu", &imu_msg);
+
+geometry_msgs::TransformStamped tfs_msg;
+
+tf::TransformBroadcaster tfbroadcaster;
+
+---
+
+		cIMU imu;
+
+		void setup()
+
+		\{
+
+												nh.initNode();
+
+													nh.advertise(imu_pub);
+
+													tfbroadcaster.init(nh);
+
+														imu.begin();
+
+\}
+
+		void loop()
+
+	\{
+
+													static uint32_t pre_time;
+
+														imu.update();
+
+														if (millis()-pre_time >= 50)
+
+												\{
+
+																								pre_time = millis();
+
+																										imu_msg.header.stamp = nh.now();
+
+																										imu_msg.header.frame_id = "imu_link";
+
+																										imu_msg.angular_velocity.x = imu.gyroData[0];
+
+																										imu_msg.angular_velocity.y = imu.gyroData[1];
+
+																										imu_msg.angular_velocity.z = imu.gyroData[2];
+
+																									imu_msg.angular_velocity_covariance[0] = 0.02;
+
+																									imu_msg.angular_velocity_covariance[1] = 0;
+
+																									imu_msg.angular_velocity_covariance[2] = 0;
+
+																										imu_msg.angular_velocity_covariance[3] = 0;
+
+																										imu_msg.angular_velocity_covariance[4] = 0.02;
+
+																										imu_msg.angular_velocity_covariance[5] = 0;
+
+																										imu_msg.angular_velocity_covariance[6] = 0;
+
+																										imu_msg.angular_velocity_covariance[7] = 0;
+
+																										imu_msg.angular_velocity_covariance[8] = 0.02;
+
+																									imu_msg.linear_acceleration.x = imu.accData[0];
+
+imu_msg.linear_acceleration.y = imu.accData[1];
+
+imu_msg.linear_acceleration.z = imu.accData[2];
+
+imu_msg.linear_acceleration_covariance[0] = 0.04;
+
+imu_msg.linear_acceleration_covariance[1] = 0;
+
+imu_msg.linear_acceleration_covariance[2] = 0;
+
+imu_msg.linear_acceleration_covariance[3] = 0;
+
+imu_msg.linear_acceleration_covariance[4] = 0.04;
+
+imu_msg.linear_acceleration_covariance[5] = 0;
+
+imu_msg.linear_acceleration_covariance[6] = 0;
+
+imu_msg.linear_acceleration_covariance[7] = 0;
+
+imu_msg.linear_acceleration_covariance[8] = 0.04;
+
+imu_msg.orientation.w = imu.quat[0];
+
+imu_msg.orientation.x = imu.quat[1];
+
+imu_msg.orientation.y = imu.quat[2];
+
+imu_msg.orientation.z = imu.quat[3];
+
+imu_msg.orientation_covariance[0] = 0.0025;
+
+imu_msg.orientation_covariance[1] = 0;
+
+imu_msg.orientation_covariance[2] = 0;
+
+imu_msg.orientation_covariance[3] = 0;
+
+imu_msg.orientation_covariance[4] = 0.0025;
+
+imu_msg.orientation_covariance[5] = 0;
+
+imu_msg.orientation_covariance[6] = 0;
+
+imu_msg.orientation_covariance[7] = 0;
+
+imu_msg.orientation_covariance[8] = 0.0025;
+
+imu_pub.publish(&imu_msg);
+
+tfs_msg.header.stamp = nh.now();
+
+tfs_msg.header.frame_id = "base_link";
+
+tfs_msg.child_frame_id = "imu_link";
+
+tfs_msg.transform.rotation.w = imu.quat[0];
+
+	tfs_msg.transform.rotation.x = imu.quat[1];
+
+tfs_msg.transform.rotation.y = imu.quat[2];
+
+tfs_msg.transform.rotation.z = imu.quat[3];
+
+tfs_msg.transform.translation.x = 0.0;
+
+tfs_msg.transform.translation.y = 0.0;
+
+																												tfs_msg.transform.translation.z = 0.0;
+
+																												tfbroadcaster.sendTransform(tfs_msg);
+
+									\}
+
+														nh.spinOnce();
+
+\}
+
+---
+
+下载例程后，使用以下命令运行rosserial server以创建imu和tf发布者。
+
+---
+
+\$ rosrun rosserial_python serial_node.py __name:=opencr_port:=/dev/ttyACM0_baud:=115200
+
+	[INFO] [1495611663.941723]: ROS Serial Python Node
+
+[INFO] [1495611663.946220]: Connecting to /dev/ttyACM0 at 115200 baud
+
+	[INFO] [1495611666.075668]: Note: publish buffer size is 1024 bytes
+
+[INFO] [1495611666.076638]: Setup publisher on imu [sensor_msgs/Imu]
+
+[INFO] [1495611666.146240]: Setup publisher on /tf [tf/tfMessage]
+
+---
+
+可以打开一个新的终端窗口，并按如下方式查看imu话题的消息数据。
+
+---
+
+\$ rostopic echo /imu
+
+	header:
+
+														seq: 686
+
+														stamp:
+
+																								secs: 1495611700
+
+																								nsecs: 369472074
+
+														frame_id: imu_link
+
+			orientation:
+
+											x: 0.0232326872647
+
+										y: -0.0115436725318
+
+											z: -4.04381135013e-05
+
+											w: 0.999659180641
+
+orientation_covariance: $\lbrack {0.0024999999441206455},{0.0},{0.0},{0.0},{0.0024999999441206455},{0.0},{0.0},{0.0}$ ,
+
+0.0024999999441206455]
+
+	angular_velocity:
+
+										x: 0.0
+
+										$y : {0.0}$
+
+											z: 0.0
+
+angular_velocity_covariance: $\lbrack {0.019999999552965164},{0.0},{0.0},{0.0},{0.019999999552965164},{0.0},{0.0},{0.0}$ ,
+
+0.01999999552965164]
+
+---
+
+linear_acceleration:
+
+x: 370.0
+
+y: 754.0
+
+z: 16228.0
+
+linear_acceleration_covariance: $\lbrack {0.03999999910593033},{0.0},{0.0},{0.0},{0.03999999910593033},{0.0},{0.0},{0.0},$ 0.03999999910593033]
+
+---
+
+以图形方式检查IMU数据时可以使用RViz。输入命令如下。
+
+---
+
+\$rviz
+
+---
+
+如图9-32所示，在RViz的Displays画面中选择 Global Options $\rightarrow$ Fixed Frame $\rightarrow$ base_link。然后点击Displays画面底部的Add按钮，将轴添加到新的显示项目中，并选择Reference Frame→imu_link，则可以从屏幕上看到画面中的轴会根据OpenCR的姿态发生变化。
+
+![302_283_1050_1359_965_0.jpg](../../images/302_283_1050_1359_965_0.jpg)
+
+图 9-32 在RViz中验证IMU
+
+## 9.3. TurtleBot3的固件
+
+OpenCR内置了TurtleBot3的rosserial库，可以以例程形式下载TurtleBot3的固件。 由于例程文件是源代码形式，因此可以由用户修改。TurtleBot3相关固件通过Arduino IDE的控制板管理器发布。因此, 如果控制板管理器的版本发生变化, 则只需执行更新后下载最新的固件即可。
+
+### 9.3.1. TurtleBot3 Burger固件
+
+TurtleBot3固件可以通过在Arduino IDE中选择Upload $\rightarrow$ File $\rightarrow$ Examples $\rightarrow$ turtleb ot3→turtlebot3_burger→turtlebot3_core来下载，如图9-33所示。
+
+![303_187_853_1357_275_0.jpg](../../images/303_187_853_1357_275_0.jpg)
+
+图 9-33 下载TurtleBot3 Burger固件
+
+TurtleBot3的Burger机器人和Waffle(Waffle Pi)机器人因为他们的Dynamixel舵机的安装位置和转动半径有差异, 所以在turtlebot3_core_config.h中有适用于各机器人的参数值。如果改变了Dynamixel舵机的安装位置, 这些参数值也必须改变。
+
+<table><tr><td colspan="3">turtlebot3_core_config.h</td></tr><tr><td>#define WHEEL_RADIUS</td><td>0.033</td><td>// meter</td></tr><tr><td>#define WHEEL_SEPARATION</td><td>0.160</td><td>// meter</td></tr><tr><td>#define TURNING_RADIUS</td><td>0.080</td><td>// meter</td></tr><tr><td>#define ROBOT_RADIUS</td><td>0.105</td><td>// meter</td></tr></table>
+
+为了在TurtleBot3 Burger功能包中使用它，请使用以下命令运行rosserial_python 节点。完成后，如图9-34所示，将执行turtlebot3_core节点，并会将移动命令订阅到/ cmd_vel话题，并且将发布测位信息(/odom)、IMU信息(/imu)和传感器信息(/ sensor_state)。TurtleBot3 Waffle和Waffle Pi的用法也相同。更详细的用法，请参阅第10章。
+
+\$ rosrun rosserial_python serial_node.py ___name:=turtlebot3_core_port:=/dev/ttyACM0
+
+[INFO] [1500275719.375458]: ROS Serial Python Node
+
+[INFO] [1500275719.380338]: Connecting to /dev/ttyACM0 at 57600 baud
+
+[INFO] [1500275721.496849]: Note: publish buffer size is 1024 bytes
+
+[INFO] [1500275721.497162]: Setup publisher on sensor_state [turtlebot3_msgs/SensorState]
+
+[INFO] [1500275721.499622]: Setup publisher on imu [sensor_msgs/Imu]
+
+[INFO] [1500275721.502328]: Setup publisher on cmd_vel_rc100 [geometry_msgs/Twist]
+
+[INFO] [1500275721.507266]: Setup publisher on odom [nav_msgs/0dometry]
+
+[INFO] [1500275721.511984]: Setup publisher on joint_states [sensor_msgs/JointState]
+
+[INFO] [1500275721.568189]: Setup publisher on /tf [tf/tfMessage]
+
+[INFO] [1500275721.571585]: Note: subscribe buffer size is 1024 bytes
+
+[INFO] [1500275721.571865]: Setup subscriber on cmd_vel [geometry_msgs/Twist]
+
+[INFO] [1500275721.573235]: Start Calibration of Gyro
+
+[INFO] [1500275724.046148]: Calibrattion End
+
+![304_398_932_578_619_0.jpg](../../images/304_398_932_578_619_0.jpg)
+
+图 9-34 turtlebot3_core节点发布和订阅的话题
+
+### 9.3.2. TurtleBot3 Waffle和Waffle Pi固件
+
+如图9-35所示, 用户可以从Arduino IDE中选择File→Examples→turtlebot3→tur tlebot3_waffle $\rightarrow$ turtlebot3_core，然后点击Upload按钮来下载TurtleBot3 Waffle和 Waffle Pi的固件。
+
+![305_187_186_1350_267_0.jpg](../../images/305_187_186_1350_267_0.jpg)
+
+图 9-35 TurtleBot3 Waffle和Waffle Pi的固件
+
+<table><tr><td colspan="3">turtlebot3_core_config.h</td></tr><tr><td>#define WHEEL_RADIUS</td><td>0.033</td><td>// meter</td></tr><tr><td>#define WHEEL_SEPARATION</td><td>0.287</td><td>// meter</td></tr><tr><td>#define TURNING_RADIUS</td><td>0.1435</td><td>// meter</td></tr><tr><td>#define ROBOT_RADIUS</td><td>0.220</td><td>// meter</td></tr></table>
+
+### 9.3.3. TurtleBot3配置固件
+
+TurtleBot3中使用的Dynamixel舵机在出厂时已将ID等设定值初始化为符合 TurtleBot3的值。如果用户更换了舵机或将舵机改用为其他目的，那么为了重新正确用于 TurtleBot3，需要恢复设定值。例程中有一个初始化舵机的例子，所以我们下面用这个例程来初始化设定值。
+
+**下载配置固件**
+
+如图9-36所示，将turtlebot3_setup→turtlebot3_setup_motor例程下载到OpenCR 控制板，则会开始进行设置。完成设置后，再将TurtleBot3固件下载到OpenCR中。
+
+<table><tr><td>Examples for OpenCR Board</td><td></td><td></td></tr><tr><td>OP3 ></td><td></td><td></td></tr><tr><td>OpenCR ></td><td></td><td></td></tr><tr><td>turtlebot3</td><td>turtlebot3_friends ></td><td></td></tr><tr><td></td><td>turtlebot3_setup</td><td>turtlebot3_setup_motor</td></tr><tr><td></td><td>turtlebot3_burger > <br> turtlebot3_waffle</td><td></td></tr></table>
+
+图 9-36 TurtleBot3舵机设置例程
+
+点击Adunino IDE上的Upload按钮下载，之后点击右上方的串口终端图标，如图9-37所示。之后将Dynamixel连接到OpenCR。请注意, 此固件只适用于设置一个 Dynamixel, 因此必须连接一个Dynamixel。
+
+![306_283_187_745_137_0.jpg](../../images/306_283_187_745_137_0.jpg)
+
+图 9-37 下载并运行串口终端
+
+**更改Dynamixel设置**
+
+运行串行终端时，将显示一个Dynamixel设置菜单，如图9-38所示。TurtleBot3中使用的Dynamixel由左右两个舵机组成，选择要更改的Dynamixel。如果要将舵机设置为左轮，请按下 `1` 之后按Enter键。
+
+![306_281_751_992_474_0.jpg](../../images/306_281_751_992_474_0.jpg)
+
+图 9-38 TurtleBot3舵机设置菜单
+
+为防止输入错误，再次显示确认菜单，如果确定要更改，请输入 “Y”。
+
+![306_281_1415_991_630_0.jpg](../../images/306_281_1415_991_630_0.jpg)
+
+图 9-39 设置确认菜单
+
+如果输入 “Y”，则会一边改变通信速度，一边搜索连接的Dynamixel。找到舵机之后会初始化ID和其他设置值。更改完成后，最后输出消息 “ok”。
+
+---
+
+![307_186_345_923_586_0.jpg](../../images/307_186_345_923_586_0.jpg)
+
+	图 9-40 设置完成消息
+
+---
+
+**Dynamixel测试**
+
+完成设置后需要检查是否正常更改。如果您在菜单中选择了test left motor/test right motor之一, 则相应的Dynamixel会以顺时针方向和逆时针方向反复转动。要结束测试，请再按一次Enter键。测试左侧Dynamixel，要输入“3”，测试右侧Dynamixel， 要输入 “4”。
+
+---
+
+![307_186_1416_931_595_0.jpg](../../images/307_186_1416_931_595_0.jpg)
+
+---
+
+图 9-41 Dynamixel测试菜单
+
+我们已经讨论了如何将ROS与嵌入式系统结合使用。需要实时控制的机器人与嵌入式系统是不可分割的关系。希望读者掌握与ROS结合使用的方法，用于以后的机器人开发。 随后，第10、11、12和13章将介绍使用本章描述的嵌入式系统的移动机器人的实例。
