@@ -49,7 +49,7 @@
   },
   "stats": {
     "books": 16,
-    "docs": 214,
+    "docs": 215,
     "code": 221
   },
   "books": [
@@ -89,7 +89,7 @@
       ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 12,
+      "docCount": 13,
       "firstDocId": "5aae9dc4ade82146",
       "chapterCount": 0,
       "codeCount": 0,
@@ -861,6 +861,20 @@
       "excerpt": "Djayr Alves Bispo Junior, Gustavo de Novaes Pires Leite, Alvaro Antonio Ochoa Villa, Alexandre Carlos Araújo da Costa, Olga de Castro Vilela",
       "order": 12,
       "previousId": "e191a923adeef00f",
+      "nextId": "855f59fcfcf0d31b",
+      "codeFiles": []
+    },
+    {
+      "id": "855f59fcfcf0d31b",
+      "bookSlug": "research-skills",
+      "relPath": "09-research-video-production/index.md",
+      "title": "科研教学视频制作",
+      "sections": [
+        "科研视频制作"
+      ],
+      "excerpt": "本套流程面向课题组内部科研技能教学，适合以下场景：",
+      "order": 13,
+      "previousId": "79d93f7889060e95",
       "nextId": "",
       "codeFiles": []
     },

@@ -97,6 +97,11 @@ def main() -> None:
         if doc["bookSlug"] == "research-skills"
         and doc["relPath"] == "08-pdf-to-markdown/index.md"
     )
+    research_video_doc = next(
+        payloads[doc["id"]] for doc in catalog["docs"]
+        if doc["bookSlug"] == "research-skills"
+        and doc["relPath"] == "09-research-video-production/index.md"
+    )
     pdf_conversion_image_urls = re.findall(
         r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
         pdf_conversion_doc["html"], re.I,
@@ -140,6 +145,16 @@ def main() -> None:
     machine_vision_html = "".join(doc["html"] for doc in machine_vision_docs)
     report = {
         "stats": catalog["stats"],
+        "research_video_tutorial": {
+            "title": research_video_doc["title"] == "科研教学视频制作",
+            "creator_credit": "内容制作：辛庆浩" in research_video_doc["html"],
+            "video_placeholder": "教学视频：待补充链接" in research_video_doc["html"],
+            "topic": next(
+                doc["sections"] for doc in catalog["docs"]
+                if doc["bookSlug"] == "research-skills"
+                and doc["relPath"] == "09-research-video-production/index.md"
+            ) == ["科研视频制作"],
+        },
         "pdf_conversion_tutorial": {
             "creator_credit": "内容制作：刘航" in pdf_conversion_doc["html"],
             "video_linked": pdf_conversion_doc.get("video") == "https://www.bilibili.com/video/BV16stf6MESW/",
@@ -412,7 +427,8 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 16, "docs": 214, "code": 221}
+    assert report["stats"] == {"books": 16, "docs": 215, "code": 221}
+    assert all(report["research_video_tutorial"].values())
     assert all(report["pdf_conversion_tutorial"].values())
     assert report["paper_figure_reproduction"] == {
         "title": "论文图片复现",
