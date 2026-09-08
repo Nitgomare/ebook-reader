@@ -36,6 +36,7 @@ def main() -> None:
         "research-skills", "shangguigu-python", "python-beginner-to-master",
         "shangguigu-data-analysis", "python-data-analysis", "deep-learning",
         "zhou-machine-learning", "machine-vision", "robot-textbook", "wind-energy", "风能技术",
+        "ros-robot-programming", "craig-introduction-to-robotics",
         "wind-turbine-theory-and-design", "Utilizing-large-scale-foundation-models-for",
         "wind-scada-data-analysis-modeling",
         "smart-analysis-system-user-manual", "smart-analysis-system-technical-docs",
@@ -157,6 +158,29 @@ def main() -> None:
         "".join(doc["html"] for doc in machine_vision_docs), re.I,
     )
     machine_vision_html = "".join(doc["html"] for doc in machine_vision_docs)
+    robotics_reference_metrics = {}
+    for slug in ("ros-robot-programming", "craig-introduction-to-robotics"):
+        book = next(book for book in catalog["books"] if book["slug"] == slug)
+        docs = [doc for doc in catalog["docs"] if doc["bookSlug"] == slug]
+        html_content = "".join(payloads[doc["id"]]["html"] for doc in docs)
+        image_urls = re.findall(
+            r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']', html_content, re.I
+        )
+        robotics_reference_metrics[slug] = {
+            "documents": len(docs),
+            "chapters": sum(bool(doc.get("chapterNumber")) for doc in docs),
+            "images": len(image_urls),
+            "external_images": sum(url.startswith(("http://", "https://")) for url in image_urls),
+            "missing_images": sum(
+                not (DIST / Path(unquote(url))).is_file()
+                for url in image_urls
+                if not url.startswith(("http://", "https://"))
+            ),
+            "math_fragments": html_content.count("arithmatex"),
+            "raw_dollar_delimiters": html_content.count("$$"),
+            "tables": html_content.count("<table>"),
+            "cover": book.get("cover", ""),
+        }
     report = {
         "stats": catalog["stats"],
         "research_video_tutorial": {
@@ -247,6 +271,7 @@ def main() -> None:
             "raw_dollar_delimiters": machine_vision_html.count("$$"),
             "tables": machine_vision_html.count("<table>"),
         },
+        "robotics_reference_books": robotics_reference_metrics,
         "categories": [item["id"] for item in catalog["site"]["categories"]],
         "book_slugs": {book["slug"] for book in catalog["books"]},
         "chapter_documents": len(chapter_docs),
@@ -466,7 +491,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 16, "docs": 217, "code": 221}
+    assert report["stats"] == {"books": 18, "docs": 246, "code": 221}
     assert all(report["research_video_tutorial"].values())
     assert all(report["zotero_new_tutorial"].values())
     assert all(report["wind_scada_tutorial"].values())
@@ -499,6 +524,30 @@ def main() -> None:
         "raw_dollar_delimiters": 0,
         "tables": 8,
     }
+    assert report["robotics_reference_books"] == {
+        "ros-robot-programming": {
+            "documents": 14,
+            "chapters": 13,
+            "images": 285,
+            "external_images": 0,
+            "missing_images": 0,
+            "math_fragments": 411,
+            "raw_dollar_delimiters": 0,
+            "tables": 54,
+            "cover": "files/ros-robot-programming/images/0_0_0_1829_1430_0.jpg",
+        },
+        "craig-introduction-to-robotics": {
+            "documents": 15,
+            "chapters": 13,
+            "images": 215,
+            "external_images": 0,
+            "missing_images": 0,
+            "math_fragments": 4574,
+            "raw_dollar_delimiters": 0,
+            "tables": 6,
+            "cover": "",
+        },
+    }
     assert report["categories"] == [
         "research-skills", "python", "data-analysis", "artificial-intelligence",
         "robotics", "wind-energy", "engineering-systems",
@@ -509,7 +558,7 @@ def main() -> None:
     assert report["embedded_media"] == 0
     assert not report["badly_numbered_chapters"]
     assert not report["badly_numbered_headings"]
-    assert report["books_with_resource_model"] == 16
+    assert report["books_with_resource_model"] == 18
     assert report["resource_downloads"] >= 13
     assert report["missing_resource_downloads"] == 0
     assert report["external_resource_links"] >= 6

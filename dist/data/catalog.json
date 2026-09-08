@@ -48,8 +48,8 @@
     ]
   },
   "stats": {
-    "books": 16,
-    "docs": 217,
+    "books": 18,
+    "docs": 246,
     "code": 221
   },
   "books": [
@@ -561,6 +561,47 @@
       "docCount": 17,
       "firstDocId": "06a82f8c4f3c4a40",
       "chapterCount": 11,
+      "codeCount": 0,
+      "resources": []
+    },
+    {
+      "slug": "ros-robot-programming",
+      "title": "ROS 机器人编程",
+      "author": "表允皙、赵汉哲、郑黎蝹、林泰勋",
+      "description": "从 ROS 平台、开发环境和通信机制出发，系统讲解 ROS 命令、工具、编程基础、移动机器人、SLAM、导航与机械臂应用。",
+      "coverSource": "images/0_0_0_1829_1430_0.jpg",
+      "tags": [
+        "ROS",
+        "机器人编程",
+        "SLAM 与导航"
+      ],
+      "category": "robotics",
+      "type": "reference",
+      "sourceSiteName": "ROS 机器人编程",
+      "cover": "files/ros-robot-programming/images/0_0_0_1829_1430_0.jpg",
+      "docCount": 14,
+      "firstDocId": "1d820dfd7093b4f4",
+      "chapterCount": 13,
+      "codeCount": 0,
+      "resources": []
+    },
+    {
+      "slug": "craig-introduction-to-robotics",
+      "title": "机器人学导论（第3版）",
+      "author": "John J. Craig · 贠超等译",
+      "description": "经典机器人学教材，系统介绍空间描述、操作臂运动学与动力学、轨迹生成、机械设计、位置与力控制以及机器人编程。",
+      "tags": [
+        "机器人学",
+        "运动学与动力学",
+        "控制"
+      ],
+      "category": "robotics",
+      "type": "reference",
+      "sourceSiteName": "机器人学导论（第3版）",
+      "cover": "",
+      "docCount": 15,
+      "firstDocId": "7d08118550e61fb8",
+      "chapterCount": 13,
       "codeCount": 0,
       "resources": []
     },
@@ -2892,6 +2933,438 @@
       "excerpt": "[1] Craig J J. Introduction to Robotics: Mechanics and Control[M]. 4th ed. Pearson, 2017.",
       "order": 17,
       "previousId": "b9e6c798f895a4e7",
+      "nextId": "",
+      "codeFiles": []
+    },
+    {
+      "id": "5548f91dcaf76f1a",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "从基本概念到机器人应用程序编程实战!",
+      "order": 1,
+      "previousId": "",
+      "nextId": "1d820dfd7093b4f4",
+      "codeFiles": []
+    },
+    {
+      "id": "1d820dfd7093b4f4",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/01/index.md",
+      "title": "第1章 机器人软件平台",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "IT产品群包括个人电脑 (PC) 和个人电话 (PP) 。 顾名思义, 这是每个人都有的个人产品。如图1-2所示, 该产品群的共同点在于它由可与各种硬件组合的硬件 (Hardware) 模块组成, 具有管理这些硬件的操作系统(Operating System)，在由操作系统提供的",
+      "chapterNumber": 1,
+      "order": 2,
+      "previousId": "5548f91dcaf76f1a",
+      "nextId": "ec6ca1f1a97b5d0a",
+      "codeFiles": []
+    },
+    {
+      "id": "ec6ca1f1a97b5d0a",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/02/index.md",
+      "title": "第2章 机器人操作系统 ROS",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "ROS is an open-source, meta-operating system for your robot. It provides the services you would expect from an operating system, including h",
+      "chapterNumber": 2,
+      "order": 3,
+      "previousId": "1d820dfd7093b4f4",
+      "nextId": "6ce2b195e020fadf",
+      "codeFiles": []
+    },
+    {
+      "id": "6ce2b195e020fadf",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/03/index.md",
+      "title": "第3章 搭建 ROS 开发环境",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "ROS支持多种操作系统，但正式支持的只有Ubuntu，而对其它版本仅提供安装方法。因此本书只说明Ubuntu及与Ubuntu兼容的Linux Mint。",
+      "chapterNumber": 3,
+      "order": 4,
+      "previousId": "ec6ca1f1a97b5d0a",
+      "nextId": "93aabb8914fdc164",
+      "codeFiles": []
+    },
+    {
+      "id": "93aabb8914fdc164",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/04/index.md",
+      "title": "第4章 ROS 的重要概念",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "为了开发与ROS有关的机器人程序，有必要了解ROS的重要概念 ${}^{1}$ 。首先让我们看一下ROS中使用的术语，接下来我们来看看ROS的重要概念:消息通信、消息文件、名称 (Name) 、坐标变换(TF)、客户端库、不同设备之间的通信、文件系统和构建系统。",
+      "chapterNumber": 4,
+      "order": 5,
+      "previousId": "6ce2b195e020fadf",
+      "nextId": "06128ae0e3a2e11d",
+      "codeFiles": []
+    },
+    {
+      "id": "06128ae0e3a2e11d",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/05/index.md",
+      "title": "第5章 ROS 命令",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "ROS命令在http://wiki.ros.org/ROS/CommandLineTools上的维基页面上有详细描述。另外，在 https://github.com/ros/cheatsheet/releases的存储库中，总结了本章中的一些重要命令。这些是本章内容的有用的辅助资",
+      "chapterNumber": 5,
+      "order": 6,
+      "previousId": "93aabb8914fdc164",
+      "nextId": "404821fb20e9fb13",
+      "codeFiles": []
+    },
+    {
+      "id": "404821fb20e9fb13",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/06/index.md",
+      "title": "第6章 ROS 工具",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "除了第5章介绍的输入型命令外，还有各种其他工具可以帮助用户使用ROS。应该指出, 这些GUI工具是对输入型命令工具的补充。如果包括ROS用户个人发布的工具，那么 ROS工具的数量很庞大。其中，本章讨论的工具是对于ROS编程非常有用的辅助工具。",
+      "chapterNumber": 6,
+      "order": 7,
+      "previousId": "06128ae0e3a2e11d",
+      "nextId": "7597bbe7c0863a71",
+      "codeFiles": []
+    },
+    {
+      "id": "7597bbe7c0863a71",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/07/index.md",
+      "title": "第7章 ROS 编程基础",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "目前为止，我们算是学习了ROS的概略，现在开始让我们学习真正的ROS编程吧。之前的内容中出现最多的词是消息、话题、服务、动作和参数。这是因为他们是ROS的核心。作为最小执行单元的节点通过消息通信在节点之间交换I/O消息, 此时使用的方法是话题、服务、动作和参数。在本章中，我们通过",
+      "chapterNumber": 7,
+      "order": 8,
+      "previousId": "404821fb20e9fb13",
+      "nextId": "39162f05f6cf5143",
+      "codeFiles": []
+    },
+    {
+      "id": "39162f05f6cf5143",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/08/index.md",
+      "title": "第8章 机器人、传感器和电机",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "机器人主要分为硬件和软件。机械、电机、齿轮、电路和传感器被归类为硬件。直接驱动或控制机器人硬件的微控制器级别的固件，以及利用从传感器获得的信息进行识别、 制图、导航和动作规划的应用软件均被分类为软件。",
+      "chapterNumber": 8,
+      "order": 9,
+      "previousId": "7597bbe7c0863a71",
+      "nextId": "05999932ef3dfb76",
+      "codeFiles": []
+    },
+    {
+      "id": "05999932ef3dfb76",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/09/index.md",
+      "title": "第9章 嵌入式系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "嵌入式系统的定义如下:嵌入在需要控制的系统中的专用计算机系统。",
+      "chapterNumber": 9,
+      "order": 10,
+      "previousId": "39162f05f6cf5143",
+      "nextId": "a59c932cb870125a",
+      "codeFiles": []
+    },
+    {
+      "id": "a59c932cb870125a",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/10/index.md",
+      "title": "第10章 移动机器人",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "ROS支持的机器人可以在相关wiki(http://robots.ros.org/)上找到。有大约180 种。其中一些包括由个人开发者公开发布的自制机器人，但是如果考虑到这是由单一系统支持的机器人的话, 却是不少的数量。其中最著名的是Willow garage开发的PR2和 Tu",
+      "chapterNumber": 10,
+      "order": 11,
+      "previousId": "05999932ef3dfb76",
+      "nextId": "c7f9d3142d645a1c",
+      "codeFiles": []
+    },
+    {
+      "id": "c7f9d3142d645a1c",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/11/index.md",
+      "title": "第11章 SLAM 和导航",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "这里的导航 (navigation) 可以理解为安装在汽车里的导航仪。在驾驶汽车时, 只要在导航仪中设置目的地，就可以知道从当前位置到目的地的准确距离和所需时间，另外还可以设置中途路过的地点或指定公路。",
+      "chapterNumber": 11,
+      "order": 12,
+      "previousId": "a59c932cb870125a",
+      "nextId": "cc4c34c142523d7d",
+      "codeFiles": []
+    },
+    {
+      "id": "cc4c34c142523d7d",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/12/index.md",
+      "title": "第12章 服务机器人",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "目前，SLAM和导航技术应用于多种情况。在机器人领域，有用于车辆、工厂和生产线的机器人，还有用于配送服务的机器人，并且其技术也在迅速发展。在第10章和第11 章中，我们了解了SLAM和导航功能包的组成和配置。在第12章中，我们来制作一个简单实用的配送服务机器人。",
+      "chapterNumber": 12,
+      "order": 13,
+      "previousId": "c7f9d3142d645a1c",
+      "nextId": "63cec6e9b5d1b34c",
+      "codeFiles": []
+    },
+    {
+      "id": "63cec6e9b5d1b34c",
+      "bookSlug": "ros-robot-programming",
+      "relPath": "chapters/13/index.md",
+      "title": "第13章 机械手臂",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "机械手臂 (Manipulator) 是为了在工厂里执行简单重复任务而设计的机器人。它的目的是取代危险的工作或取代重复的任务，最近有许多有关机械手臂和人的协作的研究。12",
+      "chapterNumber": 13,
+      "order": 14,
+      "previousId": "cc4c34c142523d7d",
+      "nextId": "",
+      "codeFiles": []
+    },
+    {
+      "id": "bc894fe6c9acf92d",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "(美) John J. Craig 著",
+      "order": 1,
+      "previousId": "",
+      "nextId": "7d08118550e61fb8",
+      "codeFiles": []
+    },
+    {
+      "id": "7d08118550e61fb8",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/01/index.md",
+      "title": "第1章 绪论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "工业自动化的历史是以技术手段的快速更新为特征的。这种自动化技术的更新不论是看作世界经济发展的诱因还是结果, 都和世界经济密切相关。工业机器人在20世纪60年代毫无疑问是一种独特的设备 ${}^{\\left\\lbrack  1\\right\\rbrack  }$ ，将其和计算机辅助设",
+      "chapterNumber": 1,
+      "order": 2,
+      "previousId": "bc894fe6c9acf92d",
+      "nextId": "16fbe2a6d67cfb96",
+      "codeFiles": []
+    },
+    {
+      "id": "16fbe2a6d67cfb96",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/02/index.md",
+      "title": "第2章 空间描述和变换",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "机器人操作的定义是指通过某种机构使零件和工具在空间运动。这自然就需要表达零件、 工具以及机构本身的位置和姿态。为了定义和运用表达位姿的数学量, 我们必须定义坐标系并给出表达的规则。我们这里提出了许多关于位姿的描述, 这些描述作为我们以后表达线速度和角速度、力和力矩的基础。",
+      "chapterNumber": 2,
+      "order": 3,
+      "previousId": "7d08118550e61fb8",
+      "nextId": "4f9eed2beb54441f",
+      "codeFiles": []
+    },
+    {
+      "id": "4f9eed2beb54441f",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/03/index.md",
+      "title": "第3章 操作臂运动学",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "操作臂运动学研究操作臂的运动特性，而不考虑使操作臂产生运动时施加的力。在操作臂运动学中, 将要研究操作臂的位置、速度、加速度以及位置变量的所有高阶导数 (对于时间或其他变量)。因此, 操作臂运动学涉及所有与运动有关的几何参数和时间参数。操作臂的运动和使之运动而施加的力和力矩之间的",
+      "chapterNumber": 3,
+      "order": 4,
+      "previousId": "16fbe2a6d67cfb96",
+      "nextId": "09c33bcb160f3bcf",
+      "codeFiles": []
+    },
+    {
+      "id": "09c33bcb160f3bcf",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/04/index.md",
+      "title": "第4章 操作臂逆运动学",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在上一章中讨论了已知操作臂的关节角, 计算工具坐标系相对于用户工作台坐标系的位置和姿态的问题。在本章中, 将研究难度更大的运动学逆问题: 已知工具坐标系相对于工作台坐标系的期望位置和姿态, 如何计算一系列满足期望要求的关节角? 第3章重点讨论操作臂的运动学正问题，而本章重点讨论操",
+      "chapterNumber": 4,
+      "order": 5,
+      "previousId": "4f9eed2beb54441f",
+      "nextId": "80d885c2a8833035",
+      "codeFiles": []
+    },
+    {
+      "id": "80d885c2a8833035",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/05/index.md",
+      "title": "第5章 速度和静力",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在本章中, 我们将机器人操作臂的讨论扩展到静态位置问题以外。我们研究刚体线速度和角速度的表示方法并且运用这些概念去分析操作臂的运动。我们将讨论作用在刚体上的力, 然后应用这些概念去研究操作臂静力学的应用问题。",
+      "chapterNumber": 5,
+      "order": 6,
+      "previousId": "09c33bcb160f3bcf",
+      "nextId": "7ece4c53f1c784d4",
+      "codeFiles": []
+    },
+    {
+      "id": "7ece4c53f1c784d4",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/06/index.md",
+      "title": "第6章 操作臂动力学",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "到目前为止, 我们只研究了操作臂的运动学。我们已研究了静态位置、静态力和速度; 但是, 从未考虑引起运动所需的力。在本章中, 将考虑操作臂的运动方程一一由驱动器施加的力矩或施加在操作臂上的外力使操作臂运动。",
+      "chapterNumber": 6,
+      "order": 7,
+      "previousId": "80d885c2a8833035",
+      "nextId": "5eaca7fc52b3e1c5",
+      "codeFiles": []
+    },
+    {
+      "id": "5eaca7fc52b3e1c5",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/07/index.md",
+      "title": "第7章 轨迹的生成",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "本章讨论计算轨迹的方法, 该轨迹描述了操作臂在多维空间中的期望运动。在这里, 轨迹指的是每个自由度的位置、速度和加速度的时间历程。",
+      "chapterNumber": 7,
+      "order": 8,
+      "previousId": "7ece4c53f1c784d4",
+      "nextId": "86401a4e7fa7577c",
+      "codeFiles": []
+    },
+    {
+      "id": "86401a4e7fa7577c",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/08/index.md",
+      "title": "第8章 操作臂的机械设计",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "根据前面章节的内容, 可知操作臂的结构会对其运动学和动力学的分析产生影响。例如, 有的运动学结构非常便于求解, 有的则没有封闭解。同样, 动力学方程的复杂程度会随着操作臂运动学结构和连杆的质量分布而发生很大变化。在后面的几章里, 将会看到操作臂的控制不仅与刚体动力学有关, 而且还",
+      "chapterNumber": 8,
+      "order": 9,
+      "previousId": "5eaca7fc52b3e1c5",
+      "nextId": "f2f99e50a1c7a191",
+      "codeFiles": []
+    },
+    {
+      "id": "f2f99e50a1c7a191",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/09/index.md",
+      "title": "第9章 操作臂的线性控制",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "基于前面章节的知识, 现在可以计算关节位置的时间历程, 这些关节位置对应于末端执行器通过空间的期望运动。在本章中, 我们将讨论如何才能使操纵臂实际完成这些期望运动。",
+      "chapterNumber": 9,
+      "order": 10,
+      "previousId": "86401a4e7fa7577c",
+      "nextId": "2a1a545e6b1af2bb",
+      "codeFiles": []
+    },
+    {
+      "id": "2a1a545e6b1af2bb",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/10/index.md",
+      "title": "第10章 操作臂的非线性控制",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "在上一章, 为了用线性方法对操作臂控制问题进行分析, 我们给出了几个近似假设。其中最重要的近似假设是认为每个关节都是独立的, 而且每个关节驱动器的惯量被 “认为” 是恒定的。上一章中的线性控制器在实际工作时, 由于这种近似会导致整个工作空间内系统阻尼不一致，以及出现其他意想不到的",
+      "chapterNumber": 10,
+      "order": 11,
+      "previousId": "f2f99e50a1c7a191",
+      "nextId": "e0ae14449d0949e8",
+      "codeFiles": []
+    },
+    {
+      "id": "e0ae14449d0949e8",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/11/index.md",
+      "title": "第11章 操作臂的力控制",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "当操作臂在空间中跟踪轨迹运动时, 可采用位置控制, 但当末端执行器与操作臂工作环境发生碰撞时, 纯粹的位置控制已经不适用了。考虑使用海绵擦窗的操作臂, 利用海面的柔性可以通过控制末端执行器与玻璃之间的位置来调整施加在窗户上的力。如果海绵十分柔软, 或者已知玻璃的精确位置, 则操作",
+      "chapterNumber": 11,
+      "order": 12,
+      "previousId": "2a1a545e6b1af2bb",
+      "nextId": "9df553863c994ca7",
+      "codeFiles": []
+    },
+    {
+      "id": "9df553863c994ca7",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/12/index.md",
+      "title": "第12章 机器人编程语言及编程系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "这一章, 我们开始讨论用户和工业机器人之间的接口。依靠这种接口, 用户便可利用我们在以前章节已经学过的所有基本机构原理和控制算法。",
+      "chapterNumber": 12,
+      "order": 13,
+      "previousId": "e0ae14449d0949e8",
+      "nextId": "17f913b4025ac384",
+      "codeFiles": []
+    },
+    {
+      "id": "17f913b4025ac384",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "chapters/13/index.md",
+      "title": "第13章 离线编程系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "离线编程系统 (OLP) 是一种已经被广泛应用的、以计算机图形学为依托的机器人编程语言,它可使机器人程序的开发能够在不用访问机器人本身的情况下进行 ${}^{ \\ominus  }$ 。不论是作为当今工业自动化装备的辅助编程工具, 还是机器人研究的平台, 离线编程系统都具有重要的",
+      "chapterNumber": 13,
+      "order": 14,
+      "previousId": "9df553863c994ca7",
+      "nextId": "b835ec451363ff04",
+      "codeFiles": []
+    },
+    {
+      "id": "b835ec451363ff04",
+      "bookSlug": "craig-introduction-to-robotics",
+      "relPath": "appendices/index.md",
+      "title": "附录、习题答案与索引",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "刚体绕 $X, Y, Z$ 轴旋转 $\\theta$ 角的公式:",
+      "order": 15,
+      "previousId": "17f913b4025ac384",
       "nextId": "",
       "codeFiles": []
     },

@@ -1,0 +1,1584 @@
+# 第6章 操作臂动力学
+
+
+## 6.1 概述
+
+到目前为止, 我们只研究了操作臂的运动学。我们已研究了静态位置、静态力和速度; 但是, 从未考虑引起运动所需的力。在本章中, 将考虑操作臂的运动方程一一由驱动器施加的力矩或施加在操作臂上的外力使操作臂运动。
+
+在机构动力学领域有很多的著作。确实, 对此领域需要进行多年的研究。显然, 我们无法涵盖此领域的各个方面。但是, 某些动力学公式似乎特别适用于操作臂。特别是利用操作臂串联结构的性质自然是我们研究的对象。
+
+与操作臂动力学有关的两个问题有待解决。第一个问题,已知一个轨迹点 $\Theta ,\dot{\Theta }$ 和 $\ddot{\Theta }$ , 希望求出期望的关节力矩矢量 $\tau$ 。这个动力学公式对操作臂控制问题(第 10 章)很有用。第二个问题是计算在施加一组关节力矩的情况下机构如何运动。也就是, 已知一个力矩矢量 $\tau$ ,计算出操作臂的运动 $\Theta$ 的和 $\dot{\Theta }$ 。这对操作臂的仿真很有用。
+
+## 6.2 刚体的加速度
+
+现在分析刚体的加速度问题。在任一瞬时, 对刚体的线速度和角速度进行求导, 可分别得到线加速度和角加速度。即
+
+$$
+{}^{B}{\dot{V}}_{Q} = \frac{d}{dt}{}^{B}{V}_{Q} = \mathop{\lim }\limits_{{{\Delta t} \rightarrow  0}}\frac{{}^{B}{V}_{Q}\left( {t + {\Delta t}}\right)  - {}^{B}{V}_{Q}\left( t\right) }{\Delta t} \tag{6-1}
+$$
+
+和
+
+$$
+{}^{A}{\dot{\Omega }}_{B} = \frac{d}{dt}{}^{A}{\Omega }_{B} = \mathop{\lim }\limits_{{{\Delta t} \rightarrow  0}}\frac{{}^{A}{\Omega }_{B}\left( {t + {\Delta t}}\right)  - {}^{A}{\Omega }_{B}\left( t\right) }{\Delta t} \tag{6-2}
+$$
+
+同速度一样,当微分的参考坐标系为世界坐标系 $\{ U\}$ 时,可用下列符号表示刚体的速度,即:
+
+$$
+{\dot{v}}_{A} = {}^{U}{\dot{V}}_{AORG} \tag{6-3}
+$$
+
+和
+
+$$
+{\dot{\omega }}_{A} = {}^{U}{\dot{\Omega }}_{A} \tag{6-4}
+$$
+
+**线加速度**
+
+式 (5-12) 描述了坐标系 $\{ A\}$ 下的速度矢量 ${}^{B}Q$ (这是第 5 章中的一个重要结论)，当坐标系 $\{ A\}$ 的原点与坐标系 $\{ B\}$ 的原点重合时,速度矢量 ${}^{B}Q$ 可表示为:
+
+$$
+{}^{A}{V}_{Q} = {}_{B}^{A}{R}^{B}{V}_{Q} + {}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}Q \tag{6-5}
+$$
+
+方程左边描述的是矢量 ${}^{A}Q$ 随时间变化的情况。由于两个坐标系的原点重合,因此可以把式 (6-5) 改写成如下形式:
+
+$$
+\frac{d}{dt}\left( {{}_{B}^{A}{R}^{B}Q}\right)  = {}_{B}^{A}{R}^{B}{V}_{Q} + {}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}Q \tag{6-6}
+$$
+
+这种形式的方程在求解相应的加速度方程时很方便。
+
+对式 (6-5) 求导,当坐标系 $\{ A\}$ 和 $\{ B\}$ 的原点重合时,可得到 ${}^{B}Q$ 的加速度在坐标系 $\{ A\}$ 中的表达式:
+
+$$
+{}^{A}{\dot{V}}_{Q} = \frac{d}{dt}\left( {{}_{B}^{A}{R}^{B}{V}_{Q}}\right)  + {}^{A}{\dot{\Omega }}_{B} \times  {}_{B}^{A}{R}^{B}Q + {}^{A}{\Omega }_{B} \times  \frac{d}{dt}\left( {{}_{B}^{A}{R}^{B}Q}\right) \tag{6-7}
+$$
+
+对上式中的第一项和最后一项应用式 (6-6), 则式 (6-7) 右边成为:
+
+$$
+{}_{B}^{A}{R}^{B}{\dot{V}}_{Q} + {}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}{V}_{Q} + {}^{A}{\dot{\Omega }}_{B} \times  {}_{B}^{A}{R}^{B}Q \tag{6-8}
+$$
+
+$$
++ {}^{A}{\Omega }_{B} \times  \left( {{}_{B}^{A}{R}^{B}{V}_{Q} + {}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}Q}\right)
+$$
+
+将上式中的同类项合并, 整理得:
+
+$$
+{}_{B}^{A}{R}^{B}{\dot{V}}_{Q} + 2{}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}{V}_{Q} + {}^{A}{\dot{\Omega }}_{B} \times  {}_{B}^{A}{R}^{B}Q + {}^{A}{\Omega }_{B} \times  \left( {{}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}Q}\right) \tag{6-9}
+$$
+
+最后,为了将结论推广到两个坐标系原点不重合的一般情况,我们附加一个表示坐标系 $\{ B\}$ 原点线加速度的项, 最终得到一般表达式:
+
+$$
+{}^{A}{\dot{V}}_{BORG} + {}_{B}^{A}{R}^{B}{\dot{V}}_{Q} + 2{}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}{V}_{Q} + {}^{A}{\dot{\Omega }}_{B} \times  {}_{B}^{A}{R}^{B}Q \tag{6-10}
+$$
+
+$$
+{ + }^{A}{\Omega }_{B} \times  \left( {{}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}Q}\right)
+$$
+
+值得指出的是当 ${}^{B}Q$ 是常量时,即
+
+$$
+{}^{B}{V}_{Q} = {}^{B}{\dot{V}}_{Q} = 0 \tag{6-11}
+$$
+
+在这种情况下, 式 (6-10) 简化为:
+
+$$
+{}^{A}{\dot{V}}_{Q} = {}^{B}{\dot{V}}_{BORG} + {}^{A}{\Omega }_{B} \times  \left( {{}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}Q}\right)  + {}^{A}{\dot{\Omega }}_{B} \times  {}_{B}^{A}{R}^{B}Q \tag{6-12}
+$$
+
+上式常用于计算旋转关节操作臂连杆的线加速度。当操作臂的连接为移动关节时, 常用一般表达式 (6-10)。
+
+**角加速度**
+
+假设坐标系 $\{ B\}$ 以角速度 ${}^{A}{\Omega }_{B}$ 相对于坐标系 $\{ A\}$ 转动,同时坐标系 $\{ C\}$ 以角速度 ${}^{B}{\Omega }_{C}$ 相对于坐标系 $\{ B\}$ 转动。为求 ${}^{A}{\mathbf{\Omega }}_{C}$ ,在坐标系 $\{ A\}$ 中进行矢量相加:
+
+$$
+{}^{A}{\Omega }_{C} = {}^{A}{\Omega }_{B} + {}_{B}^{A}{R}^{B}{\Omega }_{C} \tag{6-13}
+$$
+
+对上式求导, 得
+
+$$
+{}^{A}{\dot{\Omega }}_{C} = {}^{A}{\dot{\Omega }}_{B} + \frac{d}{dt}\left( {{}_{B}^{A}{R}^{B}{\Omega }_{C}}\right) \tag{6-14}
+$$
+
+将式 (6-6) 代入上式右侧最后一项中, 得
+
+$$
+{}^{A}{\dot{\Omega }}_{C} = {}^{A}{\dot{\Omega }}_{B} + {}_{B}^{A}{R}^{B}{\dot{\Omega }}_{C} + {}^{A}{\Omega }_{B} \times  {}_{B}^{A}{R}^{B}{\Omega }_{C} \tag{6-15}
+$$
+
+上式用于计算操作臂连杆的角加速度。
+
+## 6.3 质量分布
+
+在单自由度系统中, 常常要考虑刚体的质量。对于定轴转动的情况, 经常用到惯量矩这个概念。对一个可以在三维空间自由运动的刚体来说, 可能存在无穷个旋转轴。在一个刚体绕任意轴作旋转运动时, 我们需要一种能够表征刚体质量分布的方法。在这里, 我们引入惯性张量, 它可以被看作是对一个物体惯量的广义度量。
+
+![143_851_404_550_402_0.jpg](../../images/143_851_404_550_402_0.jpg)
+
+图6-1 描述物体质量分布的惯性张量, 这里 ${}^{A}P$ 表示单元体 ${dv}$ 的位置矢量
+
+现在我们定义一组参量, 给出刚体质量在参考坐标系中分布的信息。图6-1表示一个刚体, 坐标系建立在刚体上。惯性张量可以在任何坐标系中定义, 但一般在固连于刚体上的坐标系中定义惯性张量。这里, 重要的是用左上标表明已知惯性张量所在的参考坐标系。坐标系 $\{ A\}$ 中的惯性张量可用 $3 \times  3$ 矩阵表示如下
+
+$$
+{}^{A}I = \left\lbrack  \begin{array}{rrr} {I}_{xx} &  - {I}_{xy} &  - {I}_{xz} \\   - {I}_{xy} & {I}_{yy} &  - {I}_{yz} \\   - {I}_{xz} &  - {I}_{yz} & {I}_{zz} \end{array}\right\rbrack \tag{6-16}
+$$
+
+矩阵中的各元素为
+
+$$
+{I}_{xx} = {\iiint }_{V}\left( {{y}^{2} + {z}^{2}}\right) {\rho d\upsilon }
+$$
+
+$$
+{I}_{yy} = {\iiint }_{V}\left( {{x}^{2} + {z}^{2}}\right) {\rho d\upsilon }
+$$
+
+$$
+{I}_{zz} = {\iiint }_{V}\left( {{x}^{2} + {y}^{2}}\right) {\rho d\nu } \tag{6-17}
+$$
+
+$$
+{I}_{xy} = {\iiint }_{V}{xy\rho dv}
+$$
+
+$$
+{I}_{xz} = {\iiint }_{V}{xz\rho d\upsilon }
+$$
+
+$$
+{I}_{yz} = {\iiint }_{V}{yz\rho d\upsilon }
+$$
+
+式中刚体由单元体 ${dv}$ 组成,单元体的密度为 $\rho$ 。每个单元体的位置由矢量 ${}^{A}P = {\left\lbrack  \begin{array}{lll} x & y & z \end{array}\right\rbrack  }^{T}$ 确定,如图6-1所示。
+
+${I}_{xx}$ ， ${I}_{yy}$ 和 ${I}_{zz}$ 称为惯量矩。它们是单元体质量 $\rho {dv}$ 乘以单元体到相应转轴垂直距离的平方在整个刚体上的积分。其余三个交叉项称为惯量积。对于一个刚体来说, 这六个相互独立的参量取决于所在坐标系的位姿。当任意选择坐标系的方位时，可能会使刚体的惯量积为零。此时, 参考坐标系的轴被称为主轴, 而相应的惯量矩被称为主惯量矩。
+
+例6.1
+
+求图6-2所示坐标系中长方体的惯性张量。已知长方体密度均匀，其大小为 $\rho$ 。
+
+解: 首先,计算惯量矩 ${I}_{xx}$ 。已知体积单元 ${dv} = {dxdydz}$ ,故:
+
+$$
+{I}_{xx} = {\int }_{0}^{h}{\int }_{0}^{l}{\int }_{0}^{\omega }\left( {{y}^{2} + {z}^{2}}\right) {\rho dxdydz}
+$$
+
+$$
+= {\int }_{0}^{h}{\int }_{0}^{l}\left( {{y}^{2} + {z}^{2}}\right) {\omega \rho dydz}
+$$
+
+$$
+= {\int }_{0}^{h}\left( {\frac{{l}^{3}}{3} + {z}^{2}l}\right) {\omega \rho dz} \tag{6-18}
+$$
+
+$$
+= \left( {\frac{h{l}^{3}\omega }{3} + \frac{{h}^{3}{l\omega }}{3}}\right) \rho
+$$
+
+$$
+= \frac{m}{3}\left( {{l}^{2} + {h}^{2}}\right)
+$$
+
+式中 $m$ 是刚体的总质量。同理可得 ${I}_{yy}$ 和 ${I}_{zz}$ :
+
+$$
+{I}_{yy} = \frac{m}{3}\left( {{\omega }^{2} + {h}^{2}}\right) \tag{6-19}
+$$
+
+和
+
+$$
+{I}_{zz} = \frac{m}{3}\left( {{l}^{2} + {\omega }^{2}}\right) \tag{6-20}
+$$
+
+![144_546_1039_604_421_0.jpg](../../images/144_546_1039_604_421_0.jpg)
+
+图6-2 均匀密度的刚体
+
+然后计算 ${I}_{xy}$ :
+
+$$
+{I}_{xy} = {\int }_{0}^{h}{\int }_{0}^{l}{\int }_{0}^{w}{xy\rho dxdydz}
+$$
+
+$$
+= {\int }_{0}^{h}{\int }_{0}^{1}\frac{{\omega }^{2}}{2}{y\rho dydz} \tag{6-21}
+$$
+
+$$
+= {\int }_{0}^{h}\frac{{\omega }^{2}{l}^{2}}{4}{\rho dz}
+$$
+
+$$
+= \frac{m}{4}{\omega l}
+$$
+
+同理可得
+
+$$
+{I}_{xz} = \frac{m}{4}{h\omega } \tag{6-22}
+$$
+
+和
+
+$$
+{I}_{yz} = \frac{m}{4}{hl} \tag{6-23}
+$$
+
+因此, 图示物体的惯性张量为
+
+$$
+{}^{A}I = \left\lbrack  \begin{matrix} \frac{m}{3}\left( {{l}^{2} + {h}^{2}}\right) &  - \frac{m}{4}{\omega l} &  - \frac{m}{4}{h\omega } \\   - \frac{m}{4}{\omega l} & \frac{m}{3}\left( {{\omega }^{2} + {h}^{2}}\right) &  - \frac{m}{4}{hl} \\   - \frac{m}{4}{h\omega } &  - \frac{m}{4}{hl} & \frac{m}{3}\left( {{l}^{2} + {\omega }^{2}}\right)  \end{matrix}\right\rbrack \tag{6-24}
+$$
+
+可看出, 惯性张量是坐标系位姿的函数。众所周知的平行移轴定理就是在参考坐标系平移时惯性张量如何变化的计算方法。平行移轴定理描述了一个以刚体质心为原点的坐标系平移到另一个坐标系时惯性张量的变换关系。假设 $\{ C\}$ 是以刚体质心为原点的坐标系, $\{ A\}$ 为任意平移后的坐标系,则平行移轴定理可以表示为 ${}^{\left\lbrack  1\right\rbrack  }$
+
+(6-25)
+
+$$
+{}^{A}{I}_{zz} = {}^{C}{I}_{zz} + m\left( {{x}_{c}^{2} + {y}_{c}^{2}}\right)
+$$
+
+$$
+{}^{\mathrm{A}}{I}_{xy} = {}^{C}{I}_{xy} - m{x}_{c}{y}_{c}
+$$
+
+式中矢量 ${P}_{c} = {\left\lbrack  \begin{array}{lll} {x}_{c} & {y}_{c} & {z}_{c} \end{array}\right\rbrack  }^{T}$ 表示刚体质心在坐标系 $\{ A\}$ 中的位置。其余的惯量矩和惯量积都可以通过式 (6-25) 交换 $x, y$ 和 $z$ 的顺序计算而得。平行移轴定理又可以表示成为矢量一矩阵形式
+
+$$
+{}^{A}I = {}^{C}I + m\left( {{P}_{c}^{T}{P}_{c}{I}_{3} - {P}_{c}{P}_{c}^{T}}\right) \tag{6-26}
+$$
+
+式中 ${I}_{3}$ 是 $3 \times  3$ 单位矩阵。
+
+例6.2
+
+求例6.1中所示刚体的惯性张量。已知, 坐标系原点在刚体的质心。
+
+解: 利用平行移轴定理式 (6-25), 这里
+
+$$
+\left\lbrack  \begin{array}{l} {x}_{c} \\  {y}_{c} \\  {z}_{c} \end{array}\right\rbrack   = \frac{1}{2}\left\lbrack  \begin{array}{l} \omega \\  l \\  h \end{array}\right\rbrack
+$$
+
+因而得
+
+$$
+{}^{c}{I}_{zz} = \frac{m}{12}\left( {{\omega }^{2} + {l}^{2}}\right) \tag{6-27}
+$$
+
+$$
+{}^{c}{I}_{xy} = 0
+$$
+
+其他参量可以由对称性得出。故在以质心为原点的坐标系中, 所求刚体的惯性张量为
+
+$$
+{}^{c}I = \left\lbrack  \begin{matrix} \frac{m}{12}\left( {{h}^{2} + {l}^{2}}\right) & 0 & 0 \\  0 & \frac{m}{12}\left( {{\omega }^{2} + {h}^{2}}\right) & 0 \\  0 & 0 & \frac{m}{12}\left( {{l}^{2} + {\omega }^{2}}\right)  \end{matrix}\right\rbrack \tag{6-28}
+$$
+
+从这个结果可以看出所得矩阵为对角矩阵,因而坐标系 $\{ C\}$ 的坐标轴为刚体的主轴。
+
+惯性张量还有其他一些性质:
+
+1. 如果由坐标系的两个坐标轴构成的平面为刚体质量分布的对称平面, 则正交于这个对称平面的坐标轴与另一个坐标轴的惯量积为零。
+
+2. 惯量矩永远是正值, 而惯量积则可能是正值或负值。
+
+3. 不论参考坐标系方位如何变化, 三个惯量矩的和保持不变。
+
+4. 惯性张量的特征值为刚体的主惯量矩, 相应的特征矢量为主轴。
+
+大多数操作臂连杆的几何形状及结构组成都比较复杂, 因而很难直接应用式 (6-17) 来进行求解。一般是使用测量装置 (例如惯量摆) 来测量每个连杆的惯量矩, 而不是通过计算求得。
+
+## 6.4 牛顿方程和欧拉方程
+
+我们把组成操作臂的连杆都看作是刚体。如果知道了连杆质心的位置和惯性张量, 那么它的质量分布特征就完全确定了。要使连杆运动, 必须对连杆进行加速和减速。连杆运动所需的力是关于连杆期望加速度及其质量分布的函数。牛顿方程以及描述旋转运动的欧拉方程描述了力、惯量和加速度之间的关系。
+
+**牛顿方程**
+
+图6-3所示的的刚体质心正以加速度 ${\dot{v}}_{c}$ 作加速运动。此时,由牛顿方程可得作用在质心上的力 $F$ 引起刚体的加速度为
+
+$$
+F = m{\dot{v}}_{C} \tag{6-29}
+$$
+
+式中 $m$ 代表刚体的总质量。
+
+![146_509_1418_620_306_0.jpg](../../images/146_509_1418_620_306_0.jpg)
+
+图6-3 作用于刚体质心的力 $F$ 引起刚体加速度 ${\dot{v}}_{c}$
+
+**欧拉方程**
+
+图6-4所示为一个旋转刚体,其角速度和角加速度分别为 $\omega \text{ 、 }\dot{\omega }$ 。此时,由欧拉方程可得作用在刚体上的力矩 $N$ 引起刚体的转动为
+
+$$
+N = {}^{c}I\dot{\omega } + \omega  \times  {}^{c}{I\omega } \tag{6-30}
+$$
+
+式中 $G$ 是刚体在坐标系 $\{ C\}$ 中的惯性张量。刚体的质心在坐标系 $\{ C\}$ 的原点上。
+
+![147_554_239_505_264_0.jpg](../../images/147_554_239_505_264_0.jpg)
+
+图6-4 作用在刚体上的力矩 $N$ ,刚体旋转角速度 $\omega$ 和角加速度 $\dot{\omega }$
+
+## 6.5 牛顿-欧拉迭代动力学方程
+
+现在讨论对应于操作臂给定运动轨迹的力矩计算问题。假设已知关节的位置、速度和加速度 $\left( {\Theta ,\dot{\Theta },\ddot{\Theta }}\right)$ ,结合机器人运动学和质量分布方面的知识,可以计算出驱动关节运动所需的力矩。这个算法是Luh、Walker和Paul在文献[2]中提出来的。
+
+**计算速度和加速度的向外迭代法**
+
+为了计算作用在连杆上的惯性力, 需要计算操作臂每个连杆在某一时刻的角速度、线加速度和角加速度。可应用迭代方法完成这些计算。首先对连杆1进行计算，接着计算下一个连杆,这样一直向外迭代到连杆 $n$ 。
+
+在第5章中已经讨论了角速度在连杆之间的 “传递” 问题, 且有(对于第 $i + 1$ 个关节的旋转运动)
+
+$$
+{}^{i + 1}{\omega }_{i + 1}{ = }_{i}^{i + 1}{R}^{i}{\omega }_{i} + {\dot{\theta }}_{i + 1}^{\;i + 1}{\widehat{Z}}_{i + 1} \tag{6-31}
+$$
+
+由式 (6-15) 可以得到连杆之间角加速度变换的方程:
+
+$$
+{}^{i + 1}{\dot{\omega }}_{i + 1} = {}_{i}^{i + 1}{R}^{i}{\dot{\omega }}_{i} + {}_{i}^{i + 1}{R}^{i}{\omega }_{i} \times  {\dot{\theta }}_{i + 1}{}^{i + 1}{\widehat{Z}}_{i + 1} + {\ddot{\theta }}_{i + 1}{}^{i + 1}{\widehat{Z}}_{i + 1} \tag{6-32}
+$$
+
+当第 $i + 1$ 个关节是移动关节时,上式可简化为
+
+$$
+{}^{i + 1}{\dot{\mathbf{\omega }}}_{i + 1} = {}_{i}^{i + 1}{\mathbf{R}}^{i}{\mathbf{\omega }}_{i} \tag{6-33}
+$$
+
+应用式 (6-12) 可以得到每个连杆坐标系原点的线加速度:
+
+$$
+{}^{i + 1}{\dot{\upsilon }}_{i + 1} = {}_{i}^{i + 1}R\left( {{}^{i}{\omega }_{i} \times  {}^{i}{P}_{i + 1} + {}^{i}{\omega }_{i} \times  \left( {{}^{i}{\omega }_{i} \times  {}^{i}{P}_{i + 1}}\right)  + {}^{i}{\dot{\upsilon }}_{i}}\right) \tag{6-34}
+$$
+
+当第 $i + 1$ 个关节是移动关节时,上式可简化为 (根据式 (6-10))
+
+$$
+{}^{i + 1}{\dot{\upsilon }}_{i + 1} = {}_{i}^{i + 1}R\left( {{}^{i}{\dot{\omega }}_{i}{ \times  }^{i}{P}_{i + 1}{ + }^{i}{\omega }_{i} \times  \left( {{}^{i}{\omega }_{i}{ \times  }^{i}{P}_{i + 1}}\right) { + }^{i}{\dot{\upsilon }}_{i}}\right) \tag{6-35}
+$$
+
+$$
++ {2}^{i + 1}{\omega }_{i + 1} \times  {\dot{d}}_{i + 1}^{-i + 1}{\widehat{Z}}_{i + 1} + {\ddot{d}}_{i + 1}^{-i + 1}{\widehat{Z}}_{i + 1}
+$$
+
+同理, 应用式 (6-12) 可以得到每个连杆质心的线加速度:
+
+$$
+{}^{i}{\dot{v}}_{{C}_{i}} = {}^{i}{\dot{\omega }}_{i} \times  {}^{i}{P}_{{C}_{i}} + {}^{i}{\omega }_{i} \times  \left( {{}^{i}{\omega }_{i} + {}^{i}{P}_{{C}_{i}}}\right)  + {}^{i}{\dot{v}}_{i} \tag{6-36}
+$$
+
+假定坐标系 $\left\{  {C}_{i}\right\}$ 固连于连杆 $i$ 上,坐标系原点位于连杆质心,且各坐标轴方位与原连杆坐标系 $\{ i\}$ 方位相同。由于式 (6-36) 与关节的运动无关,因此无论是旋转关节还是移动关节,式 (6-36) 对于第 $i + 1$ 个连杆来说都是有效的。
+
+注意，第 1 个连杆的方程非常简单，因为 ${}^{0}{\omega }_{0} = {}^{0}{\dot{\omega }}_{0} = 0$ 。
+
+**作用在连杆上的力和力矩**
+
+计算出每个连杆质心的线加速度和角加速度之后, 运用牛顿一欧拉公式 (见 6.4 节) 便可以计算出作用在连杆质心上的惯性力和力矩。即:
+
+(6-37)
+
+$$
+{F}_{i} = m{\dot{v}}_{{C}_{i}}
+$$
+
+$$
+{N}_{i} = {}^{{C}_{i}}I{\dot{\omega }}_{i} + {\omega }_{i} \times  {}^{{C}_{i}}I{\omega }_{i}
+$$
+
+式中坐标系 $\left\{  {C}_{i}\right\}$ 的原点位于连杆质心,各坐标轴方位与原连杆坐标系 $\{ i\}$ 方位相同。
+
+**计算力和力矩的向内迭代法**
+
+计算出作用在每个连杆上的力和力矩之后, 需要计算关节力矩, 它们是实际施加在连杆上的力和力矩。
+
+根据典型连杆在无重力状态下的受力图 (见图6-5) 列出力平衡方程和力矩平衡方程。每个连杆都受到相邻连杆的作用力和力矩以及附加的惯性力和力矩。在第5章中已经定义了一些专用符号用来表示相邻连杆的作用力和力矩, 在这里重新写出:
+
+${f}_{i} =$ 连杆 $i - 1$ 作用在连杆 $i$ 上的力;
+
+${n}_{i} =$ 连杆 $i - 1$ 作用在连杆 $i$ 上的力矩。
+
+将所有作用在连杆 $i$ 上的力相加,得到力平衡方程:
+
+$$
+{}^{i}{F}_{i} = {}^{i}{f}_{i} - {}_{i + 1}^{i}{R}^{i + 1}{f}_{i + 1} \tag{6-38}
+$$
+
+将所有作用在质心上的力矩相加, 并且令它们的和为零, 得到力矩平衡方程:
+
+$$
+{}^{i}{N}_{i}{ = }^{i}{n}_{i}{ - }^{i}{n}_{i + 1} + \left( {-{}^{i}{P}_{{C}_{i}}}\right)  \times  {}^{i}{f}_{i} - \left( {{}^{i}{P}_{i + 1} - {}^{i}{P}_{{C}_{i}}}\right)  \times  {}^{i}{f}_{i + 1} \tag{6-39}
+$$
+
+![148_559_1349_539_371_0.jpg](../../images/148_559_1349_539_371_0.jpg)
+
+图6-5 对于单个操作臂连杆的力平衡, 包括惯性力
+
+利用力平衡方程 (式6-38) 的结果以及附加旋转矩阵的办法, 式 (6-39) 可写成
+
+$$
+{}^{i}{N}_{i} = {}^{i}{n}_{i} - {}_{i + 1}^{i}{R}^{i + 1}{n}_{i + 1} - {}^{i}{P}_{{C}_{i}} \times  {}^{i}{F}_{i} - {}^{i}{P}_{i + 1} \times  {}_{i + 1}^{i}{R}^{i + 1}{f}_{i + 1} \tag{6-40}
+$$
+
+最后, 重新排列力和力矩方程, 形成相邻连杆从高序号向低序号排列的迭代关系:
+
+$$
+{}^{i}{f}_{i} = {}_{i + 1}^{i}{R}^{i + 1}{f}_{i + 1} + {}^{i}{F}_{i} \tag{6-41}
+$$
+
+$$
+{}^{i}{n}_{i} = {}^{i}{N}_{i} + {}_{i + 1}^{i}{R}^{i + 1}{n}_{i + 1} + {}^{i}{P}_{{C}_{i}} \times  {}^{i}{F}_{i} + {}^{i}{P}_{i + 1} \times  {}_{i + 1}^{i}{R}^{i + 1}{f}_{i + 1} \tag{6-42}
+$$
+
+应用这些方程对连杆依次求解，从连杆 $n$ 开始向内迭代一直到机器人基座。这些向内迭代求力的方法与第5章中介绍的静力学迭代方法相似, 只是惯性力和力矩现在是作用在每个连杆上的。
+
+在静力学中,可通过计算一个连杆施加于相邻连杆的力矩在 $\widehat{z}$ 方向的分量求得关节力矩:
+
+$$
+{\tau }_{i} = {}^{i}{n}_{i}^{T}{}^{i}{\widehat{Z}}_{i} \tag{6-43}
+$$
+
+对于移动关节 $i$ ,有
+
+$$
+{\tau }_{i} = {}^{i}{f}_{i}^{T}{}^{i}{\widehat{Z}}_{i} \tag{6-44}
+$$
+
+式中符号 $\tau$ 表示线性驱动力。
+
+注意,对一个在自由空间中运动的机器人来说, ${}^{N + 1}{f}_{N + 1}$ 和 ${}^{N + 1}{n}_{N + 1}$ 等于零,因此应用这些方程首先计算连杆 $n$ 时是很简单的。如果机器人与环境接触， ${}^{N + 1}{f}_{N + 1}$ 和 ${}^{N + 1}{n}_{N + 1}$ 不为零，力平衡方程中就包含了接触力和力矩。
+
+**牛顿-欧拉迭代动力学算法**
+
+由关节运动计算关节力矩的完整算法由两部分组成。第一部分是对每个连杆应用牛顿-欧拉方程, 从连杆1到连杆n向外迭代计算连杆的速度和加速度。第二部分是从连杆n到连杆1向内迭代计算连杆间的相互作用力和力矩以及关节驱动力矩。对于转动关节来说, 这个算法归纳如下:
+
+外推: $i : 0 \rightarrow  5$
+
+$$
+{}^{i + 1}{\omega }_{i + 1}{ = }_{i}^{i + 1}{R}^{i}{\omega }_{i} + {\dot{\theta }}_{i + 1}^{\;i + 1}{Z}_{i + 1} \tag{6-45}
+$$
+
+$$
+{}^{i + 1}{\dot{\mathbf{\omega }}}_{i + 1}{ = }_{i}^{i + 1}{R}^{i}{\dot{\mathbf{\omega }}}_{i}{ + }_{i}^{i + 1}{R}^{i}{\mathbf{\omega }}_{i} \times  {\dot{\mathbf{\theta }}}_{i + 1}{}^{i + 1}{\widehat{Z}}_{i + 1} + {\ddot{\mathbf{\theta }}}_{i + 1}{}^{i + 1}{\widehat{Z}}_{i + 1} \tag{6-46}
+$$
+
+$$
+{}^{i + 1}{\dot{\upsilon }}_{i + 1}{ = }_{i}^{i + 1}R\left( {{}^{i}{\dot{\omega }}_{i}{ \times  }^{i}{P}_{i + 1}{ + }^{i}{\omega }_{i} \times  \left( {{}^{i}{\omega }_{i}{ \times  }^{i}{P}_{i + 1}}\right) { + }^{i}{\dot{\upsilon }}_{i}}\right) \tag{6-47}
+$$
+
+$$
+{}^{i + 1}{\dot{v}}_{{C}_{i + 1}} = {}^{i + 1}{\dot{\omega }}_{i + 1} \times  {}^{i + 1}{P}_{{C}_{i + 1}}
+$$
+
+$$
+{ + }^{i + 1}{\omega }_{i + 1} \times  \left( {{}^{i + 1}{\omega }_{i + 1}{ \times  }^{i + 1}{P}_{{C}_{i + 1}}}\right) { + }^{i + 1}{\dot{v}}_{i + 1} \tag{6-48}
+$$
+
+$$
+{}^{i + 1}{F}_{i + 1} = {m}_{i + 1}{}^{i + 1}{\dot{v}}_{{C}_{i + 1}} \tag{6-49}
+$$
+
+$$
+{}^{i + 1}{N}_{i + 1} = {}^{{C}_{i + 1}}{I}_{i + 1}{}^{i + 1}{\dot{\omega }}_{i + 1} + {}^{i + 1}{\omega }_{i + 1} \times  {}^{{C}_{i + 1}}{I}_{i + 1}{}^{i + 1}{\omega }_{i + 1} \tag{6-50}
+$$
+
+内推: $i : 6 \rightarrow  1$
+
+$$
+{}^{i}{f}_{i} = {}_{i + 1}^{i}{R}^{i + 1}{f}_{i + 1} + {}^{i}{F}_{i} \tag{6-51}
+$$
+
+$$
+{}^{i}{n}_{i} = {}^{i}{N}_{i} + {}_{i + 1}^{i}{R}^{i + 1}{n}_{i + 1} + {}^{i}{P}_{{C}_{i}} \times  {}^{i}{F}_{i} \tag{6-52}
+$$
+
+$$
++ {}^{i}{P}_{i + 1}{ \times  }_{i + 1}^{i}{R}^{i + 1}{f}_{i + 1}
+$$
+
+$$
+{\tau }_{i} = {}^{i}{n}_{i}^{{T}^{i}}\widehat{Z}
+$$
+
+(6-53)
+
+**计及重力的动力学算法**
+
+令 ${}^{0}{\dot{v}}_{0} = G$ 就可以很简单地将作用在连杆上的重力因素包括到动力学方程中去,其中 $G$ 与重力矢量大小相等，而方向相反。这等效于机器人正以 $1\mathrm{\;g}$ 的加速度在做向上加速运动。这个假想的向上加速度与重力作用在连杆上的效果是相同的。因而, 不需要其他额外的计算就可以对重力影响进行计算。
+
+## 6.6 迭代形式与封闭形式的动力学方程
+
+已知关节位置、速度和加速度, 应用方程 (6-45) ~ (6-53) 就可以计算所需的关节力矩。 如同在第5章中的方法计算雅可比矩阵一样, 方程 (6-45) ~ (6-53) 主要应用于两个方面: 进行数值计算或作为一种分析算法用于符号方程的推导。
+
+将这些方程用于数值计算是很有用的, 因为这些方程适用于任何机器人。只要将待求操作臂的惯性张量、连杆质量、矢量 ${P}_{ci}$ 以及矩阵 ${}^{i + 1}R$ 带入到这些方程中,就可以直接计算出任何运动情况下的关节力矩。
+
+然而, 我们经常需要对方程的结构进行研究。例如, 重力项的形式是什么? 重力影响与惯性力影响相比较哪一个影响较大? 为了研究诸如此类的问题, 经常需要给出封闭形式的动力学方程。应用牛顿-欧拉方程递推算法对 $\Theta$ , $\dot{\Theta }$ 和 $\ddot{\Theta }$ 进行符号推导即可得到这些方程。这与第5章中推导符号形式的雅克比矩阵相似。
+
+## 6.7 封闭形式动力学方程应用举例
+
+![150_1104_904_360_342_0.jpg](../../images/150_1104_904_360_342_0.jpg)
+
+图6-6 质量集中在连杆末端的二连杆平面操作臂
+
+这里我们计算图6-6所示平面二连杆操作臂的封闭形式动力学方程。为简单起见, 假设操作臂的质量分布非常简单:每个连杆的质量都集中在连杆的末端，设其质量分别为 ${m}_{1}$ 和 ${m}_{2}$ 。
+
+首先, 确定牛顿-欧拉迭代公式中各参量的值。每个连杆质心的位置矢量
+
+$$
+{}^{1}{P}_{{C}_{1}} = {l}_{1}{\widehat{X}}_{1}
+$$
+
+$$
+{}^{2}{P}_{{C}_{2}} = {l}_{2}{\widehat{X}}_{2}
+$$
+
+由于假设为集中质量, 因此每个连杆质心的惯性张量为零矩阵:
+
+$$
+{c}_{1}{I}_{1} = 0
+$$
+
+$$
+{c}_{2}{I}_{2} = 0
+$$
+
+末端执行器上没有作用力, 因而有
+
+$$
+{f}_{3} = 0
+$$
+
+$$
+{n}_{3} = 0
+$$
+
+机器人基座不旋转, 因此有
+
+$$
+{\omega }_{0} = 0
+$$
+
+$$
+{\dot{\omega }}_{0} = 0
+$$
+
+包括重力因素, 有
+
+$$
+{}^{0}{\dot{v}}_{0} = g{\widehat{Y}}_{0}
+$$
+
+相邻连杆坐标系之间的相对转动由下式给出
+
+$$
+{}_{i + 1}^{i}R = \left\lbrack  \begin{matrix} {c}_{i + 1} &  - {s}_{i + 1} & {0.0} \\  {s}_{i + 1} & {c}_{i + 1} & {0.0} \\  {0.0} & {0.0} & {1.0} \end{matrix}\right\rbrack
+$$
+
+$$
+{}_{i}^{i + 1}R = \left\lbrack  \begin{matrix} {c}_{i + 1} & {s}_{i + 1} & {0.0} \\   - {s}_{i + 1} & {c}_{i + 1} & {0.0} \\  {0.0} & {0.0} & {1.0} \end{matrix}\right\rbrack
+$$
+
+应用方程 (6-45) $\sim  \left( {6 - {53}}\right)$ 。
+
+对连杆1用向外迭代法求解如下:
+
+$$
+{}^{1}{\omega }_{1} = {\dot{\theta }}_{1}^{1}{\widehat{Z}}_{1} = \left\lbrack  \begin{matrix} 0 \\  0 \\  {\dot{\theta }}_{1} \end{matrix}\right\rbrack
+$$
+
+$$
+{}^{1}{\dot{\omega }}_{1} = {\ddot{\theta }}_{1}^{1}{\widehat{Z}}_{1} = \left\lbrack  \begin{array}{l} 0 \\  0 \\  {\ddot{\theta }}_{1} \end{array}\right\rbrack
+$$
+
+$$
+{}^{1}{\dot{v}}_{1} = \left\lbrack  \begin{matrix} {c}_{1} & {s}_{1} & 0 \\   - {s}_{1} & {c}_{1} & 0 \\  0 & 0 & 1 \end{matrix}\right\rbrack  \left\lbrack  \begin{array}{l} 0 \\  g \\  0 \end{array}\right\rbrack   = \left\lbrack  \begin{matrix} g{s}_{1} \\  g{c}_{1} \\  0 \end{matrix}\right\rbrack
+$$
+
+$$
+{}^{1}{\dot{v}}_{{C}_{1}} = \left\lbrack  \begin{matrix} 0 \\  {l}_{1}{\ddot{\theta }}_{1} \\  0 \end{matrix}\right\rbrack   + \left\lbrack  \begin{matrix}  - {l}_{1}{\dot{\theta }}_{1}^{2} \\  0 \\  0 \end{matrix}\right\rbrack   + \left\lbrack  \begin{matrix} g{s}_{1} \\  g{c}_{1} \\  0 \end{matrix}\right\rbrack   = \left\lbrack  \begin{matrix}  - {l}_{1}{\dot{\theta }}_{1}^{2} + g{s}_{1} \\  {l}_{1}{\ddot{\theta }}_{1} + g{c}_{1} \\  0 \end{matrix}\right\rbrack \tag{6-54}
+$$
+
+$$
+{}^{1}{F}_{1} = \left\lbrack  \begin{matrix}  - {m}_{1}{l}_{1}{\dot{\theta }}_{1}^{2} + {m}_{1}g{s}_{1} \\  {m}_{1}{l}_{1}{\ddot{\theta }}_{1} + {m}_{1}g{c}_{1} \\  0 \end{matrix}\right\rbrack
+$$
+
+$$
+{}^{1}{N}_{1} = \left\lbrack  \begin{array}{l} 0 \\  0 \\  0 \end{array}\right\rbrack
+$$
+
+对连杆 2 用向外迭代法求解如下:
+
+$$
+{}^{2}{\omega }_{2} = \left\lbrack  \begin{matrix} 0 \\  0 \\  {\dot{\theta }}_{1} + {\dot{\theta }}_{2} \end{matrix}\right\rbrack
+$$
+
+$$
+{}^{2}{\dot{\omega }}_{2} = \left\lbrack  \begin{matrix} 0 \\  0 \\  {\ddot{\theta }}_{1} + {\ddot{\theta }}_{2} \end{matrix}\right\rbrack \tag{6-55}
+$$
+
+$$
+{}^{2}{\dot{v}}_{2} = \left\lbrack  \begin{matrix} {c}_{2} & {s}_{2} & 0 \\   - {s}_{2} & {c}_{2} & 0 \\  0 & 0 & 1 \end{matrix}\right\rbrack  \left\lbrack  \begin{matrix}  - {l}_{1}{\dot{\theta }}_{1}^{2} + g{s}_{1} \\  {l}_{1}{\ddot{\theta }}_{1} + g{c}_{1} \\  0 \end{matrix}\right\rbrack   = \left\lbrack  \begin{matrix} {l}_{1}{\ddot{\theta }}_{1}{s}_{2} - {l}_{1}{\dot{\theta }}_{1}^{2}{c}_{2} + g{s}_{12} \\  {l}_{1}{\ddot{\theta }}_{1}{c}_{2} + {l}_{1}{\dot{\theta }}_{1}^{2}{s}_{2} + g{c}_{12} \\  0 \end{matrix}\right\rbrack
+$$
+
+$$
+{}^{2}{\dot{v}}_{{C}_{2}} = \left\lbrack  \begin{matrix} 0 \\  {l}_{2}\left( {{\ddot{\theta }}_{1} + {\ddot{\theta }}_{2}}\right) \\  0 \end{matrix}\right\rbrack   + \left\lbrack  \begin{matrix}  - {l}_{2}{\left( {\dot{\theta }}_{1} + {\dot{\theta }}_{2}\right) }^{2} \\  0 \\  0 \end{matrix}\right\rbrack
+$$
+
+$$
++ \left\lbrack  \begin{matrix} {l}_{1}{\ddot{\theta }}_{1}{s}_{2} - {l}_{1}{\dot{\theta }}_{1}^{2}{c}_{2} + g{s}_{12} \\  {l}_{1}{\ddot{\theta }}_{1}{c}_{2} + {l}_{1}{\dot{\theta }}_{1}^{2}{s}_{2} + g{c}_{12} \\  0 \end{matrix}\right\rbrack
+$$
+
+(6-55')
+
+$$
+{}^{2}{F}_{2} = \left\lbrack  \begin{matrix} {m}_{2}{l}_{1}{\ddot{\theta }}_{1}{s}_{2} - {m}_{2}{l}_{1}{\dot{\theta }}_{1}^{2}{c}_{2} + {m}_{2}g{s}_{12} - {m}_{2}{l}_{2}{\left( {\dot{\theta }}_{1} + {\dot{\theta }}_{2}\right) }^{2} \\  {m}_{2}{l}_{1}{\ddot{\theta }}_{1}{c}_{2} + {m}_{2}{l}_{1}{\dot{\theta }}_{1}^{2}{c}_{2} + {m}_{2}g{c}_{12} + {m}_{2}{l}_{2}\left( {{\ddot{\theta }}_{1} + {\ddot{\theta }}_{2}}\right) \\  0 \end{matrix}\right\rbrack
+$$
+
+$$
+{}^{2}{N}_{2} = \left\lbrack  \begin{array}{l} 0 \\  0 \\  0 \end{array}\right\rbrack
+$$
+
+对连杆 2 用向内迭代法求解如下:
+
+$$
+{}^{2}{f}_{2} = {}^{2}{F}_{2}
+$$
+
+$$
+{}^{2}{n}_{2} = \left\lbrack  \begin{matrix} 0 \\  0 \\  0 \\  {m}_{2}{l}_{1}{l}_{2}{c}_{2}{\ddot{\theta }}_{1} + {m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{1}^{2} + {m}_{2}{l}_{2}g{c}_{12} + {m}_{2}{l}_{2}^{2}\left( {{\ddot{\theta }}_{1} + {\ddot{\theta }}_{2}}\right)  \end{matrix}\right\rbrack \tag{6-56}
+$$
+
+对连杆1用向内迭代法求解如下:
+
+$$
+{}^{1}{f}_{1} = \left\lbrack  \begin{matrix} {c}_{2} &  - {s}_{2} & 0 \\  {s}_{2} & {c}_{2} & 0 \\  0 & 0 & 1 \end{matrix}\right\rbrack  \left\lbrack  \begin{matrix} {m}_{2}{l}_{2}{s}_{2}{\ddot{\theta }}_{1} - {m}_{2}{l}_{1}{c}_{2}{\dot{\theta }}_{1}^{2} + {m}_{2}g{s}_{12} - {m}_{2}{l}_{2}{\left( {\dot{\theta }}_{1} + {\dot{\theta }}_{2}\right) }^{2} \\  {m}_{2}{l}_{1}{c}_{2}{\ddot{\theta }}_{1} + {m}_{2}{l}_{1}{s}_{2}{\dot{\theta }}_{1}^{2} + {m}_{2}g{c}_{12} + {m}_{2}{l}_{2}\left( {{\ddot{\theta }}_{1} + {\ddot{\theta }}_{2}}\right) \\  0 \end{matrix}\right\rbrack
+$$
+
+$$
++ \left\lbrack  \begin{matrix}  - {m}_{1}{l}_{1}{\dot{\theta }}_{1}^{2} + {m}_{1}g{s}_{1} \\  {m}_{1}{l}_{1}{\ddot{\theta }}_{1} + {m}_{1}g{c}_{1} \\  0 \end{matrix}\right\rbrack
+$$
+
+$$
+{}^{1}{n}_{1}^{ * } = \left\lbrack  \begin{matrix} 0 \\  0 \\  0 \\  {m}_{2}{l}_{1}{l}_{2}{c}_{2}{\ddot{\theta }}_{1} + {m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{1}^{2} + {m}_{2}{l}_{2}g{c}_{12} + {m}_{2}{l}_{2}^{2}\left( {{\ddot{\theta }}_{1} + {\ddot{\theta }}_{2}}\right)  \end{matrix}\right\rbrack \tag{6-57}
+$$
+
+$$
++ \left\lbrack  \begin{matrix} 0 \\  0 \\  {m}_{1}{l}_{1}^{2}{\ddot{\theta }}_{1} + {m}_{1}{l}_{1}g{c}_{1} \end{matrix}\right\rbrack
+$$
+
+$$
++ \left\lbrack  \begin{matrix} 0 \\  0 \\  {m}_{2}{l}_{1}^{2}{\ddot{\theta }}_{1} - {m}_{2}{l}_{1}{l}_{2}{s}_{2}{\left( {\dot{\theta }}_{1} + {\dot{\theta }}_{2}\right) }^{2} + {m}_{2}{l}_{1}g{s}_{2}{s}_{12} \\   + {m}_{2}{l}_{1}{l}_{2}{c}_{2}\left( {{\ddot{\theta }}_{1} + {\ddot{\theta }}_{2}}\right)  + {m}_{2}{l}_{1}g{c}_{2}{c}_{12} \end{matrix}\right\rbrack
+$$
+
+取 ${}^{i}{n}_{i}$ 中的 $\widehat{Z}$ 方向分量,得关节力矩:
+
+$$
+{\tau }_{1} = {m}_{2}{l}_{2}^{2}\left( {{\ddot{\theta }}_{1} + {\ddot{\theta }}_{2}}\right)  + {m}_{2}{l}_{1}{l}_{2}{c}_{2}\left( {2{\ddot{\theta }}_{1} + {\ddot{\theta }}_{2}}\right)  + \left( {{m}_{1} + {m}_{2}}\right) {l}_{1}^{2}{\ddot{\theta }}_{1} - {m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{2}^{2}
+$$
+
+$$
+- 2{m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{1}{\dot{\theta }}_{2} + {m}_{2}{l}_{2}g{c}_{12} + \left( {{m}_{1} + {m}_{2}}\right) {l}_{1}g{c}_{1} \tag{6-58}
+$$
+
+$$
+{\tau }_{2} = {m}_{2}{l}_{1}{l}_{2}{c}_{2}{\ddot{\theta }}_{1} + {m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{1}^{2} + {m}_{2}{l}_{2}g{c}_{12} + {m}_{2}{l}_{2}^{2}\left( {{\ddot{\theta }}_{1} + {\ddot{\theta }}_{2}}\right)
+$$
+
+式 (6-58) 将驱动力矩表示为关于关节位置、速度和加速度的函数。注意, 如此复杂的函数表达式描述的竟是一个假设的最简单的操作臂。可见, 一个封闭形式的6自由度操作臂的动力学方程将是相当复杂的。
+
+## 6.8 操作臂动力学方程的结构
+
+通过忽略一个方程中的某些细节可以很方便地表示操作臂的动力学方程, 而仅显示方程的某些结构。
+
+**状态空间方程**
+
+当用牛顿一欧拉方程对操作臂进行分析时, 动力学方程可以写成如下形式
+
+$$
+\tau  = M\left( \Theta \right) \ddot{\Theta } + V\left( {\Theta ,\dot{\Theta }}\right)  + G\left( \Theta \right) \tag{6-59}
+$$
+
+式中 $M\left( \Theta \right)$ 为操作臂的 $n \times  n$ 质量矩阵, $V\left( {\Theta ,\dot{\Theta }}\right)$ 是 $n \times  1$ 的离心力和哥氏力矢量, $G\left( \Theta \right)$ 是 $n \times  1$ 重力矢量。上式之所以称为状态空间方程，是因为式 (6-59) 中的矢量 $V\left( {\Theta ,\dot{\Theta }}\right)$ 取决于位置和速度 ${}^{\left( 3\right) }$ 。
+
+$M\left( \Theta \right)$ 和 $G\left( \Theta \right)$ 中的元素都是关于操作臂所有关节位置 $\Theta$ 的复杂函数。而 $V\left( {\Theta ,\dot{\Theta }}\right)$ 中的元素都是关于 $\Theta$ 和 $\dot{\Theta }$ 的复杂函数。
+
+可以将操作臂动力学方程中不同类型的项划分为质量矩阵、离心力和哥氏力矢量以及重力矢量。
+
+例6.3
+
+求6.7节中操作臂的 $M\left( \Theta \right) , V\left( {\Theta ,\dot{\Theta }}\right)$ 和 $G\left( \Theta \right)$ 。
+
+式 (6-59) 定义了操作臂的质量矩阵 $M\left( \Theta \right)$ ,组成 $M\left( \Theta \right)$ 的所有各项均为 $\Theta$ 的函数并与 $\ddot{\Theta }$ 相乘。因此有
+
+$$
+M\left( \Theta \right)  = \left\lbrack  \begin{matrix} {l}_{2}^{2}{m}_{2} + 2{l}_{1}{l}_{2}{m}_{2}{c}_{2} + {l}_{1}^{2}\left( {{m}_{1} + {m}_{2}}\right) & {l}_{2}^{2}{m}_{2} + {l}_{1}{l}_{2}{m}_{2}{c}_{2} \\  {l}_{2}^{2}{m}_{2} + {l}_{1}{l}_{2}{m}_{2}{c}_{2} & {l}_{2}^{2}{m}_{2} \end{matrix}\right\rbrack \tag{6-60}
+$$
+
+操作臂的质量矩阵都是对称和正定的, 因而都是可逆的。
+
+速度项 $V\left( {\Theta ,\dot{\Theta }}\right)$ 包含了所有与关节速度有关的项,即
+
+$$
+V\left( {\Theta ,\dot{\Theta }}\right)  = \left\lbrack  \begin{matrix}  - {m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{2}^{2} - 2{m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{1}{\dot{\theta }}_{2} \\  {m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{1}^{2} \end{matrix}\right\rbrack \tag{6-61}
+$$
+
+$- {m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{2}^{2}$ 是与离心力有关的项,因为它是关节速度的平方。 $- 2{m}_{2}{l}_{1}{l}_{2}{s}_{2}{\dot{\theta }}_{1}{\dot{\theta }}_{2}$ 是与哥氏力有关的项, 因为它总是包含两个不同关节速度的乘积。
+
+重力项 $G\left( \Theta \right)$ 包含了所有与重力加速度 $g$ 有关的项,因而有
+
+$$
+G\left( \Theta \right)  = \left\lbrack  \begin{matrix} {m}_{2}{l}_{2}g{c}_{12} + \left( {{m}_{1} + {m}_{2}}\right) {l}_{1}g{c}_{1} \\  {m}_{2}{l}_{2}g{c}_{12} \end{matrix}\right\rbrack \tag{6-62}
+$$
+
+注意，重力项只与 $\Theta$ 有关，而与它的导数无关。
+
+**形位空间方程**
+
+将动力学方程中的速度项 $V\left( {\Theta ,\dot{\Theta }}\right)$ 写成另外一种形式如下
+
+$$
+\tau  = M\left( \Theta \right) \ddot{\Theta } + B\left( \Theta \right) \left\lbrack  {\dot{\Theta }\dot{\Theta }}\right\rbrack   + C\left( \Theta \right) \left\lbrack  {\dot{\Theta }}^{2}\right\rbrack   + G\left( \Theta \right) \tag{6-63}
+$$
+
+式中 $B\left( \Theta \right)$ 是 $n \times  n\left( {n - 1}\right) /2$ 阶的哥氏力系数矩阵, $\left\lbrack  {\dot{\Theta }\dot{\Theta }}\right\rbrack$ 是 $n\left( {n - 1}\right) /2 \times  1$ 阶的关节速度积矢量,即
+
+$$
+\left\lbrack  {\dot{\Theta }\dot{\Theta }}\right\rbrack   = {\left\lbrack  {\dot{\theta }}_{1}{\dot{\theta }}_{2}{\dot{\theta }}_{1}{\dot{\theta }}_{3}\cdots {\dot{\theta }}_{n - 1}{\dot{\theta }}_{n}\right\rbrack  }^{T} \tag{6-64}
+$$
+
+$C\left( \Theta \right)$ 是 $n \times  n$ 阶离心力系数矩阵,而 $\left\lbrack  {\dot{\Theta }}^{2}\right\rbrack$ 是 $n \times  1$ 阶矢量,即
+
+$$
+{\left\lbrack  \begin{array}{llll} {\dot{\theta }}_{1}^{2} & {\dot{\theta }}_{2}^{2} & \cdots & {\dot{\theta }}_{n}^{2} \end{array}\right\rbrack  }^{T} \tag{6-65}
+$$
+
+式 (6-63) 称为形位空间方程, 因为它的系数矩阵仅是操作臂位置的函数 ${}^{\left( 3\right) }$ 。
+
+在这种形式的动力学方程中, 计算的复杂性反映在对各种参数的计算方式上, 而这些参数仅是操作臂位置 $\Theta$ 的函数。在应用中 (例如在计算机控制操作臂时),重要的是要求动力学方程必须随着操作臂的运动不断更新。(方程 (6-63) 表明了哪些参数仅是关节位置的函数, 并且能够随着操作臂位形的变化及时更新。) 在第10章中将讨论与操作臂控制有关的计算方法问题。
+
+例6.4
+
+求6.7节中操作臂的 $B\left( \Theta \right)$ 和 $C\left( \Theta \right)$ (见式 (6-63))。
+
+对于图示的简单二连杆操作臂, 有
+
+$$
+\left\lbrack  {\dot{\Theta }\dot{\Theta }}\right\rbrack   = \left\lbrack  {{\dot{\theta }}_{1}{\dot{\theta }}_{2}}\right\rbrack
+$$
+
+$$
+\left\lbrack  {\dot{\Theta }}^{2}\right\rbrack   = \left\lbrack  \begin{matrix} {\dot{\theta }}_{1}^{2} \\  {\dot{\theta }}_{2}^{2} \end{matrix}\right\rbrack \tag{6-66}
+$$
+
+因此有
+
+$$
+B\left( \Theta \right)  = \left\lbrack  \begin{matrix}  - 2{m}_{2}{l}_{1}{l}_{2}{s}_{2} \\  0 \end{matrix}\right\rbrack \tag{6-67}
+$$
+
+和
+
+$$
+C\left( \Theta \right)  = \left\lbrack  \begin{matrix} 0 &  - {m}_{2}{l}_{1}{l}_{2}{s}_{2} \\  {m}_{2}{l}_{1}{l}_{2}{s}_{2} & 0 \end{matrix}\right\rbrack \tag{6-68}
+$$
+
+## 6.9 操作臂动力学的拉格朗日公式
+
+牛顿-欧拉方法是基于基本动力学公式 (6-29) 和 (6-30) 以及作用在连杆之间约束力和力矩分析之上的。替代牛顿-欧拉方法的另一种方法是本节我们将要简要介绍的拉格朗日动力学公式。牛顿一欧拉公式可以被认为是一种解决动力学问题的力平衡方法, 而拉格朗日公式则是一种基于能量的动力学方法。当然, 对于同一个操作臂来说, 两种方法得到的运动方程是相同的。我们这里讨论的拉格朗日动力学是比较简单的, 有时特指刚性连杆串联的操作臂的情况。更全面的介绍,可参见文献[4]。
+
+首先讨论操作臂动能的表达式。第 $i$ 根连杆的动能 ${k}_{i}$ 可以表示为
+
+$$
+{k}_{i} = \frac{1}{2}{m}_{i}{v}_{{C}_{i}}^{T}{v}_{{C}_{i}} + \frac{1}{2}{}^{i}{\omega }_{i}^{T}{}^{{C}_{i}}{I}_{i}{}^{i}{\omega }_{i} \tag{6-69}
+$$
+
+式中第一项是由连杆质心线速度产生的动能, 第二项是由连杆的角速度产生的动能。整个操作臂的动能是各个连杆动能之和, 即
+
+$$
+k = \mathop{\sum }\limits_{{i = 1}}^{n}{k}_{i} \tag{6-70}
+$$
+
+式 (6-69) 中的 ${v}_{{C}_{i}}$ 和 ${}^{i}{\omega }_{i}$ 是 $\Theta$ 和 $\dot{\Theta }$ 的函数。由此我们可知操作臂的动能 $k\left( {\Theta ,\dot{\Theta }}\right)$ 可以描述为关节位置和速度的标量函数。事实上，操作臂的动能可以写成
+
+$$
+k\left( {\Theta ,\dot{\Theta }}\right)  = \frac{1}{2}{\dot{\Theta }}^{T}M\left( \Theta \right) \dot{\Theta } \tag{6-71}
+$$
+
+这里 $M\left( \Theta \right)$ 是在 6.8 节介绍过的 $n \times  n$ 操作臂的质量矩阵。我们知道式 (6-71) 的表达是一种二次型 ${}^{\left\lbrack  5\right\rbrack  }$ ,也就是说,将这个矩阵展开后,方程全部是由 ${\dot{\theta }}_{i}$ 的二次项组成的。而且,由于总动能永远是正的, 因此操作臂质量矩阵一定是正定矩阵。正定矩阵的二次型永远是正值。方程 (6-71) 类似于我们熟悉的质点动能表达式
+
+$$
+k = \frac{1}{2}m{v}^{2} \tag{6-72}
+$$
+
+实际上操作臂的质量矩阵一定是正定的, 这类似于质量总是正数这一事实。
+
+第 $i$ 根连杆的势能 ${u}_{i}$ 可以表示为
+
+$$
+{u}_{i} =  - {m}_{i}^{0}{g}^{T0}{P}_{{C}_{i}} + {u}_{{re}{f}_{i}} \tag{6-73}
+$$
+
+这里 ${}^{0}g$ 是 $3 \times  1$ 的重力矢量， ${}^{0}{P}_{{C}_{i}}$ 是位于第 $i$ 根连杆质心的矢量， ${u}_{{re}{f}_{i}}$ 是使 ${u}_{i}$ 的最小值为零的常数 ${}^{ \ominus  }$ 。操作臂的总势能为各个连杆势能之和,即
+
+$$
+u = \mathop{\sum }\limits_{{i = 1}}^{n}{u}_{i} \tag{6-74}
+$$
+
+因为式 (6-73) 中的 ${}^{0}{P}_{{C}_{i}}$ 是 $\Theta$ 的函数,由此可以看出操作臂的势能 $u\left( \Theta \right)$ 可以描述为关节位置的标量函数。
+
+---
+
+$\Theta$ 实际上动力学方程中仅出现势能对于 $\Theta$ 的偏导数,因此这个常数是任意的,这相当于势能可以相对于任意一个参考零点来定义。
+
+---
+
+拉格朗日动力学公式给出了一种从标量函数推导动力学方程的方法, 我们称这个标量函数为拉格朗日函数, 即一个机械系统的动能和势能的差值。这里, 操作臂的拉格朗日函数可表示为
+
+$$
+\mathcal{L}\left( {\Theta ,\dot{\Theta }}\right)  = k\left( {\Theta ,\dot{\Theta }}\right)  - u\left( \Theta \right) \tag{6-75}
+$$
+
+则操作臂的运动方程为
+
+$$
+\frac{d}{dt}\frac{\partial \mathcal{L}}{\partial \dot{\Theta }} - \frac{\partial \mathcal{L}}{\partial \Theta } = \tau \tag{6-76}
+$$
+
+这里 $\tau$ 是 $n \times  1$ 的驱动力矩矢量。对于操作臂来说,方程变为
+
+$$
+\frac{d}{dt}\frac{\partial k}{\partial \dot{\Theta }} - \frac{\partial k}{\partial \Theta } + \frac{\partial u}{\partial \Theta } = \tau \tag{6-77}
+$$
+
+为简化起见,这里省略了 $k\left( \cdot \right)$ 和 $u\left( \cdot \right)$ 中的自变量。
+
+例6.5
+
+在图6-7中, RP操作臂连杆的惯性张量为
+
+$$
+{c}_{1}{I}_{1} = \left\lbrack  \begin{matrix} {I}_{xx1} & 0 & 0 \\  0 & {I}_{yy1} & 0 \\  0 & 0 & {I}_{zz1} \end{matrix}\right\rbrack
+$$
+
+$$
+{c}_{2}{I}_{2} = \left\lbrack  \begin{matrix} {I}_{xx2} & 0 & 0 \\  0 & {I}_{yy2} & 0 \\  0 & 0 & {I}_{zz2} \end{matrix}\right\rbrack \tag{6-78}
+$$
+
+总质量为 ${m}_{1}$ 和 ${m}_{2}$ 。从图 6-7 中可知,连杆 1 的质心与关节 1 的轴线相距 ${l}_{1}$ ,连杆 2 的质心与关节 1 的轴线距离为变量 ${d}_{2}$ 。用拉格朗日动力学方法求此操作臂的动力学方程。
+
+![156_494_1301_659_467_0.jpg](../../images/156_494_1301_659_467_0.jpg)
+
+图6-7 例6.5中的RP操作臂
+
+由式 (6-69), 我们可写出连杆1的动能为
+
+$$
+{k}_{1} = \frac{1}{2}{m}_{1}{l}_{1}^{2}{\dot{\theta }}_{1}^{2} + \frac{1}{2}{I}_{zz1}{\dot{\theta }}_{1}^{2} \tag{6-79}
+$$
+
+连杆2的动能为
+
+$$
+{k}_{2} = \frac{1}{2}{m}_{2}\left( {{d}_{2}^{2}{\dot{\theta }}_{1}^{2} + {\dot{d}}_{2}^{2}}\right)  + \frac{1}{2}{I}_{zz2}{\dot{\theta }}_{1}^{2} \tag{6-80}
+$$
+
+因此, 总动能为
+
+$$
+k\left( {\Theta ,\dot{\Theta }}\right)  = \frac{1}{2}\left( {{m}_{1}{l}_{1}^{2} + {I}_{zz1} + {I}_{zz2} + {m}_{2}{d}_{2}^{2}}\right) {\dot{\theta }}_{1}^{2} + \frac{1}{2}{m}_{2}{\dot{d}}_{2}^{2} \tag{6-81}
+$$
+
+由式 (6-73), 可写出连杆1的势能
+
+$$
+{u}_{1} = {m}_{1}{l}_{1}g\sin {\theta }_{1} + {m}_{1}{l}_{1}g \tag{6-82}
+$$
+
+连杆2的势能
+
+$$
+{u}_{2} = {m}_{2}g{d}_{2}\sin {\theta }_{1} + {m}_{2}g{d}_{2\max } \tag{6-83}
+$$
+
+在这里 ${d}_{2\max }$ 是关节2的最大运动范围。因此,总势能为
+
+$$
+u\left( \Theta \right)  = g\left( {{m}_{1}{l}_{1} + {m}_{2}{d}_{2}}\right) \sin {\theta }_{1} + {m}_{1}{l}_{1}g + {m}_{2}g{d}_{2\max } \tag{6-84}
+$$
+
+其次, 求式 (6-77) 中的偏导数
+
+$$
+\frac{\partial k}{\partial \dot{\Theta }} = \left\lbrack  \begin{matrix} \left( {{m}_{1}{l}_{1}^{2} + {I}_{zz1} + {I}_{zz2} + {m}_{2}{d}_{2}^{2}}\right) {\dot{\theta }}_{1} \\  {m}_{2}{d}_{2} \end{matrix}\right\rbrack \tag{6-85}
+$$
+
+$$
+\frac{\partial k}{\partial \Theta } = \left\lbrack  \begin{matrix} 0 \\  {m}_{2}{d}_{2}{\dot{\theta }}_{1}^{2} \end{matrix}\right\rbrack \tag{6-86}
+$$
+
+$$
+\frac{\partial u}{\partial \Theta } = \left\lbrack  \begin{matrix} g\left( {{m}_{1}{l}_{1} + {m}_{2}{d}_{2}}\right) \cos {\theta }_{1} \\  g{m}_{2}\sin {\theta }_{1} \end{matrix}\right\rbrack \tag{6-87}
+$$
+
+最后, 代入式 (6-77) 中, 得
+
+$$
+{\tau }_{1} = \left( {{m}_{1}{l}_{1}^{2} + {I}_{zz1} + {I}_{zz2} + {m}_{2}{d}_{2}^{2}}\right) {\ddot{\theta }}_{1} + 2{m}_{2}{d}_{2}{\dot{\theta }}_{1}{\dot{d}}_{2}
+$$
+
+$$
++ \left( {{m}_{1}{l}_{1} + {m}_{2}{d}_{2}}\right) g\cos {\theta }_{1} \tag{6-88}
+$$
+
+$$
+{\tau }_{2} = {m}_{2}{\ddot{d}}_{2} - {m}_{2}{d}_{2}{\dot{\theta }}_{1}^{2} + {m}_{2}g\sin {\theta }_{1}
+$$
+
+由式 (6-88) 可看出
+
+$$
+M\left( \Theta \right)  = \left\lbrack  \begin{matrix} \left( {{m}_{1}{l}_{1}^{2} + {I}_{zz1} + {I}_{zz2} + {m}_{2}{d}_{2}^{2}}\right) & 0 \\  0 & {m}_{2} \end{matrix}\right\rbrack
+$$
+
+$$
+V\left( {\Theta ,\dot{\Theta }}\right)  = \left\lbrack  \begin{matrix} 2{m}_{2}{d}_{2}{\dot{\theta }}_{1}{\dot{d}}_{2} \\   - {m}_{2}{d}_{2}{\dot{\theta }}_{1}^{2} \end{matrix}\right\rbrack \tag{6-89}
+$$
+
+$$
+G\left( \Theta \right)  = \left\lbrack  \begin{matrix} \left( {{m}_{1}{l}_{1} + {m}_{2}{d}_{2}}\right) g\cos {\theta }_{1} \\  {m}_{2}g\sin {\theta }_{1} \end{matrix}\right\rbrack
+$$
+
+## 6.10 建立笛卡儿空间的规范化操作臂动力学方程
+
+上述动力学方程均是按照操作臂关节角(即关节空间)对位置和时间的导数建立的, 其一般形式为
+
+$$
+\tau  = M\left( \Theta \right) \ddot{\Theta } + V\left( {\Theta ,\dot{\Theta }}\right)  + G\left( \Theta \right) \tag{6-90}
+$$
+
+建立关节空间方程的目的是便于应用串联机构的性质推导动力学方程。本节将讨论笛卡儿空间末端执行器的加速度与作用在末端执行器上的笛卡儿空间力和力矩之间关系的动力学方程。
+
+**笛卡儿状态空间方程**
+
+在第10章和第11章将会看到, 有时希望应用笛卡儿变量的一般形式 ${}^{\lbrack 6\rbrack }$ 建立操作臂的动力学方程。
+
+$$
+\mathcal{F} = {M}_{x}\left( \Theta \right) \ddot{\chi } + {V}_{x}\left( {\Theta ,\dot{\Theta }}\right)  + {G}_{x}\left( \Theta \right) \tag{6-91}
+$$
+
+这里 $\mathcal{F}$ 是作用于机器人末端执行器上的力和力矩矢量, $\chi$ 是一个能够恰当表达末端执行器位姿的笛卡儿矢量 ${}^{\left\lbrack  7\right\rbrack  }$ 。与关节空间参数相似, ${M}_{x}\left( \Theta \right)$ 是笛卡儿质量矩阵, ${V}_{x}\left( {\Theta ,\dot{\Theta }}\right)$ 是笛卡儿空间的速度项矢量, ${G}_{x}\left( \Theta \right)$ 是笛卡儿空间的重力项矢量。注意,作用于末端执行器上的摩擦力 $\mathcal{F}$ 实际上可以用关节驱动器的驱动力表示, 即通过下面的关系式
+
+$$
+\tau  = {J}^{r}\left( \Theta \right) \mathcal{F} \tag{6-92}
+$$
+
+这里雅克比矩阵 $J\left( \Theta \right)$ 与 $\mathcal{F}$ 和 $\ddot{\chi }$ 的坐标系相同,这个坐标系通常为工具坐标系。
+
+可以用如下方法得出式 (6-90) 和式 (6-91) 中各项之间的对应关系。首先, 用雅克比转置矩阵的逆阵左乘式 (6-90) 得到
+
+$$
+{J}^{-T}\tau  = {J}^{-T}M\left( \Theta \right) \ddot{\Theta } + {J}^{-T}V\left( {\Theta ,\dot{\Theta }}\right)  + {J}^{-T}G\left( \Theta \right) \tag{6-93}
+$$
+
+或
+
+$$
+\mathcal{F} = {J}^{-T}M\left( \Theta \right) \ddot{\Theta } + {J}^{-T}V\left( {\Theta ,\dot{\Theta }}\right)  + {J}^{-T}G\left( \Theta \right) \tag{6-94}
+$$
+
+其次, 求关节空间和笛卡儿空间加速度之间的关系。由雅克比矩阵的定义得
+
+$$
+\dot{\chi } = J\dot{\Theta } \tag{6-95}
+$$
+
+求导得
+
+$$
+\ddot{x} = \dot{J}\dot{\Theta } + J\ddot{\Theta } \tag{6-96}
+$$
+
+求解式 (6-96) 得关节空间的加速度
+
+$$
+\ddot{\Theta } = {J}^{-1}\ddot{\chi } - {J}^{-1}\dot{J}\dot{\Theta } \tag{6-97}
+$$
+
+把式 (6-97) 代入式 (6-94) 得
+
+$$
+\mathcal{F} = {J}^{-T}M\left( \Theta \right) {J}^{-1}\ddot{\chi } - {J}^{-T}M\left( \Theta \right) {J}^{-1}\dot{J}\dot{\Theta } + {J}^{-T}V\left( {\Theta ,\dot{\Theta }}\right)  + {J}^{-T}G\left( \Theta \right) \tag{6-98}
+$$
+
+由此可以得出笛卡儿空间动力学方程中各项的表达式
+
+$$
+{M}_{x}\left( \Theta \right)  = {J}^{-T}\left( \Theta \right) M\left( \Theta \right) {J}^{-1}\left( \Theta \right)
+$$
+
+$$
+{V}_{x}\left( {\Theta ,\dot{\Theta }}\right)  = {J}^{-T}\left( \Theta \right) \left( {V\left( {\Theta ,\dot{\Theta }}\right)  - M\left( \Theta \right) {J}^{-1}\left( \Theta \right) \dot{J}\left( \Theta \right) \dot{\Theta }}\right) \tag{6-99}
+$$
+
+$$
+{G}_{x}\left( \Theta \right)  = {J}^{-T}\left( \Theta \right) G\left( \Theta \right)
+$$
+
+注意,式 (6-99) 中的雅克比矩阵和式 (6-91) 中的 $\mathcal{F}$ 和 $\chi$ 的坐标系相同,这个坐标系的选择是任意的 ${}^{ \ominus  }$ 。当操作臂达到奇异位置时，笛卡儿空间动力学方程中的某些量将趋于无穷大。
+
+---
+
+$\Theta$ 为便于计算,可选择笛卡儿坐标系。
+
+---
+
+例6.6
+
+对于6.7节中的二连杆平面机械臂, 求笛卡儿空间形式的动力学方程。按照固连于第二根连杆末端的坐标系, 写出它的动力学方程。
+
+我们已经求出了这个操作臂的动力学方程 (在6.7节中) 和雅克比矩阵 (方程5.66), 这里我们重新给出
+
+$$
+J\left( \Theta \right)  = \left\lbrack  \begin{matrix} {l}_{1}{s}_{2} & 0 \\  {l}_{1}{c}_{2} + {l}_{2} & {l}_{2} \end{matrix}\right\rbrack \tag{6-100}
+$$
+
+首先计算这个雅克比逆矩阵
+
+$$
+{J}^{-1}\left( \Theta \right)  = \frac{1}{{l}_{1}{l}_{2}{s}_{2}}\left\lbrack  \begin{matrix} {l}_{2} & 0 \\   - {l}_{1}{c}_{2} - {l}_{2} & {l}_{1}{s}_{2} \end{matrix}\right\rbrack \tag{6-101}
+$$
+
+然后将个雅克比矩阵对时间求导, 得
+
+$$
+\dot{J}\left( \Theta \right)  = \left\lbrack  \begin{matrix} {l}_{1}{c}_{2}{\dot{\theta }}_{2} & 0 \\   - {l}_{1}{s}_{2}{\theta }_{2} & 0 \end{matrix}\right\rbrack \tag{6-102}
+$$
+
+利用式 (6-99) 和6.7节中的结果可得
+
+$$
+{M}_{x}\left( \Theta \right)  = \left\lbrack  \begin{matrix} {m}_{2} + \frac{{m}_{1}}{{s}_{2}^{2}} & 0 \\  0 & {m}_{2} \end{matrix}\right\rbrack
+$$
+
+$$
+{V}_{x}\left( {\Theta ,\dot{\Theta }}\right)  = \left\lbrack  \begin{matrix}  - \left( {{m}_{2}{l}_{1}{c}_{2} + {m}_{2}{l}_{2}}\right) {\dot{\theta }}_{1}^{2} - {m}_{2}{l}_{2}{\dot{\theta }}_{2}^{2} - \left( {2{m}_{2}{l}_{2} + {m}_{2}{l}_{1}{c}_{2} + {m}_{1}{l}_{1}\frac{{c}_{2}}{{s}_{2}^{2}}}\right) {\dot{\theta }}_{1}{\dot{\theta }}_{2} \\  {m}_{2}{l}_{1}{s}_{2}{\dot{\theta }}_{1}^{2} + {l}_{1}{m}_{2}{s}_{2}{\dot{\theta }}_{1}{\dot{\theta }}_{2} \end{matrix}\right\rbrack \tag{6-103}
+$$
+
+$$
+{G}_{x}\left( \Theta \right)  = \left\lbrack  \begin{matrix} {m}_{1}g\frac{{c}_{1}}{{s}_{2}} + {m}_{2}g{s}_{12} \\  {m}_{2}g{c}_{12} \end{matrix}\right\rbrack
+$$
+
+当 ${s}_{2} = 0$ 时，操作臂位于奇异位置，动力学方程中的某些项将趋于无穷大。例如，当 ${\theta }_{2} = 0$ (机械臂伸直),末端执行器的笛卡儿有效质量在连杆2末端坐标系 ${\widehat{X}}_{2}$ 方向上变为无穷大。一般奇异位形存在一个特定的方向, 在这个奇异方向上运动是不可能的, 但在与这个方向 “正交”的子空间的一般运动是可能的 ${}^{\left\lbrack  8\right\rbrack  }$ 。
+
+**笛卡儿位形空间中的力矩方程**
+
+联立式 (6-91) 和式 (6-92), 可以用笛卡儿空间动力学方程写出等价的关节力矩
+
+$$
+\tau  = {J}^{T}\left( \Theta \right) \left( {{M}_{x}\left( \Theta \right) \ddot{\chi } + {V}_{x}\left( {\Theta ,\dot{\Theta }}\right)  + {G}_{x}\left( \Theta \right) }\right) \tag{6-104}
+$$
+
+将上式改写为如下形式有助于进一步讨论
+
+$$
+\tau  = {J}^{T}\left( \Theta \right) {M}_{x}\left( \Theta \right) \ddot{\chi } + {B}_{x}\left( \Theta \right) \left\lbrack  {\dot{\Theta }\dot{\Theta }}\right\rbrack   + {C}_{x}\left( \Theta \right) \left\lbrack  {\dot{\Theta }}^{2}\right\rbrack   + G\left( \Theta \right) \tag{6-105}
+$$
+
+式中 ${B}_{x}\left( \Theta \right)$ 是 $n \times  n\left( {n - 1}\right) /2$ 阶的哥氏力系数矩阵, $\left\lbrack  {\dot{\Theta },\dot{\Theta }}\right\rbrack$ 是 $n\left( {n - 1}\right) /2 \times  1$ 的关节速度积矢量,即
+
+$$
+\left\lbrack  {\dot{\Theta }\dot{\Theta }}\right\rbrack   = {\left\lbrack  {\dot{\theta }}_{1}{\dot{\theta }}_{2}{\dot{\theta }}_{1}{\dot{\theta }}_{3}\cdots {\dot{\theta }}_{n - 1}{\dot{\theta }}_{n}\right\rbrack  }^{T} \tag{6-106}
+$$
+
+${C}_{x}\left( \Theta \right)$ 是 $n \times  n$ 阶的离心系数矩阵, $\left\lbrack  {\dot{\Theta }}^{2}\right\rbrack$ 是 $n \times  1$ 阶矢量,由下式给出
+
+$$
+{\left\lbrack  {\dot{\theta }}_{1}^{2}{\dot{\theta }}_{2}^{2}\cdots {\dot{\theta }}_{n}^{2}\right\rbrack  }^{T} \tag{6-107}
+$$
+
+注意,在式 (6-105) 中, $G\left( \Theta \right)$ 与关节空间方程中的相同,但一般情况下, ${B}_{x}\left( \Theta \right)  \neq  B\left( \Theta \right)$ , ${C}_{x}\left( \Theta \right)  \neq  C\left( \Theta \right)$ 。
+
+例6.7
+
+根据式 (6-105),求 6.7 节中操作臂的 ${B}_{x}\left( \Theta \right)$ 和 ${C}_{x}\left( \Theta \right)$ 。
+
+如果求出 ${J}^{T}\left( \Theta \right) {V}_{x}\left( {\Theta ,\dot{\Theta }}\right)$ 的乘积,可得
+
+$$
+{B}_{x}\left( \Theta \right)  = \left\lbrack  \begin{matrix} {m}_{1}{l}_{1}^{2}\frac{{c}_{2}}{{s}_{2}} - {m}_{2}{l}_{1}{l}_{2}{s}_{2} \\  {m}_{2}{l}_{1}{l}_{2}{s}_{2} \end{matrix}\right\rbrack \tag{6-108}
+$$
+
+和
+
+$$
+{C}_{x}\left( \Theta \right)  = \left\lbrack  \begin{matrix} 0 &  - {m}_{2}{l}_{1}{l}_{2}{s}_{2} \\  {m}_{2}{l}_{1}{l}_{2}{s}_{2} & 0 \end{matrix}\right\rbrack \tag{6-109}
+$$
+
+## 6.11 计及非刚体效应
+
+值得注意的是, 我们推导出的动力学方程未能包含全部作用于操作臂上的力。它们只包含了刚体力学中的那些力, 而没有包含摩擦力。然而摩擦力也是一种最重要的力, 所有的机构都必然受到摩擦力的影响。齿轮传动在目前的操作臂中是相当典型的，然而由于摩擦产生的力是相当大的——在典型工况下大约相当于操作臂驱动力矩的25%。
+
+为了使动力学方程能够反应实际工况, 建立这些摩擦力的模型 (至少是近似的) 是非常重要的。最简单的摩擦力模型就是粘性摩擦，摩擦力矩与关节运动速度成正比，因此有
+
+$$
+{\tau }_{\text{ friction }} = v\dot{\theta } \tag{6-110}
+$$
+
+这里 $v$ 是粘性摩擦系数。有时应用另一个简单的摩擦模型,就是库仑摩擦。库仑摩擦是一个常数, 它的符号取决于关节速度, 即
+
+$$
+{\tau }_{\text{ friction }} = c\operatorname{sgn}\left( \dot{\theta }\right) \tag{6-111}
+$$
+
+式中 $c$ 是库伦摩擦常数。当 $\dot{\theta } = 0$ 时, $c$ 值一般取为 1,通常称为静摩擦系数; 当 $\dot{\theta } \neq  0$ 时, $c$ 值小于 1 , 称为动摩擦系数。对某个操作臂关节来说,采用粘性摩擦模型还是库仑摩擦模型是一个比较复杂的问题, 这与润滑情况及其他影响因素有关。比较合理的模型是二者兼顾, 可表示为
+
+$$
+{\tau }_{\text{ friction }} = c\operatorname{sgn}\left( \dot{\theta }\right)  + v\dot{\theta } \tag{6-112}
+$$
+
+在许多操作臂关节中，摩擦力也与关节位置有关。主要原因是齿轮失圆，齿轮的偏心将会导致摩擦力随关节位置而变化, 因此一个比较复杂的摩擦力模型为
+
+$$
+{\tau }_{\text{ friction }} = f\left( {\theta ,\dot{\theta }}\right) \tag{6-113}
+$$
+
+然后将这些摩擦力模型附加到刚体力学模型中的动力学项中, 得到一个更完整的模型
+
+$$
+\tau  = M\left( \Theta \right) \ddot{\Theta } + V\left( {\Theta ,\dot{\Theta }}\right)  + G\left( \Theta \right)  + F\left( {\Theta ,\dot{\Theta }}\right) \tag{6-114}
+$$
+
+在这个模型中还忽略了其他一些影响因素。比如, 刚性连杆的假设意味着在运动方程中未包括弯曲效应 (能够引起谐振)。但是这些影响因素的建模十分复杂, 已经超出了本书的范围(见文献[9, 10])。
+
+## 6.12 动力学仿真
+
+为了对操作臂的运动进行仿真，我们必须应用上节中建立的动力学模型。由封闭形式的动力学方程式 (6-59), 可通过仿真求出动力学方程中的加速度
+
+$$
+\ddot{\Theta } = {M}^{-1}\left( \Theta \right) \left( {\tau  - V\left( {\Theta ,\dot{\Theta }}\right)  - G\left( \Theta \right)  - F\left( {\Theta ,\dot{\Theta }}\right) }\right) \tag{6-115}
+$$
+
+可以应用几种已知的数值积分方法对加速度积分, 计算出位置和速度。
+
+已知操作臂运动的初始条件, 通常为下面的形式
+
+$$
+\Theta \left( 0\right)  = {\Theta }_{0} \tag{6-116}
+$$
+
+$$
+\dot{\Theta }\left( 0\right)  = 0
+$$
+
+用步长 ${\Delta t}$ 对式 (6-115) 进行数值积分。数值积分的方法有许多种 ${}^{\left\lbrack  {11}\right\rbrack  }$ 。这里,我们介绍最简单的一种数值积分方法,称为欧拉积分: 从 $t = 0$ 开始,进行迭代计算
+
+$$
+\dot{\Theta }\left( {t + {\Delta t}}\right)  = \dot{\Theta }\left( t\right)  + \ddot{\Theta }\left( t\right) {\Delta t}
+$$
+
+$$
+\Theta \left( {t + {\Delta t}}\right)  = \Theta \left( t\right)  + \dot{\Theta }\left( t\right) {\Delta t} + \frac{1}{2}\ddot{\Theta }\left( t\right) \Delta {t}^{2} \tag{6-117}
+$$
+
+式中,对于每次迭代,要由式 (6-115) 计算一次 $\ddot{\Theta }$ 。这样,通过输入已知的力矩函数,用数值积分方法即可求出操作臂的位置、速度和加速度。
+
+欧拉积分的概念是简单的,然而可采用更复杂的积分方法进行更精确有效的仿真 ${}^{\left\lbrack  {11}\right\rbrack  }$ 。如何选择 ${\Delta t}$ 的大小是经常遇到的问题。 ${\Delta t}$ 应当小到将连续时间离散为很小的时间增量,使得这个近似是合理的,但 ${\Delta t}$ 不应当过小,以免仿真计算花费的计算时间过长。
+
+## 6.13 计算效率问题
+
+因为典型操作臂的动力学方程非常复杂, 因此必须考虑计算效率问题。本节中只讨论关节空间动力学问题, 关于笛卡儿空间动力学的计算效率问题可参考文献[7, 8]。
+
+**关于计算效率的研究简介**
+
+仅考虑向外迭代计算和向内迭代计算的简单情况, 在计算方程 (6-45) - (6-53) 时需要进行的乘法计算和加法计算的次数为
+
+$$
+\text{ 126n - 99次乘法 }
+$$
+
+$$
+\text{ 106n - 92次加法 }
+$$
+
+式中 $n$ 是连杆的数量 (这里至少为 2 )。尽管这个计算显得有些复杂,但这个方程的计算效率与前面提到的一些操作臂动力学公式相比要高得多。文献[12, 13]中操作臂动力学方程的第一个公式是直接通过拉格朗日计算方法得到的, 这种方法大约需要的计算次数为 ${}^{\left\lbrack  {14}\right\rbrack  }$ 。
+
+$$
+{32}{n}^{4} + {86}{n}^{3} + {171}{n}^{2} + {53n} - {128}\text{ 次乘法 }
+$$
+
+$$
+{25}{n}^{4} + {66}{n}^{3} + {129}{n}^{2} + {42n} - {96}\text{ 次加法 }
+$$
+
+在典型情况下,即 $n = 6$ 时,牛顿-欧拉迭代方法的计算效率将比拉格朗日方法高约 100 倍! 当然这两种方法得出的方程是等效的, 数值计算的结果是完全相同的, 但是方程的结构大不相同。这并不是说拉格朗日方法不能得到有效的方程。而是说, 通过这种比较说明, 在针对某一问题建立计算方法的时候, 必须考虑计算效率。一种方法效率的高低是由连杆的迭代计算方法决定的, 特别是与变量的表示方法有关 ${}^{\left\lbrack  {15}\right\rbrack  }$ 。
+
+Renaud ${}^{\left\lbrack  {16}\right\rbrack  }$ 和Liegois等人 ${}^{\left\lbrack  {17}\right\rbrack  }$ 早期在建立连杆质量分布公式中做出了贡献。在对人体四肢进行建模时, Stepanenko和Vukobratovic ${}^{\left\lbrack  {18}\right\rbrack  }$ 开始以牛顿-欧拉方法研究动力学问题而不是用传统的拉格朗日方法。Orin等人 ${}^{\left\lbrack  {19}\right\rbrack  }$ 在研究行走机器人腿部运动的计算时对这种方法进行了修改。 Orin研究小组采用局部连杆参考坐标系而不是在惯性坐标系中表示力和力矩, 从而提高了计算效率。他们也注意到了相邻连杆计算的连续性, 并且预测可能会存在一个有效的递归公式。 ${\text{ Armstrong }}^{\left\lbrack  {20}\right\rbrack  }$ , Luh, Walker和Paul ${}^{\left\lbrack  2\right\rbrack  }$ 对计算效率问题进行了仔细研究,并且提出了关于 $O\left( n\right)$ 复杂度的算法。他们通过建立迭代(或递归)计算方法和在局部连杆坐标系中表示连杆速度和加速度的方法建立了这种算法。Hollerbach ${}^{\left\lbrack  {14}\right\rbrack  }$ 和 ${\text{ Silver }}^{\left\lbrack  {15}\right\rbrack  }$ 又进一步研究了各种各样的计算算法。 Hollerbach和Sahar ${}^{\left\lbrack  {21}\right\rbrack  }$ 指出,对于某些特定的几何结构来说,算法的复杂度可以进一步降低。
+
+**封闭形式方程与迭代形式方程的计算效率**
+
+一般来说, 本章介绍的迭代方法在计算任何操作臂动力学方程时都是非常有效的, 但是封闭形式的方程对某些特殊的操作臂来说通常更为有效。以 6.7 节中两个连杆的平面操作臂为例, 将 $n = 2$ 代入 6.13 节的公式中，可以看出采用迭代算法计算一般两连杆动力学方程需要 153 次乘法和120次加法计算。然而, 这个特殊的两连杆机械臂十分简单: 它是平面的, 并且它的质量可被视为集中质量。因此, 如果采用6.7节中给出的封闭形式的动力学方程, 则仅需要进行30次乘法和13次加法计算。由于这种特殊的操作臂过于简单, 因此这是一种极端情况, 然而它说明封闭形式的方程可能是一种最有效的动力学方程。一些学者在一些文章中也表明, 对于任意已知的操作臂，封闭形式的动力学方程比文献[22~27]中介绍的一些通用的方法更为有效。
+
+因此, 如果从运动学和动力学意义上讲操作臂的设计是简单的, 那么它们的动力学方程也是简单的。可以定义一个运动学上的简单操作臂, 使得这个操作臂的许多 (或者全部) 关节转角为 ${0}^{ \circ  },{90}^{ \circ  }$ 或 - ${90}^{ \circ  }$ ，并且许多连杆长度和偏距为零。我们可以定义一个动力学上的简单操作臂,使得每个连杆在坐标系 $\left\{  {C}_{i}\right\}$ 中的惯性张量矩阵为对角形。
+
+封闭形式方程的缺点是比较简单, 使得在建立方程时还需要相当多的人工劳动。然而, 目前已开发出的封闭形式运动方程的符号编程装置, 能够自动进行一些一般运算和三角变换的计算 ${}^{\left\lbrack  {25},{28} - {30}\right\rbrack  }$ 。
+
+**有效的动力学仿真**
+
+对操作臂进行动力学数值仿真时, 已知操作臂当前的位置、速度和输入力矩, 我们感兴趣的是求关节的加速度。一种有效的计算方法就是本章中讨论的动力学方程的计算方法以及求解方程 (关节加速度) 和数值积分的有效方法。文献[31]中介绍了几种高效的操作臂动力学仿真方法。
+
+**存储方案**
+
+在任何一种计算方法中, 计算和存储是交替进行的。在计算操作臂的动力学方程 (6-59) 时,已经隐含了一种假设,即当求解 $\tau$ 值时,希望尽可能快地得出 $\Theta$ , $\dot{\Theta }$ 和 $\ddot{\Theta }$ 。如果需要,可以通过预先计算方程 (6-59) 中所有可能的 $\Theta$ , $\dot{\Theta }$ 和 $\ddot{\Theta }$ (适当的量化),以提高存储容量为代价来减轻计算负担。还可以通过查询的方法得到需要的动力学计算过程的信息。
+
+所需的存储容量是相当大的。设想每一个关节角范围被离散为 10 段；同样，设想速度和加速度也被离散为 10 段。对一个6关节的操作臂来说， $\left( {\Theta ,\dot{\Theta }\text{ 和 }\ddot{\Theta }}\right)$ 量化空间的单元数量为 (10 $\times  {10} \times  {10}{)}^{6}$ 。而且每一个单元中还有6个力矩值。假设每一个力矩值需要一个计算字节，那么这个存储空间将有 $6 \times  {10}^{18}$ 个字节! 注意,如果考虑负载质量的变化,那么这个存储空间还需要重新计算——即对于所有可能的负载还要增加一维存储空间。
+
+还有许多减小存储空间的计算方法。例如, 如果预先计算出方程 (6-63) 中的矩阵, 则存储空间就只有一维 ( $\Theta$ ) 而不是三维。通过对 $\Theta$ 函数的查询，就会得到一个比较令人满意的计算量 (见式 (6-63))。对于更详细的论述和其他可能的参数化方法, 可以参见文献[3]和[6]。
+
+**参考文献**
+
+[1] I. Shames, Engineering Mechanics, 2nd edition, Prentice-Hall, Englewood Cliffs, NJ, 1967.
+
+[2] J.Y.S. Luh, M.W. Walker, and R.P. Paul, "On-Line Computational Scheme for Mechanical Manipulators," Transactions of the ASME Journal of Dynamic Systems, Measurement, and Control, 1980.
+
+[3] M. Raibert, "Mechanical Arm Control Using a State Space Memory," SME paper MS77-750, 1977.
+
+[4] K.R. Symon, Mechanics, 3rd edition, Addison-Wesley, Reading, MA, 1971.
+
+[5] B. Noble, Applied Linear Algebra, Prentice-Hall, Englewood Cliffs, NJ, 1969.
+
+[6] O. Khatib. "Commande Dynamique dans L'Espace Operationnel des Robots Manip-ulateurs en Presence d'Obstacles," These de Docteur-Ingenieur. Ecole Nationale Superieure de l'Aeronautique et de L'Espace (ENSAE), Toulouse.
+
+[7] O. Khatib, "Dynamic Control of Manipulators in Operational Space," Sixth IFTOMM Congress on Theory of Machines and Mechanisms, New Delhi, December 15-20, 1983.
+
+[8] O. Khatib, "The Operational Space Formulation in Robot Manipulator Control," 15th ISIR, Tokyo, September 11-13, 1985.
+
+[9] E. Schmitz, "Experiments on the End-Point Position Control of a Very Flexible One-Link Manipulator," Unpublished Ph.D. Thesis, Department of Aeronautics and Astronautics, Stanford University, SUDAAR No. 547, June 1985.
+
+[10] W. Book, "Recursive Lagrangian Dynamics of Flexible Manipulator Arms," International Journal of Robotics Research, Vol. 3, No. 3, 1984.
+
+[11] S. Conte and C. DeBoor, Elementary Numerical Analysis: An Algorithmic Approach, 2nd edition, McGraw-Hill, New York, 1972.
+
+[12] J. Uicker,"On the Dynamic Analysis of Spatial Linkages Using 4 x 4 Matrices," Unpublished Ph.D dissertation, Northwestern University, Evanston, IL, 1965.
+
+[13] J. Uicker, "Dynamic Behaviour of Spatial Linkages," ASME Mechanisms, Vol. 5, No. 68, pp. 1-15.
+
+[14] J.M. Hollerbach, "A Recursive Lagrangian Formulation of Manipulator Dynamics and a Comparative Study of Dynamics Formulation Complexity," in Robot Motion, M. Brady et al., Editors, MIT Press, Cambridge, MA, 1983.
+
+[15] W. Silver, "On the Equivalence of Lagrangian and Newton-Euler Dynamics for Manipulators," International Journal of Robotics Research, Vol. 1, No. 2, pp. 60-70.
+
+[16] M. Renaud, "Contribution à l'Etude de la Modélisation et de la Commande des Systèmes Mécaniques Articulés," Thèse de Docteur-Ingénieur, Université Paul Sabatier, Toulouse, December 1975.
+
+[17] A. Liegois, W. Khalil, J.M. Dumas, and M. Renaud, "Mathematical Models of Interconnected Mechanical Systems," Symposium on the Theory and Practice of Robots and Manipulators, Poland, 1976.
+
+[18] Y. Stepanenko and M. Vukobratovic, "Dynamics of Articulated Open-Chain Active Mechanisms," Math-Biosciences Vol. 28, 1976, pp. 137-170.
+
+[19] D.E. Orin et al, "Kinematic and Kinetic Analysis of Open-Chain Linkages Utilizing Newton-Euler Methods," Math-Biosciences Vol. 43, 1979, pp. 107-130.
+
+[20] W.W. Armstrong, "Recursive Solution to the Equations of Motion of an N-Link Manipulator," Proceedings of the 5th World Congress on the Theory of Machines and Mechanisms, Montreal, July 1979.
+
+[21] J.M. Hoilerbach and G. Sahar, "Wrist-Partitioned Inverse Accelerations and Manipulator Dynamics," MIT AI Memo No. 717, April 1983.
+
+[22] T.K. Kanade, P.K. Khosla, and N. Tanaka, "Real-Time Control of the CMU Direct Drive Arm II Using Customized Inverse Dynamics," Proceedings of the 23rd IEEE Conference on Decision and Control, Las Vegas, NV, December 1984.
+
+[23] A. Izaguirre and R.P. Paul, "Computation of the Inertial and Gravitational Coefficients of the Dynamic Equations for a Robot Manipulator with a Load," Proceedings of the 1985 International Conference on Robotics and Automation, pp. 1024-1032, St. Louis, March 1985.
+
+[24] B. Armstrong, O. Khatib, and J. Burdick, "The Explicit Dynamic Model and Inertial Parameters of the PUMA 560 Arm," Proceedings of the 1986 IEEE International Conference on Robotics and Automation, San Francisco, April 1986, pp. 510-518.
+
+[25] J.W. Burdick, "An Algorithm for Generation of Efficient Manipulator Dynamic Equations," Proceedings of the 1986 IEEE International Conference on Robotics and Automation, San Francisco, April 7-11, 1986, pp. 212-218.
+
+[26] T.R. Kane and D.A. Levinson, "The Use of Kane's Dynamical Equations in Robotics," The International Journal of Robotics Research, Vol. 2, No. 3, Fall 1983, pp. 3-20.
+
+[27] M. Renaud, "An Efficient Iterative Analytical Procedure for Obtaining a Robot Manipulator Dynamic Model," First International Symposium of Robotics Research, NH, August 1983.
+
+[28] W. Schiehlen, "Computer Generation of Equations of Motion," in Computer Aided Analysis and Optimization of Mechanical System Dynamics, E.J. Haug, Editor, Springer-Verlag, Berlin & New York, 1984.
+
+[29] G. Cesareo, F. Nicolo, and S. Nicosia, "DYMIR: A Code for Generating Dynamic Model of Robots," in Advanced Software in Robotics, Elsevier Science Publishers, North-Holland, 1984.
+
+[30] J. Murray, and C. Neuman, "ARM: An Algebraic Robot Dynamic Modelling Program," IEEE International Conference on Robotics, Atlanta, March 1984.
+
+[31] M. Walker and D. Orin, "Efficient Dynamic Computer Simulation of Robotic Mechanisms," ASME Journal of Dynamic Systems, Measurement, and Control, Vol. 104, 1982.
+
+**习题**
+
+6.1 [12] 求一匀质的、坐标原点建立在其质心的刚性圆柱体的惯性张量。
+
+6.2 [32] 建立6.7节中二连杆操作臂的动力学方程。将每个连杆看作为一个匀质矩形刚体。各连杆的尺寸为 ${l}_{i},{\omega }_{i}$ 和 ${h}_{i}$ ,总质量为 ${m}_{i}$ 。
+
+6.3 [43]建立第3章习题3.3中的三连杆操作臂的动力学方程。将每个连杆看作为一个匀质矩形刚体。各连杆的尺寸为 ${l}_{i},{\omega }_{i}$ 和 ${h}_{i}$ ,总质量为 ${m}_{i}$ 。
+
+![165_1084_751_359_303_0.jpg](../../images/165_1084_751_359_303_0.jpg)
+
+图6-8 质量集中于连杆末端的二连杆非平面操作臂
+
+6.4 [13]式(6-45) $\sim  \left( {6 - {53}}\right)$ 表示带有移动关节的机构，建立这个机构的方程组。
+
+6.5 [30]建立图6-8中所示的二连杆非平面操作臂的动力学方程。假设每个连杆的质量可视为集中于连杆末端(最外端)的集中质量。质量分别为 ${m}_{1}$ 和 ${m}_{2}$ ，连杆长度为 ${l}_{1}$ 和 ${l}_{2}$ 。 这个操作臂与习题3.3中的前两个连杆相同。假设作用于每个关节的粘性摩擦系数分别为 ${v}_{1}$ 和 ${v}_{2}$ 。
+
+6.6 [32]推导6.7节中的二连杆平面操作臂基坐标下的笛卡儿空间方程。提示: 参见例6.5, 但要应用基坐标系下的雅克比矩阵。
+
+6.7 [18]要存储一个一般三连杆操作臂动力学方程需要多大的内存空间? 将每个关节的位置、 速度和加速度离散为16段。需进行适当的假设。
+
+6.8 [32]推导二连杆操作臂的动力学方程, 如图4-6所示。已知连杆1的惯性张量:
+
+$$
+{C}_{1}I = \left\lbrack  \begin{matrix} {I}_{xx1} & 0 & 0 \\  0 & {I}_{yy1} & 0 \\  0 & 0 & {I}_{zz1} \end{matrix}\right\rbrack
+$$
+
+假定连杆2的质量 ${m}_{2}$ 集中于末端执行器处。
+
+假定重力的方向是向下的 $\left( {\widehat{Z}}_{1}\right.$ 的负方向)。
+
+6.9 [37]推导具有一个移动关节的三连杆操作臂的动力学方程, 见图3-9。已知连杆1的惯性张量:
+
+$$
+{C}_{1}I = \left\lbrack  \begin{matrix} {I}_{xx1} & 0 & 0 \\  0 & {I}_{yy1} & 0 \\  0 & 0 & {I}_{zz1} \end{matrix}\right\rbrack
+$$
+
+连杆 2 的质量 ${m}_{2}$ 集中于该连杆坐标系的原点处。连杆 3 的惯性张量为:
+
+$$
+{C}_{3}I = \left\lbrack  \begin{matrix} {I}_{xx3} & 0 & 0 \\  0 & {I}_{yy3} & 0 \\  0 & 0 & {I}_{zz3} \end{matrix}\right\rbrack
+$$
+
+假设重力方向为 ${\widehat{Z}}_{1}$ 的负方向，每个关节处的粘性摩擦系数为 ${v}_{i}$ 。
+
+6.10 [35]推导习题6.8中的操作臂在笛卡儿空间下的动力学方程。写出坐标系\{2\}中的方程。
+
+6.11 一个单连杆操作臂的惯性张量为:
+
+$$
+{C}_{1}I = \left\lbrack  \begin{matrix} {I}_{xx1} & 0 & 0 \\  0 & {I}_{yy1} & 0 \\  0 & 0 & {I}_{zz1} \end{matrix}\right\rbrack
+$$
+
+假定这只是连杆自身的惯量。如果电机电枢的惯量矩为 ${I}_{m}$ ,齿轮的传动比为 100,那么从
+
+电机轴 ${}^{\left( 1\right) }$ 来看,总惯性张量是多少?
+
+6.12 [20]如图6-9所示单自由度操作臂的总质量为 $m = 1$ ，质心为
+
+$$
+{}^{1}{P}_{C} = \left\lbrack  \begin{array}{l} 2 \\  0 \\  0 \end{array}\right\rbrack
+$$
+
+惯性张量为
+
+$$
+{}^{c}{I}_{1} = \left\lbrack  \begin{array}{lll} 1 & 0 & 0 \\  0 & 2 & 0 \\  0 & 0 & 2 \end{array}\right\rbrack
+$$
+
+从静止 $t = 0$ 开始,关节角 ${\theta }_{1}\left( \mathrm{{rad}}\right)$ 按照如下的时间函数运动:
+
+$$
+{\theta }_{1}\left( t\right)  = {bt} + c{t}^{2}
+$$
+
+作为时间 $t$ 的函数求在坐标系 $\{ 1\}$ 下,连杆的角加速度和质心的线加速度。
+
+![166_505_1328_672_392_0.jpg](../../images/166_505_1328_672_392_0.jpg)
+
+图6-9 习题6.12单杆“操作臂”
+
+6.13 [40]建立图6-8中的二连杆非平面操作臂的笛卡儿动力学方程。假设每个连杆的质量可视为集中于连杆末端 (最外端) 的集中质量。质量分别为 ${m}_{1}$ 和 ${m}_{2}$ ,连杆长度为 ${l}_{1}$ 和 ${l}_{2}$ 。这个操作臂与习题 3.3 中的前两个连杆相同。假设作用于每个关节的粘性摩擦系数分别为 ${v}_{1}$ 和 ${v}_{2}$ 。 写出坐标系 \{3\} 下的笛卡儿动力学方程, 该坐标系位于操作臂的末端, 并且与连杆坐标系 \{2\}的方位相同。
+
+6.14 [18]2自由度RP操作臂的动力学方程如下:
+
+$$
+{\tau }_{1} = {m}_{1}\left( {{d}_{1}^{2} + {d}_{2}}\right) {\ddot{\theta }}_{1} + {m}_{2}{d}_{2}^{2}{\ddot{\theta }}_{1} + 2{m}_{2}{d}_{2}{\dot{d}}_{2}{\dot{\theta }}_{1}
+$$
+
+$$
++ g\cos {\theta }_{1}\left\lbrack  {{m}_{1}\left( {{d}_{1} + {d}_{2}{\dot{\theta }}_{1}}\right)  + {m}_{2}\left( {{d}_{2} + {\dot{d}}_{2}}\right) }\right\rbrack
+$$
+
+$$
+{\tau }_{2} = {m}_{1}{\dot{d}}_{2}{\ddot{\theta }}_{1} + {m}_{2}{\ddot{d}}_{2} - {m}_{1}{d}_{1}{\dot{d}}_{2} - {m}_{2}{d}_{2}{\dot{\theta }}^{2} + {m}_{2}\left( {{d}_{2} + 1}\right) g\sin {\theta }_{1}
+$$
+
+式中有一些项显然是不正确的。请将它们指出。
+
+6.15 [28]用牛顿-欧拉方法代替拉格朗日方法推导例6.5中RP操作臂的动力学方程。
+
+6.16 [25]推导图6-10中PR操作臂的运动方程。忽略摩擦,但要包括重力。(这里, ${\widehat{X}}_{0}$ 是竖直向上的)。连杆的惯性张量为对角形,惯性矩分别为 ${I}_{xx},{I}_{yy},{I}_{zz1}$ 和 ${I}_{xx2},{I}_{yy2},{I}_{zz2}$ 。连杆的质心分别为:
+
+$$
+{}^{1}{P}_{{C}_{1}} = \left\lbrack  \begin{matrix} 0 \\  0 \\   - {l}_{1} \end{matrix}\right\rbrack
+$$
+
+$$
+{}^{2}{P}_{{C}_{2}} = \left\lbrack  \begin{array}{l} 0 \\  0 \\  0 \end{array}\right\rbrack
+$$
+
+6.17 [40]在操作臂动力学方程中与速度相关的项可以被写成矩阵-矢量积的形式, 即
+
+$$
+V\left( {\Theta ,\dot{\Theta }}\right)  = {V}_{m}\left( {\Theta ,\dot{\Theta }}\right) \dot{\Theta }
+$$
+
+式中下标 $m$ 代表 “矩阵形式”。表示操作臂质量矩阵对时间的导数和 ${V}_{m}\left( \cdot \right)$ 之间存在一种特定的关系。即:
+
+$$
+\dot{M}\left( \Theta \right)  = 2{V}_{m}\left( {\Theta ,\dot{\Theta }}\right)  - S
+$$
+
+式中 $S$ 是反对称矩阵。
+
+![167_534_1370_554_268_0.jpg](../../images/167_534_1370_554_268_0.jpg)
+
+图6-10 习题6.16的PR操作臂
+
+6.18 [15]给出合理的摩擦模型 (即式 (6-114) 中 $F\left( {\Theta ,\dot{\Theta }}\right)$ ) 具有的两种属性。
+
+6.19 [28]用拉格朗日方法做习题6.5。
+
+6.20 [28]用拉格朗日方法推导6.7节中2自由度操作臂的动力学方程。
+
+**编程习题**
+
+1. 推导三连杆操作臂 (例3.3中) 的动力学方程。即, 将6.7节的条件推广到三连杆的情况。已知操作臂参数:
+
+$$
+{l}_{1} = {l}_{2} = {0.5}\mathrm{\;m}
+$$
+
+$$
+{m}_{1} = {4.6}\mathrm{{Kg}}
+$$
+
+$$
+{m}_{2} = {2.3}\mathrm{{Kg}}
+$$
+
+$$
+{m}_{3} = {1.0}\mathrm{{Kg}}
+$$
+
+$$
+g = {9.8}\mathrm{\;m}/{\mathrm{s}}^{2}
+$$
+
+对前两个连杆来说, 假定质量都集中在连杆末端。对连杆3来说, 假定质心位于坐标系\{3\} 的原点——即靠近连杆的末端。连杆3的惯性张量为
+
+$$
+{}^{{C}_{s}}I = \left\lbrack  \begin{matrix} {0.05} & 0 & 0 \\  0 & {0.1} & 0 \\  0 & 0 & {0.1} \end{matrix}\right\rbrack  \mathrm{{Kg}} - {\mathrm{m}}^{2}
+$$
+
+相对于连杆坐标系的连杆质心矢量为
+
+$$
+{}^{1}{P}_{{C}_{1}} = {l}_{1}{\widehat{X}}_{1}
+$$
+
+$$
+{}^{2}{P}_{{C}_{2}} = {l}_{2}{\widehat{X}}_{2}
+$$
+
+$$
+{}^{3}{P}_{{C}_{3}} = 0
+$$
+
+2. 写出三连杆操作臂的仿真程序。对于这个简单的欧拉积分程序, 应用数值积分 (如6.12节) 方法即可。为使程序代码模块化, 可以采用如下定义
+
+---
+
+Procedure UPDATE(VAR tau: vec3; VAR period: real; VAR
+
+	theta, thetadot: vec3);
+
+---
+
+其中 “tau” 是操作臂的力矩指令 (在本题中始终为零), “period” 是希望的时间步长 (s)。 "theta" 和 "thetadot" 是操作臂的状态。Theta和thetadot用每次调用UPDATE的 "period" 秒数来更新。注意,“period”一般情况下要大于数值积分中的积分步长 ${\Delta t}$ 。例如,尽管数值积分中的步长可能为0.001s，但你可以每0.1s打印一次操作臂的位置和速度。
+
+为了检验仿真程序, 设定关节力矩指令的值为0 (对于全过程), 进行如下检验:
+
+(a) 将操作臂的初始位置设定为
+
+$$
+\left\lbrack  \begin{array}{lll} {\theta }_{1} & {\theta }_{2} & {\theta }_{3} \end{array}\right\rbrack   = \left\lbrack  \begin{array}{lll}  - {90} & 0 & 0 \end{array}\right\rbrack
+$$
+
+仿真几秒钟之后, 看操作臂的运动是否与你所预计的一致?
+
+(b) 将操作臂的初始位置设定为
+
+$$
+\left\lbrack  \begin{array}{lll} {\theta }_{1} & {\theta }_{2} & {\theta }_{3} \end{array}\right\rbrack   = \left\lbrack  \begin{array}{lll} {30} & {30} & {10} \end{array}\right\rbrack
+$$
+
+仿真几秒钟之后, 看操作臂的运动是否与你所预计的一致?
+
+(c) 对被仿真的操作臂的每个关节引入粘性摩擦, 即给每个关节的动力学方程中加 $\lambda {\tau }_{f} = v\dot{\theta }$ 的项,式中每个关节的 $v = {5.0}\mathrm{\;N} \cdot  \mathrm{m} \cdot  \mathrm{s}$ (牛顿 $\cdot$ 米 $\cdot$ 秒)。重复上面的检验 (b), 看运动是否是你所预计的?
+
+**MATLAB习题1**
+
+这个练习集中在平面2自由度 $2\mathrm{R}$ 机器人的逆动力学分析上(分步速度控制结构——见第 5 章MATLAB习题)。这个机器人是平面3自由度3R机器人的前两个R-关节和前两个运动连杆 (见图3-6和图3-7，DH参数由图3-8的前两行给出)。
+
+计算这个平面 ${2R}$ 机器人的关节力矩 (也就是解逆动力学问题),目的是给分步速度控制方法提供每个时间步长内的指令运动。你既可以采用牛顿 - 欧拉数值递归方法, 也可以采用习题6.2中得出的分析方程, 或两者全用。
+
+已知: ${L}_{\mathrm{i}} = {1.0}\mathrm{\;m},{L}_{2} = {0.5}\mathrm{\;m}$ ,两个连杆的质量密度均为 $\rho  = {7806}\mathrm{\;{kg}}/{\mathrm{m}}^{3}$ 的实心钢,宽度和厚度为 $w = t = 5\mathrm{\;{cm}}$ 。假定转动关节是理想的,将每个连杆的最外边缘连接起来 (实际上是不可能的)。 初始角度为 $\Theta  = \left\{  \begin{array}{l} {\theta }_{1} \\  {\theta }_{2} \end{array}\right\}   = \left\{  \begin{array}{l} {10}^{ \circ  } \\  {90}^{ \circ  } \end{array}\right\}$ 。
+
+笛卡儿速度指令 (常数) 为 ${}^{0}\dot{X} = {}^{0}\left\{  \begin{array}{l} \dot{x} \\  \dot{y} \end{array}\right\}   = {}^{0}\left\{  \begin{matrix} 0 \\  {0.5} \end{matrix}\right\}  \left( {\mathrm{m}/\mathrm{s}}\right)$ 。
+
+仿真运动时间 $1\mathrm{\;s}$ ，控制步长 ${0.01}\mathrm{\;s}$ 。
+
+请按下列条件绘出5个曲线图(请分开绘制):
+
+1. 两个关节角 $\Theta  = {\left\{  {\theta }_{1}{\theta }_{2}\right\}  }^{T}$ (deg) 与时间的关系曲线;
+
+2. 两个关节速率 $\dot{\Theta } = {\left\{  {\dot{\theta }}_{1}{\dot{\theta }}_{2}\right\}  }^{T}$ (rad/s) 与时间的关系曲线;
+
+3. 两个关节加速度 $\ddot{\Theta } = {\left\{  {\ddot{\theta }}_{1}{\ddot{\theta }}_{2}\right\}  }^{T}\left( {\mathrm{{rad}}/{\mathrm{s}}^{2}}\right)$ 与时间的关系曲线;
+
+4. ${}_{H}^{0}T$ 的 3 个笛卡儿坐标分量为 $X = \{ {xy\phi }{\} }^{T}$ ( $\phi$ 的单位应为 $\mathrm{{rad}}$ ) 与时间的关系曲线;
+
+5. 两个逆动力学关节力矩 $T = {\left\{  {\tau }_{1}{\tau }_{2}\right\}  }^{T}\left( \mathrm{{Nm}}\right)$ 与时间的关系曲线。
+
+仔细绘制每一张图中的曲线(徒手即可！)，应标出轴的名称和单位。
+
+进行两次仿真。第一次,不计重力 (运动平面与重力是垂直的); 第二次,考虑重力 $g$ , 方向为沿Y轴负向。
+
+**MATLAB 习题2**
+
+这个练习将集中在3自由度3R机器人(图3-6和3-7; DH参数在图3-8中已给出)的瞬态逆动力学解法上。已知长度参数如下: ${L}_{1} = 4,{L}_{2} = 3,{L}_{3} = 2\left( \mathrm{\;m}\right)$ 。作为动力学问题,还必须已知质量和惯量矩: ${m}_{1} = {20},{m}_{2} = {15},{m}_{3} = {10}\left( \mathrm{\;{kg}}\right) ,{}^{C}{I}_{zz1} = {0.5},{}^{C}{I}_{zz2} = {0.2},{}^{C}{I}_{zz3} = {0.1}\left( \mathrm{\;{{kg}{m}^{2}}}\right)$ 。假定每个连杆的重心在其几何中心处, 并且假定重力作用在运动平面的-Y方向上。在这个练习中, 不考虑驱动器的动力学问题和关节处的齿轮传动问题。
+
+a) 编写一个MATLAB程序进行下列瞬态运动的牛顿一欧拉递归逆动力学求解 (即, 给定运动指令, 计算所需的关节驱动力矩):
+
+$$
+\Theta  = \left\{  \begin{array}{l} {\theta }_{1} \\  {\theta }_{2} \\  {\theta }_{3} \end{array}\right\}   = \left\{  \begin{array}{l} {10}^{ \circ  } \\  {20}^{ \circ  } \\  {30}^{ \circ  } \end{array}\right\}  \;\dot{\Theta } = \left\{  \begin{array}{l} {\dot{\theta }}_{1} \\  {\dot{\theta }}_{2} \\  {\dot{\theta }}_{3} \end{array}\right\}   = \left\{  \begin{array}{l} 1 \\  2 \\  3 \end{array}\right\}  \left( {\mathrm{{rad}}/\mathrm{s}}\right) \ddot{\Theta } = \left\{  \begin{array}{l} {\ddot{\theta }}_{1} \\  {\ddot{\theta }}_{2} \\  {\ddot{\theta }}_{3} \end{array}\right\}   = \left\{  \begin{matrix} {0.5} \\  1 \\  {1.5} \end{matrix}\right\}  \left( {\mathrm{{rad}}/{\mathrm{s}}^{2}}\right)
+$$
+
+b) 用Corke MATLAB Robotics工具箱检验a) 中的结果。试用函数rne()和gravload()。
+
+**MATLAB习题3**
+
+这个练习将集中在全部时间历程上的平面3自由度3R机器人的正动力学解法上 (参数见 MATLAB习题2)。在此情况下，不计重力(即，假定重力的作用方向与运动平面垂直)。用 Corke MATLAB Robotics工具箱求解正动力学问题 (即, 已知驱动关节力矩指令, 求解机器人相应的运动), 关节力矩、初始关节角度和初始关节角速度如下:
+
+$$
+T = \left\{  \begin{array}{l} {\tau }_{1} \\  {\tau }_{2} \\  {\tau }_{3} \end{array}\right\}   = \left\{  \begin{array}{l} {20} \\  5 \\  1 \end{array}\right\}  \left( {\mathrm{{Nm}},\text{ 常量 }}\right) \;{\Theta }_{0} = \left\{  \begin{array}{l} {\theta }_{10} \\  {\theta }_{20} \\  {\theta }_{30} \end{array}\right\}   = \left\{  \begin{array}{l}  - {60}^{ \circ  } \\  {90}^{ \circ  } \\  {30}^{ \circ  } \end{array}\right\}
+$$
+
+$$
+{\dot{\Theta }}_{0} = \left\{  \begin{array}{l} {\dot{\theta }}_{10} \\  {\dot{\theta }}_{20} \\  {\dot{\theta }}_{30} \end{array}\right\}   = \left\{  \begin{array}{l} 0 \\  0 \\  0 \end{array}\right\}  \left( {\mathrm{{rad}}/\mathrm{s}}\right)
+$$
+
+仿真时间4s，并且试用函数fdyn()。
+
+绘出机器人运动计算结果的两个曲线图 (请分开绘制):
+
+1. 三个关节角 (deg) $\Theta  = {\left\{  {\theta }_{1}{\theta }_{2}{\theta }_{3}\right\}  }^{T}$ 与时间的关系曲线;
+
+2. 三个关节角速度 $\left( {\mathrm{{rad}}/\mathrm{s}}\right) \;\dot{\Theta } = {\left\{  {\dot{\theta }}_{1}{\dot{\theta }}_{2}{\dot{\theta }}_{3}\right\}  }^{T}$ 与时间的关系曲线。
+
+仔细绘制每一张图中的曲线(徒手即可！)，应标出轴的名称和单位。
