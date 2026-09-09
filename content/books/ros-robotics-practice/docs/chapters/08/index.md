@@ -32,7 +32,7 @@ $$
 ---
 
 $$
-1\;\tau \_ i = {Kp}\_ i\left( {{\theta d}\_ i - {\theta }_{\_ }i}\right)  + {Kd}\_ i\left( {{\dot{\theta }d}\_ i - {\dot{\theta }}_{\_ }i}\right)  + {Ki}\_ i\int \left( {{\theta d}\_ i - {\theta }_{\_ }i}\right) {dt}
+\tau_i=K_{p,i}(\theta_{d,i}-\theta_i)+K_{d,i}(\dot\theta_{d,i}-\dot\theta_i)+K_{i,i}\int(\theta_{d,i}-\theta_i)\,\mathrm dt
 $$
 
 ---
@@ -105,11 +105,11 @@ $1\;\tau  = M\left( q\right) \left\lbrack  {\ddot{q}d + {Kd}\left( {\dot{q}d - \
 
 ---
 
-$M\left( q\right) \ddot{q} = M\left( q\right) \left\lbrack  {\ddot{q}d + {Kd}\dot{e} + {Kp}\dot{e}}\right\rbrack$
-
-							$\ddot{q} = \ddot{q}d + {Kd}\dot{e} + {Kp}\ddot{e}$
-
-								$\ddot{e} + {Kd}\dot{e} + {Kp}e = 0$
+$$
+\begin{aligned}
+M(q)\ddot q&=M(q)\left[\ddot q_d+K_d\dot e+K_p e\right]\\ \ddot q&=\ddot q_d+K_d\dot e+K_p e\\ \ddot e+K_d\dot e+K_p e&=0
+\end{aligned}
+$$
 
 ---
 
@@ -173,7 +173,7 @@ Figun S: Force Exectnecs padiclea Matrix $S$ Eryth ehectcces excanutiore (Direnp
 
 ---
 
-$M\_ d\ddot{x} + B\_ d\dot{x} + {K\_ d}x = {F\_ {ext}}$
+$M_d\ddot{x} + B_d\dot{x} + {K_d}x = {F_{ext}}$
 
 ---
 

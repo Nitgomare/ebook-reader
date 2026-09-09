@@ -37,7 +37,7 @@ $v = {dP}/{dt} = \dot{P}$
 
 ---
 
-$v\_ P = v\_ 0 + \omega  \times  r$
+$v_P = v_0 + \omega  \times  r$
 
 ---
 
@@ -67,11 +67,9 @@ $\dot{R} = S\left( \omega \right)  \times  R$
 
 ---
 
-$S\left( \omega \right)  = \left\lbrack  \begin{array}{lll} 0 &  - {\omega z} & {\omega y} \end{array}\right\rbrack$
-
-	$\left\lbrack  \begin{array}{lll} {\omega z} & 0 &  - {\omega x} \end{array}\right\rbrack$
-
-	$\left\lbrack  \begin{array}{lll}  - {\omega y} & {\omega x} & 0 \end{array}\right\rbrack$
+$$
+S(\boldsymbol\omega)=\begin{bmatrix}0&-\omega_z&\omega_y\\\omega_z&0&-\omega_x\\-\omega_y&\omega_x&0\end{bmatrix}
+$$
 
 ---
 
@@ -87,13 +85,17 @@ $S\left( \omega \right)  = \left\lbrack  \begin{array}{lll} 0 &  - {\omega z} & 
 
 在操作臂中，每个连杆的速度可以通过关节速度和相邻连杆的速度传递得到。
 
-对于转动关节 i，连杆 i 相对于连杆 i-1 的角速度增量为 $\dot{\theta}_i\boldsymbol{z}_{i-1}$，因此：
+以下向量均在同一参考坐标系中表示；$\boldsymbol z_{i-1}$ 为关节轴的单位方向向量。对于转动关节 i，相对角速度增量为 $\dot\theta_i\boldsymbol z_{i-1}$，因此：
 
 ---
 
-$\boldsymbol{\omega}_i = \boldsymbol{\omega}_{i-1} + \dot{\theta}_i\boldsymbol{z}_{i-1}$ （转动关节）
+$$
+\boldsymbol\omega_i=\boldsymbol\omega_{i-1}+\dot\theta_i\boldsymbol z_{i-1}\qquad\text{（转动关节）}
+$$
 
-$\boldsymbol{\omega}_i = \boldsymbol{\omega}_{i-1}$ （移动关节）
+$$
+\boldsymbol\omega_i=\boldsymbol\omega_{i-1}\qquad\text{（移动关节）}
+$$
 
 ---
 
@@ -101,13 +103,17 @@ $\boldsymbol{\omega}_i = \boldsymbol{\omega}_{i-1}$ （移动关节）
 
 ---
 
-$\boldsymbol{v}_i = \boldsymbol{v}_{i-1} + \boldsymbol{\omega}_{i-1} \times \boldsymbol{p}_{i-1,i} + \dot{d}_i\boldsymbol{z}_{i-1}$ （移动关节）
+$$
+\boldsymbol v_i=\boldsymbol v_{i-1}+\boldsymbol\omega_{i-1}\times\boldsymbol p_{i-1,i}+\dot d_i\boldsymbol z_{i-1}\qquad\text{（移动关节）}
+$$
 
-$\boldsymbol{v}_i = \boldsymbol{v}_{i-1} + \boldsymbol{\omega}_{i-1} \times \boldsymbol{p}_{i-1,i}$ （转动关节）
+$$
+\boldsymbol v_i=\boldsymbol v_{i-1}+\boldsymbol\omega_{i-1}\times\boldsymbol p_{i-1,i}\qquad\text{（转动关节）}
+$$
 
 ---
 
-其中，$\boldsymbol{p}_{i-1,i}$ 是连杆 i 原点相对于连杆 i-1 原点的位置矢量，$\dot{d}_i$ 是移动关节的伸缩速度，$\boldsymbol{z}_{i-1}$ 是关节轴方向。
+其中p_\{i-1, i\}是连杆i原点相对于连杆i-1原点的位置矢量。
 
 ### 5.4.2 向外递推计算速度
 
@@ -117,7 +123,7 @@ $\boldsymbol{v}_i = \boldsymbol{v}_{i-1} + \boldsymbol{\omega}_{i-1} \times \bol
 
 ### 5.5.1 定义
 
-对于n自由度操作臂，关节速度向量 $\dot{\mathbf{q}} = {\left\lbrack  \dot{\mathbf{q}}\_ 1,\dot{\mathbf{q}}\_ 2,\ldots ,\dot{\mathbf{q}}\_ n\right\rbrack  }^{\top }$ ，末端速度向量 $\mathbf{v} = {\left\lbrack  \mathbf{v}\_ \mathbf{x},\mathbf{v}\_ \mathbf{y},\mathbf{v}\_ \mathbf{z},\mathbf{\omega }\_ \mathbf{x},\mathbf{\omega }\_ \mathbf{y},\mathbf{\omega }\_ \mathbf{z}\right\rbrack  }_{\top }$ (6×1，包含线速度和角速度)，则:
+对于n自由度操作臂，关节速度向量 $\dot{\mathbf{q}} = {\left\lbrack  \dot{\mathbf{q}}_1,\dot{\mathbf{q}}_2,\ldots ,\dot{\mathbf{q}}_n\right\rbrack  }^{\top }$ ，末端速度向量 $\mathbf{v} = {\left\lbrack  \mathbf{v}_\mathbf{x},\mathbf{v}_\mathbf{y},\mathbf{v}_\mathbf{z},\mathbf{\omega }_\mathbf{x},\mathbf{\omega }_\mathbf{y},\mathbf{\omega }_\mathbf{z}\right\rbrack  }_{\top }$ (6×1，包含线速度和角速度)，则:
 
 ---
 
@@ -135,9 +141,9 @@ $v = J\left( q\right)  \times  \dot{q}$
 
 ---
 
-$J\_ i = \left\lbrack  {z\_ \{ i - 1\}  \times  \left( {p\_ n - p\_ \{ i - 1\} }\right) }\right\rbrack$
-
-	[z_\{i-1\}
+$$
+J_i=\begin{bmatrix}\boldsymbol z_{i-1}\times(\boldsymbol p_n-\boldsymbol p_{i-1})\\\boldsymbol z_{i-1}\end{bmatrix}
+$$
 
 ---
 
@@ -147,9 +153,9 @@ $J\_ i = \left\lbrack  {z\_ \{ i - 1\}  \times  \left( {p\_ n - p\_ \{ i - 1\} }
 
 ---
 
-J_i = [z_\{i-1\}]
-
-	[0
+$$
+J_i=\begin{bmatrix}\boldsymbol z_{i-1}\\\boldsymbol 0\end{bmatrix}
+$$
 
 ---
 
@@ -169,11 +175,13 @@ J_i = [z_\{i-1\}]
 
 ---
 
-$J = \left\lbrack  {-{l1}\sin \left( {\theta 1}\right)  - {l2}\sin \left( {{\theta 1} + {\theta 2}}\right) \; - {l2}\sin \left( {{\theta 1} + {\theta 2}}\right) }\right\rbrack$
-
-	[ l1 cos(θ1) + l2 cos(θ1+θ2) l2 cos(θ1+θ2)]
-
-											1 ]
+$$
+J=\begin{bmatrix}
+-l_1\sin\theta_1-l_2\sin(\theta_1+\theta_2)&-l_2\sin(\theta_1+\theta_2)\\
+l_1\cos\theta_1+l_2\cos(\theta_1+\theta_2)&l_2\cos(\theta_1+\theta_2)\\
+1&1
+\end{bmatrix}
+$$
 
 ---
 
@@ -207,7 +215,7 @@ def jacobian_geometric(dh_params, q):
 
 				z = [np.array([0, 0, 1])] # 各关节轴方向
 
-				#正运动学，记录各连杆的位置和 $z$ 轴
+				#正运动学，记录各连杆的位置和 z 轴
 
 				for i in range(n):
 
@@ -239,7 +247,7 @@ def jacobian_geometric(dh_params, q):
 
 								z.append(T[:3, 2].copy())
 
-				p_end $= p\left\lbrack  {-1}\right\rbrack  \;\#$ 末端位置
+				p_end = p[-1] # 末端位置
 
 				J = np.zeros((6, n))
 
@@ -307,7 +315,7 @@ def jacobian_geometric(dh_params, q):
 
 - cond(J) 很大 → 接近奇异(条件数越大越接近奇异)
 
-- 奇异值分解 (SVD) : 最小奇异值接近0 $\rightarrow$ 接近奇异
+- 奇异值分解 (SVD) : 最小奇异值接近0 → 接近奇异
 
 ### 5.6.4 奇异的处理
 
@@ -335,11 +343,13 @@ ${\tau }^{ \land  }T \times  {\delta \theta } = {F}^{ \land  }T \times  {\delta 
 
 ---
 
-$\tau {}^{ \land  }T \times  {\delta \theta } = F{}^{ \land  }T \times  J \times  {\delta \theta }$
-
-	${\tau }^{ \land  }T = {F}^{ \land  }T \times  J$
-
-	$\tau  = {J}^{x}T\left( q\right)  \times  F$
+$$
+\begin{aligned}
+\boldsymbol\tau^{\mathsf T}\delta\boldsymbol\theta&=\boldsymbol F^{\mathsf T}J\delta\boldsymbol\theta\\
+\boldsymbol\tau^{\mathsf T}&=\boldsymbol F^{\mathsf T}J\\
+\boldsymbol\tau&=J^{\mathsf T}(q)\boldsymbol F
+\end{aligned}
+$$
 
 ---
 
@@ -347,7 +357,7 @@ $\tau {}^{ \land  }T \times  {\delta \theta } = F{}^{ \land  }T \times  J \times
 
 其中:
 
-- $\tau  = {\left\lbrack  \tau \_ 1,\tau \_ 2,\ldots ,\tau \_ n\right\rbrack  }^{ \land  }T$ : 关节力矩向量 (n×1)
+- $\tau  = {\left\lbrack  \tau _1,\tau _2,\ldots ,\tau _n\right\rbrack  }^{ \land  }T$ : 关节力矩向量 (n×1)
 
 - F = [f_x, f_y, f_z, n_x, n_y, n_z]^T:末端力/力矩向量(6x1，前3个是力，后3个是力矩)
 
@@ -365,17 +375,17 @@ $\tau {}^{ \land  }T \times  {\delta \theta } = F{}^{ \land  }T \times  J \times
 
 ### 5.7.3 二连杆臂的静力示例
 
-对于二自由度平面臂，末端受力 $\mathrm{F} = {\left\lbrack  \mathrm{f}\_ \mathrm{x},\mathrm{f}\_ \mathrm{y}\right\rbrack  }^{ \land  }\mathrm{T}$ ，关节力矩:
+对于二自由度平面臂，末端受力 $\mathrm{F} = {\left\lbrack  \mathrm{f}_\mathrm{x},\mathrm{f}_\mathrm{y}\right\rbrack  }^{ \land  }\mathrm{T}$ ，关节力矩:
 
 ---
 
-[τ1] = J^T × [f_x]
+$$
+\begin{bmatrix}\tau_1\\\tau_2\end{bmatrix}=J^{\mathsf T}\begin{bmatrix}f_x\\f_y\end{bmatrix}
+$$
 
-[τ2] 												[f_y]
-
-其中J^T = [-l1 sin(θ1)-l2 sin(θ1+θ2) 																																								l1 cos(θ1)+l2 cos(θ1+θ2)]
-
-											[-l2 sin(θ1+θ2) 																																									12 cos(θ1+θ2) 																																																																					]
+$$
+J^{\mathsf T}=\begin{bmatrix}-l_1\sin\theta_1-l_2\sin(\theta_1+\theta_2)&l_1\cos\theta_1+l_2\cos(\theta_1+\theta_2)\\-l_2\sin(\theta_1+\theta_2)&l_2\cos(\theta_1+\theta_2)\end{bmatrix}
+$$
 
 ---
 

@@ -141,9 +141,7 @@ TurtleBot3 Burger的简化URDF模型:
 
 		<?xml version="1.0"?>
 
-2 - <robot name="turtlebot3_burger" xmlns:xacro="http://www.ros.org/wiki/xacr
-
-		${0}^{\prime \prime } >$
+<robot name="turtlebot3_burger" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 			<link name="base_link">
 
@@ -199,7 +197,7 @@ TurtleBot3 Burger的简化URDF模型:
 
 				<child link="wheel_left_link"/>
 
-				<origin xyz="0 0.08 0" rpy="\$\{pi/2\} 0 0"/>
+				<origin xyz="0 0.08 0" rpy="${pi/2} 0 0"/>
 
 				<axis xyz="0 0 1"/>
 
@@ -209,7 +207,7 @@ TurtleBot3 Burger的简化URDF模型:
 
 	<joint name="wheel_right_joint" type="continuous">
 
-		<origin xyz="0 -0.08 0" rpy="\$\{pi/2\} 0 0"/>
+		<origin xyz="0 -0.08 0" rpy="${pi/2} 0 0"/>
 
 		...
 
@@ -249,7 +247,7 @@ Xacro(XML Macros)是URDF的宏语言，支持变量、宏定义、条件判断�
 
 <xacro:macro name="wheel" params="prefix y">
 
-	<link name="\$\{prefix\}_wheel_link">
+	<link name="${prefix}_wheel_link">
 
 		<visual><geometry><cylinder length="0.018" radius="0.033"/></geometry>
 
@@ -257,13 +255,13 @@ Xacro(XML Macros)是URDF的宏语言，支持变量、宏定义、条件判断�
 
 	</link>
 
-	<joint name="\$\{prefix\}_wheel_joint" type="continuous">
+	<joint name="${prefix}_wheel_joint" type="continuous">
 
 		<parent link="base_link"/>
 
-		<child link="\$\{prefix\}_wheel_link"/>
+		<child link="${prefix}_wheel_link"/>
 
-		<origin xyz="0 \$\{y\} 0" rpy="\$\{pi/2\} 0 0"/>
+		<origin xyz="0 ${y} 0" rpy="${pi/2} 0 0"/>
 
 		<axis xyz="0 0 1"/>
 
@@ -365,11 +363,11 @@ TurtleBot3的TF树:
 
 ---
 
-odom $\rightarrow$ base_link $\rightarrow$ wheel_left_link
+odom → base_link → wheel_left_link
 
-	$\rightarrow$ wheel_right_link
+	→ wheel_right_link
 
-	$\rightarrow$ laser_link
+	→ laser_link
 
 	- imu_link
 

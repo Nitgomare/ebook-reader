@@ -629,7 +629,7 @@ MoveIt2的核心组件:
 
 						pose.pose.position.x = x
 
-						pose.pose.position.y $= y$
+						pose.pose.position.y = y
 
 						pose.pose.position.z = z
 
@@ -709,7 +709,7 @@ def plan_cartesian_path(self, waypoints):
 
 	else:
 
-		self.get_logger().warn(f"路径只完成了\{fraction*100:.1f\}%")
+		self.get_logger().warn(f"路径只完成了{fraction*100:.1f}%")
 
 ---
 

@@ -73,13 +73,11 @@ $\theta \left( t\right)  = {a0} + {a1t} + {a2}{t}^{2} + {a3}{t}^{3}$
 
 ---
 
-a0 = θ0
-
-	a1 = v0
-
-a2 = (3(θf-θ0)/t ${f}^{2}$ ) - (2v0+vf)/tf
-
-a3 = (-2(θf-θ0)/t ${f}^{3}$ ) + (v0+vf)/t ${f}^{2}$
+$$
+\begin{aligned}
+a_0&=\theta_0\\a_1&=v_0\\ a_2&=\frac{3(\theta_f-\theta_0)}{t_f^2}-\frac{2v_0+v_f}{t_f}\\ a_3&=-\frac{2(\theta_f-\theta_0)}{t_f^3}+\frac{v_0+v_f}{t_f^2}
+\end{aligned}
+$$
 
 ---
 
@@ -217,13 +215,13 @@ def cubic_polynomial(theta0, thetaf, v0, vf, tf, t):
 
 										[T**5, T**4, T**3, T**2, T, 1],
 
-										$\left\lbrack  {0,0,0,0,1,0}\right\rbrack$ ,
+										[0, 0, 0, 0, 1, 0],
 
-										$\left\lbrack  {5 * T *  * 4,4 * T *  * 3,3 * T *  * 2,2 * T,1,0}\right\rbrack  ,$
+										[5*T**4, 4*T**3, 3*T**2, 2*T, 1, 0],
 
-										$\left\lbrack  {0,0,0,2,0,0}\right\rbrack$ ,
+										[0, 0, 0, 2, 0, 0],
 
-										[20*T**3, 12*T***2, 6*T, 2, 0, 0]
+										[20*T**3, 12*T**2, 6*T, 2, 0, 0]
 
 					])
 
@@ -235,9 +233,9 @@ def cubic_polynomial(theta0, thetaf, v0, vf, tf, t):
 
 						theta = a0 + a1*t + a2*t**2 + a3*t**3 + a4*t**4 + a5*t**5
 
-						theta_dot = a1 + 2*a2*t + 3*a3*t**2 + 4*a4*t* *3 + 5*a5*t*4
+						theta_dot = a1 + 2*a2*t + 3*a3*t**2 + 4*a4*t**3 + 5*a5*t**4
 
-						theta_ddot = 2*a2 + 6*a3*t + 12*a4*t**2 + 20*a5*t***3
+						theta_ddot = 2*a2 + 6*a3*t + 12*a4*t**2 + 20*a5*t**3
 
 						return theta, theta_dot, theta_ddot
 
@@ -263,7 +261,7 @@ def cubic_polynomial(theta0, thetaf, v0, vf, tf, t):
 
 						theta, v, a = trajectory[i]
 
-	print(f"t=\{t_values[i]:.2f\}s: θ=\{theta:.4f\}rad, v=\{v:.4f\}rad/s, a=\{a:.
+	print(f"t={t_values[i]:.2f}s: θ={theta:.4f}rad, v={v:.4f}rad/s, a={a:.
 
 4f\}rad/s2")
 
@@ -323,7 +321,7 @@ MoveIt等运动规划框架支持路径点的Blending参数配置。
 
 - 目标函数:最小化运动时间tf
 
-- 约束: $\left| {q\_ i}\right|  \leq  v\_ \max ,\left| {q\_ i}\right|  \leq  a\_ \max$ ,关节限位,避障
+- 约束: $\left| {q_i}\right|  \leq  v_\max ,\left| {q_i}\right|  \leq  a_\max$ ,关节限位,避障
 
 - 求解方法:数值优化、动态规划、凸优化等
 

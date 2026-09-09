@@ -355,9 +355,9 @@ icks_per_rev
 
 		radius = delta_dist / delta_theta
 
-		${cx} = x -$ radius * math.csin(theta)
+		cx = x - radius * math.sin(theta)
 
-		${cy} = y +$ radius * math.cos(theta)
+		cy = y + radius * math.cos(theta)
 
 		x = cx + radius * math.sin(theta + delta_theta)
 

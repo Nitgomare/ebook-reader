@@ -187,6 +187,12 @@ def main() -> None:
             "code_blocks": html_content.count("<pre"),
             "cover": book.get("cover", ""),
         }
+        if slug == "ros-robotics-practice":
+            code_blocks = re.findall(r"<pre\b[^>]*>(.*?)</pre>", html_content, re.I | re.S)
+            robotics_reference_metrics[slug]["formula_like_code_blocks"] = sum(
+                bool(re.search(r"\\(?:omega|theta|frac|times|begin|left|mathrel)\b", block))
+                for block in code_blocks
+            )
     report = {
         "stats": catalog["stats"],
         "research_video_tutorial": {
@@ -561,10 +567,11 @@ def main() -> None:
             "images": 56,
             "external_images": 0,
             "missing_images": 0,
-            "math_fragments": 227,
+            "math_fragments": 252,
             "raw_dollar_delimiters": 0,
             "tables": 16,
-            "code_blocks": 296,
+            "code_blocks": 238,
+            "formula_like_code_blocks": 0,
             "cover": "",
         },
     }

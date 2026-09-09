@@ -123,7 +123,7 @@ ros2 topic pub /topic_name std_msgs/msg/String "\{data: 'Hello ROS2'\}"
 
 															#以指定频率发布 (1Hz)
 
-		ros2 topic pub -r 1 /topic_name std_msgs/msg/String "\{data: 'Hello'\}"
+		ros2 topic pub -r 1 /topic_name std_msgs/msg/String "{data: 'Hello'}"
 
 																#查看话题发布频率
 
@@ -157,13 +157,13 @@ ros2 topic pub /topic_name std_msgs/msg/String "\{data: 'Hello ROS2'\}"
 
 	#调用服务
 
-	ros2 service call /service_name std_srvs/srv/Empty "\{\}"
+	ros2 service call /service_name std_srvs/srv/Empty "{}"
 
 	#调用带参数的服务
 
 4 - ros2 service call /spawn turtlesim/srv/Spawn "\{x: 2.0, y: 2.0, theta: 0.
 
-	0, name: 'turtle2'\}"
+	0, name: 'turtle2'}"
 
 	#查找指定类型的服务
 
@@ -189,7 +189,7 @@ ros2 topic pub /topic_name std_msgs/msg/String "\{data: 'Hello ROS2'\}"
 
 				#发送动作目标
 
-			ros2 action send_goal /action_name action_type "\{goal_field: value\}"
+			ros2 action send_goal /action_name action_type "{goal_field: value}"
 
 				#发送动作目标并查看反馈
 
@@ -379,7 +379,7 @@ RViz的主要功能:
 
 配置好Display后，可以保存为.rviz配置文件，下次直接加载:
 
-- File $\rightarrow$ Save Config As $\rightarrow$ 选择保存路径
+- File → Save Config As → 选择保存路径
 
 - 建议将配置文件放在功能包的rviz/目录下
 

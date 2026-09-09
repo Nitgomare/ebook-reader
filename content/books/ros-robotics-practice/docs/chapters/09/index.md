@@ -191,9 +191,9 @@ ROS2版本:
 
 12 - echo "deb [arch=\$(dpkg --print-architecture) signed-by=/usr/share/keyring
 
-	s/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu \$(. /etc/os
+	s/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os
 
-	-release && echo \$UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.
+	-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.
 
 	d/ros2.list > /dev/null
 
@@ -311,7 +311,7 @@ ROS2工作空间目录结构
 
 #查看当前ROS_DOMAIN_ID
 
-	echo \$ROS_DOMAIN_ID
+	echo $ROS_DOMAIN_ID
 
 ---
 
