@@ -561,10 +561,10 @@ def main() -> None:
             "images": 56,
             "external_images": 0,
             "missing_images": 0,
-            "math_fragments": 223,
+            "math_fragments": 227,
             "raw_dollar_delimiters": 0,
             "tables": 16,
-            "code_blocks": 297,
+            "code_blocks": 296,
             "cover": "",
         },
     }

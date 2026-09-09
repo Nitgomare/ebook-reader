@@ -87,13 +87,13 @@ $S\left( \omega \right)  = \left\lbrack  \begin{array}{lll} 0 &  - {\omega z} & 
 
 在操作臂中，每个连杆的速度可以通过关节速度和相邻连杆的速度传递得到。
 
-对于转动关节i，连杆i相对于连杆i-1的角速度为 $\dot{\theta }i \times  z\{ \mathrm{i} - 1\}$ ，因此:
+对于转动关节 i，连杆 i 相对于连杆 i-1 的角速度增量为 $\dot{\theta}_i\boldsymbol{z}_{i-1}$，因此：
 
 ---
 
-$\omega \_ i = \omega \_ \{ i - 1\}  + \theta \_ i \times  z\_ \{ i - 1\} \;$ (转动关节)
+$\boldsymbol{\omega}_i = \boldsymbol{\omega}_{i-1} + \dot{\theta}_i\boldsymbol{z}_{i-1}$ （转动关节）
 
-$\omega \_ i = \omega \_ \{ i - 1\}$ 	(移动关节)
+$\boldsymbol{\omega}_i = \boldsymbol{\omega}_{i-1}$ （移动关节）
 
 ---
 
@@ -101,13 +101,13 @@ $\omega \_ i = \omega \_ \{ i - 1\}$ 	(移动关节)
 
 ---
 
-$1\;v\_ i = v\_ \{ i - 1\}  + \omega \_ \{ i - 1\}  \times  p\_ \{ i - 1, i\}  + d\_ i \times  z\_ \{ i - 1\} \;$ (移动关节)
+$\boldsymbol{v}_i = \boldsymbol{v}_{i-1} + \boldsymbol{\omega}_{i-1} \times \boldsymbol{p}_{i-1,i} + \dot{d}_i\boldsymbol{z}_{i-1}$ （移动关节）
 
-	$v\_ i = v\_ \{ i - 1\}  + \omega \_ \{ i - 1\}  \times  p\_ \{ i - 1, i\}$ 															(转动关节)
+$\boldsymbol{v}_i = \boldsymbol{v}_{i-1} + \boldsymbol{\omega}_{i-1} \times \boldsymbol{p}_{i-1,i}$ （转动关节）
 
 ---
 
-其中p_\{i-1, i\}是连杆i原点相对于连杆i-1原点的位置矢量。
+其中，$\boldsymbol{p}_{i-1,i}$ 是连杆 i 原点相对于连杆 i-1 原点的位置矢量，$\dot{d}_i$ 是移动关节的伸缩速度，$\boldsymbol{z}_{i-1}$ 是关节轴方向。
 
 ### 5.4.2 向外递推计算速度
 
