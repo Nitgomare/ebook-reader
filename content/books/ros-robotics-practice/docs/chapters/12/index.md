@@ -87,11 +87,11 @@ ROS使用右手坐标系(REP-103标准):
 
 	using namespace std::chrono_literals;
 
-	class PublisherNode : public rclcpp::Node \{
+	class PublisherNode : public rclcpp::Node {
 
 	public:
 
-			PublisherNode() : Node("publisher_node"), count_(0) \{
+			PublisherNode() : Node("publisher_node"), count_(0) {
 
 						// 创建发布者:消息类型、话题名、QoS队列深度
 
@@ -107,11 +107,11 @@ ROS使用右手坐标系(REP-103标准):
 
 						RCLCPP_INFO(this->get_logger(), "发布者节点已启动");
 
-			\}
+			}
 
 	private:
 
-			void timer_callback() \{
+			void timer_callback() {
 
 						auto message = std_msgs::msg::String();
 
@@ -123,7 +123,7 @@ ROS使用右手坐标系(REP-103标准):
 
 						publisher_->publish(message);
 
-			\}
+			}
 
 			rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
 
@@ -131,7 +131,7 @@ ROS使用右手坐标系(REP-103标准):
 
 			size_t count_;
 
-	\};
+	};
 
 - int main(int argc, char * argv[]) \{
 
@@ -143,7 +143,7 @@ ROS使用右手坐标系(REP-103标准):
 
 			return 0;
 
-	\}
+	}
 
 ---
 
@@ -155,11 +155,11 @@ ROS使用右手坐标系(REP-103标准):
 
 	#include "std_msgs/msg/string.hpp"
 
-	class SubscriberNode : public rclcpp::Node \{
+	class SubscriberNode : public rclcpp::Node {
 
 	public:
 
-			SubscriberNode() : Node("subscriber_node") \{
+			SubscriberNode() : Node("subscriber_node") {
 
 					// 创建订阅者:话题名、QoS、回调函数(使用std::bind绑定成员函数)
 
@@ -173,21 +173,21 @@ ROS使用右手坐标系(REP-103标准):
 
 					RCLCPP_INFO(this->get_logger(), "订阅者节点已启动");
 
-			\}
+			}
 
 	private:
 
 			void topic_callback(const std_msgs::msg::String::SharedPtr msg) const
 
-	\{
+	{
 
 					RCLCPP_INFO(this->get_logger(), "收到:'%s'", msg->data.c_str());
 
-			\}
+			}
 
 			rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
 
-	\};
+	};
 
 - int main(int argc, char * argv[]) \{
 
@@ -199,7 +199,7 @@ ROS使用右手坐标系(REP-103标准):
 
 			return 0;
 
-	\}
+	}
 
 ---
 
@@ -297,7 +297,7 @@ int64 sum
 
 find_package(rosidl_default_generators REQUIRED)
 
-rosidl_generate_interfaces(\$\{PROJECT_NAME\}
+rosidl_generate_interfaces(${PROJECT_NAME}
 
 	"srv/AddTwoInts.srv"
 
@@ -327,11 +327,11 @@ rosidl_generate_interfaces(\$\{PROJECT_NAME\}
 
 	#include "my_first_package/srv/add_two_ints.hpp"
 
-	class ServiceServer : public rclcpp::Node \{
+	class ServiceServer : public rclcpp::Node {
 
 	public:
 
-				ServiceServer() : Node("service_server") \{
+				ServiceServer() : Node("service_server") {
 
 							service_ = this->create_service<my_first_package::srv::AddTwoInts>
 
@@ -345,7 +345,7 @@ rosidl_generate_interfaces(\$\{PROJECT_NAME\}
 
 						RCLCPP_INFO(this->get_logger(), "服务服务器已启动");
 
-				\}
+				}
 
 	private:
 
@@ -357,7 +357,7 @@ rosidl_generate_interfaces(\$\{PROJECT_NAME\}
 
 							std::shared_ptr<my_first_package::srv::AddTwoInts::Response> respo
 
-	nse) \{
+	nse) {
 
 							response->sum = request->a + request->b;
 
@@ -367,13 +367,13 @@ rosidl_generate_interfaces(\$\{PROJECT_NAME\}
 
 															request->a, request->b, response->sum);
 
-				\}
+				}
 
 				rclcpp::Service<my_first_package::srv::AddTwoInts>::SharedPtr service_
 
 	;
 
-	\};
+	};
 
 - int main(int argc, char **argv) \{
 
@@ -385,7 +385,7 @@ rosidl_generate_interfaces(\$\{PROJECT_NAME\}
 
 				return 0;
 
-	\}
+	}
 
 ---
 
@@ -397,35 +397,35 @@ rosidl_generate_interfaces(\$\{PROJECT_NAME\}
 
 	#include "my_first_package/srv/add_two_ints.hpp"
 
-	class ServiceClient : public rclcpp::Node \{
+	class ServiceClient : public rclcpp::Node {
 
 	public:
 
-				ServiceClient() : Node("service_client") \{
+				ServiceClient() : Node("service_client") {
 
 							client_ = this->create_client<my_first_package::srv::AddTwoInts>(   )
 
 	"add_two_ints");
 
-				\}
+				}
 
-				int call_service(int a, int b) \{
+				int call_service(int a, int b) {
 
 							// 等待服务可用
 
-							while (!client_->wait_for_service(std::chrono::seconds(1))) \{
+							while (!client_->wait_for_service(std::chrono::seconds(1))) {
 
-										if (!rclcpp::ok()) \{
+										if (!rclcpp::ok()) {
 
 													RCLCPP_ERROR(this->get_logger(), "等待服务时被中断");
 
 													return -1;
 
-										\}
+										}
 
 										RCLCPP_INFO(this->get_logger(), "等待服务可用...");
 
-							\}
+							}
 
 							auto request = std::make_shared<my_first_package::srv::AddTwoInts
 
@@ -443,7 +443,7 @@ rosidl_generate_interfaces(\$\{PROJECT_NAME\}
 
 	ce(), future) ==
 
-										rclcpp::FutureReturnCode::SUCCESS) \{
+										rclcpp::FutureReturnCode::SUCCESS) {
 
 										RCLCPP_INFO(this->get_logger(), "结果:%ld", future.get()->sum
 
@@ -451,21 +451,21 @@ rosidl_generate_interfaces(\$\{PROJECT_NAME\}
 
 										return future.get()->sum;
 
-							\} else \{
+							} else {
 
 										RCLCPP_ERROR(this->get_logger(), "服务调用失败");
 
 										return -1;
 
-							\}
+							}
 
-				\}
+				}
 
 	private:
 
 				rclcpp::Client<my_first_package::srv::AddTwoInts>::SharedPtr client_;
 
-	\};
+	};
 
 int main(int argc, char **argv) \{
 
@@ -525,7 +525,7 @@ int32[] partial_sequence
 
 #include "my_first_package/action/fibonacci.hpp"
 
-class ActionServer : public rclcpp::Node \{
+class ActionServer : public rclcpp::Node {
 
 public:
 
@@ -533,7 +533,7 @@ public:
 
 	using GoalHandle = rclcpp_action::ServerGoalHandle<Fibonacci>;
 
-	ActionServer() : Node("action_server") \{
+	ActionServer() : Node("action_server") {
 
 		action_server_ = rclcpp_action::create_server<Fibonacci>(   )
 
@@ -553,7 +553,7 @@ ers::_1));
 
 		RCLCPP_INFO(this->get_logger(), "动作服务器已启动");
 
-	\}
+	}
 
 private:
 
@@ -561,33 +561,33 @@ private:
 
 		const rclcpp_action::GoalUUID &, std::shared_ptr<const Fibonacci::
 
-Goal> goal) \{
+Goal> goal) {
 
 		RCLCPP_INFO(this->get_logger(), "收到目标: order=%d", goal->order);
 
 		return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
 
-	\}
+	}
 
 	rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<Goal
 
-Handle>) \{
+Handle>) {
 
 		RCLCPP_INFO(this->get_logger(), "收到取消请求");
 
 		return rclcpp_action::CancelResponse::ACCEPT;
 
-	\}
+	}
 
-	void handle_accepted(const std::shared_ptr<GoalHandle> goal_handle) \{
+	void handle_accepted(const std::shared_ptr<GoalHandle> goal_handle) {
 
-		std::thread\{std::bind(&ActionServer::execute, this, std::placehold
+		std::thread{std::bind(&ActionServer::execute, this, std::placehold
 
-ers::_1), goal_handle\}.detach();
+ers::_1), goal_handle}.detach();
 
-	\}
+	}
 
-	void execute(const std::shared_ptr<GoalHandle> goal_handle) \{
+	void execute(const std::shared_ptr<GoalHandle> goal_handle) {
 
 		const auto goal = goal_handle->get_goal();
 
@@ -603,9 +603,9 @@ ers::_1), goal_handle\}.detach();
 
 		rclcpp::Rate loop_rate(1);
 
-		for (int i = 1; (i < goal->order) && rclcpp::ok(); ++i) \{
+		for (int i = 1; (i < goal->order) && rclcpp::ok(); ++i) {
 
-			if (goal_handle->is_canceling()) \{
+			if (goal_handle->is_canceling()) {
 
 					result->sequence = sequence;
 
@@ -613,7 +613,7 @@ ers::_1), goal_handle\}.detach();
 
 					return;
 
-			\}
+			}
 
 			sequence.push_back(sequence[i] + sequence[i-1]);
 
@@ -621,23 +621,23 @@ ers::_1), goal_handle\}.detach();
 
 			loop_rate.sleep();
 
-		\}
+		}
 
-		if (rclcpp::ok()) \{
+		if (rclcpp::ok()) {
 
 			result->sequence = sequence;
 
 			goal_handle->succeed(result);
 
-		\}
+		}
 
-	\}
+	}
 
 	rclcpp_action::Server<Fibonacci>::SharedPtr action_server_;
 
-\};
+};
 
-int main(int argc, char **argv) \{
+int main(int argc, char **argv) {
 
 	rclcpp::init(argc, argv);
 
@@ -647,7 +647,7 @@ int main(int argc, char **argv) \{
 
 	return 0;
 
-\}
+}
 
 ```
 
@@ -667,11 +667,11 @@ ROS2参数服务器架构Lgboobam
 
 	#include "rclcpp/rclcpp.hpp"
 
-	class ParamNode : public rclcpp::Node \{
+	class ParamNode : public rclcpp::Node {
 
 	public:
 
-					ParamNode() : Node("param_node") \{
+					ParamNode() : Node("param_node") {
 
 									// 声明参数 (名称、默认值、描述)
 
@@ -711,37 +711,37 @@ ROS2参数服务器架构Lgboobam
 
 	::_1));
 
-					\}
+					}
 
 	private:
 
 					rcl_interfaces::msg::SetParametersResult param_callback(   )
 
-									const std::vector<rclcpp::Parameter> &parameters) \{
+									const std::vector<rclcpp::Parameter> &parameters) {
 
 									rcl_interfaces::msg::SetParametersResult result;
 
 									result.successful = true;
 
-									for (const auto &param : parameters) \{
+									for (const auto &param : parameters) {
 
-													if (param.get_name() == "max_speed") \{
+													if (param.get_name() == "max_speed") {
 
 																RCLCPP_INFO(this->get_logger(), "max_speed 变为: %f", para
 
 	m.as_double());
 
-												\}
+												}
 
-									\}
+									}
 
 									return result;
 
-					\}
+					}
 
 					OnSetParametersCallbackHandle::SharedPtr param_callback_handle_;
 
-	\};
+	};
 
 int main(int argc, char **argv) \{
 
@@ -809,7 +809,7 @@ def generate_launch_description():
 
 			output='screen', # 输出到屏幕
 
-			parameters=[\{'max_speed': 2.0\}\}, # 设置参数
+			parameters=[{'max_speed': 2.0}}, # 设置参数
 
 		),
 
@@ -889,7 +889,7 @@ def generate_launch_description():
 
 							),
 
-							launch_arguments=\{'use_sim_time': use_sim_time\}.items()
+							launch_arguments={'use_sim_time': use_sim_time}.items()
 
 				)
 

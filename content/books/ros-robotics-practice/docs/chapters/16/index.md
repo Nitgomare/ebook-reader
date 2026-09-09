@@ -77,25 +77,25 @@ SLAM建图 / AMCL定位 / 全局规划(A*)/ 局部规划(DWA)
 
 系统中的主要ROS话题和服务:
 
-<table><tr><td>话题/服务</td><td>类型</td><td>方向</td><td>说明</td></tr><tr><td>/scan</td><td>sensor_msgs/LaserS can</td><td>传感器 $\rightarrow$ 系统</td><td>激光雷达扫描数据</td></tr><tr><td>/camera/image_raw</td><td>sensor_msgs/Image</td><td>传感器 $\rightarrow$ 系统</td><td>相机图像(可选)</td></tr><tr><td>/imu/data</td><td>sensor_msgs/Imu</td><td>传感器 $\rightarrow$ 系统</td><td>IMU数据</td></tr><tr><td>/odom</td><td>nav_msgs/Odometry</td><td>底盘 $\rightarrow$ 系统</td><td>轮式里程计</td></tr><tr><td>/cmd_vel</td><td>geometry_msgs/Twis t</td><td>系统 $\rightarrow$ 底盘</td><td>速度命令(线速度+角速度)</td></tr><tr><td>/map</td><td>nav_msgs/Occupanc yGrid</td><td>SLAM $\rightarrow$ 系统</td><td>栅格地图</td></tr><tr><td>/tf</td><td>tf2_msgs/TFMessage</td><td>全系统</td><td>坐标变换 (odom→base_link 等)</td></tr><tr><td>/tf_static</td><td>tf2_msgs/TFMessage</td><td>全系统</td><td>静态坐标变换</td></tr><tr><td>/patrol_waypoints</td><td>自定义</td><td>任务层</td><td>巡逻航点(参数)</td></tr><tr><td>/patrol_state</td><td>std_msgs/String</td><td>任务层→外部</td><td>巡逻状态</td></tr></table>
+<table><tr><td>话题/服务</td><td>类型</td><td>方向</td><td>说明</td></tr><tr><td>/scan</td><td>sensor_msgs/LaserS can</td><td>传感器 → 系统</td><td>激光雷达扫描数据</td></tr><tr><td>/camera/image_raw</td><td>sensor_msgs/Image</td><td>传感器 → 系统</td><td>相机图像(可选)</td></tr><tr><td>/imu/data</td><td>sensor_msgs/Imu</td><td>传感器 → 系统</td><td>IMU数据</td></tr><tr><td>/odom</td><td>nav_msgs/Odometry</td><td>底盘 → 系统</td><td>轮式里程计</td></tr><tr><td>/cmd_vel</td><td>geometry_msgs/Twis t</td><td>系统 → 底盘</td><td>速度命令(线速度+角速度)</td></tr><tr><td>/map</td><td>nav_msgs/Occupanc yGrid</td><td>SLAM → 系统</td><td>栅格地图</td></tr><tr><td>/tf</td><td>tf2_msgs/TFMessage</td><td>全系统</td><td>坐标变换 (odom→base_link 等)</td></tr><tr><td>/tf_static</td><td>tf2_msgs/TFMessage</td><td>全系统</td><td>静态坐标变换</td></tr><tr><td>/patrol_waypoints</td><td>自定义</td><td>任务层</td><td>巡逻航点(参数)</td></tr><tr><td>/patrol_state</td><td>std_msgs/String</td><td>任务层→外部</td><td>巡逻状态</td></tr></table>
 
 ### 16.2.3 TF树设计
 
 ---
 
-map $\rightarrow$ odom $\rightarrow$ base_link $\rightarrow$ laser_link
+map → odom → base_link → laser_link
 
-	$\rightarrow$ camera_link (可选)
+	→ camera_link (可选)
 
-	$\rightarrow$ imu_link
+	→ imu_link
 
 	→ wheel_left_link
 
-	$\rightarrow$ wheel_right_link
+	→ wheel_right_link
 
-	$\rightarrow$ caster_front_link
+	→ caster_front_link
 
-	$\rightarrow$ caster_rear_link
+	→ caster_rear_link
 
 ---
 
@@ -127,7 +127,7 @@ RGB-D相机 ——USB—— 树莓派
 
 Arduino ——USB—— 树莓派(发送速度命令，接收编码器/IMU数据)
 
-							——PWM $\rightarrow$ 电机驱动板 $\rightarrow$ 左电机
+							——PWM → 电机驱动板 → 左电机
 
 																								右电机
 
@@ -151,21 +151,27 @@ Arduino ——USB—— 树莓派(发送速度命令，接收编码器/IMU数据
 
 计算:
 
-	线速度 $v = \left( {v - l + v - r}\right) /2$
-
-	角速度 $\omega  = \left( {v\_ r - v\_ l}\right) /B$
+$$
+\begin{aligned}
+v&=\frac{v_l+v_r}{2}\\ \omega&=\frac{v_r-v_l}{B}
+\end{aligned}
+$$
 
 逆运动学(已知v，ω，求轮速):
 
-	v_l = v - ω * B / 2
-
-	v_r = v + ω * B / 2
+$$
+\begin{aligned}
+v_l&=v-\frac{\omega B}{2}\\ v_r&=v+\frac{\omega B}{2}
+\end{aligned}
+$$
 
 轮速转电机转速(RPM):
 
-	RPM_l = v_l / (2πr) × 60
-
-	RPM_r = v_r / (2πr) × 60
+$$
+\begin{aligned}
+\mathrm{RPM}_l&=\frac{60v_l}{2\pi r}\\\mathrm{RPM}_r&=\frac{60v_r}{2\pi r}
+\end{aligned}
+$$
 
 ---
 
@@ -173,19 +179,21 @@ Arduino ——USB—— 树莓派(发送速度命令，接收编码器/IMU数据
 
 ---
 
-$\Delta \mathrm{d}l = {2\pi r} \times  \Delta$ ticks $\mathrm{L}/\mathrm{N}$
+$$
+\begin{aligned}
+\Delta d_l&=\frac{2\pi r\,\Delta\mathrm{ticks}_l}{N}\\\Delta d_r&=\frac{2\pi r\,\Delta\mathrm{ticks}_r}{N}
+\end{aligned}
+$$
 
-	$\Delta \mathrm{d}\_ \mathrm{r} = {2\pi r} \times  \Delta$ ticks $\_ \mathrm{r}/\mathrm{N}$
-
-$\Delta \mathrm{d} = \left( {\Delta \mathrm{d}\_ \mathrm{l} + \Delta \mathrm{d}\_ \mathrm{r}}\right) /2$
-
-	${\Delta \theta } = \left( {\Delta \mathrm{d} - \mathrm{r} - \Delta \mathrm{d} - \mathrm{l}}\right) /\mathrm{B}$
-
-	$x +  = {\Delta d} \times  \cos \left( {\theta  + {\Delta \theta }/2}\right)$
-
-$y +  = {\Delta d} \times  \sin \left( {\theta  + {\Delta \theta }/2}\right)$
-
-	$\theta  \mathrel{\text{ += }} {\Delta \theta }$
+$$
+\begin{aligned}
+\Delta d&=\frac{\Delta d_l+\Delta d_r}{2}\\
+\Delta\theta&=\frac{\Delta d_r-\Delta d_l}{B}\\
+x_{\mathrm{new}}&=x+\Delta d\cos\left(\theta+\frac{\Delta\theta}{2}\right)\\
+y_{\mathrm{new}}&=y+\Delta d\sin\left(\theta+\frac{\Delta\theta}{2}\right)\\
+\theta_{\mathrm{new}}&=\theta+\Delta\theta
+\end{aligned}
+$$
 
 ---
 
@@ -257,7 +265,7 @@ from nav2_simple_commander.robot_navigator import BasicNavigator, TaskRes
 
 					self.navigator.waitUntilNav2Active()
 
-					self.get_logger().info(f'巡逻节点已启动, 共\{len(self.waypoints)\}个航
+					self.get_logger().info(f'巡逻节点已启动, 共{len(self.waypoints)}个航
 
 	点 1)
 
@@ -315,13 +323,13 @@ from nav2_simple_commander.robot_navigator import BasicNavigator, TaskRes
 
 							wp = self.waypoints[current_index]
 
-							self.get_logger().info(f'前往航点 \{current_index+1\}/\{len(self.
+							self.get_logger().info(f'前往航点 {current_index+1}/{len(self.
 
-	waypoints)\}: '
+	waypoints)}: '
 
-																		f'(\{wp["x"]::2f\}, \{wp["y"]:.2f\}), 朝
+																		f'({wp["x"]::2f}, {wp["y"]:.2f}), 朝
 
-	向\{wp["theta"]:.2f\}rad')
+	向{wp["theta"]:.2f}rad')
 
 							#创建目标位姿并导航
 
@@ -349,9 +357,9 @@ from nav2_simple_commander.robot_navigator import BasicNavigator, TaskRes
 
 							if result == TaskResult.SUCCEEDED:
 
-									self.get_logger().info(f'到达航点 \{current_index+1\}, 停留\{s
+									self.get_logger().info(f'到达航点 {current_index+1}, 停留{s
 
-	elf.wait_time\}秒')
+	elf.wait_time}秒')
 
 									time.sleep(self.wait_time)
 
@@ -363,7 +371,7 @@ from nav2_simple_commander.robot_navigator import BasicNavigator, TaskRes
 
 							elif result == TaskResult.FAILED:
 
-									self.get_logger().error(f'导航到航点\{current_index+1\}失败,
+									self.get_logger().error(f'导航到航点{current_index+1}失败,
 
 	跳过 1
 
@@ -413,7 +421,7 @@ waypoints.yaml :
 
 5 - - \{x: 1.0, y: 2.0, theta: -1.57\} 																																											#航点4: 左转
 
-						- \{x: 1.0, y: 0.0, theta: 0.0\} 																																												#航点5:回到起点
+						- {x: 1.0, y: 0.0, theta: 0.0} 																																												#航点5:回到起点
 
 ---
 
@@ -497,9 +505,9 @@ simulation.launch.py :
 
 																			),
 
-																				launch_arguments=\{'use_sim_time': use_sim_time, 'map'
+																				launch_arguments={'use_sim_time': use_sim_time, 'map'
 
-		: map_file\}.items(),
+		: map_file}.items(),
 
 																),
 
@@ -529,7 +537,7 @@ simulation.launch.py :
 
 					output='screen',
 
-					parameters=[\{
+					parameters=[{
 
 						'waypoints_file': os.path.join(pkg_patrol, 'confi
 
@@ -539,7 +547,7 @@ g', 'waypoints.yaml'),
 
 						'loop': True,
 
-					\}],
+					}],
 
 				),
 

@@ -35,7 +35,7 @@
 
 ---
 
-${}^{ \land  }A\;P = {\left\lbrack  p\_ x,\;p\_ y,\;p\_ z\right\rbrack  }^{ \land  }T$
+${}^{ \land  }A\;P = {\left\lbrack  p_x,\;p_y,\;p_z\right\rbrack  }^{ \land  }T$
 
 ---
 
@@ -47,15 +47,13 @@ ${}^{ \land  }A\;P = {\left\lbrack  p\_ x,\;p\_ y,\;p\_ z\right\rbrack  }^{ \lan
 
 旋转矩阵 (Rotation Matrix) :
 
-设刚体上固连坐标系\{B\}，其三个单位主轴向量为 ${}^{A\mathrm{\;X}\_ \mathrm{B}\text{ 、 }}$ A $\mathrm{Y}\_ \mathrm{B}$ 、 ${}^{A}\mathrm{Y}\_ \mathrm{B}$ 、 ${}^{A}\mathrm{Z}\_ \mathrm{B}$ (在参考系\{A\}中表示)，则旋转矩阵为:
+设刚体上固连坐标系\{B\}，其三个单位主轴向量为 ${}^{A\mathrm{\;X}_\mathrm{B}\text{ 、 }}$ A $\mathrm{Y}_\mathrm{B}$ 、 ${}^{A}\mathrm{Y}_\mathrm{B}$ 、 ${}^{A}\mathrm{Z}_\mathrm{B}$ (在参考系\{A\}中表示)，则旋转矩阵为:
 
 ---
 
-	${}^{ \land  }$ A R_B = [^A X_B, ^A Y_B, ^A Z_B] = [r11 r12 r13]
-
-											[r21 r22 r23]
-
-3 											[r31 r32 r33]
+$$
+{}^A R_B=[{}^A\boldsymbol X_B\;\;{}^A\boldsymbol Y_B\;\;{}^A\boldsymbol Z_B]=\begin{bmatrix}r_{11}&r_{12}&r_{13}\\r_{21}&r_{22}&r_{23}\\r_{31}&r_{32}&r_{33}\end{bmatrix}
+$$
 
 ---
 
@@ -109,9 +107,9 @@ ZYX欧拉角的旋转矩阵为:R = Rz(ψ) Ry(θ) Rx(φ)
 
 ---
 
-^A T_B = [^A R_B 		^A P_Borg]
-
-	[0 0 0 1 ]
+$$
+{}^A T_B=\begin{bmatrix}{}^A R_B&{}^A\boldsymbol P_{B\mathrm{org}}\\\boldsymbol 0^{\mathsf T}&1\end{bmatrix}
+$$
 
 ---
 
@@ -133,7 +131,9 @@ ZYX欧拉角的旋转矩阵为:R = Rz(ψ) Ry(θ) Rx(φ)
 
 ---
 
-1 ^A P = ^B P + ^A P_Borg
+$$
+{}^A\boldsymbol P={}^B\boldsymbol P+{}^A\boldsymbol P_{B\mathrm{org}}
+$$
 
 ---
 
@@ -143,7 +143,9 @@ ZYX欧拉角的旋转矩阵为:R = Rz(ψ) Ry(θ) Rx(φ)
 
 ---
 
-${}^{ \land  }A\mathrm{P} = {}^{ \land  }A\mathrm{R}\_ B \times  {}^{ \land  }\mathrm{B}\mathrm{P}$
+$$
+{}^A\boldsymbol P={}^A R_B\,{}^B\boldsymbol P
+$$
 
 ---
 
@@ -153,7 +155,9 @@ ${}^{ \land  }A\mathrm{P} = {}^{ \land  }A\mathrm{R}\_ B \times  {}^{ \land  }\m
 
 ---
 
-1 ^A P = ^A R_B × ^B P + ^A P_Borg
+$$
+{}^A\boldsymbol P={}^A R_B\,{}^B\boldsymbol P+{}^A\boldsymbol P_{B\mathrm{org}}
+$$
 
 ---
 
@@ -161,9 +165,9 @@ ${}^{ \land  }A\mathrm{P} = {}^{ \land  }A\mathrm{R}\_ B \times  {}^{ \land  }\m
 
 ---
 
-[^A P] = [^A R_B ^A P_Borg] [^B P]
-
-														[1] [0 0 0 0 1][1]
+$$
+\begin{bmatrix}{}^A\boldsymbol P\\1\end{bmatrix}=\begin{bmatrix}{}^A R_B&{}^A\boldsymbol P_{B\mathrm{org}}\\\boldsymbol 0^{\mathsf T}&1\end{bmatrix}\begin{bmatrix}{}^B\boldsymbol P\\1\end{bmatrix}
+$$
 
 ---
 
@@ -177,9 +181,9 @@ ${}^{ \land  }A\mathrm{P} = {}^{ \land  }A\mathrm{R}\_ B \times  {}^{ \land  }\m
 
 ---
 
-Trans(Q) = [I Q]
-
-	[0 1]
+$$
+\operatorname{Trans}(\boldsymbol Q)=\begin{bmatrix}I_3&\boldsymbol Q\\\boldsymbol 0^{\mathsf T}&1\end{bmatrix}
+$$
 
 ---
 
@@ -191,11 +195,9 @@ Trans(Q) = [I Q]
 
 ---
 
-${Rx}\left( \theta \right)  = \lbrack 1$ 			0
-
-	0 cos(θ) -sin(θ)]
-
-	[0 sin(θ) cos(θ)]
+$$
+R_x(\theta)=\begin{bmatrix}1&0&0\\0&\cos\theta&-\sin\theta\\0&\sin\theta&\cos\theta\end{bmatrix}
+$$
 
 ---
 
@@ -203,11 +205,9 @@ ${Rx}\left( \theta \right)  = \lbrack 1$ 			0
 
 ---
 
-${Ry}\left( \theta \right)  = \left\lbrack  \begin{array}{lll} \cos \left( \theta \right) & 0 & \sin \left( \theta \right)  \end{array}\right\rbrack$
-
-	$\left\lbrack  \begin{array}{llllll}  & 0 & & 1 & & 0 \end{array}\right\rbrack$
-
-	[-sin(θ) 0 cos(θ)]
+$$
+R_y(\theta)=\begin{bmatrix}\cos\theta&0&\sin\theta\\0&1&0\\-\sin\theta&0&\cos\theta\end{bmatrix}
+$$
 
 	网
 
@@ -221,11 +221,9 @@ ${Ry}\left( \theta \right)  = \left\lbrack  \begin{array}{lll} \cos \left( \thet
 
 ---
 
-1 	${Rz}\left( \theta \right)  = \lbrack \cos \left( \theta \right)  - \sin \left( \theta \right) \;$
-
-2 			[sin(θ) cos(θ) 0]
-
-			[ 0 0 1]
+$$
+R_z(\theta)=\begin{bmatrix}\cos\theta&-\sin\theta&0\\\sin\theta&\cos\theta&0\\0&0&1\end{bmatrix}
+$$
 
 ---
 
@@ -249,7 +247,9 @@ ${Ry}\left( \theta \right)  = \left\lbrack  \begin{array}{lll} \cos \left( \thet
 
 ---
 
-${}^{ \land  }$ A T_C = ^A T_B × ^B T_C
+$$
+{}^A T_C={}^A T_B\,{}^B T_C
+$$
 
 ---
 
@@ -261,9 +261,9 @@ ${}^{ \land  }$ A T_C = ^A T_B × ^B T_C
 
 ---
 
-${}^{ \land  }\mathrm{B}\mathrm{T}\_ \mathrm{A} = {\left( {}^{ \land  }\mathrm{A}\mathrm{T}\_ \mathrm{B}\right) }^{ \land  }\left( {-1}\right)  = \left\lbrack  \begin{array}{lll} {\mathrm{R}}^{ \land  }\mathrm{T} &  - {\mathrm{R}}^{ \land  }\mathrm{T} & \mathrm{P} \end{array}\right\rbrack$
-
-	[0 1 ]
+$$
+{}^B T_A=({}^A T_B)^{-1}=\begin{bmatrix}R^{\mathsf T}&-R^{\mathsf T}\boldsymbol P\\\boldsymbol 0^{\mathsf T}&1\end{bmatrix}
+$$
 
 ---
 
@@ -289,13 +289,13 @@ TF2的核心概念:
 
 ---
 
-map $\rightarrow$ odom $\rightarrow$ base_link $\rightarrow$ laser_link
+map → odom → base_link → laser_link
 
-	$\rightarrow$ camera_link
+	→ camera_link
 
-	$\rightarrow$ imu_link
+	→ imu_link
 
-	$\rightarrow$ wheel_left_link
+	→ wheel_left_link
 
 	→ wheel_right_link
 

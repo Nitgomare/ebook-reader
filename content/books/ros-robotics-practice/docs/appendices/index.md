@@ -348,11 +348,9 @@ ros2 topic echo /cmd_vel 	#终端2
 
 ---
 
-${Rx}\left( \theta \right)  = \lbrack 1$
-
-	[0 cos(θ) -sin(θ)]
-
-	[0 sin(θ) cos(θ)]
+$$
+R_x(\theta)=\begin{bmatrix}1&0&0\\0&\cos\theta&-\sin\theta\\0&\sin\theta&\cos\theta\end{bmatrix}
+$$
 
 ---
 
@@ -360,11 +358,9 @@ ${Rx}\left( \theta \right)  = \lbrack 1$
 
 ---
 
-${Ry}\left( \theta \right)  = \left\lbrack  \begin{array}{lll} \cos \left( \theta \right) & 0 & \sin \left( \theta \right)  \end{array}\right\rbrack$
-
-	$\left\lbrack  \begin{array}{llllll}  & 0 & & 1 & & 0 \end{array}\right\rbrack$
-
-	[-sin(θ) 0 cos(θ)]
+$$
+R_y(\theta)=\begin{bmatrix}\cos\theta&0&\sin\theta\\0&1&0\\-\sin\theta&0&\cos\theta\end{bmatrix}
+$$
 
 ---
 
@@ -372,11 +368,9 @@ ${Ry}\left( \theta \right)  = \left\lbrack  \begin{array}{lll} \cos \left( \thet
 
 ---
 
-${Rz}\left( \theta \right)  = \lbrack \cos \left( \theta \right)  - \sin \left( \theta \right) \;0$
-
-	[sin(θ) cos(θ) 0]
-
-	[ 0 ]
+$$
+R_z(\theta)=\begin{bmatrix}\cos\theta&-\sin\theta&0\\\sin\theta&\cos\theta&0\\0&0&1\end{bmatrix}
+$$
 
 ---
 
@@ -384,9 +378,9 @@ ${Rz}\left( \theta \right)  = \lbrack \cos \left( \theta \right)  - \sin \left( 
 
 ---
 
-$\mathrm{T} = \left\lbrack  \begin{array}{ll} \mathrm{R} & \mathrm{p} \end{array}\right\rbrack$ 			(4×4矩阵，R为3×3旋转矩阵， $p$ 为3×1位置向量)
-
-	[0 1]
+$$
+T=\begin{bmatrix}R&\boldsymbol p\\\boldsymbol 0^{\mathsf T}&1\end{bmatrix}\in\mathbb R^{4\times4}
+$$
 
 ---
 
@@ -394,9 +388,9 @@ $\mathrm{T} = \left\lbrack  \begin{array}{ll} \mathrm{R} & \mathrm{p} \end{array
 
 ---
 
-1 2 		${T}^{-1} = \left\lbrack  {R}^{T}\right.$ 									$- {R}^{T}p\rbrack$
-
-						[0 										1
+$$
+T^{-1}=\begin{bmatrix}R^{\mathsf T}&-R^{\mathsf T}\boldsymbol p\\\boldsymbol 0^{\mathsf T}&1\end{bmatrix}
+$$
 
 ---
 
@@ -404,7 +398,9 @@ $\mathrm{T} = \left\lbrack  \begin{array}{ll} \mathrm{R} & \mathrm{p} \end{array
 
 ---
 
-${}^{ \land  }$ A T_C = ^A T_B × ^B T_C
+$$
+{}^A T_C={}^A T_B\,{}^B T_C
+$$
 
 ---
 
@@ -412,7 +408,9 @@ ${}^{ \land  }$ A T_C = ^A T_B × ^B T_C
 
 ---
 
-$\mathrm{L}R = {Rz}$ (yaw) $\times  {Ry}$ (pitch) $\times  {Rx}$ (roll)
+$$
+R=R_z(\mathrm{yaw})R_y(\mathrm{pitch})R_x(\mathrm{roll})
+$$
 
 ---
 
@@ -424,11 +422,9 @@ $\mathrm{L}R = {Rz}$ (yaw) $\times  {Ry}$ (pitch) $\times  {Rx}$ (roll)
 
 ---
 
-$R = \left\lbrack  {1 - 2\left( {{y}^{2} + {z}^{2}}\right) }\right.$ 										2 (xy-zw) 																	2(xz+yw)
-
-		[ 2(xy+zw) 										$1 - 2\left( {{x}^{2} + {z}^{2}}\right)$ 																	2(yz-xw) ]
-
-		[ 2(xz-yw) 											2(yz+xw) 																	$1 - 2\left( {{x}^{2} + {y}^{2}}\right) \rbrack$
+$$
+R=\begin{bmatrix}1-2(y^2+z^2)&2(xy-zw)&2(xz+yw)\\2(xy+zw)&1-2(x^2+z^2)&2(yz-xw)\\2(xz-yw)&2(yz+xw)&1-2(x^2+y^2)\end{bmatrix}
+$$
 
 ---
 
@@ -436,7 +432,9 @@ $R = \left\lbrack  {1 - 2\left( {{y}^{2} + {z}^{2}}\right) }\right.$ 										2
 
 ---
 
-$1\;1\;2\left\lbrack  {i - 1}\right\rbrack  T - i = \operatorname{Rotz}\left( {\theta }_{i}\right)  \times  \operatorname{Transz}\left( {d}_{i}\right)  \times  \operatorname{Transx}\left( {a}_{i}\right)  \times  \operatorname{Rotx}\left( {\alpha }_{i}\right)$
+$$
+{}^{i-1}T_i=\operatorname{Rot}_z(\theta_i)\operatorname{Trans}_z(d_i)\operatorname{Trans}_x(a_i)\operatorname{Rot}_x(\alpha_i)
+$$
 
 ---
 
@@ -444,17 +442,14 @@ $1\;1\;2\left\lbrack  {i - 1}\right\rbrack  T - i = \operatorname{Rotz}\left( {\
 
 ---
 
-																																											^\{i-1\}T_i = [
-
-																															$\left\lbrack  {\cos {\theta }_{i}, - \sin {\theta }_{i}\cos {\alpha }_{i},\sin {\theta }_{i}\sin {\alpha }_{i},{a}_{i}\cos {\theta }_{i}}\right\rbrack  ,$
-
-																[sin ${\theta }_{i}$ , $\cos {\theta }_{i}\cos {\alpha }_{i}$ , $- \cos {\theta }_{i}\sin {\alpha }_{i}$ , ${a}_{i}$ sin ${\theta }_{i}$ ],
-
-								$\left\lbrack  {0,\;\sin {\alpha }_{i},\;\cos {\alpha }_{i},\;{d}_{i}}\right\rbrack$
-
-[ 0, 0, 0, 0, 1 ]
-
-																																										]
+$$
+{}^{i-1}T_i=\begin{bmatrix}
+\cos\theta_i&-\sin\theta_i\cos\alpha_i&\sin\theta_i\sin\alpha_i&a_i\cos\theta_i\\
+\sin\theta_i&\cos\theta_i\cos\alpha_i&-\cos\theta_i\sin\alpha_i&a_i\sin\theta_i\\
+0&\sin\alpha_i&\cos\alpha_i&d_i\\
+0&0&0&1
+\end{bmatrix}
+$$
 
 ---
 
@@ -472,11 +467,13 @@ ${}^{0}T = {}^{0}{T}_{1} \times  {}^{1}{T}_{2} \times  \ldots  \times  {}^{n - 1
 
 ---
 
-$x = {l1}\cos {\theta 1} + {l2}\cos \left( {{\theta 1} + {\theta 2}}\right)$
-
-	$y = {l1}\sin {\theta 1} + {l2}\sin \left( {{\theta 1} + {\theta 2}}\right)$
-
-	$\varphi  = {\theta 1} + {\theta 2}$
+$$
+\begin{aligned}
+x&=l_1\cos\theta_1+l_2\cos(\theta_1+\theta_2)\\
+y&=l_1\sin\theta_1+l_2\sin(\theta_1+\theta_2)\\
+\varphi&=\theta_1+\theta_2
+\end{aligned}
+$$
 
 ---
 
@@ -486,7 +483,9 @@ $x = {l1}\cos {\theta 1} + {l2}\cos \left( {{\theta 1} + {\theta 2}}\right)$
 
 ${r}^{2} = {x}^{2} + {y}^{2}$
 
-		$\cos {\theta 2} = \left( {{r}^{2} - l{1}^{2} - l{2}^{2}}\right) /\left( {2l1l2}\right)$
+$$
+\cos\theta_2=\frac{r^2-l_1^2-l_2^2}{2l_1l_2}
+$$
 
 ${\theta 2} =  \pm  \arccos \left( {\cos {\theta 2}}\right)$
 
@@ -504,15 +503,15 @@ $v = J\left( q\right) \dot{q}$
 
 ---
 
-$v = {\left\lbrack  v\_ x, v\_ y, v\_ z,\omega \_ x,\omega \_ y,\omega \_ z\right\rbrack  }^{ \land  }T\left( {6 \times  1}\right)$ ， $\dot{q}$ 为关节速度(n×1)，J为6×n矩阵
+$v = {\left\lbrack  v_x, v_y, v_z,\omega _x,\omega _y,\omega _z\right\rbrack  }^{ \land  }T\left( {6 \times  1}\right)$ ， $\dot{q}$ 为关节速度(n×1)，J为6×n矩阵
 
 ## 转动关节i的雅可比列
 
 ---
 
-${J}_{i} = \left\lbrack  {{z}_{i - 1} \times  \left( {p - {p}_{i - 1}}\right) }\right\rbrack$
-
-	[Zi-1
+$$
+J_i=\begin{bmatrix}\boldsymbol z_{i-1}\times(\boldsymbol p-\boldsymbol p_{i-1})\\\boldsymbol z_{i-1}\end{bmatrix}
+$$
 
 ---
 
@@ -520,9 +519,9 @@ ${J}_{i} = \left\lbrack  {{z}_{i - 1} \times  \left( {p - {p}_{i - 1}}\right) }\
 
 ---
 
-${J}_{i} = \left\lbrack  {z}_{i - 1}\right\rbrack$
-
-	[0 ]
+$$
+J_i=\begin{bmatrix}\boldsymbol z_{i-1}\\\boldsymbol 0\end{bmatrix}
+$$
 
 ---
 
@@ -530,11 +529,13 @@ ${J}_{i} = \left\lbrack  {z}_{i - 1}\right\rbrack$
 
 ---
 
-$J = \lbrack  - {l1}\sin {\theta 1} - {l2}\sin \left( {{\theta 1} + {\theta 2}}\right)$
-
-	[ l1 cosθ1 + l2 cos(θ1+θ2)
-
-	[ 1 											1
+$$
+J=\begin{bmatrix}
+-l_1\sin\theta_1-l_2\sin(\theta_1+\theta_2)&-l_2\sin(\theta_1+\theta_2)\\
+l_1\cos\theta_1+l_2\cos(\theta_1+\theta_2)&l_2\cos(\theta_1+\theta_2)\\
+1&1
+\end{bmatrix}
+$$
 
 ---
 
@@ -542,7 +543,9 @@ $J = \lbrack  - {l1}\sin {\theta 1} - {l2}\sin \left( {{\theta 1} + {\theta 2}}\
 
 ---
 
-$\tau  = {J}^{\tau }\left( q\right) F$
+$$
+\boldsymbol\tau=J^{\mathsf T}(q)\boldsymbol F
+$$
 
 ---
 
@@ -588,7 +591,9 @@ $M\left( q\right) \ddot{q} + C\left( {q,\dot{q}}\right) \dot{q} + G\left( q\righ
 
 ---
 
-	$L = K - P$
+$$
+L=K-P
+$$
 
 $d/{dt}\left( {\partial L/\partial {\dot{q}}_{i}}\right)  - \partial L/\partial {q}_{i} = {\tau }_{i}$
 
@@ -654,7 +659,9 @@ ${\Delta \theta } = {J}^{\top }{\left( J{J}^{\top } + {\lambda }^{2}I\right) }^{
 
 ---
 
-	$\theta \left( t\right)  = {a}_{0} + {a}_{1}t + {a}_{2}{t}^{2} + {a}_{3}{t}^{3}$
+$$
+\theta(t)=a_0+a_1t+a_2t^2+a_3t^3
+$$
 
 2 边界条件: $\theta \left( 0\right)  = {\theta 0},\dot{\theta }\left( 0\right)  = {v0},\theta \left( {tf}\right)  = {\theta f},\dot{\theta }\left( {tf}\right)  = {vf}$
 
@@ -666,7 +673,7 @@ ${\Delta \theta } = {J}^{\top }{\left( J{J}^{\top } + {\lambda }^{2}I\right) }^{
 
 $\theta \left( t\right)  = {a}_{0} + {a}_{1}t + {a}_{2}{t}^{2} + {a}_{3}{t}^{3} + {a}_{4}{t}^{4} + {a}_{5}{t}^{5}$
 
-	边界条件: 增加 $\ddot{\theta }\left( 0\right)  = {a0},\ddot{\theta }\left( {tf}\right)  = {af}$
+边界条件：增加 $\ddot\theta(0)=a_0$、$\ddot\theta(t_f)=a_f$。
 
 ---
 
@@ -684,21 +691,25 @@ $\theta \left( t\right)  = {a}_{0} + {a}_{1}t + {a}_{2}{t}^{2} + {a}_{3}{t}^{3} 
 
 ---
 
-$v = \left( {v - r + v - l}\right) /2$
-
-	$\omega  = \left( {v - r - {vl}}\right) /B$
+$$
+\begin{aligned}
+v&=\frac{v_l+v_r}{2}\\ \omega&=\frac{v_r-v_l}{B}
+\end{aligned}
+$$
 
 ---
 
-$v\_ r/v\_ l$ 为右/左轮线速度, B为轮距
+$v_r/v_l$ 为右/左轮线速度, B为轮距
 
 ## 逆运动学
 
 ---
 
-$v - l = v - {\omega B}/2$
-
-	$v - r = v + {\omega B}/2$
+$$
+\begin{aligned}
+v_l&=v-\frac{\omega B}{2}\\ v_r&=v+\frac{\omega B}{2}
+\end{aligned}
+$$
 
 ---
 
@@ -706,15 +717,15 @@ $v - l = v - {\omega B}/2$
 
 ---
 
-${\Delta d} = \left( {{\Delta d} - 1 + {\Delta d} - r}\right) /2$
-
-	${\Delta \theta } = \left( {\Delta {d}_{ - }r - \Delta {d}_{ - }l}\right) /B$
-
-	$x +  = {\Delta d}\cos \left( {\theta  + {\Delta \theta }/2}\right)$
-
-	$y +  = {\Delta d}\sin \left( {\theta  + {\Delta \theta }/2}\right)$
-
-$\theta  = {\Delta \theta }$
+$$
+\begin{aligned}
+\Delta d&=\frac{\Delta d_l+\Delta d_r}{2}\\
+\Delta\theta&=\frac{\Delta d_r-\Delta d_l}{B}\\
+x_{\mathrm{new}}&=x+\Delta d\cos\left(\theta+\frac{\Delta\theta}{2}\right)\\
+y_{\mathrm{new}}&=y+\Delta d\sin\left(\theta+\frac{\Delta\theta}{2}\right)\\
+\theta_{\mathrm{new}}&=\theta+\Delta\theta
+\end{aligned}
+$$
 
 ---
 

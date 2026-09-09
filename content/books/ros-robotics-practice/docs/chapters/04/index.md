@@ -85,9 +85,11 @@ Pieper准则(Pieper's Criterion):当操作臂的三个相邻关节轴线交于�
 
 ---
 
-${r}^{2} = {l1}^{2} + {l2}^{2} - 2{l1}{l2}\cos \left( {\pi  - {\theta 2}}\right)$
-
-	$= l{1}^{2} + l{2}^{2} + {2l1l2}\cos \left( {\theta 2}\right)$
+$$
+\begin{aligned}
+r^2&=l_1^2+l_2^2-2l_1l_2\cos(\pi-\theta_2)\\ &=l_1^2+l_2^2+2l_1l_2\cos\theta_2
+\end{aligned}
+$$
 
 因此:
 
@@ -127,7 +129,7 @@ ${\theta 2} =  + \arccos \left( {\cos \left( {\theta 2}\right) }\right)$ 	(肘�
 
 一种常用方法:
 
-1. 给定末端位姿 $\left( {x, y,\phi }\right)$ ，指定腕部位置偏移: $\left( {x\_ w, y\_ w}\right)  = \left( {x - {13}\cos \left( \phi \right) , y - {13}\sin \left( \phi \right) }\right)$
+1. 给定末端位姿 $\left( {x, y,\phi }\right)$ ，指定腕部位置偏移: $\left( {x_w, y_w}\right)  = \left( {x - {13}\cos \left( \phi \right) , y - {13}\sin \left( \phi \right) }\right)$
 
 2. 对前两个连杆用二连杆逆运动学求解 ${\theta 1},{\theta 2}$
 
@@ -163,15 +165,17 @@ ${\theta 2} =  + \arccos \left( {\cos \left( {\theta 2}\right) }\right)$ 	(肘�
 
 ${\Delta \theta } = \alpha  \times  {J}^{\pi }T\left( q\right)  \times  {\Delta x}$
 
-	q_\{k+1\} = q_k + Δθ
+$$
+q_{k+1}=q_k+\Delta\theta
+$$
 
 其中:
 
 Δx = x_desired - x_current (末端位置/姿态误差)
 
-	J(q) = 当前雅可比矩阵
+$J(q)$ 为当前雅可比矩阵。
 
-	$\alpha  =$ 步长因子(需要适当选择，太大会振荡，太小收敛慢)
+$\alpha$ 为步长因子（需要适当选择，太大会振荡，太小收敛慢）。
 
 ---
 
@@ -185,7 +189,9 @@ ${\Delta \theta } = \alpha  \times  {J}^{\pi }T\left( q\right)  \times  {\Delta 
 
 ${\Delta \theta } = {J}^{ \land  }\{  - 1\} \left( q\right)  \times  {\Delta x}$
 
-	$q\_ \{ k + 1\}  = q\_ k + {\Delta \theta }$
+$$
+q_{k+1}=q_k+\Delta\theta
+$$
 
 ---
 
@@ -237,7 +243,7 @@ DLS方法是实际机器人系统中最常用的逆运动学数值解法。
 
 						])
 
-						return $J$
+						return J
 
 - def forward_2d(q, l1, l2):
 
@@ -267,7 +273,7 @@ DLS方法是实际机器人系统中最常用的逆运动学数值解法。
 
 									if np.linalg.norm(error) < tol:
 
-													print(f"收敛于第\{i\}次迭代")
+													print(f"收敛于第{i}次迭代")
 
 														return q
 
@@ -275,7 +281,7 @@ DLS方法是实际机器人系统中最常用的逆运动学数值解法。
 
 									dq = J.T @ np.linalg.inv(J @ J.T + lam**2 * np.eye(2)) @ error
 
-									$q \mathrel{\text{ += }} {dq}$
+									q += dq
 
 						return q
 
@@ -287,9 +293,9 @@ DLS方法是实际机器人系统中最常用的逆运动学数值解法。
 
 	q_solution = inverse_kinematics_dls(target, [0.1, 0.1], l1, l2)
 
-		print(f"解: θ1=\{q_solution[0]:.4f\}, θ2=\{q_solution[1]:.4f\}")
+		print(f"解: θ1={q_solution[0]:.4f}, θ2={q_solution[1]:.4f}")
 
-		print(f"验证位置: \{forward_2d(q_solution, l1, l2)\}")
+		print(f"验证位置: {forward_2d(q_solution, l1, l2)}")
 
 ---
 
@@ -321,7 +327,7 @@ $\dot{q} = {J}^{ \frown  } + \dot{x} + \left( {I - {J}^{ \frown  } + J}\right) \
 
 ---
 
-其中 ${\mathrm{J}}^{ + }$ 是伪逆， $\mathrm{q}\_ 0$ 是次要目标的关节速度， $\left( {\mathrm{I} - {\mathrm{J}}_{ + }\mathrm{J}}\right)$ 是零空间投影矩阵。
+其中 ${\mathrm{J}}^{ + }$ 是伪逆， $\mathrm{q}_0$ 是次要目标的关节速度， $\left( {\mathrm{I} - {\mathrm{J}}_{ + }\mathrm{J}}\right)$ 是零空间投影矩阵。
 
 **推荐视频**
 

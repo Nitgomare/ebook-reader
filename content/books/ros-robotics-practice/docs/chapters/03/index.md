@@ -59,7 +59,7 @@ Denavit-Hartenberg(D-H)参数法是描述操作臂连杆坐标系的标准方法
 
 2. x轴:x_i轴沿z_\{i-1\}和z_i的公垂线方向，从z_\{i-1\}指向z_i
 
-3. 原点: $\mathrm{O}\_ \mathrm{i}$ 在z_i轴与x_i轴的交点
+3. 原点: $\mathrm{O}_\mathrm{i}$ 在z_i轴与x_i轴的交点
 
 4. y轴:由右手定则确定，y_i = z_i × x_i
 
@@ -81,7 +81,9 @@ ECINE
 
 ---
 
-1 ^\{i-1\}T_i = Rotz(θ_i) × Transz(d_i) × Transx(a_i) × Rotx(α_i)
+$$
+{}^{i-1}T_i=\operatorname{Rot}_z(\theta_i)\operatorname{Trans}_z(d_i)\operatorname{Trans}_x(a_i)\operatorname{Rot}_x(\alpha_i)
+$$
 
 ---
 
@@ -91,17 +93,14 @@ ECINE
 
 ---
 
-	^\{i-1\}T_i = [
-
-	[cos(θ_i), -sin(θ_i)cos(α_i), sin(θ_i)sin(α_i), a_i cos(θ_i)],
-
-[sin(θ_i), cos(θ_i)cos(α_i), -cos(θ_i)sin(α_i), a_i sin(θ_i)],
-
-[0, sin(α_i), cos(α_i), ___d_i ],
-
-	[0, 													0, 																																				0, 																																																										1
-
-	]
+$$
+{}^{i-1}T_i=\begin{bmatrix}
+\cos\theta_i&-\sin\theta_i\cos\alpha_i&\sin\theta_i\sin\alpha_i&a_i\cos\theta_i\\
+\sin\theta_i&\cos\theta_i\cos\alpha_i&-\cos\theta_i\sin\alpha_i&a_i\sin\theta_i\\
+0&\sin\alpha_i&\cos\alpha_i&d_i\\
+0&0&0&1
+\end{bmatrix}
+$$
 
 ---
 
@@ -111,7 +110,18 @@ ECINE
 
 以PUMA560机械臂为例，这是一个经典的6自由度工业机械臂，其D-H参数表如下:
 
-<table><tr><td>关节i</td><td>a_i (m)</td><td>a_i (rad)</td><td>d_i (m)</td><td>θ_i (rad)</td><td>类型</td></tr><tr><td>1</td><td>0</td><td>$- \pi /2$</td><td>0.6718</td><td>0_1</td><td>转动</td></tr><tr><td>2</td><td>0.4318</td><td>0</td><td>0</td><td>$\theta \_ 2$</td><td>转动</td></tr><tr><td>3</td><td>0.0203</td><td>$- \pi /2$</td><td>0.15005</td><td>$\theta \_ 3$</td><td>转动</td></tr><tr><td>4</td><td>0</td><td>π/2</td><td>0.4318</td><td>$\theta \_ 4$</td><td>转动</td></tr><tr><td>5</td><td>0</td><td>- π/2</td><td>0</td><td>$\theta \_ 5$</td><td>转动</td></tr><tr><td>6</td><td>0</td><td>0</td><td>0</td><td>$\theta \_ 6$</td><td>转动</td></tr></table>
+
+
+| 关节i | a_i (m) | a_i (rad) | d_i (m) | θ_i (rad) | 类型 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 0 | $- \pi /2$ | 0.6718 | 0_1 | 转动 |
+| 2 | 0.4318 | 0 | 0 | $\theta _2$ | 转动 |
+| 3 | 0.0203 | $- \pi /2$ | 0.15005 | $\theta _3$ | 转动 |
+| 4 | 0 | π/2 | 0.4318 | $\theta _4$ | 转动 |
+| 5 | 0 | - π/2 | 0 | $\theta _5$ | 转动 |
+| 6 | 0 | 0 | 0 | $\theta _6$ | 转动 |
+
+
 
 PUMA560的后三个关节(4、5、6)轴线交于一点(腕部中心)，满足Pieper准则，因此存在逆运动学封闭解。
 
@@ -139,17 +149,26 @@ PUMA560的后三个关节(4、5、6)轴线交于一点(腕部中心)，满足Pie
 
 D-H参数表:
 
-<table><tr><td>关节i</td><td>a_i</td><td>a_i</td><td>d_i</td><td>$\theta \_ i$</td></tr><tr><td>1</td><td>11</td><td>0</td><td>0</td><td>${\theta 1}$</td></tr><tr><td>2</td><td>12</td><td>0</td><td>0</td><td>${\theta 2}$</td></tr></table>
+
+
+| 关节i | a_i | a_i | d_i | $\theta _i$ |
+| --- | --- | --- | --- | --- |
+| 1 | 11 | 0 | 0 | ${\theta 1}$ |
+| 2 | 12 | 0 | 0 | ${\theta 2}$ |
+
+
 
 正运动学解:
 
 ---
 
-x = l1 cos(θ1) + l2 cos(θ1+θ2)
-
-	y = l1 sin(θ1) + l2 sin(θ1+θ2)
-
-$\varphi  = {\theta 1} + {\theta 2}\;$ (末端姿态角)
+$$
+\begin{aligned}
+x&=l_1\cos\theta_1+l_2\cos(\theta_1+\theta_2)\\
+y&=l_1\sin\theta_1+l_2\sin(\theta_1+\theta_2)\\
+\varphi&=\theta_1+\theta_2
+\end{aligned}
+$$
 
 ---
 
@@ -159,11 +178,13 @@ $\varphi  = {\theta 1} + {\theta 2}\;$ (末端姿态角)
 
 ---
 
-$x = {l1}\cos \left( {\theta 1}\right)  + {l2}\cos \left( {{\theta 1} + {\theta 2}}\right)  + {l3}\cos \left( {{\theta 1} + {\theta 2} + {\theta 3}}\right)$
-
-			y = l1 sin(θ1) + l2 sin(θ1+θ2) + l3 sin(θ1+θ2+θ3)
-
-		$\varphi  = {\theta 1} + {\theta 2} + {\theta 3}$
+$$
+\begin{aligned}
+x&=l_1\cos\theta_1+l_2\cos(\theta_1+\theta_2)+l_3\cos(\theta_1+\theta_2+\theta_3)\\
+y&=l_1\sin\theta_1+l_2\sin(\theta_1+\theta_2)+l_3\sin(\theta_1+\theta_2+\theta_3)\\
+\varphi&=\theta_1+\theta_2+\theta_3
+\end{aligned}
+$$
 
 ---
 
@@ -217,17 +238,17 @@ $x = {l1}\cos \left( {\theta 1}\right)  + {l2}\cos \left( {{\theta 1} + {\theta 
 
 - dh_params = [
 
-			\{'a': 11, 'alpha': 0, 'd': 0, 'theta': theta1\},
+			{'a': 11, 'alpha': 0, 'd': 0, 'theta': theta1},
 
-			\{'a': 12, 'alpha': 0, 'd': 0, 'theta': theta2\},
+			{'a': 12, 'alpha': 0, 'd': 0, 'theta': theta2},
 
-			\{'a': l3, 'alpha': 0, 'd': 0, 'theta': theta3\},
+			{'a': l3, 'alpha': 0, 'd': 0, 'theta': theta3},
 
 	]
 
 	T = forward_kinematics(dh_params)
 
-	print(f"末端位置: x=\{T[0,3]:.4f\}, y=\{T[1,3]:.4f\}, z=\{T[2,3]:.4f\}")
+	print(f"末端位置: x={T[0,3]:.4f}, y={T[1,3]:.4f}, z={T[2,3]:.4f}")
 
 ---
 

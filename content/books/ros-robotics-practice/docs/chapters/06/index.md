@@ -71,7 +71,7 @@ a_P = a_0 + a × r + ω × (ω × r)
 
 ---
 
-$\mathrm{r}\_ \mathrm{c} = \left( {1/\mathrm{m}}\right) \int \mathrm{r}\mathrm{{dm}}$
+$\mathrm{r}_\mathrm{c} = \left( {1/\mathrm{m}}\right) \int \mathrm{r}\mathrm{{dm}}$
 
 ---
 
@@ -85,27 +85,25 @@ $\mathrm{r}\_ \mathrm{c} = \left( {1/\mathrm{m}}\right) \int \mathrm{r}\mathrm{{
 
 ---
 
-$I = \left\lbrack  \begin{array}{lll} I\_ {xx} &  - I\_ {xy} &  - I\_ {xz} \end{array}\right\rbrack$
-
-	[-I_xy I_yy -I_yz]
-
-	[-I_xz -I_yz I_zz]
+$$
+I=\begin{bmatrix}I_{xx}&-I_{xy}&-I_{xz}\\-I_{xy}&I_{yy}&-I_{yz}\\-I_{xz}&-I_{yz}&I_{zz}\end{bmatrix}
+$$
 
 ---
 
 其中:
 
-- L_xx = \$(y²+z²)dm (绕x轴的转动惯量)
+- $I_{xx}=\int(y^2+z^2)\,\mathrm dm$（绕 x 轴的转动惯量）
 
-- L_yy = \$(x²+z²)dm (绕y轴的转动惯量)
+- $I_{yy}=\int(x^2+z^2)\,\mathrm dm$（绕 y 轴的转动惯量）
 
-- L_zz = \$(x²+y²)dm (绕z轴的转动惯量)
+- $I_{zz}=\int(x^2+y^2)\,\mathrm dm$（绕 z 轴的转动惯量）
 
-- Lxy = \$xy dm (惯性积)
+- $I_{xy}=\int xy\,\mathrm dm$（惯性积）
 
-- Lyz $=$ Syz dm
+- $I_{yz}=\int yz\,\mathrm dm$
 
-- Lxz = Sxz dm
+- $I_{xz}=\int xz\,\mathrm dm$
 
 惯性张量与参考点(通常是质心)和参考坐标系的方向有关。当坐标系沿刚体主轴方向时，惯性积为0， 惯性张量成为对角矩阵。
 
@@ -115,7 +113,7 @@ $I = \left\lbrack  \begin{array}{lll} I\_ {xx} &  - I\_ {xy} &  - I\_ {xz} \end{
 
 ---
 
-$1\;I = I\_ c + m\left( {{d}^{2}I - {d{d}^{ \nwarrow  }}T}\right)$
+$1\;I = I_c + m\left( {{d}^{2}I - {d{d}^{ \nwarrow  }}T}\right)$
 
 ---
 
@@ -161,7 +159,7 @@ F = m a_c
 
 ---
 
-$N = I\_ {c\alpha } + \omega  \times  \left( {I\_ {c\omega }}\right)$
+$N = I_{c\alpha } + \omega  \times  \left( {I_{c\omega }}\right)$
 
 ---
 
@@ -175,7 +173,7 @@ $N = I\_ {c\alpha } + \omega  \times  \left( {I\_ {c\omega }}\right)$
 
 - ω是角速度
 
-- $\omega  \times  \left( {\mathrm{I}\_ \mathrm{c}\omega }\right)$ 是陀螺力矩项(由于惯性积和角速度方向不重合引起)
+- $\omega  \times  \left( {\mathrm{I}_\mathrm{c}\omega }\right)$ 是陀螺力矩项(由于惯性积和角速度方向不重合引起)
 
 当ω沿主轴方向时，I_cω与ω同方向，陀螺力矩项为0，欧拉方程简化为N = I_cα。
 
@@ -195,17 +193,21 @@ $N = I\_ {c\alpha } + \omega  \times  \left( {I\_ {c\omega }}\right)$
 
 ### 6.5.2 向外递推(速度和加速度传播)
 
-从基座(连杆0)开始， ${\omega \_ 0} = 0,{\alpha \_ 0} = 0,{v\_ 0} = 0$ (建座固定)。
+从基座(连杆0)开始， ${\omega _0} = 0,{\alpha _0} = 0,{v_0} = 0$ (建座固定)。
 
 对于转动关节i:
 
 ---
 
-		角速度: $\omega \_ i = \omega \_ \{ i - 1\}  + \theta \_ i\;z\_ \{ i - 1\}$
+$$
+\boldsymbol\omega_i=\boldsymbol\omega_{i-1}+\dot\theta_i\boldsymbol z_{i-1}
+$$
 
-2 角加速度: $\alpha \_ i = \alpha \_ \{ i - 1\}  + \omega \_ \{ i - 1\}  \times  \theta \_ i\_ z\_ \{ i - 1\}  + \theta \_ i\_ z\_ \{ i - 1\}$
+$$
+\boldsymbol\alpha_i=\boldsymbol\alpha_{i-1}+\boldsymbol\omega_{i-1}\times(\dot\theta_i\boldsymbol z_{i-1})+\ddot\theta_i\boldsymbol z_{i-1}
+$$
 
-	质心加速度: $a \_  {ci} = a\_ i + \alpha \_ i \times  r\_ {ci} + \omega \_ i \times  \left( {\omega \_ i \times  r\_ {ci}}\right)$
+质心加速度: $a _{ci} = a_i + \alpha _i \times  r_{ci} + \omega _i \times  \left( {\omega _i \times  r_{ci}}\right)$
 
 ---
 
@@ -213,13 +215,15 @@ $N = I\_ {c\alpha } + \omega  \times  \left( {I\_ {c\omega }}\right)$
 
 ---
 
-		角速度: $\omega \_ i = \omega \_ \{ i - 1\}$
+角速度: $\omega _i = \omega _{i - 1}$
 
-	角加速度: $\alpha \_ i = \alpha \_ \{ i - 1\}$
+角加速度: $\alpha _i = \alpha _{i - 1}$
 
-质心加速度: ${a\_ {ci}} = a\_ \{ i - 1\}  + {d\_ i}\;z\_ \{ i - 1\}  + {2\omega }\_ \{ i - 1\}  \times  {d\_ i}\;z\_ \{ i - 1\}  + {\alpha \_ {\{ i - 1\} }}$
+质心加速度: ${a_{ci}} = a_{i - 1}  + {d_i}\;z_{i - 1}  + {2\omega }_{i - 1}  \times  {d_i}\;z_{i - 1}  + {\alpha _{\{ i - 1\} }}$
 
-		* p_i + w_\{i-1\} * (w_\{i-1\} * p_i)
+$\quad {}*p_i+w_{i-1}*(w_{i-1}*p_i)$
+
+> 校对提示：原稿此式的导数阶次、乘法符号及质心项不完整，需对照原始推导核实。
 
 ---
 
@@ -233,19 +237,21 @@ $N = I\_ {c\alpha } + \omega  \times  \left( {I\_ {c\omega }}\right)$
 
 ---
 
-		连杆i质心的合力:F_i = m_i a_ci
+连杆 i 质心的合力：$F_i=m_i a_{ci}$
 
-		连杆i质心的合力矩: $N\_ i = I\_ {ci}\alpha \_ i + \omega \_ i \times  \left( {I\_ {ci}{\omega }_{\_ i}}\right)$
+连杆i质心的合力矩: $N_i = I_{ci}\alpha _i + \omega _i \times  \left( {I_{ci}{\omega }_{_i}}\right)$
 
-	关节i对连杆i的作用力: f_i = F_i + f_\{i+1\}
+关节 i 对连杆 i 的作用力：$f_i=F_i+f_{i+1}$
 
-	关节i对连杆i的作用力矩:n_i = N_i + n_\{i+1\} + r_ci × F_i + (p_\{i+1\} - r_ci) ×
+关节 i 对连杆 i 的作用力矩：
 
-		f_\{i+1\}
+$$
+n_i=N_i+n_{i+1}+r_{ci}\times F_i+(p_{i+1}-r_{ci})\times f_{i+1}
+$$
 
-7 关节驱动力矩(转动关节): $\tau \_ i = n\_ i \cdot  z\_ \{ i - 1\}$
+7 关节驱动力矩(转动关节): $\tau _i = n_i \cdot  z_{i - 1}$
 
-	关节驱动力(移动关节): $\tau \_ i = f\_ i \cdot  z\_ \{ i - 1\}$
+关节驱动力(移动关节): $\tau _i = f_i \cdot  z_{i - 1}$
 
 ---
 
@@ -287,7 +293,7 @@ $\mathrm{L} = \mathrm{K} - \mathrm{P}$
 
 ---
 
-总动能 $\mathrm{K} = \sum \mathrm{K}\_ \mathrm{i}$ 。可以证明，总动能可以写成二次型形式:
+总动能 $\mathrm{K} = \sum \mathrm{K}_\mathrm{i}$ 。可以证明，总动能可以写成二次型形式:
 
 ---
 
@@ -355,13 +361,18 @@ $1\;M\left( q\right) \ddot{q} + C\left( {q,\dot{q}}\right) \dot{q} + G\left( q\r
 
 ---
 
+$$
+M(q)=\begin{bmatrix}M_{11}&M_{12}\\M_{21}&M_{22}\end{bmatrix}
+$$
+
+> 校对提示：原稿此处的质量矩阵元素存在字符缺失，无法仅由排版确定。以下保留原文待核对。
+
+```text
 1 M(q) = [m1 lc1^ + m2(l1^2+lc2^2 l1 lc2 cosθ2) + I1+I2 m2(lc2^+l1 lc2 cosθ
-
-		2)+I2]
-
+2)+I2]
 2 					[m2(1c2*1l 1c2 cosθ2)+I2 																									m2 lc2+I2
-
-						]
+]
+```
 
 ---
 
@@ -369,21 +380,19 @@ $1\;M\left( q\right) \ddot{q} + C\left( {q,\dot{q}}\right) \dot{q} + G\left( q\r
 
 ---
 
-$C\left( {q,\dot{q}}\right) \dot{q} = \left\lbrack  {-{m2}\operatorname{l1}\operatorname{lc2}\sin {\theta 2}\left( {2\dot{\theta }1\dot{\theta }2 + \dot{\theta }{2}^{2}}\right) }\right\rbrack$
+$$
+C(q,\dot q)\dot q=\begin{bmatrix}-m_2l_1l_{c2}\sin\theta_2(2\dot\theta_1\dot\theta_2+\dot\theta_2^2)\\\text{原稿第二项缺失导数/幂次，待核对}\end{bmatrix}
+$$
 
-	[ m2 l1 lc2 sinθ2 θ1
-
----
-
-]
+> 原稿第二项：m2 l1 lc2 sinθ2 θ1。
 
 重力项:
 
 ---
 
-$G\left( q\right)  = \left\lbrack  {\left( {{m1}{lc1} + {m2}{l1}}\right) g\cos {\theta 1} + {m2}{lc2g}\cos \left( {{\theta 1} + {\theta 2}}\right) }\right\rbrack$
-
-	[m2 lc2 g cos(θ1+θ2) 						]
+$$
+G(q)=\begin{bmatrix}(m_1l_{c1}+m_2l_1)g\cos\theta_1+m_2l_{c2}g\cos(\theta_1+\theta_2)\\m_2l_{c2}g\cos(\theta_1+\theta_2)\end{bmatrix}
+$$
 
 ---
 

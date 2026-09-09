@@ -107,7 +107,7 @@ class MinimalPublisher : public rclcpp::Node \{
 
 public:
 
-	MinimalPublisher() : Node("minimal_publisher"), count_(0) \{
+	MinimalPublisher() : Node("minimal_publisher"), count_(0) {
 
 		// 创建发布者: 消息类型、话题名、QoS (队列深度10)
 
@@ -123,11 +123,11 @@ public:
 
 			std::bind(&MinimalPublisher::timer_callback, this));
 
-	\}
+	}
 
 private:
 
-	void timer_callback() \{
+	void timer_callback() {
 
 		auto message = std_msgs::msg::String();
 
@@ -139,7 +139,7 @@ _str());
 
 		publisher_->publish(message);
 
-	\}
+	}
 
 	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
 
@@ -395,15 +395,15 @@ TF2的核心功能:
 
 ---
 
-map $\rightarrow$ odom $\rightarrow$ base_link $\rightarrow$ laser_link
+map → odom → base_link → laser_link
 
-	$\rightarrow$ camera_link
+	→ camera_link
 
-	$\rightarrow$ imu_link
+	→ imu_link
 
-	$\rightarrow$ wheel_left_link
+	→ wheel_left_link
 
-	$\rightarrow$ wheel_right_link
+	→ wheel_right_link
 
 ---
 
