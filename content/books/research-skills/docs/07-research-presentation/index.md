@@ -8,6 +8,20 @@
 >
 > **内容制作：戴琼**
 
+## 扩展 PPT 资源
+
+以下文件可用于科研汇报的框架参考、版式学习和案例复刻：
+
+- <a href="extra-resources/框架一.pptx" download>下载：框架一（PPTX）</a>
+- <a href="extra-resources/框架二.pptx" download>下载：框架二（PPTX）</a>
+- <a href="extra-resources/随机系统统计矩估计的降维积分法：研究进展.pptx" download>下载：随机系统统计矩估计的降维积分法—研究进展（PPTX）</a>
+- <a href="extra-resources/国家自然区域创新发展联合基金项目答辩.pptx" download>下载：国家自然区域创新发展联合基金项目答辩（PPTX）</a>
+- <a href="extra-resources/基于数据-机理混合驱动的“驭电”仿真大模型.pptx" download>下载：基于数据-机理混合驱动的“驭电”仿真大模型（PPTX）</a>
+- <a href="extra-resources/基于图神经网络的流场预测方法研究进展.pptx" download>下载：基于图神经网络的流场预测方法研究进展（PPTX）</a>
+- <a href="extra-resources/PPT复刻(1).pptx" download>下载：PPT 复刻案例（网页下载版，PPTX）</a>
+
+> 说明：“PPT 复刻案例”原文件超过网站单文件发布限制，网页下载版仅压缩了内嵌图片，幻灯片数量、文字和版式保持不变。
+
 
 > 教学案例：
 > 《Transformer在风力发电机组数据分析中的应用综述》
