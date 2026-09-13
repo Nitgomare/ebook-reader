@@ -3613,7 +3613,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "基于《ROS机器人编程》(ROBOTIS)与《机器人学导论》(John J. Craig 第3版)融合编写",
+      "excerpt": "本书是将两本机器人领域经典教材进行有机融合的学习指南：",
       "order": 1,
       "previousId": "",
       "nextId": "839c87682d314fd9",
@@ -3627,7 +3627,7 @@
       "sections": [
         "第一篇 机器人学基础理论"
       ],
-      "excerpt": "bauaire Mehamot Seaignmidizing Romorgas Mondabelial Ramierus",
+      "excerpt": "机器人学是研究机器人的设计、制造、运动和控制的交叉学科。与那些纯理论的自然科学不同，当前机器人学是一门侧重于综合的工程科学。机器人学研究的是怎样综合运用机械、传感器、驱动器和计算机来实现人类某些方面的功能。",
       "video": "https://www.bilibili.com/video/BV1S1n4zFEAG/",
       "chapterNumber": 1,
       "order": 2,
@@ -3675,7 +3675,7 @@
       "sections": [
         "第一篇 机器人学基础理论"
       ],
-      "excerpt": "图4-1 逆运动学多解示意图(肘上/肘下)",
+      "excerpt": "图4-1 逆运动学多解示意图（肘上/肘下）",
       "video": "https://www.bilibili.com/video/BV1FPjk6bEjp/",
       "chapterNumber": 4,
       "order": 5,
@@ -3691,7 +3691,7 @@
       "sections": [
         "第一篇 机器人学基础理论"
       ],
-      "excerpt": "第3章和第4章研究了操作臂的静态定位问题，即给定关节角如何确定末端位姿(正运动学)，以及给定期望位姿如何求解关节角(逆运动学)。本章将运动学的研究范围扩展到速度和静力方面。",
+      "excerpt": "第3章和第4章研究了操作臂的静态定位问题，即给定关节角如何确定末端位姿（正运动学），以及给定期望位姿如何求解关节角（逆运动学）。本章将运动学的研究范围扩展到速度和静力方面。",
       "video": "https://www.bilibili.com/video/BV1bzSSBCETQ/",
       "chapterNumber": 5,
       "order": 6,
@@ -3707,7 +3707,7 @@
       "sections": [
         "第一篇 机器人学基础理论"
       ],
-      "excerpt": "前几章讨论了运动学问题，即操作臂的位置和速度与关节变量之间的关系，不考虑引起运动的力和力矩。本章开始研究引起操作臂运动的力和力矩，这就是操作臂动力学(Dynamics)问题。",
+      "excerpt": "前几章讨论了运动学问题，即操作臂的位置和速度与关节变量之间的关系，不考虑引起运动的力和力矩。本章开始研究引起操作臂运动的力和力矩，这就是操作臂动力学（Dynamics）问题。",
       "video": "https://www.bilibili.com/video/BV1tjME6XEeL/",
       "chapterNumber": 6,
       "order": 7,
@@ -3723,7 +3723,7 @@
       "sections": [
         "第一篇 机器人学基础理论"
       ],
-      "excerpt": "图7-1 轨迹规划曲线对比(三次/五次多项式)",
+      "excerpt": "图7-1 轨迹规划曲线对比（三次/五次多项式）",
       "video": "https://www.bilibili.com/video/BV1FPjk6bEjp/",
       "chapterNumber": 7,
       "order": 8,
@@ -3739,7 +3739,7 @@
       "sections": [
         "第一篇 机器人学基础理论"
       ],
-      "excerpt": "前面几章讨论了操作臂的运动学、动力学和轨迹生成，本章讨论如何控制操作臂使其沿期望轨迹运动。 控制是机器人学的核心问题之一，目标是设计控制算法，使操作臂在存在不确定性、扰动和建模误差的情况下，精确、稳定地跟踪期望轨迹。",
+      "excerpt": "前面几章讨论了操作臂的运动学、动力学和轨迹生成，本章讨论如何控制操作臂使其沿期望轨迹运动。控制是机器人学的核心问题之一，目标是设计控制算法，使操作臂在存在不确定性、扰动和建模误差的情况下，精确、稳定地跟踪期望轨迹。",
       "video": "https://www.bilibili.com/video/BV1bzSSBCETQ/",
       "chapterNumber": 8,
       "order": 9,
@@ -3803,7 +3803,7 @@
       "sections": [
         "第二篇 ROS 机器人编程实战"
       ],
-      "excerpt": "ROS中使用标准国际单位制(SI):",
+      "excerpt": "ROS中使用标准国际单位制（SI）：",
       "video": "https://www.bilibili.com/video/BV1nx9UBMEEB/",
       "chapterNumber": 12,
       "order": 13,
@@ -3819,7 +3819,7 @@
       "sections": [
         "第二篇 ROS 机器人编程实战"
       ],
-      "excerpt": "根据《ROS机器人编程》第8章，机器人传感器可以分为以下几类:",
+      "excerpt": "根据《ROS机器人编程》第8章，机器人传感器可以分为以下几类：",
       "video": "https://www.bilibili.com/video/BV1tjME6XEeL/",
       "chapterNumber": 13,
       "order": 14,
@@ -3851,7 +3851,7 @@
       "sections": [
         "第二篇 ROS 机器人编程实战"
       ],
-      "excerpt": "根据《ROS机器人编程》第11章，移动机器人导航(Navigation)需要以下核心功能:",
+      "excerpt": "根据《ROS机器人编程》第11章，移动机器人导航（Navigation）需要以下核心功能：",
       "video": "https://www.bilibili.com/video/BV1zwEn6TEvj/",
       "chapterNumber": 15,
       "order": 16,
@@ -3867,7 +3867,7 @@
       "sections": [
         "第三篇 综合实战"
       ],
-      "excerpt": "本项目综合运用前面章节所学的机器人学理论和ROS编程知识，构建一个能够在室内环境自主巡逻的移动机器人。项目目标:",
+      "excerpt": "本项目综合运用前面章节所学的机器人学理论和ROS编程知识，构建一个能够在室内环境自主巡逻的移动机器人。项目目标：",
       "video": "https://www.bilibili.com/video/BV1bzSSBCETQ/",
       "chapterNumber": 16,
       "order": 17,
@@ -3883,7 +3883,7 @@
       "sections": [
         "正文"
       ],
-      "excerpt": "1. 《机器人学导论》(Introduction to Robotics: Mechanics and Control, 3rd Edition)— John J. Craig",
+      "excerpt": "1. 《机器人学导论》（Introduction to Robotics: Mechanics and Control, 3rd Edition） — John J. Craig",
       "order": 18,
       "previousId": "756589c715cceb62",
       "nextId": "",
