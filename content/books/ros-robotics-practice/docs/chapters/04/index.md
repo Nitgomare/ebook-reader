@@ -335,7 +335,7 @@ ROS2 Movelt 2机械臂控制实战
 
 包含逆运动学求解器(KDL/IKFast/TRAC-IK)配置、四种主流路径规划策略对比、笛卡尔路径生成等核心内容。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV1FPjk6bEjp/)
 
 **推荐GitHub项目**
 
@@ -343,4 +343,4 @@ ROS-Theory-Practice (ROS理论与实践)
 
 从机器人模型创建、仿真环境搭建，到导航功能实现，再到实体机器人移植的完整教程代码，包含运动学和逆运动学实例。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/jingxuanyang/ROS-Theory-Practice)

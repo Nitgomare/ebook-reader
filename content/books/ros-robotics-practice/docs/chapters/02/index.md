@@ -409,7 +409,7 @@ print(T_inv)
 
 包含TF坐标变换系统、URDF建模、Gazebo仿真等核心主题，每期聚焦一个具体问题，强调动手能力。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV11oVs67Exd/)
 
 **推荐GitHub项目**
 
@@ -417,4 +417,4 @@ MATLAB-For-Robotics-concepts
 
 基于Craig《机器人学导论》的MATLAB代码，包含空间变换、运动学、动力学、轨迹规划的交互式脚本和可视化动画。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/SakethGG/MATLAB-For-Robotics-concepts)

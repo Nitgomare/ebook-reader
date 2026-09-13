@@ -751,13 +751,13 @@ ros2 launch open_manipulator_x_controller open_manipulator_x_controller.lau
 
 从SLAM建图(Cartographer)、AMCL定位，到全局/局部规划(A*+DWA)、Nav2配置、代价地图调优，完整演示移动机器人导航全流程。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV1zwEn6TEvj/)
 
 别再被Movelt 2劝退! 手把手搞定ROS 2机械臂规划
 
 从MoveIt2安装配置、URDF/SRDF准备、规划器调优(OMPL)，到笛卡尔路径、避障规划、抓取操作、Python/C++接口编程的完整实战。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV1FPjk6bEjp/)
 
 **推荐GitHub项目**
 
@@ -765,10 +765,10 @@ Navigation2 — ROS2官方导航框架
 
 ROS2导航栈的官方仓库，包含规划器(NavFn/Smac)、控制器(DWB/TEB)、恢复行为、行为树、代价地图等完整组件，支持差速、全向、阿克曼等多种机器人，附详细文档和教程。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/ros-navigation/navigation2)
 
 Movelt 2 — ROS2机械臂运动规划框架
 
 MoveIt2官方仓库，包含运动学(KDL/IKFast/TRAC-IK)、运动规划(OMPL/CHOMP/STOMP)、 碰撞检测(FCL)、轨迹处理、抓取规划等完整功能，支持多种机械臂，附Setup Assistant配置工具和 Python/C++ API。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/moveit/moveit2)

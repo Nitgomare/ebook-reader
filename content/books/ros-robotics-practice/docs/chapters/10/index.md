@@ -531,7 +531,7 @@ colcon是ROS2的构建工具(替代ROS1的catkin_make):
 
 深入讲解ROS2的话题、服务、动作、参数四大通信机制，包含DDS原理、QoS配置、自定义消息和完整实战代码。
 
-isobar看
+[B站观看](https://www.bilibili.com/video/BV1tjME6XEeL/)
 
 **推荐GitHub项目**
 
@@ -539,4 +539,4 @@ Hands-On-ROS-for-Robotics-Programming
 
 《ROS机器人编程实战》配套代码仓库，按章节组织，包含话题、服务、动作、参数、TF、导航、 SLAM、机械臂等完整示例，是学习ROS2通信机制的优秀参考。
 
-G GitHub仓库
+[GitHub仓库](https://github.com/PacktPublishing/Hands-On-ROS-for-Robotics-Programming)

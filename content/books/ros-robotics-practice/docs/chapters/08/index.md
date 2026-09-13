@@ -313,7 +313,7 @@ ROS2机器人开发实战:控制理论与ros2_control
 
 讲解ROS2控制框架的架构、控制器配置、硬件接口编写，以及位置/速度/力矩控制、阻抗控制的实际应用和参数调优。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV1bzSSBCETQ/)
 
 **推荐GitHub项目**
 
@@ -323,4 +323,4 @@ ros2_control - ROS2官方控制框架
 
 velocity_controller、effort_controller、diff_drive_controller、joint_trajectory_controller等)，支持实时控制和力/阻抗控制。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/ros-controls/ros2_control)

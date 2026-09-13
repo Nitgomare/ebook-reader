@@ -450,7 +450,7 @@ $$
 
 涵盖环境安装、工程结构、通信架构、Navigation、激光雷达、roscpp等全程实战内容，包含动力学控制实战。
 
-B站观看
+[B站观看](https://www.bilibili.com/video/BV1tjME6XEeL/)
 
 **推荐GitHub项目**
 
@@ -458,4 +458,4 @@ ros2_control — ROS2机器人控制框架
 
 ROS2官方的机器人控制框架，提供硬件抽象、控制器管理、实时控制等功能，支持位置、速度、力矩、阻抗等多种控制器，是动力学控制的工程实现基础。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/ros-controls/ros2_control)

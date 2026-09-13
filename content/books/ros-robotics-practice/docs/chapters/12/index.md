@@ -933,7 +933,7 @@ ROS2 C++开发系列:发布者/订阅者/服务/动作完整教程
 
 从功能包创建、CMake配置，到发布者、订阅者、服务、动作、参数、launch文件的完整C++编程实战，遵循ROS2官方风格指南。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV1nx9UBMEEB/)
 
 **推荐GitHub项目**
 
@@ -941,4 +941,4 @@ ros2_for_beginners_code — ROS2初学者完整代码
 
 按章节组织的ROS2学习代码，包含C++和Python双版本，覆盖话题、服务、动作、参数、TF、 URDF、Gazebo、Nav2、MoveIt2等所有核心主题，每个示例都有详细注释。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/homalozoa/ros2_for_beginners_code)

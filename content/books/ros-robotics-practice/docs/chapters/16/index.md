@@ -787,7 +787,7 @@ ROS2机器人开发实战:从仿真到实体的完整项目流程
 
 演示自主巡逻机器人从URDF建模、Gazebo仿真、SLAM建图(Cartographer)、Nav2导航调优，到实体部署(systemd自启)和调试的完整项目流程，是移动机器人项目实战的优秀参考。
 
-isolang
+[B站观看](https://www.bilibili.com/video/BV1bzSSBCETQ/)
 
 **推荐GitHub项目**
 
@@ -795,10 +795,10 @@ Hands-On-ROS-for-Robotics-Programming: 完整项目代码
 
 《ROS机器人编程实战》配套的完整项目，包含GoPiGo3机器人的SLAM、导航、视觉、巡逻等功能实现, 代码结构清晰, 注释详细, 可作为移动机器人项目的参考模板。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/PacktPublishing/Hands-On-ROS-for-Robotics-Programming)
 
 turtlebot3 — TurtleBot3官方仓库
 
 TurtleBot3的官方软件仓库，包含固件、驱动、仿真、SLAM、导航、应用等完整代码，是学习移动机器人ROS开发的最佳参考。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/ROBOTIS-GIT/turtlebot3)

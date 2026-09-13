@@ -393,7 +393,7 @@ ROS2 C++开发系列01:在ROS2上编写第一个C++ Hello World
 
 手把手配置ROS2 C++开发环境，从VSCode配置、文件夹创建到编写并运行第一个程序，遵循官方风格指南。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV1nx9UBMEEB/)
 
 **推荐GitHub项目**
 
@@ -401,4 +401,4 @@ ros2_for_beginners_code — ROS2初学者代码
 
 配套ROS2入门教程的完整代码，按章节组织，包含C++和Python实现，涵盖话题、服务、动作、参数、TF、导航等主题，是学习ROS2编程的优秀参考。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/homalozoa/ros2_for_beginners_code)

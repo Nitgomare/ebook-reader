@@ -581,7 +581,7 @@ ros2 interface package sensor_msgs # 列出某个包的所有接口
 
 详细演示RViz2配置、Gazebo仿真环境搭建、rqt工具箱使用(rqt_graph、rqt_plot、rqt_console)和 rosbag数据录制回放，是ROS2调试必备技能。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV11oVs67Exd/)
 
 推荐GitHub项目
 
@@ -589,4 +589,4 @@ ros_robotics_projects — ROS机器人项目实例
 
 包含人脸识别、聊天机器人、手势控制、目标检测、深度学习、SLAM导航等多个ROS项目完整代码， 每个项目都有详细的RViz配置和调试方法。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/qboticslabs/ros_robotics_projects)

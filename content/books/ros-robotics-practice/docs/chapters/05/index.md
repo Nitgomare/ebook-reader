@@ -397,10 +397,12 @@ ROS2机器人开发实战(上集)
 
 聚焦ROS2理论知识体系，从设计理念和架构讲起，系统讲解核心通信机制、工程化开发工具和机器人建模可视化技术。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV1bzSSBCETQ/)
 
 **推荐GitHub项目**
 
 robotics-practice — 机器人学实践代码
 
 包含运动学、雅可比、动力学等章节的代码实现和笔记，使用Pinocchio库进行高效计算，附详细推导
+
+[GitHub仓库](https://github.com/alexjunholee/robotics-practice)
