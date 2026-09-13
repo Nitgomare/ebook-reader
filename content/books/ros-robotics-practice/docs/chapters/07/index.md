@@ -333,7 +333,7 @@ ROS2 Movelt 2机械臂控制:路径规划与轨迹生成
 
 对比OMPL、CHOMP等规划算法，演示笛卡尔路径生成、避障规划、轨迹后处理(时间参数化、速度/ 加速度限制)。
 
-B站观看
+[B站观看](https://www.bilibili.com/video/BV1FPjk6bEjp/)
 
 **推荐GitHub项目**
 
@@ -341,4 +341,4 @@ Movelt 2 — ROS2机械臂运动规划框架
 
 ROS2官方的运动规划框架，集成运动学、碰撞检测、运动规划、轨迹生成(包含时间最优轨迹生成、 速度/加速度限制)、可视化等功能。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/moveit/moveit2)

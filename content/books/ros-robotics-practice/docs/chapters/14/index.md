@@ -565,7 +565,7 @@ ROS2 URDF建模与Gazebo仿真完整教程
 
 从URDF基础语法、Xacro宏使用、传感器插件配置，到Gazebo世界搭建、控制器加载、TurtleBot3仿真的全流程演示，是移动机器人仿真的必备技能。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV11oVs67Exd/)
 
 **推荐GitHub项目**
 
@@ -573,4 +573,4 @@ ROS-Theory-Practice:机器人建模与仿真章节代码
 
 包含差速机器人、全向机器人、机械臂的URDF模型、Gazebo仿真配置和控制器配置，可直接运行，附详细说明文档。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/jingxuanyang/ROS-Theory-Practice)

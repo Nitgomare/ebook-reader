@@ -268,7 +268,7 @@ $$
 
 从基础环境配置与Gazebo仿真联动起步，逐步深入到C++接口调用、避障规划、笛卡尔路径生成以及逆运动学求解等核心模块。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV1FPjk6bEjp/)
 
 **推荐GitHub项目**
 
@@ -276,4 +276,4 @@ Pinocchio — 高效刚体动力学库
 
 机器人运动学和动力学的C++/Python库，支持正/逆运动学、雅可比、动力学计算，性能优异，广泛应用于科研和工业领域。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/stack-of-tasks/pinocchio)

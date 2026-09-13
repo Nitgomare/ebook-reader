@@ -107,7 +107,7 @@ Conedulum
 
 涵盖ROS2简介、环境搭建、通信架构等完整入门内容，适合零基础学习者建立机器人系统的整体认知。
 
-is B站观看
+[B站观看](https://www.bilibili.com/video/BV1S1n4zFEAG/)
 
 **推荐GitHub项目**
 
@@ -115,4 +115,4 @@ is B站观看
 
 系统的机器人学学习路线，涵盖数学基础、运动学、动力学、控制等模块，附推荐资源和代码示例。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/ysu341/how-to-learn-robotics)

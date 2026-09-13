@@ -457,7 +457,7 @@ ROS2传感器集成与数据融合实战
 
 涵盖激光雷达、RGB-D相机、IMU的驱动配置、数据可视化、消息结构详解，以及EKF多传感器融合的参数调优和实战演示。
 
-B B站观看
+[B站观看](https://www.bilibili.com/video/BV1tjME6XEeL/)
 
 **推荐GitHub项目**
 
@@ -465,4 +465,4 @@ Mastering-ROS-for-Robotics-Programming-Third-edition
 
 《精通ROS机器人编程(第3版)》配套代码，包含传感器接口(激光雷达、相机、IMU)、执行器控制(Dynamixel)、多传感器融合、机械臂规划等高级主题的完整代码。
 
-O GitHub仓库
+[GitHub仓库](https://github.com/PacktPublishing/Mastering-ROS-for-Robotics-Programming-Third-edition)
