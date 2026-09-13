@@ -666,6 +666,160 @@
       ],
       "category": "robotics",
       "type": "reference",
+      "courseRows": [
+        {
+          "chapter": 1,
+          "github": [
+            {
+              "label": "how-to-learn-robotics",
+              "url": "https://github.com/ysu341/how-to-learn-robotics"
+            }
+          ]
+        },
+        {
+          "chapter": 2,
+          "github": [
+            {
+              "label": "MATLAB for Robotics",
+              "url": "https://github.com/SakethGG/MATLAB-For-Robotics-concepts"
+            }
+          ]
+        },
+        {
+          "chapter": 3,
+          "github": [
+            {
+              "label": "Pinocchio",
+              "url": "https://github.com/stack-of-tasks/pinocchio"
+            }
+          ]
+        },
+        {
+          "chapter": 4,
+          "github": [
+            {
+              "label": "ROS Theory Practice",
+              "url": "https://github.com/jingxuanyang/ROS-Theory-Practice"
+            }
+          ]
+        },
+        {
+          "chapter": 5,
+          "github": [
+            {
+              "label": "robotics-practice",
+              "url": "https://github.com/alexjunholee/robotics-practice"
+            }
+          ]
+        },
+        {
+          "chapter": 6,
+          "github": [
+            {
+              "label": "ros2_control",
+              "url": "https://github.com/ros-controls/ros2_control"
+            }
+          ]
+        },
+        {
+          "chapter": 7,
+          "github": [
+            {
+              "label": "MoveIt 2",
+              "url": "https://github.com/moveit/moveit2"
+            }
+          ]
+        },
+        {
+          "chapter": 8,
+          "github": [
+            {
+              "label": "ros2_control",
+              "url": "https://github.com/ros-controls/ros2_control"
+            }
+          ]
+        },
+        {
+          "chapter": 9,
+          "github": [
+            {
+              "label": "ROS 2 Beginners",
+              "url": "https://github.com/homalozoa/ros2_for_beginners_code"
+            }
+          ]
+        },
+        {
+          "chapter": 10,
+          "github": [
+            {
+              "label": "Hands-On ROS",
+              "url": "https://github.com/PacktPublishing/Hands-On-ROS-for-Robotics-Programming"
+            }
+          ]
+        },
+        {
+          "chapter": 11,
+          "github": [
+            {
+              "label": "ROS Robotics Projects",
+              "url": "https://github.com/qboticslabs/ros_robotics_projects"
+            }
+          ]
+        },
+        {
+          "chapter": 12,
+          "github": [
+            {
+              "label": "ROS 2 Beginners",
+              "url": "https://github.com/homalozoa/ros2_for_beginners_code"
+            }
+          ]
+        },
+        {
+          "chapter": 13,
+          "github": [
+            {
+              "label": "Mastering ROS",
+              "url": "https://github.com/PacktPublishing/Mastering-ROS-for-Robotics-Programming-Third-edition"
+            }
+          ]
+        },
+        {
+          "chapter": 14,
+          "github": [
+            {
+              "label": "ROS Theory Practice",
+              "url": "https://github.com/jingxuanyang/ROS-Theory-Practice"
+            }
+          ]
+        },
+        {
+          "chapter": 15,
+          "github": [
+            {
+              "label": "Navigation2",
+              "url": "https://github.com/ros-navigation/navigation2"
+            },
+            {
+              "label": "MoveIt 2",
+              "url": "https://github.com/moveit/moveit2"
+            }
+          ]
+        },
+        {
+          "chapter": 16,
+          "github": [
+            {
+              "label": "Hands-On ROS",
+              "url": "https://github.com/PacktPublishing/Hands-On-ROS-for-Robotics-Programming"
+            },
+            {
+              "label": "TurtleBot3",
+              "url": "https://github.com/ROBOTIS-GIT/turtlebot3"
+            }
+          ]
+        }
+      ],
       "sourceSiteName": "ROS 机器人编程与机器人学导论实战",
       "cover": "",
       "docCount": 18,
