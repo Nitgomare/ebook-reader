@@ -61,8 +61,9 @@ python -m venv .venv
 4. 大型数据文件仍可下载，但网页预览最多读取前 256 KB，避免浏览器卡顿。
 5. Python 视频分 P 目录可用 `..\.venv\Scripts\python.exe tools\sync_bilibili_playlist.py` 从 Bilibili 官方接口同步，并按既定章节范围更新。
 6. 在 `books.json` 中设置课程所属 `category`；首页会按 `site.categories` 的顺序自动分区。
-7. 发布前运行 `manage.py check`，检查章节路由、图片、代码关联、下载文件和 GitHub 单文件上限。
-8. 提交源码配置和 `dist/`，再部署到受访问控制保护的 Cloudflare Pages。
+7. 每次提交、推送或部署前更新根目录的 `CHANGELOG.md`，记录新增、优化、修复、安全和部署事项。
+8. 发布前运行 `manage.py check`，检查章节路由、图片、代码关联、下载文件和 GitHub 单文件上限。
+9. 提交源码配置、更新日志和 `dist/`，再部署到受访问控制保护的 Cloudflare Pages。
 
 ## 部署
 
