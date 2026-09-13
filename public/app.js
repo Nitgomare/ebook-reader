@@ -425,6 +425,7 @@
     docs.forEach(function (doc) { if (doc.chapterNumber != null) docByChapter[doc.chapterNumber] = doc; });
     var resources = book.resources || [];
     var rows = resourceRows(book, docByChapter, docs);
+    var hasGithub = rows.some(function (row) { return row.github && row.github.length; });
     var lessonResources = {};
     rows.forEach(function (row) {
       if (row.lesson || !row.chapter) return;
@@ -455,9 +456,16 @@
       }
       var videoUrl = row.video || (doc && doc.video);
       var video = videoUrl ? resourceAction(videoUrl, "视频", true) : '<span class="resource-empty">—</span>';
+      var github = '<span class="resource-empty">—</span>';
+      if (hasGithub && row.github && row.github.length) {
+        github = '<div class="resource-action-list">' + row.github.map(function (link) {
+          return resourceAction(link.url, link.label || "GitHub", true);
+        }).join("") + '</div>';
+      }
       return '<tr><td class="resource-topic"><b>' + escapeHtml(topicLabel) + '</b>' +
         (row.desc ? '<small>' + escapeHtml(row.desc) + '</small>' : '') + '</td>' +
-        '<td>' + article + '</td><td>' + lesson + '</td><td>' + code + '</td><td>' + video + '</td></tr>';
+        '<td>' + article + '</td><td>' + lesson + '</td><td>' + code + '</td><td>' + video + '</td>' +
+        (hasGithub ? '<td>' + github + '</td>' : '') + '</tr>';
     }).join("");
     var external = (book.resourceLinks || []).map(function (link) {
       return '<a class="resource-file" href="' + escapeHtml(link.url) + '" target="_blank" rel="noopener"><span>' +
@@ -476,8 +484,9 @@
       '</p><p>' + escapeHtml(book.description || "正文、课件、代码与视频按章节对应整理。") +
       '</p><div class="resource-book-meta"><strong>' + (book.chapterCount || docs.length) + ' 章正文</strong><strong>' +
       resourceTotal + ' 项配套资源</strong>' + tags + '</div></section>';
-    var table = '<section class="resource-group"><h2>章节资源</h2><p>正文、课件、代码与视频按章节对应整理；空白项表示目前没有可靠资源。</p><div class="resource-table-wrap"><table class="resource-table"><thead><tr><th>主题</th><th>正文</th><th>课件</th><th>代码</th><th>视频</th></tr></thead><tbody>' +
-      (bodyRows || '<tr><td colspan="5" class="resource-empty">本书暂无分章资源。</td></tr>') +
+    var table = '<section class="resource-group"><h2>章节资源</h2><p>正文、课件、代码、视频与 GitHub 仓库按章节对应整理；空白项表示目前没有可靠资源。</p><div class="resource-table-wrap"><table class="resource-table"><thead><tr><th>主题</th><th>正文</th><th>课件</th><th>代码</th><th>视频</th>' +
+      (hasGithub ? '<th>GitHub</th>' : '') + '</tr></thead><tbody>' +
+      (bodyRows || '<tr><td colspan="' + (hasGithub ? '6' : '5') + '" class="resource-empty">本书暂无分章资源。</td></tr>') +
       '</tbody></table></div></section>';
     var filesSection = (external || downloadList) ? '<section class="resource-group"><h2>教材与课程</h2><div class="resource-file-list">' +
       external + downloadList + '</div></section>' : '';

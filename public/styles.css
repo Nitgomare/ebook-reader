@@ -223,6 +223,7 @@ div.arithmatex { overflow-x: auto; overflow-y: hidden; }
 .resource-topic small { display: block; margin-top: .3rem; color: var(--muted); font-size: .67rem; line-height: 1.6; }
 .resource-action { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem .68rem; border-radius: 999px; color: var(--accent); background: var(--accent-soft); font-size: .66rem; font-weight: 750; white-space: nowrap; text-decoration: none; }
 .resource-action:hover { color: #fff; background: var(--accent); }
+.resource-action-list { display: flex; flex-wrap: wrap; gap: .38rem; min-width: 8rem; }
 .resource-empty { color: var(--muted); font-size: .72rem; }
 .resource-steps { margin: .2rem 0 0; padding-left: 1.2rem; color: var(--muted); line-height: 2; font-size: .8rem; }
 .resource-file-list, .inline-code-list { display: grid; gap: .65rem; }
