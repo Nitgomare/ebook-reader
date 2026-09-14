@@ -100,6 +100,11 @@
           "label": "风电 SCADA 数据分析教学视频（庄锦良）",
           "url": "https://www.bilibili.com/video/BV1VCbG6YEp5/",
           "kind": "视频"
+        },
+        {
+          "label": "系统性文献检索操作手册视频（肖鑫）",
+          "url": "https://www.bilibili.com/video/BV1iwYr6ZEyo/",
+          "kind": "视频"
         }
       ],
       "sourceSiteName": "科研工具与实践",
@@ -993,6 +998,7 @@
         "文献检索与管理"
       ],
       "excerpt": "目的：检查关键词是否合理，不立即确定最终文献数量。",
+      "video": "https://www.bilibili.com/video/BV1iwYr6ZEyo/",
       "order": 2,
       "previousId": "5aae9dc4ade82146",
       "nextId": "dc672cddb2d0de58",
