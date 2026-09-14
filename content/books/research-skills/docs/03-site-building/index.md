@@ -275,7 +275,7 @@ nav:
 
   - "1. 文献检索与管理":
       - "1.1 文献检索工具": 01-literature/01-search-tools.md
-      - "1.2 文献筛选方法": 01-literature/02-literature-screening.md
+      - "1.2 系统性文献检索与筛选": 11-systematic-literature-search/index.md
 
   - "3. 网站制作与部署":
       - "教程总览": 03-site-building/index.md
