@@ -3,7 +3,7 @@
 > **课程信息**
 >
 > - 内容制作：肖鑫
-> - 配套视频：待补充 B 站链接
+> - 配套视频：[前往 Bilibili 观看](https://www.bilibili.com/video/BV1iwYr6ZEyo/)
 
 ---
 
