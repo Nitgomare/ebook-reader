@@ -3,7 +3,6 @@
 > **课程信息**
 >
 > - 内容制作：肖鑫
-> - 筛选方法补充整理：郑圭晟
 > - 配套视频：[前往 Bilibili 观看](https://www.bilibili.com/video/BV1iwYr6ZEyo/)
 
 ---
