@@ -49,7 +49,7 @@
   },
   "stats": {
     "books": 19,
-    "docs": 262,
+    "docs": 261,
     "code": 221
   },
   "books": [
@@ -109,8 +109,8 @@
       ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 13,
-      "firstDocId": "5aae9dc4ade82146",
+      "docCount": 12,
+      "firstDocId": "e5279f4780297c21",
       "chapterCount": 0,
       "codeCount": 0,
       "resources": [
@@ -976,20 +976,6 @@
   ],
   "docs": [
     {
-      "id": "5aae9dc4ade82146",
-      "bookSlug": "research-skills",
-      "relPath": "01-literature/01-search-tools.md",
-      "title": "文献检索工具",
-      "sections": [
-        "文献检索与管理"
-      ],
-      "excerpt": "文献的查找与下载属于科研基本技能，上手难度不高。遇到暂时找不到或下载不下来的文献时，不要局限于单一数据库，可以通过更换检索平台、调整关键词、检索 DOI、查找预印本或使用其他渠道继续尝试。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "e5279f4780297c21",
-      "codeFiles": []
-    },
-    {
       "id": "e5279f4780297c21",
       "bookSlug": "research-skills",
       "relPath": "11-systematic-literature-search/index.md",
@@ -997,10 +983,10 @@
       "sections": [
         "文献检索与管理"
       ],
-      "excerpt": "目的：检查关键词是否合理，不立即确定最终文献数量。",
+      "excerpt": "常用检索符号如下。不同数据库的具体语法可能略有差异，正式检索前应查看对应平台的帮助说明。",
       "video": "https://www.bilibili.com/video/BV1iwYr6ZEyo/",
-      "order": 2,
-      "previousId": "5aae9dc4ade82146",
+      "order": 1,
+      "previousId": "",
       "nextId": "75a2d21641c4856a",
       "codeFiles": []
     },
@@ -1014,7 +1000,7 @@
       ],
       "excerpt": "从软件安装、文献抓取与 PDF 阅读到参考文献生成",
       "video": "https://www.bilibili.com/video/BV1L6bG6vEA2/",
-      "order": 3,
+      "order": 2,
       "previousId": "e5279f4780297c21",
       "nextId": "06c96fded88bf5e0",
       "codeFiles": []
@@ -1028,7 +1014,7 @@
         "格式转换与术语"
       ],
       "excerpt": "PDF 适合阅读和打印，但不适合直接编辑，也不方便大模型准确读取文章结构、公式、表格和图片。因此，在整理文献或制作教学网页时，通常需要先将 PDF 转换为 Markdown，再根据需要转换为 HTML。",
-      "order": 4,
+      "order": 3,
       "previousId": "75a2d21641c4856a",
       "nextId": "153190f72f2eaa1c",
       "codeFiles": []
@@ -1043,7 +1029,7 @@
       ],
       "excerpt": "将需要的文献（风电）从官网下载为 PDF 格式。",
       "video": "https://www.bilibili.com/video/BV16stf6MESW/",
-      "order": 5,
+      "order": 4,
       "previousId": "06c96fded88bf5e0",
       "nextId": "7445bfdfd579b5d0",
       "codeFiles": []
@@ -1057,7 +1043,7 @@
         "正文"
       ],
       "excerpt": "这套教程带你完整复刻一个与本站结构相同的科研知识库：用 Markdown 写内容，用 MkDocs Material 生成静态网页，把代码上传到 GitHub，最后交给 Cloudflare Pages 自动构建和发布。",
-      "order": 6,
+      "order": 5,
       "previousId": "153190f72f2eaa1c",
       "nextId": "b57cb861bf19c527",
       "codeFiles": []
@@ -1072,7 +1058,7 @@
       ],
       "excerpt": "本专题面向需要使用 Python 完成科研数据处理、可视化与建模的学习者。建议先结合课件和视频了解工具链，再按正文步骤完成环境配置与示例实践。",
       "video": "https://www.bilibili.com/video/BV1pVt363EZy/",
-      "order": 7,
+      "order": 6,
       "previousId": "7445bfdfd579b5d0",
       "nextId": "49bdc37e9eb20bc3",
       "codeFiles": []
@@ -1087,7 +1073,7 @@
       ],
       "excerpt": "1. 掌握用 pandas 进行数据清洗（去重、按建模列去空值、物理边界过滤）",
       "video": "https://www.bilibili.com/video/BV1VCbG6YEp5/",
-      "order": 8,
+      "order": 7,
       "previousId": "b57cb861bf19c527",
       "nextId": "1c6bd541db1e6a8a",
       "codeFiles": []
@@ -1102,7 +1088,7 @@
       ],
       "excerpt": "利用 AI 工具，将论文翻译参考模板和论文原文提供给 AI，输入提示词。",
       "video": "https://www.bilibili.com/video/BV1JmtU6kE9T/",
-      "order": 9,
+      "order": 8,
       "previousId": "49bdc37e9eb20bc3",
       "nextId": "7dba8d9e50dad83a",
       "codeFiles": []
@@ -1116,7 +1102,7 @@
         "科研绘图"
       ],
       "excerpt": "论文中的流程图、框架图、机制图和系统结构图通常以位图形式存在，直接截图虽然能够保留视觉效果，但难以满足后续修改文字、调整排版、移动元素和重新配色等需求。本教程介绍一种结合多模态大模型与 Draw.io 的论文图片重构方法：先利用豆包、GPT 等模型理解原图的结构、布局和视觉元素，",
-      "order": 10,
+      "order": 9,
       "previousId": "1c6bd541db1e6a8a",
       "nextId": "e191a923adeef00f",
       "video": "files/research-skills/06-paper-figure-reproduction/paper-figure-reproduction.mp4",
@@ -1131,7 +1117,7 @@
         "科研汇报"
       ],
       "excerpt": "以下文件可用于科研汇报的框架参考、版式学习和案例复刻：",
-      "order": 11,
+      "order": 10,
       "previousId": "7dba8d9e50dad83a",
       "nextId": "79d93f7889060e95",
       "video": "files/research-skills/07-research-presentation/research-presentation.mp4",
@@ -1146,7 +1132,7 @@
         "科研汇报"
       ],
       "excerpt": "Djayr Alves Bispo Junior, Gustavo de Novaes Pires Leite, Alvaro Antonio Ochoa Villa, Alexandre Carlos Araújo da Costa, Olga de Castro Vilela",
-      "order": 12,
+      "order": 11,
       "previousId": "e191a923adeef00f",
       "nextId": "855f59fcfcf0d31b",
       "codeFiles": []
@@ -1161,7 +1147,7 @@
       ],
       "excerpt": "本套流程面向课题组内部科研技能教学，适合以下场景：",
       "video": "https://www.bilibili.com/video/BV1G1bG6wEsm/",
-      "order": 13,
+      "order": 12,
       "previousId": "79d93f7889060e95",
       "nextId": "",
       "codeFiles": []

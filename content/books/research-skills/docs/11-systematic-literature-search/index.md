@@ -37,6 +37,26 @@
 - 先用较宽检索式了解文献规模，再逐步增加限制条件；
 - 每次只改变一个条件，便于解释结果变化。
 
+常用检索符号如下。不同数据库的具体语法可能略有差异，正式检索前应查看对应平台的帮助说明。
+
+| 运算符 | 含义 | 示例 |
+|---|---|---|
+| `AND` | 同时满足多个条件 | `"wind power" AND Transformer` |
+| `OR` | 包含任意一个同义词 | `"wind power" OR "wind energy"` |
+| `NOT` | 排除无关主题 | `"wind speed" NOT offshore` |
+| `" "` | 精确匹配完整词组 | `"foundation model"` |
+| `*` | 匹配不同词形 | `forecast*` |
+
+以“面向风电功率预测的时序大模型”为例，可进一步把研究问题拆成研究对象、任务、方法、数据和泛化问题五组关键词：
+
+| 关键词类型 | 中文关键词 | 英文关键词 |
+|---|---|---|
+| 研究对象 | 风电、风速、风电场 | wind power, wind speed, wind farm |
+| 研究任务 | 功率预测、短期预测 | power forecasting, short-term forecasting |
+| 技术方法 | 大模型、Transformer、基座模型 | large language model, Transformer, foundation model |
+| 数据类型 | 时序数据、多变量数据、SCADA | time series, multivariate data, SCADA |
+| 泛化问题 | 迁移学习、少样本、跨风场 | transfer learning, few-shot learning, cross-farm |
+
 ![](image/1.png)
 
 ---
@@ -77,6 +97,10 @@
 | Google Scholar | https://scholar.google.com/ | 补充检索和引用追踪 |
 | Crossref | https://search.crossref.org/ | 核对DOI和书目信息 |
 | OpenAlex | https://openalex.org/ | 免费查询论文和引用关系 |
+| arXiv | https://arxiv.org/ | 人工智能、计算机与工程方向预印本 |
+| ACM Digital Library | https://dl.acm.org/ | 计算机科学、数据挖掘与知识发现 |
+| OpenReview | https://openreview.net/ | 会议论文、评审意见与作者回复 |
+| Semantic Scholar | https://www.semanticscholar.org/ | 相关论文、重要引用与研究脉络 |
 
 ![](image/5.png)
 
@@ -96,6 +120,22 @@
 | 国家标准全文公开系统 | https://openstd.samr.gov.cn/ | 查询风电国家标准和行业术语 |
 
 > 学术论文主要来自知网、Web of Science、Scopus、IEEE Xplore等数据库；行业报告和标准用于补充背景，不与学术论文混为一类。
+
+### 2.4 引文追踪与文献图谱
+
+数据库检索完成后，应围绕领域内的核心论文继续追踪研究脉络：
+
+- **正向追踪参考文献**：寻找理论来源、经典论文、原始数据集、评价指标和基础方法；
+- **逆向追踪被引文献**：了解后续改进、工程应用和当前研究前沿；
+- **追踪作者与课题组**：关注持续产出相关成果的作者主页、实验室主页和项目仓库。
+
+可使用以下工具辅助扩展阅读：
+
+- [Connected Papers](https://www.connectedpapers.com/)：围绕一篇核心论文生成相关文献图谱；
+- [ResearchRabbit](https://www.researchrabbit.ai/)：追踪论文、作者、主题和引用关系；
+- [Semantic Scholar](https://www.semanticscholar.org/)：查看相关工作、重要引用和不同版本。
+
+文献图谱适合发现线索，但不能替代可复现的正式数据库检索。纳入系统综述的文献仍应记录数据库、检索式、检索时间和筛选原因。
 
 ---
 
@@ -158,7 +198,18 @@ AND
 
 ### 4.2 如果下载不了文献
 
-可以用学校的VPN下载，用机构登录，登录学校自己的账号
+建议按以下顺序寻找合法可访问的全文：
+
+1. 通过学校图书馆、WebVPN 或机构统一身份认证进入数据库；
+2. 在 Google Scholar 中搜索完整标题，查看右侧 PDF 和“所有版本”；
+3. 使用 DOI 在 Crossref、OpenAlex 或出版商页面核对书目信息；
+4. 使用 [Unpaywall](https://unpaywall.org/) 查找开放获取版本；
+5. 查看作者主页、课题组主页、机构知识库、arXiv 或论文配套 GitHub 仓库；
+6. 通过图书馆馆际互借、文献传递或邮件联系通讯作者。
+
+!!! warning "账号与文件安全"
+
+    不要在来源不明的网站输入学校账号或个人密码，不要购买来历不明的共享账号，也不要下载可疑的可执行程序。
 
 ![](image/8.png)
 
@@ -439,3 +490,29 @@ Scopus_WindPowerForecasting_2026-08-25.csv
 | 标题摘要筛选后 |  |
 | 全文筛选后 |  |
 | 最终纳入文献 |  |
+
+---
+
+## 八、推荐的完整工作流
+
+```text
+明确研究问题与纳入范围
+    ↓
+拆分中英文关键词并建立同义词组
+    ↓
+在综合数据库进行测试检索
+    ↓
+调整字段、时间范围与检索式
+    ↓
+在专业数据库执行正式检索并保存记录
+    ↓
+追踪核心论文的参考文献与被引文献
+    ↓
+合并结果并在 Zotero 中去重
+    ↓
+依次完成标题、摘要和全文筛选
+    ↓
+记录纳入与排除原因，统计最终结果
+    ↓
+合法获取全文并建立可持续维护的文献库
+```
