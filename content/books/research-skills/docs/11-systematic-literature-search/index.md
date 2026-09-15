@@ -1,4 +1,4 @@
-# 系统性文献检索与筛选操作手册
+# 文献检索与筛选
 
 > **课程信息**
 >
@@ -7,9 +7,13 @@
 
 ---
 
+本课程面向需要开展课题调研、开题准备、综述写作和研究方案设计的研究生及科研人员，系统介绍从研究问题拆解到文献库建立的完整流程。课程内容包括中英文关键词设计、数据库选择、检索式构建、引文追踪、全文获取、去重、分级筛选、质量评价和结果统计。
+
+学习完成后，读者应能够根据研究目标制定可复现的检索策略，规范记录文献的纳入与排除过程，并使用 Zotero 等工具建立结构清晰、便于持续更新的个人文献库。
+
 ## 一、建立关键词表
 
-### 1.1 中文关键词（根据你的专业方向选择）
+### 1.1 中文关键词设计
 
 | 概念组 | 核心词 | 同义词或相关词 |
 |---|---|---|
@@ -19,7 +23,7 @@
 | 运维问题 | 故障诊断 | 状态监测、健康评估、异常检测、预测性维护、剩余寿命预测 |
 | 系统问题 | 并网调度 | 风电消纳、电力系统调度、新能源并网、风储协同 |
 
-### 1.2 英文关键词（根据你的专业方向选择）
+### 1.2 英文关键词设计
 
 | 概念组 | 核心词 | 同义词或相关词 |
 |---|---|---|
@@ -67,10 +71,10 @@
 
 | 网站 | 地址 | 主要用途 |
 |---|---|---|
-| 中国知网 | https://www.cnki.net/ | 中文期刊、学位论文、核心期刊 |
-| 万方数据 | https://www.wanfangdata.com.cn/ | 中文期刊、学位论文、科技报告 |
-| 维普 | https://www.cqvip.com/ | 中文期刊补充检索 |
-| 国家哲学社会科学文献中心 | https://www.ncpssd.org/ | 能源政策、产业、管理类文献 |
+| 中国知网 | [访问网站](https://www.cnki.net/) | 中文期刊、学位论文、核心期刊 |
+| 万方数据 | [访问网站](https://www.wanfangdata.com.cn/) | 中文期刊、学位论文、科技报告 |
+| 维普 | [访问网站](https://www.cqvip.com/) | 中文期刊补充检索 |
+| 国家哲学社会科学文献中心 | [访问网站](https://www.ncpssd.org/) | 能源政策、产业、管理类文献 |
 
 ![](image/2.png)
 
@@ -88,19 +92,19 @@
 
 | 网站 | 地址 | 主要用途 |
 |---|---|---|
-| Web of Science | https://www.webofscience.com/ | SCI、ESCI、引文追踪 |
-| Scopus | https://www.scopus.com/ | 工程、能源、计算机综合检索 |
-| ScienceDirect | https://www.sciencedirect.com/ | Elsevier能源和工程期刊全文 |
-| IEEE Xplore | https://ieeexplore.ieee.org/ | 电力系统、控制、人工智能、传感器 |
-| SpringerLink | https://link.springer.com/ | 能源、数据科学、智能制造 |
-| Wiley Online Library | https://onlinelibrary.wiley.com/ | 风能、可靠性、能源工程 |
-| Google Scholar | https://scholar.google.com/ | 补充检索和引用追踪 |
-| Crossref | https://search.crossref.org/ | 核对DOI和书目信息 |
-| OpenAlex | https://openalex.org/ | 免费查询论文和引用关系 |
-| arXiv | https://arxiv.org/ | 人工智能、计算机与工程方向预印本 |
-| ACM Digital Library | https://dl.acm.org/ | 计算机科学、数据挖掘与知识发现 |
-| OpenReview | https://openreview.net/ | 会议论文、评审意见与作者回复 |
-| Semantic Scholar | https://www.semanticscholar.org/ | 相关论文、重要引用与研究脉络 |
+| Web of Science | [访问网站](https://www.webofscience.com/) | SCI、ESCI、引文追踪 |
+| Scopus | [访问网站](https://www.scopus.com/) | 工程、能源、计算机综合检索 |
+| ScienceDirect | [访问网站](https://www.sciencedirect.com/) | Elsevier能源和工程期刊全文 |
+| IEEE Xplore | [访问网站](https://ieeexplore.ieee.org/) | 电力系统、控制、人工智能、传感器 |
+| SpringerLink | [访问网站](https://link.springer.com/) | 能源、数据科学、智能制造 |
+| Wiley Online Library | [访问网站](https://onlinelibrary.wiley.com/) | 风能、可靠性、能源工程 |
+| Google Scholar | [访问网站](https://scholar.google.com/) | 补充检索和引用追踪 |
+| Crossref | [访问网站](https://search.crossref.org/) | 核对 DOI 和书目信息 |
+| OpenAlex | [访问网站](https://openalex.org/) | 免费查询论文和引用关系 |
+| arXiv | [访问网站](https://arxiv.org/) | 人工智能、计算机与工程方向预印本 |
+| ACM Digital Library | [访问网站](https://dl.acm.org/) | 计算机科学、数据挖掘与知识发现 |
+| OpenReview | [访问网站](https://openreview.net/) | 会议论文、评审意见与作者回复 |
+| Semantic Scholar | [访问网站](https://www.semanticscholar.org/) | 相关论文、重要引用与研究脉络 |
 
 ![](image/5.png)
 
@@ -114,10 +118,10 @@
 
 | 网站 | 地址 | 主要用途 |
 |---|---|---|
-| 国家能源局 | https://www.nea.gov.cn/ | 风电政策、装机和行业数据 |
-| 全球风能理事会 | https://gwec.net/ | 全球风电行业报告 |
-| 中国可再生能源学会风能专业委员会 | http://www.cwea.org.cn/ | 中国风电行业统计和报告 |
-| 国家标准全文公开系统 | https://openstd.samr.gov.cn/ | 查询风电国家标准和行业术语 |
+| 国家能源局 | [访问网站](https://www.nea.gov.cn/) | 风电政策、装机和行业数据 |
+| 全球风能理事会 | [访问网站](https://gwec.net/) | 全球风电行业报告 |
+| 中国可再生能源学会风能专业委员会 | [访问网站](http://www.cwea.org.cn/) | 中国风电行业统计和报告 |
+| 国家标准全文公开系统 | [访问网站](https://openstd.samr.gov.cn/) | 查询风电国家标准和行业术语 |
 
 > 学术论文主要来自知网、Web of Science、Scopus、IEEE Xplore等数据库；行业报告和标准用于补充背景，不与学术论文混为一类。
 

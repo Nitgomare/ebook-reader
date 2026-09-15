@@ -48,9 +48,9 @@
     ]
   },
   "stats": {
-    "books": 19,
-    "docs": 261,
-    "code": 221
+    "books": 17,
+    "docs": 211,
+    "code": 216
   },
   "books": [
     {
@@ -70,6 +70,18 @@
       "category": "research-skills",
       "type": "course",
       "featured": true,
+      "docAuthors": {
+        "11-systematic-literature-search/index.md": "肖鑫",
+        "01-literature/04-zotero-new/index.md": "张衡",
+        "08-pdf-to-markdown/index.md": "刘航",
+        "03-site-building/index.md": "李东",
+        "04-python-research-computing/index.md": "李锦瑞",
+        "10-wind-scada-data-analysis/index.md": "庄锦良",
+        "05-ai-paper-translation/index.md": "李东",
+        "06-paper-figure-reproduction/index.md": "窦丽露",
+        "07-research-presentation/index.md": "戴琼",
+        "09-research-video-production/index.md": "辛庆浩"
+      },
       "resourceLinks": [
         {
           "label": "Python 科研计算基础与环境搭建课程视频（李锦瑞）",
@@ -102,14 +114,14 @@
           "kind": "视频"
         },
         {
-          "label": "系统性文献检索操作手册视频（肖鑫）",
+          "label": "文献检索与筛选课程视频（肖鑫）",
           "url": "https://www.bilibili.com/video/BV1iwYr6ZEyo/",
           "kind": "视频"
         }
       ],
       "sourceSiteName": "科研工具与实践",
       "cover": "",
-      "docCount": 12,
+      "docCount": 11,
       "firstDocId": "e5279f4780297c21",
       "chapterCount": 0,
       "codeCount": 0,
@@ -195,7 +207,7 @@
     },
     {
       "slug": "shangguigu-python",
-      "title": "Python 系统学习",
+      "title": "Python 入门",
       "author": "尚硅谷",
       "description": "从环境准备和核心语法出发，逐步学习函数、面向对象、文件、并发与协程。",
       "tags": [
@@ -214,32 +226,12 @@
           "kind": "视频"
         }
       ],
-      "sourceSiteName": "Python 系统学习",
+      "sourceSiteName": "Python 入门",
       "cover": "",
       "docCount": 14,
       "firstDocId": "9ce085645f85dfab",
       "chapterCount": 14,
       "codeCount": 165,
-      "resources": []
-    },
-    {
-      "slug": "python-beginner-to-master",
-      "title": "Python 从入门到精通",
-      "author": "明日科技",
-      "description": "从基础语法、流程控制和数据结构逐步学习面向对象、文件、数据库及项目开发。",
-      "tags": [
-        "Python",
-        "中文教材",
-        "项目案例"
-      ],
-      "category": "python",
-      "type": "reference",
-      "sourceSiteName": "Python从入门到精通",
-      "cover": "",
-      "docCount": 26,
-      "firstDocId": "5d05d680b081c251",
-      "chapterCount": 22,
-      "codeCount": 0,
       "resources": []
     },
     {
@@ -275,51 +267,6 @@
       "firstDocId": "50204d742907b7f6",
       "chapterCount": 4,
       "codeCount": 17,
-      "resources": []
-    },
-    {
-      "slug": "python-data-analysis",
-      "title": "Python 数据分析",
-      "author": "明日科技",
-      "description": "覆盖 NumPy、Pandas、Matplotlib、Seaborn、机器学习与完整数据分析案例。",
-      "tags": [
-        "数据分析",
-        "中文教材",
-        "案例"
-      ],
-      "category": "data-analysis",
-      "type": "reference",
-      "codeSource": "docs/assets/code",
-      "codeLinks": {
-        "chapter03_numpy_tutorial.py": [
-          "chapters/03-numpy/index.md"
-        ],
-        "chapter04_pandas_basics_tutorial.py": [
-          "chapters/04-pandas/index.md"
-        ],
-        "chapter05_pandas_io_tutorial.py": [
-          "chapters/05-pandas/index.md"
-        ],
-        "chapter06_pandas_processing_tutorial.py": [
-          "chapters/06-pandas/index.md"
-        ],
-        "chapter07_pandas_cleaning_tutorial.py": [
-          "chapters/07-pandas/index.md"
-        ]
-      },
-      "resourceLinks": [
-        {
-          "label": "数据分析补充视频",
-          "url": "https://www.bilibili.com/video/BV1D9GLzyEL6/",
-          "kind": "视频"
-        }
-      ],
-      "sourceSiteName": "Python 数据分析 · 教材站",
-      "cover": "files/python-data-analysis/00-front-matter/images/cover.jpg",
-      "docCount": 23,
-      "firstDocId": "a2cebd9370b2c317",
-      "chapterCount": 21,
-      "codeCount": 5,
       "resources": []
     },
     {
@@ -359,7 +306,7 @@
       "slug": "zhou-machine-learning",
       "title": "机器学习",
       "author": "周志华",
-      "description": "从基本概念、经典模型到计算学习理论与强化学习的系统教材。",
+      "description": "以周志华《机器学习》为核心教材，从基本概念与模型评估出发，系统学习线性模型、决策树、神经网络、支持向量机、贝叶斯方法、集成学习、聚类和降维，并进一步理解特征选择、计算学习理论、半监督学习、概率图模型、规则学习与强化学习。课程按章节关联正文、课件、代码和视频，适合具备 Python 与基础数学知识的学习者循序学习，也可作为算法查阅和实验复现参考。",
       "coverSource": "assets/cover.jpeg",
       "tags": [
         "机器学习",
@@ -587,7 +534,8 @@
         "人脸识别",
         "人体姿态识别"
       ],
-      "category": "artificial-intelligence",
+      "category": "robotics",
+      "order": 10,
       "type": "reference",
       "sourceSiteName": "机器视觉入门与实战 · 在线图书",
       "cover": "",
@@ -609,6 +557,7 @@
         "项目实战"
       ],
       "category": "robotics",
+      "order": 20,
       "type": "course",
       "sourceSiteName": "轮腿式智能安保巡逻机器人项目实战",
       "cover": "files/robot-textbook/0.png",
@@ -630,6 +579,7 @@
         "SLAM 与导航"
       ],
       "category": "robotics",
+      "order": 40,
       "type": "reference",
       "sourceSiteName": "ROS 机器人编程",
       "cover": "files/ros-robot-programming/images/0_0_0_1829_1430_0.jpg",
@@ -650,6 +600,7 @@
         "控制"
       ],
       "category": "robotics",
+      "order": 30,
       "type": "reference",
       "sourceSiteName": "机器人学导论（第3版）",
       "cover": "",
@@ -670,6 +621,7 @@
         "项目实战"
       ],
       "category": "robotics",
+      "order": 50,
       "type": "reference",
       "courseRows": [
         {
@@ -979,11 +931,11 @@
       "id": "e5279f4780297c21",
       "bookSlug": "research-skills",
       "relPath": "11-systematic-literature-search/index.md",
-      "title": "系统性文献检索与筛选",
+      "title": "文献检索与筛选",
       "sections": [
         "文献检索与管理"
       ],
-      "excerpt": "常用检索符号如下。不同数据库的具体语法可能略有差异，正式检索前应查看对应平台的帮助说明。",
+      "excerpt": "本课程面向需要开展课题调研、开题准备、综述写作和研究方案设计的研究生及科研人员，系统介绍从研究问题拆解到文献库建立的完整流程。课程内容包括中英文关键词设计、数据库选择、检索式构建、引文追踪、全文获取、去重、分级筛选、质量评价和结果统计。",
       "video": "https://www.bilibili.com/video/BV1iwYr6ZEyo/",
       "order": 1,
       "previousId": "",
@@ -994,7 +946,7 @@
       "id": "75a2d21641c4856a",
       "bookSlug": "research-skills",
       "relPath": "01-literature/04-zotero-new/index.md",
-      "title": "Zotero 文献管理与使用",
+      "title": "Zotero 使用教程",
       "sections": [
         "文献检索与管理"
       ],
@@ -1038,7 +990,7 @@
       "id": "7445bfdfd579b5d0",
       "bookSlug": "research-skills",
       "relPath": "03-site-building/index.md",
-      "title": "知识库搭建",
+      "title": "知识库搭建教程",
       "sections": [
         "正文"
       ],
@@ -1067,11 +1019,11 @@
       "id": "49bdc37e9eb20bc3",
       "bookSlug": "research-skills",
       "relPath": "10-wind-scada-data-analysis/index.md",
-      "title": "风电 SCADA 数据分析（新）",
+      "title": "风电 SCADA 数据分析",
       "sections": [
         "Python 科研计算"
       ],
-      "excerpt": "1. 掌握用 pandas 进行数据清洗（去重、按建模列去空值、物理边界过滤）",
+      "excerpt": "本课程以风电机组 SCADA 数据为对象，讲解数据检查、清洗、探索性分析、特征关系判断以及线性回归和 KNN 回归建模，并通过对比实验理解不同方法的适用条件。",
       "video": "https://www.bilibili.com/video/BV1VCbG6YEp5/",
       "order": 7,
       "previousId": "b57cb861bf19c527",
@@ -1119,22 +1071,8 @@
       "excerpt": "以下文件可用于科研汇报的框架参考、版式学习和案例复刻：",
       "order": 10,
       "previousId": "7dba8d9e50dad83a",
-      "nextId": "79d93f7889060e95",
-      "video": "files/research-skills/07-research-presentation/research-presentation.mp4",
-      "codeFiles": []
-    },
-    {
-      "id": "79d93f7889060e95",
-      "bookSlug": "research-skills",
-      "relPath": "07-research-presentation/reference.md",
-      "title": "案例参考文章",
-      "sections": [
-        "科研汇报"
-      ],
-      "excerpt": "Djayr Alves Bispo Junior, Gustavo de Novaes Pires Leite, Alvaro Antonio Ochoa Villa, Alexandre Carlos Araújo da Costa, Olga de Castro Vilela",
-      "order": 11,
-      "previousId": "e191a923adeef00f",
       "nextId": "855f59fcfcf0d31b",
+      "video": "files/research-skills/07-research-presentation/research-presentation.mp4",
       "codeFiles": []
     },
     {
@@ -1147,8 +1085,8 @@
       ],
       "excerpt": "本套流程面向课题组内部科研技能教学，适合以下场景：",
       "video": "https://www.bilibili.com/video/BV1G1bG6wEsm/",
-      "order": 12,
-      "previousId": "79d93f7889060e95",
+      "order": 11,
+      "previousId": "e191a923adeef00f",
       "nextId": "",
       "codeFiles": []
     },
@@ -1555,392 +1493,6 @@
       "codeFiles": []
     },
     {
-      "id": "4e235b15f071bc5f",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "copyright.md",
-      "title": "版权信息",
-      "sections": [
-        "导读"
-      ],
-      "excerpt": "本书封面贴有清华大学出版社防伪标签，无标签者不得销售。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "7d6ed8ea3075766c",
-      "codeFiles": []
-    },
-    {
-      "id": "7d6ed8ea3075766c",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "introduction.md",
-      "title": "内容简介",
-      "sections": [
-        "导读"
-      ],
-      "excerpt": "《Python从入门到精通》从初学者角度出发，通过通俗易懂的语言、丰富多彩的实例，详细介绍了使用Python进行程序开发应该掌握的各方面技术。全书共分22章，包括初识Python、Python语言基础、运算符与表达式、流程控制语句、列表与元组、字典与集合、字符串、Python中使",
-      "order": 2,
-      "previousId": "4e235b15f071bc5f",
-      "nextId": "c8d5c65acc79e06c",
-      "codeFiles": []
-    },
-    {
-      "id": "c8d5c65acc79e06c",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "preface.md",
-      "title": "前言 Preface",
-      "sections": [
-        "导读"
-      ],
-      "excerpt": "Python人称“胶水”语言，能够把用其他语言制作的各种模块（尤其是C/C++）很轻松地联结在一起。它是1989年由荷兰人Guido van Rossum发明的一种面向对象的解释型高级编程语言。由于Python语言简洁、易读，非常适合编程入门，现在很多学校都开设了这门课程，甚至有",
-      "order": 3,
-      "previousId": "7d6ed8ea3075766c",
-      "nextId": "5d05d680b081c251",
-      "codeFiles": []
-    },
-    {
-      "id": "5d05d680b081c251",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-01.md",
-      "title": "第1章 初识Python",
-      "sections": [
-        "第1篇 基础知识"
-      ],
-      "excerpt": "Python是一种跨平台的、开源的、免费的、解释型的高级编程语言。近几年发展势头迅猛，在2018年3月的TIOBE编程语言排行榜中已经晋升到第4名，而在IEEE Spectrum发布的2017年度编程语言排行榜中，Python位居第一。另外，Python的应用领域非常广泛，如We",
-      "chapterNumber": 1,
-      "order": 4,
-      "previousId": "c8d5c65acc79e06c",
-      "nextId": "ac30dd2c4fec5333",
-      "codeFiles": []
-    },
-    {
-      "id": "ac30dd2c4fec5333",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-02.md",
-      "title": "第2章 Python语言基础",
-      "sections": [
-        "第1篇 基础知识"
-      ],
-      "excerpt": "熟练掌握一门编程语言，最好的方法就是充分了解、掌握基础知识，并亲自体验，多敲代码，熟能生巧。",
-      "chapterNumber": 2,
-      "order": 5,
-      "previousId": "5d05d680b081c251",
-      "nextId": "6b25fb98aba10f94",
-      "codeFiles": []
-    },
-    {
-      "id": "6b25fb98aba10f94",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-03.md",
-      "title": "第3章 运算符与表达式",
-      "sections": [
-        "第1篇 基础知识"
-      ],
-      "excerpt": "在进行数学运算或逻辑判断时，需要应用算术运算符、比较运算符，以及逻辑运算符等。因此，在Python中也提供了这些运算符。另外，Python还提供了一个可以根据条件确定返回值的条件表达式。这些内容都是Python开发必备的基础知识，需要读者掌握。",
-      "chapterNumber": 3,
-      "order": 6,
-      "previousId": "ac30dd2c4fec5333",
-      "nextId": "2259407787af38f2",
-      "codeFiles": []
-    },
-    {
-      "id": "2259407787af38f2",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-04.md",
-      "title": "第4章 流程控制语句",
-      "sections": [
-        "第1篇 基础知识"
-      ],
-      "excerpt": "做任何事情都要遵循一定的原则。例如，到图书馆去借书，就必须要有借书证，并且借书证不能过期，这两个条件缺一不可。程序设计也是如此，需要利用流程控制实现与用户的交流，并根据用户的需求决定程序“做什么”“怎么做”。",
-      "chapterNumber": 4,
-      "order": 7,
-      "previousId": "6b25fb98aba10f94",
-      "nextId": "b92c39b1774e333f",
-      "codeFiles": []
-    },
-    {
-      "id": "b92c39b1774e333f",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-05.md",
-      "title": "第5章 列表与元组",
-      "sections": [
-        "第1篇 基础知识"
-      ],
-      "excerpt": "在数学里，序列也称为数列，是指按照一定顺序排列的一列数，而在程序设计中，序列是一种常用的数据存储方式，几乎每种程序设计语言都提供了类似的数据结构，如C语言或Java中的数组等。",
-      "chapterNumber": 5,
-      "order": 8,
-      "previousId": "2259407787af38f2",
-      "nextId": "21d384955f00226f",
-      "codeFiles": []
-    },
-    {
-      "id": "21d384955f00226f",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-06.md",
-      "title": "第6章 字典与集合",
-      "sections": [
-        "第1篇 基础知识"
-      ],
-      "excerpt": "在第5章中已经介绍了两个常用的序列结构——列表和元组。本章将再介绍两个序列结构——字典和集合。其中，字典这种序列结构就像电话通讯录，可以将联系人姓名和电话号码关联起来，在需要时可以直接通过姓名找到对应的电话；而集合就像是收集了很多表情的表情包，里面的所有表情都是唯一的。",
-      "chapterNumber": 6,
-      "order": 9,
-      "previousId": "b92c39b1774e333f",
-      "nextId": "ba5e34a4823a3778",
-      "codeFiles": []
-    },
-    {
-      "id": "ba5e34a4823a3778",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-07.md",
-      "title": "第7章 字符串",
-      "sections": [
-        "第1篇 基础知识"
-      ],
-      "excerpt": "字符串几乎是所有编程语言在项目开发过程中涉及最多的一块内容。大部分项目的运行结果都需要以文本的形式展示给客户，比如财务系统的总账报表、电子游戏的比赛结果、火车站的列车时刻表等。这些都是经过程序精密的计算、判断和梳理，将我们想要的内容用文本形式直观地展示出来。曾经有一位“久经沙场”",
-      "chapterNumber": 7,
-      "order": 10,
-      "previousId": "21d384955f00226f",
-      "nextId": "0c301574a063492c",
-      "codeFiles": []
-    },
-    {
-      "id": "0c301574a063492c",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-08.md",
-      "title": "第8章 Python中使用正则表达式",
-      "sections": [
-        "第2篇 进阶提高"
-      ],
-      "excerpt": "正则表达式（Regular Expression，常简写为regex或者RE），又称规则表达式，它不是某个编程语言所特有的，是计算机科学的一个概念，通常被用来检索和替换符合某些规则的文本。目前，正则表达式已经在各种计算机语言（如Java、C#和Python等）中得到了广泛的应用和",
-      "chapterNumber": 8,
-      "order": 11,
-      "previousId": "ba5e34a4823a3778",
-      "nextId": "fcaf66c6bdac7179",
-      "codeFiles": []
-    },
-    {
-      "id": "fcaf66c6bdac7179",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-09.md",
-      "title": "第9章 函数",
-      "sections": [
-        "第2篇 进阶提高"
-      ],
-      "excerpt": "在前面的章节中，所有编写的代码都是从上到下依次执行的，如果某段代码需要多次使用，那么需要将该段代码复制多次。这种做法势必会影响开发效率。在实际项目开发中是不可取的。那么如果想让某一段代码多次使用，应该怎么做呢？在Python中，提供了函数。我们可以把实现某一功能的代码定义为一个函",
-      "chapterNumber": 9,
-      "order": 12,
-      "previousId": "0c301574a063492c",
-      "nextId": "cdfc410c02f24984",
-      "codeFiles": []
-    },
-    {
-      "id": "cdfc410c02f24984",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-10.md",
-      "title": "第10章 面向对象程序设计",
-      "sections": [
-        "第2篇 进阶提高"
-      ],
-      "excerpt": "面向对象程序设计是在面向过程程序设计的基础上发展而来的，它比面向过程编程具有更强的灵活性和扩展性。面向对象程序设计也是一个程序员发展的“分水岭”，很多的初学者和略有成就的开发者，就是因为无法理解“面向对象”而放弃。这里要提醒一下初学者：要想在编程这条路上走得比别人远，就一定要掌握",
-      "chapterNumber": 10,
-      "order": 13,
-      "previousId": "fcaf66c6bdac7179",
-      "nextId": "30ad2a45561283d1",
-      "codeFiles": []
-    },
-    {
-      "id": "30ad2a45561283d1",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-11.md",
-      "title": "第11章 模块",
-      "sections": [
-        "第2篇 进阶提高"
-      ],
-      "excerpt": "Python提供了强大的模块支持，主要体现为不仅在Python标准库中包含了大量的模块（称为标准模块），而且还有很多第三方模块，另外开发者自己也可以开发自定义模块。这些强大的模块支持将极大地提高我们的开发效率。",
-      "chapterNumber": 11,
-      "order": 14,
-      "previousId": "cdfc410c02f24984",
-      "nextId": "47139a530ac4d539",
-      "codeFiles": []
-    },
-    {
-      "id": "47139a530ac4d539",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-12.md",
-      "title": "第12章 异常处理及程序调试",
-      "sections": [
-        "第2篇 进阶提高"
-      ],
-      "excerpt": "学习过C语言或者Java语言的用户都知道：在C语言或者Java语言中，编译器可以捕获很多语法错误。但是，在Python语言中，只有在程序运行后才会执行语法检查。所以，只有在运行或测试程序时，才会真正知道该程序能不能正常运行。因此，掌握一定的异常处理语句和程序调试方法是十分必要的。",
-      "chapterNumber": 12,
-      "order": 15,
-      "previousId": "30ad2a45561283d1",
-      "nextId": "a815debe7303b868",
-      "codeFiles": []
-    },
-    {
-      "id": "a815debe7303b868",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-13.md",
-      "title": "第13章 文件及目录操作",
-      "sections": [
-        "第2篇 进阶提高"
-      ],
-      "excerpt": "在变量、序列和对象中存储的数据是暂时的，程序结束后就会丢失。为了能够长时间地保存程序中的数据，需要将程序中的数据保存到磁盘文件中。Python提供了内置的文件对象和对文件，以及目录进行操作的内置模块。通过这些技术可以很方便地将数据保存到文件（如文本文件等）中，以达到长时间保存数据",
-      "chapterNumber": 13,
-      "order": 16,
-      "previousId": "47139a530ac4d539",
-      "nextId": "aa5d857431a3d7ae",
-      "codeFiles": []
-    },
-    {
-      "id": "aa5d857431a3d7ae",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-14.md",
-      "title": "第14章 操作数据库",
-      "sections": [
-        "第2篇 进阶提高"
-      ],
-      "excerpt": "程序运行的时候，数据都是在内存中的。当程序终止的时候，通常都需要将数据保存到磁盘上，前面我们学习了将数据写入文件，保存在磁盘上。为了便于程序保存和读取数据，而且，能直接通过条件快速查询到指定的数据，就出现了数据库（Database）这种专门用于集中存储和查询的软件。本章将介绍数据",
-      "chapterNumber": 14,
-      "order": 17,
-      "previousId": "a815debe7303b868",
-      "nextId": "7010c97a39748414",
-      "codeFiles": []
-    },
-    {
-      "id": "7010c97a39748414",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-15.md",
-      "title": "第15章 GUI界面编程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "到目前为止，我们的所有输入和输出都只是IDLE中的简单文本。不过现代计算机和程序会使用大量的图形。如果我们的程序中也有一些图形就太好了。在这一章中，我们会开始建立一些简单的GUI。这说明从现在开始，我们的程序看上去就会像你平常熟悉的那些程序一样，将会有窗口、按钮之类的图形。",
-      "chapterNumber": 15,
-      "order": 18,
-      "previousId": "aa5d857431a3d7ae",
-      "nextId": "03d324ff4d229b2e",
-      "codeFiles": []
-    },
-    {
-      "id": "03d324ff4d229b2e",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-16.md",
-      "title": "第16章 Pygame游戏编程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "Python非常受欢迎的一个原因是它的应用领域非常广泛，其中就包括游戏开发。而使用Python进行游戏开发的首选模块就是Pygame。本章我们就来学习一下如何使用Pygame开发游戏。与其他章节不同的是，本章的侧重点不是讲解理论知识，而是在编写游戏的过程中学习Pygame。我们会",
-      "chapterNumber": 16,
-      "order": 19,
-      "previousId": "7010c97a39748414",
-      "nextId": "5ad3b756f5b6d4c1",
-      "codeFiles": []
-    },
-    {
-      "id": "5ad3b756f5b6d4c1",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-17.md",
-      "title": "第17章 网络爬虫开发",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "随着大数据时代的来临，网络信息量也变得更多更大，网络爬虫在互联网中的地位将越来越重要。本章将介绍通过Python语言实现网络爬虫的常用技术，以及常见的网络爬虫框架，最后将通过一个实战项目详细地介绍爬虫爬取数据的整个过程。",
-      "chapterNumber": 17,
-      "order": 20,
-      "previousId": "03d324ff4d229b2e",
-      "nextId": "7a012a19160d1e1d",
-      "codeFiles": []
-    },
-    {
-      "id": "7a012a19160d1e1d",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-18.md",
-      "title": "第18章 使用进程和线程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "为了实现在同一时间运行多个任务，Python引入了多线程的概念。在Python中可以通过方便、快捷的方式启动多线程模式。多线程常被应用在符合并发机制的程序中，如网络程序等。为了再进一步将工作任务细分，在一个进程内可以使用多个线程。本章将结合实例由浅入深地向读者介绍在Python中",
-      "chapterNumber": 18,
-      "order": 21,
-      "previousId": "5ad3b756f5b6d4c1",
-      "nextId": "6139c238c4ce19b5",
-      "codeFiles": []
-    },
-    {
-      "id": "6139c238c4ce19b5",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-19.md",
-      "title": "第19章 网络编程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "计算机网络就是把各个计算机连接到一起，让网络中的计算机可以互相通信。网络编程就是如何在程序中实现两台计算机的通信。本章将讲解网络的基础知识，包括比较常见的TCP协议和UDP协议，以及如何使用TCP编程和UDP编程。",
-      "chapterNumber": 19,
-      "order": 22,
-      "previousId": "7a012a19160d1e1d",
-      "nextId": "8f6323721d3c5ec4",
-      "codeFiles": []
-    },
-    {
-      "id": "8f6323721d3c5ec4",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-20.md",
-      "title": "第20章 Web编程",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "由于Python简洁易懂，可维护性好，所以越来越多的互联网公司使用Python进行Web开发，如豆瓣、知乎等网站。本章将介绍Web基础知识，包括HTTP协议、Web服务器以及前端基础知识。此外，将重点介绍WSGI接口，最后介绍常用的Web开发框架。",
-      "chapterNumber": 20,
-      "order": 23,
-      "previousId": "6139c238c4ce19b5",
-      "nextId": "666d3cc2b38024c3",
-      "codeFiles": []
-    },
-    {
-      "id": "666d3cc2b38024c3",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-21.md",
-      "title": "第21章 Flask框架",
-      "sections": [
-        "第3篇 高级应用"
-      ],
-      "excerpt": "第20章我们介绍了如何使用WSGI进行Web开发，并且介绍了4种Python常用Web框架，本章我们将详细介绍如何使用Flask框架。通过对比WSGI，读者将会发现使用Web框架开发Web应用程序的简单和高效。",
-      "chapterNumber": 21,
-      "order": 24,
-      "previousId": "8f6323721d3c5ec4",
-      "nextId": "7a98ad758bcd97a0",
-      "codeFiles": []
-    },
-    {
-      "id": "7a98ad758bcd97a0",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "chapter-22.md",
-      "title": "第22章 e起去旅行网站",
-      "sections": [
-        "第4篇 项目实战"
-      ],
-      "excerpt": "第21章介绍了Flask框架的基本使用方法，本章我们就应用Flask框架实现一个介绍旅游景区及旅游攻略的网站——e起去旅行网站。e起去旅行网站是一个包括前台和后台的完整网站。前台主要包括用户登录、注册以及景区内容的展现，而后台主要包括景区管理、游记管理、用户管理等内容的增删改查。",
-      "chapterNumber": 22,
-      "order": 25,
-      "previousId": "666d3cc2b38024c3",
-      "nextId": "5982b580137248c2",
-      "codeFiles": []
-    },
-    {
-      "id": "5982b580137248c2",
-      "bookSlug": "python-beginner-to-master",
-      "relPath": "appendix.md",
-      "title": "附录CD",
-      "sections": [
-        "附录"
-      ],
-      "excerpt": "",
-      "order": 26,
-      "previousId": "7a98ad758bcd97a0",
-      "nextId": "",
-      "codeFiles": []
-    },
-    {
       "id": "50204d742907b7f6",
       "bookSlug": "shangguigu-data-analysis",
       "relPath": "chapter-01.md",
@@ -2033,364 +1585,6 @@
         "61804be918ede594",
         "d574d7dd2aae44b2"
       ]
-    },
-    {
-      "id": "96794d9fbb602ba9",
-      "bookSlug": "python-data-analysis",
-      "relPath": "code-lab.md",
-      "title": "交互式代码学习器",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在线切换第 3～7 章脚本，并按教材三级大纲查看代码片段；也可搜索关键写法、复制当前片段。在线内容与下载入口读取同一份 .py 文件；需要运行、修改或保存结果时，请下载后在本地 Python 环境中练习。",
-      "order": 1,
-      "previousId": "",
-      "nextId": "0e028fb7c28f0de1",
-      "codeFiles": []
-    },
-    {
-      "id": "0e028fb7c28f0de1",
-      "bookSlug": "python-data-analysis",
-      "relPath": "00-front-matter/index.md",
-      "title": "前置内容",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "书名：Python数据分析从入门到精通（第2版）",
-      "order": 2,
-      "previousId": "96794d9fbb602ba9",
-      "nextId": "a2cebd9370b2c317",
-      "codeFiles": []
-    },
-    {
-      "id": "a2cebd9370b2c317",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/01-chapter/index.md",
-      "title": "第1章 数据分析基础",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "数据分析是数学、统计学理论结合科学的统计分析方法（如线性回归分析、聚类分析、方差分析、时间序列分析等）对数据库中的数据、Excel数据、收集的大量数据、网页抓取的数据等进行分析，从中提取有价值的信息形成结论并进行展示的过程。本章将对数据分析的基础知识进行讲解。",
-      "chapterNumber": 1,
-      "order": 3,
-      "previousId": "0e028fb7c28f0de1",
-      "nextId": "07e7f77a2b4c4de4",
-      "codeFiles": []
-    },
-    {
-      "id": "07e7f77a2b4c4de4",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/02-chapter/index.md",
-      "title": "第2章 搭建数据分析开发环境",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "工欲善其事，必先利其器。Python提供的数据处理、绘图、数据可视化、数组计算、机器学习等模块，使得数据可视化工作变得简单、高效。而要使用Python，需要先安装IDE开发环境，以及适合数据分析、数据可视化的Anaconda、Jupyter Notebook、Pycharm等开发",
-      "chapterNumber": 2,
-      "order": 4,
-      "previousId": "a2cebd9370b2c317",
-      "nextId": "e8f6db7585e7bd0e",
-      "codeFiles": []
-    },
-    {
-      "id": "e8f6db7585e7bd0e",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/03-numpy/index.md",
-      "title": "第3章 NumPy模块之数组计算",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "NumPy模块在数据处理、数据清洗、数据过滤、数据转换等方面可以快速实现数据计算，Pandas的底层也是基于NumPy的。因此，这一章内容将介绍NumPy的基础知识，使读者快速了解NumPy并将其应用到实际数据分析工作当中。",
-      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=6",
-      "chapterNumber": 3,
-      "order": 5,
-      "previousId": "07e7f77a2b4c4de4",
-      "nextId": "c0c84b750daac4eb",
-      "codeFiles": [
-        "881591ed76c0a768"
-      ]
-    },
-    {
-      "id": "c0c84b750daac4eb",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/04-pandas/index.md",
-      "title": "第4章 Pandas模块基础",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Pandas是Python的核心数据分析支持库，它提供了大量快速处理表格数据的函数和方法。本章将讲解Pandas模块的基础知识，主要内容包括安装和了解Pandas模块，Pandas模块的两大数据结构，即Series()对象和DataFrame()对象，还有索引的相关知识。",
-      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=22",
-      "chapterNumber": 4,
-      "order": 6,
-      "previousId": "e8f6db7585e7bd0e",
-      "nextId": "844f3c47e72b81c1",
-      "codeFiles": [
-        "38227e21a12b851f"
-      ]
-    },
-    {
-      "id": "844f3c47e72b81c1",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/05-pandas/index.md",
-      "title": "第5章 Pandas模块之数据的读取",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在实现数据分析的过程中，数据读取与处理是首要任务。拿到数据后需要先读取数据才能对数据进行分析。本章将主要介绍如何读取Excel文件、CSV文件、HTML网页以及数据库中的数据。",
-      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=43",
-      "chapterNumber": 5,
-      "order": 7,
-      "previousId": "c0c84b750daac4eb",
-      "nextId": "8d2488105aae38e1",
-      "codeFiles": [
-        "da29f0a9855257fc"
-      ]
-    },
-    {
-      "id": "8d2488105aae38e1",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/06-pandas/index.md",
-      "title": "第6章 Pandas模块之数据的处理",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "数据读取后并不是所有的数据都是我们所需要的，因此还要对数据进行简单的处理，本章将主要介绍如何进行数据的抽取，数据的增、删、改、查以及如何对数据进行排序与排名操作。",
-      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=37",
-      "chapterNumber": 6,
-      "order": 8,
-      "previousId": "844f3c47e72b81c1",
-      "nextId": "6b7c418e5bee7f95",
-      "codeFiles": [
-        "ca2f285dadd2bbfd"
-      ]
-    },
-    {
-      "id": "6b7c418e5bee7f95",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/07-pandas/index.md",
-      "title": "第7章 Pandas模块之数据的清洗",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "数据清洗是数据分析的一个重要工作，因为数据的质量直接影响数据分析以及算法模型的结果。本章主要介绍在进行数据清洗时如何处理缺失值、重复值和异常值，以及字符串操作和数据转换。",
-      "video": "https://www.bilibili.com/video/BV1D9GLzyEL6/?p=44",
-      "chapterNumber": 7,
-      "order": 9,
-      "previousId": "8d2488105aae38e1",
-      "nextId": "2c82daf4b486778a",
-      "codeFiles": [
-        "1af800164de42872"
-      ]
-    },
-    {
-      "id": "2c82daf4b486778a",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/08-chapter/index.md",
-      "title": "第8章 数据的计算与格式化",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "数据分析过程中少不了数据计算、数据的格式化。本章主要介绍数据计算与数据格式化，其中包含常见的数据计算函数（sum()、mean()、max()、min()）、高级的数据计算函数（median()、mode()、var()、std()、quantile()）以及数据的格式化等。",
-      "chapterNumber": 8,
-      "order": 10,
-      "previousId": "6b7c418e5bee7f95",
-      "nextId": "161d4ecb51f1b75e",
-      "codeFiles": []
-    },
-    {
-      "id": "161d4ecb51f1b75e",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/09-chapter/index.md",
-      "title": "第9章 数据统计及透视表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在实现数据分析的过程中，数据分组统计、数据移位、数据合并以及数据透视表都是不可缺少的数据分析技术。本章将通过各种实例来演示以上每种数据分析技术的实现方法。",
-      "chapterNumber": 9,
-      "order": 11,
-      "previousId": "2c82daf4b486778a",
-      "nextId": "4ec00f85d8417264",
-      "codeFiles": []
-    },
-    {
-      "id": "4ec00f85d8417264",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/10-chapter/index.md",
-      "title": "第10章 处理日期与时间",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在对时间类型数据进行分析时，需要将字符串时间转换为标准时间类型，而Pandas有着强大的日期数据处理功能。本章主要介绍日期数据的处理，日期范围、频率和移位，时间区间与频率转换，重新采样与频率转换，移动窗口函数等。",
-      "chapterNumber": 10,
-      "order": 12,
-      "previousId": "161d4ecb51f1b75e",
-      "nextId": "1c7faf6a818466b3",
-      "codeFiles": []
-    },
-    {
-      "id": "1c7faf6a818466b3",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/11-scikit-learn/index.md",
-      "title": "第11章 Scikit-Learn机器学习模块",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "机器学习，顾名思义就是让机器（计算机）模拟人类学习，从而有效提高工作效率。Python提供的第三方模块Scikit-Learn融入了大量的数学模型算法，使得数据分析、机器学习变得简单高效。本章主要内容包括Scikit-Learn概述、安装，常用的线性回归模型—最小二乘法回归、岭回",
-      "chapterNumber": 11,
-      "order": 13,
-      "previousId": "4ec00f85d8417264",
-      "nextId": "04c3968b9dcc561d",
-      "codeFiles": []
-    },
-    {
-      "id": "04c3968b9dcc561d",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/12-matplotlib/index.md",
-      "title": "第12章 Matplotlib模块入门",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "在数据分析中，我们经常用到大量的可视化操作。一张精美的图表不仅能够展示大量的信息，更能够直观体现数据之间隐藏的关系。本章主要介绍Matpoltlib模块的入门知识。",
-      "chapterNumber": 12,
-      "order": 14,
-      "previousId": "1c7faf6a818466b3",
-      "nextId": "1625141f5853bc28",
-      "codeFiles": []
-    },
-    {
-      "id": "1625141f5853bc28",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/13-matplotlib/index.md",
-      "title": "第13章 Matplotlib模块进阶",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "相信通过上一章的学习，你已经掌握了Matplotlib的基础知识，学会了绘制各种类型的图表。本章是Matplotlib的进阶，包括图表的颜色设置、日期时间处理、次坐标轴图表、多个子图表绘制等内容。",
-      "chapterNumber": 13,
-      "order": 15,
-      "previousId": "04c3968b9dcc561d",
-      "nextId": "84bd101e7dde6eee",
-      "codeFiles": []
-    },
-    {
-      "id": "84bd101e7dde6eee",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/14-seaborn/index.md",
-      "title": "第14章 Seaborn图表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Seaborn模块与Matplotlib模块相似，也是Python数据可视化分析的第三方模块。由于Seaborn在Matplotlib的基础上进行了更高级的API封装，所以Seaborn可以通过一个高级界面来绘制更加有吸引力的统计图形。",
-      "chapterNumber": 14,
-      "order": 16,
-      "previousId": "1625141f5853bc28",
-      "nextId": "5ab5be053e7b94bd",
-      "codeFiles": []
-    },
-    {
-      "id": "5ab5be053e7b94bd",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/15-plotly/index.md",
-      "title": "第15章 Plotly图表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Plotly是一个基于JavaScript的动态绘图模块，绘制出来的图表可以与Web应用集成。该模块不仅提供了丰富而又强大的绘图库，还支持各种类型的绘图方案，绘图的种类丰富、效果美观，方便保存和分享。",
-      "chapterNumber": 15,
-      "order": 17,
-      "previousId": "84bd101e7dde6eee",
-      "nextId": "b9c51f48e9898482",
-      "codeFiles": []
-    },
-    {
-      "id": "b9c51f48e9898482",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/16-bokeh/index.md",
-      "title": "第16章 Bokeh图表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Anaconda开发环境中还集成了一个叫作Bokeh的模块，该模块同样可以根据数据集绘制对应的图表，以满足数据可视化的多种需求。本章将介绍如何使用Bokeh模块绘制数据图表。",
-      "chapterNumber": 16,
-      "order": 18,
-      "previousId": "5ab5be053e7b94bd",
-      "nextId": "7457cbd1ff3520f8",
-      "codeFiles": []
-    },
-    {
-      "id": "7457cbd1ff3520f8",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/17-pyecharts/index.md",
-      "title": "第17章 Pyecharts图表",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Echarts是一个由百度开发并开源的数据可视化工具，而Python是一门适用于数据处理和数据分析的语言，为了适应Python的需求，Pyecharts模块诞生了。本章以Pyecharts 2.0.3版本为载体，介绍Pyecharts的安装、链式调用、Pyecharts图表的组成",
-      "chapterNumber": 17,
-      "order": 19,
-      "previousId": "b9c51f48e9898482",
-      "nextId": "f6decdfc5c4f281f",
-      "codeFiles": []
-    },
-    {
-      "id": "f6decdfc5c4f281f",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/18-chapter/index.md",
-      "title": "第18章 股票数据分析",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "Python在处理和分析股票金融类数据时具有其他语言不可比拟的优势，这是因为Pandas的创始人就是一名量化金融分析师，所以Pandas中的很多函数是专门为分析金融数据而设计的。本章介绍如何通过Python获取并分析股票行情数据。",
-      "chapterNumber": 18,
-      "order": 20,
-      "previousId": "7457cbd1ff3520f8",
-      "nextId": "91e3a67828cba3eb",
-      "codeFiles": []
-    },
-    {
-      "id": "91e3a67828cba3eb",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/19-chapter/index.md",
-      "title": "第19章 淘宝网订单分析",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "淘宝电商每时每刻都会产生大量的订单数据，虽然淘宝后台也提供了数据分析功能，但是很多时候无法满足用户的需求，用户不能按照自己的想法挖掘更有价值的信息进行分析。本章将专门针对淘宝电商订单数据进行挖掘和分析，包括从数据预处理到数据分析的完整过程，掌握了这些分析方法，不但可以大大提高运营",
-      "chapterNumber": 19,
-      "order": 21,
-      "previousId": "f6decdfc5c4f281f",
-      "nextId": "c42d376c497c1704",
-      "codeFiles": []
-    },
-    {
-      "id": "c42d376c497c1704",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/20-chapter/index.md",
-      "title": "第20章 网站用户数据分析",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "网站App平台注册用户分析，是指获得网站或App等平台用户的注册数据，并对用户注册数据进行统计、分析，从中发现产品推广对新注册用户的影响，以及目前的营销策略中可能存在的问题，为进一步修正或重新制定营销策略提供有效的依据。",
-      "chapterNumber": 20,
-      "order": 22,
-      "previousId": "91e3a67828cba3eb",
-      "nextId": "82d65ec0b0b6781d",
-      "codeFiles": []
-    },
-    {
-      "id": "82d65ec0b0b6781d",
-      "bookSlug": "python-data-analysis",
-      "relPath": "chapters/21-nba/index.md",
-      "title": "第21章 NBA球员薪资分析",
-      "sections": [
-        "正文"
-      ],
-      "excerpt": "互联网时代，随处可见的网页表格数据对于数据分析和数据挖掘来说是很好的资源，但如果直接复制和粘贴网页上的数据，不仅费时费力，而且容易漏掉有用的数据或复制了其他没用的数据。Pandas提供了专门获取网页数据的方法，可以轻松地解决这一问题。本案例将使用Pandas实现简单爬虫，爬取NB",
-      "chapterNumber": 21,
-      "order": 23,
-      "previousId": "c42d376c497c1704",
-      "nextId": "",
-      "codeFiles": []
     },
     {
       "id": "4ab69924aecec56e",
@@ -7136,61 +6330,6 @@
       "language": "csv",
       "size": 43323,
       "downloadUrl": "files/code/shangguigu-data-analysis/shared-data/weather_withna.csv",
-      "truncated": false
-    },
-    {
-      "id": "881591ed76c0a768",
-      "bookSlug": "python-data-analysis",
-      "path": "chapter03_numpy_tutorial.py",
-      "name": "chapter03_numpy_tutorial.py",
-      "kind": "source",
-      "language": "python",
-      "size": 40015,
-      "downloadUrl": "files/code/python-data-analysis/chapter03_numpy_tutorial.py",
-      "truncated": false
-    },
-    {
-      "id": "38227e21a12b851f",
-      "bookSlug": "python-data-analysis",
-      "path": "chapter04_pandas_basics_tutorial.py",
-      "name": "chapter04_pandas_basics_tutorial.py",
-      "kind": "source",
-      "language": "python",
-      "size": 17633,
-      "downloadUrl": "files/code/python-data-analysis/chapter04_pandas_basics_tutorial.py",
-      "truncated": false
-    },
-    {
-      "id": "da29f0a9855257fc",
-      "bookSlug": "python-data-analysis",
-      "path": "chapter05_pandas_io_tutorial.py",
-      "name": "chapter05_pandas_io_tutorial.py",
-      "kind": "source",
-      "language": "python",
-      "size": 21830,
-      "downloadUrl": "files/code/python-data-analysis/chapter05_pandas_io_tutorial.py",
-      "truncated": false
-    },
-    {
-      "id": "ca2f285dadd2bbfd",
-      "bookSlug": "python-data-analysis",
-      "path": "chapter06_pandas_processing_tutorial.py",
-      "name": "chapter06_pandas_processing_tutorial.py",
-      "kind": "source",
-      "language": "python",
-      "size": 19235,
-      "downloadUrl": "files/code/python-data-analysis/chapter06_pandas_processing_tutorial.py",
-      "truncated": false
-    },
-    {
-      "id": "1af800164de42872",
-      "bookSlug": "python-data-analysis",
-      "path": "chapter07_pandas_cleaning_tutorial.py",
-      "name": "chapter07_pandas_cleaning_tutorial.py",
-      "kind": "source",
-      "language": "python",
-      "size": 22319,
-      "downloadUrl": "files/code/python-data-analysis/chapter07_pandas_cleaning_tutorial.py",
       "truncated": false
     },
     {

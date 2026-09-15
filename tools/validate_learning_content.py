@@ -33,8 +33,7 @@ def main() -> None:
     all_html = "".join(payload["html"] for payload in payloads.values())
     chapter_docs = [doc for doc in catalog["docs"] if doc.get("chapterNumber")]
     expected_books = {
-        "research-skills", "shangguigu-python", "python-beginner-to-master",
-        "shangguigu-data-analysis", "python-data-analysis", "deep-learning",
+        "research-skills", "shangguigu-python", "shangguigu-data-analysis", "deep-learning",
         "zhou-machine-learning", "machine-vision", "robot-textbook", "wind-energy", "风能技术",
         "ros-robot-programming", "craig-introduction-to-robotics",
         "ros-robotics-practice",
@@ -206,7 +205,7 @@ def main() -> None:
             ) == ["科研视频制作"],
         },
         "zotero_new_tutorial": {
-            "title": zotero_new_doc["title"] == "Zotero 使用讲义（新）",
+            "title": zotero_new_doc["title"] == "Zotero 使用教程",
             "creator_credit": "内容制作：张衡" in zotero_new_doc["html"],
             "video_linked": zotero_new_doc.get("video") == "https://www.bilibili.com/video/BV1L6bG6vEA2/",
             "images": len(zotero_new_image_urls) == 16,
@@ -221,7 +220,7 @@ def main() -> None:
             ) == ["文献检索与管理"],
         },
         "wind_scada_tutorial": {
-            "title": wind_scada_doc["title"] == "风电 SCADA 数据分析（新）",
+            "title": wind_scada_doc["title"] == "风电 SCADA 数据分析",
             "creator_credit": "内容制作：庄锦良" in wind_scada_doc["html"],
             "video_linked": wind_scada_doc.get("video") == "https://www.bilibili.com/video/BV1VCbG6YEp5/",
             "topic": next(
@@ -329,6 +328,25 @@ def main() -> None:
             "cover": machine_learning_book["cover"],
         },
         "resource_book_info": "resource-book-info" in app_js,
+        "simplified_resource_table": (
+            all(token in app_js for token in (
+                "<th>目录</th><th>作者</th>", "<th>参考附件</th>", "docAuthors",
+            ))
+            and "TEXTBOOK · SLIDES · CODE · VIDEO" not in app_js
+            and "<h2>教材与课程</h2>" not in app_js
+        ),
+        "python_course_title": next(
+            book["title"] for book in catalog["books"] if book["slug"] == "shangguigu-python"
+        ),
+        "machine_vision_category": next(
+            book["category"] for book in catalog["books"] if book["slug"] == "machine-vision"
+        ),
+        "robotics_order": [
+            book["slug"] for book in sorted(
+                (book for book in catalog["books"] if book["category"] == "robotics"),
+                key=lambda book: book.get("order", 1000),
+            )
+        ],
         "minimal_navigation": (
             "course-resource-link" in app_js
             and "renderResources" in app_js
@@ -503,7 +521,7 @@ def main() -> None:
         ),
     }
 
-    assert report["stats"] == {"books": 19, "docs": 264, "code": 221}
+    assert report["stats"] == {"books": 17, "docs": 211, "code": 216}
     assert all(report["research_video_tutorial"].values())
     assert all(report["zotero_new_tutorial"].values())
     assert all(report["wind_scada_tutorial"].values())
@@ -519,7 +537,7 @@ def main() -> None:
         "creator_credit": True,
     }
     assert report["research_presentation"] == {
-        "documents": 2,
+        "documents": 1,
         "images": 11,
         "missing_images": 0,
         "video_present": True,
@@ -567,10 +585,10 @@ def main() -> None:
             "images": 56,
             "external_images": 0,
             "missing_images": 0,
-            "math_fragments": 252,
+            "math_fragments": 0,
             "raw_dollar_delimiters": 0,
-            "tables": 16,
-            "code_blocks": 238,
+            "tables": 26,
+            "code_blocks": 221,
             "formula_like_code_blocks": 0,
             "cover": "",
         },
@@ -585,7 +603,7 @@ def main() -> None:
     assert report["embedded_media"] == 0
     assert not report["badly_numbered_chapters"]
     assert not report["badly_numbered_headings"]
-    assert report["books_with_resource_model"] == 19
+    assert report["books_with_resource_model"] == 17
     assert report["resource_downloads"] >= 13
     assert report["missing_resource_downloads"] == 0
     assert report["external_resource_links"] >= 6
@@ -600,6 +618,13 @@ def main() -> None:
         "cover": "files/zhou-machine-learning/assets/cover.jpeg",
     }
     assert report["resource_book_info"]
+    assert report["simplified_resource_table"]
+    assert report["python_course_title"] == "Python 入门"
+    assert report["machine_vision_category"] == "robotics"
+    assert report["robotics_order"] == [
+        "machine-vision", "robot-textbook", "craig-introduction-to-robotics",
+        "ros-robot-programming", "ros-robotics-practice",
+    ]
     assert report["minimal_navigation"]
     assert report["resource_first_entry"]
     assert report["scada_book"] == {
@@ -620,7 +645,7 @@ def main() -> None:
     assert report["python_research_computing"]["creator_credit"]
     assert not report["removed_research_skill_pages"]
     assert report["ai_translation_guide"] == {
-        "title": "Kimi 论文翻译操作指南",
+        "title": "Kimi 论文翻译与术语整理",
         "images": 7,
         "missing_images": 0,
         "creator_credit": True,
@@ -628,7 +653,7 @@ def main() -> None:
     }
     assert report["site_building_guide"] == {
         "documents": 1,
-        "title": "知识库搭建",
+        "title": "知识库搭建教程",
         "sections": 12,
     }
     assert report["standalone_site_building_nav"]

@@ -3,21 +3,20 @@ docs_dir: docs
 nav:
   - "课程导读": index.md
   - "文献检索与管理":
-      - "系统性文献检索与筛选": 11-systematic-literature-search/index.md
-      - "Zotero 文献管理与使用": 01-literature/04-zotero-new/index.md
+      - "文献检索与筛选": 11-systematic-literature-search/index.md
+      - "Zotero 使用教程": 01-literature/04-zotero-new/index.md
   - "格式转换与术语":
       - "PDF 转 Markdown 和 HTML": 02-format-trans/01-pdf-to-markdown.md
       - "PDF 转 Markdown 操作教程": 08-pdf-to-markdown/index.md
-  - "知识库搭建": 03-site-building/index.md
+  - "知识库搭建教程": 03-site-building/index.md
   - "Python 科研计算":
       - "科研计算基础与环境搭建": 04-python-research-computing/index.md
-      - "风电 SCADA 数据分析（新）": 10-wind-scada-data-analysis/index.md
+      - "风电 SCADA 数据分析": 10-wind-scada-data-analysis/index.md
   - "AI 论文翻译":
       - "Kimi 论文翻译与术语整理": 05-ai-paper-translation/index.md
   - "科研绘图":
       - "论文图片复现": 06-paper-figure-reproduction/index.md
   - "科研汇报":
       - "科研汇报 PPT 制作": 07-research-presentation/index.md
-      - "案例参考文章": 07-research-presentation/reference.md
   - "科研视频制作":
       - "科研教学视频制作": 09-research-video-production/index.md

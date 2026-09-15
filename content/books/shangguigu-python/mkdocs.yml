@@ -1,4 +1,4 @@
-site_name: "Python 系统学习"
+site_name: "Python 入门"
 docs_dir: docs
 nav:
   - 课程导读: index.md
