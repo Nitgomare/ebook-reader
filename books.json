@@ -61,6 +61,18 @@
       "category": "research-skills",
       "type": "course",
       "featured": true,
+      "docAuthors": {
+        "11-systematic-literature-search/index.md": "肖鑫",
+        "01-literature/04-zotero-new/index.md": "张衡",
+        "08-pdf-to-markdown/index.md": "刘航",
+        "03-site-building/index.md": "李东",
+        "04-python-research-computing/index.md": "李锦瑞",
+        "10-wind-scada-data-analysis/index.md": "庄锦良",
+        "05-ai-paper-translation/index.md": "李东",
+        "06-paper-figure-reproduction/index.md": "窦丽露",
+        "07-research-presentation/index.md": "戴琼",
+        "09-research-video-production/index.md": "辛庆浩"
+      },
       "resourceLinks": [
         {
           "label": "Python 科研计算基础与环境搭建课程视频（李锦瑞）",
@@ -93,7 +105,7 @@
           "kind": "视频"
         },
         {
-          "label": "系统性文献检索操作手册视频（肖鑫）",
+          "label": "文献检索与筛选课程视频（肖鑫）",
           "url": "https://www.bilibili.com/video/BV1iwYr6ZEyo/",
           "kind": "视频"
         }
@@ -101,7 +113,7 @@
     },
     {
       "slug": "shangguigu-python",
-      "title": "Python 系统学习",
+      "title": "Python 入门",
       "author": "尚硅谷",
       "description": "从环境准备和核心语法出发，逐步学习函数、面向对象、文件、并发与协程。",
       "tags": ["Python", "基础课程", "逐章源码"],
@@ -112,15 +124,6 @@
       "resourceLinks": [
         {"label": "尚硅谷 Python 配套视频", "url": "https://www.bilibili.com/video/BV1tDsgzxECr/", "kind": "视频"}
       ]
-    },
-    {
-      "slug": "python-beginner-to-master",
-      "title": "Python 从入门到精通",
-      "author": "明日科技",
-      "description": "从基础语法、流程控制和数据结构逐步学习面向对象、文件、数据库及项目开发。",
-      "tags": ["Python", "中文教材", "项目案例"],
-      "category": "python",
-      "type": "reference"
     },
     {
       "slug": "shangguigu-data-analysis",
@@ -140,26 +143,6 @@
       }
     },
     {
-      "slug": "python-data-analysis",
-      "title": "Python 数据分析",
-      "author": "明日科技",
-      "description": "覆盖 NumPy、Pandas、Matplotlib、Seaborn、机器学习与完整数据分析案例。",
-      "tags": ["数据分析", "中文教材", "案例"],
-      "category": "data-analysis",
-      "type": "reference",
-      "codeSource": "docs/assets/code",
-      "codeLinks": {
-        "chapter03_numpy_tutorial.py": ["chapters/03-numpy/index.md"],
-        "chapter04_pandas_basics_tutorial.py": ["chapters/04-pandas/index.md"],
-        "chapter05_pandas_io_tutorial.py": ["chapters/05-pandas/index.md"],
-        "chapter06_pandas_processing_tutorial.py": ["chapters/06-pandas/index.md"],
-        "chapter07_pandas_cleaning_tutorial.py": ["chapters/07-pandas/index.md"]
-      },
-      "resourceLinks": [
-        {"label": "数据分析补充视频", "url": "https://www.bilibili.com/video/BV1D9GLzyEL6/", "kind": "视频"}
-      ]
-    },
-    {
       "slug": "deep-learning",
       "title": "动手学深度学习",
       "author": "李沐等",
@@ -177,7 +160,7 @@
       "slug": "zhou-machine-learning",
       "title": "机器学习",
       "author": "周志华",
-      "description": "从基本概念、经典模型到计算学习理论与强化学习的系统教材。",
+      "description": "以周志华《机器学习》为核心教材，从基本概念与模型评估出发，系统学习线性模型、决策树、神经网络、支持向量机、贝叶斯方法、集成学习、聚类和降维，并进一步理解特征选择、计算学习理论、半监督学习、概率图模型、规则学习与强化学习。课程按章节关联正文、课件、代码和视频，适合具备 Python 与基础数学知识的学习者循序学习，也可作为算法查阅和实验复现参考。",
       "coverSource": "assets/cover.jpeg",
       "tags": ["机器学习", "西瓜书", "中文教材"],
       "category": "artificial-intelligence",
@@ -223,7 +206,8 @@
       "author": "夏东、周波",
       "description": "系统介绍机器视觉、人脸识别、人体姿态识别、索引技术、目标检测及嵌入式应用。",
       "tags": ["机器视觉", "人脸识别", "人体姿态识别"],
-      "category": "artificial-intelligence",
+      "category": "robotics",
+      "order": 10,
       "type": "reference"
     },
     {
@@ -234,6 +218,7 @@
       "coverSource": "0.png",
       "tags": ["智能机器人", "轮腿机器人", "项目实战"],
       "category": "robotics",
+      "order": 20,
       "type": "course"
     },
     {
@@ -244,6 +229,7 @@
       "coverSource": "images/0_0_0_1829_1430_0.jpg",
       "tags": ["ROS", "机器人编程", "SLAM 与导航"],
       "category": "robotics",
+      "order": 40,
       "type": "reference"
     },
     {
@@ -253,6 +239,7 @@
       "description": "经典机器人学教材，系统介绍空间描述、操作臂运动学与动力学、轨迹生成、机械设计、位置与力控制以及机器人编程。",
       "tags": ["机器人学", "运动学与动力学", "控制"],
       "category": "robotics",
+      "order": 30,
       "type": "reference"
     },
     {
@@ -262,6 +249,7 @@
       "description": "融合机器人学基础理论与 ROS 2 工程实践，覆盖运动学、动力学、控制、通信、传感器、仿真、SLAM、导航及自主巡逻机器人综合项目。",
       "tags": ["ROS 2", "机器人学", "项目实战"],
       "category": "robotics",
+      "order": 50,
       "type": "reference",
       "courseRows": [
         {"chapter": 1, "github": [{"label": "how-to-learn-robotics", "url": "https://github.com/ysu341/how-to-learn-robotics"}]},

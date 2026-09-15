@@ -1,4 +1,4 @@
-# Python 基础课程
+# Python 入门
 
 <section class="course-guide-hero">
 <div class="course-guide-copy">

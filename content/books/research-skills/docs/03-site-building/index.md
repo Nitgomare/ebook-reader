@@ -1,4 +1,4 @@
-# 知识库搭建
+# 知识库搭建教程
 
 这套教程带你完整复刻一个与本站结构相同的科研知识库：用 Markdown 写内容，用 MkDocs Material 生成静态网页，把代码上传到 GitHub，最后交给 Cloudflare Pages 自动构建和发布。
 
@@ -245,7 +245,7 @@ python -m mkdocs build --strict
 例如创建 `docs/01-literature/systematic-search.md`：
 
 ```markdown
-# 系统性文献检索与筛选
+# 文献检索与筛选
 
 这节课介绍如何选择数据库并设计检索式。
 
@@ -274,7 +274,7 @@ nav:
   - "课程首页": index.md
 
   - "1. 文献检索与管理":
-      - "1.1 系统性文献检索与筛选": 11-systematic-literature-search/index.md
+      - "1.1 文献检索与筛选": 11-systematic-literature-search/index.md
 
   - "3. 网站制作与部署":
       - "教程总览": 03-site-building/index.md
