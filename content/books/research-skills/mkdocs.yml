@@ -3,7 +3,6 @@ docs_dir: docs
 nav:
   - "课程导读": index.md
   - "文献检索与管理":
-      - "文献检索工具": 01-literature/01-search-tools.md
       - "系统性文献检索与筛选": 11-systematic-literature-search/index.md
       - "Zotero 文献管理与使用": 01-literature/04-zotero-new/index.md
   - "格式转换与术语":

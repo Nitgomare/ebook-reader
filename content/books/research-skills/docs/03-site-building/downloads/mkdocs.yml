@@ -85,7 +85,7 @@ nav:
   - "课程首页": index.md
   - "1. 文献检索与管理":
       - "本章介绍": 01-literature/index.md
-      - "1.1 文献检索工具": 01-literature/search.md
+      - "1.1 系统性文献检索与筛选": 01-literature/systematic-search.md
   - "2. 网站制作教程":
       - "教程总览": 02-site-building/index.md
       - "2.1 目录与配置": 02-site-building/structure.md

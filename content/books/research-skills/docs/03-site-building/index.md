@@ -242,10 +242,10 @@ python -m mkdocs build --strict
 
 ### 新建一篇页面
 
-例如创建 `docs/01-literature/01-search-tools.md`：
+例如创建 `docs/01-literature/systematic-search.md`：
 
 ```markdown
-# 文献检索工具
+# 系统性文献检索与筛选
 
 这节课介绍如何选择数据库并设计检索式。
 
@@ -274,8 +274,7 @@ nav:
   - "课程首页": index.md
 
   - "1. 文献检索与管理":
-      - "1.1 文献检索工具": 01-literature/01-search-tools.md
-      - "1.2 系统性文献检索与筛选": 11-systematic-literature-search/index.md
+      - "1.1 系统性文献检索与筛选": 11-systematic-literature-search/index.md
 
   - "3. 网站制作与部署":
       - "教程总览": 03-site-building/index.md
@@ -291,7 +290,7 @@ nav:
 同一网站优先使用相对路径：
 
 ```markdown
-[下一节](02-literature-screening.md)
+[下一节](02-zotero.md)
 [返回首页](../index.md)
 [打开外部网站](https://example.com)
 ```
@@ -304,7 +303,7 @@ nav:
 
 ```text
 docs/01-literature/
-├─ 01-search-tools.md
+├─ systematic-search.md
 └─ images/
    └─ database-search.png
 ```
