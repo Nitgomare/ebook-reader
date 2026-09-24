@@ -217,9 +217,20 @@
 
 复杂,这种机器人目前应用得最多。 
 
-![](../../images/5bcb000c0f76afc727206b3de9b3e3437f525661060f022604dace0e032e7f4d.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-1-8.html" data-interactive-title="图1.8 球坐标型机器人">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图1.8显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/5bcb000c0f76afc727206b3de9b3e3437f525661060f022604dace0e032e7f4d.jpg" alt="图1.8 球坐标型机器人">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图 1.8 球坐标型机器人
+<p class="figure-caption">图1.8 球坐标型机器人（原图与交互示例）</p>
 
 
 ![](../../images/7b91a8834d661c041c739cddd11f66a28da68941ce81aadd643dfdd6b5bb1029.jpg)
@@ -415,14 +426,24 @@ $$
 
 #### 七、承载能力
 
-![](../../images/fea6f772b1be426b6c3c48e7dd3f6bcfb5c99cc3c3a9aec7da8a8efcc8d20547.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-1-14.html" data-interactive-title="图1.14 A4020 型 SCARA 机器人的工作范围">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图1.14显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/fea6f772b1be426b6c3c48e7dd3f6bcfb5c99cc3c3a9aec7da8a8efcc8d20547.jpg" alt="图1.14 A4020 型 SCARA 机器人的工作范围">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-
+<p class="figure-caption">图1.14 A4020 型 SCARA 机器人的工作范围（原图与交互示例）</p>
 承载能力是指机器人在工作范围内的任何位姿上所能承受的最大质量。 
 
 承载能力不仅决定于负载的质量,且与机器人运行的速度和加速度的大小、方向有关。为安全起见,承载 
 
-图1.14 A4020型SCARA 机器人的工作范围 
 
 能力这一技术指标是指高速运行时的承载能力。通常,承载能力不仅指负载质量,还包括机器人末端操作器的质量。 
 
@@ -475,6 +496,16 @@ MOTOMAN EA1400 型弧焊机器人的技术参数如表 1.2 所示。
 
 1.10 什么是 SCARA 机器人, 应用上有何特点? 
 
-![](../../images/4fe7e2fb228edd41e5a825f0ddd29242289dd3d5d43bf2d8617957151f1bc72a.jpg)
-
-题1.7图
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-t1-7.html" data-interactive-title="题1.7 二自由度平面关节型机器人机械手可达工作空间">
+  <div class="interactive-figure-toolbar" role="group" aria-label="题1.7显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/4fe7e2fb228edd41e5a825f0ddd29242289dd3d5d43bf2d8617957151f1bc72a.jpg" alt="题1.7 二自由度平面关节型机器人机械手可达工作空间">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">题1.7 二自由度平面关节型机器人机械手可达工作空间（原图与交互示例）</p>

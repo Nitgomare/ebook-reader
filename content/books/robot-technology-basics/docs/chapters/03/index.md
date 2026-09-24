@@ -567,9 +567,19 @@ $$
 
 机器人的各连杆通过关节连接在一起,关节有移动副与转动副两种。按从机座到末端执行器的顺序,由低到高依次为各关节和各连杆编号,如图3.15所示。机座的编号为杆件0,与机座相连的连杆编号为连杆1,以此类推。机座与连杆1的关节编号为关节1,连杆1与连杆2的连接关节编号为2,以此类推。各连杆的坐标系Z轴方向与关节轴线重合(对于移动关节,为Z轴线沿此关节移动方向)。 
 
-![](../../images/0e17b5953c4a898740a9dd8834d47de5f4156d5f38483985e46ce43e0bdd142d.jpg)
-
-图3.15 机器人坐标系的分配
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-15.html" data-interactive-title="图3.15 机器人坐标系的分配">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3.15显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/0e17b5953c4a898740a9dd8834d47de5f4156d5f38483985e46ce43e0bdd142d.jpg" alt="图3.15 机器人坐标系的分配">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图3.15 机器人坐标系的分配（原图与交互示例）</p>
 
 
 末端执行器上的坐标系依据夹持器(手爪)手指的运动方向固定在末端执行器上。原点位于形心； $X_{n}$ 沿末端执行器手指组成的平面的法向，故又被称为法线矢量； $Y_{n}$ 垂直于手指，称为姿态矢量。 $Z_{n}$ 的方向朝外指向目标，称为接近矢量。 
@@ -636,9 +646,20 @@ $$
 
 其中， $A_{1}^{0}(A_{1})$ 表示杆件1上的1号坐标系到机座的0号坐标系的齐次坐标变换矩阵。 
 
-![](../../images/4d92a7546985e30ba2890ba5f50acf38f6f17a2e578a252be97c5be568ec35dd.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-17.html" data-interactive-title="图3.17 棱柱联轴器连杆 D-H 坐标系建立示意图">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3.17显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/4d92a7546985e30ba2890ba5f50acf38f6f17a2e578a252be97c5be568ec35dd.jpg" alt="图3.17 棱柱联轴器连杆 D-H 坐标系建立示意图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图 3.17 棱柱联轴器连杆 D-H 坐标系建立示意图
+<p class="figure-caption">图3.17 棱柱联轴器连杆 D-H 坐标系建立示意图（原图与交互示例）</p>
 
 
 #### 二、连杆坐标系间变换矩阵的确定

@@ -1,0 +1,1381 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图4-2 三连杆操作臂的两个逆解 · 人机交互演示</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #14213d;
+  --muted: #65748b;
+  --line: #d9e2ef;
+  --surface: rgba(255, 255, 255, 0.94);
+  --blue: #2563eb;
+  --blue-dark: #174ea6;
+  --blue-soft: #eaf2ff;
+  --red: #d93025;
+  --green: #12944f;
+  --violet: #7c3aed;
+  --orange: #c26a10;
+  --cyan: #0e7490;
+}
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; }
+body {
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(160deg, #f8fbff 0%, #eef4fb 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+    "Microsoft YaHei", Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+button, input, select { font: inherit; }
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 460px;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.viewport {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-drag: none;
+  overscroll-behavior: contain;
+}
+.viewport.is-dragging { cursor: grabbing; }
+.fk-grid-line { stroke: #e2eaf5; stroke-width: 1; }
+.fk-axis { stroke-width: 3.2; }
+.fk-axis-label, .fk-point-label, .fk-vec-label, .fk-origin-label {
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: #f7fafe;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.fk-origin-label { font-size: 15px; fill: #475569; }
+.fk-vec-line { stroke-width: 4.4; fill: none; }
+.fk-projection { stroke-width: 2.2; stroke-dasharray: 7 6; fill: none; }
+.fk-arc { fill: none; stroke-width: 2.6; stroke-dasharray: 6 5; }
+.fk-point { stroke: #fff; stroke-width: 2.6; }
+
+.panel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: min(304px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  overflow: auto;
+  padding: 15px 17px 14px;
+  border: 1px solid rgba(30, 64, 175, 0.14);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 16px 36px rgba(30, 64, 175, 0.14);
+}
+.panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.panel h1 { margin: 0; font-size: 15px; line-height: 1.4; }
+.panel .subtitle { margin: 5px 0 12px; color: var(--muted); font-size: 11.5px; line-height: 1.55; }
+.reset {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid #bfd2ef;
+  border-radius: 7px;
+  color: var(--blue-dark);
+  background: #fff;
+  cursor: pointer;
+}
+.reset:hover { background: var(--blue-soft); }
+.control { margin-top: 10px; }
+.control-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.control label { color: #42526a; font-size: 12.5px; }
+.control output {
+  color: var(--blue-dark);
+  font: 700 12.5px ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+input[type="range"] {
+  width: 100%;
+  height: 4px;
+  margin: 8px 0 2px;
+  border-radius: 999px;
+  outline: none;
+  background: #dbe5f1;
+  appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  width: 16px; height: 16px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 2px 7px rgba(37, 99, 235, 0.42);
+  cursor: pointer;
+  appearance: none;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px; height: 12px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+}
+.options { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; }
+.options label { display: inline-flex; align-items: center; gap: 6px; color: #4a5a72; font-size: 12px; cursor: pointer; }
+.options input { accent-color: var(--blue); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 11px; padding-top: 10px; border-top: 1px dashed var(--line); color: #5b6a80; font-size: 11.5px; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; }
+.legend i.dot { width: 9px; height: 9px; border-radius: 50%; }
+
+.readout {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  max-width: min(460px, calc(100% - 32px));
+  padding: 10px 13px;
+  border: 1px solid rgba(30, 64, 175, 0.12);
+  border-radius: 10px;
+  color: #3d4c63;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 26px rgba(30, 64, 175, 0.09);
+  font: 15px/1.6 "Cambria Math", "Times New Roman", serif;
+}
+.readout .row { white-space: nowrap; }
+.readout strong { color: var(--blue-dark); font-family: inherit; }
+.readout .small { font-size: 13px; color: #5b6a80; }
+.hint {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.82);
+  font-size: 11px;
+}
+.tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.tabs button {
+  flex: 1;
+  padding: 6px 4px;
+  border: 1px solid #cfdcf0;
+  border-radius: 8px;
+  color: #45566f;
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+.tabs button.is-active { border-color: var(--blue); color: #fff; background: var(--blue); }
+
+@media (max-width: 720px) {
+  .app { min-height: 540px; }
+  .panel {
+    top: auto;
+    bottom: 8px;
+    left: 8px;
+    width: calc(100% - 16px);
+    max-height: 54%;
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+  .panel .subtitle { display: none; }
+  .readout { top: 8px; right: 8px; bottom: auto; font-size: 13px; max-width: calc(100% - 16px); }
+  .hint { display: none; }
+  .legend { margin-top: 8px; padding-top: 8px; }
+}
+
+.panel h1 { font-size: 15px; }
+.mode-tabs { margin-top: 11px; }
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 12px;
+  margin-top: 10px;
+}
+.control-grid .control { margin-top: 0; min-width: 0; }
+.control-grid .control label { font-size: 12px; }
+.control-grid .control output { font-size: 12px; }
+.control-grid input[type="range"] { margin: 7px 0 1px; }
+
+.readout { max-width: min(620px, calc(100% - 32px)); }
+.readout table { border-collapse: collapse; width: 100%; font: inherit; }
+.readout th {
+  padding: 1px 10px 3px 0;
+  color: #5b6a80;
+  font: 700 12px -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+  text-align: left;
+  white-space: nowrap;
+}
+.readout td {
+  padding: 1px 12px 1px 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.readout td:last-child, .readout th:last-child { padding-right: 0; }
+.readout .row { white-space: normal; }
+.readout .warn { color: #b45309; font-weight: 700; }
+.readout .ok { color: #15803d; font-weight: 700; }
+.readout .a { color: #1d4ed8; }
+.readout .b { color: #64748b; }
+.readout .tip { color: #c2410c; }
+
+@media (max-width: 720px) {
+  .panel h1 { font-size: 13.5px; }
+  .mode-tabs button { font-size: 11px; padding: 5px 2px; }
+  .control-grid { gap: 5px 8px; }
+  .control-grid .control label { font-size: 10.5px; }
+  .control-grid .control output { font-size: 10.5px; }
+  .readout { font-size: 12px; line-height: 1.45; padding: 6px 8px; }
+  .readout .small { font-size: 10px; }
+  /* 窄屏下把表格摊平：每个解一行、角度与末端各占一行 */
+  .readout table { display: block; }
+  .readout thead { display: none; }
+  .readout tbody { display: block; }
+  .readout tr {
+    display: block;
+    margin-top: 3px;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .readout td { display: inline; padding: 0; font-size: 10px; }
+  .readout td:first-child { font-weight: 700; }
+  .readout td:nth-child(2)::before { content: "θ₁="; }
+  .readout td:nth-child(3)::before { content: " θ₂="; }
+  .readout td:nth-child(4)::before { content: " θ₃="; }
+  .readout td:nth-child(5) { display: block; }
+  .readout td:nth-child(5)::before { content: "末端 "; }
+}
+</style>
+</head>
+<body>
+<main class="app">
+<svg class="viewport" id="viewport" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" role="img"
+     aria-label="三连杆平面操作臂的两个逆解：同一末端位姿对应实线与虚线两个位形">
+  <defs>
+    <marker id="mAxis" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"></path>
+    </marker>
+    <marker id="mRing" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"></path>
+    </marker>
+  </defs>
+  <g id="angles"></g>
+  <g id="armA"></g>
+  <g id="armB"></g>
+  <g id="labels"></g>
+</svg>
+
+<section class="panel" aria-label="图4-2 控制面板">
+  <div class="panel-head">
+    <div>
+      <h1>图4-2 三连杆操作臂的两个解</h1>
+      <p class="subtitle">同一目标位姿 (x, y, φ) 有两组关节角：实线解与虚线解（θ₂ 取 −θ₂）。
+        两组解的末端完全重合，只有中间关节的转向相反。</p>
+    </div>
+    <button class="reset" id="reset" type="button">重置</button>
+  </div>
+
+  <div class="mode-tabs tabs">
+    <button id="modeSolid" type="button" class="is-active">实线解</button>
+    <button id="modeDashed" type="button">虚线解</button>
+    <button id="modeBoth" type="button">两解并显</button>
+  </div>
+
+  <div class="control-grid">
+    <div class="control">
+      <div class="control-head"><label for="tx">目标 x</label><output id="txValue">0.70</output></div>
+      <input id="tx" type="range" min="-1.3" max="1.3" step="0.02" value="0.7">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="ty">目标 y</label><output id="tyValue">0.40</output></div>
+      <input id="ty" type="range" min="-1.3" max="1.3" step="0.02" value="0.4">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="phi">目标姿态 φ</label><output id="phiValue">0.0°</output></div>
+      <input id="phi" type="range" min="-180" max="180" step="1" value="0">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="l1">连杆 l₁</label><output id="l1Value">1.00</output></div>
+      <input id="l1" type="range" min="0.6" max="1.2" step="0.05" value="1">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="l2">连杆 l₂</label><output id="l2Value">1.00</output></div>
+      <input id="l2" type="range" min="0.6" max="1.2" step="0.05" value="1">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="l3">连杆 l₃</label><output id="l3Value">0.40</output></div>
+      <input id="l3" type="range" min="0" max="0.6" step="0.05" value="0.4">
+    </div>
+  </div>
+
+  <div class="options">
+    <label><input id="showAngles" type="checkbox" checked>关节角弧</label>
+    <label><input id="showTarget" type="checkbox" checked>目标点</label>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#1d4ed8"></i>实线解 A（θ₂ &gt; 0）</span>
+    <span><i style="background:#94a3b8"></i>虚线解 B（θ₂′ = −θ₂）</span>
+    <span><i class="dot" style="background:#c2410c"></i>目标位姿 T</span>
+    <span><i style="background:#0e7490"></i>关节角弧（θ′ 为虚线解）</span>
+  </div>
+</section>
+
+<div class="hint">拖动平移 · 滚轮缩放 · 双击复位</div>
+
+<div class="readout" id="readout">
+  <div class="row">目标位姿 <strong>T</strong> = ( <span id="rtx">0.70</span>, <span id="rty">0.40</span> )，φ = <span id="rphi">0.0°</span>
+    <span class="small">（腕点 W = T − l₃·[cφ, sφ]）</span></div>
+  <table id="kineTable">
+    <thead><tr><th>解</th><th>θ₁</th><th>θ₂</th><th>θ₃</th><th>末端 (x, y)</th></tr></thead>
+    <tbody id="kineBody"></tbody>
+  </table>
+  <div class="row small" id="noteRow">…</div>
+</div>
+</main>
+<script>
+/*!
+ * figure-kit.js — 交互教学图公共底座
+ *
+ * 为两本机器人教材的交互图提供统一的三维投影、视图拖动/缩放、滑块与重置逻辑。
+ * 纯原生 JavaScript，无任何外部依赖，可在 iframe sandbox="allow-scripts" 下运行。
+ *
+ * 主要 API（挂在 window.FK 上）：
+ *   FK.Vec        三维向量运算（add/sub/scale/dot/cross/norm/normalize）
+ *   FK.M4         4x4 齐次变换矩阵运算（identity/multiply/rotX/rotY/rotZ/rotAxis/translate/apply/fromRT/inverse）
+ *   FK.Scene      可交互三维场景（SVG 渲染、正交投影、指针捕获、滚轮缩放、自动旋转）
+ *   FK.AdaptiveScene  按 iframe 实际尺寸自适应 viewBox 的场景（推荐使用，见下方注释）
+ *   FK.bindRanges 把 range 输入批量绑定到 state 并刷新
+ *   FK.format     数值格式化
+ *
+ * 坐标约定：右手坐标系，x 向右、y 向前（屏幕内）、z 向上。
+ * 投影：先绕 z 轴 yaw、再绕屏幕水平轴 pitch 的正交投影，可缩放。
+ */
+(function (global) {
+  "use strict";
+
+  /* ------------------------------------------------------------------ 向量 */
+
+  var Vec = {
+    add: function (a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; },
+    sub: function (a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; },
+    scale: function (a, s) { return [a[0] * s, a[1] * s, a[2] * s]; },
+    dot: function (a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; },
+    cross: function (a, b) {
+      return [
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+      ];
+    },
+    len: function (a) { return Math.sqrt(Vec.dot(a, a)); },
+    normalize: function (a) {
+      var n = Vec.len(a);
+      return n < 1e-12 ? [0, 0, 0] : Vec.scale(a, 1 / n);
+    },
+    /** 与教材一致：向量按列写成矩阵，转置后返回行向量字符串 */
+    round: function (a, digits) {
+      var d = digits === undefined ? 3 : digits;
+      var p = Math.pow(10, d);
+      return a.map(function (v) { return Math.round(v * p) / p; });
+    },
+    eq: function (a, b, eps) {
+      var e = eps === undefined ? 1e-6 : eps;
+      return Math.abs(a[0] - b[0]) < e && Math.abs(a[1] - b[1]) < e && Math.abs(a[2] - b[2]) < e;
+    },
+  };
+
+  /* ------------------------------------------------------------------ 矩阵 */
+
+  var M4 = {
+    identity: function () { return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; },
+    /** 行主序 4x4 相乘 */
+    multiply: function (a, b) {
+      var out = new Array(16);
+      for (var i = 0; i < 4; i += 1) {
+        for (var j = 0; j < 4; j += 1) {
+          var sum = 0;
+          for (var k = 0; k < 4; k += 1) sum += a[i * 4 + k] * b[k * 4 + j];
+          out[i * 4 + j] = sum;
+        }
+      }
+      return out;
+    },
+    chain: function () {
+      var out = M4.identity();
+      for (var i = 0; i < arguments.length; i += 1) out = M4.multiply(out, arguments[i]);
+      return out;
+    },
+    rotX: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1];
+    },
+    rotY: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1];
+    },
+    rotZ: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+    },
+    /** Rodrigues 轴角旋转；k 必须是单位轴（会自动归一化） */
+    rotAxis: function (axis, rad) {
+      var k = Vec.normalize(axis);
+      var c = Math.cos(rad), s = Math.sin(rad), t = 1 - c;
+      var x = k[0], y = k[1], z = k[2];
+      return [
+        t * x * x + c, t * x * y - s * z, t * x * z + s * y, 0,
+        t * x * y + s * z, t * y * y + c, t * y * z - s * x, 0,
+        t * x * z - s * y, t * y * z + s * x, t * z * z + c, 0,
+        0, 0, 0, 1,
+      ];
+    },
+    translate: function (v) {
+      return [1, 0, 0, v[0], 0, 1, 0, v[1], 0, 0, 1, v[2], 0, 0, 0, 1];
+    },
+    /** 由旋转矩阵（行主序 3x3 数组）与位移构造齐次变换 */
+    fromRT: function (r, p) {
+      return [
+        r[0], r[1], r[2], p[0],
+        r[3], r[4], r[5], p[1],
+        r[6], r[7], r[8], p[2],
+        0, 0, 0, 1,
+      ];
+    },
+    /** 变换一个点（含平移） */
+    apply: function (m, v) {
+      return [
+        m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3],
+        m[4] * v[0] + m[5] * v[1] + m[6] * v[2] + m[7],
+        m[8] * v[0] + m[9] * v[1] + m[10] * v[2] + m[11],
+      ];
+    },
+    /** 只变换方向（不含平移） */
+    applyDir: function (m, v) {
+      return [
+        m[0] * v[0] + m[1] * v[1] + m[2] * v[2],
+        m[4] * v[0] + m[5] * v[1] + m[6] * v[2],
+        m[8] * v[0] + m[9] * v[1] + m[10] * v[2],
+      ];
+    },
+    /** 齐次逆变换：R 转置，-Rᵀp（教材式 2-45 的矩阵形式） */
+    inverse: function (m) {
+      var r = [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]];
+      var rt = [r[0], r[3], r[6], r[1], r[4], r[7], r[2], r[5], r[8]];
+      var p = [m[3], m[7], m[11]];
+      var t = [
+        -(rt[0] * p[0] + rt[1] * p[1] + rt[2] * p[2]),
+        -(rt[3] * p[0] + rt[4] * p[1] + rt[5] * p[2]),
+        -(rt[6] * p[0] + rt[7] * p[1] + rt[8] * p[2]),
+      ];
+      return M4.fromRT(rt, t);
+    },
+    /** 取 3x3 旋转部分 */
+    rotation: function (m) {
+      return [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]];
+    },
+    /** 取位移部分 */
+    position: function (m) { return [m[3], m[7], m[11]]; },
+    /** X-Y-Z 固定角（先绕 X 转 γ、再绕 Y 转 β、最后绕 Z 转 α），教材式 2-63 */
+    fromFixedXYZ: function (gamma, beta, alpha) {
+      return M4.chain(M4.rotZ(alpha), M4.rotY(beta), M4.rotX(gamma));
+    },
+    /** Z-Y-X 欧拉角（每次绕运动坐标系的新轴），教材式 2-71 */
+    fromEulerZYX: function (alpha, beta, gamma) {
+      return M4.chain(M4.rotZ(alpha), M4.rotY(beta), M4.rotX(gamma));
+    },
+  };
+
+  /* ------------------------------------------------------------------ 场景 */
+
+  var NS = "http://www.w3.org/2000/svg";
+  var DEG = Math.PI / 180;
+
+  /**
+   * Scene 构造函数。
+   * @param {object} options
+   *   - svg: 承载投影图形的 SVG 元素（必填）
+   *   - origin: 投影中心在 viewBox 中的位置，默认 {x: 560, y: 360}
+   *   - scale: 每单位长度对应的像素数，默认 78
+   *   - yaw / pitch: 初始视角（弧度）
+   *   - minScale / maxScale / minPitch / maxPitch
+   *   - onRender: 每次绘制后的回调（用于同步读数）
+   *   - layer: 兼容字段；不传则使用 svg 自身作为绘图容器
+   */
+  function Scene(options) {
+    var self = this;
+    var opts = options || {};
+    this.svg = opts.svg;
+    if (!this.svg) throw new Error("FK.Scene 需要一个 svg 元素作为视图容器");
+    this.layer = opts.layer || this.svg;
+    this.defaults = {
+      yaw: opts.yaw === undefined ? -0.72 : opts.yaw,
+      pitch: opts.pitch === undefined ? 0.48 : opts.pitch,
+      scale: opts.scale === undefined ? 78 : opts.scale,
+      panX: 0,
+      panY: 0,
+    };
+    this.limits = {
+      minScale: opts.minScale === undefined ? 34 : opts.minScale,
+      maxScale: opts.maxScale === undefined ? 190 : opts.maxScale,
+      minPitch: opts.minPitch === undefined ? -1.15 : opts.minPitch,
+      maxPitch: opts.maxPitch === undefined ? 1.15 : opts.maxPitch,
+    };
+    this.origin = opts.origin || { x: 560, y: 360 };
+    this.baseOrigin = { x: this.origin.x, y: this.origin.y };
+    this.state = {
+      yaw: this.defaults.yaw,
+      pitch: this.defaults.pitch,
+      scale: this.defaults.scale,
+      dragging: false,
+      panning: false,
+      pointerId: null,
+      lastX: 0,
+      lastY: 0,
+      auto: false,
+    };
+    this.onRender = opts.onRender || null;
+    this.autoSpeed = opts.autoSpeed === undefined ? 0.0032 : opts.autoSpeed;
+    this._frame = 0;
+    this._render = null;
+    this._enableInteraction();
+  }
+
+  Scene.prototype = {
+    /** 世界坐标 -> 屏幕坐标（正交投影 + 深度值） */
+    project: function (v) {
+      var s = this.state;
+      var cy = Math.cos(s.yaw), sy = Math.sin(s.yaw);
+      var cp = Math.cos(s.pitch), sp = Math.sin(s.pitch);
+      var x1 = v[0] * cy - v[1] * sy;
+      var y1 = v[0] * sy + v[1] * cy;
+      var z1 = v[2];
+      var depth = y1 * cp - z1 * sp;
+      var vertical = y1 * sp + z1 * cp;
+      return {
+        x: this.origin.x + x1 * s.scale,
+        y: this.origin.y - vertical * s.scale,
+        depth: depth,
+      };
+    },
+    /** 变换矩阵作用后再投影，便于处理带位姿的坐标系 */
+    projectT: function (m, v) { return this.project(M4.apply(m, v)); },
+    /** 清空图层 */
+    clear: function () { while (this.layer.firstChild) this.layer.removeChild(this.layer.firstChild); },
+    /** 创建 SVG 元素 */
+    el: function (tag, attrs, parent) {
+      var node = document.createElementNS(NS, tag);
+      if (attrs) {
+        Object.keys(attrs).forEach(function (key) {
+          if (attrs[key] === null || attrs[key] === undefined) return;
+          node.setAttribute(key, attrs[key]);
+        });
+      }
+      (parent || this.layer).appendChild(node);
+      return node;
+    },
+    /** 画一条线段（世界坐标） */
+    line: function (a, b, attrs, parent) {
+      var A = this.project(a), B = this.project(b);
+      return this.el("line", Object.assign({ x1: A.x, y1: A.y, x2: B.x, y2: B.y }, attrs || {}), parent);
+    },
+    /** 画一条带箭头的线段，marker 为 marker id（不含 url()） */
+    arrow: function (a, b, cls, marker, parent) {
+      var A = this.project(a), B = this.project(b);
+      return this.el("line", {
+        x1: A.x, y1: A.y, x2: B.x, y2: B.y,
+        class: cls,
+        "marker-end": marker ? "url(#" + marker + ")" : null,
+      }, parent);
+    },
+    /** 画文字标签 */
+    text: function (v, str, attrs, dx, dy, parent) {
+      var p = this.project(v);
+      var node = this.el("text", Object.assign({
+        x: p.x + (dx || 0),
+        y: p.y + (dy || 0),
+      }, attrs || {}), parent);
+      node.textContent = str;
+      return node;
+    },
+    /** 画一条折线 */
+    polyline: function (points, attrs, parent) {
+      var d = points.map(function (p) {
+        var q = this.project(p);
+        return q.x + "," + q.y;
+      }, this).join(" ");
+      return this.el("polyline", Object.assign({ points: d, fill: "none" }, attrs || {}), parent);
+    },
+    /** 画一个实心圆点 */
+    dot: function (v, attrs, parent) {
+      var p = this.project(v);
+      return this.el("circle", Object.assign({ cx: p.x, cy: p.y, r: 6 }, attrs || {}), parent);
+    },
+    /**
+     * 绘制一个坐标系（三根轴 + 标签）。
+     * @param {number[]} m 4x4 齐次变换，定义坐标系在参考系中的位姿
+     * @param {object} cfg { labels:[x,y,z], length, colors:[c1,c2,c3], marker, parent, dash }
+     */
+    axes: function (m, cfg) {
+      var c = cfg || {};
+      var len = c.length === undefined ? 2.4 : c.length;
+      var labels = c.labels || ["X", "Y", "Z"];
+      var colors = c.colors || ["#e23a34", "#1a73e8", "#2e9e63"];
+      var dirs = [[len, 0, 0], [0, len, 0], [0, 0, len]];
+      var group = c.parent || this.layer;
+      for (var i = 0; i < 3; i += 1) {
+        var tip = M4.apply(m, dirs[i]);
+        var base = M4.apply(m, [0, 0, 0]);
+        var A = this.project(base), B = this.project(tip);
+        this.el("line", {
+          x1: A.x, y1: A.y, x2: B.x, y2: B.y,
+          stroke: colors[i],
+          "stroke-width": c.width || 3.4,
+          "stroke-dasharray": c.dash || null,
+          "marker-end": c.marker ? "url(#" + c.marker + ")" : null,
+        }, group);
+        var node = this.el("text", {
+          x: B.x + (c.dx === undefined ? 8 : c.dx),
+          y: B.y + (c.dy === undefined ? -6 : c.dy),
+          fill: colors[i],
+        }, group);
+        node.textContent = labels[i];
+      }
+      var origin = M4.apply(m, [0, 0, 0]);
+      var p = this.project(origin);
+      this.el("circle", { cx: p.x, cy: p.y, r: c.originR || 4, fill: "#2b3a52" }, group);
+      if (c.originLabel) {
+        var t = this.el("text", { x: p.x + 8, y: p.y + 16, fill: "#2b3a52" }, group);
+        t.textContent = c.originLabel;
+      }
+      return group;
+    },
+    /** 绘制地面网格（xy 平面） */
+    grid: function (half, step, attrs) {
+      var h = half === undefined ? 3 : half;
+      var s = step === undefined ? 1 : step;
+      var group = this.el("g", { class: "fk-grid" });
+      for (var i = -h; i <= h; i += s) {
+        this.line([-h, i, 0], [h, i, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
+        this.line([i, -h, 0], [i, h, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
+      }
+      return group;
+    },
+    /** 每次状态变化时调用的真实绘制函数 */
+    setRenderer: function (fn) { this._render = fn; },
+    /** 触发一次重绘 */
+    render: function () {
+      this.origin.x = this.baseOrigin.x;
+      this.origin.y = this.baseOrigin.y;
+      if (this._render) this._render(this);
+      if (this.onRender) this.onRender(this);
+    },
+    reset: function () {
+      this.state.yaw = this.defaults.yaw;
+      this.state.pitch = this.defaults.pitch;
+      this.state.scale = this.defaults.scale;
+      this.origin.x = this.baseOrigin.x;
+      this.origin.y = this.baseOrigin.y;
+    },
+    setAuto: function (on) {
+      this.state.auto = !!on;
+      if (this.state.auto && !this._frame) this._frame = requestAnimationFrame(this._tick.bind(this));
+    },
+    _tick: function () {
+      this._frame = 0;
+      if (!this.state.auto && !this.state.dragging) return;
+      this.state.yaw += this.autoSpeed;
+      this.render();
+      if (this.state.auto) this._frame = requestAnimationFrame(this._tick.bind(this));
+    },
+    _enableInteraction: function () {
+      var self = this;
+      var svg = this.svg;
+      svg.addEventListener("pointerdown", function (event) {
+        if (event.button !== 0 && event.pointerType === "mouse") return;
+        if (self.state.pointerId !== null) return;
+        event.preventDefault();
+        self.state.dragging = true;
+        self.state.pointerId = event.pointerId;
+        self.state.lastX = event.clientX;
+        self.state.lastY = event.clientY;
+        svg.classList.add("is-dragging");
+        try { svg.setPointerCapture(event.pointerId); } catch (error) { /* 忽略 */ }
+      });
+      svg.addEventListener("pointermove", function (event) {
+        if (!self.state.dragging || event.pointerId !== self.state.pointerId) return;
+        event.preventDefault();
+        var dx = event.clientX - self.state.lastX;
+        var dy = event.clientY - self.state.lastY;
+        self.state.lastX = event.clientX;
+        self.state.lastY = event.clientY;
+        // 水平拖动的直觉方向：向右拖动使模型向右转（观察者绕模型向左移动的等价效果）
+        self.state.yaw += dx * 0.008;
+        self.state.pitch = Math.max(
+          self.limits.minPitch,
+          Math.min(self.limits.maxPitch, self.state.pitch + dy * 0.007)
+        );
+        self.render();
+      });
+      function endDrag(event) {
+        if (event && self.state.pointerId !== null && event.pointerId !== self.state.pointerId) return;
+        self.state.dragging = false;
+        self.state.pointerId = null;
+        svg.classList.remove("is-dragging");
+      }
+      svg.addEventListener("pointerup", endDrag);
+      svg.addEventListener("pointercancel", endDrag);
+      svg.addEventListener("lostpointercapture", endDrag);
+      svg.addEventListener("dragstart", function (event) { event.preventDefault(); });
+      svg.addEventListener("wheel", function (event) {
+        event.preventDefault();
+        var factor = event.deltaY > 0 ? 0.92 : 1.08;
+        self.state.scale = Math.max(
+          self.limits.minScale,
+          Math.min(self.limits.maxScale, self.state.scale * factor)
+        );
+        self.render();
+      }, { passive: false });
+      // 双击复位视角
+      svg.addEventListener("dblclick", function () {
+        self.reset();
+        self.render();
+      });
+    },
+  };
+
+  /* ------------------------------------------------------------------ 自适应场景 */
+
+  /**
+   * 根据 iframe 实际像素尺寸调整 viewBox 与投影中心，避免在窄屏或矮窗口里
+   * 出现大片空白、或图形被压得过小。
+   *
+   * 做法：viewBox 直接取容器的像素宽高（1 单位 = 1 px），因此组件的字号、
+   * 半径、线宽在任何窗口里都保持同样的物理大小；图形位置由 origin 的
+   * 相对锚点决定，缩放由 scale 决定。
+   *
+   * @param {object} options
+   *   - svg / viewport：视图容器（必填）
+   *   - scale：投影缩放（宽屏），默认 78
+   *   - narrowScale：窄屏投影缩放，默认取 scale * 0.86
+   *   - narrowWidth：判定为窄屏的宽度阈值（px），默认 620
+   *   - tallRatio：高度/宽度 大于该值时视为竖屏，默认 1.15
+   *   - wide / narrow / tall：三种形态下的锚点，形如 { x: 0.55, y: 0.62 }
+   *   - design：设计基准尺寸，仅用于日志与默认锚点，默认 { width: 1000, height: 620 }
+   *   - onLayout：每次布局后回调 (scene, layout)
+   *   - 其余选项透传给 Scene
+   */
+  function AdaptiveScene(options) {
+    var opts = options || {};
+    var svg = opts.svg;
+    if (!svg) throw new Error("FK.AdaptiveScene 需要一个 svg 元素作为视图容器");
+    var wide = opts.wide || { x: 0.56, y: 0.62 };
+    var narrow = opts.narrow || { x: 0.5, y: 0.42 };
+    var tall = opts.tall || { x: 0.5, y: 0.4 };
+    var narrowWidth = opts.narrowWidth === undefined ? 620 : opts.narrowWidth;
+    var tallRatio = opts.tallRatio === undefined ? 1.15 : opts.tallRatio;
+    var baseScale = opts.scale === undefined ? 78 : opts.scale;
+    var narrowScale = opts.narrowScale === undefined ? baseScale * 0.86 : opts.narrowScale;
+
+    var sceneOptions = {};
+    Object.keys(opts).forEach(function (key) {
+      if (["wide", "narrow", "tall", "narrowWidth", "tallRatio", "scale", "narrowScale", "onLayout", "design"].indexOf(key) === -1) {
+        sceneOptions[key] = opts[key];
+      }
+    });
+    sceneOptions.scale = baseScale;
+    var scene = new Scene(sceneOptions);
+
+    function layout() {
+      var rect = svg.getBoundingClientRect();
+      var width = Math.max(320, Math.round(rect.width || 1000));
+      var height = Math.max(320, Math.round(rect.height || 620));
+      var isNarrow = width < narrowWidth;
+      var isTall = height / width > tallRatio;
+      var anchor = isNarrow ? (isTall ? tall : narrow) : wide;
+      if (isNarrow && !isTall) anchor = narrow;
+      if (isNarrow && isTall) anchor = tall;
+      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+      svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      scene.baseOrigin.x = width * anchor.x;
+      scene.baseOrigin.y = height * anchor.y;
+      scene.limits.minScale = baseScale * 0.42;
+      scene.limits.maxScale = baseScale * 2.5;
+      var previousScale = scene.state.scale;
+      var previousDefault = scene.defaults.scale;
+      var nextScale = isNarrow ? narrowScale : baseScale;
+      if (previousScale === previousDefault) {
+        scene.state.scale = nextScale;
+      } else {
+        scene.state.scale = Math.max(scene.limits.minScale, Math.min(scene.limits.maxScale, previousScale));
+      }
+      scene.defaults.scale = nextScale;
+      scene.origin.x = scene.baseOrigin.x;
+      scene.origin.y = scene.baseOrigin.y;
+      if (opts.onLayout) opts.onLayout(scene, { width: width, height: height, narrow: isNarrow, tall: isTall });
+      scene.render();
+    }
+
+    scene.fit = layout;
+    if (typeof ResizeObserver !== "undefined") {
+      var observer = new ResizeObserver(function () { layout(); });
+      observer.observe(svg);
+      scene._observer = observer;
+    } else {
+      global.addEventListener("resize", layout);
+    }
+    // 首帧布局：等一帧再测，确保 iframe 已完成布局
+    if (typeof requestAnimationFrame === "function") {
+      requestAnimationFrame(layout);
+    } else {
+      layout();
+    }
+    return scene;
+  }
+
+  /* ------------------------------------------------------------------ 工具 */
+
+  /**
+   * 把一组 range 控件绑定到 state，并统一在 input 时重绘。
+   * @param {object[]} defs 每项 { id, key, value, format, onChange }
+   * @param {object} state 目标状态对象
+   * @param {function} render 刷新函数
+   * @param {string} outputSuffix 输出元素的后缀，默认 "Value"
+   */
+  function bindRanges(defs, state, render, outputSuffix) {
+    var suffix = outputSuffix || "Value";
+    var sync = [];
+    defs.forEach(function (def) {
+      var input = document.getElementById(def.id);
+      if (!input) return;
+      var output = document.getElementById(def.id + suffix);
+      function apply() {
+        var raw = Number(input.value);
+        state[def.key] = raw;
+        if (output) {
+          output.textContent = def.format ? def.format(raw) : String(raw);
+        }
+        if (def.onChange) def.onChange(raw, state);
+        render();
+      }
+      input.value = def.value === undefined ? input.value : def.value;
+      input.addEventListener("input", apply);
+      sync.push({ input: input, output: output, def: def, apply: apply });
+      apply();
+    });
+    return {
+      /** 把 state 当前值写回控件 */
+      refresh: function () {
+        sync.forEach(function (item) {
+          var value = state[item.def.key];
+          if (value === undefined) return;
+          item.input.value = value;
+          if (item.output) {
+            item.output.textContent = item.def.format ? item.def.format(value) : String(value);
+          }
+        });
+      },
+      apply: function () { sync.forEach(function (item) { item.apply(); }); },
+    };
+  }
+
+  function bindToggles(defs, state, render) {
+    defs.forEach(function (def) {
+      var input = document.getElementById(def.id);
+      if (!input) return;
+      input.checked = !!state[def.key];
+      input.addEventListener("change", function () {
+        state[def.key] = input.checked;
+        if (def.onChange) def.onChange(input.checked, state);
+        render();
+      });
+    });
+  }
+
+  function format(value, digits) {
+    var d = digits === undefined ? 2 : digits;
+    var fixed = Number(value).toFixed(d);
+    return fixed === "-" + (0).toFixed(d) ? (0).toFixed(d) : fixed;
+  }
+
+  /** 角度的常见显示：45.0° */
+  function deg(value, digits) {
+    return format(value, digits === undefined ? 1 : digits) + "°";
+  }
+
+  global.FK = {
+    Vec: Vec,
+    M4: M4,
+    Scene: Scene,
+    AdaptiveScene: AdaptiveScene,
+    bindRanges: bindRanges,
+    bindToggles: bindToggles,
+    format: format,
+    deg: deg,
+    DEG: DEG,
+  };
+}(window));
+</script>
+<script>
+(function () {
+  var viewport = document.getElementById("viewport");
+  var L = {
+    angles: document.getElementById("angles"),
+    armA: document.getElementById("armA"),
+    armB: document.getElementById("armB"),
+    labels: document.getElementById("labels")
+  };
+
+  var BASE_SCALE = 155;
+  var scene = new FK.Scene({ svg: viewport, origin: { x: 462, y: 300 }, scale: BASE_SCALE });
+  var state = {
+    tx: 0.7, ty: 0.4, phi: 0,
+    l1: 1, l2: 1, l3: 0.4,
+    mode: "solid",
+    showAngles: true, showTarget: true
+  };
+  /* 平移/缩放在屏幕像素里做，因此与世界坐标无关 */
+  var pan = { x: 0, y: 0, dragging: false, id: null, lx: 0, ly: 0 };
+
+  /* 纯平面投影：世界 (x, y) -> 屏幕；v[2] 只用于给关节圆点排序留位 */
+  scene.project = function (v) {
+    var s = scene.state.scale;
+    return {
+      x: this.origin.x + pan.x + v[0] * s,
+      y: this.origin.y + pan.y - v[1] * s,
+      depth: v[2] || 0
+    };
+  };
+
+  var COL = {
+    link: "#1d4ed8", link2: "#3b6fe0", joint: "#1e293b",
+    alt: "#94a3b8", altJoint: "#a8b3c4",
+    t1: "#0e7490", t2: "#7c3aed", t3: "#b45309",
+    target: "#c2410c"
+  };
+
+  /* ------------------------------------------------------------ 运动学 */
+  function fk(l1, l2, l3, t1, t2, t3) {
+    var a12 = t1 + t2;
+    var a123 = a12 + t3;
+    var p0 = [0, 0];
+    var p1 = [l1 * Math.cos(t1), l1 * Math.sin(t1)];
+    var p2 = [p1[0] + l2 * Math.cos(a12), p1[1] + l2 * Math.sin(a12)];
+    var p3 = [p2[0] + l3 * Math.cos(a123), p2[1] + l3 * Math.sin(a123)];
+    return { joints: [p0, p1, p2, p3], angles: [t1, a12, a123] };
+  }
+
+  /* 逆解：先把目标点按 φ 折算到腕点，再用式(4-14)/(4-15) 解 θ1、θ2，
+     最后由式(4-28) 的 φ = θ1+θ2+θ3 解出 θ3。返回两支解（θ2 取 ±）。
+     退化情形：腕点正好落在原点（式(4-27) 的 x = y = 0）时 θ1 取任意值，
+     教材 4.4 节对此有说明，这里取 θ1 = 0 并置 degenerate 标志。 */
+  function ik(l1, l2, l3, x, y, phi) {
+    var wx = x - l3 * Math.cos(phi);
+    var wy = y - l3 * Math.sin(phi);
+    var d = wx * wx + wy * wy;
+    var c2 = (d - l1 * l1 - l2 * l2) / (2 * l1 * l2);
+    var reach = l1 + l2;
+    var rW = Math.sqrt(d);
+    if (d < 1e-18) {
+      var t2 = Math.PI;
+      return {
+        ok: true, degenerate: true, c2: -1, c2raw: -1, rW: 0, reach: reach,
+        wrist: [0, 0], branch: [
+          { name: "A", sign: 1, t1: 0, t2: t2, t3: phi - t2, tip: fk(l1, l2, l3, 0, t2, phi - t2).joints[3] },
+          { name: "B", sign: -1, t1: 0, t2: -t2, t3: phi + t2, tip: fk(l1, l2, l3, 0, -t2, phi + t2).joints[3] }
+        ]
+      };
+    }
+    if (c2 > 1 || c2 < -1) {
+      return { ok: false, degenerate: false, c2: c2, c2raw: c2, rW: rW, reach: reach, wrist: [wx, wy], branch: [] };
+    }
+    var c2c = Math.max(-1, Math.min(1, c2));
+    var beta = Math.atan2(wy, wx);
+    var cosPsi = (d + l1 * l1 - l2 * l2) / (2 * l1 * rW);
+    var psi = Math.acos(Math.max(-1, Math.min(1, cosPsi)));
+    var t2a = Math.atan2(Math.sqrt(Math.max(0, 1 - c2c * c2c)), c2c);
+    var branch = [
+      { name: "A", sign: 1, t1: beta - psi, t2: t2a },
+      { name: "B", sign: -1, t1: beta + psi, t2: -t2a }
+    ];
+    branch.forEach(function (b) {
+      b.t3 = phi - b.t1 - b.t2;
+      b.tip = fk(l1, l2, l3, b.t1, b.t2, b.t3).joints[3];
+    });
+    return {
+      ok: true, degenerate: false, c2: c2c, c2raw: c2, rW: rW, reach: reach,
+      wrist: [wx, wy], psi: psi, beta: beta, branch: branch
+    };
+  }
+
+  /* ------------------------------------------------------------- 绘图 */
+  function seg(a, b, attrs, parent) {
+    var A = scene.project(a), B = scene.project(b);
+    return scene.el("line", Object.assign({ x1: A.x, y1: A.y, x2: B.x, y2: B.y }, attrs || {}), parent);
+  }
+  function tag(v, str, attrs, dx, dy, parent) {
+    var p = scene.project(v);
+    var node = scene.el("text", Object.assign({
+      x: p.x + (dx || 0), y: p.y + (dy || 0),
+      "font-size": 14.5, "font-weight": 700, class: "fk-axis-label"
+    }, attrs || {}), parent);
+    node.textContent = str;
+    return node;
+  }
+  /* 关节角弧：从 a0 到 a1（弧度，带符号） */  function drawArc(cx, cy, r, a0, a1, color, label, lr, ldx, ldy, layer) {
+    var n = 44, pts = [], i;
+    for (i = 0; i <= n; i += 1) {
+      var a = a0 + (a1 - a0) * i / n;
+      pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a), 0]);
+    }
+    scene.polyline(pts, { stroke: color, class: "fk-arc" }, layer);
+    if (!label) return;
+    var mid = a0 + (a1 - a0) * 0.5;
+    tag([cx + lr * Math.cos(mid), cy + lr * Math.sin(mid), 0], label,
+      { fill: color, "font-size": 13.5, "text-anchor": "middle" }, ldx || 0, ldy || 4, layer);
+  }
+
+  /* 画一套位形：关节序列 + 关节圆点 + 各连杆中点标签 */
+  function drawArm(sol, sel, l1, l2, l3) {
+    var K = fk(l1, l2, l3, sel.t1, sel.t2, sel.t3);
+    var j = K.joints, i;
+    var LAYER = sel.name === "A" ? L.armA : L.armB;
+    var main = sel.name === "A";
+    var color = main ? COL.link : COL.alt;
+    var widths = [main ? 13 : 8, main ? 13 : 8, main ? 8 : 6];
+    var dashes = [main ? null : "10 8", main ? null : "10 8", main ? null : "7 6"];
+    for (i = 0; i < 3; i += 1) {
+      if (i === 2 && l3 < 1e-6) continue;
+      seg(j[i], j[i + 1], {
+        stroke: i === 2 && main ? "#60a5fa" : color,
+        "stroke-width": widths[i], "stroke-dasharray": dashes[i],
+        "stroke-linecap": "round"
+      }, LAYER);
+    }
+    for (i = 0; i < 4; i += 1) {
+      if (i === 3 && l3 < 1e-6) continue;
+      var p = scene.project(j[i]);
+      scene.el("circle", {
+        cx: p.x, cy: p.y, r: i === 0 ? 6.5 : 5.5,
+        fill: "#fff", stroke: main ? COL.joint : COL.altJoint, "stroke-width": 2.6
+      }, LAYER);
+    }
+    /* 连杆标签（l₃ 只给主解标一次） */
+    var mid1 = [(j[0][0] + j[1][0]) / 2, (j[0][1] + j[1][1]) / 2];
+    var mid2 = [(j[1][0] + j[2][0]) / 2, (j[1][1] + j[2][1]) / 2];
+    tag(mid1, "l\u2081", { fill: main ? "#1e3a8a" : "#7b8798", "font-size": 14 }, -16, -8, L.labels);
+    tag(mid2, "l\u2082", { fill: main ? "#1e3a8a" : "#7b8798", "font-size": 14 }, 12, -8, L.labels);
+    return K;
+  }
+
+  /* 画 θ1、θ2、θ3 的角弧：solid 解用实线色，dashed 解用灰色并标 ( ′ ) */
+  function drawAngles(sel, l1, l2, l3, dashed) {
+    var K = fk(l1, l2, l3, sel.t1, sel.t2, sel.t3);
+    var j = K.joints;
+    var c1 = dashed ? "#a8b3c4" : COL.t1;
+    var c2 = dashed ? "#b6a6d8" : COL.t2;
+    var c3 = dashed ? "#c9ab7f" : COL.t3;
+    var sfx = dashed ? "\u2032" : "";
+    drawArc(0, 0, Math.min(0.30, 0.30 * l1), 0, sel.t1, c1, "\u03b8\u2081" + sfx, 0.40, 0, 5, L.angles);
+    drawArc(j[1][0], j[1][1], Math.min(0.26, 0.30 * l2), sel.t1, sel.t1 + sel.t2, c2, "\u03b8\u2082" + sfx, 0.36, 0, 5, L.angles);
+    if (l3 > 1e-6) {
+      drawArc(j[2][0], j[2][1], Math.min(0.22, 0.30 * l3), sel.t1 + sel.t2, sel.t1 + sel.t2 + sel.t3, c3, "\u03b8\u2083" + sfx, 0.32, -10, -8, L.angles);
+    }
+  }
+
+  function drawBase() {
+    seg([-0.30, 0, 0], [0.30, 0, 0], { stroke: "#334155", "stroke-width": 3.4 }, L.armA);
+    for (var i = -3; i <= 3; i += 1) {
+      seg([i * 0.09 - 0.14, 0, 0], [i * 0.09 + 0.02, -0.13, 0], { stroke: "#334155", "stroke-width": 1.5 }, L.armA);
+    }
+  }
+
+  function drawAxes() {
+    seg([0, 0, 0], [0.55, 0, 0], { stroke: "#64748b", "stroke-width": 2, "marker-end": "url(#mAxis)" }, L.labels);
+    seg([0, 0, 0], [0, 0.55, 0], { stroke: "#64748b", "stroke-width": 2, "marker-end": "url(#mAxis)" }, L.labels);
+    tag([0.55, 0, 0], "X", { fill: "#64748b", "font-size": 13 }, 5, 15, L.labels);
+    tag([0, 0.55, 0], "Y", { fill: "#64748b", "font-size": 13 }, 7, -4, L.labels);
+    tag([0, 0, 0], "O", { fill: "#475569", "font-size": 14 }, -18, 18, L.labels);
+  }
+
+  function drawTarget(x, y, phi) {
+    seg([x, y, 0], [x + 0.42 * Math.cos(phi), y + 0.42 * Math.sin(phi), 0],
+      { stroke: COL.target, "stroke-width": 3, "stroke-dasharray": "7 5" }, L.labels);
+    var p = scene.project([x, y, 0]);
+    scene.el("circle", { cx: p.x, cy: p.y, r: 6.6, fill: COL.target, stroke: "#fff", "stroke-width": 2.4, class: "fk-point" }, L.labels);
+    tag([x, y, 0], "T", { fill: "#8a3a0c", "font-size": 16 }, 12, -24, L.labels);
+    tag([x, y, 0], "T = (" + FK.format(x, 2) + ", " + FK.format(y, 2) + ")\uff0c\u03c6 = " + FK.deg(degNorm(phi), 0),
+      { fill: "#8a3a0c", "font-size": 12 }, 12, 38, L.labels);
+  }
+
+  /* ------------------------------------------------------------ 读数 */
+  function degNorm(rad) {
+    var d = rad / FK.DEG;
+    d = d % 360;
+    if (d > 180) d -= 360;
+    if (d <= -180) d += 360;
+    return d;
+  }
+  function degNormNum(d) {
+    d = d % 360;
+    if (d > 180) d -= 360;
+    if (d <= -180) d += 360;
+    return d;
+  }
+
+  function kineRowsHTML(sol, sign2, label, cls) {
+    if (!sol.ok) {
+      return '<tr class="' + cls + '"><td>' + label + "</td><td>—</td><td>—</td><td>—</td></tr>";
+    }
+    var b = sol.branch[sign2 >= 0 ? 0 : 1];
+    var tip = b.tip;
+    return '<tr class="' + cls + '"><td>' + label + "</td>"
+      + "<td>" + FK.deg(degNorm(b.t1), 1) + "</td>"
+      + "<td>" + FK.deg(degNorm(b.t2), 1) + "</td>"
+      + "<td>" + FK.deg(degNorm(b.t3), 1) + "</td>"
+      + "<td>(" + FK.format(tip[0], 3) + ", " + FK.format(tip[1], 3) + ")</td></tr>";
+  }
+
+  /* ----------------------------------------------------------- 渲染 */
+  function render() {
+    var k;
+    for (k in L) { if (Object.prototype.hasOwnProperty.call(L, k)) L[k].replaceChildren(); }
+
+    var l1 = state.l1, l2 = state.l2, l3 = state.l3;
+    var x = state.tx, y = state.ty, phi = state.phi * FK.DEG;
+    var sol = ik(l1, l2, l3, x, y, phi);
+
+    drawAxes();
+    drawBase();
+
+    if (sol.ok) {
+      var showA = state.mode !== "dashed";
+      var showB = state.mode !== "solid";
+      if (showA) drawArm(sol, sol.branch[0], l1, l2, l3);
+      if (showB) drawArm(sol, sol.branch[1], l1, l2, l3);
+      if (state.showAngles) {
+        if (showA) drawAngles(sol.branch[0], l1, l2, l3, false);
+        if (showB) drawAngles(sol.branch[1], l1, l2, l3, true);
+      }
+      /* 腕点 W 与目标点 T 都是两解共用的 */
+      var w = scene.project([sol.wrist[0], sol.wrist[1], 0]);
+      scene.el("circle", { cx: w.x, cy: w.y, r: 3.6, fill: "#475569" }, L.labels);
+      tag([sol.wrist[0], sol.wrist[1], 0], "W", { fill: "#475569", "font-size": 13 }, 9, 16, L.labels);
+    }
+    if (state.showTarget) drawTarget(x, y, phi);
+
+    /* -------------------------------------------------------- 读数表 */
+    document.getElementById("kineBody").innerHTML =
+      kineRowsHTML(sol, 1, "\u5b9e\u7ebf\u89e3 A\uff08\u03b8\u2082 &gt; 0\uff09", "a")
+      + kineRowsHTML(sol, -1, "\u865a\u7ebf\u89e3 B\uff08\u03b8\u2082\u2032 = \u2212\u03b8\u2082\uff09", "b");
+
+    document.getElementById("rtx").textContent = FK.format(x, 2);
+    document.getElementById("rty").textContent = FK.format(y, 2);
+    document.getElementById("rphi").textContent = FK.deg(state.phi, 1);
+
+    var note = document.getElementById("noteRow");
+    if (!sol.ok) {
+      note.className = "row small warn";
+      note.textContent = "无解：目标点超出可达范围。c\u2082 = " + FK.format(sol.c2raw, 3)
+        + " 越界（式(4-14) 要求 −1 \u2264 c\u2082 \u2264 1），腕点距原点 "
+        + FK.format(sol.rW, 3) + " > l\u2081+l\u2082 = " + FK.format(sol.reach, 3) + "。";
+    } else if (sol.degenerate) {
+      note.className = "row small warn";
+      note.textContent = "退化情形：腕点正好落在原点（教材式(4-27) 的 x = y = 0），θ\u2081 可取任意值。"
+        + "此处取 θ\u2081 = 0，得 θ\u2082 = ±180°（两连杆折返），两组解末端仍重合于 T。";
+    } else {
+      var bA = sol.branch[0], bB = sol.branch[1];
+      var dA = Math.hypot(bA.tip[0] - x, bA.tip[1] - y);
+      var dB = Math.hypot(bB.tip[0] - x, bB.tip[1] - y);
+      var rRel = Math.abs(dA - dB) / Math.max(1e-12, Math.max(dA, dB, 1e-12));
+      note.className = "row small ok";
+      note.textContent = "两组解末端完全重合：|T_A − T_B| = " + dA.toExponential(2)
+        + "（式(4-15) 的 ± 就是图中实线/虚线两个位形）；"
+        + "\u03b8\u2082 = " + FK.deg(degNorm(bA.t2), 1) + " \u2194 " + FK.deg(degNorm(bB.t2), 1)
+        + "，\u03b8\u2081 = " + FK.deg(degNorm(bA.t1), 1) + " \u2194 " + FK.deg(degNorm(bB.t1), 1)
+        + "，两解支距 " + rRel.toExponential(1) + "。";
+      if (Math.abs(state.l3) < 1e-9) {
+        note.textContent += " 当前 l\u2083 = 0：T 即腕点（教材图4-2 的取法）。";
+      }
+    }
+  }
+
+  /* ----------------------------------------------------------- 布局 */
+  function layout() {
+    var w = viewport.clientWidth || window.innerWidth;
+    var h = viewport.clientHeight || window.innerHeight;
+    if (w / h < 1.05) {
+      viewport.setAttribute("viewBox", "0 0 420 780");
+      viewport.setAttribute("preserveAspectRatio", "xMidYMin meet");
+      scene.baseOrigin = { x: 208, y: 252 };
+      scene.state.scale = 95;
+      scene.defaults.scale = 95;
+    } else {
+      viewport.setAttribute("viewBox", "0 0 1000 620");
+      viewport.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      scene.baseOrigin = { x: 462, y: 300 };
+      scene.state.scale = BASE_SCALE;
+      scene.defaults.scale = BASE_SCALE;
+    }
+    scene.origin.x = scene.baseOrigin.x;
+    scene.origin.y = scene.baseOrigin.y;
+  }
+
+  scene.setRenderer(render);
+
+  var ranges = FK.bindRanges([
+    { id: "tx", key: "tx", value: 0.7, format: function (v) { return FK.format(v, 2); } },
+    { id: "ty", key: "ty", value: 0.4, format: function (v) { return FK.format(v, 2); } },
+    { id: "phi", key: "phi", value: 0, format: function (v) { return FK.deg(v, 1); } },
+    { id: "l1", key: "l1", value: 1, format: function (v) { return FK.format(v, 2); } },
+    { id: "l2", key: "l2", value: 1, format: function (v) { return FK.format(v, 2); } },
+    { id: "l3", key: "l3", value: 0.4, format: function (v) { return FK.format(v, 2); } }
+  ], state, render);
+
+  FK.bindToggles([
+    { id: "showAngles", key: "showAngles" },
+    { id: "showTarget", key: "showTarget" }
+  ], state, render);
+
+  function setMode(mode) {
+    state.mode = mode;
+    document.getElementById("modeSolid").classList.toggle("is-active", mode === "solid");
+    document.getElementById("modeDashed").classList.toggle("is-active", mode === "dashed");
+    document.getElementById("modeBoth").classList.toggle("is-active", mode === "both");
+    render();
+  }
+  document.getElementById("modeSolid").addEventListener("click", function () { setMode("solid"); });
+  document.getElementById("modeDashed").addEventListener("click", function () { setMode("dashed"); });
+  document.getElementById("modeBoth").addEventListener("click", function () { setMode("both"); });
+
+  document.getElementById("reset").addEventListener("click", function () {
+    state.tx = 0.7; state.ty = 0.4; state.phi = 0;
+    state.l1 = 1; state.l2 = 1; state.l3 = 0.4;
+    state.mode = "solid";
+    state.showAngles = true; state.showTarget = true;
+    document.getElementById("showAngles").checked = true;
+    document.getElementById("showTarget").checked = true;
+    document.getElementById("modeSolid").classList.add("is-active");
+    document.getElementById("modeDashed").classList.remove("is-active");
+    document.getElementById("modeBoth").classList.remove("is-active");
+    pan.x = 0; pan.y = 0;
+    ranges.refresh();
+    scene.reset();
+    layout();
+    render();
+  });
+
+  /* 拖动平移（平面图不用三维旋转） */
+  viewport.addEventListener("pointerdown", function (event) {
+    if (pan.id !== null) return;
+    pan.id = event.pointerId; pan.lx = event.clientX; pan.ly = event.clientY; pan.dragging = true;
+  });
+  viewport.addEventListener("pointermove", function (event) {
+    if (!pan.dragging || event.pointerId !== pan.id) return;
+    pan.x += event.clientX - pan.lx;
+    pan.y += event.clientY - pan.ly;
+    pan.lx = event.clientX; pan.ly = event.clientY;
+    render();
+  });
+  function endPan(event) {
+    if (event && pan.id !== null && event.pointerId !== pan.id) return;
+    pan.dragging = false; pan.id = null;
+  }
+  viewport.addEventListener("pointerup", endPan);
+  viewport.addEventListener("pointercancel", endPan);
+  viewport.addEventListener("lostpointercapture", endPan);
+  viewport.addEventListener("dblclick", function () { pan.x = 0; pan.y = 0; render(); });
+  window.addEventListener("resize", function () { layout(); render(); });
+
+  /* --------------------------------------------------------- 数值自检 */
+  (function selfTest() {
+    var EPS = 1e-9;
+    var L1 = 1, L2 = 1, L3 = 0.4;
+
+    /* 自检1：默认目标 (0.7, 0.4)、φ = 0° 时，两组解的末端位置必须完全一致（< 1e-9）。
+       教材式(4-15) 的 ± 就是这两个位形；末端位置与姿态都应重合。 */
+    var s0 = ik(L1, L2, L3, 0.7, 0.4, 0);
+    if (!s0.ok) throw new Error("默认目标 (0.7,0.4) 应在可达范围内");
+    var A = s0.branch[0], B = s0.branch[1];
+    var dp = Math.hypot(A.tip[0] - B.tip[0], A.tip[1] - B.tip[1]);
+    if (!(dp < EPS)) throw new Error("两解末端位置误差应 < 1e-9，实得 " + dp);
+    if (Math.abs(A.t1 + A.t2 + A.t3 - B.t1 - B.t2 - B.t3) > EPS) {
+      throw new Error("两解末端姿态应相同（θ1+θ2+θ3 = φ）");
+    }
+    /* 两组解各自的 FK 都必须命中目标点 */
+    [A, B].forEach(function (b, i) {
+      var K = fk(L1, L2, L3, b.t1, b.t2, b.t3);
+      if (Math.hypot(K.joints[3][0] - 0.7, K.joints[3][1] - 0.4) > EPS) {
+        throw new Error("解 " + i + " 的 FK 未命中目标点");
+      }
+    });
+    /* θ2 取相反符号（教材提醒：虚线解是 θ2 取 −θ2） */
+    if (Math.abs(A.t2 + B.t2) > EPS) throw new Error("两解的 θ2 应互为相反数");
+    /* 解析值对照：c2 = (x²+y²−l1²−l2²)/(2l1l2)（式(4-14)） */
+    var c2 = (0.7 * 0.7 + 0.4 * 0.4 - L1 * L1 - L2 * L2) / (2 * L1 * L2);
+    if (Math.abs(Math.cos(A.t2) - c2) > EPS) throw new Error("θ2 的余弦应等于式(4-14) 的 c2");
+
+    /* 自检2：边界与越界。r = l1+l2 时 c2 = 1、两组解退化为同一位形；r > l1+l2 应判无解。 */
+    var sEdge = ik(L1, L2, 0, 2, 0, 0);
+    if (!sEdge.ok || Math.abs(sEdge.c2 - 1) > EPS) throw new Error("边界 r = l1+l2 时应有唯一解 c2 = 1");
+    if (Math.abs(sEdge.branch[0].t2) > 1e-9) throw new Error("边界上 θ2 应为 0");
+    var sOut = ik(L1, L2, 0, 2.05, 0, 0);
+    if (sOut.ok) throw new Error("r > l1+l2 时应显示无解");
+    if (!(sOut.c2raw > 1)) throw new Error("越界时 c2 必须大于 1");
+    /* 目标超远（滑块极限 ±1.3, ±1.3，l3 = 0 时 r ≈ 1.84 < 2）也应被正确判定 */
+    var sFar = ik(L1, L2, 0, 1.3, 1.3, 0);
+    if (sFar.ok) throw new Error("(1.3,1.3) 相对 l1+l2 = 2 应无解");
+    if (!(sFar.rW > L1 + L2)) throw new Error("无解判据应为 r > l1+l2");
+
+    /* 自检3：随机目标（可达范围内）扫一遍，两解末端位置误差恒 < 1e-9 */
+    var k, t, x, y;
+    for (k = 0; k < 240; k += 1) {
+      t = k * 0.1309;
+      var rr = 0.35 + 1.25 * ((k % 17) / 16);
+      x = rr * Math.cos(t);
+      y = rr * Math.sin(t);
+      var s = ik(L1, L2, L3, x, y, (k * 7) % 360 * FK.DEG - Math.PI);
+      if (!s.ok) continue;
+      var e = Math.hypot(s.branch[0].tip[0] - s.branch[1].tip[0], s.branch[0].tip[1] - s.branch[1].tip[1]);
+      if (!(e < EPS)) throw new Error("扫掠自检失败 @" + k + "，误差 " + e);
+      var K1 = fk(L1, L2, L3, s.branch[0].t1, s.branch[0].t2, s.branch[0].t3);
+      if (Math.hypot(K1.joints[3][0] - x, K1.joints[3][1] - y) > 1e-9) {
+        throw new Error("扫掠 FK 自检失败 @" + k);
+      }
+    }
+
+    /* 自检4：l3 = 0 时目标点即腕点，逆解与教材式(4-14)–(4-16) 的取法一致 */
+    var s2 = ik(L1, L2, 0, 0.7, 0.4, 0.6);
+    if (!s2.ok) throw new Error("l3 = 0 时 (0.7,0.4) 应有解");
+    if (Math.hypot(s2.wrist[0] - 0.7, s2.wrist[1] - 0.4) > EPS) throw new Error("l3 = 0 时腕点应等于目标点");
+    if (Math.abs(s2.branch[0].t3 - 0.6) > EPS) throw new Error("l3 = 0 时 θ3 应等于 φ − θ1 − θ2");
+
+    /* 自检5：退化情形（腕点落在原点，式(4-27) 的 x = y = 0）不得产生 NaN，
+       两组解仍要重合，θ2 = ±180° */
+    var sDeg = ik(0.6, 0.6, 0, 0, 0, 0);
+    if (!sDeg.ok || !sDeg.degenerate) throw new Error("腕点在原点应判为退化情形且有解");
+    if (!isFinite(sDeg.c2raw) || !isFinite(sDeg.branch[0].t2) || !isFinite(sDeg.branch[1].t2)) {
+      throw new Error("退化情形的角度/余弦不得为 NaN");
+    }
+    if (Math.abs(Math.abs(sDeg.branch[0].t2) - Math.PI) > EPS) throw new Error("退化情形 θ2 应为 ±180°");
+    if (Math.hypot(sDeg.branch[0].tip[0] - sDeg.branch[1].tip[0],
+                   sDeg.branch[0].tip[1] - sDeg.branch[1].tip[1]) > EPS) {
+      throw new Error("退化情形两组解末端应重合");
+    }
+  }());
+
+  layout();
+  render();
+}());
+</script>
+</body>
+</html>

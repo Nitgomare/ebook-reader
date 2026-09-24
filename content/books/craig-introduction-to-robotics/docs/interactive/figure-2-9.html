@@ -910,7 +910,7 @@ input[type="range"]::-moz-range-thumb {
   // 响应式取景：视口窄时缩小 viewBox，让刻度文字不被等比压得太小
   var LAYOUTS = [
     { max: 720, view: [700, 470], origin: { x: 348, y: 194 }, scale: 46 },
-    { max: 1e9, view: [1000, 620], origin: { x: 556, y: 352 }, scale: 66 }
+    { max: 1e9, view: [1000, 620], origin: { x: 560, y: 330 }, scale: 50 }
   ];
   function layout() {
     var w = viewport.clientWidth || 1200;
@@ -961,7 +961,7 @@ input[type="range"]::-moz-range-thumb {
         x: b.x + cfg.dx[i], y: b.y + cfg.dy[i], fill: cfg.colors[i],
         "font-size": 16.5, "font-style": "italic", class: "fk-axis-label"
       }, layer);
-      label.textContent = cfg.labelTexts ? cfg.labelTexts[i] : ["X\u0302", "Y\u0302", "Z\u0302"][i];
+      label.textContent = cfg.labelTexts ? cfg.labelTexts[i] : (cfg.labels ? cfg.labels[i] : ["X\u0302", "Y\u0302", "Z\u0302"][i]);
     }
     var o = scene.project(origin);
     scene.el("circle", { cx: o.x, cy: o.y, r: 4.4, fill: "#334155" }, layer);

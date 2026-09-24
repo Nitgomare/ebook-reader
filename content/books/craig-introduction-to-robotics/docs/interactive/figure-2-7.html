@@ -213,6 +213,30 @@ input[type="range"]::-moz-range-thumb {
   .readout { font-size: 12px; line-height: 1.45; padding: 6px 8px; }
   .readout .small { font-size: 10.5px; }
 }
+
+/* 移动端收尾：确保 390px 宽下不出现横向溢出、面板与读数都收在视口内 */
+html, body { overflow-x: hidden; }
+.app { max-width: 100vw; }
+@media (max-width: 720px) {
+  .panel { overflow-x: hidden; }
+  .panel h1 { font-size: 13.5px; }
+  .legend { font-size: 10px; gap: 3px 7px; }
+  .legend span { white-space: nowrap; }
+  .options-grid label { font-size: 10px; }
+  .readout { max-width: calc(100% - 16px); overflow-wrap: anywhere; }
+}
+
+/* 移动端硬性约束：任何块都不得超出 390px 视口 */
+@media (max-width: 720px) {
+  .readout {
+    max-width: calc(100vw - 16px) !important;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+  .readout .row { white-space: normal !important; }
+  .panel { max-width: calc(100vw - 16px) !important; }
+  .matrix { max-width: calc(100vw - 16px) !important; }
+}
 </style>
 </head>
 <body>

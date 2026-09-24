@@ -162,6 +162,96 @@
       "number": "图4.1",
       "title": "图4.1 二自由度平面关节型机器人简图",
       "caption": "图 4.1 二自由度平面关节型机器人简图"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/59_400_1287_835_624_0.jpg",
+      "figure_id": "figure-3-2",
+      "number": "图3-2",
+      "title": "图3-2 连杆长度 a 与连杆转角 α",
+      "caption": "图3-2 一个连杆的运动参数是由连杆两端关节轴的相对关系决定的, 可以用两个参数描述这种关系:连杆的长度 $\\alpha$ 和连杆转角 $\\alpha$"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/64_423_847_782_587_0.jpg",
+      "figure_id": "figure-3-6",
+      "number": "图3-6",
+      "title": "图3-6 一个三连杆平面操作臂",
+      "caption": "图3-6 一个三连杆平面操作臂，图(b)中用简图表示这个操作臂，各轴上标记的斜线表示它们相互平行"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/65_406_1286_828_393_0.jpg",
+      "figure_id": "figure-3-9",
+      "number": "图3-9",
+      "title": "图3-9 包含一个移动关节的三自由度操作臂",
+      "caption": "图3-9 包含一个移动关节的三自由度操作臂"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/04/index.md",
+      "image": "../../images/89_1065_1385_353_259_0.jpg",
+      "figure_id": "figure-4-2",
+      "number": "图4-2",
+      "title": "图4-2 三连杆操作臂的两个解",
+      "caption": "图4-2 三连杆操作臂, 虚线代表第二个解"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/04/index.md",
+      "image": "../../images/96_986_752_466_393_0.jpg",
+      "figure_id": "figure-4-8",
+      "number": "图4-8",
+      "title": "图4-8 平面三连杆机器人的平面几何关系",
+      "caption": "图4-8 平面三连杆机器人的平面几何关系"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/01/index.md",
+      "image": "../../images/5bcb000c0f76afc727206b3de9b3e3437f525661060f022604dace0e032e7f4d.jpg",
+      "figure_id": "figure-1-8",
+      "number": "图1.8",
+      "title": "图1.8 球坐标型机器人",
+      "caption": "图 1.8 球坐标型机器人"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/01/index.md",
+      "image": "../../images/fea6f772b1be426b6c3c48e7dd3f6bcfb5c99cc3c3a9aec7da8a8efcc8d20547.jpg",
+      "figure_id": "figure-1-14",
+      "number": "图1.14",
+      "title": "图1.14 A4020 型 SCARA 机器人的工作范围",
+      "caption": "图1.14 A4020型SCARA 机器人的工作范围"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/01/index.md",
+      "image": "../../images/4fe7e2fb228edd41e5a825f0ddd29242289dd3d5d43bf2d8617957151f1bc72a.jpg",
+      "figure_id": "figure-t1-7",
+      "number": "题1.7",
+      "title": "题1.7 二自由度平面关节型机器人机械手可达工作空间",
+      "caption": "题1.7图"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/0e17b5953c4a898740a9dd8834d47de5f4156d5f38483985e46ce43e0bdd142d.jpg",
+      "figure_id": "figure-3-15",
+      "number": "图3.15",
+      "title": "图3.15 机器人坐标系的分配",
+      "caption": "图3.15 机器人坐标系的分配"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/4d92a7546985e30ba2890ba5f50acf38f6f17a2e578a252be97c5be568ec35dd.jpg",
+      "figure_id": "figure-3-17",
+      "number": "图3.17",
+      "title": "图3.17 棱柱联轴器连杆 D-H 坐标系建立示意图",
+      "caption": "图 3.17 棱柱联轴器连杆 D-H 坐标系建立示意图"
     }
   ]
 }

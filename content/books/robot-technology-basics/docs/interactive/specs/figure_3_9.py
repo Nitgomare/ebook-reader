@@ -284,7 +284,7 @@ SCRIPT = r"""
       scene.polyline(rotPts, {
         stroke: COLORS.axisZ, "stroke-width": 2, "stroke-dasharray": "5 4", "fill": "none"
       }, axesLayer);
-      label([0, 0, 2.95], "转动轴 Z（右手法则）", { fill: COLORS.axisZ, "font-size": 14 }, 9, -8, axesLayer);
+      label([0, 0, 1.85], "转动轴 Z", { fill: COLORS.axisZ, "font-size": 14 }, -76, 4, axesLayer);
     }
 
     // 半径 OA、OA′

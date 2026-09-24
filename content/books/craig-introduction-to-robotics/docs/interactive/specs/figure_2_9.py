@@ -211,7 +211,7 @@ SCRIPT = r"""
         x: b.x + cfg.dx[i], y: b.y + cfg.dy[i], fill: cfg.colors[i],
         "font-size": 16.5, "font-style": "italic", class: "fk-axis-label"
       }, layer);
-      label.textContent = cfg.labelTexts ? cfg.labelTexts[i] : ["X\u0302", "Y\u0302", "Z\u0302"][i];
+      label.textContent = cfg.labelTexts ? cfg.labelTexts[i] : (cfg.labels ? cfg.labels[i] : ["X\u0302", "Y\u0302", "Z\u0302"][i]);
     }
     var o = scene.project(origin);
     scene.el("circle", { cx: o.x, cy: o.y, r: 4.4, fill: "#334155" }, layer);

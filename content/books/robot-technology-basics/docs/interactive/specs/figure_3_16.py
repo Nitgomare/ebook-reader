@@ -58,9 +58,11 @@ CSS = COMMON_CSS + """
   .mtable { margin: 2px 0 2px 0; }
   .mtable td { padding: 0 3px; font: 11px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; }
   .mat-caption { font-size: 10.5px; max-width: none; }
+  .mat-inline { display: block; }
   .panel .control { margin-top: 7px; }
   .panel .subtitle { display: none; }
   .panel .legend { margin-top: 7px; padding-top: 7px; }
+  [data-mobile-hide] { display: none !important; }
   .hint { display: none; }
 }
 """
@@ -151,7 +153,7 @@ BODY = """
     <strong>d<sub>i</sub></strong> = <span id="dOut">0.900</span>　
     <strong>θ<sub>i</sub></strong> = <span id="thetaOut">30.0°</span>
   </div>
-  <div class="row small" style="white-space:normal">连杆变换（教材 3.3.2 四步：绕 Z 转 θ<sub>i</sub> → 沿 Z 移 d<sub>i</sub> → 沿 X 移 a<sub>i−1</sub> → 绕 X 转 α<sub>i−1</sub>）：</div>
+  <div class="row small" style="white-space:normal">连杆变换（教材 3.3.2 四步，式(3.20)）：<br>绕 Z 转 θ<sub>i</sub> → 沿 Z 移 d<sub>i</sub> → 沿 X 移 a<sub>i−1</sub> → 绕 X 转 α<sub>i−1</sub></div>
   <div class="row" style="white-space:normal"><div class="mat-inline">
     <table class="mtable" aria-label="连杆变换矩阵">
       <tr><td class="theta" id="t-0-0">0.866</td><td class="alpha" id="t-0-1">−0.453</td><td class="alpha" id="t-0-2">0.211</td><td class="len" id="t-0-3">1.386</td></tr>
@@ -208,13 +210,13 @@ SCRIPT = r"""
 
   function applyLayout() {
     var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    scene.baseOrigin.x = narrow ? 450 : 410;
-    scene.baseOrigin.y = narrow ? 340 : 330;
+    scene.baseOrigin.x = narrow ? 452 : 410;
+    scene.baseOrigin.y = narrow ? 306 : 330;
   }
 
   function applyInitialZoom() {
     var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    var target = narrow ? 44 : 76;
+    var target = narrow ? 62 : 76;
     scene.state.scale = target;
     scene.defaults.scale = target;
   }
@@ -277,7 +279,7 @@ SCRIPT = r"""
   }
 
   /** 绕 axis 从 from 方向转到 to 方向画圆弧（带符号角，用于扭角 α）*/
-  function drawAngleArc(center, from, to, axis, radius, color, label, labelPush) {
+  function drawAngleArc(center, from, to, axis, radius, color, label, labelPush, labelDx, labelDy) {
     var a0 = FK.Vec.normalize(from);
     var a1 = FK.Vec.normalize(to);
     var av = FK.Vec.normalize(axis);
@@ -296,7 +298,8 @@ SCRIPT = r"""
     }, dimLayer);
     var midDir = FK.Vec.add(FK.Vec.scale(a0, Math.cos(total / 2)), FK.Vec.scale(perp, Math.sin(total / 2)));
     tag(FK.Vec.add(center, FK.Vec.scale(midDir, radius * (labelPush || 1.7))), label,
-      { fill: color, "font-size": 16, class: "fk-axis-label" }, -10, 6, dimLayer);
+      { fill: color, "font-size": 16, class: "fk-axis-label" },
+      labelDx === undefined ? -10 : labelDx, labelDy === undefined ? 6 : labelDy, dimLayer);
   }
 
   /* ------------------------------------------------------------------ 渲染 */
@@ -336,7 +339,7 @@ SCRIPT = r"""
       stroke: C.prev, "stroke-width": 3.4, "marker-end": "url(#arrowPrev)"
     }, jointLayer);
     tag([0, 0, zTop], "关节轴 i\u22121（Z" + "i\u22121" + "）",
-      { fill: C.prev, "font-size": 15, class: "fk-axis-label" }, -172, -4, jointLayer);
+      { fill: C.prev, "font-size": 15, class: "fk-axis-label" }, -92, -4, jointLayer);
 
     /* --- 关节轴 i（= Z_i），过 O_i，方向 Zi ------------------------- */
     var lo = FK.Vec.add(Oi, FK.Vec.scale(Zi, -1.0));
@@ -363,7 +366,7 @@ SCRIPT = r"""
         stroke: C.a, "stroke-width": 2, "stroke-dasharray": "5 4", "marker-end": "url(#arrowCross)"
       }, dimLayer);
       tag(FK.Vec.scale(crossDir, 0.5), "Z\u0302" + "i\u22121" + " \u00d7 Z\u0302" + "i" + " \u221d X\u0302" + "i",
-        { fill: "#8a4a08", "font-size": 12.5 }, -20, 26, dimLayer);
+        { fill: "#8a4a08", "font-size": 12.5, "data-mobile-hide": "1" }, -20, 58, dimLayer);
     }
 
     /* --- 沿 Z_{i-1} 的偏距 d_i -------------------------------------- */
@@ -389,8 +392,8 @@ SCRIPT = r"""
           stroke: C.ref, "stroke-width": 1.6, "stroke-dasharray": "4 4"
         }, dimLayer);
         tag(FK.Vec.add(Oi, FK.Vec.scale(ZAX, 0.85)), "\u2225 Z" + "i\u22121",
-          { fill: C.ref, "font-size": 12.5 }, -62, 12, dimLayer);
-        drawAngleArc(Oi, ZAX, Zi, Xi, 0.6, C.next, "\u03b1" + "i\u22121", 2.35);
+          { fill: C.ref, "font-size": 12.5, "data-mobile-hide": "1" }, -62, 12, dimLayer);
+        drawAngleArc(Oi, ZAX, Zi, Xi, 0.6, C.next, "\u03b1" + "i\u22121", 2.35, -68, 4);
       }
     }
 
@@ -409,12 +412,12 @@ SCRIPT = r"""
       tag(FK.Vec.add(foot, [0.42 * 2.0 * Math.cos(midT), 0.42 * 2.0 * Math.sin(midT), 0]),
         "\u03b8" + "i",
         { fill: "#174ea6", "font-size": 17, "font-style": "italic", class: "fk-axis-label" },
-        -8, 26, dimLayer);
+        -70, 34, dimLayer);
       seg(foot, FK.Vec.add(foot, [0.58, 0, 0]), {
         stroke: "#8fb0ea", "stroke-width": 1.4, "stroke-dasharray": "4 4"
       }, dimLayer);
       tag(FK.Vec.add(foot, [0.58, 0, 0]), "\u2225 X" + "i\u22121",
-        { fill: "#5b6a80", "font-size": 12.5 }, -46, -6, dimLayer);
+        { fill: "#5b6a80", "font-size": 12.5, "data-mobile-hide": "1" }, -46, -6, dimLayer);
     }
 
     /* --- 两个连杆坐标系（只画 X / Y；Z 就是关节轴） ------------------ */

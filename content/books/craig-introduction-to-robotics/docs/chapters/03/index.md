@@ -25,9 +25,19 @@
 
 三维空间中的任意两个轴之间的距离均为一个确定值, 两个轴之间的距离即为两轴之间公垂线的长度。两轴之间的公垂线总是存在的, 当两轴不平行时, 两轴之间的公垂线只有一条。当两关节轴平行时,则存在无数条长度相等的公垂线。在图3-2中,关节轴 $i - 1$ 和关节轴 $i$ 之间公垂线的长度为 ${a}_{i - 1},{a}_{i - 1}$ 即为连杆长度。也可以用另一种方法来描述连杆参数 ${a}_{i - 1}$ ,以关节轴 $i - 1$ 为轴线作一个圆柱,并且把该圆柱的半径向外扩大,直到该圆柱与关节轴 $i$ 相交时, 这时圆柱的半径即等于 ${a}_{i - 1}$ 。
 
-![59_400_1287_835_624_0.jpg](../../images/59_400_1287_835_624_0.jpg)
-
-图3-2 一个连杆的运动参数是由连杆两端关节轴的相对关系决定的, 可以用两个参数描述这种关系:连杆的长度 $\alpha$ 和连杆转角 $\alpha$
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-2.html" data-interactive-title="图3-2 连杆长度 a 与连杆转角 α">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-2显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/59_400_1287_835_624_0.jpg" alt="图3-2 连杆长度 a 与连杆转角 α">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图3-2 连杆长度 a 与连杆转角 α（原图与交互示例）</p>
 
 ---
 
@@ -159,9 +169,19 @@ ${\theta }_{i} =$ 绕 ${\widehat{Z}}_{i}$ 轴,从 ${\widehat{X}}_{i - 1}$ 旋转
 
 图3-6(a)所示为一个平面三杆操作臂。因为三个关节均为转动关节，因此有时称该操作臂为RRR (或3R) 机构。图3-6(b)为该操作臂的简图。注意在三个关节轴上均标有双斜线，表示这些关节轴线平行。在此机构上建立连杆坐标系并写出Denavit-Hartenberg参数。
 
-![64_423_847_782_587_0.jpg](../../images/64_423_847_782_587_0.jpg)
-
-图3-6 一个三连杆平面操作臂，图(b)中用简图表示这个操作臂，各轴上标记的斜线表示它们相互平行
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-6.html" data-interactive-title="图3-6 一个三连杆平面操作臂">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-6显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/64_423_847_782_587_0.jpg" alt="图3-6 一个三连杆平面操作臂">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图3-6 一个三连杆平面操作臂（原图与交互示例）</p>
 
 ![64_1102_1549_393_522_0.jpg](../../images/64_1102_1549_393_522_0.jpg)
 
@@ -183,9 +203,19 @@ ${\theta }_{i} =$ 绕 ${\widehat{Z}}_{i}$ 轴,从 ${\widehat{X}}_{i - 1}$ 旋转
 
 图3-9(a)所示为一个三自由度机器人, 其中包括一个移动关节。该操作臂称为 “RPR型机构” (一种定义关节类型和顺序的表示方法)。它是一种 “柱坐标” 机器人, 俯视时前两个关节可看作是极坐标形式, 最后一个关节 (关节3) 可提供机械手的转动。图3-9(b)为该操作臂的简图。注意表示移动关节的符号, 还要注意 “点” 表示两个相邻关节轴的交点。实际上关节轴1与关节轴2是相互垂直的。
 
-![65_406_1286_828_393_0.jpg](../../images/65_406_1286_828_393_0.jpg)
-
-图3-9 包含一个移动关节的三自由度操作臂
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-9.html" data-interactive-title="图3-9 包含一个移动关节的三自由度操作臂">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-9显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/65_406_1286_828_393_0.jpg" alt="图3-9 包含一个移动关节的三自由度操作臂">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图3-9 包含一个移动关节的三自由度操作臂（原图与交互示例）</p>
 
 ![65_394_1758_875_337_0.jpg](../../images/65_394_1758_875_337_0.jpg)
 
