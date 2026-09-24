@@ -886,9 +886,20 @@ $$
 
 符号 ${R}_{x}\left( {30.0}\right)$ 表示绕一个给定轴 $\widehat{X}$ 旋转 30 度的方位。这是一个等效轴角坐标表示法的例子。如果轴的方向是一般方向 (而不是主轴方向), 任何方位都可通过选择适当的轴和角度来得到。坐标系 $\{ B\}$ 的表达如下:
 
-![45_1003_1020_480_520_0.jpg](../../images/45_1003_1020_480_520_0.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-19.html" data-interactive-title="图2-19 等效轴角坐标系表示法">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-19显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/45_1003_1020_480_520_0.jpg" alt="等效轴角坐标系表示法原图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图2-19 等效轴角坐标系表示法
+<p class="figure-caption">图2-19 等效轴角坐标系表示法（原图与交互示例）</p>
 
 首先将坐标系 $\{ B\}$ 和一个已知参考坐标系 $\{ A\}$ 重合。 将 $\{ B\}$ 绕矢量 ${}^{A}\widehat{K}$ 按右手定则旋转 $\theta$ 角。
 

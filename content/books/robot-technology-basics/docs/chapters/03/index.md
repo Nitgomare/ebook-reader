@@ -296,12 +296,22 @@ $$
 
 图 3.10 所示为点 A 绕任意过原点的单位矢量 k 旋转 $\theta$ 角的情况。 $k_{X}$ 、 $k_{Y}$ 、 $k_{Z}$ 分别为 k 矢量在固定参考系坐标轴 X、Y、Z 上的三个分量，且 $k_{X}^{2} + k_{Y}^{2} + k_{Z}^{2} = 1$ 。 
 
-![](../../images/59e5512bf858cbfa5d8757a3d0bf6dbd5c954747cf69c15ab9c161913fe50358.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-10.html" data-interactive-title="图3.10 点绕任意轴的一般旋转变换">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3.10显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/59e5512bf858cbfa5d8757a3d0bf6dbd5c954747cf69c15ab9c161913fe50358.jpg" alt="点A绕任意轴k旋转到A撇的原图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
+<p class="figure-caption">图 3.10 一般旋转变换（原图与交互示例）</p>
 
 可以证得,绕任意过原点的单位矢量 k 旋转 $\theta$ 角的旋转算子为 
-
-图 3.10 一般旋转变换 
 
 $$
 \operatorname{Rot} (\boldsymbol {k}, \theta) = \left[ \begin{array}{c c c c} k _ {X} k _ {X} \text {vers} \theta + \mathrm{c} \theta & k _ {Y} k _ {X} \text {vers} \theta - k _ {Z} \mathrm{s} \theta & k _ {Z} k _ {X} \text {vers} \theta + k _ {Y} \mathrm{s} \theta & 0 \\ k _ {X} k _ {Y} \text {vers} \theta + k _ {Z} \mathrm{s} \theta & k _ {Y} k _ {Y} \text {vers} \theta + \mathrm{c} \theta & k _ {Z} k _ {Y} \text {vers} \theta - k _ {X} \mathrm{s} \theta & 0 \\ k _ {X} k _ {Z} \text {vers} \theta - k _ {Y} \mathrm{s} \theta & k _ {Y} k _ {Z} \text {vers} \theta + k _ {X} \mathrm{s} \theta & k _ {Z} k _ {Z} \text {vers} \theta + \mathrm{c} \theta & 0 \\ 0 & 0 & 0 & 1 \end{array} \right]\tag{3.15}
