@@ -243,6 +243,17 @@
       "type": "reference"
     },
     {
+      "slug": "robot-technology-basics",
+      "title": "机器人技术基础（第三版）",
+      "author": "刘极峰、杨小兰 主编",
+      "description": "系统介绍机器人本体结构、运动学、动力学、轨迹规划、控制系统、语言与编程，并延伸至工业机器人、操纵型机器人、仿生机器人和课程实验。",
+      "coverSource": "images/ebeb712d75c5336091846e2289b18c069534d7f77e66f49365ee16d2eafafffb.jpg",
+      "tags": ["机器人技术", "运动学与动力学", "工业机器人"],
+      "category": "robotics",
+      "order": 35,
+      "type": "reference"
+    },
+    {
       "slug": "ros-robotics-practice",
       "title": "ROS 机器人编程与机器人学导论实战",
       "author": "机器人学与 ROS 融合学习资料",

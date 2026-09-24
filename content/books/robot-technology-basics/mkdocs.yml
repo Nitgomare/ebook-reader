@@ -1,0 +1,15 @@
+site_name: "机器人技术基础（第三版）"
+docs_dir: docs
+nav:
+  - "前置内容": 00-front-matter/index.md
+  - "第1章 绪论": chapters/01/index.md
+  - "第2章 机器人本体结构": chapters/02/index.md
+  - "第3章 机器人运动学": chapters/03/index.md
+  - "第4章 机器人动力学": chapters/04/index.md
+  - "第5章 机器人轨迹规划": chapters/05/index.md
+  - "第6章 机器人控制系统": chapters/06/index.md
+  - "第7章 机器人语言与编程": chapters/07/index.md
+  - "第8章 工业机器人": chapters/08/index.md
+  - "第9章 操纵型机器人": chapters/09/index.md
+  - "第10章 仿生机器人": chapters/10/index.md
+  - "附录与参考资料": appendices/index.md
