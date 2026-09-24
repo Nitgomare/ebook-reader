@@ -241,9 +241,19 @@ $$
 {}^{i - 1}P = {}^{i - 1}{T}_{Q}^{R}{T}_{P}^{Q}{T}^{P}{T}^{i}P \tag{3-1}
 $$
 
-![68_402_548_881_622_0.jpg](../../images/68_402_548_881_622_0.jpg)
-
-图3-15 中间坐标系 $\{ P\} ,\{ Q\}$ 和 $\{ R\}$ 的位置
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-15.html" data-interactive-title="图3-15 中间坐标系{P}{Q}{R}的位置">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-15显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/68_402_548_881_622_0.jpg" alt="图3-15 中间坐标系{P}{Q}{R}的位置">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图3-15 中间坐标系{P}{Q}{R}的位置（原图与交互示例）</p>
 
 即
 
@@ -349,9 +359,19 @@ Unimation PUMA560 (图3-17) 是一个六自由度机器人, 所有关节均为�
 
 ---
 
-![72_315_254_363_680_0.jpg](../../images/72_315_254_363_680_0.jpg)
-
-图3-20 一个3R腕部机构简图, 三个轴相互垂直并相交于一点, 这种设计用于PUMA560 和许多工业机器人中
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-20.html" data-interactive-title="图3-20 一个3R腕部机构简图">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-20显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/72_315_254_363_680_0.jpg" alt="图3-20 一个3R腕部机构简图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图3-20 一个3R腕部机构简图（原图与交互示例）</p>
 
 <table><tr><td>$i$</td><td>${\alpha }_{i} - 1$</td><td>${a}_{i} - 1$</td><td>${d}_{i}$</td><td>${\theta }_{i}$</td></tr><tr><td>1</td><td>0</td><td>0</td><td>0</td><td>${\theta }_{1}$</td></tr><tr><td>2</td><td>$- {90}^{ \circ  }$</td><td>0</td><td>0</td><td>${\theta }_{2}$</td></tr><tr><td>3</td><td>0</td><td>${a}_{2}$</td><td>${d}_{3}$</td><td>${\theta }_{3}$</td></tr><tr><td>4</td><td>$- {90}^{ \circ  }$</td><td>${a}_{3}$</td><td>${d}_{4}$</td><td>${\theta }_{4}$</td></tr><tr><td>5</td><td>90°</td><td>0</td><td>0</td><td>${\theta }_{5}$</td></tr><tr><td>6</td><td>$- {90}^{ \circ  }$</td><td>0</td><td>0</td><td>${\theta }_{6}$</td></tr></table>
 

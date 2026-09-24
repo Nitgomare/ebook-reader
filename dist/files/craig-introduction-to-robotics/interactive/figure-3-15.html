@@ -1,0 +1,1420 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图3-15 中间坐标系{P}{Q}{R} · 连杆变换四步分解</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #14213d;
+  --muted: #65748b;
+  --line: #d9e2ef;
+  --surface: rgba(255, 255, 255, 0.94);
+  --blue: #2563eb;
+  --blue-dark: #174ea6;
+  --blue-soft: #eaf2ff;
+  --red: #d93025;
+  --green: #12944f;
+  --violet: #7c3aed;
+  --orange: #c26a10;
+  --cyan: #0e7490;
+}
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; }
+body {
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(160deg, #f8fbff 0%, #eef4fb 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+    "Microsoft YaHei", Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+button, input, select { font: inherit; }
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 460px;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.viewport {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-drag: none;
+  overscroll-behavior: contain;
+}
+.viewport.is-dragging { cursor: grabbing; }
+.fk-grid-line { stroke: #e2eaf5; stroke-width: 1; }
+.fk-axis { stroke-width: 3.2; }
+.fk-axis-label, .fk-point-label, .fk-vec-label, .fk-origin-label {
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: #f7fafe;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.fk-origin-label { font-size: 15px; fill: #475569; }
+.fk-vec-line { stroke-width: 4.4; fill: none; }
+.fk-projection { stroke-width: 2.2; stroke-dasharray: 7 6; fill: none; }
+.fk-arc { fill: none; stroke-width: 2.6; stroke-dasharray: 6 5; }
+.fk-point { stroke: #fff; stroke-width: 2.6; }
+
+.panel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: min(304px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  overflow: auto;
+  padding: 15px 17px 14px;
+  border: 1px solid rgba(30, 64, 175, 0.14);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 16px 36px rgba(30, 64, 175, 0.14);
+}
+.panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.panel h1 { margin: 0; font-size: 15px; line-height: 1.4; }
+.panel .subtitle { margin: 5px 0 12px; color: var(--muted); font-size: 11.5px; line-height: 1.55; }
+.reset {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid #bfd2ef;
+  border-radius: 7px;
+  color: var(--blue-dark);
+  background: #fff;
+  cursor: pointer;
+}
+.reset:hover { background: var(--blue-soft); }
+.control { margin-top: 10px; }
+.control-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.control label { color: #42526a; font-size: 12.5px; }
+.control output {
+  color: var(--blue-dark);
+  font: 700 12.5px ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+input[type="range"] {
+  width: 100%;
+  height: 4px;
+  margin: 8px 0 2px;
+  border-radius: 999px;
+  outline: none;
+  background: #dbe5f1;
+  appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  width: 16px; height: 16px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 2px 7px rgba(37, 99, 235, 0.42);
+  cursor: pointer;
+  appearance: none;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px; height: 12px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+}
+.options { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; }
+.options label { display: inline-flex; align-items: center; gap: 6px; color: #4a5a72; font-size: 12px; cursor: pointer; }
+.options input { accent-color: var(--blue); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 11px; padding-top: 10px; border-top: 1px dashed var(--line); color: #5b6a80; font-size: 11.5px; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; }
+.legend i.dot { width: 9px; height: 9px; border-radius: 50%; }
+
+.readout {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  max-width: min(460px, calc(100% - 32px));
+  padding: 10px 13px;
+  border: 1px solid rgba(30, 64, 175, 0.12);
+  border-radius: 10px;
+  color: #3d4c63;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 26px rgba(30, 64, 175, 0.09);
+  font: 15px/1.6 "Cambria Math", "Times New Roman", serif;
+}
+.readout .row { white-space: nowrap; }
+.readout strong { color: var(--blue-dark); font-family: inherit; }
+.readout .small { font-size: 13px; color: #5b6a80; }
+.hint {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.82);
+  font-size: 11px;
+}
+.tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.tabs button {
+  flex: 1;
+  padding: 6px 4px;
+  border: 1px solid #cfdcf0;
+  border-radius: 8px;
+  color: #45566f;
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+.tabs button.is-active { border-color: var(--blue); color: #fff; background: var(--blue); }
+
+@media (max-width: 720px) {
+  .app { min-height: 540px; }
+  .panel {
+    top: auto;
+    bottom: 8px;
+    left: 8px;
+    width: calc(100% - 16px);
+    max-height: 54%;
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+  .panel .subtitle { display: none; }
+  .readout { top: 8px; right: 8px; bottom: auto; font-size: 13px; max-width: calc(100% - 16px); }
+  .hint { display: none; }
+  .legend { margin-top: 8px; padding-top: 8px; }
+}
+
+.step-banner {
+  margin-top: 9px;
+  padding: 6px 9px;
+  border: 1px solid #cddffb;
+  border-radius: 9px;
+  color: var(--blue-dark);
+  background: var(--blue-soft);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.step-banner b { color: #1d4ed8; }
+.step-banner .chain { color: #5b6a80; font-size: 11px; }
+.control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; margin-top: 6px; }
+.control-grid .control { margin-top: 6px; }
+.control-grid .control label { font-size: 11.5px; }
+.control-grid .control output { font-size: 11.5px; }
+.control-grid input[type="range"] { margin: 6px 0 0; }
+.options { margin-top: 9px; }
+.legend { margin-top: 8px; padding-top: 8px; gap: 4px 10px; font-size: 11px; }
+.matrix-block { margin-top: 9px; padding-top: 8px; border-top: 1px dashed var(--line); }
+.mx + .mx { margin-top: 8px; }
+.mx-head { margin-bottom: 3px; color: #45566f; font-size: 11px; }
+.mx-head strong { color: var(--blue-dark); }
+.mx-grid {
+  border-collapse: collapse;
+  border-left: 2px solid #b9c8dd;
+  border-right: 2px solid #b9c8dd;
+  font: 10.5px/1.35 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+.mx-grid td { padding: 0 5px; text-align: right; color: #33415c; }
+.mx-grid td.pos { color: var(--blue-dark); font-weight: 700; }
+.mx-grid td.hi { color: #b45309; font-weight: 700; }
+.mx-grid td.dim { color: #9aa8bd; }
+
+@media (max-width: 720px) {
+  .readout { font-size: 12.5px; }
+  .readout .row { white-space: normal; }
+  .readout .small { font-size: 11.5px; }
+  .step-banner { font-size: 11.5px; }
+}
+</style>
+</head>
+<body>
+<main class="app">
+<svg class="viewport" id="viewport" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" role="img"
+     aria-label="连杆变换四步分解与中间坐标系 P、Q、R 的交互三维示意图">
+  <defs>
+    <marker id="arrowX" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d93025"></path>
+    </marker>
+    <marker id="arrowY" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"></path>
+    </marker>
+    <marker id="arrowZ" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#12944f"></path>
+    </marker>
+    <marker id="arrowP" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c26a10"></path>
+    </marker>
+    <marker id="arrowQ" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"></path>
+    </marker>
+    <marker id="arrowR" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0e7490"></path>
+    </marker>
+    <marker id="arrowD" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b91c1c"></path>
+    </marker>
+  </defs>
+  <g id="grid"></g>
+  <g id="dimLayer"></g>
+  <g id="axesLayer"></g>
+  <g id="labelLayer"></g>
+</svg>
+
+<section class="panel" aria-label="图3-15 控制面板">
+  <div class="panel-head">
+    <div>
+      <h1>图3-15 中间坐标系 {P}{Q}{R}</h1>
+      <p class="subtitle">式(3-4) 四步分解：{i−1} →绕X转α<sub>i−1</sub>→ {P} →沿X移a<sub>i−1</sub>→ {Q} →绕Z转θ<sub>i</sub>→ {R} →沿Z移d<sub>i</sub>→ {i}。拖动“步骤”逐帧看清每一步。</p>
+    </div>
+    <button class="reset" id="reset" type="button">重置</button>
+  </div>
+
+  <div class="step-banner" id="stepBanner"></div>
+
+  <div class="control">
+    <div class="control-head"><label for="step">步骤（显示到第 k 步）</label><output id="stepValue">4 / 4</output></div>
+    <input id="step" type="range" min="1" max="4" step="1" value="4">
+  </div>
+
+  <div class="control-grid">
+    <div class="control">
+      <div class="control-head"><label for="alpha">扭角 α<sub>i−1</sub></label><output id="alphaValue">-90.0°</output></div>
+      <input id="alpha" type="range" min="-180" max="180" step="1" value="-90">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="a">长度 a<sub>i−1</sub></label><output id="aValue">0.50</output></div>
+      <input id="a" type="range" min="0" max="2" step="0.05" value="0.5">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="theta">关节角 θ<sub>i</sub></label><output id="thetaValue">30.0°</output></div>
+      <input id="theta" type="range" min="-180" max="180" step="1" value="30">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="d">偏距 d<sub>i</sub></label><output id="dValue">0.50</output></div>
+      <input id="d" type="range" min="-2" max="2" step="0.05" value="0.5">
+    </div>
+  </div>
+
+  <div class="options">
+    <label><input id="play" type="checkbox">自动逐步播放</label>
+    <label><input id="showAnno" type="checkbox" checked>显示参数标注</label>
+    <label><input id="auto" type="checkbox">自动旋转视角</label>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#475569"></i>{i−1}</span>
+    <span><i style="background:#c26a10"></i>{P} 绕X转α</span>
+    <span><i style="background:#7c3aed"></i>{Q} 沿X移a</span>
+    <span><i style="background:#0e7490"></i>{R} 绕Z转θ</span>
+    <span><i style="background:#174ea6"></i>{i} 沿Z移d</span>
+  </div>
+
+  <div class="matrix-block">
+    <div class="mx">
+      <div class="mx-head" id="mxHeadStep"></div>
+      <table class="mx-grid"><tbody id="mxStep"></tbody></table>
+    </div>
+    <div class="mx">
+      <div class="mx-head" id="mxHeadAcc"></div>
+      <table class="mx-grid"><tbody id="mxAcc"></tbody></table>
+    </div>
+  </div>
+</section>
+
+<div class="hint">拖动旋转 · 滚轮缩放 · 双击复位</div>
+<div class="readout">
+  <div class="row"><strong>第 <span id="roStep">4</span> / 4 步</strong> <span class="small" id="roStepName"></span></div>
+  <div class="row">累计变换位移 <strong>p</strong> = [ <span id="rox">0.500</span>, <span id="roy">0.500</span>, <span id="roz">0.000</span> ]ᵀ</div>
+  <div class="row small">α<sub>i−1</sub> = <span id="roAlpha">-90.0°</span> · a<sub>i−1</sub> = <span id="roA">0.50</span> · θ<sub>i</sub> = <span id="roTheta">30.0°</span> · d<sub>i</sub> = <span id="roD">0.50</span></div>
+</div>
+</main>
+<script>
+/*!
+ * figure-kit.js — 交互教学图公共底座
+ *
+ * 为两本机器人教材的交互图提供统一的三维投影、视图拖动/缩放、滑块与重置逻辑。
+ * 纯原生 JavaScript，无任何外部依赖，可在 iframe sandbox="allow-scripts" 下运行。
+ *
+ * 主要 API（挂在 window.FK 上）：
+ *   FK.Vec        三维向量运算（add/sub/scale/dot/cross/norm/normalize）
+ *   FK.M4         4x4 齐次变换矩阵运算（identity/multiply/rotX/rotY/rotZ/rotAxis/translate/apply/fromRT/inverse）
+ *   FK.Scene      可交互三维场景（SVG 渲染、正交投影、指针捕获、滚轮缩放、自动旋转）
+ *   FK.AdaptiveScene  按 iframe 实际尺寸自适应 viewBox 的场景（推荐使用，见下方注释）
+ *   FK.bindRanges 把 range 输入批量绑定到 state 并刷新
+ *   FK.format     数值格式化
+ *
+ * 坐标约定：右手坐标系，x 向右、y 向前（屏幕内）、z 向上。
+ * 投影：先绕 z 轴 yaw、再绕屏幕水平轴 pitch 的正交投影，可缩放。
+ */
+(function (global) {
+  "use strict";
+
+  /* ------------------------------------------------------------------ 向量 */
+
+  var Vec = {
+    add: function (a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; },
+    sub: function (a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; },
+    scale: function (a, s) { return [a[0] * s, a[1] * s, a[2] * s]; },
+    dot: function (a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; },
+    cross: function (a, b) {
+      return [
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+      ];
+    },
+    len: function (a) { return Math.sqrt(Vec.dot(a, a)); },
+    normalize: function (a) {
+      var n = Vec.len(a);
+      return n < 1e-12 ? [0, 0, 0] : Vec.scale(a, 1 / n);
+    },
+    /** 与教材一致：向量按列写成矩阵，转置后返回行向量字符串 */
+    round: function (a, digits) {
+      var d = digits === undefined ? 3 : digits;
+      var p = Math.pow(10, d);
+      return a.map(function (v) { return Math.round(v * p) / p; });
+    },
+    eq: function (a, b, eps) {
+      var e = eps === undefined ? 1e-6 : eps;
+      return Math.abs(a[0] - b[0]) < e && Math.abs(a[1] - b[1]) < e && Math.abs(a[2] - b[2]) < e;
+    },
+  };
+
+  /* ------------------------------------------------------------------ 矩阵 */
+
+  var M4 = {
+    identity: function () { return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; },
+    /** 行主序 4x4 相乘 */
+    multiply: function (a, b) {
+      var out = new Array(16);
+      for (var i = 0; i < 4; i += 1) {
+        for (var j = 0; j < 4; j += 1) {
+          var sum = 0;
+          for (var k = 0; k < 4; k += 1) sum += a[i * 4 + k] * b[k * 4 + j];
+          out[i * 4 + j] = sum;
+        }
+      }
+      return out;
+    },
+    chain: function () {
+      var out = M4.identity();
+      for (var i = 0; i < arguments.length; i += 1) out = M4.multiply(out, arguments[i]);
+      return out;
+    },
+    rotX: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1];
+    },
+    rotY: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1];
+    },
+    rotZ: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+    },
+    /** Rodrigues 轴角旋转；k 必须是单位轴（会自动归一化） */
+    rotAxis: function (axis, rad) {
+      var k = Vec.normalize(axis);
+      var c = Math.cos(rad), s = Math.sin(rad), t = 1 - c;
+      var x = k[0], y = k[1], z = k[2];
+      return [
+        t * x * x + c, t * x * y - s * z, t * x * z + s * y, 0,
+        t * x * y + s * z, t * y * y + c, t * y * z - s * x, 0,
+        t * x * z - s * y, t * y * z + s * x, t * z * z + c, 0,
+        0, 0, 0, 1,
+      ];
+    },
+    translate: function (v) {
+      return [1, 0, 0, v[0], 0, 1, 0, v[1], 0, 0, 1, v[2], 0, 0, 0, 1];
+    },
+    /** 由旋转矩阵（行主序 3x3 数组）与位移构造齐次变换 */
+    fromRT: function (r, p) {
+      return [
+        r[0], r[1], r[2], p[0],
+        r[3], r[4], r[5], p[1],
+        r[6], r[7], r[8], p[2],
+        0, 0, 0, 1,
+      ];
+    },
+    /** 变换一个点（含平移） */
+    apply: function (m, v) {
+      return [
+        m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3],
+        m[4] * v[0] + m[5] * v[1] + m[6] * v[2] + m[7],
+        m[8] * v[0] + m[9] * v[1] + m[10] * v[2] + m[11],
+      ];
+    },
+    /** 只变换方向（不含平移） */
+    applyDir: function (m, v) {
+      return [
+        m[0] * v[0] + m[1] * v[1] + m[2] * v[2],
+        m[4] * v[0] + m[5] * v[1] + m[6] * v[2],
+        m[8] * v[0] + m[9] * v[1] + m[10] * v[2],
+      ];
+    },
+    /** 齐次逆变换：R 转置，-Rᵀp（教材式 2-45 的矩阵形式） */
+    inverse: function (m) {
+      var r = [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]];
+      var rt = [r[0], r[3], r[6], r[1], r[4], r[7], r[2], r[5], r[8]];
+      var p = [m[3], m[7], m[11]];
+      var t = [
+        -(rt[0] * p[0] + rt[1] * p[1] + rt[2] * p[2]),
+        -(rt[3] * p[0] + rt[4] * p[1] + rt[5] * p[2]),
+        -(rt[6] * p[0] + rt[7] * p[1] + rt[8] * p[2]),
+      ];
+      return M4.fromRT(rt, t);
+    },
+    /** 取 3x3 旋转部分 */
+    rotation: function (m) {
+      return [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]];
+    },
+    /** 取位移部分 */
+    position: function (m) { return [m[3], m[7], m[11]]; },
+    /** X-Y-Z 固定角（先绕 X 转 γ、再绕 Y 转 β、最后绕 Z 转 α），教材式 2-63 */
+    fromFixedXYZ: function (gamma, beta, alpha) {
+      return M4.chain(M4.rotZ(alpha), M4.rotY(beta), M4.rotX(gamma));
+    },
+    /** Z-Y-X 欧拉角（每次绕运动坐标系的新轴），教材式 2-71 */
+    fromEulerZYX: function (alpha, beta, gamma) {
+      return M4.chain(M4.rotZ(alpha), M4.rotY(beta), M4.rotX(gamma));
+    },
+  };
+
+  /* ------------------------------------------------------------------ 场景 */
+
+  var NS = "http://www.w3.org/2000/svg";
+  var DEG = Math.PI / 180;
+
+  /**
+   * Scene 构造函数。
+   * @param {object} options
+   *   - svg: 承载投影图形的 SVG 元素（必填）
+   *   - origin: 投影中心在 viewBox 中的位置，默认 {x: 560, y: 360}
+   *   - scale: 每单位长度对应的像素数，默认 78
+   *   - yaw / pitch: 初始视角（弧度）
+   *   - minScale / maxScale / minPitch / maxPitch
+   *   - onRender: 每次绘制后的回调（用于同步读数）
+   *   - layer: 兼容字段；不传则使用 svg 自身作为绘图容器
+   */
+  function Scene(options) {
+    var self = this;
+    var opts = options || {};
+    this.svg = opts.svg;
+    if (!this.svg) throw new Error("FK.Scene 需要一个 svg 元素作为视图容器");
+    this.layer = opts.layer || this.svg;
+    this.defaults = {
+      yaw: opts.yaw === undefined ? -0.72 : opts.yaw,
+      pitch: opts.pitch === undefined ? 0.48 : opts.pitch,
+      scale: opts.scale === undefined ? 78 : opts.scale,
+      panX: 0,
+      panY: 0,
+    };
+    this.limits = {
+      minScale: opts.minScale === undefined ? 34 : opts.minScale,
+      maxScale: opts.maxScale === undefined ? 190 : opts.maxScale,
+      minPitch: opts.minPitch === undefined ? -1.15 : opts.minPitch,
+      maxPitch: opts.maxPitch === undefined ? 1.15 : opts.maxPitch,
+    };
+    this.origin = opts.origin || { x: 560, y: 360 };
+    this.baseOrigin = { x: this.origin.x, y: this.origin.y };
+    this.state = {
+      yaw: this.defaults.yaw,
+      pitch: this.defaults.pitch,
+      scale: this.defaults.scale,
+      dragging: false,
+      panning: false,
+      pointerId: null,
+      lastX: 0,
+      lastY: 0,
+      auto: false,
+    };
+    this.onRender = opts.onRender || null;
+    this.autoSpeed = opts.autoSpeed === undefined ? 0.0032 : opts.autoSpeed;
+    this._frame = 0;
+    this._render = null;
+    this._enableInteraction();
+  }
+
+  Scene.prototype = {
+    /** 世界坐标 -> 屏幕坐标（正交投影 + 深度值） */
+    project: function (v) {
+      var s = this.state;
+      var cy = Math.cos(s.yaw), sy = Math.sin(s.yaw);
+      var cp = Math.cos(s.pitch), sp = Math.sin(s.pitch);
+      var x1 = v[0] * cy - v[1] * sy;
+      var y1 = v[0] * sy + v[1] * cy;
+      var z1 = v[2];
+      var depth = y1 * cp - z1 * sp;
+      var vertical = y1 * sp + z1 * cp;
+      return {
+        x: this.origin.x + x1 * s.scale,
+        y: this.origin.y - vertical * s.scale,
+        depth: depth,
+      };
+    },
+    /** 变换矩阵作用后再投影，便于处理带位姿的坐标系 */
+    projectT: function (m, v) { return this.project(M4.apply(m, v)); },
+    /** 清空图层 */
+    clear: function () { while (this.layer.firstChild) this.layer.removeChild(this.layer.firstChild); },
+    /** 创建 SVG 元素 */
+    el: function (tag, attrs, parent) {
+      var node = document.createElementNS(NS, tag);
+      if (attrs) {
+        Object.keys(attrs).forEach(function (key) {
+          if (attrs[key] === null || attrs[key] === undefined) return;
+          node.setAttribute(key, attrs[key]);
+        });
+      }
+      (parent || this.layer).appendChild(node);
+      return node;
+    },
+    /** 画一条线段（世界坐标） */
+    line: function (a, b, attrs, parent) {
+      var A = this.project(a), B = this.project(b);
+      return this.el("line", Object.assign({ x1: A.x, y1: A.y, x2: B.x, y2: B.y }, attrs || {}), parent);
+    },
+    /** 画一条带箭头的线段，marker 为 marker id（不含 url()） */
+    arrow: function (a, b, cls, marker, parent) {
+      var A = this.project(a), B = this.project(b);
+      return this.el("line", {
+        x1: A.x, y1: A.y, x2: B.x, y2: B.y,
+        class: cls,
+        "marker-end": marker ? "url(#" + marker + ")" : null,
+      }, parent);
+    },
+    /** 画文字标签 */
+    text: function (v, str, attrs, dx, dy, parent) {
+      var p = this.project(v);
+      var node = this.el("text", Object.assign({
+        x: p.x + (dx || 0),
+        y: p.y + (dy || 0),
+      }, attrs || {}), parent);
+      node.textContent = str;
+      return node;
+    },
+    /** 画一条折线 */
+    polyline: function (points, attrs, parent) {
+      var d = points.map(function (p) {
+        var q = this.project(p);
+        return q.x + "," + q.y;
+      }, this).join(" ");
+      return this.el("polyline", Object.assign({ points: d, fill: "none" }, attrs || {}), parent);
+    },
+    /** 画一个实心圆点 */
+    dot: function (v, attrs, parent) {
+      var p = this.project(v);
+      return this.el("circle", Object.assign({ cx: p.x, cy: p.y, r: 6 }, attrs || {}), parent);
+    },
+    /**
+     * 绘制一个坐标系（三根轴 + 标签）。
+     * @param {number[]} m 4x4 齐次变换，定义坐标系在参考系中的位姿
+     * @param {object} cfg { labels:[x,y,z], length, colors:[c1,c2,c3], marker, parent, dash }
+     */
+    axes: function (m, cfg) {
+      var c = cfg || {};
+      var len = c.length === undefined ? 2.4 : c.length;
+      var labels = c.labels || ["X", "Y", "Z"];
+      var colors = c.colors || ["#e23a34", "#1a73e8", "#2e9e63"];
+      var dirs = [[len, 0, 0], [0, len, 0], [0, 0, len]];
+      var group = c.parent || this.layer;
+      for (var i = 0; i < 3; i += 1) {
+        var tip = M4.apply(m, dirs[i]);
+        var base = M4.apply(m, [0, 0, 0]);
+        var A = this.project(base), B = this.project(tip);
+        this.el("line", {
+          x1: A.x, y1: A.y, x2: B.x, y2: B.y,
+          stroke: colors[i],
+          "stroke-width": c.width || 3.4,
+          "stroke-dasharray": c.dash || null,
+          "marker-end": c.marker ? "url(#" + c.marker + ")" : null,
+        }, group);
+        var node = this.el("text", {
+          x: B.x + (c.dx === undefined ? 8 : c.dx),
+          y: B.y + (c.dy === undefined ? -6 : c.dy),
+          fill: colors[i],
+        }, group);
+        node.textContent = labels[i];
+      }
+      var origin = M4.apply(m, [0, 0, 0]);
+      var p = this.project(origin);
+      this.el("circle", { cx: p.x, cy: p.y, r: c.originR || 4, fill: "#2b3a52" }, group);
+      if (c.originLabel) {
+        var t = this.el("text", { x: p.x + 8, y: p.y + 16, fill: "#2b3a52" }, group);
+        t.textContent = c.originLabel;
+      }
+      return group;
+    },
+    /** 绘制地面网格（xy 平面） */
+    grid: function (half, step, attrs) {
+      var h = half === undefined ? 3 : half;
+      var s = step === undefined ? 1 : step;
+      var group = this.el("g", { class: "fk-grid" });
+      for (var i = -h; i <= h; i += s) {
+        this.line([-h, i, 0], [h, i, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
+        this.line([i, -h, 0], [i, h, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
+      }
+      return group;
+    },
+    /** 每次状态变化时调用的真实绘制函数 */
+    setRenderer: function (fn) { this._render = fn; },
+    /** 触发一次重绘 */
+    render: function () {
+      this.origin.x = this.baseOrigin.x;
+      this.origin.y = this.baseOrigin.y;
+      if (this._render) this._render(this);
+      if (this.onRender) this.onRender(this);
+    },
+    reset: function () {
+      this.state.yaw = this.defaults.yaw;
+      this.state.pitch = this.defaults.pitch;
+      this.state.scale = this.defaults.scale;
+      this.origin.x = this.baseOrigin.x;
+      this.origin.y = this.baseOrigin.y;
+    },
+    setAuto: function (on) {
+      this.state.auto = !!on;
+      if (this.state.auto && !this._frame) this._frame = requestAnimationFrame(this._tick.bind(this));
+    },
+    _tick: function () {
+      this._frame = 0;
+      if (!this.state.auto && !this.state.dragging) return;
+      this.state.yaw += this.autoSpeed;
+      this.render();
+      if (this.state.auto) this._frame = requestAnimationFrame(this._tick.bind(this));
+    },
+    _enableInteraction: function () {
+      var self = this;
+      var svg = this.svg;
+      svg.addEventListener("pointerdown", function (event) {
+        if (event.button !== 0 && event.pointerType === "mouse") return;
+        if (self.state.pointerId !== null) return;
+        event.preventDefault();
+        self.state.dragging = true;
+        self.state.pointerId = event.pointerId;
+        self.state.lastX = event.clientX;
+        self.state.lastY = event.clientY;
+        svg.classList.add("is-dragging");
+        try { svg.setPointerCapture(event.pointerId); } catch (error) { /* 忽略 */ }
+      });
+      svg.addEventListener("pointermove", function (event) {
+        if (!self.state.dragging || event.pointerId !== self.state.pointerId) return;
+        event.preventDefault();
+        var dx = event.clientX - self.state.lastX;
+        var dy = event.clientY - self.state.lastY;
+        self.state.lastX = event.clientX;
+        self.state.lastY = event.clientY;
+        // 水平拖动的直觉方向：向右拖动使模型向右转（观察者绕模型向左移动的等价效果）
+        self.state.yaw += dx * 0.008;
+        self.state.pitch = Math.max(
+          self.limits.minPitch,
+          Math.min(self.limits.maxPitch, self.state.pitch + dy * 0.007)
+        );
+        self.render();
+      });
+      function endDrag(event) {
+        if (event && self.state.pointerId !== null && event.pointerId !== self.state.pointerId) return;
+        self.state.dragging = false;
+        self.state.pointerId = null;
+        svg.classList.remove("is-dragging");
+      }
+      svg.addEventListener("pointerup", endDrag);
+      svg.addEventListener("pointercancel", endDrag);
+      svg.addEventListener("lostpointercapture", endDrag);
+      svg.addEventListener("dragstart", function (event) { event.preventDefault(); });
+      svg.addEventListener("wheel", function (event) {
+        event.preventDefault();
+        var factor = event.deltaY > 0 ? 0.92 : 1.08;
+        self.state.scale = Math.max(
+          self.limits.minScale,
+          Math.min(self.limits.maxScale, self.state.scale * factor)
+        );
+        self.render();
+      }, { passive: false });
+      // 双击复位视角
+      svg.addEventListener("dblclick", function () {
+        self.reset();
+        self.render();
+      });
+    },
+  };
+
+  /* ------------------------------------------------------------------ 自适应场景 */
+
+  /**
+   * 根据 iframe 实际像素尺寸调整 viewBox 与投影中心，避免在窄屏或矮窗口里
+   * 出现大片空白、或图形被压得过小。
+   *
+   * 做法：viewBox 直接取容器的像素宽高（1 单位 = 1 px），因此组件的字号、
+   * 半径、线宽在任何窗口里都保持同样的物理大小；图形位置由 origin 的
+   * 相对锚点决定，缩放由 scale 决定。
+   *
+   * @param {object} options
+   *   - svg / viewport：视图容器（必填）
+   *   - scale：投影缩放（宽屏），默认 78
+   *   - narrowScale：窄屏投影缩放，默认取 scale * 0.86
+   *   - narrowWidth：判定为窄屏的宽度阈值（px），默认 620
+   *   - tallRatio：高度/宽度 大于该值时视为竖屏，默认 1.15
+   *   - wide / narrow / tall：三种形态下的锚点，形如 { x: 0.55, y: 0.62 }
+   *   - design：设计基准尺寸，仅用于日志与默认锚点，默认 { width: 1000, height: 620 }
+   *   - onLayout：每次布局后回调 (scene, layout)
+   *   - 其余选项透传给 Scene
+   */
+  function AdaptiveScene(options) {
+    var opts = options || {};
+    var svg = opts.svg;
+    if (!svg) throw new Error("FK.AdaptiveScene 需要一个 svg 元素作为视图容器");
+    var wide = opts.wide || { x: 0.56, y: 0.62 };
+    var narrow = opts.narrow || { x: 0.5, y: 0.42 };
+    var tall = opts.tall || { x: 0.5, y: 0.4 };
+    var narrowWidth = opts.narrowWidth === undefined ? 620 : opts.narrowWidth;
+    var tallRatio = opts.tallRatio === undefined ? 1.15 : opts.tallRatio;
+    var baseScale = opts.scale === undefined ? 78 : opts.scale;
+    var narrowScale = opts.narrowScale === undefined ? baseScale * 0.86 : opts.narrowScale;
+
+    var sceneOptions = {};
+    Object.keys(opts).forEach(function (key) {
+      if (["wide", "narrow", "tall", "narrowWidth", "tallRatio", "scale", "narrowScale", "onLayout", "design"].indexOf(key) === -1) {
+        sceneOptions[key] = opts[key];
+      }
+    });
+    sceneOptions.scale = baseScale;
+    var scene = new Scene(sceneOptions);
+
+    function layout() {
+      var rect = svg.getBoundingClientRect();
+      var width = Math.max(320, Math.round(rect.width || 1000));
+      var height = Math.max(320, Math.round(rect.height || 620));
+      var isNarrow = width < narrowWidth;
+      var isTall = height / width > tallRatio;
+      var anchor = isNarrow ? (isTall ? tall : narrow) : wide;
+      if (isNarrow && !isTall) anchor = narrow;
+      if (isNarrow && isTall) anchor = tall;
+      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+      svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      scene.baseOrigin.x = width * anchor.x;
+      scene.baseOrigin.y = height * anchor.y;
+      scene.limits.minScale = baseScale * 0.42;
+      scene.limits.maxScale = baseScale * 2.5;
+      var previousScale = scene.state.scale;
+      var previousDefault = scene.defaults.scale;
+      var nextScale = isNarrow ? narrowScale : baseScale;
+      if (previousScale === previousDefault) {
+        scene.state.scale = nextScale;
+      } else {
+        scene.state.scale = Math.max(scene.limits.minScale, Math.min(scene.limits.maxScale, previousScale));
+      }
+      scene.defaults.scale = nextScale;
+      scene.origin.x = scene.baseOrigin.x;
+      scene.origin.y = scene.baseOrigin.y;
+      if (opts.onLayout) opts.onLayout(scene, { width: width, height: height, narrow: isNarrow, tall: isTall });
+      scene.render();
+    }
+
+    scene.fit = layout;
+    if (typeof ResizeObserver !== "undefined") {
+      var observer = new ResizeObserver(function () { layout(); });
+      observer.observe(svg);
+      scene._observer = observer;
+    } else {
+      global.addEventListener("resize", layout);
+    }
+    // 首帧布局：等一帧再测，确保 iframe 已完成布局
+    if (typeof requestAnimationFrame === "function") {
+      requestAnimationFrame(layout);
+    } else {
+      layout();
+    }
+    return scene;
+  }
+
+  /* ------------------------------------------------------------------ 工具 */
+
+  /**
+   * 把一组 range 控件绑定到 state，并统一在 input 时重绘。
+   * @param {object[]} defs 每项 { id, key, value, format, onChange }
+   * @param {object} state 目标状态对象
+   * @param {function} render 刷新函数
+   * @param {string} outputSuffix 输出元素的后缀，默认 "Value"
+   */
+  function bindRanges(defs, state, render, outputSuffix) {
+    var suffix = outputSuffix || "Value";
+    var sync = [];
+    defs.forEach(function (def) {
+      var input = document.getElementById(def.id);
+      if (!input) return;
+      var output = document.getElementById(def.id + suffix);
+      function apply() {
+        var raw = Number(input.value);
+        state[def.key] = raw;
+        if (output) {
+          output.textContent = def.format ? def.format(raw) : String(raw);
+        }
+        if (def.onChange) def.onChange(raw, state);
+        render();
+      }
+      input.value = def.value === undefined ? input.value : def.value;
+      input.addEventListener("input", apply);
+      sync.push({ input: input, output: output, def: def, apply: apply });
+      apply();
+    });
+    return {
+      /** 把 state 当前值写回控件 */
+      refresh: function () {
+        sync.forEach(function (item) {
+          var value = state[item.def.key];
+          if (value === undefined) return;
+          item.input.value = value;
+          if (item.output) {
+            item.output.textContent = item.def.format ? item.def.format(value) : String(value);
+          }
+        });
+      },
+      apply: function () { sync.forEach(function (item) { item.apply(); }); },
+    };
+  }
+
+  function bindToggles(defs, state, render) {
+    defs.forEach(function (def) {
+      var input = document.getElementById(def.id);
+      if (!input) return;
+      input.checked = !!state[def.key];
+      input.addEventListener("change", function () {
+        state[def.key] = input.checked;
+        if (def.onChange) def.onChange(input.checked, state);
+        render();
+      });
+    });
+  }
+
+  function format(value, digits) {
+    var d = digits === undefined ? 2 : digits;
+    var fixed = Number(value).toFixed(d);
+    return fixed === "-" + (0).toFixed(d) ? (0).toFixed(d) : fixed;
+  }
+
+  /** 角度的常见显示：45.0° */
+  function deg(value, digits) {
+    return format(value, digits === undefined ? 1 : digits) + "°";
+  }
+
+  global.FK = {
+    Vec: Vec,
+    M4: M4,
+    Scene: Scene,
+    AdaptiveScene: AdaptiveScene,
+    bindRanges: bindRanges,
+    bindToggles: bindToggles,
+    format: format,
+    deg: deg,
+    DEG: DEG,
+  };
+}(window));
+</script>
+<script>
+(function () {
+  var viewport = document.getElementById("viewport");
+  var gridLayer = document.getElementById("grid");
+  var dimLayer = document.getElementById("dimLayer");
+  var axesLayer = document.getElementById("axesLayer");
+  var labelLayer = document.getElementById("labelLayer");
+
+  var DEFAULTS = { step: 4, alpha: -90, a: 0.5, theta: 30, d: 0.5 };
+  var state = {
+    step: DEFAULTS.step, alpha: DEFAULTS.alpha, a: DEFAULTS.a,
+    theta: DEFAULTS.theta, d: DEFAULTS.d,
+    showAnno: true, play: false, auto: false
+  };
+
+  // 允许用 #alpha=0&a=0&theta=0&d=0&step=2 指定初始状态（便于核对极值与退化情形）
+  (function readHash() {
+    var raw = (window.location.hash || "").replace(/^#/, "");
+    if (!raw) return;
+    raw.split("&").forEach(function (kv) {
+      var parts = kv.split("=");
+      if (parts.length !== 2) return;
+      var key = decodeURIComponent(parts[0]);
+      var value = Number(decodeURIComponent(parts[1]));
+      if (!isFinite(value)) return;
+      if (key === "step") state.step = Math.max(1, Math.min(4, Math.round(value)));
+      if (key === "alpha") state.alpha = Math.max(-180, Math.min(180, value));
+      if (key === "a") state.a = Math.max(0, Math.min(2, value));
+      if (key === "theta") state.theta = Math.max(-180, Math.min(180, value));
+      if (key === "d") state.d = Math.max(-2, Math.min(2, value));
+    });
+  }());
+
+  var scene = new FK.Scene({ svg: viewport, origin: { x: 700, y: 364 }, scale: 126, yaw: -0.68, pitch: 0.44 });
+
+  var C = {
+    x: "#d93025", y: "#2563eb", z: "#12944f",
+    P: "#c26a10", Q: "#7c3aed", R: "#0e7490", D: "#b91c1c",
+    base: "#475569", final: "#174ea6"
+  };
+  var DIRS = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+
+  var STEP_INFO = [
+    { from: "{i−1}", to: "{P}", act: "绕 X̂<sub>i−1</sub> 旋转 α<sub>i−1</sub>", mat: "R<sub>X</sub>(α<sub>i−1</sub>)", color: C.P },
+    { from: "{P}", to: "{Q}", act: "沿 X̂<sub>i−1</sub> 平移 a<sub>i−1</sub>", mat: "D<sub>X</sub>(a<sub>i−1</sub>)", color: C.Q },
+    { from: "{Q}", to: "{R}", act: "绕 Ẑ<sub>Q</sub> 旋转 θ<sub>i</sub>", mat: "R<sub>Z</sub>(θ<sub>i</sub>)", color: C.R },
+    { from: "{R}", to: "{i}", act: "沿 Ẑ<sub>R</sub> 平移 d<sub>i</sub>", mat: "D<sub>Z</sub>(d<sub>i</sub>)", color: C.D }
+  ];
+
+  /* ------------------------------------------------------------ 绘制工具 */
+
+  function richText(x, y, parts, attrs, parent) {
+    var node = scene.el("text", Object.assign({ x: x, y: y }, attrs || {}), parent);
+    parts.forEach(function (part) {
+      var span = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+      span.setAttribute("dy", part[1] || 0);
+      span.setAttribute("font-size", part[2] || 15);
+      span.textContent = part[0];
+      node.appendChild(span);
+    });
+    return node;
+  }
+
+  function sub(main, subText, size) {
+    return [[main, 0, size || 15], [subText, 5, (size || 15) - 4.5]];
+  }
+
+  function richTextRot(x, y, deg, parts, attrs, parent) {
+    var node = richText(x, y, parts, attrs, parent);
+    node.setAttribute("transform", "rotate(" + deg + " " + x + " " + y + ")");
+    node.setAttribute("text-anchor", "middle");
+    return node;
+  }
+
+  function drawFrame(m, cfg) {
+    var O = scene.project(FK.M4.apply(m, [0, 0, 0]));
+    for (var i = 0; i < 3; i += 1) {
+      var tip = FK.M4.apply(m, FK.Vec.scale(DIRS[i], cfg.len));
+      var B = scene.project(tip);
+      scene.el("line", {
+        x1: O.x, y1: O.y, x2: B.x, y2: B.y,
+        stroke: cfg.colors[i],
+        "stroke-width": cfg.width,
+        "stroke-dasharray": cfg.dash || null,
+        "marker-end": "url(#" + cfg.markers[i] + ")"
+      }, axesLayer);
+    }
+    scene.el("circle", { cx: O.x, cy: O.y, r: 4.2, fill: cfg.dot, class: "fk-point" }, axesLayer);
+    return O;
+  }
+
+  function axisLabel(m, index, len, parts, dx, dy, color) {
+    var p = scene.project(FK.M4.apply(m, FK.Vec.scale(DIRS[index], len)));
+    richText(p.x + dx, p.y + dy, parts, { fill: color, "font-size": 15, class: "fk-axis-label" }, labelLayer);
+  }
+
+  /** 坐标系名称标牌；x、y 是标牌左上角的屏幕坐标，leader 是引线终点（屏幕坐标） */
+  function badge(x, y, text, color, leader) {
+    var w = 22 + text.length * 7.6;
+    var h = 19;
+    if (leader) {
+      scene.el("line", {
+        x1: x + w + 3, y1: y + h / 2,
+        x2: leader.x, y2: leader.y,
+        stroke: "#9aa8bd", "stroke-width": 1.1, "stroke-dasharray": "4 4"
+      }, labelLayer);
+    }
+    scene.el("rect", {
+      x: x, y: y, width: w, height: h, rx: 6,
+      fill: "#ffffff", "fill-opacity": 0.94, stroke: color, "stroke-width": 1.6
+    }, labelLayer);
+    var t = scene.el("text", {
+      x: x + w / 2, y: y + 13.4, "text-anchor": "middle", fill: color,
+      "font-size": 12, "font-weight": 700, "font-style": "italic"
+    }, labelLayer);
+    t.textContent = text;
+    return { x: x, y: y, w: w, h: h };
+  }
+
+  /** 弧形箭头：plane = "YZ"（绕X轴，从Y转向Z）或 "XY"（绕Z轴，从X转向Y） */
+  function drawArc(m, plane, radius, angle, color, marker, parts) {
+    if (Math.abs(angle) < 1.5 * FK.DEG) return;
+    var steps = Math.max(10, Math.round(Math.abs(angle) / FK.DEG / 4));
+    var pts = [];
+    for (var i = 0; i <= steps; i += 1) {
+      var t = angle * (i / steps);
+      pts.push(FK.M4.apply(m, plane === "YZ"
+        ? [0, radius * Math.cos(t), radius * Math.sin(t)]
+        : [radius * Math.cos(t), radius * Math.sin(t), 0]));
+    }
+    scene.polyline(pts, {
+      stroke: color, "stroke-width": 2.4, "stroke-dasharray": "6 5",
+      "marker-end": "url(#" + marker + ")"
+    }, dimLayer);
+    var mid = angle * 0.5;
+    var label = FK.M4.apply(m, plane === "YZ"
+      ? [0, (radius + 0.34) * Math.cos(mid), (radius + 0.34) * Math.sin(mid)]
+      : [(radius + 0.34) * Math.cos(mid), (radius + 0.34) * Math.sin(mid), 0]);
+    var q = scene.project(label);
+    richText(q.x, q.y + 5, parts, { fill: color, "font-size": 15, "text-anchor": "middle", class: "fk-vec-label" }, labelLayer);
+  }
+
+  /** 尺寸线：两端双斜线 + 尺寸界线 + 数值标签（标签沿尺寸线方向旋转）；down=true 时放在轴线“下方” */
+  function dimension(p1, p2, offPx, color, parts, down, labelOff) {
+    var A = scene.project(p1);
+    var B = scene.project(p2);
+    var dx = B.x - A.x;
+    var dy = B.y - A.y;
+    var len = Math.sqrt(dx * dx + dy * dy);
+    if (len < 8) return;
+    var ux = dx / len;
+    var uy = dy / len;
+    var nx = -uy;
+    var ny = ux;
+    if ((down && ny < 0) || (!down && ny > 0)) { nx = -nx; ny = -ny; }
+    var a = { x: A.x + nx * offPx, y: A.y + ny * offPx };
+    var b = { x: B.x + nx * offPx, y: B.y + ny * offPx };
+    [A, B].forEach(function (src, index) {
+      var tgt = index === 0 ? a : b;
+      scene.el("line", {
+        x1: src.x, y1: src.y, x2: tgt.x, y2: tgt.y,
+        stroke: color, "stroke-width": 1.2, "stroke-dasharray": "4 4", opacity: 0.65
+      }, dimLayer);
+    });
+    scene.el("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: color, "stroke-width": 1.9 }, dimLayer);
+    var sx = (ux + nx) / Math.SQRT2;
+    var sy = (uy + ny) / Math.SQRT2;
+    [a, b].forEach(function (p) {
+      [-3.6, 3.6].forEach(function (offset) {
+        var cx = p.x + ux * offset;
+        var cy = p.y + uy * offset;
+        scene.el("line", {
+          x1: cx - sx * 7.5, y1: cy - sy * 7.5, x2: cx + sx * 7.5, y2: cy + sy * 7.5,
+          stroke: color, "stroke-width": 1.9
+        }, dimLayer);
+      });
+    });
+    var angle = Math.atan2(uy, ux) * 180 / Math.PI;
+    if (angle > 90) angle -= 180;
+    if (angle < -90) angle += 180;
+    var lo = labelOff === undefined ? 11 : labelOff;
+    var mp = { x: (a.x + b.x) / 2 + nx * lo, y: (a.y + b.y) / 2 + ny * lo };
+    richTextRot(mp.x, mp.y + 5, angle, parts, { fill: color, "font-size": 15, class: "fk-vec-label" }, labelLayer);
+  }
+
+  /* ------------------------------------------------------------ 面板矩阵 */
+
+  var IDENTITY = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+
+  function fillMatrix(tbody, m, mode) {
+    tbody.replaceChildren();
+    for (var r = 0; r < 4; r += 1) {
+      var tr = document.createElement("tr");
+      for (var c = 0; c < 4; c += 1) {
+        var v = m[r * 4 + c];
+        var td = document.createElement("td");
+        td.textContent = (Math.abs(v) < 5e-4 ? 0 : v).toFixed(3);
+        if (r === 3) td.className = "dim";
+        else if (mode === "pos" && c === 3) td.className = "pos";
+        else if (mode === "hi" && Math.abs(v - IDENTITY[r * 4 + c]) > 1e-9) td.className = "hi";
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+  }
+
+  /* ------------------------------------------------------------ 主绘制 */
+
+  function render() {
+    gridLayer.replaceChildren();
+    dimLayer.replaceChildren();
+    axesLayer.replaceChildren();
+    labelLayer.replaceChildren();
+
+    scene.grid(3, 1);
+
+    var alpha = state.alpha * FK.DEG;
+    var theta = state.theta * FK.DEG;
+    var k = state.step;
+
+    var I = FK.M4.identity();
+    var T1 = FK.M4.rotX(alpha);
+    var T2 = FK.M4.translate([state.a, 0, 0]);
+    var T3 = FK.M4.rotZ(theta);
+    var T4 = FK.M4.translate([0, 0, state.d]);
+    var TP = T1;
+    var TQ = FK.M4.multiply(TP, T2);
+    var TR = FK.M4.multiply(TQ, T3);
+    var TI = FK.M4.multiply(TR, T4);
+
+    // 1) 坐标轴：{i−1} 恒显示，之后逐步出现 {P}、{Q}、{R}、{i}
+    drawFrame(I, {
+      len: 1.75, width: 3.0, colors: [C.x, C.y, C.z],
+      markers: ["arrowX", "arrowY", "arrowZ"], dot: C.base
+    });
+    var mids = [
+      { m: TP, len: 1.42, color: C.P, marker: "arrowP" },
+      { m: TQ, len: 1.14, color: C.Q, marker: "arrowQ" },
+      { m: TR, len: 0.90, color: C.R, marker: "arrowR" }
+    ];
+    for (var i = 0; i < Math.min(k, 3); i += 1) {
+      var mid = mids[i];
+      drawFrame(mid.m, {
+        len: mid.len, width: 2.5, dash: "9 6",
+        colors: [mid.color, mid.color, mid.color],
+        markers: [mid.marker, mid.marker, mid.marker], dot: mid.color
+      });
+    }
+    if (k >= 4) {
+      drawFrame(TI, {
+        len: 1.75, width: 3.6, colors: [C.x, C.y, C.z],
+        markers: ["arrowX", "arrowY", "arrowZ"], dot: C.final
+      });
+    }
+
+    // 2) 参数标注（弧形箭头 / 尺寸线）
+    if (state.showAnno) {
+      if (k >= 1) drawArc(I, "YZ", 0.86, alpha, C.P, "arrowP", sub("α", "i−1", 16));
+      if (k >= 3) drawArc(TQ, "XY", 0.58, theta, C.R, "arrowR", sub("θ", "i", 16));
+      if (k >= 2) dimension([0, 0, 0], [state.a, 0, 0], 44, C.Q, sub("a", "i−1", 16), true, 11);
+      if (k >= 4) dimension(FK.M4.position(TR), FK.M4.position(TI), 30, C.D, sub("d", "i", 16), false, -11);
+    }
+
+    // 3) 坐标系名称：{i−1}/{P}/{Q}/{R} 统一泊成左侧一列，用细引线指向各自原点；{i} 贴住自身原点
+    var O = scene.project([0, 0, 0]);
+    var Qs = scene.project(FK.M4.position(TQ));
+    var Is = scene.project(FK.M4.position(TI));
+    var colX = O.x - 80;
+    badge(colX, O.y - 38, "{i−1}", C.base, { x: O.x - 8, y: O.y - 6 });
+    if (k >= 1) badge(colX, O.y + 3, "{P}", C.P, { x: O.x + 4, y: O.y + 4 });
+    if (k >= 2) badge(colX, O.y + 44, "{Q}", C.Q, { x: Qs.x - 14, y: Qs.y - 8 });
+    if (k >= 3) badge(colX, O.y + 85, "{R}", C.R, { x: Qs.x - 12, y: Qs.y + 10 });
+    if (k >= 4) badge(Is.x + 25, Is.y - 10, "{i}", C.final, null);
+
+    axisLabel(I, 0, 1.75, sub("X\u0302", "i−1"), 8, 16, C.x);
+    axisLabel(I, 1, 1.75, sub("Y\u0302", "i−1"), 8, -8, C.y);
+    axisLabel(I, 2, 1.75, sub("Z\u0302", "i−1"), 10, -8, C.z);
+    if (k >= 4) {
+      var degenerate = FK.Vec.len(FK.Vec.sub(FK.M4.position(TI), [0, 0, 0])) < 0.22;
+      axisLabel(TI, 0, 1.75, sub("X\u0302", "i"), 8, 16 + (degenerate ? 22 : 0), C.x);
+      axisLabel(TI, 1, 1.75, sub("Y\u0302", "i"), 8, -8 - (degenerate ? 22 : 0), C.y);
+      axisLabel(TI, 2, 1.75, sub("Z\u0302", "i"), 10, -8 - (degenerate ? 20 : 0), C.z);
+    }
+    if (k === 2) axisLabel(TP, 0, 1.42, sub("X\u0302", "P"), 8, 16, C.P);
+    if (k === 3) axisLabel(TQ, 2, 1.14, sub("Z\u0302", "Q"), -14, -12, C.Q);
+    if (k === 4) axisLabel(TR, 2, 0.90, sub("Z\u0302", "R"), -30, -14, C.R);
+
+    // 4) 读数与矩阵
+    var info = STEP_INFO[k - 1];
+    var acc = k === 1 ? TP : (k === 2 ? TQ : (k === 3 ? TR : TI));
+    var steps = [T1, T2, T3, T4];
+    var names = ["{i−1}", "{P}", "{Q}", "{R}", "{i}"].slice(0, k + 1);
+
+    document.getElementById("stepBanner").innerHTML =
+      "<b>第 " + k + " 步</b>：" + info.from + " <span style='color:" + info.color + "'>— " + info.act + " →</span> " + info.to +
+      "<br><span class='chain'>已显示 " + names.join("、") + "（共 " + (k + 1) + " 个坐标系）</span>";
+
+    document.getElementById("mxHeadStep").innerHTML = "本步 T<sub>" + k + "</sub> = " + info.mat;
+    fillMatrix(document.getElementById("mxStep"), steps[k - 1], "hi");
+    document.getElementById("mxHeadAcc").innerHTML = k === 4
+      ? "连乘 <sup>i−1</sup><sub>i</sub>T = T<sub>1</sub>T<sub>2</sub>T<sub>3</sub>T<sub>4</sub>"
+      : "累乘 T<sub>1</sub>···T<sub>" + k + "</sub>（还没到 {i}）";
+    fillMatrix(document.getElementById("mxAcc"), acc, "pos");
+
+    var p = FK.M4.position(acc);
+    document.getElementById("roStep").textContent = k;
+    document.getElementById("roStepName").innerHTML = info.act + " → " + info.to;
+    document.getElementById("rox").textContent = FK.format(p[0], 3);
+    document.getElementById("roy").textContent = FK.format(p[1], 3);
+    document.getElementById("roz").textContent = FK.format(p[2], 3);
+    document.getElementById("roAlpha").textContent = FK.deg(state.alpha, 1);
+    document.getElementById("roA").textContent = FK.format(state.a, 2);
+    document.getElementById("roTheta").textContent = FK.deg(state.theta, 1);
+    document.getElementById("roD").textContent = FK.format(state.d, 2);
+  }
+
+  scene.setRenderer(render);
+
+  /* ------------------------------------------------------------ 响应式布局 */
+
+  function relayout() {
+    var rect = viewport.getBoundingClientRect();
+    var W = Math.max(360, Math.round(rect.width || window.innerWidth));
+    var H = Math.max(360, Math.round(rect.height || window.innerHeight));
+    viewport.setAttribute("viewBox", "0 0 " + W + " " + H);
+    var narrow = W < 720;
+    scene.baseOrigin.x = narrow ? W * 0.34 : W * 0.50;
+    scene.baseOrigin.y = narrow ? H * 0.28 : H * 0.5;
+    var unit = narrow
+      ? Math.max(46, Math.min(70, W * 0.17))
+      : Math.max(70, Math.min(144, W * 0.12));
+    scene.defaults.scale = unit;
+    scene.state.scale = unit;
+    scene.origin.x = scene.baseOrigin.x;
+    scene.origin.y = scene.baseOrigin.y;
+  }
+
+  /* ------------------------------------------------------------ 交互绑定 */
+
+  var ranges = FK.bindRanges(
+    [
+      { id: "step", key: "step", value: state.step, format: function (v) { return v + " / 4"; } },
+      { id: "alpha", key: "alpha", value: state.alpha, format: function (v) { return FK.deg(v, 1); } },
+      { id: "a", key: "a", value: state.a, format: function (v) { return FK.format(v, 2); } },
+      { id: "theta", key: "theta", value: state.theta, format: function (v) { return FK.deg(v, 1); } },
+      { id: "d", key: "d", value: state.d, format: function (v) { return FK.format(v, 2); } }
+    ],
+    state,
+    render
+  );
+
+  var playFrame = 0;
+  var playClock = 0;
+  var playLast = 0;
+
+  function playTick(t) {
+    playFrame = 0;
+    if (!state.play) return;
+    if (!playLast) playLast = t;
+    playClock += t - playLast;
+    playLast = t;
+    if (playClock >= 950) {
+      playClock = 0;
+      state.step = state.step >= 4 ? 1 : state.step + 1;
+      ranges.refresh();
+      render();
+    }
+    playFrame = requestAnimationFrame(playTick);
+  }
+
+  function setPlay(on) {
+    state.play = !!on;
+    playClock = 0;
+    playLast = 0;
+    if (state.play) {
+      if (!playFrame) playFrame = requestAnimationFrame(playTick);
+    } else if (playFrame) {
+      cancelAnimationFrame(playFrame);
+      playFrame = 0;
+    }
+  }
+
+  FK.bindToggles(
+    [
+      { id: "play", key: "play", onChange: setPlay },
+      { id: "showAnno", key: "showAnno" },
+      { id: "auto", key: "auto", onChange: function (v) { scene.setAuto(v); } }
+    ],
+    state,
+    render
+  );
+
+  document.getElementById("reset").addEventListener("click", function () {
+    state.step = DEFAULTS.step;
+    state.alpha = DEFAULTS.alpha;
+    state.a = DEFAULTS.a;
+    state.theta = DEFAULTS.theta;
+    state.d = DEFAULTS.d;
+    state.showAnno = true;
+    state.auto = false;
+    setPlay(false);
+    document.getElementById("showAnno").checked = true;
+    document.getElementById("auto").checked = false;
+    document.getElementById("play").checked = false;
+    scene.setAuto(false);
+    ranges.refresh();
+    scene.reset();
+    render();
+  });
+
+  window.addEventListener("resize", function () {
+    relayout();
+    render();
+  });
+
+  /* ------------------------------------------------------------ 教材数值自检 */
+
+  (function selfTest() {
+    // 式(3-4) 展开式（本教材标准 D-H 记法）
+    function expand(alpha, a, theta, d) {
+      var ca = Math.cos(alpha), sa = Math.sin(alpha);
+      var ct = Math.cos(theta), st = Math.sin(theta);
+      return [
+        ct, -st, 0, a,
+        st * ca, ct * ca, -sa, -sa * d,
+        st * sa, ct * sa, ca, ca * d,
+        0, 0, 0, 1
+      ];
+    }
+    function chain(alpha, a, theta, d) {
+      return FK.M4.chain(
+        FK.M4.rotX(alpha),
+        FK.M4.translate([a, 0, 0]),
+        FK.M4.rotZ(theta),
+        FK.M4.translate([0, 0, d])
+      );
+    }
+    var cases = [
+      [-90 * FK.DEG, 0.5, 30 * FK.DEG, 0.5],
+      [37 * FK.DEG, 1.2, -64 * FK.DEG, -0.8],
+      [0, 0, 0, 0],
+      [180 * FK.DEG, 0, -180 * FK.DEG, 2]
+    ];
+    cases.forEach(function (cse, index) {
+      var got = chain(cse[0], cse[1], cse[2], cse[3]);
+      var want = expand(cse[0], cse[1], cse[2], cse[3]);
+      for (var i = 0; i < 16; i += 1) {
+        if (Math.abs(got[i] - want[i]) > 1e-12) {
+          throw new Error("式(3-4) 自检失败（第" + (index + 1) + "组，元素" + i + "）：" + got[i] + " ≠ " + want[i]);
+        }
+      }
+      var R = FK.M4.rotation(got);
+      for (var r = 0; r < 3; r += 1) {
+        for (var c2 = 0; c2 < 3; c2 += 1) {
+          var sum = 0;
+          for (var kk = 0; kk < 3; kk += 1) sum += R[r * 3 + kk] * R[c2 * 3 + kk];
+          if (Math.abs(sum - (r === c2 ? 1 : 0)) > 1e-12) {
+            throw new Error("旋转部分非正交（第" + (index + 1) + "组）");
+          }
+        }
+      }
+    });
+    // 默认参数（α=−90°, a=0.5, θ=30°, d=0.5）下 ^{i-1}_iT 的显式数值
+    var Tdef = chain(-90 * FK.DEG, 0.5, 30 * FK.DEG, 0.5);
+    var expected = [
+      0.8660254037844387, -0.5, 0, 0.5,
+      0, 0, 1, 0.5,
+      -0.5, -0.8660254037844387, 0, 0,
+      0, 0, 0, 1
+    ];
+    for (var j = 0; j < 16; j += 1) {
+      if (Math.abs(Tdef[j] - expected[j]) > 1e-12) {
+        throw new Error("默认参数数值自检失败（元素" + j + "）：" + Tdef[j] + " ≠ " + expected[j]);
+      }
+    }
+    // 默认参数下 {i} 原点 = [a, −sα·d, cα·d] = [0.5, 0.5, 0]
+    var p = FK.M4.position(Tdef);
+    if (!FK.Vec.eq(FK.Vec.round(p, 9), [0.5, 0.5, 0], 1e-9)) {
+      throw new Error("默认参数 {i} 原点自检失败：" + JSON.stringify(p));
+    }
+    // 四个中间坐标系的原点：{P} 与 {i−1} 重合，{Q} 在 [a,0,0]，{R} 与 {Q} 重合
+    var eps = 1e-12;
+    if (!FK.Vec.eq(FK.M4.position(FK.M4.rotX(-90 * FK.DEG)), [0, 0, 0], eps)) {
+      throw new Error("中间坐标系 {P} 原点自检失败");
+    }
+    if (!FK.Vec.eq(FK.M4.position(chain(-90 * FK.DEG, 0.5, 0, 0)), [0.5, 0, 0], eps)) {
+      throw new Error("中间坐标系 {Q} 原点自检失败");
+    }
+    if (!FK.Vec.eq(FK.M4.position(chain(-90 * FK.DEG, 0.5, 30 * FK.DEG, 0)), [0.5, 0, 0], eps)) {
+      throw new Error("中间坐标系 {R} 与 {Q} 应重合，自检失败");
+    }
+  }());
+
+  relayout();
+  render();
+}());
+</script>
+</body>
+</html>
