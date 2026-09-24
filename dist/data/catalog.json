@@ -48,8 +48,8 @@
     ]
   },
   "stats": {
-    "books": 17,
-    "docs": 211,
+    "books": 18,
+    "docs": 223,
     "code": 216
   },
   "books": [
@@ -607,6 +607,28 @@
       "docCount": 15,
       "firstDocId": "7d08118550e61fb8",
       "chapterCount": 13,
+      "codeCount": 0,
+      "resources": []
+    },
+    {
+      "slug": "robot-technology-basics",
+      "title": "机器人技术基础（第三版）",
+      "author": "刘极峰、杨小兰 主编",
+      "description": "系统介绍机器人本体结构、运动学、动力学、轨迹规划、控制系统、语言与编程，并延伸至工业机器人、操纵型机器人、仿生机器人和课程实验。",
+      "coverSource": "images/ebeb712d75c5336091846e2289b18c069534d7f77e66f49365ee16d2eafafffb.jpg",
+      "tags": [
+        "机器人技术",
+        "运动学与动力学",
+        "工业机器人"
+      ],
+      "category": "robotics",
+      "order": 35,
+      "type": "reference",
+      "sourceSiteName": "机器人技术基础（第三版）",
+      "cover": "files/robot-technology-basics/images/ebeb712d75c5336091846e2289b18c069534d7f77e66f49365ee16d2eafafffb.jpg",
+      "docCount": 12,
+      "firstDocId": "2fd5685e4f1bcf4d",
+      "chapterCount": 10,
       "codeCount": 0,
       "resources": []
     },
@@ -2746,6 +2768,184 @@
       "excerpt": "刚体绕 $X, Y, Z$ 轴旋转 $\\theta$ 角的公式:",
       "order": 15,
       "previousId": "17f913b4025ac384",
+      "nextId": "",
+      "codeFiles": []
+    },
+    {
+      "id": "2090edde17d0db14",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "00-front-matter/index.md",
+      "title": "前置内容",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "\"十二五\"普通高等教育本科国家级规划教材",
+      "order": 1,
+      "previousId": "",
+      "nextId": "2fd5685e4f1bcf4d",
+      "codeFiles": []
+    },
+    {
+      "id": "2fd5685e4f1bcf4d",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/01/index.md",
+      "title": "第1章 绪论",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "计算机技术的不断进步和发展使机器人技术的发展一次次达到一个新水平。上至太空舱、宇宙飞船，下至微型机器人、深海开发，机器人技术已拓展到全球经济发展的诸多领域，成为高科技中极为重要的组成部分。人类文明的发展、科技的进步已和机器人的研究、应用产生了密不可分的关系。人类社会的发展已离不开",
+      "chapterNumber": 1,
+      "order": 2,
+      "previousId": "2090edde17d0db14",
+      "nextId": "6848647dd5a7a3fe",
+      "codeFiles": []
+    },
+    {
+      "id": "6848647dd5a7a3fe",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/02/index.md",
+      "title": "第2章 机器人本体结构",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "机器人本体结构指其机体结构和机械传动系统，也是机器人的支承基础和执行机构。本章以工业机器人为主要对象介绍机器人本体主要组成部分的特点和结构形式。",
+      "chapterNumber": 2,
+      "order": 3,
+      "previousId": "2fd5685e4f1bcf4d",
+      "nextId": "c24170579f0122df",
+      "codeFiles": []
+    },
+    {
+      "id": "c24170579f0122df",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/03/index.md",
+      "title": "第3章 机器人运动学",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "机器人,特别是其中最有代表性的关节型机器人,实质上是由一系列关节连接而成的空间连杆开式链机构。要研究机器人,就必须对其运动学和动力学有一个基本的了解。本章将主要讨论机器人运动学的基本问题,引入齐次坐标、齐次变换,进行机器人的位姿分析,介绍机器人正向与逆向运动学的基本知识。",
+      "chapterNumber": 3,
+      "order": 4,
+      "previousId": "6848647dd5a7a3fe",
+      "nextId": "6aff039b4ea833d6",
+      "codeFiles": []
+    },
+    {
+      "id": "6aff039b4ea833d6",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/04/index.md",
+      "title": "第4章 机器人动力学",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "稳态下研究的机器人运动学分析只限于静态位置问题的讨论,未涉及机器人运动的力、速度、加速度等动态过程。实际上,机器人是一个复杂的动力学系统,机器人系统在外载荷和关节驱动力矩(驱动力)的作用下将取得静力平衡,在关节驱动力矩(驱动力)的作用下将发生运动变化。机器人的动态性能不仅与运动学",
+      "chapterNumber": 4,
+      "order": 5,
+      "previousId": "c24170579f0122df",
+      "nextId": "155035d9f6ad9bca",
+      "codeFiles": []
+    },
+    {
+      "id": "155035d9f6ad9bca",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/05/index.md",
+      "title": "第5章 机器人轨迹规划",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "机器人轨迹泛指工业机器人在运动过程中的运动轨迹,即运动点的位移、速度和加速度。",
+      "chapterNumber": 5,
+      "order": 6,
+      "previousId": "6aff039b4ea833d6",
+      "nextId": "808760a036fe5cf7",
+      "codeFiles": []
+    },
+    {
+      "id": "808760a036fe5cf7",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/06/index.md",
+      "title": "第6章 机器人控制系统",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "工业机器人的控制系统包含对机器人本体工作过程进行控制的控制机、机器人专用传感器、运动伺服驱动系统等。控制系统主要对机器人工作过程中的动作顺序、应到达的位置及姿态、路径轨迹及规划、动作时间间隔以及末端执行器施加在被作用物上的力和力矩等进行控制。控制系统中涉及传感技术、驱动技术、控制",
+      "chapterNumber": 6,
+      "order": 7,
+      "previousId": "155035d9f6ad9bca",
+      "nextId": "caa069267bc6b528",
+      "codeFiles": []
+    },
+    {
+      "id": "caa069267bc6b528",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/07/index.md",
+      "title": "第7章 机器人语言与编程",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "早期的机器人只具有简单的动作功能,采用固定程序控制,动作适应性差。随着机器人技术的发展及对机器人功能要求的提高,希望同一台机器人通过不同的程序能适应各种不同的作业,即机器人具有较好的通用性。鉴于这样的情况,机器人编程语言的研究变得越来越重要,机器人编程语言也层出不穷。机器人编程实",
+      "chapterNumber": 7,
+      "order": 8,
+      "previousId": "808760a036fe5cf7",
+      "nextId": "dc26d2af442f7767",
+      "codeFiles": []
+    },
+    {
+      "id": "dc26d2af442f7767",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/08/index.md",
+      "title": "第8章 工业机器人",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "工业机器人是迄今为止最成熟、应用最广泛的一类应用于工业领域的机器人，现大多数机器人的起源都可追溯到早期的工业机器人技术，而工业机器人也是迄今为止机器人技术中最重要的工程与应用典范。习近平总书记在2014年两院院士大会上特别指出：机器人是“制造业皇冠顶端的明珠”，其研发、制造、应用",
+      "chapterNumber": 8,
+      "order": 9,
+      "previousId": "caa069267bc6b528",
+      "nextId": "43990a062f206201",
+      "codeFiles": []
+    },
+    {
+      "id": "43990a062f206201",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/09/index.md",
+      "title": "第9章 操纵型机器人",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "操纵型机器人由于具有灵活性、机动性，可代替人完成很多重复、烦琐或危险的劳动，可广泛应用于各类服务、农林作业、海洋探索、外科手术、脑波控制、自动驾驶等领域。随着机器人技术日新月异的发展，操纵型机器人将呈现出更加广阔的应用前景。",
+      "chapterNumber": 9,
+      "order": 10,
+      "previousId": "dc26d2af442f7767",
+      "nextId": "b644001468d5e5f6",
+      "codeFiles": []
+    },
+    {
+      "id": "b644001468d5e5f6",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "chapters/10/index.md",
+      "title": "第10章 仿生机器人",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "近年来,随着全球范围内现代科技的强力推动和应用市场的大力牵引,机器人技术取得了长足的进步。人们已不再局限于具有高端技术的工业机器人与操纵型机器人,而是将目标投向了自然界中拥有高超运动能力和协调控制能力的各种生物的仿生学研究,经过近代科研工作者的不懈努力,从各种仿生的概念提出、研发",
+      "chapterNumber": 10,
+      "order": 11,
+      "previousId": "43990a062f206201",
+      "nextId": "6917f62484333f78",
+      "codeFiles": []
+    },
+    {
+      "id": "6917f62484333f78",
+      "bookSlug": "robot-technology-basics",
+      "relPath": "appendices/index.md",
+      "title": "附录与参考资料",
+      "sections": [
+        "正文"
+      ],
+      "excerpt": "让学生运用已学的机械设计基础、工业机器人、机电传动控制、电工技术、电子技术等课程的相关知识,阅读慧鱼机器人说明书,根据教师拟订的设计题目或学生自选题目,设计并组装一个机电一体化机械系统。",
+      "order": 12,
+      "previousId": "b644001468d5e5f6",
       "nextId": "",
       "codeFiles": []
     },
