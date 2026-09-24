@@ -654,11 +654,19 @@ input[type="range"]::-moz-range-thumb {
       }
       return group;
     },
-    /** 绘制地面网格（xy 平面） */
-    grid: function (half, step, attrs) {
+    /**
+     * 绘制地面网格（xy 平面）。
+     * @param {number} half 网格半宽，默认 3
+     * @param {number} step 网格间距，默认 1
+     * @param {object} attrs 传给每条网格线的额外属性
+     * @param {Element} parent 目标图层；不传时落在 scene.layer。
+     *   注意：调用方若在 render() 里用某个命名图层调用 replaceChildren() 清理，
+     *   就必须把该图层作为 parent 传进来，否则网格会挂在根 SVG 上不断累积。
+     */
+    grid: function (half, step, attrs, parent) {
       var h = half === undefined ? 3 : half;
       var s = step === undefined ? 1 : step;
-      var group = this.el("g", { class: "fk-grid" });
+      var group = this.el("g", { class: "fk-grid" }, parent);
       for (var i = -h; i <= h; i += s) {
         this.line([-h, i, 0], [h, i, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
         this.line([i, -h, 0], [i, h, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
@@ -1043,7 +1051,9 @@ input[type="range"]::-moz-range-thumb {
     var Q = state.mode === "transform" ? [state.dx, state.dy, state.dz] : [0, 0, 0];
     var P2 = FK.Vec.add(mid, Q);
 
-    scene.grid(Math.max(2, Math.round(layout.axisLength)), 1);
+    // 网格必须画进 gridLayer：render() 只清理命名图层，
+    // 若让它落在根 SVG（scene.layer），每次重绘都会累积一套网格。
+    scene.grid(Math.max(2, Math.round(layout.axisLength)), 1, null, gridLayer);
     axes();
 
     if (state.showGuide) {
@@ -1058,21 +1068,22 @@ input[type="range"]::-moz-range-thumb {
       }
     }
 
-    vec([0, 0, 0], P1, C.p1, "mP1");
+    // 同理，所有矢量都必须显式落在 vectorLayer
+    vec([0, 0, 0], P1, C.p1, "mP1", undefined, vectorLayer);
     tag(P1, "\u1d2cP\u2081", C.p1, 12, -12, 17);
 
     if (state.showMid && state.mode === "transform") {
-      vec([0, 0, 0], mid, C.mid, "mMid", 3.6);
+      vec([0, 0, 0], mid, C.mid, "mMid", 3.6, vectorLayer);
       tag(mid, "R_Z(\u03b8)\u00b7\u1d2cP\u2081", C.mid, 12, -12, 15);
     }
 
     if (state.mode === "transform") {
-      vec(mid, P2, C.q, "mQ", 3.6);
+      vec(mid, P2, C.q, "mQ", 3.6, vectorLayer);
       var mp = FK.Vec.scale(FK.Vec.add(mid, P2), 0.5);
       tag(mp, "\u1d2cQ", C.q, 10, -8, 15);
     }
 
-    vec([0, 0, 0], P2, C.p2, "mP2", 5);
+    vec([0, 0, 0], P2, C.p2, "mP2", 5, vectorLayer);
     tag(P2, "\u1d2cP\u2082", C.p2, 12, -12, 18);
 
     if (state.mode === "rotate") {

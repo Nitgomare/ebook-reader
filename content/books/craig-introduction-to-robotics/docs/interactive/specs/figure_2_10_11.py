@@ -289,7 +289,9 @@ SCRIPT = r"""
     var Q = state.mode === "transform" ? [state.dx, state.dy, state.dz] : [0, 0, 0];
     var P2 = FK.Vec.add(mid, Q);
 
-    scene.grid(Math.max(2, Math.round(layout.axisLength)), 1);
+    // 网格必须画进 gridLayer：render() 只清理命名图层，
+    // 若让它落在根 SVG（scene.layer），每次重绘都会累积一套网格。
+    scene.grid(Math.max(2, Math.round(layout.axisLength)), 1, null, gridLayer);
     axes();
 
     if (state.showGuide) {
@@ -304,21 +306,22 @@ SCRIPT = r"""
       }
     }
 
-    vec([0, 0, 0], P1, C.p1, "mP1");
+    // 同理，所有矢量都必须显式落在 vectorLayer
+    vec([0, 0, 0], P1, C.p1, "mP1", undefined, vectorLayer);
     tag(P1, "\u1d2cP\u2081", C.p1, 12, -12, 17);
 
     if (state.showMid && state.mode === "transform") {
-      vec([0, 0, 0], mid, C.mid, "mMid", 3.6);
+      vec([0, 0, 0], mid, C.mid, "mMid", 3.6, vectorLayer);
       tag(mid, "R_Z(\u03b8)\u00b7\u1d2cP\u2081", C.mid, 12, -12, 15);
     }
 
     if (state.mode === "transform") {
-      vec(mid, P2, C.q, "mQ", 3.6);
+      vec(mid, P2, C.q, "mQ", 3.6, vectorLayer);
       var mp = FK.Vec.scale(FK.Vec.add(mid, P2), 0.5);
       tag(mp, "\u1d2cQ", C.q, 10, -8, 15);
     }
 
-    vec([0, 0, 0], P2, C.p2, "mP2", 5);
+    vec([0, 0, 0], P2, C.p2, "mP2", 5, vectorLayer);
     tag(P2, "\u1d2cP\u2082", C.p2, 12, -12, 18);
 
     if (state.mode === "rotate") {

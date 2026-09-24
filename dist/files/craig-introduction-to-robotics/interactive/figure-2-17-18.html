@@ -628,11 +628,19 @@ input[type="range"]::-moz-range-thumb {
       }
       return group;
     },
-    /** 绘制地面网格（xy 平面） */
-    grid: function (half, step, attrs) {
+    /**
+     * 绘制地面网格（xy 平面）。
+     * @param {number} half 网格半宽，默认 3
+     * @param {number} step 网格间距，默认 1
+     * @param {object} attrs 传给每条网格线的额外属性
+     * @param {Element} parent 目标图层；不传时落在 scene.layer。
+     *   注意：调用方若在 render() 里用某个命名图层调用 replaceChildren() 清理，
+     *   就必须把该图层作为 parent 传进来，否则网格会挂在根 SVG 上不断累积。
+     */
+    grid: function (half, step, attrs, parent) {
       var h = half === undefined ? 3 : half;
       var s = step === undefined ? 1 : step;
-      var group = this.el("g", { class: "fk-grid" });
+      var group = this.el("g", { class: "fk-grid" }, parent);
       for (var i = -h; i <= h; i += s) {
         this.line([-h, i, 0], [h, i, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
         this.line([i, -h, 0], [i, h, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
@@ -1192,7 +1200,9 @@ input[type="range"]::-moz-range-thumb {
   function render() {
     Object.keys(layers).forEach(function (k) { layers[k].replaceChildren(); });
 
-    scene.grid(3, 1);
+    // 网格必须画进 #grid 图层：render() 只清理 layers 里的命名图层，
+    // 若让 grid() 落在根 SVG，每次重绘都会累积一套网格（拖影根因）。
+    scene.grid(3, 1, null, layers.grid);
 
     var data = build();
     var R = rotationMatrix(data.current);

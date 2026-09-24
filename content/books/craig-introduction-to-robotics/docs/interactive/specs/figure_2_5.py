@@ -254,7 +254,7 @@ SCRIPT = r"""
     vecLayer.replaceChildren();
     angleLayer.replaceChildren();
 
-    scene.grid(3, 1);
+    scene.grid(3, 1, null, gridLayer);
 
     var theta = state.theta * FK.DEG;
     var Rab = FK.M4.rotZ(theta);

@@ -370,7 +370,9 @@ SCRIPT = r"""
     gTarget.replaceChildren();
     gMarks.replaceChildren();
 
-    scene.grid(1.4, 0.4);
+    // 网格必须画进 gGrid：render() 只清理命名的 <g> 图层，
+    // 若让 grid() 落在根 SVG，每次重绘都会累积一套网格（拖影根因）。
+    scene.grid(1.4, 0.4, null, gGrid);
 
     // 基座坐标系与基座
     seg([0, 0, 0], [0, 0.42, 0], { stroke: "#94a3b8", "stroke-width": 2.6, "stroke-dasharray": "5 5", "marker-end": "url(#arAX)" }, gWork);

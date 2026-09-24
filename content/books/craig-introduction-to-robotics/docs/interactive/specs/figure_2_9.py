@@ -262,7 +262,7 @@ SCRIPT = r"""
     compLayer.replaceChildren();
     vecLayer.replaceChildren();
 
-    scene.grid(3, 1);
+    scene.grid(3, 1, null, gridLayer);
 
     var P1 = [state.p1x, state.p1y, state.p1z];
     var Q = [state.qx, state.qy, state.qz];

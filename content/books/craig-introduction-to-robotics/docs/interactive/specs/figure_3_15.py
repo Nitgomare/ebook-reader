@@ -379,7 +379,7 @@ SCRIPT = r"""
     axesLayer.replaceChildren();
     labelLayer.replaceChildren();
 
-    scene.grid(3, 1);
+    scene.grid(3, 1, null, gridLayer);
 
     var alpha = state.alpha * FK.DEG;
     var theta = state.theta * FK.DEG;

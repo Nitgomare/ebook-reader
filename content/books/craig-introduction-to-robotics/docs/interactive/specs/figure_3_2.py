@@ -367,7 +367,7 @@ SCRIPT = r"""
       });
     });
     fitView(pts);
-    scene.grid(Math.max(2, Math.round(L)), 1);
+    scene.grid(Math.max(2, Math.round(L)), 1, null, gridLayer);
 
     /* 2) 两条关节轴 */
     axisLine(g.P, g.r1, "#475569", "mAxis1", L);

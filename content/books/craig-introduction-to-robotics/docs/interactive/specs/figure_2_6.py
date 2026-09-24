@@ -151,7 +151,7 @@ SCRIPT = r"""
     angleLayer.replaceChildren();
     vectorLayer.replaceChildren();
 
-    scene.grid(Math.max(2, Math.round(layout.axisLength)), 1);
+    scene.grid(Math.max(2, Math.round(layout.axisLength)), 1, null, gridLayer);
 
     drawAxes(axesA, FK.M4.identity(), {
       labels: ["X\u0302\u2090", "Y\u0302\u2090", "Z\u0302\u2090"],
