@@ -124,9 +124,11 @@
 
 ### 2.7 Git 与部署状态（重要）
 
-- **已提交并推送一个 commit**：`52e0a1b 新增两本机器人教材 16 张交互图与全量审查清单`（父提交 `3b4c0c2`）。该提交**不包含**第二批 10 张图与底座同步，这些改动目前只在工作区（未提交）。
-- **Cloudflare 部署未完成**：两次 `wrangler pages deploy` 都失败（`fetch failed` / 上传中断），线上仍是旧版本。
-- 工作区里有三份**用户自己的、不要提交**的未跟踪文件：`PRD.md`、`第16页-网站技术架构.md`、`第17页-内容架构与知识组织.md`。
+- **已提交并推送两个 commit**（origin/main 已同步）：
+  - `52e0a1b` 新增两本机器人教材 16 张交互图与全量审查清单（第一批）
+  - `a61f63d` 新增第二批 11 张交互图并同步两书公共底座（第二批 + 底座同步 + 6 个 Markdown 嵌入 + 文档更新）
+  - 提交前工作区已核对：只暂存 `content/`、`dist/`、`tools/`、`CHANGELOG.md`、`INTERACTIVE_FIGURES_INVENTORY.md`、`INTERACTIVE_FIGURES_CONTINUATION.md`、`.gitignore`；用户自己未跟踪的 `PRD.md`、`第16页-网站技术架构.md`、`第17页-内容架构与知识组织.md` 未纳入。
+- **Cloudflare 部署仍未完成**：此前两次 `wrangler pages deploy` 都失败（`fetch failed` / 上传中断），线上仍是旧版本；接手方需要在 `dist/` 就绪后重新部署（命令见 `PROJECT_HANDOFF.md` 第 11 节）。
 - `.gitignore` 已补充忽略：`tmp/generated/`、`tmp/shots/`、`tmp/chrome*/`、`tmp/audit/`、`tmp/audit-results/`、`tmp/s1..s5/q1..q6/r1/`（子代理截图产生的 Chrome profile）。
 
 ---
@@ -299,7 +301,7 @@ FIGURE = {"id": "figure-3-2", "title": "...", "css": COMMON_CSS, "body": BODY, "
 | 正文嵌入 | ✅ 6 个 Markdown（克雷格 2/3/4 章；机器人技术基础 1/3/4 章） |
 | 公共底座 | ✅ 两书 `figure-kit.js` 已同步为同一版本（581 行，含 `FK.AdaptiveScene`） |
 | `manage.py check` | ✅ 通过（3691 个引用资源） |
-| Git | ⚠️ 仅第一批在 `52e0a1b`；第二批 10 张 + 底座同步**未提交** |
-| Cloudflare 部署 | ❌ 未完成（两次失败），线上仍是旧版 |
+| Git | ✅ 已提交并推送两个 commit：`52e0a1b`（第一批）、`a61f63d`（第二批 + 底座同步）；工作区任务文件已清空 |
+| Cloudflare 部署 | ❌ 未完成（两次失败），线上仍是旧版 —— **接手方需重新部署 `dist/`** |
 | 进行中 | ✅ 无（4 个子代理已全部完成） |
 | 剩余 | 304 张适合交互（高 109 / 中 160 / 低 35）；262 张不适合；41 张待核对 |
