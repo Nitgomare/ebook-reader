@@ -225,9 +225,11 @@ input[type="range"]::-moz-range-thumb {
   .mtable { margin: 2px 0 2px 0; }
   .mtable td { padding: 0 3px; font: 11px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; }
   .mat-caption { font-size: 10.5px; max-width: none; }
+  .mat-inline { display: block; }
   .panel .control { margin-top: 7px; }
   .panel .subtitle { display: none; }
   .panel .legend { margin-top: 7px; padding-top: 7px; }
+  [data-mobile-hide] { display: none !important; }
   .hint { display: none; }
 }
 </style>
@@ -319,8 +321,8 @@ input[type="range"]::-moz-range-thumb {
     <strong>d<sub>i</sub></strong> = <span id="dOut">0.900</span>　
     <strong>θ<sub>i</sub></strong> = <span id="thetaOut">30.0°</span>
   </div>
-  <div class="row small">连杆变换（教材 3.3.2 四步：绕 Z 转 θ<sub>i</sub> → 沿 Z 移 d<sub>i</sub> → 沿 X 移 a<sub>i−1</sub> → 绕 X 转 α<sub>i−1</sub>）：</div>
-  <div class="row"><div class="mat-inline">
+  <div class="row small" style="white-space:normal">连杆变换（教材 3.3.2 四步，式(3.20)）：<br>绕 Z 转 θ<sub>i</sub> → 沿 Z 移 d<sub>i</sub> → 沿 X 移 a<sub>i−1</sub> → 绕 X 转 α<sub>i−1</sub></div>
+  <div class="row" style="white-space:normal"><div class="mat-inline">
     <table class="mtable" aria-label="连杆变换矩阵">
       <tr><td class="theta" id="t-0-0">0.866</td><td class="alpha" id="t-0-1">−0.453</td><td class="alpha" id="t-0-2">0.211</td><td class="len" id="t-0-3">1.386</td></tr>
       <tr><td class="theta" id="t-1-0">0.500</td><td class="alpha" id="t-1-1">0.785</td><td class="alpha" id="t-1-2">−0.366</td><td class="len" id="t-1-3">0.800</td></tr>
@@ -346,7 +348,8 @@ input[type="range"]::-moz-range-thumb {
  * 主要 API（挂在 window.FK 上）：
  *   FK.Vec        三维向量运算（add/sub/scale/dot/cross/norm/normalize）
  *   FK.M4         4x4 齐次变换矩阵运算（identity/multiply/rotX/rotY/rotZ/rotAxis/translate/apply/fromRT/inverse）
- *   FK.Scene      可交互三维场景（SVG 或 Canvas 渲染、正交投影、指针捕获、滚轮缩放、自动旋转）
+ *   FK.Scene      可交互三维场景（SVG 渲染、正交投影、指针捕获、滚轮缩放、自动旋转）
+ *   FK.AdaptiveScene  按 iframe 实际尺寸自适应 viewBox 的场景（推荐使用，见下方注释）
  *   FK.bindRanges 把 range 输入批量绑定到 state 并刷新
  *   FK.format     数值格式化
  *
@@ -746,6 +749,95 @@ input[type="range"]::-moz-range-thumb {
     },
   };
 
+  /* ------------------------------------------------------------------ 自适应场景 */
+
+  /**
+   * 根据 iframe 实际像素尺寸调整 viewBox 与投影中心，避免在窄屏或矮窗口里
+   * 出现大片空白、或图形被压得过小。
+   *
+   * 做法：viewBox 直接取容器的像素宽高（1 单位 = 1 px），因此组件的字号、
+   * 半径、线宽在任何窗口里都保持同样的物理大小；图形位置由 origin 的
+   * 相对锚点决定，缩放由 scale 决定。
+   *
+   * @param {object} options
+   *   - svg / viewport：视图容器（必填）
+   *   - scale：投影缩放（宽屏），默认 78
+   *   - narrowScale：窄屏投影缩放，默认取 scale * 0.86
+   *   - narrowWidth：判定为窄屏的宽度阈值（px），默认 620
+   *   - tallRatio：高度/宽度 大于该值时视为竖屏，默认 1.15
+   *   - wide / narrow / tall：三种形态下的锚点，形如 { x: 0.55, y: 0.62 }
+   *   - design：设计基准尺寸，仅用于日志与默认锚点，默认 { width: 1000, height: 620 }
+   *   - onLayout：每次布局后回调 (scene, layout)
+   *   - 其余选项透传给 Scene
+   */
+  function AdaptiveScene(options) {
+    var opts = options || {};
+    var svg = opts.svg;
+    if (!svg) throw new Error("FK.AdaptiveScene 需要一个 svg 元素作为视图容器");
+    var wide = opts.wide || { x: 0.56, y: 0.62 };
+    var narrow = opts.narrow || { x: 0.5, y: 0.42 };
+    var tall = opts.tall || { x: 0.5, y: 0.4 };
+    var narrowWidth = opts.narrowWidth === undefined ? 620 : opts.narrowWidth;
+    var tallRatio = opts.tallRatio === undefined ? 1.15 : opts.tallRatio;
+    var baseScale = opts.scale === undefined ? 78 : opts.scale;
+    var narrowScale = opts.narrowScale === undefined ? baseScale * 0.86 : opts.narrowScale;
+
+    var sceneOptions = {};
+    Object.keys(opts).forEach(function (key) {
+      if (["wide", "narrow", "tall", "narrowWidth", "tallRatio", "scale", "narrowScale", "onLayout", "design"].indexOf(key) === -1) {
+        sceneOptions[key] = opts[key];
+      }
+    });
+    sceneOptions.scale = baseScale;
+    var scene = new Scene(sceneOptions);
+
+    function layout() {
+      var rect = svg.getBoundingClientRect();
+      var width = Math.max(320, Math.round(rect.width || 1000));
+      var height = Math.max(320, Math.round(rect.height || 620));
+      var isNarrow = width < narrowWidth;
+      var isTall = height / width > tallRatio;
+      var anchor = isNarrow ? (isTall ? tall : narrow) : wide;
+      if (isNarrow && !isTall) anchor = narrow;
+      if (isNarrow && isTall) anchor = tall;
+      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+      svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      scene.baseOrigin.x = width * anchor.x;
+      scene.baseOrigin.y = height * anchor.y;
+      scene.limits.minScale = baseScale * 0.42;
+      scene.limits.maxScale = baseScale * 2.5;
+      var previousScale = scene.state.scale;
+      var previousDefault = scene.defaults.scale;
+      var nextScale = isNarrow ? narrowScale : baseScale;
+      if (previousScale === previousDefault) {
+        scene.state.scale = nextScale;
+      } else {
+        scene.state.scale = Math.max(scene.limits.minScale, Math.min(scene.limits.maxScale, previousScale));
+      }
+      scene.defaults.scale = nextScale;
+      scene.origin.x = scene.baseOrigin.x;
+      scene.origin.y = scene.baseOrigin.y;
+      if (opts.onLayout) opts.onLayout(scene, { width: width, height: height, narrow: isNarrow, tall: isTall });
+      scene.render();
+    }
+
+    scene.fit = layout;
+    if (typeof ResizeObserver !== "undefined") {
+      var observer = new ResizeObserver(function () { layout(); });
+      observer.observe(svg);
+      scene._observer = observer;
+    } else {
+      global.addEventListener("resize", layout);
+    }
+    // 首帧布局：等一帧再测，确保 iframe 已完成布局
+    if (typeof requestAnimationFrame === "function") {
+      requestAnimationFrame(layout);
+    } else {
+      layout();
+    }
+    return scene;
+  }
+
   /* ------------------------------------------------------------------ 工具 */
 
   /**
@@ -820,6 +912,7 @@ input[type="range"]::-moz-range-thumb {
     Vec: Vec,
     M4: M4,
     Scene: Scene,
+    AdaptiveScene: AdaptiveScene,
     bindRanges: bindRanges,
     bindToggles: bindToggles,
     format: format,
@@ -840,12 +933,12 @@ input[type="range"]::-moz-range-thumb {
 
   var scene = new FK.Scene({
     svg: viewport,
-    origin: { x: 430, y: 400 },
-    scale: 48,
+    origin: { x: 410, y: 330 },
+    scale: 76,
     yaw: -0.72,
     pitch: 0.44,
-    minScale: 26,
-    maxScale: 140
+    minScale: 30,
+    maxScale: 170
   });
 
   var DEFAULTS = { a: 1.6, alpha: 25, d: 0.9, theta: 30 };
@@ -867,13 +960,13 @@ input[type="range"]::-moz-range-thumb {
 
   function applyLayout() {
     var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    scene.baseOrigin.x = narrow ? 430 : 430;
-    scene.baseOrigin.y = narrow ? 300 : 400;
+    scene.baseOrigin.x = narrow ? 452 : 410;
+    scene.baseOrigin.y = narrow ? 306 : 330;
   }
 
   function applyInitialZoom() {
     var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    var target = narrow ? 34 : 48;
+    var target = narrow ? 62 : 76;
     scene.state.scale = target;
     scene.defaults.scale = target;
   }
@@ -936,7 +1029,7 @@ input[type="range"]::-moz-range-thumb {
   }
 
   /** 绕 axis 从 from 方向转到 to 方向画圆弧（带符号角，用于扭角 α）*/
-  function drawAngleArc(center, from, to, axis, radius, color, label, labelPush) {
+  function drawAngleArc(center, from, to, axis, radius, color, label, labelPush, labelDx, labelDy) {
     var a0 = FK.Vec.normalize(from);
     var a1 = FK.Vec.normalize(to);
     var av = FK.Vec.normalize(axis);
@@ -955,7 +1048,8 @@ input[type="range"]::-moz-range-thumb {
     }, dimLayer);
     var midDir = FK.Vec.add(FK.Vec.scale(a0, Math.cos(total / 2)), FK.Vec.scale(perp, Math.sin(total / 2)));
     tag(FK.Vec.add(center, FK.Vec.scale(midDir, radius * (labelPush || 1.7))), label,
-      { fill: color, "font-size": 16, class: "fk-axis-label" }, -10, 6, dimLayer);
+      { fill: color, "font-size": 16, class: "fk-axis-label" },
+      labelDx === undefined ? -10 : labelDx, labelDy === undefined ? 6 : labelDy, dimLayer);
   }
 
   /* ------------------------------------------------------------------ 渲染 */
@@ -995,7 +1089,7 @@ input[type="range"]::-moz-range-thumb {
       stroke: C.prev, "stroke-width": 3.4, "marker-end": "url(#arrowPrev)"
     }, jointLayer);
     tag([0, 0, zTop], "关节轴 i\u22121（Z" + "i\u22121" + "）",
-      { fill: C.prev, "font-size": 15, class: "fk-axis-label" }, -172, -4, jointLayer);
+      { fill: C.prev, "font-size": 15, class: "fk-axis-label" }, -92, -4, jointLayer);
 
     /* --- 关节轴 i（= Z_i），过 O_i，方向 Zi ------------------------- */
     var lo = FK.Vec.add(Oi, FK.Vec.scale(Zi, -1.0));
@@ -1022,7 +1116,7 @@ input[type="range"]::-moz-range-thumb {
         stroke: C.a, "stroke-width": 2, "stroke-dasharray": "5 4", "marker-end": "url(#arrowCross)"
       }, dimLayer);
       tag(FK.Vec.scale(crossDir, 0.5), "Z\u0302" + "i\u22121" + " \u00d7 Z\u0302" + "i" + " \u221d X\u0302" + "i",
-        { fill: "#8a4a08", "font-size": 12.5 }, -20, 26, dimLayer);
+        { fill: "#8a4a08", "font-size": 12.5, "data-mobile-hide": "1" }, -20, 58, dimLayer);
     }
 
     /* --- 沿 Z_{i-1} 的偏距 d_i -------------------------------------- */
@@ -1048,8 +1142,8 @@ input[type="range"]::-moz-range-thumb {
           stroke: C.ref, "stroke-width": 1.6, "stroke-dasharray": "4 4"
         }, dimLayer);
         tag(FK.Vec.add(Oi, FK.Vec.scale(ZAX, 0.85)), "\u2225 Z" + "i\u22121",
-          { fill: C.ref, "font-size": 12.5 }, -62, 12, dimLayer);
-        drawAngleArc(Oi, ZAX, Zi, Xi, 0.6, C.next, "\u03b1" + "i\u22121", 2.35);
+          { fill: C.ref, "font-size": 12.5, "data-mobile-hide": "1" }, -62, 12, dimLayer);
+        drawAngleArc(Oi, ZAX, Zi, Xi, 0.6, C.next, "\u03b1" + "i\u22121", 2.35, -68, 4);
       }
     }
 
@@ -1068,12 +1162,12 @@ input[type="range"]::-moz-range-thumb {
       tag(FK.Vec.add(foot, [0.42 * 2.0 * Math.cos(midT), 0.42 * 2.0 * Math.sin(midT), 0]),
         "\u03b8" + "i",
         { fill: "#174ea6", "font-size": 17, "font-style": "italic", class: "fk-axis-label" },
-        -8, 26, dimLayer);
+        -70, 34, dimLayer);
       seg(foot, FK.Vec.add(foot, [0.58, 0, 0]), {
         stroke: "#8fb0ea", "stroke-width": 1.4, "stroke-dasharray": "4 4"
       }, dimLayer);
       tag(FK.Vec.add(foot, [0.58, 0, 0]), "\u2225 X" + "i\u22121",
-        { fill: "#5b6a80", "font-size": 12.5 }, -46, -6, dimLayer);
+        { fill: "#5b6a80", "font-size": 12.5, "data-mobile-hide": "1" }, -46, -6, dimLayer);
     }
 
     /* --- 两个连杆坐标系（只画 X / Y；Z 就是关节轴） ------------------ */

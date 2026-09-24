@@ -60,8 +60,34 @@ EXTRA_CSS = """
   .matrix {
     right: 8px; top: 96px; bottom: auto; left: 8px;
     font-size: 10.5px; line-height: 1.35; padding: 6px 8px;
+    max-width: calc(100% - 16px);
+    overflow: hidden;
   }
   .matrix .cap { font-size: 10.5px; margin-bottom: 2px; }
+}
+
+/* 移动端收尾：确保 390px 宽下不出现横向溢出、面板与读数都收在视口内 */
+html, body { overflow-x: hidden; }
+.app { max-width: 100vw; }
+@media (max-width: 720px) {
+  .panel { overflow-x: hidden; }
+  .panel h1 { font-size: 13.5px; }
+  .legend { font-size: 10px; gap: 3px 7px; }
+  .legend span { white-space: nowrap; }
+  .options-grid label { font-size: 10px; }
+  .readout { max-width: calc(100% - 16px); overflow-wrap: anywhere; }
+}
+
+/* 移动端硬性约束：任何块都不得超出 390px 视口 */
+@media (max-width: 720px) {
+  .readout {
+    max-width: calc(100vw - 16px) !important;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+  .readout .row { white-space: normal !important; }
+  .panel { max-width: calc(100vw - 16px) !important; }
+  .matrix { max-width: calc(100vw - 16px) !important; }
 }
 """
 
@@ -150,11 +176,8 @@ BODY = """
 
 <div class="matrix" id="matrix">
   <div class="cap">ᴬ_BT（式2-21，4×4 齐次变换矩阵）</div>
-  <div class="row"><span class="b">[</span> <span class="r" id="m00">0.866</span>  <span class="r" id="m01">-0.500</span>  <span class="r" id="m02">0.000</span>   <span class="t" id="m03">10.000</span> <span class="b">]</span></div>
-  <div class="row"><span class="b">[</span> <span class="r" id="m10">0.500</span>  <span class="r" id="m11">0.866</span>   <span class="r" id="m12">0.000</span>   <span class="t" id="m13">5.000</span> <span class="b">]</span></div>
-  <div class="row"><span class="b">[</span> <span class="r" id="m20">0.000</span>  <span class="r" id="m21">0.000</span>   <span class="r" id="m22">1.000</span>   <span class="t" id="m23">0.000</span> <span class="b">]</span></div>
-  <div class="row"><span class="b">[</span> <span class="h" id="m30">0</span>      <span class="h" id="m31">0</span>       <span class="h" id="m32">0</span>       <span class="h" id="m33">1</span>     <span class="b">]</span></div>
-  <div class="small" style="font-size:11.5px;color:#65748b">左 3×3：旋转 ᴬ_BR　·　右上 3×1：平移 ᴬP_BORG</div>
+  <div id="matrixRows"></div>
+  <div class="small" style="font-size:11.5px;color:#65748b">左 3×3：旋转 ᴬ_BR（红）　·　右上 3×1：平移 ᴬP_BORG（紫）　·　末行 [0 0 0 1]（绿）</div>
 </div>
 
 <div class="readout">
@@ -371,11 +394,18 @@ SCRIPT = r"""
 
     drawArc(1.15, 0, theta);
 
-    // 矩阵与读数（注意 id 是两位下标：m00 … m33）
-    for (var i = 0; i < 16; i += 1) {
-      var cell = document.getElementById("m" + (i < 10 ? "0" : "") + i);
-      if (cell) cell.textContent = FK.format(T[i], 3);
+    // 矩阵（按行拼字符串渲染，保证显示值与计算值一致）
+    var rows = "";
+    for (var r = 0; r < 4; r += 1) {
+      var cls = r < 3 ? "r" : "h";
+      rows += '<div class="row"><span class="b">[</span> ' +
+        '<span class="' + cls + '">' + FK.format(T[r * 4], 3) + '</span>  ' +
+        '<span class="' + cls + '">' + FK.format(T[r * 4 + 1], 3) + '</span>  ' +
+        '<span class="' + cls + '">' + FK.format(T[r * 4 + 2], 3) + '</span>   ' +
+        '<span class="' + (r < 3 ? "t" : "h") + '">' + FK.format(T[r * 4 + 3], 3) + '</span> ' +
+        '<span class="b">]</span></div>';
     }
+    document.getElementById("matrixRows").innerHTML = rows;
     document.getElementById("q1").textContent = FK.format(PB[0], 3);
     document.getElementById("q2").textContent = FK.format(PB[1], 3);
     document.getElementById("q3").textContent = FK.format(PB[2], 3);

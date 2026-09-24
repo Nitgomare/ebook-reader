@@ -60,6 +60,7 @@ CSS = COMMON_CSS + """
   .panel .legend { display: none; }
   [data-mobile-hide] { display: none !important; }
   .mat-note { display: block; }
+  [data-mobile-hide] { display: none !important; }
   .hint { display: none; }
 }
 """
@@ -243,7 +244,8 @@ SCRIPT = r"""
       var t2 = scene.el("text", {
         x: p.x + (c.dx === undefined ? 12 : c.dx),
         y: p.y + (c.dy === undefined ? -12 : c.dy) + 20,
-        fill: c.textColor || color, "font-size": 13, class: "fk-point-label"
+        fill: c.textColor || color, "font-size": 13, class: "fk-point-label",
+        "data-mobile-hide": "1"
       }, vecLayer);
       t2.textContent = c.value;
     }
@@ -397,23 +399,23 @@ SCRIPT = r"""
       // U 的箭头指向画面右侧、靠近读数框；标签自动放到箭头左侧，避免被读数框遮住
       var pU = scene.project(U);
       var uDx = pU.x > 520 ? -215 : 16;
-      drawVector(U, C.U, "arrowU", "U", { value: vecStr(U) + "\u1d40", dx: uDx, dy: -12 });
+      drawVector(U, C.U, "arrowU", "U", { value: vecStr(U) + "\u1d40", dx: uDx, dy: -14 });
       drawVector(Mid, C.M, "arrowM", "Rot(Z,\u03b8\u2081)\u00b7U",
-        { value: vecStr(Mid) + "\u1d40", dx: 14, dy: 22, dim: !showMid });
-      drawVector(W, C.W, "arrowW", "W", { value: vecStr(W) + "\u1d40", dx: 14, dy: -14 });
+        { value: vecStr(Mid) + "\u1d40", dx: 14, dy: 24, dim: !showMid });
+      drawVector(W, C.W, "arrowW", "W", { value: vecStr(W) + "\u1d40", dx: 20, dy: -28 });
     }
 
-    // 两步旋转的角度标注
+    // 两步旋转的角度标注：两张弧线各占一侧，避免与端点标签挤在一起
     if (!firstOnly) {
       if (state.t1 !== 0) {
-        var p1 = scene.project(blend(U, Mid, 0.62, 1.14));
+        var p1 = scene.project(blend(U, Mid, 0.5, 1.28));
         var a1 = scene.el("text", {
           x: p1.x, y: p1.y, fill: "#a35a0d", "font-size": 17, class: "fk-axis-label"
         }, arcLayer);
         a1.textContent = "\u03b8\u2081 = " + FK.format(state.t1, 0) + "\u00b0";
       }
       if (state.step2) {
-        var p2 = scene.project(blend(Mid, W, 0.62, 1.14));
+        var p2 = scene.project(blend(Mid, W, 0.42, 1.34));
         var a2 = scene.el("text", {
           x: p2.x, y: p2.y, fill: "#0e7490", "font-size": 17, class: "fk-axis-label"
         }, arcLayer);

@@ -48,6 +48,16 @@ IMPLEMENTED = {
     ("robot-technology-basics", "图3.16"): "docs/interactive/figure-3-16.html",
     ("robot-technology-basics", "图3.20"): "docs/interactive/figure-3-20.html",
     ("robot-technology-basics", "图4.1"): "docs/interactive/figure-4-1.html",
+    ("robot-technology-basics", "图1.8"): "docs/interactive/figure-1-8.html",
+    ("robot-technology-basics", "图1.14"): "docs/interactive/figure-1-14.html",
+    ("robot-technology-basics", "题1.7图"): "docs/interactive/figure-t1-7.html",
+    ("robot-technology-basics", "图3.15"): "docs/interactive/figure-3-15.html",
+    ("robot-technology-basics", "图3.17"): "docs/interactive/figure-3-17.html",
+    ("craig-introduction-to-robotics", "图3-2"): "docs/interactive/figure-3-2.html",
+    ("craig-introduction-to-robotics", "图3-6"): "docs/interactive/figure-3-6.html",
+    ("craig-introduction-to-robotics", "图3-9"): "docs/interactive/figure-3-9.html",
+    ("craig-introduction-to-robotics", "图4-2"): "docs/interactive/figure-4-2.html",
+    ("craig-introduction-to-robotics", "图4-8"): "docs/interactive/figure-4-8.html",
 }
 
 # 正在实施（已排入本轮批次但尚未验证完成）

@@ -1,0 +1,1002 @@
+"""图3-15 机器人坐标系的分配（《机器人技术基础（第三版）》3.3.1 一、坐标系号的分配方法）。
+
+教材依据（正文原话，第 3 章 3.3.1 节）：
+- “机器人的各连杆通过关节连接在一起，关节有移动副与转动副两种。按从机座到末端执行器的顺序，
+  由低到高依次为各关节和各连杆编号，如图3.15所示。机座的编号为杆件0，与机座相连的连杆编号为
+  连杆1，以此类推。机座与连杆1的关节编号为关节1，连杆1与连杆2的连接关节编号为2，以此类推。
+  各连杆的坐标系Z轴方向与关节轴线重合（对于移动关节，为Z轴线沿此关节移动方向）。”
+- “末端执行器上的坐标系依据夹持器(手爪)手指的运动方向固定在末端执行器上。原点位于形心；
+  X_n 沿末端执行器手指组成的平面的法向，故又被称为法线矢量；Y_n 垂直于手指，称为姿态矢量。
+  Z_n 的方向朝外指向目标，称为接近矢量。”
+- 3.3.1 2. D-H 方法：“连杆 i 的坐标系的 Z_i 轴位于连杆 i 与连杆 i+1 的转动关节轴线上；连杆 i 的
+  两端轴线的公垂线为连杆坐标系的 X_i 轴，方向指向下一个连杆；公垂线与 Z_i 的交点为坐标系原点；
+  坐标系的 Y_i 轴由 X_i 和 Z_i 确定。”
+- 3.3.1(2) 棱柱联轴器：“距离 d_i 成为联轴器(关节)变量，而联轴器的方向即为此联轴器移动的方向。
+  该轴方向是规定的 …… 对于联轴器来说，其长度 a_i 没有意义，令其为零。联轴器的坐标系原点与
+  下一个规定的连杆原点重合。…… 当 d_i = 0 时，定义该联轴器的位置为零。”
+
+记法约定（本图严格按教材下标书写）：
+- 本教材采用标准（standard / 经典 Denavit-Hartenberg）记法——{i} 的 Z_i 位于关节 i 的轴线上、
+  X_i 沿公垂线指向下一连杆；但**下标比克雷格书早一位**：教材把“关节轴 Z_{i−1} 与 Z_i 之间的
+  连杆长度、连杆扭角”写成 a_i、α_i（克雷格书同几何量写作 a_{i−1}、α_{i−1}）。
+  本图只按教材写法出现 i（a_i、α_i、d_i、θ_i），读数区给出两套下标的对照，避免 i−1 与 i 混用。
+- 关节变量：转动关节为 θ_i，移动（棱柱）关节为 d_i。
+
+本图表达的教学点：
+1. 编号规则：杆件 0 = 机座，连杆/关节/坐标系一律从机座到末端由低到高；n 个关节 ⇒ {0}…{n} 共 n+1 个坐标系。
+2. Z_i 与关节 i 的轴线重合：转动关节 Z 沿转轴，移动关节 Z 沿移动方向。
+   —— 把某个关节在“转动/移动”之间切换时，该关节的 Z 轴方向随之改变（本图核心交互）。
+3. 多数平行连杆的 Z 轴保持平行：只把关节 1 设为转动（绕机座竖轴），关节 2 默认移动（升降），
+   关节 3、4 转动但转轴与关节 1 平行 —— 于是所有 Z 轴始终相互平行，不逐杆换向。
+
+脚本内自检（selfTest）：见文件末尾，逐条断言编号、Z 轴平行性、移动关节 Z 轴与上游 Z 轴同向、
+移动关节原点沿自身 Z 轴平移、坐标系原点平面性等，失败直接 throw。
+"""
+
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
+from figure_style import COMMON_CSS  # noqa: E402
+
+CSS = COMMON_CSS + """
+.fig-note {
+  margin-top: 9px;
+  padding: 6px 9px;
+  border: 1px solid #cddffb;
+  border-radius: 9px;
+  color: var(--blue-dark);
+  background: var(--blue-soft);
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+.fig-note b { color: #1d4ed8; }
+.panel { overflow-x: hidden; }
+.jrow {
+  display: grid;
+  /* 用 minmax(0, 1fr)：否则 select 的默认固有宽度会把轨道撑开，窄屏时行内容溢出面板 */
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 6px;
+  margin-top: 7px;
+  max-width: 100%;
+}
+.jrow .jname { color: #42526a; font-size: 12px; font-weight: 700; }
+.jrow select {
+  width: 100%;
+  min-width: 0;
+  padding: 3px 4px;
+  border: 1px solid #cfdcf0;
+  border-radius: 7px;
+  color: #33415a;
+  background: #fff;
+  font-size: 12px;
+}
+.jrow select.is-move { border-color: #c26a10; color: #8a4a08; background: #fff7ec; }
+.jout {
+  flex: none;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid #cfe0fb;
+  background: #f2f7ff;
+  font: 700 11px/1.35 ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: #174ea6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jout.is-move { border-color: #f0cf9f; background: #fff7ec; color: #8a4a08; }
+.vrow .control { margin-top: 4px; }
+.vrow .control label { font-size: 11.5px; }
+.panel .sec-title {
+  margin: 12px 0 0;
+  padding-top: 9px;
+  border-top: 1px dashed var(--line);
+  color: #45566f;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.zlist { margin: 0; padding: 0; list-style: none; }
+.zlist li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 2px 0;
+  color: #3d4c63;
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+.zlist li b { color: #0b6b3a; }
+.zlist li.moved b { color: #8a4a08; }
+.zlist li i {
+  flex: none;
+  width: 26px;
+  height: 3px;
+  border-radius: 2px;
+  background: #94a3b8;
+}
+.zlist li.moved i { background: #c26a10; }
+.rule {
+  margin: 6px 0 0;
+  padding: 6px 9px;
+  border-left: 3px solid #2563eb;
+  border-radius: 0 8px 8px 0;
+  color: #33415a;
+  background: #f5f9ff;
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+.rule b { color: var(--blue-dark); }
+.readout .sy-rev { color: #7c3aed; }
+.readout .sy-mov { color: #c26a10; }
+@media (max-width: 720px) {
+  .panel .sec-title { margin-top: 8px; padding-top: 6px; }
+  .jrow { grid-template-columns: 30px minmax(0, 1fr) auto; gap: 3px 5px; margin-top: 5px; }
+  .jrow .jname, .jrow select { font-size: 11.5px; }
+  .jrow select { padding: 2px 3px; }
+  .jout { font-size: 10px; padding: 1px 4px; }
+  .vrow .control { margin-top: 2px; }
+  .vrow .control label { font-size: 11px; }
+  .readout { font-size: 12px; max-width: calc(100% - 16px); padding: 7px 9px; }
+  .readout .row { white-space: normal; }
+  .readout .small { font-size: 10.5px; }
+  .zlist li { font-size: 11px; padding: 1px 0; }
+  .rule, .fig-note { font-size: 10.5px; }
+  [data-mobile-hide] { display: none !important; }
+}
+"""
+
+BODY = """
+<svg class="viewport" id="viewport" viewBox="0 0 1000 700" preserveAspectRatio="none" role="img"
+     aria-label="机器人坐标系分配示意图：杆件0为机座，各连杆坐标系的Z轴与关节轴线重合，转动关节沿转轴、移动关节沿移动方向">
+  <defs>
+    <marker id="arX" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.2" markerHeight="5.2" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d93025"></path>
+    </marker>
+    <marker id="arY" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.2" markerHeight="5.2" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"></path>
+    </marker>
+    <marker id="arZ" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.6" markerHeight="5.6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#12944f"></path>
+    </marker>
+    <marker id="arZb" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.6" markerHeight="5.6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#12944f"></path>
+    </marker>
+    <marker id="arArc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"></path>
+    </marker>
+    <marker id="arMove" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c26a10"></path>
+    </marker>
+  </defs>
+  <g id="gGrid"></g>
+  <g id="gBase"></g>
+  <g id="gLink"></g>
+  <g id="gFrame"></g>
+  <g id="gAxis"></g>
+  <g id="gMark"></g>
+</svg>
+
+<section class="panel" aria-label="图3.15 控制面板">
+  <div class="panel-head">
+    <div>
+      <h1>图3.15 机器人坐标系的分配</h1>
+      <p class="subtitle">杆件 0 是机座；连杆 i 的坐标系 {i} 的 Z 轴与关节 i 的轴线重合
+        （转动关节沿转轴、移动关节沿移动方向）。把某个关节改成“移动”，看它的 Z 轴方向随之改变。</p>
+    </div>
+    <button class="reset" id="reset" type="button">重置</button>
+  </div>
+
+  <div class="fig-note">
+    <b>编号规则</b>（教材 3.3.1 一）：从机座到末端由低到高 —— 杆件 0 = 机座，关节 i 连接杆件 i−1 与
+    杆件 i，坐标系 {i} 固定在杆件 i 上。n 个关节 ⇒ {0}…{n} 共 n+1 个坐标系。<b>不要逐杆换向</b>：
+    本图 4 个关节的 Z 轴两两平行（关节 1 绕机座竖轴，其余转轴与它平行），这正是“多数平行连杆的
+    Z 轴保持平行”。
+    <br><b>记法</b>：教材用标准 D-H，但下标比克雷格书早一位（教材 a<sub>i</sub>、α<sub>i</sub>
+    ＝ 克雷格 a<sub>i−1</sub>、α<sub>i−1</sub>）；本图只出现教材下标 i，不混用 i−1。
+  </div>
+
+  <div class="control">
+    <div class="control-head"><label for="nJoints">关节数 n（杆件 0…n 共 n+1 个坐标系）</label><output id="nJointsValue">4</output></div>
+    <input id="nJoints" type="range" min="3" max="4" step="1" value="4">
+  </div>
+
+  <p class="sec-title">各关节类型（切换后该关节 Z 轴方向随之改变）</p>
+  <div class="jrow">
+    <span class="jname">关节1</span>
+    <select id="k0" aria-label="关节1类型"><option value="R">转动</option><option value="P">移动</option></select>
+    <output class="jout" id="k0Value">Z 沿转轴</output>
+  </div>
+  <div class="jrow">
+    <span class="jname">关节2</span>
+    <select id="k1" aria-label="关节2类型"><option value="R">转动</option><option value="P" selected>移动</option></select>
+    <output class="jout is-move" id="k1Value">Z 沿移动方向</output>
+  </div>
+  <div class="jrow">
+    <span class="jname">关节3</span>
+    <select id="k2" aria-label="关节3类型"><option value="R" selected>转动</option><option value="P">移动</option></select>
+    <output class="jout" id="k2Value">Z 沿转轴</output>
+  </div>
+  <div class="jrow" id="row4">
+    <span class="jname">关节4</span>
+    <select id="k3" aria-label="关节4类型"><option value="R" selected>转动</option><option value="P">移动</option></select>
+    <output class="jout" id="k3Value">Z 沿转轴</output>
+  </div>
+
+  <p class="sec-title" id="varTitle">各关节变量</p>
+  <div class="vrow">
+    <div class="control">
+      <div class="control-head"><label for="q0" id="q0Label">关节1 转角 θ₁</label><output id="q0Value">20.0°</output></div>
+      <input id="q0" type="range" min="-90" max="90" step="1" value="20">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="q1" id="q1Label">关节2 位移 d₂</label><output id="q1Value">0.45</output></div>
+      <input id="q1" type="range" min="-0.5" max="1.2" step="0.01" value="0.45">
+    </div>
+    <div class="control">
+      <div class="control-head"><label for="q2" id="q2Label">关节3 转角 θ₃</label><output id="q2Value">-25.0°</output></div>
+      <input id="q2" type="range" min="-150" max="150" step="1" value="-25">
+    </div>
+    <div class="control" id="var4">
+      <div class="control-head"><label for="q3" id="q3Label">关节4 转角 θ₄</label><output id="q3Value">35.0°</output></div>
+      <input id="q3" type="range" min="-150" max="150" step="1" value="35">
+    </div>
+  </div>
+
+  <div class="options">
+    <label><input id="showFrames" type="checkbox" checked>显示坐标系 {i}</label>
+    <label><input id="showAxisLabels" type="checkbox" checked>显示轴标</label>
+    <label><input id="showZAxis" type="checkbox" checked>Z 轴延长线（关节轴线）</label>
+    <label><input id="showVars" type="checkbox" checked>显示变量标注</label>
+    <label><input id="auto" type="checkbox">自动旋转视角</label>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#12944f"></i>Z<sub>i</sub> 轴（= 关节 i 轴线）</span>
+    <span><i style="background:#d93025"></i>X<sub>i</sub></span>
+    <span><i style="background:#2563eb"></i>Y<sub>i</sub></span>
+    <span><i style="background:#7c3aed"></i>转动关节（转轴 ⊥ 连杆）</span>
+    <span><i style="background:#c26a10"></i>移动关节（Z 沿移动方向）</span>
+    <span><i class="dot" style="background:#334155"></i>机座（杆件 0）与关节铰点</span>
+  </div>
+</section>
+
+<div class="hint">拖动旋转 · 滚轮缩放 · 双击复位</div>
+
+<div class="readout">
+  <div class="row" id="statusRow"><strong>当前构型</strong>：<span id="status">…</span></div>
+  <div class="row small">各坐标系 Z 轴方向（在 {0} 中，理论值为 [0, 0, 1]<sup>T</sup>）：</div>
+  <ul class="zlist" id="zlist"></ul>
+  <div class="row small" data-mobile-hide">关节变量：<span id="varLine">…</span></div>
+  <div class="row small">机座 = 杆件 0（{0} 固连于机座）；杆件 <span id="nLink">4</span> 的坐标系 =
+    {<span id="nFrame">4</span>}（共 <span id="nCount">5</span> 个坐标系）</div>
+  <div class="row small sy" data-mobile-hide>图上符号：<b class="sy-rev">↺ 转动关节</b>（Z 沿转轴）　<b class="sy-mov">↕ 移动关节</b>（Z 沿移动方向）</div>
+</div>
+"""
+
+SCRIPT = r"""
+(function () {
+  "use strict";
+
+  var viewport = document.getElementById("viewport");
+  var gGrid = document.getElementById("gGrid");
+  var gBase = document.getElementById("gBase");
+  var gLink = document.getElementById("gLink");
+  var gFrame = document.getElementById("gFrame");
+  var gAxis = document.getElementById("gAxis");
+  var gMark = document.getElementById("gMark");
+
+  var DEFAULTS = {
+    nJoints: 4,
+    kinds: ["R", "P", "R", "R"],
+    q: [20, 0.45, -25, 35],
+    showFrames: true, showAxisLabels: true, showZAxis: true, showVars: true, auto: false
+  };
+  // state 必须在任何取景/绘制函数首次调用之前完成定义（否则 fit() 会因 state 未定义而整页崩溃）
+  var state = {
+    nJoints: DEFAULTS.nJoints,
+    kinds: DEFAULTS.kinds.slice(),
+    q: DEFAULTS.q.slice(),
+    showFrames: true, showAxisLabels: true, showZAxis: true, showVars: true, auto: false,
+    userZoom: false, zoomRatio: 1, compact: false
+  };
+
+  var C = {
+    x: "#d93025", y: "#2563eb", z: "#12944f",
+    rev: "#7c3aed", move: "#c26a10",
+    link: "#5b6a80", linkDot: "#334155", base: "#475569",
+    grid: "#e2eaf5", muted: "#94a3b8", frame: "#174ea6"
+  };
+
+  // 连杆长度（第 i 段 = 杆件 i 的长度，沿 Ẑ_i 从 O_{i-1} 到 O_i）
+  var LEN = [0.90, 0.85, 0.80, 0.70];
+  // 关节类型切换时该关节的默认变量值
+  var RESET_R = [-40, 0, -30, 40];
+  var RESET_P = [0, 0.45, 0, 0];
+  var AXIS_K = 0.62;   // 关节轴线半长（世界单位）
+  var FRAME_K = 0.46;  // 坐标轴长度（世界单位）
+
+  var scene = new FK.Scene({
+    svg: viewport,
+    origin: { x: 640, y: 350 },
+    scale: 155,
+    yaw: -0.72,
+    pitch: 0.42,
+    minScale: 40,
+    maxScale: 620
+  });
+
+  /* ---------------------------------------------------------------- 运动学 */
+
+  /**
+   * 关节 i 的 Z 轴方向（在 {i−1} 中表达）：
+   *   转动关节：Z 沿关节转轴 —— 本机器人所有转轴都与机座竖轴平行，故取 [0, 0, 1]；
+   *   移动关节：Z 沿关节移动方向 —— 取“连杆 i 的伸展方向”（由 θ_i 绕转轴转过后的方向）。
+   * 两者相差 90°，这正是切换关节类型时 Z 轴方向突变的原因（本图核心教学点）。
+   * 注意：kind 必须由调用方传入 —— 不要在这里读 state.kinds，否则 kinematics 会依赖隐藏状态。
+   */
+  function jointZ(kind, acc, phi) {
+    return kind === "R"
+      ? acc.slice()                          // 沿转轴（= 机座竖轴，所有转动关节共用）
+      : [Math.cos(phi), Math.sin(phi), 0];   // 沿移动方向（= 连杆 i 的伸展方向）
+  }
+
+  /**
+   * 正运动学 / 坐标系分配：自机座向末端依次分配 {0}…{n}。
+   * 返回 frames[i] = { o: 原点, x, y, z: 三轴方向（均在 {0} 中）, kind: 关节 i 的类型 }
+   * 关节 i 由 Ẑ_i（在 {i−1} 中）连接 O_{i−1} 与 O_i：
+   *   转动关节 Ẑ_i ⊥ 连杆 ⇒ O_i = O_{i−1} + L_i·dir(φ_i)
+   *   移动关节 Ẑ_i ∥ 连杆 ⇒ O_i = O_{i−1} + (L_i + d_i)·dir(φ_i)
+   * 两种情形都满足“Z_i ∥ Ẑ_i”：yaw 构成机座竖轴上的转动，绕它的任何转动都不改变 Ẑ 方向。
+   */
+  function kinematics(kinds, q) {
+    var n = state.nJoints;
+    var acc = [0, 0, 1];   // {0} 的 Ẑ = 机座竖轴（本机器人所有转动关节的转轴都与它平行）
+    var phi = 0;           // 连杆方向在 xy 平面内的方位角
+    var pos = [0, 0, 0];
+    var out = [{ o: [0, 0, 0], x: [1, 0, 0], y: [0, 1, 0], z: [0, 0, 1], kind: "R" }];
+    for (var i = 0; i < n; i += 1) {
+      var kind = kinds[i];
+      if (kind === "R") { phi += q[i] * FK.DEG; }
+      var zhat = jointZ(kind, acc, phi);
+      var reach = LEN[i] + (kind === "P" ? q[i] : 0);
+      pos = [pos[0] + reach * Math.cos(phi), pos[1] + reach * Math.sin(phi), pos[2]];
+      out.push({
+        o: pos.slice(),
+        x: [Math.cos(phi), Math.sin(phi), 0],
+        y: [-Math.sin(phi), Math.cos(phi), 0],
+        z: zhat.slice(),
+        kind: kind
+      });
+    }
+    return out;
+  }
+
+  function project2(v) { return scene.project(v); }
+
+  function toScreen(v) { return scene.project(v); }
+
+  /* ---------------------------------------------------------------- 取景 */
+  // 本底座的图把 viewBox 与容器像素 1:1 对齐（preserveAspectRatio="none"），
+  // 再按“图形屏幕包围盒”自适应反推 scale / origin，等价于克雷格版底座的 FK.AdaptiveScene。
+
+  var _fitting = false;
+
+  function boundsPoints(frames) {
+    var pts = [];
+    var n = state.nJoints;
+    for (var i = 0; i <= n; i += 1) {
+      var f = frames[i];
+      pts.push(f.o);
+      pts.push(FK.Vec.add(f.o, [AXIS_K, 0, 0]));
+      pts.push(FK.Vec.sub(f.o, [AXIS_K, 0, 0]));
+      pts.push(FK.Vec.add(f.o, [0, 0, AXIS_K]));
+      pts.push(FK.Vec.sub(f.o, [0, 0, AXIS_K]));
+      pts.push(FK.Vec.add(f.o, FK.Vec.scale(f.x, FRAME_K)));
+      pts.push(FK.Vec.add(f.o, FK.Vec.scale(f.y, FRAME_K)));
+      pts.push(FK.Vec.add(f.o, FK.Vec.scale(f.z, FRAME_K)));
+    }
+    pts.push([-0.45, -0.45, -0.06]);
+    pts.push([0.45, 0.45, -0.06]);
+    pts.push([0, 0, -1.0]);
+    return pts;
+  }
+
+  /** 在给定缩放下的屏幕外接框（原点取当前 scene.origin） */
+  function screenExtent(pts) {
+    var dxs = [], dys = [], i, p;
+    for (i = 0; i < pts.length; i += 1) {
+      p = toScreen(pts[i]);
+      dxs.push(p.x);
+      dys.push(p.y);
+    }
+    var x0 = Math.min.apply(null, dxs), x1 = Math.max.apply(null, dxs);
+    var y0 = Math.min.apply(null, dys), y1 = Math.max.apply(null, dys);
+    return { x0: x0, x1: x1, y0: y0, y1: y1, w: x1 - x0, h: y1 - y0 };
+  }
+
+  /**
+   * 自适应取景：viewBox 与容器像素 1:1 对齐（等价于克雷格版底座的 FK.AdaptiveScene），
+   * 先按当前视角估一次缩放，再按该缩放重算屏幕外接框并精确反推 origin —— 两步收敛，
+   * 避免“按旧缩放量的尺寸算新缩放”造成的图形过小。
+   */
+  function fit(frames) {
+    if (_fitting) return;
+    _fitting = true;
+    var rect = viewport.getBoundingClientRect();
+    var W = Math.max(300, Math.round(rect.width || 1000));
+    var H = Math.max(300, Math.round(rect.height || 700));
+    viewport.setAttribute("viewBox", "0 0 " + W + " " + H);
+    viewport.setAttribute("preserveAspectRatio", "none");
+
+    var narrow = W < 720;
+    var ax0 = narrow ? 8 : 332, ax1 = W - 8;   // 桌面端给左上角控制面板让位
+    var ay0 = 12, ay1 = H - 12;
+    var panel = document.querySelector(".panel");
+    if (panel) {
+      var pr = panel.getBoundingClientRect();
+      if (narrow) {
+        if (pr.top > 60) ay1 = Math.min(ay1, pr.top - 8);   // 移动端面板贴底：图形只占上方
+      } else if (pr.right < W - 220) {
+        ax0 = Math.max(ax0, pr.right + 12);
+      }
+    }
+    // 读数卡固定在右上角（移动端在顶部）。图形要避开它，避免遮挡。
+    var readout = document.querySelector(".readout");
+    if (readout) {
+      var rr = readout.getBoundingClientRect();
+      var sy2 = H / Math.max(1, rect.height);
+      var roBottom = (rr.bottom - rect.top) * sy2;
+      if (!isFinite(roBottom)) roBottom = 0;
+      if (narrow) {
+        // 移动端读数卡在顶部：图形排在它下方；空间实在不够时再用全高并让它盖住读数卡
+        if (roBottom > 20 && ay1 - roBottom > 260) ay0 = Math.max(ay0, roBottom + 8);
+      } else {
+        var roLeft = rr.left;
+        var belowH = ay1 - Math.max(ay0, roBottom + 10);
+        var leftW = roLeft - 10 - ax0;
+        if (belowH >= 250 || belowH * 1.4 >= leftW) {
+          if (roBottom > 20 && roBottom < H - 120) ay0 = Math.max(ay0, roBottom + 10);
+        } else if (roLeft > ax0 + 190) {
+          ax1 = Math.min(ax1, roLeft - 10);
+        }
+      }
+    }
+    if (ax1 - ax0 < 190) ax0 = 8;
+
+    var pts = boundsPoints(frames);
+    // 迭代收敛：每一轮都用“当前缩放对应的”屏幕外接框重新定缩放与位置
+    //（不能拿旧缩放的尺寸去反推新缩放，那会把图形算小/算偏 —— 第一批出过这个问题）
+    var unit = scene.state.scale;
+    var ratio = state.userZoom ? Math.max(0.2, Math.min(5, state.zoomRatio)) : 1;
+    var passes = 4;
+    for (var p = 0; p < passes; p += 1) {
+      var e = screenExtent(pts);
+      var eff = unit * ratio;
+      var availW = Math.max(120, ax1 - ax0 - 24);
+      var availH = Math.max(120, ay1 - ay0 - 24);
+      var need = Math.max(e.w > 1e-6 ? e.w / eff : 0, e.h > 1e-6 ? e.h / eff : 0);
+      var next = need > 1e-6 ? Math.min(availW, availH) / need : unit;
+      unit = Math.max(scene.limits.minScale, Math.min(scene.limits.maxScale, next));
+      scene.defaults.scale = unit;
+      scene.state.scale = Math.max(scene.limits.minScale,
+        Math.min(scene.limits.maxScale, unit * ratio));
+      // 精确对齐：把外接框中心移到可用区域中心
+      var e2 = screenExtent(pts);
+      var sc = scene.state.scale / eff;
+      var bcx = (e2.x0 + e2.x1) / 2;
+      var bcy = (e2.y0 + e2.y1) / 2;
+      scene.origin.x += (ax0 + ax1) / 2 - bcx * sc - (1 - sc) * scene.origin.x;
+      scene.origin.y += (ay0 + ay1) / 2 - bcy * sc - (1 - sc) * scene.origin.y;
+      // 兜底：把外接框整体推回可用区域内（平移不改变 scale，故收敛很快）
+      var pad = (p === passes - 1) ? 8 : 20;
+      var e3 = screenExtent(pts);
+      if (e3.x1 > ax1 - pad) scene.origin.x -= e3.x1 - (ax1 - pad);
+      if (e3.x0 < ax0 + pad) scene.origin.x += (ax0 + pad) - e3.x0;
+      if (e3.y1 > ay1 - pad) scene.origin.y -= e3.y1 - (ay1 - pad);
+      if (e3.y0 < ay0 + pad) scene.origin.y += (ay0 + pad) - e3.y0;
+    }
+    scene.baseOrigin.x = scene.origin.x;
+    scene.baseOrigin.y = scene.origin.y;
+    state.compact = (ax1 - ax0) < 380 || scene.state.scale < 96;
+    _fitting = false;
+  }
+
+  /* ------------------------------------------------------------ 绘图工具 */
+
+  function seg(a, b, attrs, parent) {
+    var A = toScreen(a), B = toScreen(b);
+    return scene.el("line", Object.assign({
+      x1: A.x, y1: A.y, x2: B.x, y2: B.y, "stroke-linecap": "round"
+    }, attrs || {}), parent);
+  }
+
+  function tag(v, str, attrs, dx, dy, parent) {
+    var p = toScreen(v);
+    var node = scene.el("text", Object.assign({
+      x: p.x + (dx || 0), y: p.y + (dy || 0),
+      "font-size": 14, "font-weight": 700, class: "fk-axis-label"
+    }, attrs || {}), parent);
+    node.textContent = str;
+    return node;
+  }
+
+  function screenTag(x, y, str, attrs, parent) {
+    var node = scene.el("text", Object.assign({
+      x: x, y: y, "font-size": 14, "font-weight": 700, class: "fk-axis-label"
+    }, attrs || {}), parent);
+    node.textContent = str;
+    return node;
+  }
+
+  function dotAt(v, r, fill, parent) {
+    var p = toScreen(v);
+    scene.el("circle", { cx: p.x, cy: p.y, r: r, fill: fill, class: "fk-point" }, parent);
+  }
+
+  function sub(s, n) { return s + n; }
+
+  /** 绕 zhat 方向的圆弧（θ 角），画在 o 处、半径 radius（世界单位） */
+  function rotArc(o, zhat, phi0, dphi, radius, color, parent, label, ldx, ldy) {
+    if (Math.abs(dphi) < 2 * FK.DEG) return;
+    var steps = Math.max(9, Math.round(Math.abs(dphi) / FK.DEG / 5));
+    var pts = [];
+    var w = FK.Vec.normalize(zhat);
+    var u = [Math.cos(phi0), Math.sin(phi0), 0];
+    var vv = FK.Vec.cross(w, u);
+    for (var k = 0; k <= steps; k += 1) {
+      var t = dphi * (k / steps);
+      pts.push(FK.Vec.add(o, FK.Vec.add(FK.Vec.scale(u, radius * Math.cos(t)), FK.Vec.scale(vv, radius * Math.sin(t)))));
+    }
+    scene.polyline(pts, {
+      stroke: color, "stroke-width": 2.3, "stroke-dasharray": "6 5", fill: "none"
+    }, parent);
+    if (label !== null && label !== undefined) {
+      var mid = dphi * 0.5;
+      var lm = FK.Vec.add(o, FK.Vec.add(
+        FK.Vec.scale(u, radius * 1.5 * Math.cos(mid)),
+        FK.Vec.scale(vv, radius * 1.5 * Math.sin(mid))
+      ));
+      tag(lm, label, { fill: color, "font-size": 15 }, ldx || 0, (ldy || 0) + 5, parent);
+    }
+  }
+
+  /** 尺寸线（双箭头 + 数值），用于标 d_i 的移动量 */
+  function dimLine(a, b, offPx, color, str, parent) {
+    var A = toScreen(a), B = toScreen(b);
+    var dx = B.x - A.x, dy = B.y - A.y, len = Math.sqrt(dx * dx + dy * dy);
+    if (len < 12) return;
+    var nx = -dy / len, ny = dx / len;
+    var p1 = { x: A.x + nx * offPx, y: A.y + ny * offPx };
+    var p2 = { x: B.x + nx * offPx, y: B.y + ny * offPx };
+    scene.el("line", {
+      x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y, stroke: color, "stroke-width": 2,
+      "marker-start": "url(#arMove)", "marker-end": "url(#arMove)"
+    }, parent);
+    screenTag((p1.x + p2.x) / 2 + nx * 14, (p1.y + p2.y) / 2 + ny * 14 - 6, str,
+      { fill: color, "font-size": 15, "text-anchor": "middle", "font-style": "italic" }, parent);
+  }
+
+  /* ---------------------------------------------------------------- 绘制 */
+
+  function render() {
+    gGrid.replaceChildren();
+    gBase.replaceChildren();
+    gLink.replaceChildren();
+    gFrame.replaceChildren();
+    gAxis.replaceChildren();
+    gMark.replaceChildren();
+
+    var frames = kinematics(state.kinds, state.q);
+    fit(frames);
+    var n = state.nJoints;
+
+    // 地面网格（弱参照）
+    for (var gi = -3; gi <= 3; gi += 1) {
+      seg([-3, gi, 0], [3, gi, 0], { stroke: C.grid, "stroke-width": 1 }, gGrid);
+      seg([gi, -3, 0], [gi, 3, 0], { stroke: C.grid, "stroke-width": 1 }, gGrid);
+    }
+
+    // 机座（杆件 0）：一块底板 + 剖面线，并标“杆件 0 = 机座”
+    seg([-0.42, -0.42, 0], [0.42, -0.42, 0], { stroke: C.base, "stroke-width": 3 }, gBase);
+    seg([0.42, -0.42, 0], [0.42, 0.42, 0], { stroke: C.base, "stroke-width": 3 }, gBase);
+    seg([0.42, 0.42, 0], [-0.42, 0.42, 0], { stroke: C.base, "stroke-width": 3 }, gBase);
+    seg([-0.42, 0.42, 0], [-0.42, -0.42, 0], { stroke: C.base, "stroke-width": 3 }, gBase);
+    seg([-0.30, -0.30, 0], [0.30, -0.30, 0], { stroke: C.frame, "stroke-width": 2, "stroke-dasharray": "7 6" }, gBase);
+    seg([-0.30, 0.30, 0], [0.30, 0.30, 0], { stroke: C.frame, "stroke-width": 2, "stroke-dasharray": "7 6" }, gBase);
+    seg([0, 0, 0], [0, 0, 0.52], { stroke: C.base, "stroke-width": 8, opacity: 0.35, "stroke-linecap": "butt" }, gBase);
+    tag([0, 0, 0], "杆件 0 = 机座", { fill: C.base, "font-size": 14.5, "text-anchor": "end" },
+      -0.42 * scene.state.scale - 12, 20, gBase);
+
+    // 连杆（粗浅色杆身 + 细中心线）
+    for (var i = 1; i <= n; i += 1) {
+      var A = frames[i - 1].o, B = frames[i].o;
+      var mid = [(A[0] + B[0]) / 2, (A[1] + B[1]) / 2, (A[2] + B[2]) / 2];
+      seg(A, B, { stroke: "#cbd5e1", "stroke-width": 16 }, gLink);
+      seg(A, B, { stroke: "#eef3f9", "stroke-width": 8 }, gLink);
+      if (!state.compact) {
+        var mp = toScreen(mid);
+        var lp = toScreen(B);
+        screenTag((mp.x + lp.x) / 2, (mp.y + lp.y) / 2 - 8, "连杆 " + i,
+          { fill: C.link, "font-size": 12.5, "text-anchor": "middle" }, gLink);
+      }
+    }
+
+    // 各坐标系 {i}：Z 轴（绿色粗箭头，= 关节轴线方向）+ X / Y 轴
+    for (var k = 0; k <= n; k += 1) {
+      var f = frames[k];
+      var zt = FK.Vec.add(f.o, FK.Vec.scale(f.z, FRAME_K * 1.15));
+      seg(f.o, zt, { stroke: C.z, "stroke-width": 4.4, "marker-end": "url(#arZb)" }, gFrame);
+      if (state.showFrames) {
+        var xt = FK.Vec.add(f.o, FK.Vec.scale(f.x, FRAME_K));
+        var yt = FK.Vec.add(f.o, FK.Vec.scale(f.y, FRAME_K));
+        seg(f.o, xt, { stroke: C.x, "stroke-width": 2.4, "marker-end": "url(#arX)" }, gFrame);
+        seg(f.o, yt, { stroke: C.y, "stroke-width": 2.4, "marker-end": "url(#arY)" }, gFrame);
+        if (state.showAxisLabels && !state.compact) {
+          tag(xt, sub("X\u0302", k), { fill: C.x, "font-size": 12.5 }, 4, 12, gFrame);
+          tag(yt, sub("Y\u0302", k), { fill: C.y, "font-size": 12.5 }, 4, 12, gFrame);
+        }
+      }
+      if (state.showAxisLabels) {
+        tag(zt, sub("Z\u0302", k), { fill: "#0b6b3a", "font-size": 13.5 }, 7, -6, gFrame);
+      }
+      dotAt(f.o, 4.6, C.linkDot, gFrame);
+      var op = toScreen(f.o);
+      // {i} 与 O_i 标在原点左侧；轴线标签 Z_i 在轴端右侧 —— 避免四类标签挤在一处
+      screenTag(op.x - 9, op.y - 5, "{" + k + "}", {
+        fill: C.frame, "font-size": 13, "text-anchor": "end", "font-style": "italic"
+      }, gFrame);
+      if (k === 0) {
+        screenTag(op.x - 9, op.y + 14, "O\u2080", { fill: "#334155", "font-size": 12, "text-anchor": "end" }, gFrame);
+      }
+    }
+
+    // 关节轴线（Z_i 延长线）+ 关节类型图元（转动弧 / 移动箭头）
+    for (var j = 0; j < n; j += 1) {
+      var fj = frames[j + 1];
+      var kind = fj.kind;
+      if (state.showZAxis) {
+        var lo = FK.Vec.sub(fj.o, FK.Vec.scale(fj.z, AXIS_K));
+        var hi = FK.Vec.add(fj.o, FK.Vec.scale(fj.z, AXIS_K));
+        seg(lo, hi, {
+          stroke: C.z, "stroke-width": 2.6, "stroke-dasharray": "11 7",
+          "marker-start": "url(#arZb)", "marker-end": "url(#arZb)"
+        }, gAxis);
+      }
+      if (kind === "R") {
+        // θ_i 是绕 Z_i 从上游坐标系的 X 轴转到本坐标系 X 轴的转角
+        var phiIn = Math.atan2(frames[j].x[1], frames[j].x[0]);
+        rotArc(fj.o, fj.z, phiIn, state.q[j] * FK.DEG, 0.52, C.rev, gMark, null, 0, 0);
+        var jp = toScreen(fj.o);
+        scene.el("circle", {
+          cx: jp.x, cy: jp.y, r: 7.6, fill: "none", stroke: C.rev, "stroke-width": 2.2
+        }, gMark);
+        // 关节编号 + 类型符号（转动：绕轴箭头），离开原点避免压住近原点的轴标
+        var mp = toScreen(FK.Vec.add(fj.o, FK.Vec.scale(fj.x, -0.18)));
+        screenTag(mp.x - 10, mp.y - 12, "\u21ba" + (j + 1),
+          { fill: C.rev, "font-size": 12.5, "text-anchor": "end" }, gMark);
+        if (state.showVars) {
+          var vm = toScreen(FK.Vec.add(fj.o, FK.Vec.scale(fj.x, -0.62)));
+          screenTag(vm.x - 4, vm.y + 16, "\u03b8" + (j + 1) + " = " + FK.deg(state.q[j], 1),
+            { fill: C.rev, "font-size": 11.5, "text-anchor": "end" }, gMark);
+        }
+      } else {
+        var d = state.q[j];
+        var from = d >= 0 ? fj.o : FK.Vec.add(fj.o, FK.Vec.scale(fj.z, -d));
+        var to = d >= 0 ? FK.Vec.add(fj.o, FK.Vec.scale(fj.z, d)) : fj.o;
+        if (Math.abs(d) > 0.02) {
+          dimLine(from, to, 26, C.move, "d" + (j + 1) + " = " + FK.format(d, 2), gMark);
+        }
+        seg(FK.Vec.add(fj.o, FK.Vec.scale(fj.z, AXIS_K * 0.85)),
+            FK.Vec.add(fj.o, FK.Vec.scale(fj.z, AXIS_K * 1.35)),
+            { stroke: C.move, "stroke-width": 6, opacity: 0.35, "stroke-linecap": "round" }, gMark);
+        var mp2 = toScreen(FK.Vec.add(fj.o, FK.Vec.scale(fj.x, -0.18)));
+        screenTag(mp2.x - 10, mp2.y - 12, "\u2195" + (j + 1),
+          { fill: C.move, "font-size": 12.5, "text-anchor": "end" }, gMark);
+      }
+    }
+
+    updatePanel(frames);
+    updateReadout(frames);
+  }
+
+  /* ------------------------------------------------------------ 面板与读数 */
+
+  function kindLabel(kind) { return kind === "R" ? "转动" : "移动"; }
+
+  function updatePanel(frames) {
+    var n = state.nJoints;
+    for (var i = 0; i < 4; i += 1) {
+      var sel = document.getElementById("k" + i);
+      var out = document.getElementById("k" + i + "Value");
+      var row = i === 3 ? document.getElementById("row4") : null;
+      if (i >= n) {
+        sel.parentNode.style.display = "none";
+        continue;
+      }
+      sel.parentNode.style.display = "";
+      sel.value = state.kinds[i];
+      sel.classList.toggle("is-move", state.kinds[i] === "P");
+      out.textContent = state.kinds[i] === "R" ? "Z 沿转轴" : "沿移动方向";
+      out.classList.toggle("is-move", state.kinds[i] === "P");
+      if (row) row.style.display = "";
+    }
+    if (n < 4) {
+      document.getElementById("row4").style.display = "none";
+      document.getElementById("var4").style.display = "none";
+    } else {
+      document.getElementById("row4").style.display = "";
+      document.getElementById("var4").style.display = "";
+    }
+    for (var k = 0; k < 4; k += 1) {
+      var lab = document.getElementById("q" + k + "Label");
+      lab.innerHTML = "关节" + (k + 1) + (state.kinds[k] === "R" ? " 转角 \u03b8" : " 位移 d") + "<sub>" + (k + 1) + "</sub>";
+    }
+  }
+
+  function updateReadout(frames) {
+    var n = state.nJoints;
+    var list = document.getElementById("zlist");
+    list.replaceChildren();
+    for (var i = 0; i <= n; i += 1) {
+      var z = frames[i].z;
+      var li = document.createElement("li");
+      var isMove = i > 0 && frames[i].kind === "P";
+      if (isMove) li.className = "moved";
+      var name = document.createElement("span");
+      name.textContent = "{" + i + "}  Z\u0302" + i + " = [" + FK.format(z[0], 3) + ", " + FK.format(z[1], 3) + ", " + FK.format(z[2], 3) + "]\u1d40";
+      var mark = document.createElement("i");
+      li.appendChild(mark);
+      li.appendChild(name);
+      list.appendChild(li);
+    }
+    // 教材“多数平行连杆的 Z 轴保持平行”的判据：全部关节都是转动关节时必然成立
+    var allRev = true;
+    for (var t = 0; t < n; t += 1) { if (state.kinds[t] !== "R") allRev = false; }
+    var moves = [];
+    var vars = [];
+    for (var j = 0; j < n; j += 1) {
+      if (state.kinds[j] === "P") moves.push(j + 1);
+      vars.push((state.kinds[j] === "R" ? "\u03b8" : "d") + (j + 1) + " = " +
+        (state.kinds[j] === "R" ? FK.deg(state.q[j], 1) : FK.format(state.q[j], 2)));
+    }
+    var varLine = vars.join("，");
+    if (!allRev) {
+      varLine += "　（有移动关节时，该关节的 Z 沿移动方向，故各 Z 轴不再两两平行 —— 这正是“Z 沿移动方向”的后果）";
+    }
+    document.getElementById("status").textContent =
+      n + " 个关节：" + state.kinds.slice(0, n).map(function (kk) { return kindLabel(kk); }).join(" / ") +
+      (moves.length ? "（关节 " + moves.join("、") + " 为移动关节）" : "（全为转动关节）") +
+      (allRev ? "　·　各 Z 轴两两平行" : "　·　存在移动关节，Z 轴仅部分平行");
+    document.getElementById("varLine").textContent = varLine;
+    document.getElementById("nLink").textContent = n;
+    document.getElementById("nFrame").textContent = n;
+    document.getElementById("nCount").textContent = n + 1;
+  }
+
+  function updateValueTags() {
+    for (var i = 0; i < 4; i += 1) {
+      var el = document.getElementById("q" + i + "Value");
+      if (el) el.textContent = state.kinds[i] === "R" ? FK.deg(state.q[i], 1) : FK.format(state.q[i], 2);
+    }
+    document.getElementById("nJointsValue").textContent = state.nJoints;
+  }
+
+  /* ---------------------------------------------------------------- 交互 */
+
+  function drawAll() {
+    fit(kinematics(state.kinds, state.q));
+    render();
+  }
+
+  function setKind(i, kind) {
+    state.kinds[i] = kind;
+    var input = document.getElementById("q" + i);
+    var val = kind === "R" ? RESET_R[i] : RESET_P[i];
+    state.q[i] = val;
+    input.value = val;
+    document.getElementById("q" + i + "Value").textContent =
+      kind === "R" ? FK.deg(val, 1) : FK.format(val, 2);
+    drawAll();
+  }
+
+  for (var bi = 0; bi < 4; bi += 1) {
+    (function (idx) {
+      var sel = document.getElementById("k" + idx);
+      sel.addEventListener("change", function () { setKind(idx, sel.value); });
+      var rng = document.getElementById("q" + idx);
+      rng.addEventListener("input", function () {
+        state.q[idx] = Number(rng.value);
+        document.getElementById("q" + idx + "Value").textContent =
+          state.kinds[idx] === "R" ? FK.deg(state.q[idx], 1) : FK.format(state.q[idx], 2);
+        drawAll();
+      });
+    }(bi));
+  }
+
+  document.getElementById("nJoints").addEventListener("input", function () {
+    var v = Math.max(3, Math.min(4, Math.round(Number(this.value))));
+    state.nJoints = v;
+    document.getElementById("nJointsValue").textContent = v;
+    drawAll();
+  });
+
+  var toggles = ["showFrames", "showAxisLabels", "showZAxis", "showVars"];
+  toggles.forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener("change", function () {
+      state[id] = el.checked;
+      render();
+    });
+  });
+  var autoEl = document.getElementById("auto");
+  autoEl.addEventListener("change", function () {
+    state.auto = autoEl.checked;
+    scene.setAuto(state.auto);
+  });
+
+  document.getElementById("reset").addEventListener("click", function () {
+    state.nJoints = DEFAULTS.nJoints;
+    state.kinds = DEFAULTS.kinds.slice();
+    state.q = DEFAULTS.q.slice();
+    state.showFrames = true; state.showAxisLabels = true; state.showZAxis = true;
+    state.showVars = true; state.auto = false;
+    state.userZoom = false;
+    state.zoomRatio = 1;
+    document.getElementById("nJoints").value = DEFAULTS.nJoints;
+    document.getElementById("showFrames").checked = true;
+    document.getElementById("showAxisLabels").checked = true;
+    document.getElementById("showZAxis").checked = true;
+    document.getElementById("showVars").checked = true;
+    document.getElementById("auto").checked = false;
+    for (var i = 0; i < 4; i += 1) {
+      document.getElementById("k" + i).value = state.kinds[i];
+      document.getElementById("q" + i).value = state.q[i];
+    }
+    scene.setAuto(false);
+    scene.reset();
+    updateValueTags();
+    drawAll();
+  });
+
+  // 用户一旦拖动/滚轮改变视角，取景不再覆盖其缩放：记录相对自适应缩放的倍率
+  function rememberZoom() {
+    state.userZoom = true;
+    state.zoomRatio = Math.max(0.2, Math.min(5, scene.state.scale / scene.defaults.scale));
+  }
+  viewport.addEventListener("wheel", rememberZoom, { passive: true });
+  viewport.addEventListener("pointerdown", rememberZoom);
+
+  window.addEventListener("resize", function () {
+    state.userZoom = false;
+    state.zoomRatio = 1;
+    drawAll();
+  });
+  window.addEventListener("load", function () { drawAll(); });
+
+  /* ------------------------------------------------------------ 数值自检 */
+
+  (function selfTest() {
+    function assert(cond, msg) { if (!cond) throw new Error("图3.15 自检失败：" + msg); }
+    function nearly(a, b, e) { return Math.abs(a - b) < (e === undefined ? 1e-9 : e); }
+
+    // 0) 初始化顺序：state 必须在 fit() 首次调用之前定义好（第一批有图因此整页崩溃）
+    assert(state && typeof state === "object" && Array.isArray(state.kinds),
+      "state 未定义或结构不完整（初始化顺序错误）");
+    assert(typeof state.q[1] === "number", "state.q 未初始化");
+
+    // 1) 编号规则：n 个关节 ⇒ n+1 个坐标系 {0}…{n}，且关节 i 连接杆件 i−1 与杆件 i
+    [3, 4].forEach(function (n) {
+      state.nJoints = n;
+      var fr = kinematics(["R", "P", "R", "R"], [20, 0.45, -25, 35]);
+      assert(fr.length === n + 1, "坐标系数应为 n+1 = " + (n + 1) + "，实得 " + fr.length);
+      for (var i = 1; i <= n; i += 1) {
+        var seg = FK.Vec.sub(fr[i].o, fr[i - 1].o);
+        assert(FK.Vec.len(seg) > 1e-9, "杆件 " + i + " 长度应为正");
+        assert(nearly(seg[2], 0), "平面臂的关节位置应共面（z 分量应为 0）");
+      }
+    });
+    state.nJoints = 4;
+
+    // 2) 杆件 0 = 机座：{0} 固定在机座，原点在机座中心，Z 轴沿机座竖轴
+    var f0 = kinematics(["R", "P", "R", "R"], [20, 0.45, -25, 35])[0];
+    assert(FK.Vec.eq(f0.o, [0, 0, 0], 1e-12), "{0} 原点应在机座中心");
+    assert(FK.Vec.eq(f0.z, [0, 0, 1], 1e-12), "{0} 的 Z 轴应沿机座竖轴");
+
+    // 3) 大多数平行连杆：关节 1 为转动时，其余关节做转动，Z 轴必然与 Z_0 平行（不逐杆换向）；
+    //    关节做移动时，其 Z 轴沿移动方向 —— 也就是本连杆的伸展方向（与前一个坐标系的 X 轴一致）。
+    var combos = [];
+    for (var m = 0; m < 16; m += 1) {
+      combos.push([(m & 1) ? "P" : "R", (m & 2) ? "P" : "R", (m & 4) ? "P" : "R", (m & 8) ? "P" : "R"]);
+    }
+    combos.forEach(function (kinds) {
+      var n1 = kinds[0] === "P" ? 0.3 : 0;   // 关节 1 为移动时先给一个滑移量，否则原点会退化
+      var q = [n1, 0.3, -20, 25];
+      var fr = kinematics(kinds, q);
+      assert(FK.Vec.eq(fr[0].z, [0, 0, 1], 1e-12), "{" + 0 + "} 的 Z 轴应沿机座竖轴");
+      for (var i = 1; i <= 4; i += 1) {
+        if (kinds[i - 1] === "R") {
+          if (kinds[0] === "R") {
+            assert(FK.Vec.eq(fr[i].z, fr[0].z, 1e-12),
+              "类型 " + kinds.join("") + " 下转动关节的 {" + i + "} 的 Z 轴应与 Z\u2080 平行，实得 " +
+              JSON.stringify(fr[i].z));
+          }
+        } else {
+          assert(FK.Vec.eq(fr[i].z, fr[i - 1].x, 1e-12),
+            "类型 " + kinds.join("") + " 下移动关节的 {" + i + "} 的 Z 轴应沿移动方向（= 上一坐标系的 X 轴），实得 " +
+            JSON.stringify(fr[i].z));
+        }
+      }
+      // 全为转动关节时（关节 1 也是转动），所有 Z 轴两两平行 —— 教材“多数平行连杆的 Z 轴保持平行”
+      if (kinds.join("") === "RRRR") {
+        for (var j = 1; j <= 4; j += 1) {
+          assert(nearly(Math.abs(fr[j].z[2]), 1, 1e-12),
+            "RRRR 下 {" + j + "} 的 Z 轴应与机座竖轴平行，实得 " + JSON.stringify(fr[j].z));
+        }
+      }
+    });
+
+    // 4) 核心教学点：转动关节 Z 沿转轴（⊥连杆）；移动关节 Z 沿移动方向（∥连杆）
+    var frR = kinematics(["R", "R", "R", "R"], [20, 10, -25, 35]);
+    var frP = kinematics(["R", "P", "R", "R"], [20, 0.45, -25, 35]);
+    // 关节 1 为转动：连杆 1 伸展方向与 Ẑ 垂直
+    var dir1 = FK.Vec.normalize([frR[1].o[0], frR[1].o[1], 0]);
+    assert(nearly(FK.Vec.dot(dir1, frR[1].z), 0, 1e-12), "转动关节 Ẑ 应垂直于连杆伸展方向");
+    // 关节 2 为移动：Ẑ 与连杆 2 伸展方向平行（同向）
+    var dir2P = FK.Vec.normalize(FK.Vec.sub(frP[2].o, frP[1].o));
+    assert(FK.Vec.len(FK.Vec.cross(dir2P, frP[2].z)) < 1e-12, "移动关节 Ẑ 应与移动方向平行");
+    assert(FK.Vec.dot(dir2P, frP[2].z) > 0, "移动关节 Ẑ 应与移动方向同向");
+    // 同一关节从转动切到移动，Z 轴方向确实变了（90°）
+    var ang = Math.acos(Math.max(-1, Math.min(1, FK.Vec.dot(frR[2].z, frP[2].z)))) / FK.DEG;
+    assert(nearly(ang, 90, 1e-9), "关节 2 由转动改移动后 Z 轴方向应改变 90°，实得 " + ang);
+
+    // 5) 移动关节：其坐标系原点只沿自身 Z 轴（移动方向）平移
+    var kindsMix = ["R", "P", "R", "R"];
+    var qa = [12, 0.30, -18, 22];
+    var qb = [12, 0.85, -18, 22];
+    var fa = kinematics(kindsMix, qa);
+    var fb = kinematics(kindsMix, qb);
+    var delta = FK.Vec.sub(fb[2].o, fa[2].o);
+    assert(FK.Vec.len(delta) > 1e-6, "改变 d₂ 后 {2} 原点应移动");
+    assert(FK.Vec.len(FK.Vec.cross(FK.Vec.normalize(delta), fa[2].z)) < 1e-12,
+      "改变 d₂ 时 {2} 原点应沿自身 Z 轴平移");
+    assert(nearly(FK.Vec.len(delta), 0.55, 1e-12), "位移量应等于 |Δd₂| = 0.55");
+    // 该关节下游的坐标系同样只做沿 Z 的刚体平移（平移部分相同）
+    var d3 = FK.Vec.sub(fb[3].o, fa[3].o);
+    assert(FK.Vec.eq(d3, delta, 1e-12), "移动关节的下游连杆应整体沿 Z 平移相同矢量");
+    assert(FK.Vec.eq(fb[3].z, fa[3].z, 1e-12), "平移不改变任何 Z 轴的方向");
+
+    // 6) 转动关节：Z 轴方向不变；{3} 的位置只绕关节 2 的 Z 轴转动，连杆长度不变
+    var fc = kinematics(kindsMix, [12, 0.30, -18, 22]);
+    var fd = kinematics(kindsMix, [12, 0.30, 60, 22]);
+    assert(FK.Vec.eq(fc[3].z, fd[3].z, 1e-12), "转动关节不应改变自身 Z 轴方向");
+    assert(FK.Vec.eq(fc[2].o, fd[2].o, 1e-12), "关节 2（移动）的坐标系 {2} 不应受 θ₃ 影响");
+    var s3c = FK.Vec.sub(fc[3].o, fc[2].o);
+    var s3d = FK.Vec.sub(fd[3].o, fd[2].o);
+    assert(nearly(FK.Vec.len(s3c), FK.Vec.len(s3d), 1e-12), "转动不改变连杆 2 的长度");
+    var angRot = Math.acos(Math.max(-1, Math.min(1, FK.Vec.dot(
+      FK.Vec.normalize(s3c), FK.Vec.normalize(s3d))))) / FK.DEG;
+    assert(nearly(angRot, 78, 1e-9), "q₃ 变化 78° ⇒ 连杆 2 的指向也应转过 78°，实得 " + angRot);
+    var d4c = FK.Vec.sub(fc[4].o, fc[3].o);
+    assert(nearly(d4c[2], 0, 1e-12), "连杆 4 应落在水平面内");
+    assert(nearly(FK.Vec.dot(FK.Vec.normalize(d4c), fc[3].z), 0, 1e-12),
+      "连杆 4 应与 Z 轴（关节转轴）垂直 —— 转动只在垂直于 Z 的平面内改变其指向");
+
+    // 7) 末坐标系 {n} 与杆件 n 一一对应
+    assert(f0 && kinematics(kindsMix, qa).length === 5, "4 关节应有 {0}…{4} 共 5 个坐标系");
+    state.q = DEFAULTS.q.slice();
+    state.kinds = DEFAULTS.kinds.slice();
+    state.nJoints = DEFAULTS.nJoints;
+  }());
+
+  drawAll();
+}());
+"""
+
+FIGURE = {
+    "id": "figure-3-15",
+    "title": "图3.15 机器人坐标系的分配 · 人机交互演示（《机器人技术基础（第三版）》）",
+    "css": CSS,
+    "body": BODY,
+    "script": SCRIPT,
+}

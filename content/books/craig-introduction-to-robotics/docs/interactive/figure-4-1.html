@@ -984,7 +984,11 @@ input[type="range"]::-moz-range-thumb {
     if (alt && Math.hypot(alt[0] - e[0], alt[1] - e[1]) > 0.02) {
       seg([0, 0, 0], [alt[0], alt[1], 0], { stroke: COL.alt, "stroke-width": 7, "stroke-dasharray": "9 7", "stroke-linecap": "round" }, L.arm);
       seg([alt[0], alt[1], 0], tip, { stroke: COL.alt, "stroke-width": 7, "stroke-dasharray": "9 7", "stroke-linecap": "round" }, L.arm);
-      tag(alt, "另一组解（θ₂ 变号）", { fill: "#64748b", "font-size": 13 }, 12, 18, L.arm);
+      // 标签朝远离末端 T 的方向让开，避免与 T 标签重叠
+      var ax = alt[0] - tip[0], ay = alt[1] - tip[1];
+      var an = Math.hypot(ax, ay) || 1;
+      tag(alt, "另一组解（θ₂ 变号）", { fill: "#64748b", "font-size": 13, "text-anchor": ax / an > 0 ? "start" : "end" },
+        (ax / an) * 26, -(ay / an) * 26 + 10, L.arm);
     }
     drawBase();
     seg([0, 0, 0], e, { stroke: COL.link, "stroke-width": 12, "stroke-linecap": "round" }, L.arm);
@@ -1062,19 +1066,20 @@ input[type="range"]::-moz-range-thumb {
     }
     pushTrail(fk(l1, l2, t1, t2).tip);
 
-    // 半径尺寸线（沿 215° 方向，避开坐标轴与读数卡）
-    var D = 215 * FK.DEG;
+    // 半径尺寸线（沿 218°/258° 方向，避开坐标轴与读数卡）
     if (rout > 1e-6) {
+      var D = 218 * FK.DEG;
       var eOut = [rout * Math.cos(D), rout * Math.sin(D), 0];
       scene.el("line", {
         x1: scene.project([0, 0, 0]).x, y1: scene.project([0, 0, 0]).y,
         x2: scene.project(eOut).x, y2: scene.project(eOut).y,
         stroke: "#2563eb", "stroke-width": 1.5, "stroke-dasharray": "6 5"
       }, L.dims);
-      dimLine([0, 0, 0], eOut, 0, -16, "外径 l₁+l₂ = " + FK.format(rout, 3), "#2563eb", "mDim");
+      dimLine([0, 0, 0], eOut, 0, -18, "外径 l₁+l₂ = " + FK.format(rout, 3), "#2563eb", "mDim");
       if (rin > 1e-6) {
-        var eIn = [rin * Math.cos(D), rin * Math.sin(D), 0];
-        dimLine([0, 0, 0], eIn, 16, 12, "内径 |l₁−l₂| = " + FK.format(rin, 3), "#b45309", "mDim2");
+        var D2 = 258 * FK.DEG;
+        var eIn = [rin * Math.cos(D2), rin * Math.sin(D2), 0];
+        dimLine([0, 0, 0], eIn, 14, 10, "内径 |l₁−l₂| = " + FK.format(rin, 3), "#b45309", "mDim2");
       }
     }
 

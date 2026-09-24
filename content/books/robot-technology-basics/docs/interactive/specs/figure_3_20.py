@@ -301,8 +301,7 @@ SCRIPT = r"""
     var phiT = state.phi * FK.DEG;
     var o = [state.tx, state.ty, 0];
     var len = 0.17;
-    // 小窗（compact）时目标坐标系文字会与构型标注挤在一起，只保留 φ 角弧
-    if (state.showFrame && !state.compact) {
+    if (state.showFrame) {
       // Ẑ：垂直于工作平面
       var zTip = [o[0], o[1], len * 1.1];
       seg(o, zTip, { stroke: "#12944f", "stroke-width": 2.6, "stroke-dasharray": "6 5", "marker-end": "url(#arA)" }, gTarget);

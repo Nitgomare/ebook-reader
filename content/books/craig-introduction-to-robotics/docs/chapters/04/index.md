@@ -45,9 +45,19 @@
 
 在求解运动学方程时可能遇到的另一个问题就是多重解问题。一个具有3个旋转关节的平面操作臂, 由于从任何方位均可到达工作空间内的任何位置, 因此在平面中有较大的灵巧工作空间 (给定适当的连杆长度和大的关节运动范围)。图4-2所示为在某一位姿下带有末端执行器的三连杆平面操作臂。虚线表示第二个可能的位形, 在这个位形下, 末端操作器的可达位姿与第一个位形相同。
 
-![89_1065_1385_353_259_0.jpg](../../images/89_1065_1385_353_259_0.jpg)
-
-图4-2 三连杆操作臂, 虚线代表第二个解
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-4-2.html" data-interactive-title="图4-2 三连杆操作臂的两个解">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图4-2显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/89_1065_1385_353_259_0.jpg" alt="图4-2 三连杆操作臂的两个解">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图4-2 三连杆操作臂的两个解（原图与交互示例）</p>
 
 因为系统最终只能选择一个解, 因此操作臂的多重解现象会产生一些问题。解的选择标准是变化的, 然而比较合理的选择应当是取 “最短行程” 解。例如, 在图4-3中,如果操作臂处于点 $A$ ,我们希望它移动到点 $B$ ,最近解就是使得每一个运动关节的移动量最小。 因此, 在没有障碍的情况下, 可选择图4-3中上部虚线所示的位形, 这表明对于操作臂的当前位置来说只需要对逆运动学程序输入一个小位移量即可。这样, 利用算法能够选择关节空间内的最短行程解。但是, “最短行程”解可能有几种确定方式。例如, 典型的机器人有3个大连杆, 附带3个小连杆, 姿态连杆靠近末端执行器。这样, 在计算 “最短行程”解时需要加权, 使得这种选择侧重于移动小连杆而不是移动大连杆。在存在障碍的情况下，“最短行程”解可能发生干涉，这时只能选择“较长行程”解一为此，一般我们需要计算全部可能的解。这样, 在图4-3中, 障碍的存在意味着需要按照下部虚线所示的位形才能到达 $B$ 点。
 
@@ -333,9 +343,19 @@ $$
 
 在几何方法中, 为求出操作臂的解, 须将操作臂的空间几何参数分解成为平面几何参数。用这种方法在求解许多操作臂时 (特别是当 ${\alpha }_{1} = 0$ 或 $\pm  {90}^{ \circ  }$ 时) 是相当容易的。然后应用平面几何方法可以求出关节角度 ${}^{\left\lbrack  7\right\rbrack  }$ 。对于如图4-7所示的具有3个自由度的操作臂来说, 由于操作臂是平面的, 因此我们可以利用平面几何关系直接求解。
 
-![96_986_752_466_393_0.jpg](../../images/96_986_752_466_393_0.jpg)
-
-图4-8 平面三连杆机器人的平面几何关系
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-4-8.html" data-interactive-title="图4-8 平面三连杆机器人的平面几何关系">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图4-8显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/96_986_752_466_393_0.jpg" alt="图4-8 平面三连杆机器人的平面几何关系">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图4-8 平面三连杆机器人的平面几何关系（原图与交互示例）</p>
 
 图4-8中示出了由 ${l}_{1}$ 和 ${l}_{2}$ 所组成的三角形及连接坐标系 $\{ 0\}$ 的原点和坐标系 $\{ 3\}$ 的原点的连线。图中虚线表示该三角形的另一种可能情况, 同样能够达到坐标系 (3) 的位置。对于实线表示的三角形,利用余弦定理求解 ${\theta }_{2}$
 

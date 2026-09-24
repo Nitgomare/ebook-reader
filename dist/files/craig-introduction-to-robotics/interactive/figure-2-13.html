@@ -208,19 +208,19 @@ input[type="range"]::-moz-range-thumb {
 .matrix {
   position: absolute;
   right: 16px;
-  bottom: 190px;
+  bottom: 288px;
   left: auto;
   width: 300px;
-  padding: 8px 11px 9px;
+  padding: 7px 10px 8px;
   border: 1px solid rgba(30, 64, 175, 0.12);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 10px 26px rgba(30, 64, 175, 0.10);
-  font: 12px/1.42 ui-monospace, SFMono-Regular, Consolas, monospace;
+  font: 11.5px/1.38 ui-monospace, SFMono-Regular, Consolas, monospace;
   color: #334155;
 }
 .matrix .cap { font-size: 11.5px; color: #174ea6; font-weight: 700; margin-bottom: 2px; }
-.matrix + .matrix { bottom: 20px; }
+.matrix + .matrix { bottom: 140px; }
 .matrix .row { white-space: pre; }
 .matrix .b { color: #94a3b8; }
 .matrix .r { color: #b3261e; }
@@ -231,19 +231,47 @@ input[type="range"]::-moz-range-thumb {
 
 @media (max-width: 720px) {
   .panel h1 { font-size: 14px; }
+  .mode-tabs { flex-direction: column; }
+  .mode-tabs button { width: 100%; }
   .control-grid { gap: 5px 8px; }
   .control-grid .control label, .control-grid .control-head output { font-size: 10.5px; }
   .options-grid { gap: 4px 8px; }
   .options-grid label { font-size: 10.5px; }
   .panel .legend { font-size: 10.5px; gap: 3px 8px; }
-  .readout { font-size: 11.5px; line-height: 1.42; padding: 5px 7px; }
-  .readout .small { font-size: 10px; }
+  .readout { font-size: 11px; line-height: 1.4; padding: 5px 7px; max-width: calc(100% - 16px); }
+  .readout .small { font-size: 9.5px; }
   .matrix {
-    right: 8px; top: 84px; bottom: auto; left: 8px; width: auto;
+    right: 8px; top: 104px; bottom: auto; left: 8px; width: auto;
     font-size: 9.5px; line-height: 1.3; padding: 5px 7px;
+    overflow: hidden;
   }
-  .matrix + .matrix { top: 196px; bottom: auto; }
+  .matrix + .matrix { top: 214px; bottom: auto; }
   .matrix .cap { font-size: 10px; }
+  .matrix .small { display: none; }
+}
+
+/* 移动端收尾：确保 390px 宽下不出现横向溢出、面板与读数都收在视口内 */
+html, body { overflow-x: hidden; }
+.app { max-width: 100vw; }
+@media (max-width: 720px) {
+  .panel { overflow-x: hidden; }
+  .panel h1 { font-size: 13.5px; }
+  .legend { font-size: 10px; gap: 3px 7px; }
+  .legend span { white-space: nowrap; }
+  .options-grid label { font-size: 10px; }
+  .readout { max-width: calc(100% - 16px); overflow-wrap: anywhere; }
+}
+
+/* 移动端硬性约束：任何块都不得超出 390px 视口 */
+@media (max-width: 720px) {
+  .readout {
+    max-width: calc(100vw - 16px) !important;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+  .readout .row { white-space: normal !important; }
+  .panel { max-width: calc(100vw - 16px) !important; }
+  .matrix { max-width: calc(100vw - 16px) !important; }
 }
 </style>
 </head>
@@ -342,18 +370,12 @@ input[type="range"]::-moz-range-thumb {
 
 <div class="matrix" id="matrixT">
   <div class="cap">ᴬ_BT（式2-45 的输入，例2.5 式2-46）</div>
-  <div class="row"><span class="b">[</span> <span class="r" id="a00">0.866</span>  <span class="r" id="a01">-0.500</span>  <span class="r" id="a02">0.000</span>   <span class="t" id="a03">10.000</span> <span class="b">]</span></div>
-  <div class="row"><span class="b">[</span> <span class="r" id="a10">0.500</span>  <span class="r" id="a11">0.866</span>   <span class="r" id="a12">0.000</span>   <span class="t" id="a13">5.000</span> <span class="b">]</span></div>
-  <div class="row"><span class="b">[</span> <span class="r" id="a20">0.000</span>  <span class="r" id="a21">0.000</span>   <span class="r" id="a22">1.000</span>   <span class="t" id="a23">0.000</span> <span class="b">]</span></div>
-  <div class="row"><span class="b">[</span> <span class="h" id="a30">0</span>      <span class="h" id="a31">0</span>       <span class="h" id="a32">0</span>       <span class="h" id="a33">1</span>     <span class="b">]</span></div>
+  <div id="rowsA"></div>
 </div>
 
 <div class="matrix" id="matrixInv">
   <div class="cap">ᴮ_AT = ᴬ_BT⁻¹（式2-45，例2.5 式2-47）</div>
-  <div class="row"><span class="b">[</span> <span class="inv" id="b00">0.866</span>  <span class="inv" id="b01">0.500</span>   <span class="inv" id="b02">0.000</span>   <span class="t" id="b03">-4.964</span> <span class="b">]</span></div>
-  <div class="row"><span class="b">[</span> <span class="inv" id="b10">-0.500</span> <span class="inv" id="b11">0.866</span>   <span class="inv" id="b12">0.000</span>   <span class="t" id="b13">-0.598</span> <span class="b">]</span></div>
-  <div class="row"><span class="b">[</span> <span class="inv" id="b20">0.000</span>  <span class="inv" id="b21">0.000</span>   <span class="inv" id="b22">1.000</span>   <span class="t" id="b23">0.000</span> <span class="b">]</span></div>
-  <div class="row"><span class="b">[</span> <span class="h" id="b30">0</span>      <span class="h" id="b31">0</span>       <span class="h" id="b32">0</span>       <span class="h" id="b33">1</span>     <span class="b">]</span></div>
+  <div id="rowsB"></div>
   <div class="small" style="font-size:10.5px;color:#65748b">平移列 = −ᴬ_BRᵀᴬP_BORG = ᴮP_AORG</div>
 </div>
 
@@ -1077,11 +1099,19 @@ input[type="range"]::-moz-range-thumb {
     place(b, labelText, font || 19, color, prefs);
   }
 
-  function fillMatrix(prefix, M) {
-    for (var i = 0; i < 16; i += 1) {
-      var cell = document.getElementById(prefix + (i < 10 ? "0" : "") + i);
-      if (cell) cell.textContent = FK.format(M[i], 3);
+  /* 按行渲染 4×4 矩阵（直接拼字符串，保证显示值与计算值一致） */
+  function matrixRowsHTML(M, cls) {
+    var html = "";
+    for (var r = 0; r < 4; r += 1) {
+      var c = r < 3 ? cls : "h";
+      html += '<div class="row"><span class="b">[</span> ' +
+        '<span class="' + c + '">' + FK.format(M[r * 4], 3) + '</span>  ' +
+        '<span class="' + c + '">' + FK.format(M[r * 4 + 1], 3) + '</span>  ' +
+        '<span class="' + c + '">' + FK.format(M[r * 4 + 2], 3) + '</span>   ' +
+        '<span class="' + (r < 3 ? "t" : "h") + '">' + FK.format(M[r * 4 + 3], 3) + '</span> ' +
+        '<span class="b">]</span></div>';
     }
+    return html;
   }
 
   function render() {
@@ -1173,8 +1203,8 @@ input[type="range"]::-moz-range-thumb {
     }
 
     // 矩阵
-    fillMatrix("a", T);
-    fillMatrix("b", Tinv);
+    document.getElementById("rowsA").innerHTML = matrixRowsHTML(T, "r");
+    document.getElementById("rowsB").innerHTML = matrixRowsHTML(Tinv, "inv");
     document.getElementById("matrixT").classList.toggle("is-hidden", !state.showT);
     document.getElementById("matrixInv").classList.toggle("is-hidden", !state.showT);
 
