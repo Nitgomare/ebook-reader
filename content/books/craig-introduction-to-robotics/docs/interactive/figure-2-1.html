@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>图2-1 · 坐标系中的位置矢量</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --blue: #2563eb;
+      --blue-dark: #174ea6;
+      --blue-soft: #eaf2ff;
+      --green: #169b62;
+      --orange: #e07a18;
+      --violet: #7c3aed;
+      --ink: #14213d;
+      --muted: #65748b;
+      --line: #d9e2ef;
+      --surface: rgb(255 255 255 / 92%);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; }
+    body {
+      overflow: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 78% 8%, rgb(219 234 254 / 78%), transparent 34%),
+        linear-gradient(145deg, #f8fbff, #eef4fb);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+        "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    button, input { font: inherit; }
+    .app { position: relative; width: 100vw; height: 100vh; min-height: 480px; }
+    .viewport { width: 100%; height: 100%; cursor: grab; touch-action: none; }
+    .viewport.is-dragging { cursor: grabbing; }
+    .grid-line { stroke: #dce6f2; stroke-width: 1; vector-effect: non-scaling-stroke; }
+    .axis { stroke: #34445a; stroke-width: 3; vector-effect: non-scaling-stroke; }
+    .axis-label, .point-label, .origin-label, .component-label {
+      paint-order: stroke;
+      stroke: #f5f9ff;
+      stroke-width: 6px;
+      stroke-linejoin: round;
+      font-weight: 750;
+    }
+    .axis-label { fill: #34445a; font-size: 22px; font-style: italic; }
+    .origin-label { fill: #34445a; font-size: 18px; }
+    .point-label { fill: var(--blue-dark); font-size: 22px; }
+    .component-label { font-size: 16px; }
+    .vector { stroke: var(--blue); stroke-width: 5; vector-effect: non-scaling-stroke; }
+    .point { fill: var(--blue); stroke: #fff; stroke-width: 4; vector-effect: non-scaling-stroke; }
+    .component { fill: none; stroke-width: 3; stroke-dasharray: 8 7; vector-effect: non-scaling-stroke; }
+    .component-x { stroke: var(--orange); }
+    .component-y { stroke: var(--green); }
+    .component-z { stroke: var(--violet); }
+    .shadow { fill: rgb(37 99 235 / 10%); }
+
+    .panel {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      width: min(290px, calc(100% - 36px));
+      padding: 17px 18px 15px;
+      border: 1px solid rgb(30 64 175 / 12%);
+      border-radius: 15px;
+      background: var(--surface);
+      box-shadow: 0 18px 42px rgb(30 64 175 / 12%);
+      backdrop-filter: blur(12px);
+    }
+    .panel-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    h1 { margin: 0; font-size: 16px; line-height: 1.35; }
+    .subtitle { margin: 5px 0 15px; color: var(--muted); font-size: 11.5px; line-height: 1.5; }
+    .reset {
+      flex: none;
+      padding: 5px 9px;
+      border: 1px solid #bfd2ef;
+      border-radius: 7px;
+      color: var(--blue-dark);
+      background: #fff;
+      cursor: pointer;
+    }
+    .reset:hover { background: var(--blue-soft); }
+    .control { margin-top: 11px; }
+    .control-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+    .control label { color: #42526a; font-size: 12.5px; }
+    .control output { color: var(--blue-dark); font: 750 13px ui-monospace, SFMono-Regular, Consolas, monospace; }
+    input[type="range"] {
+      width: 100%;
+      height: 4px;
+      margin: 9px 0 0;
+      border-radius: 999px;
+      outline: none;
+      background: #dbe5f1;
+      appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      width: 16px;
+      height: 16px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 2px 7px rgb(37 99 235 / 42%);
+      cursor: pointer;
+      appearance: none;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 2px 7px rgb(37 99 235 / 42%);
+      cursor: pointer;
+    }
+    .options { display: flex; gap: 14px; margin-top: 15px; color: var(--muted); font-size: 12px; }
+    .options label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .options input { accent-color: var(--blue); }
+
+    .readout {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      max-width: calc(100% - 36px);
+      padding: 10px 14px;
+      border: 1px solid rgb(30 64 175 / 11%);
+      border-radius: 10px;
+      color: #43526a;
+      background: rgb(255 255 255 / 88%);
+      box-shadow: 0 10px 28px rgb(30 64 175 / 8%);
+      font-family: "Cambria Math", "Times New Roman", serif;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .readout strong { color: var(--blue-dark); }
+    .hint {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgb(255 255 255 / 78%);
+      font-size: 11px;
+    }
+
+    @media (max-width: 680px) {
+      .app { min-height: 560px; }
+      .panel { top: 10px; left: 10px; width: calc(100% - 20px); padding: 13px 15px; }
+      .subtitle { margin-bottom: 8px; }
+      .control { margin-top: 7px; }
+      .options { margin-top: 10px; }
+      .hint { display: none; }
+      .readout { right: 10px; bottom: 10px; max-width: calc(100% - 20px); font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <svg class="viewport" id="viewport" viewBox="0 0 1000 620" role="img"
+      aria-label="可旋转观察并调整坐标分量的三维位置矢量交互图">
+      <defs>
+        <marker id="axisArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#34445a"></path>
+        </marker>
+        <marker id="vectorArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"></path>
+        </marker>
+      </defs>
+      <g id="grid"></g>
+      <ellipse class="shadow" id="shadow" rx="42" ry="13"></ellipse>
+      <g id="axes">
+        <line class="axis" id="axisX" marker-end="url(#axisArrow)"></line>
+        <line class="axis" id="axisY" marker-end="url(#axisArrow)"></line>
+        <line class="axis" id="axisZ" marker-end="url(#axisArrow)"></line>
+        <text class="axis-label" id="labelX">Xₐ</text>
+        <text class="axis-label" id="labelY">Yₐ</text>
+        <text class="axis-label" id="labelZ">Zₐ</text>
+        <text class="origin-label" id="labelO">O</text>
+      </g>
+      <g id="components">
+        <line class="component component-x" id="componentX"></line>
+        <line class="component component-y" id="componentY"></line>
+        <line class="component component-z" id="componentZ"></line>
+        <text class="component-label" id="labelPx" fill="#b85e0c">pₓ</text>
+        <text class="component-label" id="labelPy" fill="#08784a">pᵧ</text>
+        <text class="component-label" id="labelPz" fill="#6d28d9">pᶻ</text>
+      </g>
+      <line class="vector" id="vector" marker-end="url(#vectorArrow)"></line>
+      <circle class="point" id="point" r="8"></circle>
+      <text class="point-label" id="labelP">ᴬP</text>
+    </svg>
+
+    <section class="panel" aria-label="位置矢量控制面板">
+      <div class="panel-header">
+        <div>
+          <h1>坐标系中的位置矢量</h1>
+          <p class="subtitle">调整坐标分量，观察矢量及其沿三个坐标轴的投影。</p>
+        </div>
+        <button class="reset" id="reset" type="button">重置</button>
+      </div>
+      <div class="control">
+        <div class="control-row"><label for="px">X 轴分量 pₓ</label><output id="pxValue">2.4</output></div>
+        <input id="px" type="range" min="-3" max="3" value="2.4" step="0.1">
+      </div>
+      <div class="control">
+        <div class="control-row"><label for="py">Y 轴分量 pᵧ</label><output id="pyValue">1.6</output></div>
+        <input id="py" type="range" min="-3" max="3" value="1.6" step="0.1">
+      </div>
+      <div class="control">
+        <div class="control-row"><label for="pz">Z 轴分量 pᶻ</label><output id="pzValue">2.1</output></div>
+        <input id="pz" type="range" min="-3" max="3" value="2.1" step="0.1">
+      </div>
+      <div class="options">
+        <label><input id="showComponents" type="checkbox" checked>显示分量</label>
+        <label><input id="autoRotate" type="checkbox">自动旋转</label>
+      </div>
+    </section>
+
+    <div class="hint">拖动旋转 · 滚轮缩放</div>
+    <div class="readout"><strong>ᴬP</strong> = [ <span id="rx">2.4</span>, <span id="ry">1.6</span>, <span id="rz">2.1</span> ]ᵀ</div>
+  </main>
+
+  <script>
+    (function () {
+      const svg = document.getElementById("viewport");
+      const grid = document.getElementById("grid");
+      const components = document.getElementById("components");
+      const sliders = ["px", "py", "pz"].map((id) => document.getElementById(id));
+      const defaults = { yaw: -0.72, pitch: 0.48, scale: 77, px: 2.4, py: 1.6, pz: 2.1 };
+      const state = { ...defaults, dragging: false, lastX: 0, lastY: 0, auto: false };
+      const origin = { x: 570, y: 365 };
+      let frame = 0;
+
+      function point(x, y, z) {
+        const cy = Math.cos(state.yaw), sy = Math.sin(state.yaw);
+        const cp = Math.cos(state.pitch), sp = Math.sin(state.pitch);
+        const x1 = x * cy - y * sy;
+        const y1 = x * sy + y * cy;
+        const z1 = z;
+        const depth = y1 * cp - z1 * sp;
+        const vertical = y1 * sp + z1 * cp;
+        return { x: origin.x + x1 * state.scale, y: origin.y - vertical * state.scale, depth };
+      }
+
+      function setLine(id, a, b) {
+        const el = document.getElementById(id);
+        el.setAttribute("x1", a.x); el.setAttribute("y1", a.y);
+        el.setAttribute("x2", b.x); el.setAttribute("y2", b.y);
+      }
+
+      function setText(id, p, dx, dy) {
+        const el = document.getElementById(id);
+        el.setAttribute("x", p.x + (dx || 0));
+        el.setAttribute("y", p.y + (dy || 0));
+      }
+
+      function midpoint(a, b) { return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }; }
+
+      function renderGrid() {
+        grid.replaceChildren();
+        for (let i = -3; i <= 3; i += 1) {
+          [[point(-3, i, 0), point(3, i, 0)], [point(i, -3, 0), point(i, 3, 0)]].forEach((pair) => {
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("class", "grid-line");
+            line.setAttribute("x1", pair[0].x); line.setAttribute("y1", pair[0].y);
+            line.setAttribute("x2", pair[1].x); line.setAttribute("y2", pair[1].y);
+            grid.appendChild(line);
+          });
+        }
+      }
+
+      function render() {
+        const O = point(0, 0, 0);
+        const xEnd = point(3.45, 0, 0), yEnd = point(0, 3.45, 0), zEnd = point(0, 0, 3.45);
+        const px = Number(sliders[0].value), py = Number(sliders[1].value), pz = Number(sliders[2].value);
+        const X = point(px, 0, 0), XY = point(px, py, 0), P = point(px, py, pz);
+        renderGrid();
+        setLine("axisX", O, xEnd); setLine("axisY", O, yEnd); setLine("axisZ", O, zEnd);
+        setText("labelX", xEnd, 12, 7); setText("labelY", yEnd, 10, 10); setText("labelZ", zEnd, 9, -7);
+        setText("labelO", O, -23, 24);
+        setLine("vector", O, P);
+        setLine("componentX", O, X); setLine("componentY", X, XY); setLine("componentZ", XY, P);
+        setText("labelPx", midpoint(O, X), 0, 18);
+        setText("labelPy", midpoint(X, XY), 8, -5);
+        setText("labelPz", midpoint(XY, P), 9, 0);
+        const dot = document.getElementById("point");
+        dot.setAttribute("cx", P.x); dot.setAttribute("cy", P.y);
+        setText("labelP", P, 15, -14);
+        const shadow = document.getElementById("shadow");
+        shadow.setAttribute("cx", XY.x); shadow.setAttribute("cy", XY.y);
+        components.hidden = !document.getElementById("showComponents").checked;
+        ["px", "py", "pz"].forEach((id, index) => {
+          const value = Number(sliders[index].value).toFixed(1);
+          document.getElementById(id + "Value").textContent = value;
+          document.getElementById("r" + id.slice(1)).textContent = value;
+        });
+      }
+
+      sliders.forEach((slider) => slider.addEventListener("input", render));
+      document.getElementById("showComponents").addEventListener("change", render);
+      document.getElementById("autoRotate").addEventListener("change", (event) => {
+        state.auto = event.target.checked;
+        if (state.auto && !frame) frame = requestAnimationFrame(animate);
+      });
+      document.getElementById("reset").addEventListener("click", () => {
+        state.yaw = defaults.yaw; state.pitch = defaults.pitch; state.scale = defaults.scale;
+        sliders.forEach((slider) => { slider.value = defaults[slider.id]; });
+        document.getElementById("showComponents").checked = true;
+        render();
+      });
+
+      svg.addEventListener("pointerdown", (event) => {
+        state.dragging = true; state.lastX = event.clientX; state.lastY = event.clientY;
+        svg.classList.add("is-dragging"); svg.setPointerCapture(event.pointerId);
+      });
+      svg.addEventListener("pointermove", (event) => {
+        if (!state.dragging) return;
+        state.yaw += (event.clientX - state.lastX) * 0.008;
+        state.pitch = Math.max(-1.05, Math.min(1.05, state.pitch - (event.clientY - state.lastY) * 0.007));
+        state.lastX = event.clientX; state.lastY = event.clientY; render();
+      });
+      function endDrag() { state.dragging = false; svg.classList.remove("is-dragging"); }
+      svg.addEventListener("pointerup", endDrag); svg.addEventListener("pointercancel", endDrag);
+      svg.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        state.scale = Math.max(48, Math.min(115, state.scale * (event.deltaY > 0 ? 0.92 : 1.08)));
+        render();
+      }, { passive: false });
+
+      function animate() {
+        frame = 0;
+        if (!state.auto) return;
+        state.yaw += 0.0035; render(); frame = requestAnimationFrame(animate);
+      }
+      render();
+    }());
+  </script>
+</body>
+</html>

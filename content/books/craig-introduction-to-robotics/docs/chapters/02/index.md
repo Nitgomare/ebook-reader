@@ -15,9 +15,20 @@
 
 一旦建立了坐标系,我们就能用一个 $3 \times  1$ 的位置矢量对世界坐标系中的任何点进行定位。 因为经常在世界坐标系中还要定义许多坐标系, 因此必须在位置矢量上附加一信息, 表明是在哪一个坐标系被定义的。在本书, 位置矢量用一个前置的上标来表明其参考的坐标系 (除非在文中已明确说明) 一一例如, ${}^{A}P$ 。这表明 ${}^{A}P$ 的数值是由沿着坐标轴 $\{ A\}$ 的距离表示的。每个沿着坐标轴的距离都可被认为是矢量在相应坐标轴上的投影。
 
-![24_920_1391_575_410_0.jpg](../../images/24_920_1391_575_410_0.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-1.html" data-interactive-title="图2-1 坐标系中的位置矢量">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-1显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/24_920_1391_575_410_0.jpg" alt="坐标系A中的位置矢量P原图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图2-1 相对于坐标系的矢量(示例)
+<p class="figure-caption">图2-1 相对于坐标系的矢量（原图与交互示例）</p>
 
 图2-1用三个相互正交的带有箭头的单位矢量来表示一个坐标系 $\{ A\}$ 。用一个矢量来表示一个点 ${}^{A}P$ ,并且可等价地被认为是空间的一个位置, 或者简单地用一组有序的三个数字来表示。矢量的各个元素用下标 $x, y$ 和 $z$ 来标明:
 

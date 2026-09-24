@@ -60,7 +60,10 @@ MARKDOWN_EXTENSION_CONFIGS = {
         "generic": True,
     },
 }
-URL_ATTR_RE = re.compile(r"(?P<attr>href|src)=(?P<quote>['\"])(?P<url>.*?)(?P=quote)", re.I)
+URL_ATTR_RE = re.compile(
+    r"(?P<attr>href|src|data-interactive-src)=(?P<quote>['\"])(?P<url>.*?)(?P=quote)",
+    re.I,
+)
 TABLE_RE = re.compile(r"(<table\b[^>]*>.*?</table>)", re.I | re.S)
 IMAGE_FOLLOWED_BY_PARAGRAPH_RE = re.compile(
     r"(?P<image><p(?P<image_attrs>[^>]*)>(?P<image_body>(?:(?!</p>).)*?<img\b(?:(?!</p>).)*)</p>)"
