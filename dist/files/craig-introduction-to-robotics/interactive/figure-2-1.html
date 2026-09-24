@@ -32,9 +32,24 @@
     }
 
     button, input { font: inherit; }
-    .app { position: relative; width: 100vw; height: 100vh; min-height: 480px; }
-    .viewport { width: 100%; height: 100%; cursor: grab; touch-action: none; }
+    .app {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 480px;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .viewport {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      touch-action: none;
+      -webkit-user-drag: none;
+      overscroll-behavior: contain;
+    }
     .viewport.is-dragging { cursor: grabbing; }
+    #components.is-hidden, #shadow.is-hidden { display: none; }
     .grid-line { stroke: #dce6f2; stroke-width: 1; vector-effect: non-scaling-stroke; }
     .axis { stroke: #34445a; stroke-width: 3; vector-effect: non-scaling-stroke; }
     .axis-label, .point-label, .origin-label, .component-label {
@@ -228,7 +243,7 @@
       const components = document.getElementById("components");
       const sliders = ["px", "py", "pz"].map((id) => document.getElementById(id));
       const defaults = { yaw: -0.72, pitch: 0.48, scale: 77, px: 2.4, py: 1.6, pz: 2.1 };
-      const state = { ...defaults, dragging: false, lastX: 0, lastY: 0, auto: false };
+      const state = { ...defaults, dragging: false, pointerId: null, lastX: 0, lastY: 0, auto: false };
       const origin = { x: 570, y: 365 };
       let frame = 0;
 
@@ -289,7 +304,9 @@
         setText("labelP", P, 15, -14);
         const shadow = document.getElementById("shadow");
         shadow.setAttribute("cx", XY.x); shadow.setAttribute("cy", XY.y);
-        components.hidden = !document.getElementById("showComponents").checked;
+        const componentsVisible = document.getElementById("showComponents").checked;
+        components.classList.toggle("is-hidden", !componentsVisible);
+        shadow.classList.toggle("is-hidden", !componentsVisible);
         ["px", "py", "pz"].forEach((id, index) => {
           const value = Number(sliders[index].value).toFixed(1);
           document.getElementById(id + "Value").textContent = value;
@@ -311,17 +328,26 @@
       });
 
       svg.addEventListener("pointerdown", (event) => {
-        state.dragging = true; state.lastX = event.clientX; state.lastY = event.clientY;
+        if (event.button !== 0 || state.dragging) return;
+        event.preventDefault();
+        state.dragging = true; state.pointerId = event.pointerId;
+        state.lastX = event.clientX; state.lastY = event.clientY;
         svg.classList.add("is-dragging"); svg.setPointerCapture(event.pointerId);
       });
       svg.addEventListener("pointermove", (event) => {
-        if (!state.dragging) return;
-        state.yaw += (event.clientX - state.lastX) * 0.008;
+        if (!state.dragging || event.pointerId !== state.pointerId) return;
+        event.preventDefault();
+        state.yaw -= (event.clientX - state.lastX) * 0.008;
         state.pitch = Math.max(-1.05, Math.min(1.05, state.pitch - (event.clientY - state.lastY) * 0.007));
         state.lastX = event.clientX; state.lastY = event.clientY; render();
       });
-      function endDrag() { state.dragging = false; svg.classList.remove("is-dragging"); }
+      function endDrag(event) {
+        if (event && state.pointerId !== null && event.pointerId !== state.pointerId) return;
+        state.dragging = false; state.pointerId = null; svg.classList.remove("is-dragging");
+      }
       svg.addEventListener("pointerup", endDrag); svg.addEventListener("pointercancel", endDrag);
+      svg.addEventListener("lostpointercapture", endDrag);
+      svg.addEventListener("dragstart", (event) => event.preventDefault());
       svg.addEventListener("wheel", (event) => {
         event.preventDefault();
         state.scale = Math.max(48, Math.min(115, state.scale * (event.deltaY > 0 ? 0.92 : 1.08)));
