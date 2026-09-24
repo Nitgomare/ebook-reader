@@ -158,9 +158,19 @@ $$
 {}_{B}^{A}R = \left\lbrack  {{}^{A}{\widehat{X}}_{B}{}^{A}{\widehat{Y}}_{B}{}^{A}{\widehat{Z}}_{B}}\right\rbrack   = \left\lbrack  \begin{matrix} {}^{B}{\widehat{X}}_{A}^{T} \\  {}^{B}{\widehat{Y}}_{A}^{T} \\  {}^{B}{\widehat{Z}}_{A}^{T} \end{matrix}\right\rbrack \tag{2-11}
 $$
 
-![28_934_1518_545_561_0.jpg](../../images/28_934_1518_545_561_0.jpg)
-
-图2-5 矢量的旋转
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-5.html" data-interactive-title="图2-5 矢量的旋转">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-5显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/28_934_1518_545_561_0.jpg" alt="图2-5 矢量的旋转">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图2-5 矢量的旋转（原图与交互示例）</p>
 
 我们已知矢量相对于某坐标系 $\{ B\}$ 的定义，现在想求矢量相对另一个坐标系 $\{ A\}$ 的定义，且这两个坐标系的原点重合, 这种情况是经常出现的, 如图2-5所示。 如果 $\{ B\}$ 相对于 $\{ A\}$ 的姿态描述是已知的,那么这个计算是可能的。这个姿态可由旋转矩阵 ${}_{B}^{A}R$ 来描述, 它的各列为 $\{ B\}$ 的单位矢量在 $\{ A\}$ 中的描述。
 
@@ -192,9 +202,20 @@ $$
 
 图2-6表示坐标系 $\{ B\}$ 相对于坐标系 $\{ A\}$ 绕 $\widehat{Z}$ 轴旋转 30 度。这里 $\widehat{Z}$ 轴指向为由纸面向外。
 
-![29_576_780_494_442_0.jpg](../../images/29_576_780_494_442_0.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-6.html" data-interactive-title="图2-6 {B}绕Ẑ轴旋转30°">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-6显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/29_576_780_494_442_0.jpg" alt="{B}绕Ẑ轴旋转30度">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图2-6 $\left\{  B\right\}$ 绕 $\widehat{Z}$ 轴旋转30度
+<p class="figure-caption">图2-6 {B}绕Ẑ轴旋转30°（原图与交互示例）</p>
 
 在 $\{ A\}$ 中写出 $\{ B\}$ 的单位矢量,并且将它们按列组成旋转矩阵,得到:
 
@@ -220,9 +241,19 @@ $$
 
 经常有这种情况,我们已知矢量相对某坐标系 $\{ B\}$ 的描述,并且想求出它相对于另一个坐标系 $\{ A\}$ 的描述。现在考虑映射的一般情况。此时,坐标系 $\{ B\}$ 的原点和坐标系 $\{ A\}$ 的原点不重合,有一个矢量偏移。确定 $\{ B\}$ 原点的矢量用 ${}^{A}{P}_{BORG}$ 表示，同时 $\{ B\}$ 相对 $\{ A\}$ 的旋转用 ${}_{B}^{A}R$ 描述。 ${}^{B}P$ 已知，求 ${}^{A}P$ ，如图2-7所示。
 
-![30_408_531_847_534_0.jpg](../../images/30_408_531_847_534_0.jpg)
-
-图2-7 在一般情况下的矢量变换
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-7.html" data-interactive-title="图2-7 在一般情况下的矢量变换">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-7显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/30_408_531_847_534_0.jpg" alt="图2-7 在一般情况下的矢量变换">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图2-7 在一般情况下的矢量变换（原图与交互示例）</p>
 
 首先将 ${}^{B}P$ 变换到一个中间坐标系,这个坐标系和 $\{ A\}$ 的姿态相同、原点和 $\{ B\}$ 的原点重合。 这可以像上一节中那样由左乘矩阵 ${}_{B}^{A}R$ 得到。然后仍用简单的矢量加法将原点平移，并得到:
 
@@ -270,9 +301,19 @@ $$
 
 图2-8表示了一个坐标系 $\{ B\}$ ,它绕坐标系 $\{ A\}$ 的 $\widehat{Z}$ 轴旋转了 30 度,沿 ${\widehat{X}}_{A}$ 平移 10 个单位, 再沿 ${\widehat{Y}}_{A}$ 平移 5 个单位。已知 ${}^{B}P = {\left\lbrack  {3.07}{.00}{.0}\right\rbrack  }^{T}$ ,求 ${}^{A}P$ 。
 
-![31_408_1015_847_601_0.jpg](../../images/31_408_1015_847_601_0.jpg)
-
-图2-8 经平移和旋转的坐标系 $\{ B\}$
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-8.html" data-interactive-title="图2-8 经平移和旋转的坐标系{B}">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-8显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/31_408_1015_847_601_0.jpg" alt="图2-8 经平移和旋转的坐标系{B}">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图2-8 经平移和旋转的坐标系{B}（原图与交互示例）</p>
 
 坐标系 $\{ B\}$ 的定义为
 
@@ -300,9 +341,19 @@ $$
 
 平移将空间中的一个点沿着一个已知的矢量方向移动一定距离。对空间一点实际平移的描述仅与一个坐标系有关。空间中点的平移与此点向另一个坐标系的映射具有相同的数学描述, 因此弄清楚映射的数学意义是非常重要的。这个区别很简单: 当一个矢量相对于一个坐标系 “向前移动” 时, 既可以认为是矢量 “向前移动”, 也可以认为坐标系 “向后移动”, 二者的数学表达式是相同的,只不过是观察位置不同。图2-9表示矢量 ${}^{A}{P}_{1}$ 怎样通过矢量 ${}^{A}Q$ 进行平移。这里,矢量 ${}^{A}Q$ 给出了进行平移的信息。
 
-![32_422_1119_784_608_0.jpg](../../images/32_422_1119_784_608_0.jpg)
-
-图2-9 平移算子
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-9.html" data-interactive-title="图2-9 平移算子">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-9显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/32_422_1119_784_608_0.jpg" alt="图2-9 平移算子">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图2-9 平移算子（原图与交互示例）</p>
 
 运算的结果是得到一个新的矢量 ${}^{A}{P}_{2}$ ,计算如下:
 
@@ -334,9 +385,19 @@ $$
 
 同平移的情况一样, 式 (2-13) 和式 (2-27) 的数学表达形式相同, 只是意义不同。为此我们能够知道如何得出作为算子的旋转矩阵:
 
-![33_978_1126_491_463_0.jpg](../../images/33_978_1126_491_463_0.jpg)
-
-图2-10 矢量 ${}^{A}{P}_{1}$ 绕 $\widehat{Z}$ 轴旋转 30 度
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-10-11.html" data-interactive-title="图2-10 矢量ᴬP₁绕Ẑ轴旋转30度">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-10显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/33_978_1126_491_463_0.jpg" alt="图2-10 矢量ᴬP₁绕Ẑ轴旋转30度">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图2-10 矢量ᴬP₁绕Ẑ轴旋转30度（原图与交互示例）</p>
 
 矢量经某一旋转 $R$ 得到的旋转矩阵与一个坐标系相对于参考坐标系经某一旋转 $R$ 得到的旋转矩阵是相同的。
 
@@ -402,9 +463,19 @@ $$
 T = \left\lbrack  \begin{matrix} {0.866} &  - {0.500} & {0.000} & {10.0} \\  {0.500} & {0.866} & {0.000} & {5.0} \\  {0.000} & {0.000} & {1.000} & {0.0} \\  0 & 0 & 0 & 1 \end{matrix}\right\rbrack \tag{2-34}
 $$
 
-![35_510_230_583_612_0.jpg](../../images/35_510_230_583_612_0.jpg)
-
-图2-11 矢量 ${}^{A}P$ 段旋转和平移得到 ${}^{A}{P}_{2}$
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-10-11.html" data-interactive-title="图2-11 矢量ᴬP经旋转和平移得到ᴬP₂">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-11显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/35_510_230_583_612_0.jpg" alt="图2-11 矢量ᴬP经旋转和平移得到ᴬP₂">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图2-11 矢量ᴬP经旋转和平移得到ᴬP₂（原图与交互示例）</p>
 
 已知
 
@@ -524,9 +595,19 @@ $$
 {}_{B}^{A}T = \left\lbrack  \begin{matrix} {0.866} &  - {0.500} & {0.000} & {4.0} \\  {0.500} & {0.866} & {0.000} & {3.0} \\  {0.000} & {0.000} & {1.000} & {0.0} \\  0 & 0 & 0 & 1 \end{matrix}\right\rbrack \tag{2-46}
 $$
 
-![37_503_1533_651_449_0.jpg](../../images/37_503_1533_651_449_0.jpg)
-
-图2-13 相对于坐标系 $\{ A\}$ 的坐标系 $\{ B\}$
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-13.html" data-interactive-title="图2-13 相对于坐标系{A}的坐标系{B}">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-13显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/37_503_1533_651_449_0.jpg" alt="图2-13 相对于坐标系{A}的坐标系{B}">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图2-13 相对于坐标系{A}的坐标系{B}（原图与交互示例）</p>
 
 应用式 (2-45), 得到
 
@@ -688,9 +769,19 @@ $$
 
 每个旋转都是绕着固定参考坐标系 $\{ A\}$ 的轴。我们规定这种姿态的表示法为X-Y-Z固定角坐标系。“固定”一词是指旋转是在固定(即不运动的)参考坐标系(图2-17)中确定的。有时把它们定义为回转角、俯仰角和偏转角。但是使用中应注意, 因为这个定义经常与其他定义不同的问题相关。
 
-![41_399_1291_876_432_0.jpg](../../images/41_399_1291_876_432_0.jpg)
-
-图2-17 X-Y-Z固定角坐标系,按照 ${R}_{x}\left( \gamma \right) ,{R}_{y}\left( \beta \right) ,{R}_{z}\left( \alpha \right)$ 的顺序进行旋转
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-17-18.html" data-interactive-title="图2-17 X-Y-Z固定角坐标系">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-17显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/41_399_1291_876_432_0.jpg" alt="图2-17 X-Y-Z固定角坐标系">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图2-17 X-Y-Z固定角坐标系（原图与交互示例）</p>
 
 可直接推导等价旋转矩阵 ${}_{B}^{A}{R}_{XYZ}\left( {\gamma ,\beta ,\alpha }\right)$ ,因为所有的旋转都是绕着参考坐标系各轴的; 即
 
@@ -804,9 +895,19 @@ $$
 {}_{B}^{A}{R}_{{Z}^{\prime }{Y}^{\prime }{X}^{\prime }}\left( {\alpha ,\beta ,\gamma }\right)  = \left\lbrack  \begin{matrix} {c\alpha c\beta } & {c\alpha s\beta s\gamma } - {s\alpha c\gamma } & {c\alpha s\beta c\gamma } + {s\alpha s\gamma } \\  {s\alpha c\beta } & {s\alpha s\beta s\gamma } + {c\alpha c\gamma } & {s\alpha s\beta c\gamma } - {c\alpha s\gamma } \\   - {s\beta } & {c\beta s\gamma } & {c\beta c\gamma } \end{matrix}\right\rbrack \tag{2-71}
 $$
 
-![43_401_1629_839_437_0.jpg](../../images/43_401_1629_839_437_0.jpg)
-
-图2-18 Z-Y-X欧拉角
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-2-17-18.html" data-interactive-title="图2-18 Z-Y-X欧拉角">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图2-18显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/43_401_1629_839_437_0.jpg" alt="图2-18 Z-Y-X欧拉角">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图2-18 Z-Y-X欧拉角（原图与交互示例）</p>
 
 ] 注意这个结果与以相反顺序绕固定轴旋转三次得到的结果完全相同! 总之, 这是一个不太直观的结果:三次绕固定轴旋转的最终姿态和以相反顺序三次绕运动坐标轴旋转的最终姿态相同。
 

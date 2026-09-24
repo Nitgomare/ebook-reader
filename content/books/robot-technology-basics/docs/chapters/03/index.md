@@ -257,12 +257,22 @@ $$
 \left[ \begin{array}{c} X _ {A ^ {\prime}} \\ Y _ {A ^ {\prime}} \\ Z _ {A ^ {\prime}} \end{array} \right] = \left[ \begin{array}{c c c} \cos \theta & - \sin \theta & 0 \\ \sin \theta & \cos \theta & 0 \\ 0 & 0 & 1 \end{array} \right] \left[ \begin{array}{c} X _ {A} \\ Y _ {A} \\ Z _ {A} \end{array} \right]
 $$
 
-![](../../images/d3d54a7305c7983b45d109283d8d67789043119d70720ee23ddc833a15f25c3f.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-9.html" data-interactive-title="图3.9 点的旋转变换">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3.9显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/d3d54a7305c7983b45d109283d8d67789043119d70720ee23ddc833a15f25c3f.jpg" alt="图3.9 点的旋转变换">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-
+<p class="figure-caption">图3.9 点的旋转变换（原图与交互示例）</p>
 $A^{\prime}$ 点和 $A$ 点的齐次坐标分别为 $[X_{A}, Y_{A}, Z_{A}, 1]^{\mathrm{T}}$ 和 $[X_{A}, Y_{A}, Z_{A}, 1]^{\mathrm{T}}$ , 因此 $A$ 点的旋转齐次变换过程为 
 
-图3.9 点的旋转变换 
 
 $$
 \left[ \begin{array}{c} X _ {A ^ {\prime}} \\ Y _ {A ^ {\prime}} \\ Z _ {A ^ {\prime}} \\ 1 \end{array} \right] = \left[ \begin{array}{c c c c} \cos \theta & - \sin \theta & 0 & 0 \\ \sin \theta & \cos \theta & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{array} \right] \left[ \begin{array}{c} X _ {A} \\ Y _ {A} \\ Z _ {A} \\ 1 \end{array} \right]\tag{3.10}
@@ -361,9 +371,20 @@ $$
 = \left[ \begin{array}{c c c c} 0 & 0 & 1 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{array} \right] \left[ \begin{array}{l} 7 \\ 3 \\ 2 \\ 1 \end{array} \right] = \left[ \begin{array}{l} 2 \\ 7 \\ 3 \\ 1 \end{array} \right]
 $$
 
-![](../../images/aec589cf0acfab412e30a42c8731b83c8eddab64de016b182da27718301a04ae.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-11.html" data-interactive-title="图3.11 两次旋转变换">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3.11显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/aec589cf0acfab412e30a42c8731b83c8eddab64de016b182da27718301a04ae.jpg" alt="图3.11 两次旋转变换">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图 3.11 两次旋转变换
+<p class="figure-caption">图3.11 两次旋转变换（原图与交互示例）</p>
 
 
 例3.5 图3.12所示单臂操作手的手腕也具有一个自由度。已知手部起始位姿矩阵为 
@@ -571,9 +592,20 @@ $$
 
 连杆 $i$ 的坐标系的 $Z_{i}$ 轴位于连杆 $i$ 与连杆 $i + 1$ 的转动关节轴线上；连杆 $i$ 的两端轴线的公垂 线为连杆坐标系的 $X_{i}$ 轴，方向指向下一个连杆；公垂线与 $Z_{i}$ 的交点为坐标系原点；坐标系的 $Y_{i}$ 轴由 $X_{i}$ 和 $Z_{i}$ 确定。至此，连杆 $i$ 的坐标系确立。 
 
-![](../../images/eb97e5f3c75c64c357c39b04c3791b7205d66a651c46aef6763039a8e52de8f7.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-16.html" data-interactive-title="图3.16 转动关节连杆 D-H 坐标系建立示意图">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3.16显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/eb97e5f3c75c64c357c39b04c3791b7205d66a651c46aef6763039a8e52de8f7.jpg" alt="图3.16 转动关节连杆 D-H 坐标系建立示意图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图 3.16 转动关节连杆 D-H 坐标系建立示意图
+<p class="figure-caption">图3.16 转动关节连杆 D-H 坐标系建立示意图（原图与交互示例）</p>
 
 
 对于如上建立的连杆坐标系, 可用 4 个参数来描述, 其中两个参数用来描述连杆, 即两关节轴线沿公垂线的距离 $a_{i}$ , 称为连杆长度, 垂直于 $a_{i}$ 所在平面内两关节轴线 $(Z_{i-1}$ 和 $Z_{i})$ 的夹角 $\alpha_{i}$ , 称为连杆扭角; 另两个参数描述相邻两杆的关系, 即沿关节 $i$ 轴线两个公垂线的距离 $d_{i}$ (称为连杆距离), 垂直于关节 $i$ 轴线的平面内两个公垂线的夹角 $\theta_{i}$ (称为连杆夹角), 如图 3.16 所示。 
@@ -847,9 +879,20 @@ $$
 
 机器人的运动学逆解具有多解性,如图 3.20 所示,对于给定的位置与姿态,它具有两组解。 
 
-![](../../images/fb1558e99c82402150b7a03741fcbb8d6aaf05834e765d105e16ae2b154cb419.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-20.html" data-interactive-title="图3.20 机器人运动学逆解多解性示意图">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3.20显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/fb1558e99c82402150b7a03741fcbb8d6aaf05834e765d105e16ae2b154cb419.jpg" alt="图3.20 机器人运动学逆解多解性示意图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图 3.20 机器人运动学逆解多解性示意图
+<p class="figure-caption">图3.20 机器人运动学逆解多解性示意图（原图与交互示例）</p>
 
 
 造成机器人运动学逆解具有多解的原因是由于解反三角函数方程产生的。对于一个真实的机器人, 只有一组解与实际情况对应, 为此必须做出判断, 以选择合适的解。通常采用剔除多余解的方法: 

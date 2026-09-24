@@ -24,9 +24,20 @@ $$
 \left. \begin{array}{l} X = X \left(\theta_ {1}, \theta_ {2}\right) \\ Y = Y \left(\theta_ {1}, \theta_ {2}\right) \end{array} \right\}\tag{4.2}
 $$
 
-![](../../images/1399cbae0b9eb837b4e3799db20e1584cfb0a58b051b348136bd8a5d2d067d34.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-4-1.html" data-interactive-title="图4.1 二自由度平面关节型机器人简图">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图4.1显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/1399cbae0b9eb837b4e3799db20e1584cfb0a58b051b348136bd8a5d2d067d34.jpg" alt="图4.1 二自由度平面关节型机器人简图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图 4.1 二自由度平面关节型机器人简图
+<p class="figure-caption">图4.1 二自由度平面关节型机器人简图（原图与交互示例）</p>
 
 
 求其微分得 

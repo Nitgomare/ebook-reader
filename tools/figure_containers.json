@@ -1,0 +1,167 @@
+{
+  "_comment": "交互图正文嵌入计划。新增交互图时在此追加一条；figure_id 必须对应 docs/interactive/<figure_id>.html。",
+  "plans": [
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/29_576_780_494_442_0.jpg",
+      "figure_id": "figure-2-6",
+      "number": "图2-6",
+      "title": "图2-6 {B}绕Ẑ轴旋转30°",
+      "caption": "图2-6 $\\left\\{  B\\right\\}$ 绕 $\\widehat{Z}$ 轴旋转30度"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/28_934_1518_545_561_0.jpg",
+      "figure_id": "figure-2-5",
+      "number": "图2-5",
+      "title": "图2-5 矢量的旋转",
+      "caption": "图2-5 矢量的旋转"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/30_408_531_847_534_0.jpg",
+      "figure_id": "figure-2-7",
+      "number": "图2-7",
+      "title": "图2-7 在一般情况下的矢量变换",
+      "caption": "图2-7 在一般情况下的矢量变换"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/31_408_1015_847_601_0.jpg",
+      "figure_id": "figure-2-8",
+      "number": "图2-8",
+      "title": "图2-8 经平移和旋转的坐标系{B}",
+      "caption": "图2-8 经平移和旋转的坐标系 $\\{ B\\}$"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/32_422_1119_784_608_0.jpg",
+      "figure_id": "figure-2-9",
+      "number": "图2-9",
+      "title": "图2-9 平移算子",
+      "caption": "图2-9 平移算子"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/33_978_1126_491_463_0.jpg",
+      "figure_id": "figure-2-10-11",
+      "number": "图2-10",
+      "title": "图2-10 矢量ᴬP₁绕Ẑ轴旋转30度",
+      "caption": "图2-10 矢量 ${}^{A}{P}_{1}$ 绕 $\\widehat{Z}$ 轴旋转 30 度"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/35_510_230_583_612_0.jpg",
+      "figure_id": "figure-2-10-11",
+      "number": "图2-11",
+      "title": "图2-11 矢量ᴬP经旋转和平移得到ᴬP₂",
+      "caption": "图2-11 矢量 ${}^{A}P$ 段旋转和平移得到 ${}^{A}{P}_{2}$"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/37_503_1533_651_449_0.jpg",
+      "figure_id": "figure-2-13",
+      "number": "图2-13",
+      "title": "图2-13 相对于坐标系{A}的坐标系{B}",
+      "caption": "图2-13 相对于坐标系 $\\{ A\\}$ 的坐标系 $\\{ B\\}$"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/41_399_1291_876_432_0.jpg",
+      "figure_id": "figure-2-17-18",
+      "number": "图2-17",
+      "title": "图2-17 X-Y-Z固定角坐标系",
+      "caption": "图2-17 X-Y-Z固定角坐标系,按照 ${R}_{x}\\left( \\gamma \\right) ,{R}_{y}\\left( \\beta \\right) ,{R}_{z}\\left( \\alpha \\right)$ 的顺序进行旋转"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/02/index.md",
+      "image": "../../images/43_401_1629_839_437_0.jpg",
+      "figure_id": "figure-2-17-18",
+      "number": "图2-18",
+      "title": "图2-18 Z-Y-X欧拉角",
+      "caption": "图2-18 Z-Y-X欧拉角"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/68_402_548_881_622_0.jpg",
+      "figure_id": "figure-3-15",
+      "number": "图3-15",
+      "title": "图3-15 中间坐标系{P}{Q}{R}的位置",
+      "caption": "图3-15 中间坐标系 $\\{ P\\} ,\\{ Q\\}$ 和 $\\{ R\\}$ 的位置"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/72_315_254_363_680_0.jpg",
+      "figure_id": "figure-3-20",
+      "number": "图3-20",
+      "title": "图3-20 一个3R腕部机构简图",
+      "caption": "图3-20 一个3R腕部机构简图, 三个轴相互垂直并相交于一点, 这种设计用于PUMA560 和许多工业机器人中"
+    },
+    {
+      "book": "craig-introduction-to-robotics",
+      "doc": "chapters/04/index.md",
+      "image": "../../images/89_1008_307_455_321_0.jpg",
+      "figure_id": "figure-4-1",
+      "number": "图4-1",
+      "title": "图4-1 连杆长度为l1和l2的两连杆操作臂",
+      "caption": "图4-1 连杆长度为 ${l}_{1}$ 和 ${l}_{2}$ 的两连杆操作臂"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/d3d54a7305c7983b45d109283d8d67789043119d70720ee23ddc833a15f25c3f.jpg",
+      "figure_id": "figure-3-9",
+      "number": "图3.9",
+      "title": "图3.9 点的旋转变换",
+      "caption": "图3.9 点的旋转变换"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/aec589cf0acfab412e30a42c8731b83c8eddab64de016b182da27718301a04ae.jpg",
+      "figure_id": "figure-3-11",
+      "number": "图3.11",
+      "title": "图3.11 两次旋转变换",
+      "caption": "图 3.11 两次旋转变换"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/eb97e5f3c75c64c357c39b04c3791b7205d66a651c46aef6763039a8e52de8f7.jpg",
+      "figure_id": "figure-3-16",
+      "number": "图3.16",
+      "title": "图3.16 转动关节连杆 D-H 坐标系建立示意图",
+      "caption": "图 3.16 转动关节连杆 D-H 坐标系建立示意图"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/03/index.md",
+      "image": "../../images/fb1558e99c82402150b7a03741fcbb8d6aaf05834e765d105e16ae2b154cb419.jpg",
+      "figure_id": "figure-3-20",
+      "number": "图3.20",
+      "title": "图3.20 机器人运动学逆解多解性示意图",
+      "caption": "图 3.20 机器人运动学逆解多解性示意图"
+    },
+    {
+      "book": "robot-technology-basics",
+      "doc": "chapters/04/index.md",
+      "image": "../../images/1399cbae0b9eb837b4e3799db20e1584cfb0a58b051b348136bd8a5d2d067d34.jpg",
+      "figure_id": "figure-4-1",
+      "number": "图4.1",
+      "title": "图4.1 二自由度平面关节型机器人简图",
+      "caption": "图 4.1 二自由度平面关节型机器人简图"
+    }
+  ]
+}

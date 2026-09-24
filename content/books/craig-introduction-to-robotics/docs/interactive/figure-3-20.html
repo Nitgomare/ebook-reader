@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图3-20 3R 腕部机构（三轴交于一点） · 人机交互演示</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #14213d;
+  --muted: #65748b;
+  --line: #d9e2ef;
+  --surface: rgba(255, 255, 255, 0.94);
+  --blue: #2563eb;
+  --blue-dark: #174ea6;
+  --blue-soft: #eaf2ff;
+  --red: #d93025;
+  --green: #12944f;
+  --violet: #7c3aed;
+  --orange: #c26a10;
+  --cyan: #0e7490;
+}
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; }
+body {
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(160deg, #f8fbff 0%, #eef4fb 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+    "Microsoft YaHei", Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+button, input, select { font: inherit; }
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 460px;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.viewport {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-drag: none;
+  overscroll-behavior: contain;
+}
+.viewport.is-dragging { cursor: grabbing; }
+.fk-grid-line { stroke: #e2eaf5; stroke-width: 1; }
+.fk-axis { stroke-width: 3.2; }
+.fk-axis-label, .fk-point-label, .fk-vec-label, .fk-origin-label {
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: #f7fafe;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.fk-origin-label { font-size: 15px; fill: #475569; }
+.fk-vec-line { stroke-width: 4.4; fill: none; }
+.fk-projection { stroke-width: 2.2; stroke-dasharray: 7 6; fill: none; }
+.fk-arc { fill: none; stroke-width: 2.6; stroke-dasharray: 6 5; }
+.fk-point { stroke: #fff; stroke-width: 2.6; }
+
+.panel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: min(304px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  overflow: auto;
+  padding: 15px 17px 14px;
+  border: 1px solid rgba(30, 64, 175, 0.14);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 16px 36px rgba(30, 64, 175, 0.14);
+}
+.panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.panel h1 { margin: 0; font-size: 15px; line-height: 1.4; }
+.panel .subtitle { margin: 5px 0 12px; color: var(--muted); font-size: 11.5px; line-height: 1.55; }
+.reset {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid #bfd2ef;
+  border-radius: 7px;
+  color: var(--blue-dark);
+  background: #fff;
+  cursor: pointer;
+}
+.reset:hover { background: var(--blue-soft); }
+.control { margin-top: 10px; }
+.control-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.control label { color: #42526a; font-size: 12.5px; }
+.control output {
+  color: var(--blue-dark);
+  font: 700 12.5px ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+input[type="range"] {
+  width: 100%;
+  height: 4px;
+  margin: 8px 0 2px;
+  border-radius: 999px;
+  outline: none;
+  background: #dbe5f1;
+  appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  width: 16px; height: 16px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 2px 7px rgba(37, 99, 235, 0.42);
+  cursor: pointer;
+  appearance: none;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px; height: 12px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+}
+.options { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; }
+.options label { display: inline-flex; align-items: center; gap: 6px; color: #4a5a72; font-size: 12px; cursor: pointer; }
+.options input { accent-color: var(--blue); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 11px; padding-top: 10px; border-top: 1px dashed var(--line); color: #5b6a80; font-size: 11.5px; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; }
+.legend i.dot { width: 9px; height: 9px; border-radius: 50%; }
+
+.readout {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  max-width: min(460px, calc(100% - 32px));
+  padding: 10px 13px;
+  border: 1px solid rgba(30, 64, 175, 0.12);
+  border-radius: 10px;
+  color: #3d4c63;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 26px rgba(30, 64, 175, 0.09);
+  font: 15px/1.6 "Cambria Math", "Times New Roman", serif;
+}
+.readout .row { white-space: nowrap; }
+.readout strong { color: var(--blue-dark); font-family: inherit; }
+.readout .small { font-size: 13px; color: #5b6a80; }
+.hint {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.82);
+  font-size: 11px;
+}
+.tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.tabs button {
+  flex: 1;
+  padding: 6px 4px;
+  border: 1px solid #cfdcf0;
+  border-radius: 8px;
+  color: #45566f;
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+.tabs button.is-active { border-color: var(--blue); color: #fff; background: var(--blue); }
+
+@media (max-width: 720px) {
+  .app { min-height: 540px; }
+  .panel {
+    top: auto;
+    bottom: 8px;
+    left: 8px;
+    width: calc(100% - 16px);
+    max-height: 54%;
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+  .panel .subtitle { display: none; }
+  .readout { top: 8px; right: 8px; bottom: auto; font-size: 13px; max-width: calc(100% - 16px); }
+  .hint { display: none; }
+  .legend { margin-top: 8px; padding-top: 8px; }
+}
+
+.readout .row { white-space: normal; }
+.readout .mat { font: 13px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 0.2px; }
+.readout .mat span { display: inline-block; width: 4.9em; text-align: right; }
+.readout .warn { color: #b91c1c; font-weight: 700; }
+.readout .ok { color: #15803d; }
+@media (max-width: 720px) {
+  .readout { padding: 7px 10px; font-size: 12px; }
+  .readout .small { font-size: 10.5px; }
+  .readout .mat { font-size: 10.5px; }
+  .readout .mat span { width: 4.1em; }
+  .readout .warn { font-weight: 600; }
+}
+</style>
+</head>
+<body>
+<main class="app">
+<svg class="viewport" id="viewport" viewBox="0 0 1000 620" role="img"
+     aria-label="3R腕部机构简图：三个关节轴两两垂直并相交于腕心 O">
+  <defs>
+    <marker id="mJ4" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"></path>
+    </marker>
+    <marker id="mJ5" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0e7490"></path>
+    </marker>
+    <marker id="mJ6" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c26a10"></path>
+    </marker>
+    <marker id="mX" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d93025"></path>
+    </marker>
+    <marker id="mY" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"></path>
+    </marker>
+    <marker id="mZ" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#12944f"></path>
+    </marker>
+    <marker id="mDim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"></path>
+    </marker>
+  </defs>
+  <g id="ground"></g>
+  <g id="links"></g>
+  <g id="axes"></g>
+  <g id="arcs"></g>
+  <g id="frames"></g>
+  <g id="tool"></g>
+  <g id="overlay"></g>
+</svg>
+
+<section class="panel" aria-label="图3-20 控制面板">
+  <div class="panel-head">
+    <div>
+      <h1>图3-20 3R 腕部机构（三轴交于一点）</h1>
+      <p class="subtitle">PUMA560 腕部：关节轴 4、5、6 依次垂直并相交于腕心 O（{4}{5}{6} 原点重合）。
+        θ₅ = 0° 或 ±180° 时轴4 与轴6 共线，θ₄ 与 θ₆ 解耦失败。</p>
+    </div>
+    <button class="reset" id="reset" type="button">重置</button>
+  </div>
+  <div class="control">
+    <div class="control-head"><label for="t4">关节角 θ₄（绕轴4 Ẑ₄）</label><output id="t4Value">0.0°</output></div>
+    <input id="t4" type="range" min="-180" max="180" step="1" value="0">
+  </div>
+  <div class="control">
+    <div class="control-head"><label for="t5">关节角 θ₅（绕轴5 Ẑ₅）</label><output id="t5Value">0.0°</output></div>
+    <input id="t5" type="range" min="-180" max="180" step="1" value="0">
+  </div>
+  <div class="control">
+    <div class="control-head"><label for="t6">关节角 θ₆（绕轴6 Ẑ₆）</label><output id="t6Value">0.0°</output></div>
+    <input id="t6" type="range" min="-180" max="180" step="1" value="0">
+  </div>
+  <div class="control">
+    <div class="control-head"><label for="tool">工具长度 L_T（{6}→{T}）</label><output id="toolValue">0.00</output></div>
+    <input id="tool" type="range" min="0" max="1.2" step="0.05" value="0">
+  </div>
+  <div class="options">
+    <label><input id="showFrames" type="checkbox" checked>显示坐标系</label>
+    <label><input id="showArcs" type="checkbox" checked>显示转角圆弧</label>
+    <label><input id="showGrid" type="checkbox" checked>显示底面网格</label>
+    <label><input id="auto" type="checkbox">自动旋转视角</label>
+  </div>
+  <div class="legend">
+    <span><i style="background:#7c3aed"></i>关节4轴 Ẑ₄</span>
+    <span><i style="background:#0e7490"></i>关节5轴 Ẑ₅</span>
+    <span><i style="background:#c26a10"></i>关节6轴 Ẑ₆</span>
+    <span><i style="background:#334155"></i>工具 / 法兰</span>
+    <span><i class="dot" style="background:#dc2626"></i>奇异位形提示</span>
+    <span>坐标系轴：<i style="background:#d93025"></i>Ẋ <i style="background:#2563eb"></i>Ẏ <i style="background:#12944f"></i>Ẑ</span>
+  </div>
+</section>
+
+<div class="hint">拖动旋转 · 滚轮缩放 · 双击复位</div>
+<div class="readout">
+  <div class="row"><strong>θ₄, θ₅, θ₆</strong> = <span id="q4">0.0°</span>, <span id="q5">0.0°</span>, <span id="q6">0.0°</span></div>
+  <div class="row small">腕部姿态矩阵 ³₆R（相对坐标系 {3}，式(3-11)）：</div>
+  <div class="row mat">[ <span id="m00">1.000</span><span id="m01">0.000</span><span id="m02">0.000</span> ]</div>
+  <div class="row mat">[ <span id="m10">0.000</span><span id="m11">0.000</span><span id="m12">1.000</span> ]</div>
+  <div class="row mat">[ <span id="m20">0.000</span><span id="m21">-1.000</span><span id="m22">0.000</span> ]</div>
+  <div class="row small">工具轴 Ẑ_T（{3} 中）= [<span id="ztx">0.000</span>, <span id="zty">1.000</span>, <span id="ztz">0.000</span>]ᵀ = [−c₄s₅, c₅, s₄s₅]</div>
+  <div class="row small">轴4⊥轴5、轴5⊥轴6 恒为 90.0°；轴4–轴6 夹角 acos(Ẑ₄·Ẑ₆) = <span id="ang46">0.0°</span></div>
+  <div class="row" id="singRow">…</div>
+</div>
+</main>
+<script>
+/*!
+ * figure-kit.js — 交互教学图公共底座
+ *
+ * 为两本机器人教材的交互图提供统一的三维投影、视图拖动/缩放、滑块与重置逻辑。
+ * 纯原生 JavaScript，无任何外部依赖，可在 iframe sandbox="allow-scripts" 下运行。
+ *
+ * 主要 API（挂在 window.FK 上）：
+ *   FK.Vec        三维向量运算（add/sub/scale/dot/cross/norm/normalize）
+ *   FK.M4         4x4 齐次变换矩阵运算（identity/multiply/rotX/rotY/rotZ/rotAxis/translate/apply/fromRT/inverse）
+ *   FK.Scene      可交互三维场景（SVG 渲染、正交投影、指针捕获、滚轮缩放、自动旋转）
+ *   FK.AdaptiveScene  按 iframe 实际尺寸自适应 viewBox 的场景（推荐使用，见下方注释）
+ *   FK.bindRanges 把 range 输入批量绑定到 state 并刷新
+ *   FK.format     数值格式化
+ *
+ * 坐标约定：右手坐标系，x 向右、y 向前（屏幕内）、z 向上。
+ * 投影：先绕 z 轴 yaw、再绕屏幕水平轴 pitch 的正交投影，可缩放。
+ */
+(function (global) {
+  "use strict";
+
+  /* ------------------------------------------------------------------ 向量 */
+
+  var Vec = {
+    add: function (a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; },
+    sub: function (a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; },
+    scale: function (a, s) { return [a[0] * s, a[1] * s, a[2] * s]; },
+    dot: function (a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; },
+    cross: function (a, b) {
+      return [
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+      ];
+    },
+    len: function (a) { return Math.sqrt(Vec.dot(a, a)); },
+    normalize: function (a) {
+      var n = Vec.len(a);
+      return n < 1e-12 ? [0, 0, 0] : Vec.scale(a, 1 / n);
+    },
+    /** 与教材一致：向量按列写成矩阵，转置后返回行向量字符串 */
+    round: function (a, digits) {
+      var d = digits === undefined ? 3 : digits;
+      var p = Math.pow(10, d);
+      return a.map(function (v) { return Math.round(v * p) / p; });
+    },
+    eq: function (a, b, eps) {
+      var e = eps === undefined ? 1e-6 : eps;
+      return Math.abs(a[0] - b[0]) < e && Math.abs(a[1] - b[1]) < e && Math.abs(a[2] - b[2]) < e;
+    },
+  };
+
+  /* ------------------------------------------------------------------ 矩阵 */
+
+  var M4 = {
+    identity: function () { return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; },
+    /** 行主序 4x4 相乘 */
+    multiply: function (a, b) {
+      var out = new Array(16);
+      for (var i = 0; i < 4; i += 1) {
+        for (var j = 0; j < 4; j += 1) {
+          var sum = 0;
+          for (var k = 0; k < 4; k += 1) sum += a[i * 4 + k] * b[k * 4 + j];
+          out[i * 4 + j] = sum;
+        }
+      }
+      return out;
+    },
+    chain: function () {
+      var out = M4.identity();
+      for (var i = 0; i < arguments.length; i += 1) out = M4.multiply(out, arguments[i]);
+      return out;
+    },
+    rotX: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1];
+    },
+    rotY: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1];
+    },
+    rotZ: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+    },
+    /** Rodrigues 轴角旋转；k 必须是单位轴（会自动归一化） */
+    rotAxis: function (axis, rad) {
+      var k = Vec.normalize(axis);
+      var c = Math.cos(rad), s = Math.sin(rad), t = 1 - c;
+      var x = k[0], y = k[1], z = k[2];
+      return [
+        t * x * x + c, t * x * y - s * z, t * x * z + s * y, 0,
+        t * x * y + s * z, t * y * y + c, t * y * z - s * x, 0,
+        t * x * z - s * y, t * y * z + s * x, t * z * z + c, 0,
+        0, 0, 0, 1,
+      ];
+    },
+    translate: function (v) {
+      return [1, 0, 0, v[0], 0, 1, 0, v[1], 0, 0, 1, v[2], 0, 0, 0, 1];
+    },
+    /** 由旋转矩阵（行主序 3x3 数组）与位移构造齐次变换 */
+    fromRT: function (r, p) {
+      return [
+        r[0], r[1], r[2], p[0],
+        r[3], r[4], r[5], p[1],
+        r[6], r[7], r[8], p[2],
+        0, 0, 0, 1,
+      ];
+    },
+    /** 变换一个点（含平移） */
+    apply: function (m, v) {
+      return [
+        m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3],
+        m[4] * v[0] + m[5] * v[1] + m[6] * v[2] + m[7],
+        m[8] * v[0] + m[9] * v[1] + m[10] * v[2] + m[11],
+      ];
+    },
+    /** 只变换方向（不含平移） */
+    applyDir: function (m, v) {
+      return [
+        m[0] * v[0] + m[1] * v[1] + m[2] * v[2],
+        m[4] * v[0] + m[5] * v[1] + m[6] * v[2],
+        m[8] * v[0] + m[9] * v[1] + m[10] * v[2],
+      ];
+    },
+    /** 齐次逆变换：R 转置，-Rᵀp（教材式 2-45 的矩阵形式） */
+    inverse: function (m) {
+      var r = [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]];
+      var rt = [r[0], r[3], r[6], r[1], r[4], r[7], r[2], r[5], r[8]];
+      var p = [m[3], m[7], m[11]];
+      var t = [
+        -(rt[0] * p[0] + rt[1] * p[1] + rt[2] * p[2]),
+        -(rt[3] * p[0] + rt[4] * p[1] + rt[5] * p[2]),
+        -(rt[6] * p[0] + rt[7] * p[1] + rt[8] * p[2]),
+      ];
+      return M4.fromRT(rt, t);
+    },
+    /** 取 3x3 旋转部分 */
+    rotation: function (m) {
+      return [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]];
+    },
+    /** 取位移部分 */
+    position: function (m) { return [m[3], m[7], m[11]]; },
+    /** X-Y-Z 固定角（先绕 X 转 γ、再绕 Y 转 β、最后绕 Z 转 α），教材式 2-63 */
+    fromFixedXYZ: function (gamma, beta, alpha) {
+      return M4.chain(M4.rotZ(alpha), M4.rotY(beta), M4.rotX(gamma));
+    },
+    /** Z-Y-X 欧拉角（每次绕运动坐标系的新轴），教材式 2-71 */
+    fromEulerZYX: function (alpha, beta, gamma) {
+      return M4.chain(M4.rotZ(alpha), M4.rotY(beta), M4.rotX(gamma));
+    },
+  };
+
+  /* ------------------------------------------------------------------ 场景 */
+
+  var NS = "http://www.w3.org/2000/svg";
+  var DEG = Math.PI / 180;
+
+  /**
+   * Scene 构造函数。
+   * @param {object} options
+   *   - svg: 承载投影图形的 SVG 元素（必填）
+   *   - origin: 投影中心在 viewBox 中的位置，默认 {x: 560, y: 360}
+   *   - scale: 每单位长度对应的像素数，默认 78
+   *   - yaw / pitch: 初始视角（弧度）
+   *   - minScale / maxScale / minPitch / maxPitch
+   *   - onRender: 每次绘制后的回调（用于同步读数）
+   *   - layer: 兼容字段；不传则使用 svg 自身作为绘图容器
+   */
+  function Scene(options) {
+    var self = this;
+    var opts = options || {};
+    this.svg = opts.svg;
+    if (!this.svg) throw new Error("FK.Scene 需要一个 svg 元素作为视图容器");
+    this.layer = opts.layer || this.svg;
+    this.defaults = {
+      yaw: opts.yaw === undefined ? -0.72 : opts.yaw,
+      pitch: opts.pitch === undefined ? 0.48 : opts.pitch,
+      scale: opts.scale === undefined ? 78 : opts.scale,
+      panX: 0,
+      panY: 0,
+    };
+    this.limits = {
+      minScale: opts.minScale === undefined ? 34 : opts.minScale,
+      maxScale: opts.maxScale === undefined ? 190 : opts.maxScale,
+      minPitch: opts.minPitch === undefined ? -1.15 : opts.minPitch,
+      maxPitch: opts.maxPitch === undefined ? 1.15 : opts.maxPitch,
+    };
+    this.origin = opts.origin || { x: 560, y: 360 };
+    this.baseOrigin = { x: this.origin.x, y: this.origin.y };
+    this.state = {
+      yaw: this.defaults.yaw,
+      pitch: this.defaults.pitch,
+      scale: this.defaults.scale,
+      dragging: false,
+      panning: false,
+      pointerId: null,
+      lastX: 0,
+      lastY: 0,
+      auto: false,
+    };
+    this.onRender = opts.onRender || null;
+    this.autoSpeed = opts.autoSpeed === undefined ? 0.0032 : opts.autoSpeed;
+    this._frame = 0;
+    this._render = null;
+    this._enableInteraction();
+  }
+
+  Scene.prototype = {
+    /** 世界坐标 -> 屏幕坐标（正交投影 + 深度值） */
+    project: function (v) {
+      var s = this.state;
+      var cy = Math.cos(s.yaw), sy = Math.sin(s.yaw);
+      var cp = Math.cos(s.pitch), sp = Math.sin(s.pitch);
+      var x1 = v[0] * cy - v[1] * sy;
+      var y1 = v[0] * sy + v[1] * cy;
+      var z1 = v[2];
+      var depth = y1 * cp - z1 * sp;
+      var vertical = y1 * sp + z1 * cp;
+      return {
+        x: this.origin.x + x1 * s.scale,
+        y: this.origin.y - vertical * s.scale,
+        depth: depth,
+      };
+    },
+    /** 变换矩阵作用后再投影，便于处理带位姿的坐标系 */
+    projectT: function (m, v) { return this.project(M4.apply(m, v)); },
+    /** 清空图层 */
+    clear: function () { while (this.layer.firstChild) this.layer.removeChild(this.layer.firstChild); },
+    /** 创建 SVG 元素 */
+    el: function (tag, attrs, parent) {
+      var node = document.createElementNS(NS, tag);
+      if (attrs) {
+        Object.keys(attrs).forEach(function (key) {
+          if (attrs[key] === null || attrs[key] === undefined) return;
+          node.setAttribute(key, attrs[key]);
+        });
+      }
+      (parent || this.layer).appendChild(node);
+      return node;
+    },
+    /** 画一条线段（世界坐标） */
+    line: function (a, b, attrs, parent) {
+      var A = this.project(a), B = this.project(b);
+      return this.el("line", Object.assign({ x1: A.x, y1: A.y, x2: B.x, y2: B.y }, attrs || {}), parent);
+    },
+    /** 画一条带箭头的线段，marker 为 marker id（不含 url()） */
+    arrow: function (a, b, cls, marker, parent) {
+      var A = this.project(a), B = this.project(b);
+      return this.el("line", {
+        x1: A.x, y1: A.y, x2: B.x, y2: B.y,
+        class: cls,
+        "marker-end": marker ? "url(#" + marker + ")" : null,
+      }, parent);
+    },
+    /** 画文字标签 */
+    text: function (v, str, attrs, dx, dy, parent) {
+      var p = this.project(v);
+      var node = this.el("text", Object.assign({
+        x: p.x + (dx || 0),
+        y: p.y + (dy || 0),
+      }, attrs || {}), parent);
+      node.textContent = str;
+      return node;
+    },
+    /** 画一条折线 */
+    polyline: function (points, attrs, parent) {
+      var d = points.map(function (p) {
+        var q = this.project(p);
+        return q.x + "," + q.y;
+      }, this).join(" ");
+      return this.el("polyline", Object.assign({ points: d, fill: "none" }, attrs || {}), parent);
+    },
+    /** 画一个实心圆点 */
+    dot: function (v, attrs, parent) {
+      var p = this.project(v);
+      return this.el("circle", Object.assign({ cx: p.x, cy: p.y, r: 6 }, attrs || {}), parent);
+    },
+    /**
+     * 绘制一个坐标系（三根轴 + 标签）。
+     * @param {number[]} m 4x4 齐次变换，定义坐标系在参考系中的位姿
+     * @param {object} cfg { labels:[x,y,z], length, colors:[c1,c2,c3], marker, parent, dash }
+     */
+    axes: function (m, cfg) {
+      var c = cfg || {};
+      var len = c.length === undefined ? 2.4 : c.length;
+      var labels = c.labels || ["X", "Y", "Z"];
+      var colors = c.colors || ["#e23a34", "#1a73e8", "#2e9e63"];
+      var dirs = [[len, 0, 0], [0, len, 0], [0, 0, len]];
+      var group = c.parent || this.layer;
+      for (var i = 0; i < 3; i += 1) {
+        var tip = M4.apply(m, dirs[i]);
+        var base = M4.apply(m, [0, 0, 0]);
+        var A = this.project(base), B = this.project(tip);
+        this.el("line", {
+          x1: A.x, y1: A.y, x2: B.x, y2: B.y,
+          stroke: colors[i],
+          "stroke-width": c.width || 3.4,
+          "stroke-dasharray": c.dash || null,
+          "marker-end": c.marker ? "url(#" + c.marker + ")" : null,
+        }, group);
+        var node = this.el("text", {
+          x: B.x + (c.dx === undefined ? 8 : c.dx),
+          y: B.y + (c.dy === undefined ? -6 : c.dy),
+          fill: colors[i],
+        }, group);
+        node.textContent = labels[i];
+      }
+      var origin = M4.apply(m, [0, 0, 0]);
+      var p = this.project(origin);
+      this.el("circle", { cx: p.x, cy: p.y, r: c.originR || 4, fill: "#2b3a52" }, group);
+      if (c.originLabel) {
+        var t = this.el("text", { x: p.x + 8, y: p.y + 16, fill: "#2b3a52" }, group);
+        t.textContent = c.originLabel;
+      }
+      return group;
+    },
+    /** 绘制地面网格（xy 平面） */
+    grid: function (half, step, attrs) {
+      var h = half === undefined ? 3 : half;
+      var s = step === undefined ? 1 : step;
+      var group = this.el("g", { class: "fk-grid" });
+      for (var i = -h; i <= h; i += s) {
+        this.line([-h, i, 0], [h, i, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
+        this.line([i, -h, 0], [i, h, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
+      }
+      return group;
+    },
+    /** 每次状态变化时调用的真实绘制函数 */
+    setRenderer: function (fn) { this._render = fn; },
+    /** 触发一次重绘 */
+    render: function () {
+      this.origin.x = this.baseOrigin.x;
+      this.origin.y = this.baseOrigin.y;
+      if (this._render) this._render(this);
+      if (this.onRender) this.onRender(this);
+    },
+    reset: function () {
+      this.state.yaw = this.defaults.yaw;
+      this.state.pitch = this.defaults.pitch;
+      this.state.scale = this.defaults.scale;
+      this.origin.x = this.baseOrigin.x;
+      this.origin.y = this.baseOrigin.y;
+    },
+    setAuto: function (on) {
+      this.state.auto = !!on;
+      if (this.state.auto && !this._frame) this._frame = requestAnimationFrame(this._tick.bind(this));
+    },
+    _tick: function () {
+      this._frame = 0;
+      if (!this.state.auto && !this.state.dragging) return;
+      this.state.yaw += this.autoSpeed;
+      this.render();
+      if (this.state.auto) this._frame = requestAnimationFrame(this._tick.bind(this));
+    },
+    _enableInteraction: function () {
+      var self = this;
+      var svg = this.svg;
+      svg.addEventListener("pointerdown", function (event) {
+        if (event.button !== 0 && event.pointerType === "mouse") return;
+        if (self.state.pointerId !== null) return;
+        event.preventDefault();
+        self.state.dragging = true;
+        self.state.pointerId = event.pointerId;
+        self.state.lastX = event.clientX;
+        self.state.lastY = event.clientY;
+        svg.classList.add("is-dragging");
+        try { svg.setPointerCapture(event.pointerId); } catch (error) { /* 忽略 */ }
+      });
+      svg.addEventListener("pointermove", function (event) {
+        if (!self.state.dragging || event.pointerId !== self.state.pointerId) return;
+        event.preventDefault();
+        var dx = event.clientX - self.state.lastX;
+        var dy = event.clientY - self.state.lastY;
+        self.state.lastX = event.clientX;
+        self.state.lastY = event.clientY;
+        // 水平拖动的直觉方向：向右拖动使模型向右转（观察者绕模型向左移动的等价效果）
+        self.state.yaw += dx * 0.008;
+        self.state.pitch = Math.max(
+          self.limits.minPitch,
+          Math.min(self.limits.maxPitch, self.state.pitch + dy * 0.007)
+        );
+        self.render();
+      });
+      function endDrag(event) {
+        if (event && self.state.pointerId !== null && event.pointerId !== self.state.pointerId) return;
+        self.state.dragging = false;
+        self.state.pointerId = null;
+        svg.classList.remove("is-dragging");
+      }
+      svg.addEventListener("pointerup", endDrag);
+      svg.addEventListener("pointercancel", endDrag);
+      svg.addEventListener("lostpointercapture", endDrag);
+      svg.addEventListener("dragstart", function (event) { event.preventDefault(); });
+      svg.addEventListener("wheel", function (event) {
+        event.preventDefault();
+        var factor = event.deltaY > 0 ? 0.92 : 1.08;
+        self.state.scale = Math.max(
+          self.limits.minScale,
+          Math.min(self.limits.maxScale, self.state.scale * factor)
+        );
+        self.render();
+      }, { passive: false });
+      // 双击复位视角
+      svg.addEventListener("dblclick", function () {
+        self.reset();
+        self.render();
+      });
+    },
+  };
+
+  /* ------------------------------------------------------------------ 自适应场景 */
+
+  /**
+   * 根据 iframe 实际像素尺寸调整 viewBox 与投影中心，避免在窄屏或矮窗口里
+   * 出现大片空白、或图形被压得过小。
+   *
+   * 做法：viewBox 直接取容器的像素宽高（1 单位 = 1 px），因此组件的字号、
+   * 半径、线宽在任何窗口里都保持同样的物理大小；图形位置由 origin 的
+   * 相对锚点决定，缩放由 scale 决定。
+   *
+   * @param {object} options
+   *   - svg / viewport：视图容器（必填）
+   *   - scale：投影缩放（宽屏），默认 78
+   *   - narrowScale：窄屏投影缩放，默认取 scale * 0.86
+   *   - narrowWidth：判定为窄屏的宽度阈值（px），默认 620
+   *   - tallRatio：高度/宽度 大于该值时视为竖屏，默认 1.15
+   *   - wide / narrow / tall：三种形态下的锚点，形如 { x: 0.55, y: 0.62 }
+   *   - design：设计基准尺寸，仅用于日志与默认锚点，默认 { width: 1000, height: 620 }
+   *   - onLayout：每次布局后回调 (scene, layout)
+   *   - 其余选项透传给 Scene
+   */
+  function AdaptiveScene(options) {
+    var opts = options || {};
+    var svg = opts.svg;
+    if (!svg) throw new Error("FK.AdaptiveScene 需要一个 svg 元素作为视图容器");
+    var wide = opts.wide || { x: 0.56, y: 0.62 };
+    var narrow = opts.narrow || { x: 0.5, y: 0.42 };
+    var tall = opts.tall || { x: 0.5, y: 0.4 };
+    var narrowWidth = opts.narrowWidth === undefined ? 620 : opts.narrowWidth;
+    var tallRatio = opts.tallRatio === undefined ? 1.15 : opts.tallRatio;
+    var baseScale = opts.scale === undefined ? 78 : opts.scale;
+    var narrowScale = opts.narrowScale === undefined ? baseScale * 0.86 : opts.narrowScale;
+
+    var sceneOptions = {};
+    Object.keys(opts).forEach(function (key) {
+      if (["wide", "narrow", "tall", "narrowWidth", "tallRatio", "scale", "narrowScale", "onLayout", "design"].indexOf(key) === -1) {
+        sceneOptions[key] = opts[key];
+      }
+    });
+    sceneOptions.scale = baseScale;
+    var scene = new Scene(sceneOptions);
+
+    function layout() {
+      var rect = svg.getBoundingClientRect();
+      var width = Math.max(320, Math.round(rect.width || 1000));
+      var height = Math.max(320, Math.round(rect.height || 620));
+      var isNarrow = width < narrowWidth;
+      var isTall = height / width > tallRatio;
+      var anchor = isNarrow ? (isTall ? tall : narrow) : wide;
+      if (isNarrow && !isTall) anchor = narrow;
+      if (isNarrow && isTall) anchor = tall;
+      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+      svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      scene.baseOrigin.x = width * anchor.x;
+      scene.baseOrigin.y = height * anchor.y;
+      scene.limits.minScale = baseScale * 0.42;
+      scene.limits.maxScale = baseScale * 2.5;
+      var previousScale = scene.state.scale;
+      var previousDefault = scene.defaults.scale;
+      var nextScale = isNarrow ? narrowScale : baseScale;
+      if (previousScale === previousDefault) {
+        scene.state.scale = nextScale;
+      } else {
+        scene.state.scale = Math.max(scene.limits.minScale, Math.min(scene.limits.maxScale, previousScale));
+      }
+      scene.defaults.scale = nextScale;
+      scene.origin.x = scene.baseOrigin.x;
+      scene.origin.y = scene.baseOrigin.y;
+      if (opts.onLayout) opts.onLayout(scene, { width: width, height: height, narrow: isNarrow, tall: isTall });
+      scene.render();
+    }
+
+    scene.fit = layout;
+    if (typeof ResizeObserver !== "undefined") {
+      var observer = new ResizeObserver(function () { layout(); });
+      observer.observe(svg);
+      scene._observer = observer;
+    } else {
+      global.addEventListener("resize", layout);
+    }
+    // 首帧布局：等一帧再测，确保 iframe 已完成布局
+    if (typeof requestAnimationFrame === "function") {
+      requestAnimationFrame(layout);
+    } else {
+      layout();
+    }
+    return scene;
+  }
+
+  /* ------------------------------------------------------------------ 工具 */
+
+  /**
+   * 把一组 range 控件绑定到 state，并统一在 input 时重绘。
+   * @param {object[]} defs 每项 { id, key, value, format, onChange }
+   * @param {object} state 目标状态对象
+   * @param {function} render 刷新函数
+   * @param {string} outputSuffix 输出元素的后缀，默认 "Value"
+   */
+  function bindRanges(defs, state, render, outputSuffix) {
+    var suffix = outputSuffix || "Value";
+    var sync = [];
+    defs.forEach(function (def) {
+      var input = document.getElementById(def.id);
+      if (!input) return;
+      var output = document.getElementById(def.id + suffix);
+      function apply() {
+        var raw = Number(input.value);
+        state[def.key] = raw;
+        if (output) {
+          output.textContent = def.format ? def.format(raw) : String(raw);
+        }
+        if (def.onChange) def.onChange(raw, state);
+        render();
+      }
+      input.value = def.value === undefined ? input.value : def.value;
+      input.addEventListener("input", apply);
+      sync.push({ input: input, output: output, def: def, apply: apply });
+      apply();
+    });
+    return {
+      /** 把 state 当前值写回控件 */
+      refresh: function () {
+        sync.forEach(function (item) {
+          var value = state[item.def.key];
+          if (value === undefined) return;
+          item.input.value = value;
+          if (item.output) {
+            item.output.textContent = item.def.format ? item.def.format(value) : String(value);
+          }
+        });
+      },
+      apply: function () { sync.forEach(function (item) { item.apply(); }); },
+    };
+  }
+
+  function bindToggles(defs, state, render) {
+    defs.forEach(function (def) {
+      var input = document.getElementById(def.id);
+      if (!input) return;
+      input.checked = !!state[def.key];
+      input.addEventListener("change", function () {
+        state[def.key] = input.checked;
+        if (def.onChange) def.onChange(input.checked, state);
+        render();
+      });
+    });
+  }
+
+  function format(value, digits) {
+    var d = digits === undefined ? 2 : digits;
+    var fixed = Number(value).toFixed(d);
+    return fixed === "-" + (0).toFixed(d) ? (0).toFixed(d) : fixed;
+  }
+
+  /** 角度的常见显示：45.0° */
+  function deg(value, digits) {
+    return format(value, digits === undefined ? 1 : digits) + "°";
+  }
+
+  global.FK = {
+    Vec: Vec,
+    M4: M4,
+    Scene: Scene,
+    AdaptiveScene: AdaptiveScene,
+    bindRanges: bindRanges,
+    bindToggles: bindToggles,
+    format: format,
+    deg: deg,
+    DEG: DEG,
+  };
+}(window));
+</script>
+<script>
+(function () {
+  var viewport = document.getElementById("viewport");
+  var L = {
+    ground: document.getElementById("ground"),
+    links: document.getElementById("links"),
+    axes: document.getElementById("axes"),
+    arcs: document.getElementById("arcs"),
+    frames: document.getElementById("frames"),
+    tool: document.getElementById("tool"),
+    overlay: document.getElementById("overlay")
+  };
+
+  var D4 = 1.60;      // 坐标系 {3} 原点到腕心的距离（对应 PUMA560 的 d4）
+  var FLANGE = 0.58;  // 腕心到法兰面（L_T = 0 时 {T} 的位置）
+  var BASE_SCALE = 74;
+
+  var scene = new FK.Scene({
+    svg: viewport, origin: { x: 548, y: 300 }, scale: BASE_SCALE, yaw: -0.62, pitch: 0.34
+  });
+  var state = { t4: 0, t5: 0, t6: 0, tool: 0, showFrames: true, showArcs: true, showGrid: true };
+
+  var COL = {
+    j4: "#7c3aed", j5: "#0e7490", j6: "#c26a10",
+    x: "#d93025", y: "#2563eb", z: "#12944f",
+    link: "#94a3b8", linkDark: "#475569", tool: "#334155",
+    warn: "#dc2626", muted: "#64748b", grid: "#e2eaf5"
+  };
+
+  /* --- 改进型（克雷格）D-H：ᵢ⁻¹ᵢT = Rx(α) · Dx(a) · Rz(θ) · Dz(d) --- */
+  function dh(alpha, a, d, theta) {
+    return FK.M4.chain(
+      FK.M4.rotX(alpha),
+      FK.M4.translate([a, 0, 0]),
+      FK.M4.rotZ(theta),
+      FK.M4.translate([0, 0, d])
+    );
+  }
+
+  /* 显示变换：把 {3} 中的 Ẑ₄（= Ŷ₃，前臂轴线）转到屏幕竖直向上，并把腕心移到显示原点 */
+  var DSP = FK.M4.chain(FK.M4.rotX(Math.PI / 2), FK.M4.translate([0, -D4, 0]));
+
+  function pose(t4, t5, t6) {
+    var T34 = dh(-Math.PI / 2, 0, D4, t4 * FK.DEG);
+    var T45 = dh(Math.PI / 2, 0, 0, t5 * FK.DEG);
+    var T56 = dh(-Math.PI / 2, 0, 0, t6 * FK.DEG);
+    var T36 = FK.M4.chain(T34, T45, T56);
+    return {
+      T36: T36,
+      R36: FK.M4.rotation(T36),
+      W4: FK.M4.multiply(DSP, T34),
+      W5: FK.M4.multiply(DSP, FK.M4.multiply(T34, T45)),
+      W6: FK.M4.multiply(DSP, T36)
+    };
+  }
+
+  /* ---------------------------------------------------------------- 绘图工具 */
+  function seg(a, b, attrs, parent) {
+    var A = scene.project(a), B = scene.project(b);
+    return scene.el("line", Object.assign({ x1: A.x, y1: A.y, x2: B.x, y2: B.y }, attrs || {}), parent);
+  }
+  function tag(v, str, attrs, dx, dy, parent) {
+    var p = scene.project(v);
+    var node = scene.el("text", Object.assign({
+      x: p.x + (dx || 0), y: p.y + (dy || 0),
+      "font-size": 15, "font-weight": 700, class: "fk-axis-label"
+    }, attrs || {}), parent);
+    node.textContent = str;
+    return node;
+  }
+  function dir(M, v) { return FK.M4.applyDir(M, v); }
+  function zAxis(M) { return dir(M, [0, 0, 1]); }
+  function xAxis(M) { return dir(M, [1, 0, 0]); }
+  function yAxis(M) { return dir(M, [0, 1, 0]); }
+  function at(o, d, l) { return FK.Vec.add(o, FK.Vec.scale(d, l)); }
+
+  function drawGrid() {
+    var z = -2.25, half = 1.0, step = 0.5, v;
+    for (v = -half; v <= half + 1e-9; v += step) {
+      seg([-half, v, z], [half, v, z], { stroke: COL.grid, "stroke-width": 1 }, L.ground);
+      seg([v, -half, z], [v, half, z], { stroke: COL.grid, "stroke-width": 1 }, L.ground);
+    }
+  }
+
+  /* 前臂（与关节4轴同轴的一段）+ 断口标记 */
+  function drawForearm() {
+    seg([0, 0, -2.30], [0, 0, -0.42], { stroke: "#cbd5e1", "stroke-width": 17, "stroke-linecap": "round" }, L.links);
+    seg([0, 0, -2.30], [0, 0, -0.42], { stroke: "#eef3f9", "stroke-width": 9, "stroke-linecap": "round" }, L.links);
+    seg([-0.14, 0, -0.50], [0.14, 0, -0.50], { stroke: COL.linkDark, "stroke-width": 2.4 }, L.links);
+    tag([0, 0, -2.10], "前臂（与轴4 同轴）", { fill: COL.muted, "font-size": 14, "text-anchor": "end" }, -16, 6, L.links);
+  }
+
+  /* 关节体（短粗半透明鼓形）+ 双箭头虚线轴 */
+  function drum(o, d, half, color) {
+    seg(at(o, d, -half), at(o, d, half),
+      { stroke: color, "stroke-width": 24, "stroke-linecap": "round", opacity: 0.18 }, L.axes);
+  }
+  function drawJointAxis(o, d, half, color, marker, text, dx, dy, anchor) {
+    seg(at(o, d, -half), at(o, d, half), {
+      stroke: color, "stroke-width": 2.6, "stroke-dasharray": "11 7",
+      "marker-start": "url(#" + marker + ")", "marker-end": "url(#" + marker + ")"
+    }, L.axes);
+    tag(at(o, d, half), text, { fill: color, "text-anchor": anchor || "start" }, dx, dy, L.axes);
+  }
+
+  /* 坐标系：默认只画 X、Y 细轴（Z 轴即关节轴，已单独画出）；labeled 时再加文字 */
+  function drawFrame(M, len, prefix, full, labeled) {
+    var o = FK.M4.position(M);
+    var xe = at(o, xAxis(M), len);
+    var ye = at(o, yAxis(M), len);
+    seg(o, xe, { stroke: COL.x, "stroke-width": 1.9, "marker-end": "url(#mX)" }, L.frames);
+    seg(o, ye, { stroke: COL.y, "stroke-width": 1.9, "marker-end": "url(#mY)" }, L.frames);
+    if (labeled) {
+      tag(xe, "Ẋ" + prefix, { fill: COL.x, "font-size": 12.5 }, 5, 4, L.frames);
+      tag(ye, "Ẏ" + prefix, { fill: COL.y, "font-size": 12.5 }, 5, 4, L.frames);
+    }
+    if (full) {
+      var ze = at(o, zAxis(M), len * 0.92);
+      seg(o, ze, { stroke: COL.z, "stroke-width": 1.9, "marker-end": "url(#mZ)" }, L.frames);
+      if (labeled) tag(ze, "Ẑ" + prefix, { fill: COL.z, "font-size": 12.5 }, 5, 4, L.frames);
+    }
+  }
+
+  /* 绕 dirZ 从 dirX0 转到 dirX 的圆弧（含 θ 标签；θ=0 时只画参考刻线） */
+  function rotArc(o, dirZ, dirX0, dirX, radius, color, name, lx, ly) {
+    var u = FK.Vec.normalize(dirX0);
+    var w = FK.Vec.normalize(dirZ);
+    var v = FK.Vec.cross(w, u);
+    var ang = Math.atan2(FK.Vec.dot(dirX, v), FK.Vec.dot(dirX, u));
+    if (Math.abs(ang) < 0.006) {
+      seg(at(o, u, radius * 0.9), at(o, u, radius * 1.06), { stroke: color, "stroke-width": 2.2, opacity: 0.75 }, L.arcs);
+    } else {
+      var steps = Math.max(8, Math.round(Math.abs(ang) / 0.07));
+      var pts = [], i, t;
+      for (i = 0; i <= steps; i += 1) {
+        t = ang * (i / steps);
+        pts.push(FK.Vec.add(o, FK.Vec.add(FK.Vec.scale(u, radius * Math.cos(t)), FK.Vec.scale(v, radius * Math.sin(t)))));
+      }
+      scene.polyline(pts, { stroke: color, class: "fk-arc" }, L.arcs);
+    }
+    var mid = ang * 0.5;
+    tag(FK.Vec.add(o, FK.Vec.add(
+      FK.Vec.scale(u, radius * 1.26 * Math.cos(mid)),
+      FK.Vec.scale(v, radius * 1.26 * Math.sin(mid))
+    )), name, { fill: color, "font-size": 16, "text-anchor": "middle" }, lx || 0, (ly || 0) + 5, L.arcs);
+  }
+
+  /* 屏幕空间尺寸标注（双箭头） */
+  function dimLine(a, b, offset, text, color) {
+    var A = scene.project(a), B = scene.project(b);
+    var dx = B.x - A.x, dy = B.y - A.y, len = Math.sqrt(dx * dx + dy * dy);
+    if (len < 6) return;
+    var nx = -dy / len, ny = dx / len;
+    var ax = A.x + nx * offset, ay = A.y + ny * offset;
+    var bx = B.x + nx * offset, by = B.y + ny * offset;
+    scene.el("line", {
+      x1: ax, y1: ay, x2: bx, y2: by, stroke: color,
+      "stroke-width": 1.6, "marker-start": "url(#mDim)", "marker-end": "url(#mDim)"
+    }, L.tool);
+    var t = scene.el("text", {
+      x: (ax + bx) / 2 + nx * 14, y: (ay + by) / 2 + ny * 14 + 5,
+      "text-anchor": "middle", fill: color, "font-size": 13.5,
+      "font-weight": 700, class: "fk-axis-label"
+    }, L.tool);
+    t.textContent = text;
+  }
+
+  /* ------------------------------------------------------------------ 渲染 */
+  function render() {
+    var k;
+    for (k in L) { if (Object.prototype.hasOwnProperty.call(L, k)) L[k].replaceChildren(); }
+
+    var t4 = state.t4, t5 = state.t5, t6 = state.t6;
+    var P = pose(t4, t5, t6);
+    var O = [0, 0, 0];                       // 腕心：{4}{5}{6} 原点，三轴交点
+    var z4 = zAxis(P.W4), z5 = zAxis(P.W5), z6 = zAxis(P.W6);
+
+    if (state.showGrid) drawGrid();
+    drawForearm();
+
+    drum(O, z4, 0.32, COL.j4);
+    drum(O, z5, 0.27, COL.j5);
+    drum(O, z6, 0.24, COL.j6);
+
+    drawJointAxis(O, z4, 1.45, COL.j4, "mJ4", "关节4轴 Ẑ₄（θ₄）", -18, -10, "end");
+    drawJointAxis(O, z5, 1.32, COL.j5, "mJ5", "关节5轴 Ẑ₅（θ₅）", -16, 20, "end");
+    drawJointAxis(O, z6, 1.32, COL.j6, "mJ6", "关节6轴 Ẑ₆（θ₆）", -16, 20, "end");
+
+    var op = scene.project(O);
+    scene.el("circle", { cx: op.x, cy: op.y, r: 7.5, fill: "#1e293b", stroke: "#fff", "stroke-width": 2.4 }, L.axes);
+    tag(O, "O", { fill: "#334155", "font-size": 15 }, -18, 22, L.axes);
+
+    if (state.showArcs) {
+      var P0 = pose(0, t5, t6);
+      var P5 = pose(t4, 0, t6);
+      var P6 = pose(t4, t5, 0);
+      rotArc(O, z4, xAxis(P0.W4), xAxis(P.W4), 1.06, COL.j4, "θ₄", 0, -12);
+      rotArc(O, z5, xAxis(P5.W5), xAxis(P.W5), 0.80, COL.j5, "θ₅", -12, 10);
+      rotArc(O, z6, xAxis(P6.W6), xAxis(P.W6), 0.56, COL.j6, "θ₆", 12, 8);
+    }
+
+    if (state.showFrames) {
+      drawFrame(DSP, 0.40, "₃", true, true);
+      drawFrame(P.W4, 0.62, "₄", false, false);
+      drawFrame(P.W5, 0.54, "₅", false, false);
+      drawFrame(P.W6, 0.46, "₆", false, false);
+    }
+
+    var tip = at(O, z6, FLANGE + state.tool);
+    var flangeEnd = at(O, z6, FLANGE);
+    seg(at(O, z6, 0.34), flangeEnd, { stroke: "#94a3b8", "stroke-width": 17, "stroke-linecap": "round" }, L.tool);
+    if (state.tool > 0.001) {
+      seg(at(O, z6, FLANGE - 0.08), tip, { stroke: COL.tool, "stroke-width": 9, "stroke-linecap": "round" }, L.tool);
+      dimLine(flangeEnd, tip, 30, "L_T = " + FK.format(state.tool, 2), "#334155");
+    }
+    if (state.showFrames) {
+      drawFrame(FK.M4.multiply(P.W6, FK.M4.translate([0, 0, FLANGE + state.tool])), 0.36, "T", false, true);
+    }    var tp = scene.project(tip);
+    scene.el("circle", { cx: tp.x, cy: tp.y, r: 5.4, fill: "#0f172a", stroke: "#fff", "stroke-width": 2 }, L.tool);
+    tag(tip, "工具坐标系 {T}", { fill: "#0f172a", "font-size": 14, "text-anchor": "end" }, -16, -6, L.tool);
+
+    /* 奇异位形反馈 */
+    var c5 = FK.Vec.dot(z4, z6);
+    var ang46 = Math.acos(Math.max(-1, Math.min(1, c5))) / FK.DEG;
+    var sing = Math.abs(t5) <= 2 || Math.abs(t5) >= 178;
+    if (sing) {
+      seg(at(O, z4, -1.55), at(O, z4, 1.55),
+        { stroke: COL.warn, "stroke-width": 10, "stroke-linecap": "round", opacity: 0.20 }, L.overlay);
+      scene.el("circle", {
+        cx: op.x, cy: op.y, r: 30, fill: "none", stroke: COL.warn,
+        "stroke-width": 3, "stroke-dasharray": "7 6"
+      }, L.overlay);
+      var wp = scene.project(at(O, z4, 1.60));
+      scene.el("text", {
+        x: wp.x + 18, y: wp.y - 14, "text-anchor": "start", fill: COL.warn,
+        "font-size": 16.5, "font-weight": 700, class: "fk-axis-label"
+      }, L.overlay).textContent = "⚠ 轴4 与 轴6 共线";
+      scene.el("text", {
+        x: wp.x + 18, y: wp.y + 8, "text-anchor": "start", fill: COL.warn,
+        "font-size": 14, "font-weight": 700, class: "fk-axis-label"
+      }, L.overlay).textContent = "θ₄ 与 θ₆ 解耦失败";
+    }
+
+    /* ---------------------------------------------------------------- 读数 */
+    var R = P.R36;
+    document.getElementById("q4").textContent = FK.deg(t4, 1);
+    document.getElementById("q5").textContent = FK.deg(t5, 1);
+    document.getElementById("q6").textContent = FK.deg(t6, 1);
+    document.getElementById("m00").textContent = FK.format(R[0], 3);
+    document.getElementById("m01").textContent = FK.format(R[1], 3);
+    document.getElementById("m02").textContent = FK.format(R[2], 3);
+    document.getElementById("m10").textContent = FK.format(R[3], 3);
+    document.getElementById("m11").textContent = FK.format(R[4], 3);
+    document.getElementById("m12").textContent = FK.format(R[5], 3);
+    document.getElementById("m20").textContent = FK.format(R[6], 3);
+    document.getElementById("m21").textContent = FK.format(R[7], 3);
+    document.getElementById("m22").textContent = FK.format(R[8], 3);
+    var zt = FK.M4.applyDir(P.T36, [0, 0, 1]);
+    document.getElementById("ztx").textContent = FK.format(zt[0], 3);
+    document.getElementById("zty").textContent = FK.format(zt[1], 3);
+    document.getElementById("ztz").textContent = FK.format(zt[2], 3);
+    document.getElementById("ang46").textContent = FK.deg(ang46, 1);
+
+    var row = document.getElementById("singRow");
+    if (sing) {
+      row.className = "row warn";
+      row.textContent = "⚠ 奇异：轴4 与轴6 共线（θ₅ = " + FK.deg(t5, 0) + "），θ₄ 与 θ₆ 解耦失败 —— 姿态只由 θ₄+θ₆ = "
+        + FK.deg(t4 + t6, 1) + " 决定";
+    } else {
+      row.className = "row ok";
+      row.textContent = "✓ 非奇异：轴4–轴6 夹角 " + FK.deg(ang46, 1) + " > 0，θ₄ 与 θ₆ 各自独立可解";
+    }
+  }
+
+  /* --------------------------------------------------------------- 布局 */
+  function layout() {
+    var w = viewport.clientWidth || window.innerWidth;
+    var h = viewport.clientHeight || window.innerHeight;
+    if (w / h < 1.05) {
+      // 竖屏：改用竖版 viewBox，避免图形被底部面板与右上读数卡遮挡
+      viewport.setAttribute("viewBox", "0 0 420 800");
+      viewport.setAttribute("preserveAspectRatio", "xMidYMin meet");
+      scene.baseOrigin = { x: 210, y: 318 };
+    } else {
+      viewport.setAttribute("viewBox", "0 0 1000 620");
+      viewport.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      scene.baseOrigin = { x: 548, y: 300 };
+    }
+    scene.state.scale = BASE_SCALE;
+    scene.defaults.scale = BASE_SCALE;
+    scene.origin.x = scene.baseOrigin.x;
+    scene.origin.y = scene.baseOrigin.y;
+  }
+
+  scene.setRenderer(render);
+
+  var ranges = FK.bindRanges([
+    { id: "t4", key: "t4", value: 0, format: function (v) { return FK.deg(v, 1); } },
+    { id: "t5", key: "t5", value: 0, format: function (v) { return FK.deg(v, 1); } },
+    { id: "t6", key: "t6", value: 0, format: function (v) { return FK.deg(v, 1); } },
+    { id: "tool", key: "tool", value: 0, format: function (v) { return FK.format(v, 2); } }
+  ], state, render);
+
+  FK.bindToggles([
+    { id: "showFrames", key: "showFrames" },
+    { id: "showArcs", key: "showArcs" },
+    { id: "showGrid", key: "showGrid" },
+    { id: "auto", key: "auto", onChange: function (v) { scene.setAuto(v); } }
+  ], state, render);
+
+  document.getElementById("reset").addEventListener("click", function () {
+    state.t4 = 0; state.t5 = 0; state.t6 = 0; state.tool = 0;
+    state.showFrames = true; state.showArcs = true; state.showGrid = true; state.auto = false;
+    document.getElementById("showFrames").checked = true;
+    document.getElementById("showArcs").checked = true;
+    document.getElementById("showGrid").checked = true;
+    document.getElementById("auto").checked = false;
+    scene.setAuto(false);
+    ranges.refresh();
+    scene.reset();
+    layout();
+    render();
+  });
+
+  window.addEventListener("resize", function () { layout(); render(); });
+
+  /* --------------------------------------------------------------- 自检 */
+  (function selfTest() {
+    function eq(a, b, eps) { return Math.abs(a - b) < (eps === undefined ? 1e-9 : eps); }
+
+    // 1) 教材式(3-10)：₆⁴T = ₅⁴T·₆⁵T
+    var a4 = 40 * FK.DEG, a5 = 35 * FK.DEG, a6 = 25 * FK.DEG;
+    var c4 = Math.cos(a4), s4 = Math.sin(a4);
+    var c5 = Math.cos(a5), s5 = Math.sin(a5);
+    var c6 = Math.cos(a6), s6 = Math.sin(a6);
+    var T45 = dh(Math.PI / 2, 0, 0, a5);
+    var T46 = FK.M4.chain(T45, dh(-Math.PI / 2, 0, 0, a6));
+    var exp46 = [
+      c5 * c6, -c5 * s6, -s5, 0,
+      s6, c6, 0, 0,
+      s5 * c6, -s5 * s6, c5, 0,
+      0, 0, 0, 1
+    ];
+    var i;
+    for (i = 0; i < 16; i += 1) {
+      if (!eq(T46[i], exp46[i])) throw new Error("式(3-10) 自检失败 @" + i + "：" + T46[i]);
+    }
+
+    // 2) 教材式(3-11)：₆³T = ₄³T·₆⁴T（a₃ = 0）
+    var T34 = dh(-Math.PI / 2, 0, D4, a4);
+    var T36 = FK.M4.chain(T34, T46);
+    var exp36 = [
+      c4 * c5 * c6 - s4 * s6, -c4 * c5 * s6 - s4 * c6, -c4 * s5, 0,
+      s5 * c6, -s5 * s6, c5, D4,
+      -s4 * c5 * c6 - c4 * s6, s4 * c5 * s6 - c4 * c6, s4 * s5, 0,
+      0, 0, 0, 1
+    ];
+    for (i = 0; i < 16; i += 1) {
+      if (!eq(T36[i], exp36[i])) throw new Error("式(3-11) 自检失败 @" + i + "：" + T36[i]);
+    }
+
+    // 3) 三轴交于一点：{4}{5}{6} 原点重合，且等于腕心 (0, d4, 0)
+    var W4 = dh(-Math.PI / 2, 0, D4, 53 * FK.DEG);
+    var W5 = FK.M4.chain(W4, dh(Math.PI / 2, 0, 0, -21 * FK.DEG));
+    var o4 = FK.M4.position(W4);
+    var o5 = FK.M4.position(W5);
+    var o6 = FK.M4.position(T36);
+    if (!FK.Vec.eq(o4, o5, 1e-12) || !FK.Vec.eq(o5, o6, 1e-12)) throw new Error("三轴交点自检失败");
+    if (!FK.Vec.eq(o6, [0, D4, 0], 1e-12)) throw new Error("腕心位置自检失败：" + JSON.stringify(o6));
+
+    // 4) 两两垂直：轴4⊥轴5、轴5⊥轴6；轴4–轴6 夹角 = |θ₅|
+    var q = pose(31, -47, 62);
+    if (!eq(FK.Vec.dot(zAxis(q.W4), zAxis(q.W5)), 0, 1e-12)) throw new Error("轴4⊥轴5 自检失败");
+    if (!eq(FK.Vec.dot(zAxis(q.W5), zAxis(q.W6)), 0, 1e-12)) throw new Error("轴5⊥轴6 自检失败");
+    if (!eq(Math.acos(Math.max(-1, Math.min(1, FK.Vec.dot(zAxis(q.W4), zAxis(q.W6))))) / FK.DEG, 47, 1e-9)) {
+      throw new Error("轴4–轴6 夹角应等于 |θ₅|");
+    }
+
+    // 5) 腕部奇异：θ₅ = 0° 与 ±180° 时 Ẑ₆ ∥ Ẑ₄（共线）
+    var s0 = pose(63, 0, -28);
+    var s180 = pose(63, 180, -28);
+    if (FK.Vec.len(FK.Vec.cross(zAxis(s0.W4), zAxis(s0.W6))) > 1e-12) throw new Error("θ₅=0 应共线");
+    if (FK.Vec.len(FK.Vec.cross(zAxis(s180.W4), zAxis(s180.W6))) > 1e-12) throw new Error("θ₅=180° 应共线");
+
+    // 6) θ₅ = 0 时末端姿态只由 θ₄+θ₆ 决定（两组不同 θ₄、θ₆ 但和为 55° 的姿态应相同）
+    var g1 = pose(20, 0, 35);
+    var g2 = pose(-15, 0, 70);
+    for (i = 0; i < 9; i += 1) {
+      if (!eq(g1.R36[i], g2.R36[i], 1e-12)) throw new Error("θ₅=0 时应只取决于 θ₄+θ₆");
+    }
+  }());
+
+  layout();
+  render();
+}());
+</script>
+</body>
+</html>

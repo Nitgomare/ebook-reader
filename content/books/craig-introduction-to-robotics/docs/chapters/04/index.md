@@ -21,9 +21,19 @@
 
 这里讨论的两连杆操作臂的工作空间是假设所有关节能够旋转 360 度, 这在实际机构中是很少见的。当关节旋转角度不能达到 360 度时, 显然工作空间的范围或可能的姿态的数目相应减小。例如,对于图4-1所示的操作臂, ${\theta }_{1}$ 的运动范围为 360 度, 但只有当 $0 \leq  {\theta }_{2} \leq  {180}^{ \circ  }$ 时,可达工作空间才具有相同的范围, 而此时仅有一个方位可以达到工作空间的每一个点。
 
-![89_1008_307_455_321_0.jpg](../../images/89_1008_307_455_321_0.jpg)
-
-图4-1 连杆长度为 ${l}_{1}$ 和 ${l}_{2}$ 的两连杆操作臂
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-4-1.html" data-interactive-title="图4-1 连杆长度为l1和l2的两连杆操作臂">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图4-1显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/89_1008_307_455_321_0.jpg" alt="图4-1 连杆长度为l1和l2的两连杆操作臂">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
+<p class="figure-caption">图4-1 连杆长度为l1和l2的两连杆操作臂（原图与交互示例）</p>
 
 当一个操作臂少于6自由度时, 它在三维空间内不能达到全部位姿。显然, 图4-1中的平面操作臂不能伸出平面, 因此凡是 $Z$ 坐标不为 0 的目标点均不可达。在很多实际情况中, 具有四个或五个自由度的操作臂能够超出平面操作, 但显然不能达到全部目标点。必须研究这种操作臂以便弄清楚它的工作空间。通常这种机器人的工作空间是一个子空间, 这个空间是由特定的机器人的工作空间确定的。一个值得研究的问题是, 对于少于6 个自由度的操作臂来说, 给定一个确定的一般目标坐标系, 什么是最近的可达目标坐标系?
 
