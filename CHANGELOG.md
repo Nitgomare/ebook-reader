@@ -35,7 +35,7 @@
 
 ### 部署
 
-- 将上述交互图与审查清单发布至 Cloudflare Pages 生产环境，并同步更新 GitHub 私有仓库。
+- 本次两批交互图（共 28 个交互页面）已提交并推送至 GitHub 私有仓库（`52e0a1b`、`a61f63d`）；Cloudflare Pages 生产部署此前两次中断，接手维护者需按 `PROJECT_HANDOFF.md` 第 11 节重新发布 `dist/`。
 
 ## 2026-09-24
 
