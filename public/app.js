@@ -66,6 +66,48 @@
     });
   }
 
+  function enhanceInteractiveFigures(root) {
+    var figures = root.querySelectorAll ? root.querySelectorAll("[data-interactive-src]") : [];
+    Array.prototype.forEach.call(figures, function (figure) {
+      if (figure.dataset.enhanced === "true") return;
+      figure.dataset.enhanced = "true";
+      var source = figure.dataset.interactiveSrc;
+      var title = figure.dataset.interactiveTitle || "交互式教学图";
+      var buttons = figure.querySelectorAll("[data-figure-mode]");
+      var panes = figure.querySelectorAll("[data-figure-pane]");
+
+      function loadInteractive(pane) {
+        if (!pane || pane.querySelector("iframe")) return;
+        var frame = document.createElement("iframe");
+        frame.className = "interactive-figure-frame";
+        frame.src = source;
+        frame.title = title;
+        frame.loading = "lazy";
+        frame.setAttribute("sandbox", "allow-scripts");
+        frame.setAttribute("allow", "fullscreen");
+        pane.replaceChildren(frame);
+      }
+
+      function activate(mode) {
+        Array.prototype.forEach.call(buttons, function (button) {
+          var active = button.dataset.figureMode === mode;
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+        Array.prototype.forEach.call(panes, function (pane) {
+          var active = pane.dataset.figurePane === mode;
+          pane.hidden = !active;
+          if (active && mode === "interactive") loadInteractive(pane);
+        });
+      }
+
+      Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () { activate(button.dataset.figureMode); });
+      });
+      activate("original");
+    });
+  }
+
   function copyText(text) {
     if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
     return new Promise(function (resolve, reject) {
@@ -604,6 +646,7 @@
     elements.docTitle.textContent = doc.title;
     elements.article.innerHTML = doc.html;
     enhanceCodeBlocks(elements.article);
+    enhanceInteractiveFigures(elements.article);
     renderRelatedCode(doc.codeFiles);
     var outlineHeadings = (doc.headings || []).slice();
     if ((doc.codeFiles || []).length) {
