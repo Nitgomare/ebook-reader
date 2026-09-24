@@ -409,7 +409,9 @@ SCRIPT = r"""
   function render() {
     Object.keys(layers).forEach(function (k) { layers[k].replaceChildren(); });
 
-    scene.grid(3, 1);
+    // 网格必须画进 #grid 图层：render() 只清理 layers 里的命名图层，
+    // 若让 grid() 落在根 SVG，每次重绘都会累积一套网格（拖影根因）。
+    scene.grid(3, 1, null, layers.grid);
 
     var data = build();
     var R = rotationMatrix(data.current);

@@ -383,7 +383,7 @@ SCRIPT = r"""
       [0, 0, 0], PA, PBORG, PAORG, PB,
       [ak, 0, 0], [-ak, 0, 0], [0, ak, 0], [0, -ak, 0], [0, 0, ak], [0, 0, -ak]
     ]);
-    scene.grid(3, 1);
+    scene.grid(3, 1, null, gridLayer);
 
     drawAxes(axesA, FK.M4.identity(), {
       length: 2.6, width: 3.0, font: 18,

@@ -292,7 +292,9 @@ SCRIPT = r"""
     gVel.replaceChildren();
     gLabels.replaceChildren();
 
-    scene.grid(1.4, 0.4);
+    // 网格必须画进 gGrid（#f4Grid）：render() 只清理命名的 <g> 图层，
+    // 若让 grid() 落在根 SVG，每次重绘都会累积一套网格（拖影根因）。
+    scene.grid(1.4, 0.4, null, gGrid);
 
     var t1 = state.t1 * FK.DEG, t2 = state.t2 * FK.DEG;
     var l1 = state.l1, l2 = state.l2;

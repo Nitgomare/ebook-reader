@@ -372,7 +372,7 @@ SCRIPT = r"""
     ];
     fitView(pts);
 
-    scene.grid(3, 1);
+    scene.grid(3, 1, null, gridLayer);
 
     // 中间坐标系：与 {A} 姿态相同、原点与 {B} 重合（虚线灰架）
     if (state.showC) {

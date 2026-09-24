@@ -388,7 +388,7 @@ SCRIPT = r"""
     pts.push(FK.Vec.add(K.origin2, [0, 0, 0.26]));
     fitView(pts);
 
-    scene.grid(1, 1);
+    scene.grid(1, 1, null, gridLayer);
 
     if (state.showRange) drawRange();
 

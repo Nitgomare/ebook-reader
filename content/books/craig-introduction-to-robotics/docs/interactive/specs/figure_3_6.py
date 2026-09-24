@@ -325,7 +325,7 @@ SCRIPT = r"""
     var K = fk(t1, t2, t3, state.l1, state.l2, state.l3);
     var A = state.mode === "b";
 
-    scene.grid(2, 0.5);
+    scene.grid(2, 0.5, null, gridLayer);
 
     /* 末端轨迹（随关节角变化的轨迹缓存） */
     if (state.showTrail && trail.length > 1) {
