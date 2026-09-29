@@ -497,3 +497,33 @@ footer a { color: var(--blue); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
 }
+
+/* 资源首页 */
+.hub-course .page-head { padding: 28px 0 20px; }
+.hub-course .page-head h1 { font-size: clamp(26px, 3vw, 34px); }
+.hub-course .page-head .lead { font-size: 15px; }
+.hub-course .gradient-text { background: none; color: var(--ink); -webkit-text-fill-color: currentColor; }
+.hub-course .section { padding: 28px 0; }
+.hub-course .section-head h2 { font-size: 24px; }
+.hub-course .section-head .eyebrow { display: none; }
+.course-outline { margin: 12px 0 0; font-size: 14px; }
+.hub-home { background: var(--canvas); }
+.hub-home-main { width: min(1000px, calc(100% - 40px)); margin: 0 auto; padding: 44px 0 32px; }
+.home-intro { margin-bottom: 28px; }
+.home-intro h1 { margin: 0 0 10px; font-size: clamp(26px, 3vw, 34px); line-height: 1.35; }
+.home-intro p { margin: 0; color: var(--muted); font-size: 15px; }
+.hub-home .track-card { padding: 24px; border-radius: 14px; box-shadow: none; }
+.hub-home .track-card::after { display: none; }
+.hub-home .track-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(29, 71, 131, .06); }
+.hub-home .track-card:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.hub-home .track-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--blue); font-size: 15px; }
+.hub-home .track-card h2 { margin: 16px 0 8px; font-size: 19px; line-height: 1.4; }
+.hub-home .track-card p { max-width: 100%; font-size: 14px; }
+.hub-home .track-meta { margin-top: 16px; }
+.hub-home .track-more { margin-top: 20px; }
+.hub-home-footer { width: min(1000px, calc(100% - 40px)); margin: 0 auto; padding: 0 0 28px; text-align: left; font-size: 13px; }
+@media (max-width: 680px) {
+  .hub-home-main { width: calc(100% - 28px); padding-top: 28px; }
+  .hub-home .track-card { padding: 20px; }
+  .hub-home-footer { width: calc(100% - 28px); }
+}

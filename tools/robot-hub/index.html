@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <title>机器人课程资源中心</title>
-  <meta name="description" content="移动机器人、机器狗与工业机器人实训资源，按平台整理成可按顺序学习的课程路线。">
+  <meta name="description" content="机器人课程讲义、课件、源码与安装资料。">
   <link rel="stylesheet" href="assets/hub.css">
 </head>
-<body>
-  <div class="progress" id="progress"></div>
-
+<body class="hub-home">
   <header class="topbar">
     <a class="brand" href="index.html" aria-label="返回首页">
       <span class="brand-mark">机</span>
@@ -25,166 +23,47 @@
     </nav>
   </header>
 
-  <main>
-    <!-- ============ 简介 ============ -->
-    <section class="hero">
-      <div class="shell hero-inner">
-        <span class="eyebrow">Curriculum hub</span>
-        <h1><span class="gradient-text">机器人课程<br>资源中心</span></h1>
-        <p class="lead">汇集移动机器人、机器狗和工业机器人实训资源，按平台整理成四门课程：先选课程方向，再按教学任务找讲义、课件、源码与软件。不铺文件清单，只呈现有学习顺序的实训课程。</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#tracks">选择课程方向 <span>→</span></a>
-          <a class="button" href="#path">查看学习路线 <span>→</span></a>
-        </div>
+  <main class="hub-home-main">
+    <div class="home-intro">
+      <h1>机器人课程资源中心</h1>
+      <p>按课程查阅讲义、课件、源码与安装资料。</p>
+    </div>
 
-        <div class="metric-grid">
-          <div class="metric"><strong>5</strong><span>机器人与实验平台</span></div>
-          <div class="metric"><strong>18</strong><span>课程单元</span></div>
-          <div class="metric"><strong>64</strong><span>静态课件与指导书</span></div>
-          <div class="metric"><strong>12</strong><span>Go2 递进式实训项目</span></div>
-        </div>
-      </div>
-    </section>
+    <section class="track-grid" id="tracks" aria-label="课程资源">
+      <a class="track-card" href="ros-mobile.html">
+        <span class="track-icon" aria-hidden="true">移</span>
+        <h2>Aimibot 移动教育机器人</h2>
+        <p>ROS 基础、运动控制、建图导航与视觉跟踪。</p>
+        <div class="track-meta"><span>ROS</span><span>6 个教学任务</span></div>
+        <span class="track-more">查看资源 →</span>
+      </a>
 
-    <!-- ============ 学习路线 ============ -->
-    <section class="section" id="path">
-      <div class="shell">
-        <div class="section-head">
-          <span class="eyebrow">Learning pathway</span>
-          <h2>不是文件目录，而是学习路径</h2>
-          <p>六步能力进阶贯穿全部课程：无论从哪台设备入手，都沿着同一条“从认知到综合项目”的路线推进，让学习者知道先学什么、再做什么、最终完成什么。</p>
-        </div>
-        <div class="pathway">
-          <div class="path-step"><small>STEP 01</small><b>设备认知</b><p>平台组成、安全规范、基本操作</p></div>
-          <div class="path-step"><small>STEP 02</small><b>开发环境</b><p>ROS、SDK、Python/C++ 工具链</p></div>
-          <div class="path-step"><small>STEP 03</small><b>通信与控制</b><p>DDS、遥控输入、底层与高层控制</p></div>
-          <div class="path-step"><small>STEP 04</small><b>环境感知</b><p>图像、点云、高度地图与避障</p></div>
-          <div class="path-step"><small>STEP 05</small><b>自主导航</b><p>SLAM、定位、路径规划与任务执行</p></div>
-          <div class="path-step highlight"><small>STEP 06</small><b>综合项目</b><p>识别、跟随、智能物流与系统验收</p></div>
-        </div>
-      </div>
-    </section>
+      <a class="track-card" href="go2.html">
+        <span class="track-icon" aria-hidden="true">足</span>
+        <h2>宇树 Go2 四足机器人</h2>
+        <p>开发环境、运动控制、环境感知与综合实训。</p>
+        <div class="track-meta"><span>Python / C++</span><span>12 个实训项目</span></div>
+        <span class="track-more">查看资源 →</span>
+      </a>
 
-    <!-- ============ 四门课程 ============ -->
-    <section class="section" id="tracks">
-      <div class="shell">
-        <div class="section-head">
-          <span class="eyebrow">Course tracks</span>
-          <h2>四条课程路线</h2>
-          <p>每条路线对应一个机器人平台和一套完整的教学任务。课程页里按教学任务分节，每一节下方给出讲义、课件、源码、软件和视频五类入口，缺件直接标注“暂无配套文件”。</p>
-        </div>
+      <a class="track-card" href="vision-sorting.html">
+        <span class="track-icon" aria-hidden="true">工</span>
+        <h2>工业机器人缺陷分拣</h2>
+        <p>工业相机、手眼标定、缺陷检测与机械臂分拣。</p>
+        <div class="track-meta"><span>工业视觉</span><span>实验指导</span></div>
+        <span class="track-more">查看资源 →</span>
+      </a>
 
-        <div class="track-grid">
-          <a class="track-card" data-index="01" href="ros-mobile.html">
-            <div class="track-top"><span class="track-icon">移</span><span class="track-label">MOBILE ROBOT · ROS</span></div>
-            <h3>Aimibot 移动教育机器人</h3>
-            <p>从 ROS 基础与系统安装出发，逐步进入运动控制、激光雷达建图、超声波避障和视觉跟踪。</p>
-            <div class="track-meta"><span>ROS</span><span>传感器</span><span>建图</span><span>避障</span><span>视觉跟踪</span></div>
-            <span class="track-more">进入课程 →</span>
-          </a>
-
-          <a class="track-card" data-index="02" href="go2.html">
-            <div class="track-top"><span class="track-icon">足</span><span class="track-label">QUADRUPED ROBOT</span></div>
-            <h3>宇树 Go2 四足机器人</h3>
-            <p>以 12 个递进式实训项目为主线，将 SDK、通信、控制、感知、导航、智能识别和综合实践连接起来。</p>
-            <div class="track-meta"><span>SDK2</span><span>DDS</span><span>SLAM</span><span>目标识别</span><span>智能物流</span></div>
-            <span class="track-more">进入课程 →</span>
-          </a>
-
-          <a class="track-card" data-index="03" href="vision-sorting.html">
-            <div class="track-top"><span class="track-icon">工</span><span class="track-label">INDUSTRIAL VISION</span></div>
-            <h3>工业机器人缺陷分拣</h3>
-            <p>以“工业相机—手眼标定—缺陷识别—坐标转换—抓取分拣”构建完整工业视觉任务链。</p>
-            <div class="track-meta"><span>手眼标定</span><span>工业视觉</span><span>坐标转换</span><span>分拣</span></div>
-            <span class="track-more">进入课程 →</span>
-          </a>
-
-          <a class="track-card" data-index="04" href="abb-baxter.html">
-            <div class="track-top"><span class="track-icon">协</span><span class="track-label">INDUSTRIAL &amp; COBOT</span></div>
-            <h3>ABB 与 Baxter 机器人</h3>
-            <p>将 Baxter 用户手册、开发指南、实训资料与 ABB 实验指导书统一归入“工业与协作机器人”路线。</p>
-            <div class="track-meta"><span>用户操作</span><span>开发接口</span><span>坐标系</span><span>安全规范</span></div>
-            <span class="track-more">进入课程 →</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 资源栏目 ============ -->
-    <section class="section" id="legend">
-      <div class="shell">
-        <div class="section-head">
-          <span class="eyebrow">Resource structure</span>
-          <h2>每个课程页有统一的资源结构</h2>
-          <p>“有就展示、没有就留空并标注”，所有教学任务都使用同一套逻辑，降低学习和维护成本。</p>
-        </div>
-        <div class="legend-grid">
-          <div class="legend"><i>01 正文</i><b>讲义与指导书</b><span>教材章节、实验说明、实训大纲</span></div>
-          <div class="legend"><i>02 课件</i><b>PPT 与讲稿</b><span>按课时编号排列，保留项目编号以便对应</span></div>
-          <div class="legend"><i>03 代码</i><b>源码与工程</b><span>C++ / Python 示例，按项目与语言分组</span></div>
-          <div class="legend"><i>04 软件与安装</i><b>SDK 与依赖</b><span>SDK 压缩包、安装指令、配置与工程文件</span></div>
-          <div class="legend"><i>05 视频</i><b>视频入口</b><span>只留入口位置，不上传 MP4，待补公开链接</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 发布约定 ============ -->
-    <section class="section" id="policy">
-      <div class="shell">
-        <div class="section-head">
-          <span class="eyebrow">Publishing policy</span>
-          <h2>从 3.3 GB 原始资料到可运营课程</h2>
-          <p>不直接上传原文件，而是在内容、格式、体积和导航四个层面做发布前处理；原始资料保持只读，页面只做索引与编排。</p>
-        </div>
-        <div class="policy-grid">
-          <div class="policy">
-            <small>ORIGINAL MATERIALS</small>
-            <h3>原始资料现状</h3>
-            <ul>
-              <li>161 个文件，约 3.3 GB，PPTX、MP4、PDF、DOCX、ZIP 与源码混合存放。</li>
-              <li>12 个本地视频约 1.21 GB，按要求一律不上传、不嵌入。</li>
-              <li>多份 PPT 含内嵌视频（Aimibot 课件的内嵌视频合计约 1.5 GB），不能只按扩展名排除。</li>
-              <li>存在重复压缩包、Office 临时文件与 <code>__pycache__</code> 缓存，不应进入发布包。</li>
-            </ul>
-          </div>
-          <div class="policy emphasis">
-            <small>CURATED RELEASE</small>
-            <h3>发布前处理方案</h3>
-            <ul>
-              <li>视频文件全部剔除，页面只保留视频入口与待补说明。</li>
-              <li>PPT 转为静态 PDF，保留文字、图片与排版，去掉内嵌视频。</li>
-              <li>源码按项目关联，支持网页查看、复制与单文件下载。</li>
-              <li>单文件控制在 25 MB 内，避免大文件阻断静态站部署。</li>
-            </ul>
-            <div class="big"><span>约</span><strong>3.3 GB</strong><span>→</span><strong>约 150 MB</strong></div>
-          </div>
-        </div>
-        <div class="note warn">
-          <strong>本轮范围说明：</strong>本版只完成页面与资源索引，PPT 减重、大文件剔除和视频接入均未执行。原始资料未做任何删除、移动或重命名，页面中的入口直接指向原始文件。
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 结尾 ============ -->
-    <section class="closing">
-      <div class="shell">
-        <div class="closing-card">
-          <h2>从“资料文件夹”转变为“可按路径学习的机器人课程体系”</h2>
-          <p>四门课程共用一条六步学习路线，每门课按教学任务分节，每节给出正文、课件、代码、软件与视频入口。缺什么就标注什么，不为了填满栏目而重复放文件。</p>
-          <div class="signature">
-            <span>资料提供：文丽</span>
-            <span>内容依据：机器人课程资源中心-展示稿</span>
-            <span>状态：页面已建，课件减重与视频接入待做</span>
-          </div>
-        </div>
-      </div>
+      <a class="track-card" href="abb-baxter.html">
+        <span class="track-icon" aria-hidden="true">协</span>
+        <h2>ABB 与 Baxter 机器人</h2>
+        <p>实验指导书、开发指南与用户手册。</p>
+        <div class="track-meta"><span>工业机器人</span><span>协作机器人</span></div>
+        <span class="track-more">查看资源 →</span>
+      </a>
     </section>
   </main>
 
-  <footer>
-    本页为课程导航页，不含视频与原始课程文件；原始资料位于 <code>机器人相关课程from文丽/</code>，保持只读。
-  </footer>
-
-  <script src="assets/hub.js"></script>
+  <footer class="hub-home-footer">资料提供：文丽</footer>
 </body>
 </html>

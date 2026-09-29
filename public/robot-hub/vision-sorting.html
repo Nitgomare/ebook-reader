@@ -8,7 +8,7 @@
   <meta name="description" content="ABB 机械臂 + 海康工业相机的缺陷分拣实训：相机与软件、手眼标定、缺陷识别、抓取分拣。">
   <link rel="stylesheet" href="assets/hub.css">
 </head>
-<body>
+<body class="hub-course">
   <div class="progress" id="progress"></div>
 
   <header class="topbar">
@@ -33,52 +33,13 @@
           <a href="index.html">首页</a><span>/</span><a href="index.html#tracks">课程方向</a><span>/</span><b>工业机器人缺陷分拣</b>
         </div>
         <h1><span class="gradient-text">工业机器人缺陷分拣</span></h1>
-        <p class="lead">以“工业相机—手眼标定—缺陷识别—坐标转换—抓取分拣”构建完整的工业视觉任务链。课程分四步推进：先搭软件环境，再做手眼标定，然后用视觉识别缺陷，最后在 ABB 机械臂上完成自动分拣与整体运行。</p>
-        <div class="chips">
-          <span class="chip">机械臂 <b>ABB + RobotStudio 6.08</b></span>
-          <span class="chip">视觉软件 <b>Vision Master 4.3</b></span>
-          <span class="chip">指导书 <b>4 章</b></span>
-          <span class="chip">工程文件 <b>3 份</b></span>
-          <span class="chip">视频 <b>2 段（不上传）</b></span>
-        </div>
+        <p class="lead">工业相机、手眼标定、缺陷识别与 ABB 机械臂分拣实验资料。</p>
+
       </div>
     </section>
 
     <!-- ============ 课程概览 ============ -->
-    <section class="section" id="overview" style="padding-top:0">
-      <div class="shell">
-        <div class="fact-grid">
-          <div class="fact">
-            <h3>学习目标</h3>
-            <ul>
-              <li>能用海康 Vision Master 4.3 搭建视觉流程并配置相机</li>
-              <li>能完成 N 点手眼标定，得到像素坐标到机械臂坐标的转换</li>
-              <li>能用二值化 + 模板匹配完成缺陷检测并输出物块中心坐标</li>
-              <li>能在 RobotStudio 中编写分拣程序并完成整体联调</li>
-            </ul>
-          </div>
-          <div class="fact">
-            <h3>适用平台</h3>
-            <ul>
-              <li>ABB 工业机械臂 + RobotStudio 6.08</li>
-              <li>海康机器人工业相机（枚举或跨网段 IP 接入）</li>
-              <li>Vision Master 4.3 算法平台（<b>需加密狗</b>）</li>
-              <li>C# 编程：Visual Studio 或 VS Code + .NET</li>
-            </ul>
-          </div>
-          <div class="fact">
-            <h3>建议学习顺序</h3>
-            <ol>
-              <li>相机与软件：装好 Vision Master、RobotStudio 与 C# 环境</li>
-              <li>标定：完成 9 点 N 点标定，得到 <code>biaoding.sol</code></li>
-              <li>视觉识别：跑通缺陷检测流程并输出坐标</li>
-              <li>分拣实训：RobotStudio 程序 + 整体运行验收</li>
-            </ol>
-          </div>
-        </div>
-        <div class="note">教学任务与章节对应随资料提供的 <b>缺陷分拣指导书.docx</b>（第一章软件相关、第二章实现逻辑与原理、第三章缺陷检测、第四章缺陷分拣）。指导书同时给出配套视频的公开来源标注（B站视频编号），本页只记录来源、不嵌入、不上传。</div>
-      </div>
-    </section>
+
 
     <!-- ============ 教学任务 ============ -->
     <section class="section" id="units">
@@ -93,12 +54,12 @@
           <aside class="toc" aria-label="本页目录">
             <h4>ON THIS PAGE</h4>
             <nav>
-              <a href="#overview" data-spy>课程概览</a>
+
               <a href="#u1" data-spy>01 相机与软件环境</a>
               <a href="#u2" data-spy>02 手眼标定</a>
               <a href="#u3" data-spy>03 缺陷检测</a>
               <a href="#u4" data-spy>04 机械臂分拣与整体运行</a>
-              <a href="#notes" data-spy>关键约束与缺件</a>
+
             </nav>
             <a class="toc-back" href="index.html#tracks">← 全部课程方向</a>
           </aside>
@@ -138,7 +99,7 @@
                 <div class="res-block is-video">
                   <h4>视频</h4>
                   <ul class="res-list">
-                    <li class="res-item"><span class="kind kind-mp4">MP4</span><span class="txt">海康工业相机 Vision Master 软件基本使用方法</span><span class="meta">本地 42.91 MB · 指导书标注来源 B站 av577013484 · 未核验、未上传</span></li>
+                    <li class="res-item"><span class="kind kind-mp4">MP4</span><span class="txt">海康工业相机 Vision Master 软件基本使用方法</span><span class="meta">视频链接待补 · 指导书来源：B站 av577013484</span></li>
                   </ul>
                 </div>
                 <div class="res-block">
@@ -185,7 +146,7 @@
                 <div class="res-block is-video">
                   <h4>视频</h4>
                   <ul class="res-list">
-                    <li class="res-item"><span class="kind kind-mp4">MP4</span><span class="txt">【标定】机器人手眼标定-方法及原理</span><span class="meta">本地 44.32 MB · 指导书标注来源 B站 av506489933 · 未核验、未上传</span></li>
+                    <li class="res-item"><span class="kind kind-mp4">MP4</span><span class="txt">【标定】机器人手眼标定-方法及原理</span><span class="meta">视频链接待补 · 指导书来源：B站 av506489933</span></li>
                   </ul>
                 </div>
                 <div class="res-block">
@@ -286,24 +247,7 @@
     </section>
 
     <!-- ============ 约束与缺件 ============ -->
-    <section class="section" id="notes">
-      <div class="shell">
-        <div class="section-head">
-          <span class="eyebrow">Open items</span>
-          <h2>关键约束与缺件</h2>
-          <p>本课程的硬性前置条件较多，开课前请逐条确认。</p>
-        </div>
-        <div class="note warn">
-          <ul>
-            <li><b>加密狗：</b>Vision Master 4.3 必须插入 U 盘形式的加密狗才能使用。</li>
-            <li><b>触发设置：</b>相机触发源必须选 SOFTWARE、触发模式选 ON，否则程序无法启动相机、界面不出图。</li>
-            <li><b>标定限制：</b>相机固定安装，仅支持二维 XY 坐标转换，物块高度需人工指定。</li>
-            <li><b>缺件：</b>原资料未附 RobotStudio 工程文件与 C# 程序源码，仅有 <code>.sol</code> / <code>.xml</code> 三个视觉工程文件。</li>
-            <li><b>视频来源：</b>两段 mp4 的公开来源在指导书正文中标注为 B站视频编号（av506489933、av577013484），本页未核验可播放性、未上传、未嵌入。</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+
 
     <!-- ============ 上下课导航 ============ -->
     <section class="section" style="padding-top:0;border-top:0">
@@ -316,9 +260,7 @@
     </section>
   </main>
 
-  <footer>
-    资料提供：文丽 ｜ 本页为课程索引，视频不上传；原始文件位于 <code>机器人相关课程from文丽/工业机器人缺陷分拣指导书/</code>。
-  </footer>
+  <footer>资料提供：文丽</footer>
 
   <script src="assets/hub.js"></script>
 </body>
