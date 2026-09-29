@@ -22,10 +22,20 @@ const path = require('node:path');
         heading: document.querySelector('h1')?.textContent.trim(),
         backLink: !!document.querySelector('a[href="../#/"]'),
         media: document.querySelectorAll('video, audio, iframe').length,
+        maintenancePanels: document.querySelectorAll('#overview, #notes, .fact-grid').length,
+        releaseBanner: document.body.textContent.includes('线上发布版说明'),
       }));
-      if (state.overflow || !state.heading || !state.backLink || state.media) {
+      if (state.overflow || !state.heading || !state.backLink || state.media || state.maintenancePanels || state.releaseBanner) {
         errors.push(`${width}/${file}: ${JSON.stringify(state)}`);
       }
+      if (file === 'index.html' && await page.locator('.track-card').count() !== 4) errors.push('Expected four course cards');
+      if (file === 'vision-sorting.html') {
+        const text = await page.locator('main').innerText();
+        for (const keyword of ['加密狗', 'SOFTWARE', '高度']) {
+          if (!text.includes(keyword)) errors.push(`Missing reader constraint: ${keyword}`);
+        }
+      }
+      if (file === 'go2.html' && !await page.getByRole('link', { name: '《智能机器人综合应用》实训大纲' }).count()) errors.push('Missing Go2 outline');
       await page.screenshot({ path: path.join(output, `${width}-${file}.png`) });
       const anchor = page.locator('[data-spy]').first();
       if (await anchor.count()) {

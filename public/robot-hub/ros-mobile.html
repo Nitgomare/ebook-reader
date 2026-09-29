@@ -8,7 +8,7 @@
   <meta name="description" content="Aimibot-450 ROS 教育机器人课程：按官方 12 课时编排，含教材、课件、实验指导书与视频入口。">
   <link rel="stylesheet" href="assets/hub.css">
 </head>
-<body>
+<body class="hub-course">
   <div class="progress" id="progress"></div>
 
   <header class="topbar">
@@ -33,71 +33,20 @@
           <a href="index.html">首页</a><span>/</span><a href="index.html#tracks">课程方向</a><span>/</span><b>Aimibot 移动教育机器人</b>
         </div>
         <h1><span class="gradient-text">Aimibot ROS 移动教育机器人</span></h1>
-        <p class="lead">以 Aimibot-450 教育机器人为平台，从设备认知与系统安装起步，经 ROS 基础、运动控制、超声波避障、激光雷达与视觉 SLAM 建图，最后完成视觉跟踪综合实验。全课按官方 12 课时安排编排。</p>
-        <div class="chips">
-          <span class="chip">平台 <b>Aimibot-450</b></span>
-          <span class="chip">课时 <b>12</b></span>
-          <span class="chip">课件 <b>9 份 PPT</b></span>
-          <span class="chip">教材 <b>V1.2</b></span>
-          <span class="chip">说明书 <b>41 页</b></span>
-          <span class="chip">视频 <b>10 段（不上传）</b></span>
-        </div>
-      </div>
-    </section>
+        <p class="lead">Aimibot-450 的设备使用、ROS 开发、运动控制、建图导航与视觉跟踪资料。</p>
 
-    <section class="section" style="padding:28px 0 0">
-      <div class="shell">
-        <div class="note warn"><strong>线上发布版说明：</strong>本页有 9 个资源因文件过大或包含视频暂未上线，相关入口已标注；课程讲义和其他配套资料可正常下载。</div>
       </div>
     </section>
 
     <!-- ============ 课程概览 ============ -->
-    <section class="section" id="overview" style="padding-top:0">
-      <div class="shell">
-        <div class="fact-grid">
-          <div class="fact">
-            <h3>学习目标</h3>
-            <ul>
-              <li>认识机器人结构、控制器与上位机软件，掌握安全与电池规范</li>
-              <li>会建 ROS 工作空间、编译源码、查看数据结构</li>
-              <li>能用键盘/手柄与 ROS 节点控制机器人运动</li>
-              <li>能完成超声波避障、激光与视觉建图、导航实验</li>
-              <li>能独立完成视觉跟踪乒乓球综合实验</li>
-            </ul>
-          </div>
-          <div class="fact">
-            <h3>适用平台</h3>
-            <ul>
-              <li>Aimibot-450 ROS 教育机器人（湖南爱米家智能科技）</li>
-              <li>ROS + Linux 上位机环境</li>
-              <li>超声波、防跌落、姿态、激光雷达、深度相机等板载传感器</li>
-              <li>可选七自由度机械手臂</li>
-            </ul>
-          </div>
-          <div class="fact">
-            <h3>建议学习顺序（官方 12 课时）</h3>
-            <ol>
-              <li>第 1 课时：认识机器人结构、控制器与软件操作界面</li>
-              <li>第 2 课时：蓝牙手柄与键盘控制机器人运动</li>
-              <li>第 3 课时：三角形轨迹运动</li>
-              <li>第 4 课时：超声波避障</li>
-              <li>第 5–6 课时：激光建图与导航</li>
-              <li>第 7–8 课时：视觉建图与导航</li>
-              <li>第 9–10 课时：视觉与雷达融合建图导航</li>
-              <li>第 11–12 课时：视觉跟踪与识别</li>
-            </ol>
-          </div>
-        </div>
-        <div class="note">课时与知识点依据随资料提供的 <b>培训计划模板.docx</b>（“Aimibot-450 教育机器人课时安排及各课时知识点”）整理；每个教学任务下方的“正文 / 课件 / 代码 / 软件与安装 / 视频”为该节的资源入口。</div>
-      </div>
-    </section>
+
 
     <!-- ============ 教学任务 ============ -->
     <section class="section" id="units">
       <div class="shell">
         <div class="section-head">
           <span class="eyebrow">Teaching units</span>
-          <h2>按教学任务分节</h2>
+          <h2>教学任务</h2>
           <p>六个教学任务覆盖 12 课时。课件保留原始编号（course_1 起），与现有 PPT 文件一一对应。</p>
         </div>
 
@@ -105,7 +54,7 @@
           <aside class="toc" aria-label="本页目录">
             <h4>ON THIS PAGE</h4>
             <nav>
-              <a href="#overview" data-spy>课程概览</a>
+
               <a href="#unit-1" data-spy>01 设备认知与软件安装</a>
               <a href="#unit-2" data-spy>02 ROS 基础与数据结构</a>
               <a href="#unit-3" data-spy>03 运动控制与轨迹</a>
@@ -113,7 +62,7 @@
               <a href="#unit-5" data-spy>05 视觉与雷达融合导航</a>
               <a href="#unit-6" data-spy>06 视觉跟踪综合实验</a>
               <a href="#refs" data-spy>参考资料</a>
-              <a href="#notes" data-spy>缺件与待办</a>
+
             </nav>
             <a class="toc-back" href="index.html#tracks">← 全部课程方向</a>
           </aside>
@@ -140,8 +89,8 @@
                 <div class="res-block is-slide">
                   <h4>课件</h4>
                   <ul class="res-list">
-                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">机器人介绍</span><span class="meta">未随本次发布上线</span><span class="meta">19 页 · 内嵌视频 84 MB</span></li>
-                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">软件系统安装</span><span class="meta">未随本次发布上线</span><span class="meta">14 页 · 内嵌视频 26.7 MB</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">机器人介绍</span><span class="meta">暂未上线</span><span class="meta">19 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">软件系统安装</span><span class="meta">暂未上线</span><span class="meta">14 页</span></li>
                   </ul>
                 </div>
                 <div class="res-block is-soft">
@@ -157,7 +106,7 @@
                     <li class="res-item"><span class="kind kind-mp4">MP4</span><span class="txt">Aimibot 教程之 Ubuntu 启动盘制作</span><span class="meta">链接待补</span></li>
                     <li class="res-item"><span class="kind kind-mp4">MP4</span><span class="txt">演示视频 1：上位机操作、查看数据结构与简单控制</span><span class="meta">链接待补</span></li>
                   </ul>
-                  <p class="res-note">本地视频不上传、不嵌入，仅保留入口；视频说明见 <a href="机器人相关课程from文丽/107移动机器人教育机器人资料课件/视频/readme.txt">视频目录说明</a>。</p>
+                  <p class="res-note">视频链接待补。视频目录见 <a href="机器人相关课程from文丽/107移动机器人教育机器人资料课件/视频/readme.txt">视频目录说明</a>。</p>
                 </div>
               </div>
             </article>
@@ -183,7 +132,7 @@
                 <div class="res-block is-slide">
                   <h4>课件</h4>
                   <ul class="res-list">
-                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人基础操作</span><span class="meta">未随本次发布上线</span><span class="meta">19 页 · 内嵌视频 341.7 MB</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人基础操作</span><span class="meta">暂未上线</span><span class="meta">19 页</span></li>
                   </ul>
                 </div>
                 <div class="res-block is-code">
@@ -223,9 +172,9 @@
                 <div class="res-block is-slide">
                   <h4>课件</h4>
                   <ul class="res-list">
-                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人运动控制</span><span class="meta">未随本次发布上线</span><span class="meta">18 页 · 内嵌视频 202.5 MB</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人运动控制</span><span class="meta">暂未上线</span><span class="meta">18 页</span></li>
                     <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/107移动机器人教育机器人资料课件/进阶实验-三角形运动、超声波跟随.pptx">进阶实验：三角形运动、超声波跟随</a><span class="meta">32 页 · WiFi 控制运动 + 超声波跟随</span></li>
-                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人轨迹控制与避障</span><span class="meta">未随本次发布上线</span><span class="meta">17 页 · 内嵌视频 313.2 MB</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人轨迹控制与避障</span><span class="meta">暂未上线</span><span class="meta">17 页</span></li>
                   </ul>
                 </div>
                 <div class="res-block is-code">
@@ -267,8 +216,8 @@
                 <div class="res-block is-slide">
                   <h4>课件</h4>
                   <ul class="res-list">
-                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人激光建图与导航</span><span class="meta">未随本次发布上线</span><span class="meta">21 页 · 内嵌视频 244.3 MB</span></li>
-                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人激光建图、导航与避障</span><span class="meta">未随本次发布上线</span><span class="meta">21 页 · 内嵌视频 244.3 MB · 与 course_4 同尺寸、内容为含避障的版本</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人激光建图与导航</span><span class="meta">暂未上线</span><span class="meta">21 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人激光建图、导航与避障</span><span class="meta">暂未上线</span><span class="meta">21 页 · 含避障内容</span></li>
                   </ul>
                 </div>
                 <div class="res-block is-code">
@@ -315,7 +264,7 @@
                 <div class="res-block is-slide">
                   <h4>课件</h4>
                   <ul class="res-list">
-                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人视觉与激光雷达融合导航与避障</span><span class="meta">未随本次发布上线</span><span class="meta">17 页 · 内嵌视频 7.8 MB</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">移动机器人视觉与激光雷达融合导航与避障</span><span class="meta">暂未上线</span><span class="meta">17 页</span></li>
                   </ul>
                 </div>
                 <div class="res-block is-code">
@@ -360,7 +309,7 @@
                 <div class="res-block is-slide">
                   <h4>课件</h4>
                   <ul class="res-list">
-                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">视觉跟踪乒乓球实验</span><span class="meta">未随本次发布上线</span><span class="meta">12 页 · 内嵌视频 20.1 MB</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">视觉跟踪乒乓球实验</span><span class="meta">暂未上线</span><span class="meta">12 页</span></li>
                   </ul>
                 </div>
                 <div class="res-block is-code">
@@ -411,25 +360,7 @@
     </section>
 
     <!-- ============ 缺件与待办 ============ -->
-    <section class="section" id="notes">
-      <div class="shell">
-        <div class="section-head">
-          <span class="eyebrow">Open items</span>
-          <h2>缺件与待办</h2>
-          <p>以下为核对原始资料后确认的缺口与待处理项，页面按事实标注，不用占位文件充数。</p>
-        </div>
-        <div class="note warn">
-          <ul>
-            <li><b>编号缺口：</b>原资料只有 course_1 / 2 / 3 / 4 / 8&amp;9 / 10 / 11 共 7 份编号课件，缺 course_5、6、7。</li>
-            <li><b>汇编编号重复：</b>实验指导书汇编中“实验十”出现两次（视觉建图、视觉追踪乒乓球），为原文件编号问题。</li>
-            <li><b>内容重复：</b>8 个单项实验文档与实验指导书汇编覆盖同一批实验，建议以汇编为主入口。</li>
-            <li><b>课件待减重：</b>9 份 PPT 全部内嵌视频，合计约 1.5 GB（course_1 单文件内嵌 341.7 MB），发布前需转静态 PDF。</li>
-            <li><b>源码缺口：</b>原资料未附 Aimibot 的 ROS 源码包，仅在教材 4.1 节说明从 Github 获取并编译。</li>
-            <li><b>视频待接入：</b>10 段本地视频与 1 份视频目录说明，均无公开链接，暂不上传。</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+
 
     <!-- ============ 上下课导航 ============ -->
     <section class="section" style="padding-top:0;border-top:0">
@@ -442,9 +373,7 @@
     </section>
   </main>
 
-  <footer>
-    资料提供：文丽 ｜ 本页为课程索引，视频不上传；原始文件位于 <code>机器人相关课程from文丽/107移动机器人教育机器人资料课件/</code>。
-  </footer>
+  <footer>资料提供：文丽</footer>
 
   <script src="assets/hub.js"></script>
 </body>

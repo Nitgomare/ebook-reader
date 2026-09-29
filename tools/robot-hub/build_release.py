@@ -52,7 +52,6 @@ def contains_video(path):
         return any(os.path.splitext(name)[1].lower() in VIDEO_EXT for name in archive.namelist())
 
 ANCHOR_RE = re.compile(r'<a\s+href="([^"]+)"([^>]*)>(.*?)</a>', re.S)
-PAGE_HEAD_RE = re.compile(r'<section class="page-head">.*?</section>', re.S)
 
 
 def excluded_reason(name, size, max_bytes):
@@ -101,7 +100,7 @@ def rewrite_page(text, included):
             return match.group(0)
         missed.append(rel)
         plain = re.sub(r"<[^>]+>", "", label).strip()
-        return '<span class="txt">%s</span><span class="meta">未随本次发布上线</span>' % plain
+        return '<span class="txt">%s</span><span class="meta">暂未上线</span>' % plain
 
     text = ANCHOR_RE.sub(repl, text)
     text = text.replace(PREFIX_OLD, PREFIX_NEW)
@@ -122,18 +121,6 @@ def rewrite_page(text, included):
         '本页为课程导航页，不含视频与原始课程文件；原始资料位于 <code>机器人相关课程from文丽/</code>，保持只读。',
         '资料提供：文丽 · 讲义、课件与源码按教学任务整理 · 视频链接待补。'
     )
-
-    if missed:
-        notice = (
-            '<section class="section" style="padding:28px 0 0">\n'
-            '      <div class="shell">\n'
-            '        <div class="note warn"><strong>线上发布版说明：</strong>'
-            '本页有 %d 个资源因文件过大或包含视频暂未上线，'
-            '相关入口已标注；课程讲义和其他配套资料可正常下载。</div>\n'
-            '      </div>\n'
-            '    </section>' % len(missed)
-        )
-        text = PAGE_HEAD_RE.sub(lambda m: m.group(0) + "\n\n    " + notice, text, count=1)
 
     return text, missed
 
