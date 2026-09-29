@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>机器人课程资源中心</title>
+  <meta name="description" content="移动机器人、机器狗与工业机器人实训资源，按平台整理成可按顺序学习的课程路线。">
+  <link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="返回首页">
+      <span class="brand-mark">机</span>
+      <span><strong>机器人课程资源中心</strong><small>ROBOTICS CURRICULUM HUB</small></span>
+    </a>
+    <nav class="coursenav" aria-label="课程导航"><a href="../#/">学习中心</a>
+      <a href="index.html" class="current">首页</a>
+      <a href="ros-mobile.html">移动机器人</a>
+      <a href="go2.html">宇树 Go2</a>
+      <a href="vision-sorting.html">视觉分拣</a>
+      <a href="abb-baxter.html">ABB · Baxter</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ 简介 ============ -->
+    <section class="hero">
+      <div class="shell hero-inner">
+        <span class="eyebrow">Curriculum hub</span>
+        <h1><span class="gradient-text">机器人课程<br>资源中心</span></h1>
+        <p class="lead">汇集移动机器人、机器狗和工业机器人实训资源，按平台整理成四门课程：先选课程方向，再按教学任务找讲义、课件、源码与软件。不铺文件清单，只呈现有学习顺序的实训课程。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#tracks">选择课程方向 <span>→</span></a>
+          <a class="button" href="#path">查看学习路线 <span>→</span></a>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric"><strong>5</strong><span>机器人与实验平台</span></div>
+          <div class="metric"><strong>18</strong><span>课程单元</span></div>
+          <div class="metric"><strong>53</strong><span>已上线课件与指导书</span></div>
+          <div class="metric"><strong>12</strong><span>Go2 递进式实训项目</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 学习路线 ============ -->
+    <section class="section" id="path">
+      <div class="shell">
+        <div class="section-head">
+          <span class="eyebrow">Learning pathway</span>
+          <h2>不是文件目录，而是学习路径</h2>
+          <p>六步能力进阶贯穿全部课程：无论从哪台设备入手，都沿着同一条“从认知到综合项目”的路线推进，让学习者知道先学什么、再做什么、最终完成什么。</p>
+        </div>
+        <div class="pathway">
+          <div class="path-step"><small>STEP 01</small><b>设备认知</b><p>平台组成、安全规范、基本操作</p></div>
+          <div class="path-step"><small>STEP 02</small><b>开发环境</b><p>ROS、SDK、Python/C++ 工具链</p></div>
+          <div class="path-step"><small>STEP 03</small><b>通信与控制</b><p>DDS、遥控输入、底层与高层控制</p></div>
+          <div class="path-step"><small>STEP 04</small><b>环境感知</b><p>图像、点云、高度地图与避障</p></div>
+          <div class="path-step"><small>STEP 05</small><b>自主导航</b><p>SLAM、定位、路径规划与任务执行</p></div>
+          <div class="path-step highlight"><small>STEP 06</small><b>综合项目</b><p>识别、跟随、智能物流与系统验收</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 四门课程 ============ -->
+    <section class="section" id="tracks">
+      <div class="shell">
+        <div class="section-head">
+          <span class="eyebrow">Course tracks</span>
+          <h2>四条课程路线</h2>
+          <p>每条路线对应一个机器人平台和一套完整的教学任务。课程页里按教学任务分节，每一节下方给出讲义、课件、源码、软件和视频五类入口，缺件直接标注“暂无配套文件”。</p>
+        </div>
+
+        <div class="track-grid">
+          <a class="track-card" data-index="01" href="ros-mobile.html">
+            <div class="track-top"><span class="track-icon">移</span><span class="track-label">MOBILE ROBOT · ROS</span></div>
+            <h3>Aimibot 移动教育机器人</h3>
+            <p>从 ROS 基础与系统安装出发，逐步进入运动控制、激光雷达建图、超声波避障和视觉跟踪。</p>
+            <div class="track-meta"><span>ROS</span><span>传感器</span><span>建图</span><span>避障</span><span>视觉跟踪</span></div>
+            <span class="track-more">进入课程 →</span>
+          </a>
+
+          <a class="track-card" data-index="02" href="go2.html">
+            <div class="track-top"><span class="track-icon">足</span><span class="track-label">QUADRUPED ROBOT</span></div>
+            <h3>宇树 Go2 四足机器人</h3>
+            <p>以 12 个递进式实训项目为主线，将 SDK、通信、控制、感知、导航、智能识别和综合实践连接起来。</p>
+            <div class="track-meta"><span>SDK2</span><span>DDS</span><span>SLAM</span><span>目标识别</span><span>智能物流</span></div>
+            <span class="track-more">进入课程 →</span>
+          </a>
+
+          <a class="track-card" data-index="03" href="vision-sorting.html">
+            <div class="track-top"><span class="track-icon">工</span><span class="track-label">INDUSTRIAL VISION</span></div>
+            <h3>工业机器人缺陷分拣</h3>
+            <p>以“工业相机—手眼标定—缺陷识别—坐标转换—抓取分拣”构建完整工业视觉任务链。</p>
+            <div class="track-meta"><span>手眼标定</span><span>工业视觉</span><span>坐标转换</span><span>分拣</span></div>
+            <span class="track-more">进入课程 →</span>
+          </a>
+
+          <a class="track-card" data-index="04" href="abb-baxter.html">
+            <div class="track-top"><span class="track-icon">协</span><span class="track-label">INDUSTRIAL &amp; COBOT</span></div>
+            <h3>ABB 与 Baxter 机器人</h3>
+            <p>将 Baxter 用户手册、开发指南、实训资料与 ABB 实验指导书统一归入“工业与协作机器人”路线。</p>
+            <div class="track-meta"><span>用户操作</span><span>开发接口</span><span>坐标系</span><span>安全规范</span></div>
+            <span class="track-more">进入课程 →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 资源栏目 ============ -->
+    <section class="section" id="legend">
+      <div class="shell">
+        <div class="section-head">
+          <span class="eyebrow">Resource structure</span>
+          <h2>每个课程页有统一的资源结构</h2>
+          <p>“有就展示、没有就留空并标注”，所有教学任务都使用同一套逻辑，降低学习和维护成本。</p>
+        </div>
+        <div class="legend-grid">
+          <div class="legend"><i>01 正文</i><b>讲义与指导书</b><span>教材章节、实验说明、实训大纲</span></div>
+          <div class="legend"><i>02 课件</i><b>PPT 与讲稿</b><span>按课时编号排列，保留项目编号以便对应</span></div>
+          <div class="legend"><i>03 代码</i><b>源码与工程</b><span>C++ / Python 示例，按项目与语言分组</span></div>
+          <div class="legend"><i>04 软件与安装</i><b>SDK 与依赖</b><span>SDK 压缩包、安装指令、配置与工程文件</span></div>
+          <div class="legend"><i>05 视频</i><b>视频入口</b><span>只留入口位置，不上传 MP4，待补公开链接</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 发布约定 ============ -->
+    
+
+    <!-- ============ 结尾 ============ -->
+    <section class="closing">
+      <div class="shell">
+        <div class="closing-card">
+          <h2>从“资料文件夹”转变为“可按路径学习的机器人课程体系”</h2>
+          <p>四门课程共用一条六步学习路线，每门课按教学任务分节，每节给出正文、课件、代码、软件与视频入口。缺什么就标注什么，不为了填满栏目而重复放文件。</p>
+          <div class="signature">
+            <span>资料提供：文丽</span>
+            <span>课程资料按平台与教学任务编排</span>
+            <span>视频链接待补</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    资料提供：文丽 · 讲义、课件与源码按教学任务整理 · 视频链接待补。
+  </footer>
+
+  <script src="assets/hub.js"></script>
+</body>
+</html>

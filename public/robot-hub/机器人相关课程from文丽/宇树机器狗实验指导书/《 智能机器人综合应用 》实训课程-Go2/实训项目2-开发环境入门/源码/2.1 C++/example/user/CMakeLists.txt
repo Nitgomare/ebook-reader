@@ -1,0 +1,2 @@
+add_executable(app_height app_height.cpp)
+target_link_libraries(app_height unitree_sdk2)

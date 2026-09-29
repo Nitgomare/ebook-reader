@@ -1,0 +1,2 @@
+add_executable(obstacles_avoid.cpp)
+target_link_libraries(obstacles_avoid unitree_sdk2)

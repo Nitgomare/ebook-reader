@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>宇树 Go2 四足机器人 · 机器人课程资源中心</title>
+  <meta name="description" content="《智能机器人综合应用》实训课程-Go2：12 个递进式实训项目，含课件、指导书、源码与安装包。">
+  <link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="返回首页">
+      <span class="brand-mark">机</span>
+      <span><strong>机器人课程资源中心</strong><small>ROBOTICS CURRICULUM HUB</small></span>
+    </a>
+    <nav class="coursenav" aria-label="课程导航"><a href="../#/">学习中心</a>
+      <a href="index.html">首页</a>
+      <a href="ros-mobile.html">移动机器人</a>
+      <a href="go2.html" class="current">宇树 Go2</a>
+      <a href="vision-sorting.html">视觉分拣</a>
+      <a href="abb-baxter.html">ABB · Baxter</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ 课程头部 ============ -->
+    <section class="page-head">
+      <div class="shell">
+        <div class="crumb">
+          <a href="index.html">首页</a><span>/</span><a href="index.html#tracks">课程方向</a><span>/</span><b>宇树 Go2 四足机器人</b>
+        </div>
+        <h1><span class="gradient-text">宇树 Go2 四足机器人</span></h1>
+        <p class="lead">《智能机器人综合应用》实训课程，以 12 个递进式实训项目为主线：从 Go2 入门与开发环境，经底层/高层运动控制、遥控器与避障数据、SLAM 建图与自主导航、多媒体与识别，最后完成智能物流多功能综合实践。</p>
+        <div class="chips">
+          <span class="chip">平台 <b>宇树 Go2</b></span>
+          <span class="chip">实训项目 <b>12</b></span>
+          <span class="chip">指导书 PDF <b>13 份</b></span>
+          <span class="chip">课件 <b>26 份 PPT</b></span>
+          <span class="chip">语言 <b>C++ / Python</b></span>
+          <span class="chip">视频 <b>待接入</b></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding:28px 0 0">
+      <div class="shell">
+        <div class="note warn"><strong>线上发布版说明：</strong>本页有 2 个资源因文件过大或包含视频暂未上线，相关入口已标注；课程讲义和其他配套资料可正常下载。</div>
+      </div>
+    </section>
+
+    <!-- ============ 课程概览 ============ -->
+    <section class="section" id="overview" style="padding-top:0">
+      <div class="shell">
+        <div class="fact-grid">
+          <div class="fact">
+            <h3>学习目标</h3>
+            <ul>
+              <li>掌握 Go2 设备操作、SDK2 环境搭建（C++ 与 Python）</li>
+              <li>能实现 DDS 通信、避障服务与 VUI 交互</li>
+              <li>能完成底层与高层运动控制、遥控器按键开发</li>
+              <li>能获取点云、高度地图、图像与视频数据</li>
+              <li>能用 ROS 2 + SLAM 完成建图、定位与路径规划</li>
+              <li>能完成手势识别、人体跟随与智能物流综合项目</li>
+            </ul>
+          </div>
+          <div class="fact">
+            <h3>适用平台</h3>
+            <ul>
+              <li>宇树 Unitree Go2 四足机器人</li>
+              <li>Unitree SDK2（C++ 与 Python 两套）</li>
+              <li>ROS 2 Humble + Navigation2 导航栈</li>
+              <li>板载相机（图像/视频）、激光雷达与感知模块</li>
+              <li>Linux 开发环境（CMake / Python 3）</li>
+            </ul>
+          </div>
+          <div class="fact">
+            <h3>建议学习顺序</h3>
+            <ol>
+              <li>入门与操作：项目 1–2（设备认知、开发环境）</li>
+              <li>通信与控制：项目 3–6（基础模块、底层/高层控制、遥控器）</li>
+              <li>环境感知：项目 7、9（避障数据、多媒体数据）</li>
+              <li>自主导航：项目 8（SLAM 建图、定位与路径规划）</li>
+              <li>智能识别：项目 10–11（手势识别、人体跟随）</li>
+              <li>综合验收：项目 12（智能物流多功能综合实践）</li>
+            </ol>
+          </div>
+        </div>
+        <div class="note">项目编号沿用原始资料编号（实训项目 1–12），方便与现有 PPT、PDF 和源码目录一一对应；每个项目下方给出“正文 / 课件 / 代码 / 软件与安装 / 视频”五类入口，缺少的栏目直接标注。实训总体要求见 <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/《智能机器人综合应用》实训大纲.pdf">《智能机器人综合应用》实训大纲</a>（4 页）。</div>
+      </div>
+    </section>
+
+    <!-- ============ 12 个实训项目 ============ -->
+    <section class="section" id="projects">
+      <div class="shell">
+        <div class="section-head">
+          <span class="eyebrow">Training projects</span>
+          <h2>12 个递进式实训项目</h2>
+          <p>难度与依赖逐级递进：前两个项目建立设备与环境基础，中间项目分别打通控制、感知与导航，最后两个项目综合运用并验收。</p>
+        </div>
+
+        <div class="with-toc">
+          <aside class="toc" aria-label="本页目录">
+            <h4>PROJECTS</h4>
+            <nav>
+              <a href="#overview" data-spy>课程概览</a>
+              <a href="#p1" data-spy>01 Go2 机器人入门</a>
+              <a href="#p2" data-spy>02 开发环境入门</a>
+              <a href="#p3" data-spy>03 基础模块使用</a>
+              <a href="#p4" data-spy>04 底层运动控制</a>
+              <a href="#p5" data-spy>05 高层运动控制</a>
+              <a href="#p6" data-spy>06 遥控器状态获取</a>
+              <a href="#p7" data-spy>07 避障数据获取</a>
+              <a href="#p8" data-spy>08 路径规划与自主导航</a>
+              <a href="#p9" data-spy>09 多媒体数据获取</a>
+              <a href="#p10" data-spy>10 手势识别</a>
+              <a href="#p11" data-spy>11 人体跟随运动</a>
+              <a href="#p12" data-spy>12 智能物流综合实践</a>
+              <a href="#notes" data-spy>缺件与待办</a>
+            </nav>
+            <a class="toc-back" href="index.html#tracks">← 全部课程方向</a>
+          </aside>
+
+          <div>
+            <!-- 01 -->
+            <article class="unit" id="p1">
+              <div class="unit-head">
+                <span class="unit-no">01</span>
+                <div>
+                  <h3>实训项目 1 · Go2 机器人入门</h3>
+                  <p>设备认知、App 与遥控器操作。</p>
+                </div>
+                <span class="unit-tag">入门</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目1-Go2机器人入门/实训项目1-Go2机器人入门.pdf">实训项目 1-Go2 机器人入门</a><span class="meta">25 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目1-Go2机器人入门/1.1-Go2 机器人简介.pptx">1.1-Go2 机器人简介</a><span class="meta">15 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目1-Go2机器人入门/1.2-APP及遥控器操作.pptx">1.2-APP 及遥控器操作</a><span class="meta">21 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套源码（本项目为设备与遥控器操作）</span></li></ul>
+                </div>
+                <div class="res-block is-video">
+                  <h4>视频</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套视频，待补公开链接</span></li></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- 02 -->
+            <article class="unit" id="p2">
+              <div class="unit-head">
+                <span class="unit-no">02</span>
+                <div>
+                  <h3>实训项目 2 · 开发环境入门</h3>
+                  <p>C++、Python 与 Unitree SDK2 环境搭建。</p>
+                </div>
+                <span class="unit-tag">入门</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目2-开发环境入门/实训项目2-开发环境入门.pdf">实训项目 2-开发环境入门</a><span class="meta">28 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目2-开发环境入门/2.1-开发环境入门(基于C++).pptx">2.1-开发环境入门（基于 C++）</a><span class="meta">24 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目2-开发环境入门/2.1-开发环境入门(基于Python).pptx">2.1-开发环境入门（基于 Python）</a><span class="meta">16 页 · 原资料两个课件同编号，按语言区分</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-soft">
+                  <h4>软件与安装</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-zip">ZIP</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目2-开发环境入门/安装库/2.1 C++/unitree_sdk2-main.zip">unitree_sdk2-main.zip</a><span class="meta">15.57 MB · C++ SDK2 源码包</span></li>
+                    <li class="res-item"><span class="kind kind-zip">ZIP</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目2-开发环境入门/安装库/2.2 Python/unitree_sdk2_python.zip">unitree_sdk2_python.zip</a><span class="meta">0.12 MB · Python SDK2 包</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目2-开发环境入门/源码/2.1 C++/example/user/app_height.cpp">app_height.cpp</a><span class="meta">示例程序</span></li>
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目2-开发环境入门/源码/2.1 C++/example/user/CMakeLists.txt">CMakeLists.txt</a><span class="meta">example/user 构建配置</span></li>
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目2-开发环境入门/源码/2.2 Python/vui_control.py">vui_control.py</a><span class="meta">语音交互示例</span></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- 03 -->
+            <article class="unit" id="p3">
+              <div class="unit-head">
+                <span class="unit-no">03</span>
+                <div>
+                  <h3>实训项目 3 · 基础模块使用</h3>
+                  <p>DDS 通信、避障服务与 VUI 交互。</p>
+                </div>
+                <span class="unit-tag">通信</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/实训项目3-基础模块使用.pdf">实训项目 3-基础模块使用</a><span class="meta">34 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/3-基础模块使用.pptx">3-基础模块使用</a><span class="meta">26 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码 · C++</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/C++/dds/publisher.cpp">dds/publisher.cpp</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/C++/dds/subscriber.cpp">subscriber.cpp</a><span class="meta">DDS 收发</span></li>
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/C++/obstacles_avoid/obstacles_avoid.cpp">obstacles_avoid.cpp</a><span class="meta">避障服务</span></li>
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/C++/vui_client/go2_vui_client.cpp">go2_vui_client.cpp</a><span class="meta">VUI 客户端</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码 · Python</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/Python/dds/publisher.py">dds/publisher.py</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/Python/dds/subscriber.py">subscriber.py</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/Python/dds/user_data.py">user_data.py</a><span class="meta">DDS 收发</span></li>
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/Python/obstacles_avoid/obstacles_avoid_move.py">obstacles_avoid_move.py</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/Python/obstacles_avoid/obstacles_avoid_switch.py">obstacles_avoid_switch.py</a><span class="meta">避障开关</span></li>
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目3-基础模块使用/源码/Python/vui_client/vui_client_example.py">vui_client_example.py</a><span class="meta">VUI 示例</span></li>
+                  </ul>
+                  <p class="res-note">原目录含 Office 临时文件 <code>~$3-基础模块使用.pptx</code> 与 <code>Python/dds/__pycache__</code> 缓存，发布前应剔除。</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 04 -->
+            <article class="unit" id="p4">
+              <div class="unit-head">
+                <span class="unit-no">04</span>
+                <div>
+                  <h3>实训项目 4 · 底层运动控制</h3>
+                  <p>关节指令、参数与状态机。</p>
+                </div>
+                <span class="unit-tag">控制</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目4-底层运动控制/实训项目4-底层运动控制.pdf">实训项目 4-底层运动控制</a><span class="meta">45 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目4-底层运动控制/4-底层运动控制.pptx">4-底层运动控制</a><span class="meta">15 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码 · C++</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目4-底层运动控制/源码/C++/low_level/low_level.cpp">low_level/low_level.cpp</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目4-底层运动控制/源码/C++/low_level/stand_example_go2.cpp">stand_example_go2.cpp</a><span class="meta">底层控制与站立示例</span></li>
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目4-底层运动控制/源码/C++/state_machine/main.cpp">state_machine/main.cpp</a><span class="meta">状态机主程序（含 cfg/conversion/robot_controller 等头文件）</span></li>
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目4-底层运动控制/源码/C++/jsonize/test_jsonize.cpp">jsonize/test_jsonize.cpp</a><span class="meta">参数解析测试</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码 · Python</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目4-底层运动控制/源码/Python/low_level/lowlevel_control.py">lowlevel_control.py</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目4-底层运动控制/源码/Python/low_level/read_lowstate.py">read_lowstate.py</a><span class="meta">底层控制与状态读取</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-soft">
+                  <h4>软件与安装</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-data">JSON</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目4-底层运动控制/源码/C++/state_machine/params/params.json">state_machine/params/params.json</a><span class="meta">状态机参数配置</span></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- 05 -->
+            <article class="unit" id="p5">
+              <div class="unit-head">
+                <span class="unit-no">05</span>
+                <div>
+                  <h3>实训项目 5 · 高层运动控制</h3>
+                  <p>SportMode 与高层动作指令。</p>
+                </div>
+                <span class="unit-tag">控制</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目5-高层运动控制/实训项目5-高层运动控制.pdf">实训项目 5-高层运动控制</a><span class="meta">22 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目5-高层运动控制/5-高层运动控制.pptx">5-高层运动控制</a><span class="meta">27 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目5-高层运动控制/源码/C++/sportmode_client.cpp">sportmode_client.cpp</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目5-高层运动控制/源码/C++/sportmode_state.cpp">sportmode_state.cpp</a><span class="meta">高层指令与状态</span></li>
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目5-高层运动控制/源码/Python/sportmode_test.py">sportmode_test.py</a><span class="meta">Python 测试</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-video">
+                  <h4>视频</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套视频，待补公开链接</span></li></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- 06 -->
+            <article class="unit" id="p6">
+              <div class="unit-head">
+                <span class="unit-no">06</span>
+                <div>
+                  <h3>实训项目 6 · 遥控器状态获取</h3>
+                  <p>摇杆、按键映射与事件逻辑。</p>
+                </div>
+                <span class="unit-tag">交互</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目6-遥控器状态获/实训项目6-遥控器状态获取.pdf">实训项目 6-遥控器状态获取</a><span class="meta">27 页 · 原目录名截断为“遥控器状态获”，页面使用正确全称</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目6-遥控器状态获/6.1-遥控器状态获取.pptx">6.1-遥控器状态获取</a><span class="meta">14 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目6-遥控器状态获/6.2-按键功能开发.pptx">6.2-按键功能开发</a><span class="meta">9 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码 · C++</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目6-遥控器状态获/源码/C++/wireless_controller/main.cpp">wireless_controller/main.cpp</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目6-遥控器状态获/源码/C++/wireless_controller/advanced_gamepad.hpp">advanced_gamepad.hpp</a><span class="meta">遥控器状态获取</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码 · Python</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目6-遥控器状态获/源码/Python/wireless_controller/wireless_controller.py">wireless_controller.py</a><span class="meta">基础版</span></li>
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目6-遥控器状态获/源码/Python/wireless_controller%20_selfdefined/wireless_controller%20_selfdefined.py">wireless_controller _selfdefined.py</a><span class="meta">自定义版 · 原目录名含空格，未改名</span></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- 07 -->
+            <article class="unit" id="p7">
+              <div class="unit-head">
+                <span class="unit-no">07</span>
+                <div>
+                  <h3>实训项目 7 · 避障数据获取</h3>
+                  <p>点云、高度地图与避障信息。</p>
+                </div>
+                <span class="unit-tag">感知</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目7-避障数据获取/实训项目7-避障数据获取.pdf">实训项目 7-避障数据获取</a><span class="meta">24 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目7-避障数据获取/7.1-点云数据获取及可视化.pptx">7.1-点云数据获取及可视化</a><span class="meta">13 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目7-避障数据获取/7.2-高度地图获取及避障数据获取.pptx">7.2-高度地图获取及避障数据获取</a><span class="meta">19 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套源码（原资料该项目无源码目录）</span></li></ul>
+                </div>
+                <div class="res-block is-video">
+                  <h4>视频</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套视频，待补公开链接</span></li></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- 08 -->
+            <article class="unit" id="p8">
+              <div class="unit-head">
+                <span class="unit-no">08</span>
+                <div>
+                  <h3>实训项目 8 · 路径规划与自主导航</h3>
+                  <p>ROS 2、SLAM、定位与导航。</p>
+                </div>
+                <span class="unit-tag">导航</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/实训项目8-路径规划与自主导航.pdf">实训项目 8-路径规划与自主导航</a><span class="meta">30 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/8.1-SDK安装与SLAM建图.pptx">8.1-SDK 安装与 SLAM 建图</a><span class="meta">19 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/8.2-路径规划与自主导航.pptx">8.2-路径规划与自主导航</a><span class="meta">22 页 · Navigation2 导航栈</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码 · ROS 2 包</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/源码/go2_navigation/go2_navigation/nav_to_pose.py">go2_navigation/nav_to_pose.py</a><span class="meta">点到点导航节点</span></li>
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/源码/go2_navigation/go2_navigation/waypoint_follower.py">waypoint_follower.py</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/源码/go2_navigation/go2_navigation/get_robot_pose.py">get_robot_pose.py</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/源码/go2_navigation/go2_navigation/init_robot_pose.py">init_robot_pose.py</a><span class="meta">航点跟随、位姿获取与初始化</span></li>
+                    <li class="res-item"><span class="kind kind-src">CFG</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/源码/go2_navigation/setup.py">setup.py</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/源码/go2_navigation/package.xml">package.xml</a><span class="meta">ROS 2 包配置</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-soft">
+                  <h4>软件与安装</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-zip">ZIP</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/安装包/unitree_go2_ros2-master.zip">unitree_go2_ros2-master.zip</a><span class="meta">20.81 MB · Go2 的 ROS 2 工作空间</span></li>
+                    <li class="res-item"><span class="kind kind-zip">ZIP</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/安装包/pointcloud_to_laserscan-humble.zip">pointcloud_to_laserscan-humble.zip</a><span class="meta">ROS 2 Humble · 点云转激光</span></li>
+                    <li class="res-item"><span class="kind kind-data">YAML/PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/安装包/amcl节点启动/amcl_config.yaml">amcl_config.yaml</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/安装包/amcl节点启动/robot.launch.py">robot.launch.py</a><span class="meta">AMCL 定位节点启动配置</span></li>
+                    <li class="res-item"><span class="kind kind-txt">TXT</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/安装包/装前必看！！！.txt">装前必看！！！.txt</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/安装包/ros2 humble 安装指令.txt">ros2 humble 安装指令.txt</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目8-路径规划与自主导航/安装包/unitree_go2_ros2 安装指令.txt">unitree_go2_ros2 安装指令.txt</a><span class="meta">安装前须知与安装指令</span></li>
+                  </ul>
+                  <p class="res-note">安装包适用于 ROS 2 Humble 环境；请先阅读“装前必看”，再按两份安装指令依次安装。</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 09 -->
+            <article class="unit" id="p9">
+              <div class="unit-head">
+                <span class="unit-no">09</span>
+                <div>
+                  <h3>实训项目 9 · 多媒体数据获取</h3>
+                  <p>摄像头、图像流与 OpenCV。</p>
+                </div>
+                <span class="unit-tag">感知</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目9-多媒体数据获取/实训项目9-多媒体数据获取.pdf">实训项目 9-多媒体数据获取</a><span class="meta">12 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目9-多媒体数据获取/9.1-图片数据获取.pptx">9.1-图片数据获取</a><span class="meta">8 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目9-多媒体数据获取/9.2-视频数据获取.pptx">9.2-视频数据获取</a><span class="meta">11 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">C++</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目9-多媒体数据获取/源码/C++/go2_video_client.cpp">go2_video_client.cpp</a><span class="meta">视频流客户端</span></li>
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目9-多媒体数据获取/源码/Python/front_camera/camera_opencv.py">front_camera/camera_opencv.py</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目9-多媒体数据获取/源码/Python/front_camera/capture_image.py">capture_image.py</a><span class="meta">前视相机取流与抓图</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-video">
+                  <h4>视频</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套视频，待补公开链接</span></li></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- 10 -->
+            <article class="unit" id="p10">
+              <div class="unit-head">
+                <span class="unit-no">10</span>
+                <div>
+                  <h3>实训项目 10 · 手势识别</h3>
+                  <p>感知结果与机器人动作映射。</p>
+                </div>
+                <span class="unit-tag">识别</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目10-手势识别/实训项目10-手势识别.pdf">实训项目 10-手势识别</a><span class="meta">28 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目10-手势识别/10.1-手势识别原理.pptx">10.1-手势识别原理</a><span class="meta">11 页 · MediaPipe</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目10-手势识别/10.2-手势识别应用.pptx">10.2-手势识别应用</a><span class="meta">11 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目10-手势识别/源码/hand_dog_cv.py">hand_dog_cv.py</a><span class="meta">手势识别与控制映射</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-video">
+                  <h4>视频</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套视频，待补公开链接</span></li></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- 11 -->
+            <article class="unit" id="p11">
+              <div class="unit-head">
+                <span class="unit-no">11</span>
+                <div>
+                  <h3>实训项目 11 · 人体跟随运动</h3>
+                  <p>人体检测、偏差计算与跟随控制。</p>
+                </div>
+                <span class="unit-tag">识别</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/实训项目11-人体跟随运动.pdf">实训项目 11-人体跟随运动</a><span class="meta">17 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/11.1-目标识别应用.pptx">11.1-目标识别应用</a><span class="meta">10 页 · SSD MobileNet V3 Large COCO 模型</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/11.2-人体跟随应用.pptx">11.2-人体跟随应用</a><span class="meta">14 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/11.3-系统调试及拓展.pptx">11.3-系统调试及拓展</a><span class="meta">8 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/源码/human_follow.py">human_follow.py</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/源码/object_detect.py">object_detect.py</a><span class="meta">人体跟随与目标检测</span></li>
+                    <li class="res-item"><span class="kind kind-data">模型</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/源码/frozen_inference_graph.pb">frozen_inference_graph.pb</a><span class="meta">12.83 MB · 推理图</span></li>
+                    <li class="res-item"><span class="kind kind-data">配置</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/源码/ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt">ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/源码/coco.names">coco.names</a> · <a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目11-人体跟随运动/源码/haarcascade_frontalface_default.xml">haarcascade_frontalface_default.xml</a><span class="meta">类别名与级联分类器</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-video">
+                  <h4>视频</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套视频，待补公开链接</span></li></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- 12 -->
+            <article class="unit final" id="p12">
+              <div class="unit-head">
+                <span class="unit-no">12</span>
+                <div>
+                  <h3>实训项目 12 · 智能物流多功能综合实践</h3>
+                  <p>巡线、卸货、爬台阶、避障与验收（Capstone）。</p>
+                </div>
+                <span class="unit-tag">综合 · 验收</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 指导书</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目12-智能物流-多功能综合实践/实训项目12-智能物流-多功能综合实践.pdf">实训项目 12-智能物流-多功能综合实践</a><span class="meta">21 页</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">12.1-项目需求及方案设计</span><span class="meta">未随本次发布上线</span><span class="meta">13 页 · 内嵌视频 18.4 MB</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目12-智能物流-多功能综合实践/12.2-自动巡线模块.pptx">12.2-自动巡线模块</a><span class="meta">9 页 · 色块检测</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目12-智能物流-多功能综合实践/12.3-自动卸货模块.pptx">12.3-自动卸货模块</a><span class="meta">9 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目12-智能物流-多功能综合实践/12.4-爬台阶模块.pptx">12.4-爬台阶模块</a><span class="meta">7 页</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目12-智能物流-多功能综合实践/12.5-避障模块.pptx">12.5-避障模块</a><span class="meta">8 页 · 18.74 MB</span></li>
+                    <li class="res-item"><span class="kind kind-ppt">PPTX</span><span class="txt">12.6-项目测试及验收</span><span class="meta">未随本次发布上线</span><span class="meta">6 页 · 内嵌视频 2.7 MB</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目12-智能物流-多功能综合实践/源码/main.py">main.py</a><span class="meta">综合实践主程序</span></li>
+                    <li class="res-item"><span class="kind kind-src">PY</span><a href="机器人相关课程from文丽/宇树机器狗实验指导书/《%20智能机器人综合应用%20》实训课程-Go2/实训项目12-智能物流-多功能综合实践/源码/go2sport.py">go2sport.py</a><span class="meta">运动控制封装</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-video">
+                  <h4>视频</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-mp4">MP4</span><span class="txt">项目演示视频内嵌于 12.1 / 12.6 课件中</span><span class="meta">需先剥离，待补独立链接</span></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 缺件与待办 ============ -->
+    <section class="section" id="notes">
+      <div class="shell">
+        <div class="section-head">
+          <span class="eyebrow">Open items</span>
+          <h2>缺件与待办</h2>
+          <p>Go2 资料最完整，主要问题集中在重复包、临时文件和课件内嵌视频。</p>
+        </div>
+        <div class="note warn">
+          <ul>
+            <li><b>重复压缩包：</b><code>《 智能机器人综合应用 》实训课程-Go2.zip</code>（191.78 MB）与同名解压目录完全重复，页面只保留目录入口。</li>
+            <li><b>缺源码：</b>项目 1（入门与遥控器操作）、项目 7（避障数据获取）原资料无源码目录。</li>
+            <li><b>临时文件与缓存：</b>项目 3 含 Office 临时文件 <code>~$3-基础模块使用.pptx</code> 与 <code>Python/dds/__pycache__</code>，发布前剔除。</li>
+            <li><b>命名问题（未改名）：</b>项目 6 目录名截断为“实训项目6-遥控器状态获”；Python 目录 <code>wireless_controller _selfdefined</code> 含空格；项目 2 的 C++ 与 Python 课件同为“2.1”。页面统一使用正确全称与语言后缀展示。</li>
+            <li><b>课件待减重：</b>项目 12 的 12.1 与 12.6 含内嵌视频（18.4 MB、2.7 MB），其余 24 份 PPT 无内嵌视频。</li>
+            <li><b>视频待接入：</b>本项目无独立视频文件，仅有内嵌视频，暂用“待补公开链接”占位。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 上下课导航 ============ -->
+    <section class="section" style="padding-top:0;border-top:0">
+      <div class="shell">
+        <div class="pager">
+          <a href="ros-mobile.html"><small>← 上一门课程</small><b>Aimibot ROS 移动教育机器人</b></a>
+          <a class="next" href="vision-sorting.html"><small>下一门课程 →</small><b>工业机器人缺陷分拣</b></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    资料提供：文丽 ｜ 本页为课程索引，视频不上传；原始文件位于 <code>机器人相关课程from文丽/宇树机器狗实验指导书/</code>。
+  </footer>
+
+  <script src="assets/hub.js"></script>
+</body>
+</html>

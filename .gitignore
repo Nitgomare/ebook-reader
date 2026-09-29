@@ -25,3 +25,6 @@ tmp/r5/
 tmp/r6/
 tmp/audit/
 tmp/audit-results/
+
+# 机器人课程资源中心：dist/robot-hub/ 由 public/robot-hub/ 构建生成，不入库以免仓库体积翻倍
+dist/robot-hub/
