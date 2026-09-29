@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>ABB 与 Baxter 机器人 · 机器人课程资源中心</title>
+  <meta name="description" content="ABB 工业机器人实验指导书与 Baxter 协作机器人用户手册、开发指南、实训资料的平台资料区。">
+  <link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="返回首页">
+      <span class="brand-mark">机</span>
+      <span><strong>机器人课程资源中心</strong><small>ROBOTICS CURRICULUM HUB</small></span>
+    </a>
+    <nav class="coursenav" aria-label="课程导航">
+      <a href="index.html">首页</a>
+      <a href="ros-mobile.html">移动机器人</a>
+      <a href="go2.html">宇树 Go2</a>
+      <a href="vision-sorting.html">视觉分拣</a>
+      <a href="abb-baxter.html" class="current">ABB · Baxter</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ 课程头部 ============ -->
+    <section class="page-head">
+      <div class="shell">
+        <div class="crumb">
+          <a href="index.html">首页</a><span>/</span><a href="index.html#tracks">课程方向</a><span>/</span><b>ABB 与 Baxter 机器人</b>
+        </div>
+        <h1><span class="gradient-text">ABB 与 Baxter 机器人</span></h1>
+        <p class="lead">工业机械臂与协作机器人的平台资料区：ABB 侧是 213 页实验指导书，Baxter 侧是用户手册、两版开发指南与一份实训资料。本页按“实验指导 / 开发文档 / 用户手册”分类，方便按用途取用，而不是按文件名平铺。</p>
+        <div class="chips">
+          <span class="chip">平台 <b>ABB 工业机械臂 · Baxter 协作机器人</b></span>
+          <span class="chip">文档 <b>5 份 PDF</b></span>
+          <span class="chip">合计 <b>约 514 页</b></span>
+          <span class="chip">课件 / 源码 <b>暂无</b></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 概览 ============ -->
+    <section class="section" id="overview" style="padding-top:0">
+      <div class="shell">
+        <div class="fact-grid">
+          <div class="fact">
+            <h3>学习目标</h3>
+            <ul>
+              <li>熟悉 ABB 工业机器人的实验流程与编程操作</li>
+              <li>掌握 Baxter 协作机器人的上电、操作与安全规范</li>
+              <li>了解 Baxter 的开发接口与坐标系，能按 v3.0 指南做二次开发</li>
+            </ul>
+          </div>
+          <div class="fact">
+            <h3>适用平台</h3>
+            <ul>
+              <li>ABB 工业机械臂（配套 RobotStudio 仿真与编程）</li>
+              <li>Baxter（瑞森可 / Rethink Robotics 协作机器人）</li>
+              <li>RobotStudio 6.08 — 分拣课程同样依赖该软件</li>
+            </ul>
+          </div>
+          <div class="fact">
+            <h3>建议学习顺序</h3>
+            <ol>
+              <li>先读用户手册：安全规范、上电与基本操作</li>
+              <li>再做实验：按 ABB 实验指导书完成实验流程</li>
+              <li>最后看开发指南：接口、坐标系与开发示例</li>
+            </ol>
+          </div>
+        </div>
+        <div class="note">本页是平台资料区，资料形态以 PDF 文档为主：<b>没有课件、没有源码、没有实验工程文件</b>。分拣课程里用到的 RobotStudio 6.08 说明，其安装与使用部分就在下方的 ABB 实验指导书中。</div>
+      </div>
+    </section>
+
+    <!-- ============ 平台资料 ============ -->
+    <section class="section" id="docs">
+      <div class="shell">
+        <div class="section-head">
+          <span class="eyebrow">Platform documents</span>
+          <h2>按用途分类的平台文档</h2>
+          <p>实验指导、开发文档、用户手册三类分开呈现；有版本关系的文档标注版本依据。</p>
+        </div>
+
+        <div class="with-toc">
+          <aside class="toc" aria-label="本页目录">
+            <h4>ON THIS PAGE</h4>
+            <nav>
+              <a href="#overview" data-spy>课程概览</a>
+              <a href="#abb" data-spy>ABB 工业机器人</a>
+              <a href="#baxter-manual" data-spy>Baxter 用户手册</a>
+              <a href="#baxter-dev" data-spy>Baxter 开发指南（两版）</a>
+              <a href="#baxter-training" data-spy>Baxter 实训资料</a>
+              <a href="#notes" data-spy>缺件与待办</a>
+            </nav>
+            <a class="toc-back" href="index.html#tracks">← 全部课程方向</a>
+          </aside>
+
+          <div>
+            <!-- ABB -->
+            <article class="unit" id="abb">
+              <div class="unit-head">
+                <span class="unit-no">ABB</span>
+                <div>
+                  <h3>ABB 工业机器人实验指导书</h3>
+                  <p>实验指导类：覆盖 ABB 机械臂的实验操作与编程，也是分拣课程的 RobotStudio 参考。</p>
+                </div>
+                <span class="unit-tag">213 页</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 实验指导</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="../机器人相关课程from文丽/ABB机器人实验指导书.pdf">ABB 机器人实验指导书</a><span class="meta">213 页 · 15.93 MB</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-soft">
+                  <h4>关联课程</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="../机器人相关课程from文丽/ABB机器人实验指导书.pdf">RobotStudio 6.08 的安装与使用</a><span class="meta">分拣课程第一章 1.2 节即指向本书</span></li>
+                    <li class="res-item"><span class="txt">另见：</span><a href="vision-sorting.html">工业机器人缺陷分拣</a></li>
+                  </ul>
+                </div>
+                <div class="res-block is-slide">
+                  <h4>课件</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套课件</span></li></ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码 / 工程文件</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套源码或 RobotStudio 工程文件</span></li></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- Baxter 用户手册 -->
+            <article class="unit" id="baxter-manual">
+              <div class="unit-head">
+                <span class="unit-no">手册</span>
+                <div>
+                  <h3>Baxter Hero 用户手册</h3>
+                  <p>用户手册类：面向操作者，讲清安全规范、上电与基本使用。</p>
+                </div>
+                <span class="unit-tag">46 页</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 用户手册</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="../机器人相关课程from文丽/瑞森可机器人资料/Baxter Hero用户手册（20230824）.pdf">Baxter Hero 用户手册（20230824）</a><span class="meta">46 页 · 3.55 MB · 文档属性创建于 2023-12-13，2024-01-05 更新</span></li>
+                  </ul>
+                </div>
+                <div class="res-block">
+                  <h4>使用建议</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="txt">定位：</span><span class="meta">先读本手册做安全与操作入门，再进入开发指南</span></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- Baxter 开发指南 -->
+            <article class="unit" id="baxter-dev">
+              <div class="unit-head">
+                <span class="unit-no">开发</span>
+                <div>
+                  <h3>Baxter 开发指南（两版）</h3>
+                  <p>开发文档类：两版内容不同，v3.0 为主入口，旧版保留作历史对照。</p>
+                </div>
+                <span class="unit-tag">99 / 93 页</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>主入口 · v3.0</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="../机器人相关课程from文丽/瑞森可机器人资料/Baxter开发指南【v3.0】.pdf">Baxter 开发指南【v3.0】</a><span class="meta">99 页 · 3.81 MB · 创建于 2020-05-12，2024-01-05 仍有更新</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-text">
+                  <h4>历史版本 · 对照用</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="../机器人相关课程from文丽/瑞森可机器人资料/Baxter开发指南.pdf">Baxter 开发指南（旧版）</a><span class="meta">93 页 · 3.51 MB · 创建于 2018-07-25</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-soft">
+                  <h4>版本核对结论</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="txt">两份不是重复文件：</span><span class="meta">文件内容校验值不同（SHA256 前 16 位分别为 56289eb1c72df1b6 与 25551dc3b9329f71）</span></li>
+                    <li class="res-item"><span class="txt">差异：</span><span class="meta">v3.0 比旧版晚约 22 个月、多 6 页，且 2024-01 还更新过</span></li>
+                    <li class="res-item"><span class="txt">建议：</span><span class="meta">以 v3.0 为主入口，旧版只在需要追溯旧接口时查阅</span></li>
+                  </ul>
+                </div>
+                <div class="res-block is-code">
+                  <h4>代码 / 示例</h4>
+                  <ul class="res-list"><li class="res-item"><span class="res-none">暂无配套示例工程与源码，开发内容以文档说明为主</span></li></ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- Baxter 实训资料 -->
+            <article class="unit" id="baxter-training">
+              <div class="unit-head">
+                <span class="unit-no">实训</span>
+                <div>
+                  <h3>机器人实训资料</h3>
+                  <p>实训类：文件名与页数已知，内容未逐页核对，暂按实训资料收录。</p>
+                </div>
+                <span class="unit-tag">63 页</span>
+              </div>
+              <div class="res-grid">
+                <div class="res-block is-text">
+                  <h4>正文 / 实训资料</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="kind kind-pdf">PDF</span><a href="../机器人相关课程from文丽/瑞森可机器人资料/2-机器人实训.pdf">2-机器人实训</a><span class="meta">63 页 · 3.65 MB · 文档属性：技术部 周文中，WPS 文字，创建于 2019-10-28</span></li>
+                  </ul>
+                </div>
+                <div class="res-block">
+                  <h4>待确认</h4>
+                  <ul class="res-list">
+                    <li class="res-item"><span class="txt">内容归属：</span><span class="meta">文件名未标明平台，需人工确认是 Baxter 实训还是通用机器人实训</span></li>
+                    <li class="res-item"><span class="txt">时效：</span><span class="meta">2019 年制作，若与现行设备不符需更新</span></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 缺件 ============ -->
+    <section class="section" id="notes">
+      <div class="shell">
+        <div class="section-head">
+          <span class="eyebrow">Open items</span>
+          <h2>缺件与待办</h2>
+          <p>本课程方向目前只有文档，教学配套最缺。</p>
+        </div>
+        <div class="note warn">
+          <ul>
+            <li><b>ABB 侧缺配套：</b>只有 213 页实验指导书，没有课件、源码与实验工程文件。</li>
+            <li><b>Baxter 侧缺配套：</b>只有用户手册与开发指南，没有实验指导书、示例工程或源码。</li>
+            <li><b>版本说明未更新：</b>开发指南 v3.0 之后（2024-01 之后）是否有新版，原资料未说明。</li>
+            <li><b>内容待核对：</b><code>2-机器人实训.pdf</code> 的平台归属与时效需人工确认。</li>
+            <li><b>其他平台的资料（如瑞森可机器人资料目录内的文件）均保持原位置只读，本页只做索引。</b></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 上下课导航 ============ -->
+    <section class="section" style="padding-top:0;border-top:0">
+      <div class="shell">
+        <div class="pager">
+          <a href="vision-sorting.html"><small>← 上一门课程</small><b>工业机器人缺陷分拣</b></a>
+          <a class="next" href="index.html"><small>返回 →</small><b>全部课程方向</b></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    资料提供：文丽 ｜ 本页为平台资料索引；原始文件位于 <code>机器人相关课程from文丽/瑞森可机器人资料/</code> 与 <code>机器人相关课程from文丽/ABB机器人实验指导书.pdf</code>。
+  </footer>
+
+  <script src="assets/hub.js"></script>
+</body>
+</html>

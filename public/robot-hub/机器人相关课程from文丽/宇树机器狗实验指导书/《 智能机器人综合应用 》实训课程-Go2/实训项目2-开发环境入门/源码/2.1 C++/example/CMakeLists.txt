@@ -1,0 +1,12 @@
+add_subdirectory(advanced_gamepad)
+add_subdirectory(client)
+add_subdirectory(helloworld)
+add_subdirectory(high_level)
+add_subdirectory(humanoid)
+add_subdirectory(jsonize)
+add_subdirectory(low_level)
+add_subdirectory(state_machine)
+add_subdirectory(wireless)
+add_subdirectory(go2w)
+add_subdirectory(user)
+

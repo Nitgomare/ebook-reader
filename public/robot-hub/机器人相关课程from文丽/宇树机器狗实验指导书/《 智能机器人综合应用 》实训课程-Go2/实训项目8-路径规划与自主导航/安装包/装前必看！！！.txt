@@ -1,0 +1,5 @@
+为方便安装，unitree_go2_ros2-master，pointcloud_to_laserscan-humble预先下载好的离线安装包。
+
+amcl节点启动文件夹里面是添加amcl节点启动命令的lauch文件和amcl节点的配置文件。
+
+ros2 humble 安装指令和unitree_go2_ros2 安装指令是SDK安装指令的汇总文件。
