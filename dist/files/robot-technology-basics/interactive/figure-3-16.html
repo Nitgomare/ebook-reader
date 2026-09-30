@@ -338,6 +338,8 @@ input[type="range"]::-moz-range-thumb {
   <div class="degen" id="degen">α<sub>i−1</sub> ≈ 0：两关节轴平行，公垂线多值，连杆坐标系原点不唯一（教材 3.3.1 的特殊情况）。</div>
 </div>
 </main>
+<link rel="stylesheet" href="figure-layout.css?v=2">
+<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -967,16 +969,11 @@ input[type="range"]::-moz-range-thumb {
   var XAX = [1, 0, 0];              // 约定等于 X_{i-1}
 
   function applyLayout() {
-    var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    scene.baseOrigin.x = narrow ? 452 : 410;
-    scene.baseOrigin.y = narrow ? 306 : 330;
+    window.FigureLayout.fit(scene,state,8);
   }
 
   function applyInitialZoom() {
-    var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    var target = narrow ? 62 : 76;
-    scene.state.scale = target;
-    scene.defaults.scale = target;
+    window.FigureLayout.fit(scene,state,8);
   }
 
   function mnum(v, digits) {
@@ -1383,6 +1380,7 @@ input[type="range"]::-moz-range-thumb {
   }());
 
   render();
+window.FigureLayout.attach(scene,state,render,8);
 }());
 </script>
 </body>

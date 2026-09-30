@@ -427,6 +427,8 @@ input[type="range"]::-moz-range-thumb {
   <div class="row small sy" data-mobile-hide>图上符号：<b class="sy-rev">↺ 转动关节</b>（Z 沿转轴）　<b class="sy-mov">↕ 移动关节</b>（Z 沿移动方向）</div>
 </div>
 </main>
+<link rel="stylesheet" href="figure-layout.css?v=2">
+<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -1165,85 +1167,7 @@ input[type="range"]::-moz-range-thumb {
    * 避免“按旧缩放量的尺寸算新缩放”造成的图形过小。
    */
   function fit(frames) {
-    if (_fitting) return;
-    _fitting = true;
-    var rect = viewport.getBoundingClientRect();
-    var W = Math.max(300, Math.round(rect.width || 1000));
-    var H = Math.max(300, Math.round(rect.height || 700));
-    viewport.setAttribute("viewBox", "0 0 " + W + " " + H);
-    viewport.setAttribute("preserveAspectRatio", "none");
-
-    var narrow = W < 720;
-    var ax0 = narrow ? 8 : 332, ax1 = W - 8;   // 桌面端给左上角控制面板让位
-    var ay0 = 12, ay1 = H - 12;
-    var panel = document.querySelector(".panel");
-    if (panel) {
-      var pr = panel.getBoundingClientRect();
-      if (narrow) {
-        if (pr.top > 60) ay1 = Math.min(ay1, pr.top - 8);   // 移动端面板贴底：图形只占上方
-      } else if (pr.right < W - 220) {
-        ax0 = Math.max(ax0, pr.right + 12);
-      }
-    }
-    // 读数卡固定在右上角（移动端在顶部）。图形要避开它，避免遮挡。
-    var readout = document.querySelector(".readout");
-    if (readout) {
-      var rr = readout.getBoundingClientRect();
-      var sy2 = H / Math.max(1, rect.height);
-      var roBottom = (rr.bottom - rect.top) * sy2;
-      if (!isFinite(roBottom)) roBottom = 0;
-      if (narrow) {
-        // 移动端读数卡在顶部：图形排在它下方；空间实在不够时再用全高并让它盖住读数卡
-        if (roBottom > 20 && ay1 - roBottom > 260) ay0 = Math.max(ay0, roBottom + 8);
-      } else {
-        var roLeft = rr.left;
-        var belowH = ay1 - Math.max(ay0, roBottom + 10);
-        var leftW = roLeft - 10 - ax0;
-        if (belowH >= 250 || belowH * 1.4 >= leftW) {
-          if (roBottom > 20 && roBottom < H - 120) ay0 = Math.max(ay0, roBottom + 10);
-        } else if (roLeft > ax0 + 190) {
-          ax1 = Math.min(ax1, roLeft - 10);
-        }
-      }
-    }
-    if (ax1 - ax0 < 190) ax0 = 8;
-
-    var pts = boundsPoints(frames);
-    // 迭代收敛：每一轮都用“当前缩放对应的”屏幕外接框重新定缩放与位置
-    //（不能拿旧缩放的尺寸去反推新缩放，那会把图形算小/算偏 —— 第一批出过这个问题）
-    var unit = scene.state.scale;
-    var ratio = state.userZoom ? Math.max(0.2, Math.min(5, state.zoomRatio)) : 1;
-    var passes = 4;
-    for (var p = 0; p < passes; p += 1) {
-      var e = screenExtent(pts);
-      var eff = unit * ratio;
-      var availW = Math.max(120, ax1 - ax0 - 24);
-      var availH = Math.max(120, ay1 - ay0 - 24);
-      var need = Math.max(e.w > 1e-6 ? e.w / eff : 0, e.h > 1e-6 ? e.h / eff : 0);
-      var next = need > 1e-6 ? Math.min(availW, availH) / need : unit;
-      unit = Math.max(scene.limits.minScale, Math.min(scene.limits.maxScale, next));
-      scene.defaults.scale = unit;
-      scene.state.scale = Math.max(scene.limits.minScale,
-        Math.min(scene.limits.maxScale, unit * ratio));
-      // 精确对齐：把外接框中心移到可用区域中心
-      var e2 = screenExtent(pts);
-      var sc = scene.state.scale / eff;
-      var bcx = (e2.x0 + e2.x1) / 2;
-      var bcy = (e2.y0 + e2.y1) / 2;
-      scene.origin.x += (ax0 + ax1) / 2 - bcx * sc - (1 - sc) * scene.origin.x;
-      scene.origin.y += (ay0 + ay1) / 2 - bcy * sc - (1 - sc) * scene.origin.y;
-      // 兜底：把外接框整体推回可用区域内（平移不改变 scale，故收敛很快）
-      var pad = (p === passes - 1) ? 8 : 20;
-      var e3 = screenExtent(pts);
-      if (e3.x1 > ax1 - pad) scene.origin.x -= e3.x1 - (ax1 - pad);
-      if (e3.x0 < ax0 + pad) scene.origin.x += (ax0 + pad) - e3.x0;
-      if (e3.y1 > ay1 - pad) scene.origin.y -= e3.y1 - (ay1 - pad);
-      if (e3.y0 < ay0 + pad) scene.origin.y += (ay0 + pad) - e3.y0;
-    }
-    scene.baseOrigin.x = scene.origin.x;
-    scene.baseOrigin.y = scene.origin.y;
-    state.compact = (ax1 - ax0) < 380 || scene.state.scale < 96;
-    _fitting = false;
+    window.FigureLayout.fit(scene,state,11);
   }
 
   /* ------------------------------------------------------------ 绘图工具 */
@@ -1734,6 +1658,7 @@ input[type="range"]::-moz-range-thumb {
   }());
 
   drawAll();
+window.FigureLayout.attach(scene,state,render,11);
 }());
 </script>
 </body>

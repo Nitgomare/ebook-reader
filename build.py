@@ -515,6 +515,12 @@ def build_download_assets(
     docs_root: Path, book_slug: str, output: Path, video_paths: set[str] | None = None
 ) -> list[dict[str, object]]:
     """Publish textbook, slide and exercise downloads for the generated resource page."""
+    for helper in (docs_root / "interactive").glob("figure-layout.*"):
+        if helper.suffix not in {".css", ".js"}:
+            continue
+        target = output / "files" / book_slug / "interactive" / helper.name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(helper, target)
     resources: list[dict[str, object]] = []
     for source in sorted(docs_root.rglob("*"), key=lambda path: path.as_posix().casefold()):
         if not source.is_file() or source.suffix.lower() not in RESOURCE_EXTENSIONS:
@@ -681,7 +687,11 @@ def build_book(
             for page in range(1, deck["pageCount"] + 1):
                 if not (slides_root / deck["id"] / f"{page:04}.webp").is_file():
                     raise FileNotFoundError(f"{slug}: missing slide {deck['id']} / {page}")
-        shutil.copytree(slides_root, output / "slides" / slug)
+        published_slides = output / "slides" / slug
+        published_slides.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(slides_root / "manifest.json", published_slides / "manifest.json")
+        for deck in slides:
+            shutil.copytree(slides_root / deck["id"], published_slides / deck["id"])
     video_resources = {
         resource["path"]: resource for resource in public_resources if resource["kind"] == "视频"
     }

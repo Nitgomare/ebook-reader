@@ -308,6 +308,8 @@ input[type="range"]::-moz-range-thumb {
   <div class="row small">由 v = Jq̇ 反算：q̇ = J⁻¹v = [ <span id="rq1">0.00</span>, <span id="rq2">0.00</span> ] rad/s</div>
 </div>
 </main>
+<link rel="stylesheet" href="figure-layout.css?v=2">
+<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -922,34 +924,7 @@ input[type="range"]::-moz-range-thumb {
 
   /** 自适应取景：viewBox 与视口像素 1:1，图形只占用面板上方的可用区域。 */
   function fit() {
-    var rect = viewport.getBoundingClientRect();
-    var W = Math.max(240, Math.round(rect.width));
-    var H = Math.max(240, Math.round(rect.height));
-    try {
-      var ctm = viewport.getScreenCTM();
-      if (ctm && ctm.d > 0.01) {
-        var box = viewport.ownerSVGElement ? viewport.ownerSVGElement : viewport;
-        var dy = box.getBoundingClientRect().height / ctm.d;
-        if (isFinite(dy) && dy > 100 && dy < 6000) H = Math.round(dy);
-      }
-    } catch (e) { /* 忽略 */ }
-    viewport.setAttribute("viewBox", "0 0 " + W + " " + H);
-
-    var panel = document.querySelector(".panel");
-    var panelTop = H;
-    if (panel) {
-      var py = panel.getBoundingClientRect().top * (H / Math.max(1, rect.height));
-      if (py > 40 && py < H) panelTop = py;
-    }
-    var avail = Math.max(130, Math.min(H, panelTop) - 22);
-    var k = Math.min(avail / 2.25, W / 3.3);
-
-    scene.origin.x = W * 0.5;
-    scene.origin.y = avail * 0.5 + 12;
-    scene.state.scale = Math.max(50, Math.min(360, k));
-    state.compact = scene.state.scale < 120;
-    scene.baseOrigin.x = scene.origin.x;
-    scene.baseOrigin.y = scene.origin.y;
+    window.FigureLayout.fit(scene,state,4.1);
   }
   window.addEventListener("resize", function () { fit(); render(); });
   window.addEventListener("load", function () { fit(); render(); });
@@ -1345,6 +1320,7 @@ input[type="range"]::-moz-range-thumb {
 
   fit();
   render();
+window.FigureLayout.attach(scene,state,render,4.1);
 }());
 </script>
 </body>

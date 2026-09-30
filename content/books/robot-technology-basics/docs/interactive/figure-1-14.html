@@ -299,6 +299,8 @@ input[type="range"]::-moz-range-thumb {
   <div class="row small note" id="bookRow">教材原始数值（图1.14）：大臂 R700、内弧 R181；图上另有 R300 虚线圆与 155°、2.5° 让位角。</div>
 </div>
 </main>
+<link rel="stylesheet" href="figure-layout.css?v=2">
+<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -926,31 +928,15 @@ input[type="range"]::-moz-range-thumb {
   function proj(v) {
     var s = scene.state.scale;
     return {
-      x: scene.baseOrigin.x + pan.x - v[1] * s,
-      y: scene.baseOrigin.y + pan.y - v[0] * s,
+      x: scene.baseOrigin.x + pan.x - v[1] * s + window.FigureLayout.offsets().x,
+      y: scene.baseOrigin.y + pan.y - v[0] * s + window.FigureLayout.offsets().y,
       depth: 0
     };
   }
 
   /** 自适应取景：viewBox 与视口像素 1:1；state 已在 fit() 首次调用之前声明。 */
   function fit() {
-    var rect = viewport.getBoundingClientRect();
-    var W = Math.max(260, Math.round(rect.width || 1200));
-    var H = Math.max(260, Math.round(rect.height || 700));
-    viewport.setAttribute("viewBox", "0 0 " + W + " " + H);
-    viewport.setAttribute("preserveAspectRatio", "xMidYMid meet");
-    var narrow = W < 720;
-    var availW = W * (narrow ? 0.94 : 0.50);
-    var availH = H * (narrow ? 0.50 : 0.78);
-    var span = Math.max(1, state.l1 + state.l2 + 150);
-    var k = Math.min(availW / (2.05 * span), availH / (narrow ? 1.85 : 2.15) / span);
-    scene.state.scale = Math.max(0.06, Math.min(1.6, k));
-    scene.defaults.scale = scene.state.scale;
-    state.compact = scene.state.scale * span < 120;
-    scene.baseOrigin.x = W * (narrow ? 0.5 : 0.46);
-    scene.baseOrigin.y = H * (narrow ? 0.30 : 0.40);
-    scene.origin.x = scene.baseOrigin.x;
-    scene.origin.y = scene.baseOrigin.y;
+    window.FigureLayout.fit(scene,state,2200);
   }
 
   var C = {
@@ -1453,6 +1439,7 @@ input[type="range"]::-moz-range-thumb {
 
   fit();
   render();
+window.FigureLayout.attach(scene,state,render,2200);
 }());
 </script>
 </body>

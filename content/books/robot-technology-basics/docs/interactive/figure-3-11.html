@@ -320,6 +320,8 @@ input[type="range"]::-moz-range-thumb {
   <div class="row mat-note"><span class="small">手机端只显示矢量读数；三张 4×4 矩阵在桌面/平板视口显示。</span></div>
 </div>
 </main>
+<link rel="stylesheet" href="figure-layout.css?v=2">
+<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -943,16 +945,11 @@ input[type="range"]::-moz-range-thumb {
   };
 
   function applyLayout() {
-    var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    scene.baseOrigin.x = narrow ? 430 : 340;
-    scene.baseOrigin.y = narrow ? 320 : 430;
+    window.FigureLayout.fit(scene,state,14);
   }
 
   function applyInitialZoom() {
-    var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    var target = narrow ? 30 : 40;
-    scene.state.scale = target;
-    scene.defaults.scale = target;
+    window.FigureLayout.fit(scene,state,14);
   }
 
   function mnum(v, digits) {
@@ -1309,6 +1306,7 @@ input[type="range"]::-moz-range-thumb {
   }());
 
   render();
+window.FigureLayout.attach(scene,state,render,14);
 }());
 </script>
 </body>
