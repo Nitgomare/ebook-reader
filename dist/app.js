@@ -457,6 +457,15 @@
     return hit;
   }
 
+  function slideActions(book, chapter) {
+    return (book.slides || []).filter(function (deck) {
+      return chapter == null ? !deck.chapters.length : deck.chapters.indexOf(chapter) !== -1;
+    }).map(function (deck) {
+      return resourceAction('slide-viewer.html?deck=' + encodeURIComponent(deck.id),
+        '在线浏览 · ' + deck.title + '（' + deck.variant + '，' + deck.pageCount + '页）', false);
+    });
+  }
+
   function resourceRows(book, docByChapter, docs) {
     if (Array.isArray(book.courseRows) && book.courseRows.length) return book.courseRows;
     var chapters = Object.keys(docByChapter).map(Number).sort(function (a, b) { return a - b; })
@@ -531,6 +540,8 @@
       if (doc && (doc.codeFiles || []).length) {
         code = resourceAction("#/code/" + doc.codeFiles[0], "代码");
       }
+      var onlineSlides = row.chapter ? slideActions(book, row.chapter) : [];
+      if (onlineSlides.length) lesson = actionList(onlineSlides);
       var videoUrl = row.video || (doc && doc.video);
       var video = videoUrl ? resourceAction(videoUrl, "视频", true) : '<span class="resource-empty">—</span>';
       matchedResources.forEach(function (resource) {
@@ -576,7 +587,8 @@
       '<div class="resource-table-wrap"><table class="resource-table"><thead><tr><th>目录</th><th>作者</th><th>正文</th><th>课件</th><th>代码</th><th>视频</th><th>参考附件</th>' +
       '</tr></thead><tbody>' + (bodyRows + supplementRows || '<tr><td colspan="7" class="resource-empty">本课程暂无可用资源。</td></tr>') +
       '</tbody></table></div></section>';
-    return info + table;
+    var extras = slideActions(book, null);
+    return info + table + (extras.length ? '<section class="resource-group"><h2>拓展与实验课件</h2><div class="resource-action-list">' + extras.join('') + '</div></section>' : '');
   }
 
   function renderResources(book) {
@@ -650,6 +662,13 @@
     elements.breadcrumb.textContent = book.title + " / " + (doc.sections.join(" / ") || "课程内容");
     elements.docTitle.textContent = doc.title;
     elements.article.innerHTML = doc.html;
+    var onlineSlides = doc.chapterNumber ? slideActions(book, doc.chapterNumber) : [];
+    if (onlineSlides.length) {
+      var slideSection = document.createElement('section');
+      slideSection.className = 'resource-group';
+      slideSection.innerHTML = '<h2>本章在线课件</h2><div class="resource-action-list">' + onlineSlides.join('') + '</div>';
+      elements.article.prepend(slideSection);
+    }
     enhanceCodeBlocks(elements.article);
     enhanceInteractiveFigures(elements.article);
     renderRelatedCode(doc.codeFiles);

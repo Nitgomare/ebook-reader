@@ -1,0 +1,251 @@
+{
+  "title": "机器人技术基础 · 肖钊授课课件",
+  "decks": [
+    {
+      "id": "20b8506424574953",
+      "title": "01 离线编程基础认知",
+      "chapters": [
+        7
+      ],
+      "topic": "第7章补充：离线编程基础认知",
+      "pageCount": 82,
+      "variant": "授课资料",
+      "sources": [
+        "01 离线编程基础认知.pptx"
+      ]
+    },
+    {
+      "id": "5c711f7948a144cd",
+      "title": "10 仿生机器人 (1)",
+      "chapters": [
+        10
+      ],
+      "topic": "第10章 仿生机器人",
+      "pageCount": 40,
+      "variant": "授课资料",
+      "sources": [
+        "10 仿生机器人 (1).pptx"
+      ]
+    },
+    {
+      "id": "a62a20ddf57669bb",
+      "title": "11 附录 机器人课程实验示例",
+      "chapters": [],
+      "topic": "附录：机器人课程实验示例",
+      "pageCount": 52,
+      "variant": "授课资料",
+      "sources": [
+        "11 附录 机器人课程实验示例.pptx"
+      ]
+    },
+    {
+      "id": "6b72bf9d7972ebf1",
+      "title": "3 机器人运动学",
+      "chapters": [
+        3
+      ],
+      "topic": "第3章 机器人运动学",
+      "pageCount": 77,
+      "variant": "授课资料",
+      "sources": [
+        "3 机器人运动学.pptx"
+      ]
+    },
+    {
+      "id": "1bb7179d85a4f64e",
+      "title": "7 机器人语言与编程",
+      "chapters": [
+        7
+      ],
+      "topic": "第7章 机器人语言与编程",
+      "pageCount": 44,
+      "variant": "授课资料",
+      "sources": [
+        "7 机器人语言与编程.pptx"
+      ]
+    },
+    {
+      "id": "c9463e546b09938c",
+      "title": "8 工业机器人",
+      "chapters": [
+        8
+      ],
+      "topic": "第8章 工业机器人",
+      "pageCount": 63,
+      "variant": "授课资料",
+      "sources": [
+        "8 工业机器人.pptx"
+      ]
+    },
+    {
+      "id": "d7f3886ab84f8b1b",
+      "title": "9 操纵型机器人",
+      "chapters": [
+        9
+      ],
+      "topic": "第9章 操纵型机器人",
+      "pageCount": 47,
+      "variant": "授课资料",
+      "sources": [
+        "9 操纵型机器人.pptx"
+      ]
+    },
+    {
+      "id": "ed62c242a31e4c4d",
+      "title": "10 智能机器人",
+      "chapters": [],
+      "topic": "拓展：智能机器人（旧版第10章，与第三版第10章仿生机器人不同）",
+      "pageCount": 43,
+      "variant": "最后一节课版本",
+      "sources": [
+        "最后一节课/10 智能机器人.pptx"
+      ]
+    },
+    {
+      "id": "bfbf304dd8c45ab1",
+      "title": "8 工业机器人",
+      "chapters": [
+        8
+      ],
+      "topic": "第8章 工业机器人",
+      "pageCount": 37,
+      "variant": "最后一节课版本",
+      "sources": [
+        "最后一节课/8 工业机器人.pptx"
+      ]
+    },
+    {
+      "id": "671cdd69841a9777",
+      "title": "9 操纵型机器人",
+      "chapters": [
+        9
+      ],
+      "topic": "第9章 操纵型机器人",
+      "pageCount": 34,
+      "variant": "最后一节课版本",
+      "sources": [
+        "最后一节课/9 操纵型机器人.pptx"
+      ]
+    },
+    {
+      "id": "aa71522f10a4c3c4",
+      "title": "工业机器人_第1-2节课",
+      "chapters": [
+        1
+      ],
+      "topic": "第1章 绪论（含课程介绍）",
+      "pageCount": 38,
+      "variant": "授课资料",
+      "sources": [
+        "第1次课(第一章)/工业机器人_第1-2节课.pptx"
+      ]
+    },
+    {
+      "id": "8ffd2f90471f3b1b",
+      "title": "工业机器人_第3-4节课",
+      "chapters": [
+        2
+      ],
+      "topic": "第2章 机器人本体结构",
+      "pageCount": 125,
+      "variant": "授课资料",
+      "sources": [
+        "第2-3次课（第二章）/工业机器人_第3-4节课.pptx"
+      ]
+    },
+    {
+      "id": "23db4fbffb1213e8",
+      "title": "2 机器人本体结构",
+      "chapters": [
+        2
+      ],
+      "topic": "第2章 机器人本体结构",
+      "pageCount": 55,
+      "variant": "素材参考",
+      "sources": [
+        "第2-3次课（第二章）/素材/2 机器人本体结构.pptx",
+        "第2-3次课（第二章） - 公开课/素材/2 机器人本体结构.pptx"
+      ]
+    },
+    {
+      "id": "2ac0d82227059265",
+      "title": "工业机器人_第3-4节课",
+      "chapters": [
+        2
+      ],
+      "topic": "第2章 机器人本体结构",
+      "pageCount": 69,
+      "variant": "公开课",
+      "sources": [
+        "第2-3次课（第二章） - 公开课/工业机器人_第3-4节课.pptx"
+      ]
+    },
+    {
+      "id": "c1cce8a3d2e04d18",
+      "title": "3 机器人运动学",
+      "chapters": [
+        3
+      ],
+      "topic": "第3章 机器人运动学",
+      "pageCount": 60,
+      "variant": "授课资料",
+      "sources": [
+        "第5-6次课(第三章)/3 机器人运动学.pptx"
+      ]
+    },
+    {
+      "id": "58c0089fab516036",
+      "title": "6 机器人控制系统",
+      "chapters": [
+        6
+      ],
+      "topic": "第6章 机器人控制系统",
+      "pageCount": 38,
+      "variant": "授课资料",
+      "sources": [
+        "第六章/6 机器人控制系统.pptx"
+      ]
+    },
+    {
+      "id": "367cef72b87d3b25",
+      "title": "4 机器人动力学",
+      "chapters": [
+        4
+      ],
+      "topic": "第4章 机器人动力学",
+      "pageCount": 50,
+      "variant": "授课资料",
+      "sources": [
+        "第四章/4 机器人动力学.pptx"
+      ]
+    },
+    {
+      "id": "f1f5514a638b6164",
+      "title": "机器人的运动学与轨迹规划(1)",
+      "chapters": [
+        3,
+        5
+      ],
+      "topic": "第3、5章补充：运动学与轨迹规划（ER16实例）",
+      "pageCount": 16,
+      "variant": "授课资料",
+      "sources": [
+        "第四章/机器人的运动学与轨迹规划(1).pptx"
+      ]
+    },
+    {
+      "id": "32419bd353fa6c33",
+      "title": "机器人的运动学与轨迹规划",
+      "chapters": [
+        3,
+        5
+      ],
+      "topic": "第3、5章补充：运动学与轨迹规划（ER16实例）",
+      "pageCount": 17,
+      "variant": "授课资料",
+      "sources": [
+        "第四章/机器人的运动学与轨迹规划.pptx"
+      ]
+    }
+  ]
+}

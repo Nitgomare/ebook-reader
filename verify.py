@@ -58,6 +58,13 @@ def main() -> int:
                     errors.append(f"文章 {summary['id']} 缺少资源：{parsed.path}")
 
     for book in catalog.get("books", []):
+        for deck in book.get("slides", []):
+            slide_root = DIST / "slides" / str(book["slug"]) / deck["id"]
+            for page in range(1, deck["pageCount"] + 1):
+                if not (slide_root / f"{page:04}.webp").is_file():
+                    errors.append(f"缺少在线课件页：{book['slug']} / {deck['id']} / {page}")
+            if not (DIST / "slide-viewer.html").is_file():
+                errors.append("缺少在线课件浏览器")
         first_id = str(book.get("firstDocId", ""))
         if first_id and first_id not in ids:
             errors.append(f"课程 {book.get('slug')} 的首篇内容不存在：{first_id}")
