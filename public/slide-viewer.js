@@ -1,6 +1,9 @@
 (function () {
   'use strict';
-  var base = 'slides/robot-technology-basics/', decks = [], active, page = 1;
+  var params = new URLSearchParams(location.search);
+  var book = params.get('book') || 'robot-technology-basics';
+  if (!/^[a-z0-9-]+$/.test(book)) book = 'robot-technology-basics';
+  var base = 'slides/' + book + '/', decks = [], active, page = 1;
   var byId = function (id) { return document.getElementById(id); };
   function imageUrl(n) { return base + active.id + '/' + String(n).padStart(4, '0') + '.webp'; }
   function show(n) {
@@ -45,6 +48,9 @@
   });
   fetch(base + 'manifest.json').then(function (r) { if (!r.ok) throw new Error('课件目录加载失败'); return r.json(); }).then(function (manifest) {
     decks = manifest.decks;
+    document.querySelector('header a').href = 'index.html#/resources/' + book;
+    document.querySelector('header h1').textContent = manifest.title;
+    byId('notice').textContent = '使用左右方向键翻页，Home / End 跳至首页 / 末页。静态幻灯片保留原版式；动画和嵌入音视频不播放。';
     decks.forEach(function (d) { var option = document.createElement('option'); option.value = d.id; option.textContent = d.title + ' · ' + d.variant + ' · ' + d.pageCount + '页'; byId('deck').append(option); });
     var params = new URLSearchParams(location.search); select(params.get('deck') || decks[0].id, params.get('page'));
   }).catch(function (error) { byId('status').textContent = error.message; });

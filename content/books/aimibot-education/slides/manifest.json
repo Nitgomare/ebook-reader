@@ -1,0 +1,140 @@
+{
+  "title": "教育机器人教材 · 文丽老师配套课件",
+  "decks": [
+    {
+      "id": "188120f7bb256031",
+      "title": "移动机器人基础操作",
+      "chapters": [
+        3,
+        4
+      ],
+      "topic": "移动机器人基础操作",
+      "pageCount": 19,
+      "variant": "配套课件",
+      "sources": [
+        "aimibot_course_1.pptx"
+      ]
+    },
+    {
+      "id": "fbdf6a4c723eb5a3",
+      "title": "视觉跟踪乒乓球实验",
+      "chapters": [],
+      "topic": "视觉跟踪乒乓球实验",
+      "pageCount": 12,
+      "variant": "配套课件",
+      "sources": [
+        "aimibot_course_10.pptx"
+      ]
+    },
+    {
+      "id": "ca53f22eeb6038e8",
+      "title": "视觉与激光雷达融合导航与避障",
+      "chapters": [
+        7,
+        8
+      ],
+      "topic": "视觉与激光雷达融合导航与避障",
+      "pageCount": 17,
+      "variant": "配套课件",
+      "sources": [
+        "aimibot_course_11.pptx"
+      ]
+    },
+    {
+      "id": "44954701ba4f1e0c",
+      "title": "移动机器人运动控制",
+      "chapters": [
+        5
+      ],
+      "topic": "移动机器人运动控制",
+      "pageCount": 18,
+      "variant": "配套课件",
+      "sources": [
+        "aimibot_course_2.pptx"
+      ]
+    },
+    {
+      "id": "f9eb18632bc24bc6",
+      "title": "移动机器人轨迹控制与避障",
+      "chapters": [
+        5,
+        6
+      ],
+      "topic": "移动机器人轨迹控制与避障",
+      "pageCount": 17,
+      "variant": "配套课件",
+      "sources": [
+        "aimibot_course_3.pptx"
+      ]
+    },
+    {
+      "id": "680cd1124c76d769",
+      "title": "移动机器人激光建图与导航",
+      "chapters": [
+        7,
+        8
+      ],
+      "topic": "移动机器人激光建图与导航",
+      "pageCount": 21,
+      "variant": "配套课件",
+      "sources": [
+        "aimibot_course_4.pptx"
+      ]
+    },
+    {
+      "id": "83a4c88831dc0ff1",
+      "title": "移动机器人激光建图、导航与避障",
+      "chapters": [
+        6,
+        7,
+        8
+      ],
+      "topic": "移动机器人激光建图、导航与避障",
+      "pageCount": 21,
+      "variant": "配套课件",
+      "sources": [
+        "aimibot_course_8&9.pptx"
+      ]
+    },
+    {
+      "id": "d7c24811a5371ed6",
+      "title": "Aimibot 机器人介绍",
+      "chapters": [
+        1
+      ],
+      "topic": "Aimibot 机器人介绍",
+      "pageCount": 19,
+      "variant": "配套课件",
+      "sources": [
+        "aimibot_Introduction.pptx"
+      ]
+    },
+    {
+      "id": "15cac74d2b2e5c77",
+      "title": "软件系统安装",
+      "chapters": [
+        4
+      ],
+      "topic": "软件系统安装",
+      "pageCount": 14,
+      "variant": "配套课件",
+      "sources": [
+        "aimibot_System installation.pptx"
+      ]
+    },
+    {
+      "id": "dcf3bf7ff7c8110e",
+      "title": "进阶实验：三角形运动、超声波跟随",
+      "chapters": [
+        5,
+        6
+      ],
+      "topic": "进阶实验：三角形运动、超声波跟随",
+      "pageCount": 32,
+      "variant": "配套课件",
+      "sources": [
+        "进阶实验-三角形运动、超声波跟随.pptx"
+      ]
+    }
+  ]
+}
