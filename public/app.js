@@ -345,17 +345,12 @@
   function renderCategory(category, availableBooks) {
     var books = availableBooks.filter(function (book) { return book.category === category.id; })
       .sort(function (a, b) { return (a.order || 1000) - (b.order || 1000); });
-    var hubCard = category.id === "robotics" ?
-      '<article class="book-card"><a class="book-main" href="robot-hub/"><span class="book-icon" aria-hidden="true">实</span>' +
-      '<span class="book-copy"><span class="book-tags">ROS · Go2 · 工业视觉 · ABB / Baxter</span><strong>机器人课程资源中心</strong>' +
-      '<span class="book-description">文丽提供的机器人实训资料，按四个课程方向整理讲义、课件、源码与安装资源。</span></span></a>' +
-      '<footer><span>4 个课程方向 · 配套实训资源</span><a href="robot-hub/">课程资源 →</a></footer></article>' : "";
     if (!books.length) return "";
     return '<section class="shelf-section category-section" aria-labelledby="category-' + escapeHtml(category.id) + '">' +
       '<div class="section-heading"><div><p class="eyebrow">' + escapeHtml(category.eyebrow || category.id) +
       '</p><h2 id="category-' + escapeHtml(category.id) + '">' + escapeHtml(category.title) + '</h2></div><p>' +
       escapeHtml(category.description || "") + '</p></div><div class="book-grid">' +
-      books.map(renderResourceCard).join("") + hubCard + '</div></section>';
+      books.map(renderResourceCard).join("") + '</div></section>';
   }
 
   function renderHomeSidebar(categories, books, query) {
@@ -461,8 +456,9 @@
     return (book.slides || []).filter(function (deck) {
       return chapter == null ? !deck.chapters.length : deck.chapters.indexOf(chapter) !== -1;
     }).map(function (deck) {
-      return resourceAction('slide-viewer.html?deck=' + encodeURIComponent(deck.id),
-        '在线浏览 · ' + deck.title + '（' + deck.variant + '，' + deck.pageCount + '页）', false);
+      return resourceAction('slide-viewer.html?book=' + encodeURIComponent(book.slug) + '&deck=' + encodeURIComponent(deck.id),
+        deck.variant === '主课件' ? '在线浏览 · ' + deck.pageCount + '页' :
+          '在线浏览 · ' + deck.title + '（' + deck.variant + '，' + deck.pageCount + '页）', false);
     });
   }
 

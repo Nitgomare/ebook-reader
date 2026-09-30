@@ -462,7 +462,8 @@
       return chapter == null ? !deck.chapters.length : deck.chapters.indexOf(chapter) !== -1;
     }).map(function (deck) {
       return resourceAction('slide-viewer.html?deck=' + encodeURIComponent(deck.id),
-        '在线浏览 · ' + deck.title + '（' + deck.variant + '，' + deck.pageCount + '页）', false);
+        deck.variant === '主课件' ? '在线浏览 · ' + deck.pageCount + '页' :
+          '在线浏览 · ' + deck.title + '（' + deck.variant + '，' + deck.pageCount + '页）', false);
     });
   }
 
