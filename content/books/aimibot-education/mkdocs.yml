@@ -1,0 +1,19 @@
+site_name: 教育机器人教材
+docs_dir: docs
+nav:
+- 前言与目录: front/index.md
+- 第 1 章 产品简介: chapters/01/index.md
+- 第 2 章 产品安全: chapters/02/index.md
+- 第 3 章 硬件手册: chapters/03/index.md
+- 第 4 章 初级 ROS 开发: chapters/04/index.md
+- 第 5 章 控制 Aimibot 运动示例: chapters/05/index.md
+- 第 6 章 超声波避障示例: chapters/06/index.md
+- 第 7 章 建图（SLAM）示例: chapters/07/index.md
+- 第 8 章 导航 （Navigation）示例: chapters/08/index.md
+- 补充实验:
+  - 实验二 通过rqt查看机器人的数据结构: experiments/02/index.md
+  - 实验四 蓝牙键盘控制机器人运动: experiments/04/index.md
+  - 实验五 ROS教育机器人圆形轨迹运动: experiments/05/index.md
+  - 实验六 ROS教育机器人超声波避障实验: experiments/06/index.md
+  - 实验八  ROS教育机器人激光雷达建图: experiments/08/index.md
+  - 实验十 智能移动机器人跟踪乒乓球实验: experiments/10/index.md

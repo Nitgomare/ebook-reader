@@ -1,0 +1,18 @@
+site_name: ABB机器人实验台实验指导书
+docs_dir: docs
+nav:
+- 前言与目录: front/index.md
+- 第一章 实验装置介绍: chapters/01/index.md
+- 第二章 机器人仿真系统基本使用实验: chapters/02/index.md
+- 第三章 码垛实验仿真与实际操作实验: chapters/03/index.md
+- 第四章 机器人各坐标系定义实验: chapters/04/index.md
+- 第五章 机器人轨迹示教编程实验: chapters/05/index.md
+- 第六章 基于Socket通讯控制机器人运动实验: chapters/06/index.md
+- 第七章 手势识别控制机器人运动实验: chapters/07/index.md
+- 第八章 语音识别控制机器人运动实验: chapters/08/index.md
+- 第九章 基于视觉识别控制机器人定位抓取实验: chapters/09/index.md
+- 第十章 基于 Profinet通讯控制机器人速度实验: chapters/10/index.md
+- 第十一章 简单码垛生产线实验: chapters/11/index.md
+- 第十二章 组态王与PLC控制机器人实验: chapters/12/index.md
+- 第十三章 工业相机物体识别码垛生产线实验: chapters/13/index.md
+- 第十四章 视觉工程项目软件架构及源码说明: chapters/14/index.md

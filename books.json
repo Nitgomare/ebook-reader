@@ -343,6 +343,33 @@
       "tags": ["系统架构", "诊断算法", "预测维护"],
       "category": "engineering-systems",
       "type": "reference"
+    },
+    {
+      "slug": "abb-lab",
+      "title": "ABB机器人实验台实验指导书",
+      "author": "文丽老师提供",
+      "description": "机器人实验台装置、仿真、示教编程与综合应用实验。",
+      "tags": [
+        "ABB",
+        "实验指导"
+      ],
+      "category": "robotics",
+      "type": "course",
+      "compactResources": true
+    },
+    {
+      "slug": "aimibot-education",
+      "title": "教育机器人教材",
+      "author": "文丽老师提供",
+      "description": "Aimibot ROS 教育机器人教材，配套六份补充实验和在线授课课件。",
+      "tags": [
+        "ROS",
+        "Aimibot",
+        "实验与课件"
+      ],
+      "category": "robotics",
+      "type": "course",
+      "compactResources": true
     }
   ]
 }

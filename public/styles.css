@@ -227,6 +227,12 @@ div.arithmatex { overflow-x: auto; overflow-y: hidden; }
 .resource-group > p { color: var(--muted); font-size: .78rem; }
 .resource-table-wrap { overflow-x: auto; margin-top: 1rem; border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); }
 .resource-table { width: 100%; min-width: 58rem; border-collapse: collapse; }
+.article .resource-table--compact { width: 100%; min-width: 34rem; table-layout: fixed; }
+.resource-table--compact th:nth-child(1) { width: 30%; }
+.resource-table--compact th:nth-child(2) { width: 17%; }
+.resource-table--compact th:nth-child(3) { width: 12%; }
+.resource-table--compact .resource-action { white-space: normal; overflow-wrap: anywhere; }
+.resource-table--compact .resource-action-list { min-width: 0; }
 .resource-table th { padding: .72rem .85rem; color: var(--muted); background: var(--accent-soft); font-size: .66rem; font-weight: 800; letter-spacing: .05em; text-align: center; white-space: nowrap; }
 .resource-table td { padding: .78rem .85rem; border-top: 1px solid var(--line); vertical-align: middle; }
 .resource-topic { min-width: 15rem; }

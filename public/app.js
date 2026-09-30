@@ -473,6 +473,7 @@
   }
 
   function renderResourceTable(book) {
+    var compact = book.compactResources === true;
     var docs = state.catalog.docs.filter(function (doc) { return doc.bookSlug === book.slug; });
     var docByChapter = {};
     docs.forEach(function (doc) { if (doc.chapterNumber != null) docByChapter[doc.chapterNumber] = doc; });
@@ -558,8 +559,8 @@
       return '<tr><td class="resource-topic"><b>' + escapeHtml(topicLabel) + '</b>' +
         (row.desc ? '<small>' + escapeHtml(row.desc) + '</small>' : '') + '</td>' +
         '<td class="resource-author">' + escapeHtml(docAuthor(doc, row)) + '</td>' +
-        '<td>' + article + '</td><td>' + lesson + '</td><td>' + code + '</td><td>' + video + '</td>' +
-        '<td>' + actionList(references) + '</td></tr>';
+        '<td>' + article + '</td><td>' + lesson + '</td>' + (compact ? '' : '<td>' + code + '</td><td>' + video + '</td>' +
+        '<td>' + actionList(references) + '</td>') + '</tr>';
     }).join("");
     var supplementRows = resources.filter(function (resource) { return !usedResources[resource.name]; }).map(function (resource) {
       var lesson = resource.kind === "课件" ? downloadAction(resource, "课件") : '<span class="resource-empty">—</span>';
@@ -579,8 +580,8 @@
     var info = '<section class="resource-book-info"><h2>课程简介</h2>' +
       '<p class="resource-book-author">作者 / 内容制作：' + escapeHtml(book.author || "待补充") + '</p><p>' +
       escapeHtml(book.description || "本页汇总课程目录及现有配套资源。") + '</p></section>';
-    var table = '<section class="resource-group"><h2>目录与资源</h2><p>正文、课件、代码、视频和参考附件按目录对应整理；“—”表示该项资源暂未提供。</p>' +
-      '<div class="resource-table-wrap"><table class="resource-table"><thead><tr><th>目录</th><th>作者</th><th>正文</th><th>课件</th><th>代码</th><th>视频</th><th>参考附件</th>' +
+    var table = '<section class="resource-group"><h2>目录与资源</h2><p>' + (compact ? '教材正文与补充实验可直接阅读，配套 PPT 可在线翻页查看。' : '正文、课件、代码、视频和参考附件按目录对应整理；“—”表示该项资源暂未提供。') + '</p>' +
+      '<div class="resource-table-wrap"><table class="resource-table' + (compact ? ' resource-table--compact' : '') + '"><thead><tr><th>目录</th><th>资料提供</th><th>正文</th><th>课件</th>' + (compact ? '' : '<th>代码</th><th>视频</th><th>参考附件</th>') +
       '</tr></thead><tbody>' + (bodyRows + supplementRows || '<tr><td colspan="7" class="resource-empty">本课程暂无可用资源。</td></tr>') +
       '</tbody></table></div></section>';
     var extras = slideActions(book, null);

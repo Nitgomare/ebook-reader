@@ -1,8 +1,0 @@
-echo "deb [arch=$(dpkg --print-architecture)] https://repo.huaweicloud.com/ros2/ubuntu/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-
-sudo apt install curl gnupg2 -ycurl -s https://gitee.com/ohhuo/rosdistro/raw/master/ros.asc | sudo apt-key add -
-sudo apt update
-
-sudo apt install ros-humble-desktop
-
-
