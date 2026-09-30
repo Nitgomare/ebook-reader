@@ -670,6 +670,18 @@ def build_book(
     if set(local_videos) - set(id_map):
         raise ValueError(f"{slug}: localVideos references a missing document")
     public_resources = build_download_assets(docs_root, slug, output, set(local_videos.values()))
+    slides_root = docs_root.parent / "slides"
+    slides = []
+    if (slides_root / "manifest.json").is_file():
+        manifest = json.loads((slides_root / "manifest.json").read_text(encoding="utf-8"))
+        slides = manifest["decks"]
+        for deck in slides:
+            if not re.fullmatch(r"[a-f0-9]{16}", deck["id"]):
+                raise ValueError(f"{slug}: invalid slide ID")
+            for page in range(1, deck["pageCount"] + 1):
+                if not (slides_root / deck["id"] / f"{page:04}.webp").is_file():
+                    raise FileNotFoundError(f"{slug}: missing slide {deck['id']} / {page}")
+        shutil.copytree(slides_root, output / "slides" / slug)
     video_resources = {
         resource["path"]: resource for resource in public_resources if resource["kind"] == "视频"
     }
@@ -747,6 +759,7 @@ def build_book(
         "chapterCount": sum(doc.get("chapterNumber") is not None for doc in public_docs),
         "codeCount": len(public_code),
         "resources": public_resources,
+        "slides": slides,
     }
     return public_book, public_docs, public_code
 
