@@ -47,6 +47,7 @@
 ### 部署
 
 - 在线课件已发布至 Cloudflare Pages 生产环境，部署预览为 `96392945.research-knowledge-hub.pages.dev`，课程页面沿用现有登录保护。
+- 精简后的10份主课件、521页已发布至生产环境，部署预览为 `75802bf5.research-knowledge-hub.pages.dev`。
 
 ## 2026-09-29（新增机器人课程资源中心）
 
