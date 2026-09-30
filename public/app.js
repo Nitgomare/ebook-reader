@@ -869,3 +869,9 @@
 
   initialize().catch(showError);
 })();
+
+window.addEventListener('message',function(event){
+ if(event.data?.type!=='textbook:figure-height'||!Number.isFinite(event.data.height))return;
+ const frame=[...document.querySelectorAll('iframe.interactive-figure-frame')].find(f=>f.contentWindow===event.source);
+ if(frame)frame.style.height=Math.max(400,Math.min(2400,Math.ceil(event.data.height)))+'px';
+});

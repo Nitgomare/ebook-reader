@@ -297,6 +297,8 @@ input[type="range"]::-moz-range-thumb {
     圆柱坐标型（图1.7）为沿 Ẑ 升降。</div>
 </div>
 </main>
+<link rel="stylesheet" href="figure-layout.css?v=2">
+<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -912,22 +914,7 @@ input[type="range"]::-moz-range-thumb {
 
   /* 自适应取景：viewBox 与视口像素 1:1。state 必须在 fit() 首次调用之前声明（见上）。 */
   function fit() {
-    var rect = viewport.getBoundingClientRect();
-    var W = Math.max(260, Math.round(rect.width || 1000));
-    var H = Math.max(260, Math.round(rect.height || 620));
-    viewport.setAttribute("viewBox", "0 0 " + W + " " + H);
-    viewport.setAttribute("preserveAspectRatio", "xMidYMid meet");
-    var narrow = W < 620;
-    var availW = W * (narrow ? 0.86 : 0.60);
-    var availH = H * (narrow ? 0.54 : 0.62);
-    var k = Math.min(availW / 4.4, availH / (narrow ? 2.9 : 3.3));
-    scene.state.scale = Math.max(34, Math.min(190, k));
-    scene.defaults.scale = scene.state.scale;
-    state.compact = scene.state.scale < 62;
-    scene.baseOrigin.x = W * 0.5;
-    scene.baseOrigin.y = H * (narrow ? 0.34 : 0.66);
-    scene.origin.x = scene.baseOrigin.x;
-    scene.origin.y = scene.baseOrigin.y;
+    window.FigureLayout.fit(scene,state,5.8);
   }
 
   var C = {
@@ -1398,14 +1385,15 @@ input[type="range"]::-moz-range-thumb {
       throw new Error("图1-8 自检失败：默认参数解析解不一致 → " + JSON.stringify(Pd));
     }
 
-    // 6) 伸缩行程的两个极值（d=0.4 / 2.0）在 θ=0 时给出 h+0.4 与 h+2.0
-    if (!close(fk(0, 0, 2.0).tip[2], BASE_H + 2.0)) {
-      throw new Error("图1-8 自检失败：d=2.0、θ=0 时 z 应为 h+2.0");
+    // 6) 伸缩行程的两个极值（d=0.4 / 2.0）在 θ=90° 时给出 h+0.4 与 h+2.0
+    if (!close(fk(0, 90, 2.0).tip[2], BASE_H + 2.0) || !close(fk(0, 90, 0.4).tip[2], BASE_H + 0.4)) {
+      throw new Error("图1-8 自检失败：θ=90° 时伸缩极值高度应为 h+d");
     }
   }());
 
   fit();
   render();
+window.FigureLayout.attach(scene,state,render,5.8);
 }());
 </script>
 </body>

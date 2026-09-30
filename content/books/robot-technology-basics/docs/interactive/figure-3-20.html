@@ -306,6 +306,8 @@ input[type="range"]::-moz-range-thumb {
   <div class="row small">可达半径 |l₁−l₂| = <span id="rmin">0.00</span> m ～ l₁+l₂ = <span id="rmax">1.00</span> m</div>
 </div>
 </main>
+<link rel="stylesheet" href="figure-layout.css?v=2">
+<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -932,38 +934,7 @@ input[type="range"]::-moz-range-thumb {
    * 避免固定 viewBox 与不同宽高比视口之间出现留白或压到面板下面。
    */
   function fit() {
-    var rect = viewport.getBoundingClientRect();
-    var W = Math.max(240, Math.round(rect.width));
-    var H = Math.max(240, Math.round(rect.height));
-    // 真·渲染尺寸：SVG 的实际视口不一定等于 CSS 盒（无头截图下尤其如此），
-    // 用 getScreenCTM 反推 y 方向的实际缩放，避免图形被压扁或留白。
-    try {
-      var ctm = viewport.getScreenCTM();
-      if (ctm && ctm.d > 0.01) {
-        var bh = viewport.ownerSVGElement ? viewport.ownerSVGElement : viewport;
-        var dy = bh.getBoundingClientRect().height / ctm.d;
-        if (isFinite(dy) && dy > 100 && dy < 6000) H = Math.round(dy);
-      }
-    } catch (e) { /* 忽略，退回 CSS 盒尺寸 */ }
-    viewport.setAttribute("viewBox", "0 0 " + W + " " + H);
-
-    var panel = document.querySelector(".panel");
-    var panelTop = H;
-    if (panel) {
-      var pr = panel.getBoundingClientRect();
-      var py = pr.top * (H / Math.max(1, rect.height));
-      if (py > 40 && py < H) panelTop = py;
-    }
-    var avail = Math.max(130, Math.min(H, panelTop) - 22);
-    var k = Math.min(avail / 2.2, W / 3.4);
-
-    scene.origin.x = W * 0.5;
-    scene.origin.y = avail * 0.5 + 10;
-    scene.state.scale = Math.max(55, Math.min(320, k));
-    state.compact = scene.state.scale < 132;   // 小窗时精简标注，避免文字互相压盖
-    state.scale = scene.state.scale;
-    scene.baseOrigin.x = scene.origin.x;
-    scene.baseOrigin.y = scene.origin.y;
+    window.FigureLayout.fit(scene,state,4.1);
   }
   fit();
   window.addEventListener("resize", function () { fit(); render(); });
@@ -1358,6 +1329,7 @@ input[type="range"]::-moz-range-thumb {
   }());
 
   render();
+window.FigureLayout.attach(scene,state,render,4.1);
 }());
 </script>
 </body>

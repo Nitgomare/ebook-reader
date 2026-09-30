@@ -310,6 +310,8 @@ input[type="range"]::-moz-range-thumb {
     <span class="small" style="margin-left:8px">第3行 = [0, 0, 1] ⇒ <strong id="zKeep">Z<sub>A′</sub> = Z<sub>A</sub> = 1.200</strong></span></div>
 </div>
 </main>
+<link rel="stylesheet" href="figure-layout.css?v=2">
+<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -934,18 +936,12 @@ input[type="range"]::-moz-range-thumb {
 
   /** 窄屏时把投影中心上移并适度缩小，避免底部控制面板盖住图形 */
   function applyLayout() {
-    var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    // 只调整投影中心，缩放交给用户滚轮（scene.setAutoZoom 由场景自己维护）
-    scene.baseOrigin.x = narrow ? 500 : 470;
-    scene.baseOrigin.y = narrow ? 330 : 404;
+    window.FigureLayout.fit(scene,state,7.5);
   }
 
   /** 按当前视口宽度给一个合适的初始缩放；用户缩放之后不再覆盖 */
   function applyInitialZoom() {
-    var narrow = viewport.clientWidth <= 720 && viewport.clientWidth > 0;
-    var target = narrow ? 54 : 62;
-    scene.state.scale = target;
-    scene.defaults.scale = target;
+    window.FigureLayout.fit(scene,state,7.5);
   }
 
   /** 读数的负号用 U+2212，避免与短横混淆 */
@@ -1199,6 +1195,7 @@ input[type="range"]::-moz-range-thumb {
   }());
 
   render();
+window.FigureLayout.attach(scene,state,render,7.5);
 }());
 </script>
 </body>
