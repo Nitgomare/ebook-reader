@@ -50,7 +50,7 @@ def main():
         digest = hashlib.sha256(p.read_bytes()).hexdigest()
         with zipfile.ZipFile(p) as z:
             pages = sorted((n for n in z.namelist() if re.fullmatch(r'ppt/slides/slide\d+\.xml',n)),key=lambda n:int(re.search(r'slide(\d+)',n)[1]))
-            texts = [' '.join(t.text or '' for t in ET.fromstring(z.read(n)).findall('.//{http://schemas.openxmlformats.org/drawingml/2006/main}t')) for n in pages]
+            texts = [' '.join(t.text or '' for t in ET.fromstring(z.read(n)).findall('.//{http://schemas.openxmlformats.org/drawingml/2006/main}t')).rstrip() for n in pages]
             links = [n for n in z.namelist() if n.startswith('ppt/slides/_rels/') and b'TargetMode="External"' in z.read(n)]
         chapters, topic = classify(p)
         deck = {**item,'id':digest[:16],'sha256':digest,'title':p.stem,'chapters':chapters,'topic':topic,'pageCount':len(texts),'evidence':texts[:6],'externalLinkSlides':len(links),'duplicateOf':hashes.get(digest),'variant':'公开课' if '公开课' in rel else ('素材参考' if '素材/' in rel else ('最后一节课版本' if '最后一节课' in rel else '授课资料'))}
