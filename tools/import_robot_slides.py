@@ -100,7 +100,7 @@ def main():
         report['onlineSelection'] = [{'chapter':d['chapters'][0], 'path':d['path'], 'pageCount':d['pageCount'], 'reason':d['selectionReason']} for d in unique]
         (audit/'inventory.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
         for entry in legacy:
-            (audit/(entry['id']+'.txt')).write_text('\n\n'.join(f'第{i}页\n'+ '\n'.join(line.rstrip() for line in t.splitlines()) for i,t in enumerate(entry['pages'],1))+'\n',encoding='utf-8')
+            (audit/(entry['id']+'.txt')).write_text('\n\n'.join(f'第{i}页\n'+ '\n'.join(line.strip() for line in t.splitlines()) for i,t in enumerate(entry['pages'],1)).rstrip()+'\n',encoding='utf-8')
         selection_lines = ['# 在线主课件筛选说明','',selection['policy'],'',f"原网站19份独立版本、987页；现选择10份主课件、{sum(d['pageCount'] for d in unique)}页。精简课件入口，不删改原始幻灯片。",'', '| 章节 | 来源 | 页数 | 选择依据 |','|---|---|---:|---|']
         selection_lines += [f"| {d['topic']} | {d['path']} | {d['pageCount']} | {d['selectionReason']} |" for d in unique]
         selection_lines += ['', '未选课件保留在本地完整资源清单和逐页文本中，不在网站发布。视频仍只登记文件名。旧版13个PPT已通过PowerPoint逐页提取文本，第5章主课件新增在线渲染。']
