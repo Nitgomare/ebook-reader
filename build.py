@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import html
 import json
+import os
 import re
 import shutil
 from html.parser import HTMLParser
@@ -522,6 +523,21 @@ def build_download_assets(
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(helper, target)
     resources: list[dict[str, object]] = []
+    for source in (docs_root / "interactive").glob("*.html"):
+        destination = output / "files" / book_slug / "interactive" / source.name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+        if source.suffix.lower() == ".html" and source.parent.name == "interactive":
+            content = source.read_text(encoding="utf-8")
+            css = source.parent / "figure-layout.css"
+            js = source.parent / "figure-layout.js"
+            if css.is_file() and js.is_file() and "figure-layout.js" in content:
+                content = re.sub(r'<link[^>]+href="figure-layout\.css[^\"]*"[^>]*>',
+                    lambda _: "<style>\n" + css.read_text(encoding="utf-8") + "\n</style>", content)
+                content = re.sub(r'<script[^>]+src="figure-layout\.js[^\"]*"[^>]*></script>',
+                    lambda _: "<script>\n" + js.read_text(encoding="utf-8") + "\n</script>", content)
+                destination.write_text(content, encoding="utf-8")
+                os.utime(destination, ns=(source.stat().st_atime_ns, source.stat().st_mtime_ns))
     for source in sorted(docs_root.rglob("*"), key=lambda path: path.as_posix().casefold()):
         if not source.is_file() or source.suffix.lower() not in RESOURCE_EXTENSIONS:
             continue
@@ -595,7 +611,8 @@ def rewrite_document_urls(
             return match.group(0)
         destination = output / "files" / book_slug / Path(*PurePosixPath(rel_path).parts)
         destination.parent.mkdir(parents=True, exist_ok=True)
-        if not destination.exists() or destination.stat().st_mtime_ns != full_path.stat().st_mtime_ns:
+        is_embedded_figure = full_path.suffix.lower() == ".html" and full_path.parent.name == "interactive" and (full_path.parent / "figure-layout.js").is_file()
+        if not destination.exists() or (not is_embedded_figure and destination.stat().st_mtime_ns != full_path.stat().st_mtime_ns):
             shutil.copy2(full_path, destination)
         encoded = "/".join(quote(part) for part in ("files", book_slug, *PurePosixPath(rel_path).parts))
         suffix = f"#{quote(fragment)}" if fragment else ""
