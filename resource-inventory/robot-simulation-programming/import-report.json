@@ -1,0 +1,145 @@
+{
+  "slug": "robot-simulation-programming",
+  "parts": [
+    {
+      "part": 1,
+      "source": "C:\\Users\\18066\\MinerU\\机器人仿真与编程技术_part1_p1-170.pdf-03fd3dd7-ae8b-4135-8e8c-fe10212822f8",
+      "images": 365,
+      "markdown_sha256": "1893c52bcbbee5f56770ebf584c60f55e817443aa23f5e111872bc936c83c530"
+    },
+    {
+      "part": 2,
+      "source": "C:\\Users\\18066\\MinerU\\机器人仿真与编程技术_part2_p171-340.pdf-0f6cf9a1-7ea4-4a7d-aa8b-e9e398b8dc12",
+      "images": 287,
+      "markdown_sha256": "f52ec827ccdfc638716ae2d97cfb22dfb37c34dd4df8999a41e68456da44e4bd"
+    },
+    {
+      "part": 3,
+      "source": "C:\\Users\\18066\\MinerU\\机器人仿真与编程技术_part3_p341-510.pdf-69aafcf1-5217-4291-937a-0c46368a2ed8",
+      "images": 74,
+      "markdown_sha256": "117b3d44e85a942231018b3d5f21d59553d96f3ce4ca6d7562acd84a3821076d"
+    },
+    {
+      "part": 4,
+      "source": "C:\\Users\\18066\\MinerU\\机器人仿真与编程技术_part4_p511-679.pdf-0fd29c22-6f92-49d4-a249-c6dd0f0a83a1",
+      "images": 124,
+      "markdown_sha256": "e2e068cb9ad25cca8106f91bd73ab5d7d7328abc046fe9a5d9f9acbe57933c0c"
+    }
+  ],
+  "images": 850,
+  "image_references": 486,
+  "joins": [
+    "part1→part2: 接续被页边界拆开的 z方向 段落",
+    "part2→part3: 保留正文与图片的连续顺序",
+    "part3→part4: 合并同一 Hydra 插件的 C++ 代码围栏"
+  ],
+  "image_mib": 18.8,
+  "documents": [
+    {
+      "path": "00-front-matter/index.md",
+      "title": "前置内容",
+      "characters": 10659
+    },
+    {
+      "path": "parts/01/index.md",
+      "title": "第一篇 基于 MATLAB 工具箱的机器人仿真 · 导言",
+      "characters": 1426
+    },
+    {
+      "path": "parts/02/index.md",
+      "title": "第二篇 机器人仿真软件的基础与应用 · 导言",
+      "characters": 7026
+    },
+    {
+      "path": "parts/03/index.md",
+      "title": "第三篇 机器人操作系统基础与应用 · 导言",
+      "characters": 4641
+    },
+    {
+      "path": "chapters/01/index.md",
+      "title": "第1章 机器人学与 MATLAB 机器人工具箱",
+      "characters": 153779
+    },
+    {
+      "path": "chapters/02/index.md",
+      "title": "第2章 MATLAB 机器人工具箱的应用",
+      "characters": 110476
+    },
+    {
+      "path": "chapters/03/index.md",
+      "title": "第3章 V-REP 在机器人仿真中的应用",
+      "characters": 158772
+    },
+    {
+      "path": "chapters/04/index.md",
+      "title": "第4章 Gazebo 在机器人仿真中的应用",
+      "characters": 126609
+    },
+    {
+      "path": "chapters/05/index.md",
+      "title": "第5章 OpenRAVE 在机器人仿真中的应用",
+      "characters": 36953
+    },
+    {
+      "path": "chapters/06/index.md",
+      "title": "第6章 机器人操作系统的基础",
+      "characters": 76862
+    },
+    {
+      "path": "chapters/07/index.md",
+      "title": "第7章 机器人操作系统的应用",
+      "characters": 53264
+    },
+    {
+      "path": "back-matter/index.md",
+      "title": "封底与出版信息",
+      "characters": 1193
+    }
+  ],
+  "source_note": "保留 MinerU 提供的公式、表格和代码内容；未将 OCR 代码视为经过运行验证的源码。",
+  "code_languages": {
+    "txt": 558,
+    "python": 25,
+    "matlab": 89,
+    "csv": 5,
+    "erlang": 4,
+    "lua": 15,
+    "lisp": 5,
+    "html": 2,
+    "javascript": 23,
+    "yaml": 11,
+    "asm": 3,
+    "bazel": 1,
+    "c": 10,
+    "json": 1,
+    "cpp": 28,
+    "cmake": 13,
+    "batch": 54,
+    "shell": 46,
+    "ini": 3,
+    "xml": 41,
+    "hcl": 6,
+    "makefile": 2,
+    "ignorefile": 6,
+    "powershell": 6,
+    "rust": 4,
+    "perl": 2,
+    "sgml": 1,
+    "swift": 1,
+    "objectivec": 1,
+    "toml": 1,
+    "erb": 2,
+    "haskell": 1,
+    "prolog": 1,
+    "typescript": 1,
+    "go": 1,
+    "ruby": 2,
+    "twig": 1
+  },
+  "math_like_code": [
+    {
+      "language": "matlab",
+      "sample": "% 设置机器人的连杆长度\n11 = 0.27;\n12 = 0.069;\n13 = 0.28;\ndeg = pi/180;\nclear L;\n% 使用标准的 DH 参数对人体手臂进行建模\n%    \\theta    d a \\alpha \\sigma\n    % 0.1    % 0.069\nL(1) = Link([0,    0.1,    0.069,"
+    }
+  ]
+}

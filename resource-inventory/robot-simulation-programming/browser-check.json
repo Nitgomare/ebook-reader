@@ -1,0 +1,159 @@
+{
+  "reports": [
+    {
+      "width": 1440,
+      "chapter": "00-front-matter/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 29,
+      "renderedMath": 29,
+      "mathErrors": [],
+      "captions": 0,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "parts/01/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 0,
+      "renderedMath": 0,
+      "mathErrors": [],
+      "captions": 0,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "chapters/01/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 812,
+      "renderedMath": 812,
+      "mathErrors": [],
+      "captions": 66,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "chapters/02/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 822,
+      "renderedMath": 822,
+      "mathErrors": [],
+      "captions": 56,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "parts/02/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 1,
+      "renderedMath": 1,
+      "mathErrors": [],
+      "captions": 0,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "chapters/03/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 25,
+      "renderedMath": 25,
+      "mathErrors": [],
+      "captions": 139,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "chapters/04/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 28,
+      "renderedMath": 28,
+      "mathErrors": [],
+      "captions": 56,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "chapters/05/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 5,
+      "renderedMath": 5,
+      "mathErrors": [],
+      "captions": 2,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "parts/03/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 0,
+      "renderedMath": 0,
+      "mathErrors": [],
+      "captions": 0,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "chapters/06/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 9,
+      "renderedMath": 9,
+      "mathErrors": [],
+      "captions": 32,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "chapters/07/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 124,
+      "renderedMath": 124,
+      "mathErrors": [],
+      "captions": 52,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "chapter": "back-matter/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 0,
+      "renderedMath": 0,
+      "mathErrors": [],
+      "captions": 0,
+      "centered": true
+    },
+    {
+      "width": 390,
+      "chapter": "chapters/01/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 812,
+      "renderedMath": 812,
+      "mathErrors": [],
+      "captions": 66,
+      "centered": true
+    },
+    {
+      "width": 390,
+      "chapter": "chapters/07/index.md",
+      "overflow": false,
+      "brokenImages": 0,
+      "formulaCount": 124,
+      "renderedMath": 124,
+      "mathErrors": [],
+      "captions": 52,
+      "centered": true
+    }
+  ],
+  "errors": []
+}

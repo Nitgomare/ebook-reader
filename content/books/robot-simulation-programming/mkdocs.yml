@@ -1,0 +1,18 @@
+site_name: "机器人仿真与编程技术"
+docs_dir: docs
+nav:
+  - "前置内容": 00-front-matter/index.md
+  - "第一篇 基于 MATLAB 工具箱的机器人仿真":
+      - "导言": parts/01/index.md
+      - "第1章 机器人学与 MATLAB 机器人工具箱": chapters/01/index.md
+      - "第2章 MATLAB 机器人工具箱的应用": chapters/02/index.md
+  - "第二篇 机器人仿真软件的基础与应用":
+      - "导言": parts/02/index.md
+      - "第3章 V-REP 在机器人仿真中的应用": chapters/03/index.md
+      - "第4章 Gazebo 在机器人仿真中的应用": chapters/04/index.md
+      - "第5章 OpenRAVE 在机器人仿真中的应用": chapters/05/index.md
+  - "第三篇 机器人操作系统基础与应用":
+      - "导言": parts/03/index.md
+      - "第6章 机器人操作系统的基础": chapters/06/index.md
+      - "第7章 机器人操作系统的应用": chapters/07/index.md
+  - "封底与出版信息": back-matter/index.md

@@ -282,6 +282,17 @@
       ]
     },
     {
+      "slug": "robot-simulation-programming",
+      "title": "机器人仿真与编程技术",
+      "author": "杨辰光、李智军、许扬",
+      "description": "介绍 MATLAB 机器人工具箱、V-REP、Gazebo、OpenRAVE 与 ROS，结合触觉识别、遥操作和 Baxter 机器人案例讲解仿真与编程。",
+      "coverSource": "images/part1/14bde4a7008283750936ffdbcbdafc8ed2e2b91ad9c0dc9169c4b2aceed1b202.jpg",
+      "tags": ["机器人仿真", "MATLAB", "ROS"],
+      "category": "robotics",
+      "order": 45,
+      "type": "reference"
+    },
+    {
       "slug": "wind-energy",
       "title": "Wind Energy Handbook",
       "author": "Tony Burton 等",
