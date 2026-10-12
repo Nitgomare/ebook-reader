@@ -154,6 +154,7 @@
 
   function hideViews() {
     document.body.classList.remove("home-view");
+    elements.article.classList.remove("article--reading");
     [elements.libraryHome, elements.documentView, elements.codeLibrary, elements.codeView].forEach(function (view) {
       view.hidden = true;
     });
@@ -659,6 +660,7 @@
     elements.breadcrumb.textContent = book.title + " / " + (doc.sections.join(" / ") || "课程内容");
     elements.docTitle.textContent = doc.title;
     elements.article.innerHTML = doc.html;
+    elements.article.classList.add("article--reading");
     var onlineSlides = doc.chapterNumber ? slideActions(book, doc.chapterNumber) : [];
     if (onlineSlides.length) {
       var slideSection = document.createElement('section');
