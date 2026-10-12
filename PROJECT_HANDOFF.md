@@ -15,7 +15,7 @@
 当前线上入口：
 
 - 生产站点：<https://research-knowledge-hub.pages.dev/>
-- GitHub 私有仓库：<https://github.com/Nitgomare/ebook-reader>
+- GitHub 公开仓库：<https://github.com/Nitgomare/ebook-reader>（2026-10-12 按用户要求改为 Public）
 - Cloudflare Pages 项目：`research-knowledge-hub`
 
 不要在文档、代码、提交信息或聊天回复中写出登录密码、Supabase 密钥、Cloudflare 令牌或用户信息。
@@ -72,7 +72,7 @@ Cloudflare Pages + dist/_worker.js 访问控制
 - 223 个章节文档。
 - 216 个代码或数据文件。
 - 首页按 7 个知识领域分类。
-- GitHub 仓库保持私密，未启用 GitHub Pages。
+- GitHub 仓库于 2026-10-12 按用户要求改为 Public，仓库源码、教材正文、图片与历史提交公开；网站登录保护不限制仓库内容访问。
 - Cloudflare Pages 负责生产部署。
 - Cloudflare Worker 在返回网页、图片、教材和源码前执行登录验证。
 - 支持 Supabase 独立账号登录，并保留可配置的共享密码兼容方案。
