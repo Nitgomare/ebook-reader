@@ -67,4 +67,4 @@ python -m venv .venv
 
 ## 部署
 
-Cloudflare Pages 发布构建完成的 `dist/`，其中 `_worker.js` 负责登录和内容访问保护。课程源文件同时保存在 `content/books/`，因此仓库克隆后可以独立重建；GitHub 仓库保持私密且不启用 GitHub Pages。
+Cloudflare Pages 发布构建完成的 `dist/`，其中 `_worker.js` 负责网站登录和内容访问保护。课程源文件同时保存在 `content/books/`，因此仓库克隆后可以独立重建。GitHub 仓库于 2026-10-12 按用户要求改为 Public，源码、教材正文、图片及提交历史可公开访问；网站登录限制不限制 GitHub 仓库内容的访问。

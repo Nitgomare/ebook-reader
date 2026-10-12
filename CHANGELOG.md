@@ -9,6 +9,13 @@
 - 每次推送或部署前必须更新本文件。
 - 不在日志中记录密码、密钥、令牌、用户信息等敏感内容。
 
+## 2026-10-12（GitHub 仓库公开）
+
+### 配置
+
+- 按用户要求将 `Nitgomare/ebook-reader` 从 Private 改为 Public，GitHub 返回 `visibility=public`、`private=false`；源码、教材正文、图片和提交历史可公开访问。
+- 同步更新仓库说明与接管文档，Cloudflare 网站登录设置保持原状。
+
 ## 2026-10-12（书籍正文段落缩进）
 
 ### 优化
