@@ -153,7 +153,9 @@
   }
 
   function hideViews() {
+    window.ReaderMode.reset();
     document.body.classList.remove("home-view");
+    elements.article.classList.remove("article--reading");
     [elements.libraryHome, elements.documentView, elements.codeLibrary, elements.codeView].forEach(function (view) {
       view.hidden = true;
     });
@@ -345,17 +347,12 @@
   function renderCategory(category, availableBooks) {
     var books = availableBooks.filter(function (book) { return book.category === category.id; })
       .sort(function (a, b) { return (a.order || 1000) - (b.order || 1000); });
-    var hubCard = category.id === "robotics" ?
-      '<article class="book-card"><a class="book-main" href="robot-hub/"><span class="book-icon" aria-hidden="true">实</span>' +
-      '<span class="book-copy"><span class="book-tags">ROS · Go2 · 工业视觉 · ABB / Baxter</span><strong>机器人课程资源中心</strong>' +
-      '<span class="book-description">文丽提供的机器人实训资料，按四个课程方向整理讲义、课件、源码与安装资源。</span></span></a>' +
-      '<footer><span>4 个课程方向 · 配套实训资源</span><a href="robot-hub/">课程资源 →</a></footer></article>' : "";
     if (!books.length) return "";
     return '<section class="shelf-section category-section" aria-labelledby="category-' + escapeHtml(category.id) + '">' +
       '<div class="section-heading"><div><p class="eyebrow">' + escapeHtml(category.eyebrow || category.id) +
       '</p><h2 id="category-' + escapeHtml(category.id) + '">' + escapeHtml(category.title) + '</h2></div><p>' +
       escapeHtml(category.description || "") + '</p></div><div class="book-grid">' +
-      books.map(renderResourceCard).join("") + hubCard + '</div></section>';
+      books.map(renderResourceCard).join("") + '</div></section>';
   }
 
   function renderHomeSidebar(categories, books, query) {
@@ -461,7 +458,7 @@
     return (book.slides || []).filter(function (deck) {
       return chapter == null ? !deck.chapters.length : deck.chapters.indexOf(chapter) !== -1;
     }).map(function (deck) {
-      return resourceAction('slide-viewer.html?deck=' + encodeURIComponent(deck.id),
+      return resourceAction('slide-viewer.html?book=' + encodeURIComponent(book.slug) + '&deck=' + encodeURIComponent(deck.id),
         deck.variant === '主课件' ? '在线浏览 · ' + deck.pageCount + '页' :
           '在线浏览 · ' + deck.title + '（' + deck.variant + '，' + deck.pageCount + '页）', false);
     });
@@ -478,6 +475,7 @@
   }
 
   function renderResourceTable(book) {
+    var compact = book.compactResources === true;
     var docs = state.catalog.docs.filter(function (doc) { return doc.bookSlug === book.slug; });
     var docByChapter = {};
     docs.forEach(function (doc) { if (doc.chapterNumber != null) docByChapter[doc.chapterNumber] = doc; });
@@ -563,8 +561,8 @@
       return '<tr><td class="resource-topic"><b>' + escapeHtml(topicLabel) + '</b>' +
         (row.desc ? '<small>' + escapeHtml(row.desc) + '</small>' : '') + '</td>' +
         '<td class="resource-author">' + escapeHtml(docAuthor(doc, row)) + '</td>' +
-        '<td>' + article + '</td><td>' + lesson + '</td><td>' + code + '</td><td>' + video + '</td>' +
-        '<td>' + actionList(references) + '</td></tr>';
+        '<td>' + article + '</td><td>' + lesson + '</td>' + (compact ? '' : '<td>' + code + '</td><td>' + video + '</td>' +
+        '<td>' + actionList(references) + '</td>') + '</tr>';
     }).join("");
     var supplementRows = resources.filter(function (resource) { return !usedResources[resource.name]; }).map(function (resource) {
       var lesson = resource.kind === "课件" ? downloadAction(resource, "课件") : '<span class="resource-empty">—</span>';
@@ -584,8 +582,8 @@
     var info = '<section class="resource-book-info"><h2>课程简介</h2>' +
       '<p class="resource-book-author">作者 / 内容制作：' + escapeHtml(book.author || "待补充") + '</p><p>' +
       escapeHtml(book.description || "本页汇总课程目录及现有配套资源。") + '</p></section>';
-    var table = '<section class="resource-group"><h2>目录与资源</h2><p>正文、课件、代码、视频和参考附件按目录对应整理；“—”表示该项资源暂未提供。</p>' +
-      '<div class="resource-table-wrap"><table class="resource-table"><thead><tr><th>目录</th><th>作者</th><th>正文</th><th>课件</th><th>代码</th><th>视频</th><th>参考附件</th>' +
+    var table = '<section class="resource-group"><h2>目录与资源</h2><p>' + (compact ? '教材正文与补充实验可直接阅读，配套 PPT 可在线翻页查看。' : '正文、课件、代码、视频和参考附件按目录对应整理；“—”表示该项资源暂未提供。') + '</p>' +
+      '<div class="resource-table-wrap"><table class="resource-table' + (compact ? ' resource-table--compact' : '') + '"><thead><tr><th>目录</th><th>资料提供</th><th>正文</th><th>课件</th>' + (compact ? '' : '<th>代码</th><th>视频</th><th>参考附件</th>') +
       '</tr></thead><tbody>' + (bodyRows + supplementRows || '<tr><td colspan="7" class="resource-empty">本课程暂无可用资源。</td></tr>') +
       '</tbody></table></div></section>';
     var extras = slideActions(book, null);
@@ -640,7 +638,7 @@
     if (!window.MathJax || !window.MathJax.startup || !window.MathJax.startup.promise) return;
     window.MathJax.startup.promise.then(function () {
       if (window.MathJax.typesetClear) window.MathJax.typesetClear([elements.article]);
-      return window.MathJax.typesetPromise([elements.article]);
+      return window.MathJax.typesetPromise([elements.article]).then(window.ReaderMode.reflow);
     }).catch(function () {});
   }
 
@@ -663,6 +661,7 @@
     elements.breadcrumb.textContent = book.title + " / " + (doc.sections.join(" / ") || "课程内容");
     elements.docTitle.textContent = doc.title;
     elements.article.innerHTML = doc.html;
+    elements.article.classList.add("article--reading");
     var onlineSlides = doc.chapterNumber ? slideActions(book, doc.chapterNumber) : [];
     if (onlineSlides.length) {
       var slideSection = document.createElement('section');
@@ -681,10 +680,11 @@
     renderPager(doc);
     renderSidebar(book, elements.searchInput.value);
     document.title = doc.title + " · " + state.catalog.site.title;
+    window.ReaderMode.activate();
     typesetMath();
     requestAnimationFrame(function () {
       var target = anchor && document.getElementById(anchor);
-      if (target) target.scrollIntoView({ block: "start" }); else window.scrollTo(0, 0);
+      if (target) window.ReaderMode.goTo(target); else if (!elements.documentView.classList.contains("is-paged")) window.scrollTo(0, 0);
     });
   }
 
@@ -804,7 +804,7 @@
       if (!link) return;
       event.preventDefault();
       var target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (target) window.ReaderMode.goTo(target, true);
       elements.outline.classList.remove("is-open");
     });
     document.addEventListener("toggle", function (event) {
@@ -856,6 +856,7 @@
 
   async function initialize() {
     cacheElements();
+    window.ReaderMode.init();
     bindEvents();
     var response = await fetch("data/catalog.json", { cache: "no-store" });
     if (!response.ok) throw new Error("课程目录加载失败，请先运行构建命令");
