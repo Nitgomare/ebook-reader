@@ -153,6 +153,7 @@
   }
 
   function hideViews() {
+    window.ReaderMode.reset();
     document.body.classList.remove("home-view");
     elements.article.classList.remove("article--reading");
     [elements.libraryHome, elements.documentView, elements.codeLibrary, elements.codeView].forEach(function (view) {
@@ -637,7 +638,7 @@
     if (!window.MathJax || !window.MathJax.startup || !window.MathJax.startup.promise) return;
     window.MathJax.startup.promise.then(function () {
       if (window.MathJax.typesetClear) window.MathJax.typesetClear([elements.article]);
-      return window.MathJax.typesetPromise([elements.article]);
+      return window.MathJax.typesetPromise([elements.article]).then(window.ReaderMode.reflow);
     }).catch(function () {});
   }
 
@@ -679,10 +680,11 @@
     renderPager(doc);
     renderSidebar(book, elements.searchInput.value);
     document.title = doc.title + " · " + state.catalog.site.title;
+    window.ReaderMode.activate();
     typesetMath();
     requestAnimationFrame(function () {
       var target = anchor && document.getElementById(anchor);
-      if (target) target.scrollIntoView({ block: "start" }); else window.scrollTo(0, 0);
+      if (target) window.ReaderMode.goTo(target); else if (!elements.documentView.classList.contains("is-paged")) window.scrollTo(0, 0);
     });
   }
 
@@ -802,7 +804,7 @@
       if (!link) return;
       event.preventDefault();
       var target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (target) window.ReaderMode.goTo(target, true);
       elements.outline.classList.remove("is-open");
     });
     document.addEventListener("toggle", function (event) {
@@ -854,6 +856,7 @@
 
   async function initialize() {
     cacheElements();
+    window.ReaderMode.init();
     bindEvents();
     var response = await fetch("data/catalog.json", { cache: "no-store" });
     if (!response.ok) throw new Error("课程目录加载失败，请先运行构建命令");

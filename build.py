@@ -402,7 +402,7 @@ def copy_public(output: Path) -> None:
         shutil.rmtree(output)
     shutil.copytree(PUBLIC_ROOT, output)
     asset_digest = hashlib.sha1(
-        (output / "app.js").read_bytes() + (output / "styles.css").read_bytes()
+        (output / "app.js").read_bytes() + (output / "reader-mode.js").read_bytes() + (output / "styles.css").read_bytes()
     ).hexdigest()[:12]
     index_path = output / "index.html"
     index_path.write_text(
