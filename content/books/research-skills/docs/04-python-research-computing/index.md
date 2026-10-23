@@ -3,6 +3,7 @@
 > **配套资源**
 >
 > - [播放课程视频（哔哩哔哩）](https://www.bilibili.com/video/BV1pVt363EZy/)
+> - [Jupyter Notebook 教学视频（补充）](https://www.bilibili.com/video/BV1WdPpeBEs2/)
 > - [下载课程课件（PPTX）](./Python科研计算基础与环境搭建.pptx)
 >
 > **内容制作：李锦瑞**
@@ -331,6 +332,7 @@ where python
 
 ### 3.2 Jupyter Notebook 的使用
 
+[观看 Jupyter Notebook 教学视频（哔哩哔哩）](https://www.bilibili.com/video/BV1WdPpeBEs2/)
 
 #### 3.2.1 启动 Jupyter Notebook
 
