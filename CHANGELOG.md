@@ -26,6 +26,7 @@
 - 移除两套从未在 `books.json` 注册、线上也无入口的书稿目录（`python-beginner-to-master`、`python-data-analysis`，共 156 MB），避免与站内同主题课程重复。
 - 清理 907 个正文与页面从未引用的图片资源（15.9 MB），全部经全局引用扫描确认无页面、表格、课件或交互图使用。
 - 发布脚本补充新的令牌文件位置（`D:\Userdata\Desktop\safety\.cloudflare_api_token`），令牌搬家后无需每次手动传参。
+- 本地草稿 `PRD.md` 加入 `.gitignore`，`git status` 保持干净。
 - `tmp/`（8.2 GB 历史发布快照）、`notebook-preview/`、`.import-robotics/`、`.import-combined/` 等未入库目录移出工作区并写入 `.gitignore`，打包与发布不再误扫这些内容。
 - 采用 `git filter-repo` 重写历史，从全部提交中剔除 `dist/` 与上述废弃内容，仓库对象库由 970 MB 降至 829 MB（余下体积基本是扫描插图本身），跟踪文件 17,665 → 7,804 个，工作区 1.5 GB → 约 0.9 GB。
 - 重写项目 README：补充站点功能清单、九大知识领域与书目对照表、分层架构与数据流、内容模型（目录约定、`mkdocs.yml` 与 `books.json` 字段）、构建与产物校验流程、前端路由与 JSON 数据契约、登录与访问控制机制、一键发布与回滚步骤、常见问题排查，便于接手者只看一份文档即可上手。
