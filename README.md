@@ -45,7 +45,7 @@ dist/_worker.js  ── 每个请求先验 Cookie / Supabase JWT ─────
 三条设计取舍，决定了整个项目的形态：
 
 1. **预渲染而不是前端渲染**：Markdown 在构建期转成 HTML 片段存进 JSON，浏览器只负责取JSON、插 DOM、排公式。首屏快，服务端零依赖。
-2. **`dist/` 全量入库**：发布包和源文件躺在同一个仓库里，任何一次上线都能从某个提交精确复现，也不依赖 CI 产物缓存。
+2. **构建产物不入库**：`dist/` 由 `manage.py check` 在本地生成（约 656 MB），只作为上传对象存在；仓库里只有源文件，克隆快、diff 也不再被成千上万个产物文件淹没。
 3. **导航与内容分离**：`mkdocs.yml` 只提供章节顺序，`books.json` 只提供站点层面的展示信息，正文里不写任何站点级配置。
 
 ## 内容版图
@@ -101,7 +101,7 @@ dist/_worker.js  ── 每个请求先验 Cookie / Supabase JWT ─────
 | `verify.py` | 产物校验器，约 120 行，构建后立即运行，任一错误即非零退出 |
 | `books.json` | 站点标题、领域定义、24 套内容元信息 |
 | `public/` | 前端源码，构建时整体复制到 `dist/`（`_worker.js` 随之上线） |
-| `dist/` | 构建产物，整体入库，部署时原样上传 |
+| `dist/` | 构建产物，本地生成、不入库，由发布脚本上传 |
 | `tools/` | 导入脚本、专项核验、Bilibili 同步、一键发布 |
 | `resource-inventory/` | 每本书的来源、图片清单与导入报告 |
 | `CHANGELOG.md` | 面向使用者的更新日志，同时是站点日志页的数据源 |
@@ -300,7 +300,7 @@ python -m venv .venv
 .\tools\release.ps1 -Message "…" -NoDeploy   # 只提交推送，不上线
 ```
 
-脚本按顺序执行：当天 CHANGELOG 检查 → 清理 `dist` 只读属性 → `manage.py check` → `node --test tools/worker-auth.test.mjs` → 按明确范围 `git add`（绝不用 `git add .`）→ 提交 → 推送 → 解析凭证 → `wrangler pages deploy dist` → 核对部署记录 → 检查未登录跳转。
+脚本按顺序执行：当天 CHANGELOG 检查 → 清理 `dist` 只读属性 → `manage.py check` → `node --test tools/worker-auth.test.mjs` → 按明确范围 `git add`（绝不用 `git add .`，`dist/` 已忽略）→ 提交 → 推送 → 解析凭证 → `wrangler pages deploy dist` → 核对部署记录 → 检查未登录跳转。
 
 | 参数 | 作用 |
 | --- | --- |
@@ -337,9 +337,9 @@ Cloudflare 控制台 → Pages → `research-knowledge-hub` → Deployments，�
 
 - 每次提交、推送或部署前必须更新 `CHANGELOG.md`：按日期倒序，分类（新增 / 优化 / 修复 / 安全 / 部署），面向使用者描述，不写密码、令牌与隐私信息。
 - 发布前必须跑完整 `manage.py check` 与认证测试。
-- `dist/` 与源文件一起提交，保证线上可复现。
+- `dist/` 不入库；发布前用 `manage.py check` 现场构建，再交给 `release.ps1` 上传。
 - 禁止 `git reset --hard`、`git clean -fd`、整库覆盖、force push；禁止用 `git add .` 掩盖混杂工作区。
-- 工作区中的 `PRD.md`、`notebook-preview/`、`tmp/` 属草稿或历史发布包，不纳入提交范围。
+- `tmp/`、`notebook-preview/`、`dist/` 已在 `.gitignore` 中，不会进入提交范围。
 - 构建会整体重写 `dist/`，因此发布前不要手工修改产物。
 
 ## 目录结构
@@ -356,7 +356,7 @@ ebook-reader/
 ├─ DSH_HANDOVER.md            # 交接说明与操作红线
 ├─ content/books/<slug>/      # 24 套内容：docs/ + 可选 code/、slides/
 ├─ public/                    # 前端源码与 _worker.js
-├─ dist/                      # 构建产物（入库，部署对象）
+├─ dist/                      # 构建产物（本地生成、不入库，部署对象）
 ├─ tools/                     # 导入、核验、同步、发布脚本
 ├─ resource-inventory/        # 各书来源与导入报告
 └─ requirements.txt / preview.cmd

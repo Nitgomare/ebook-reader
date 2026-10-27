@@ -71,10 +71,10 @@ $ProjectName = 'research-knowledge-hub'
 $Branch = 'main'
 $Wrangler = 'wrangler@4.37.0'
 
-# 只提交这些范围；不包含 tmp/、notebook-preview/、PRD.md 等草稿材料。
+# 只提交这些范围；dist/ 是本地构建产物（已在 .gitignore），tmp/、notebook-preview/ 等草稿也不入库。
 $IncludePaths = @(
   'CHANGELOG.md', 'README.md', 'books.json', 'build.py', 'manage.py', 'verify.py',
-  'public', 'content', 'tools', 'resource-inventory', 'dist'
+  'public', 'content', 'tools', 'resource-inventory'
 )
 
 function Write-Step($text) { Write-Host ""; Write-Host "== $text" -ForegroundColor Cyan }
@@ -118,7 +118,6 @@ Write-Ok ("工作区变更条目：{0}" -f $dirty.Count)
 
 function Test-InScope {
   param([string]$Path)
-  if ($Path -like 'dist/*') { return $true }
   foreach ($inc in $IncludePaths) {
     if ($Path -eq $inc -or $Path -like "$inc/*") { return $true }
   }
