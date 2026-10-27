@@ -14,6 +14,8 @@ ROOT = Path(__file__).resolve().parent
 DIST = ROOT / "dist"
 URL_RE = re.compile(r"(?:href|src)=['\"]([^'\"]+)['\"]", re.I)
 DOC_ROUTE_RE = re.compile(r"^#/doc/([^?]+)")
+PARAGRAPH_RE = re.compile(r"<p\b[^>]*>(?P<body>.*?)</p>", re.S)
+CODE_SPAN_RE = re.compile(r"<code\b[^>]*>.*?</code>", re.S)
 
 
 def main() -> int:
@@ -42,6 +44,14 @@ def main() -> int:
         payload = json.loads(payload_path.read_text(encoding="utf-8"))
         if payload.get("title") != summary.get("title"):
             errors.append(f"标题不一致：{summary['id']}")
+        html = str(payload.get("html", ""))
+        plain_paragraphs = CODE_SPAN_RE.sub("", html)
+        for paragraph in PARAGRAPH_RE.finditer(plain_paragraphs):
+            body = paragraph.group("body")
+            if "$$" in body:
+                errors.append(
+                    f"文章 {summary['id']} 的段落里残留块公式定界符：{body[:40].strip()}…"
+                )
         for identifier in payload.get("codeFiles", []):
             if identifier not in code_ids:
                 errors.append(f"章节 {summary['id']} 指向不存在的代码：{identifier}")
