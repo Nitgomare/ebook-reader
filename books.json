@@ -3,6 +3,7 @@
     "title": "科研知识学习中心",
     "subtitle": "将科研工具、编程、人工智能、机器人与风电工程资料整合成简洁、统一、可持续扩展的学习路径",
     "categories": [
+      {"id": "management-science", "title": "管理科学与运筹优化", "eyebrow": "MANAGEMENT SCIENCE", "description": "学习运筹建模、优化方法与管理决策。"},
       {
         "id": "research-skills",
         "title": "科研工具与实践",
@@ -48,6 +49,8 @@
     ]
   },
   "books": [
+    {"slug": "solidworks-robot-modeling", "title": "基于 SolidWorks 的智能机器人建模", "author": "何志鹏、龙东平、马文悦、邓越平 主编", "description": "湖南科技大学智能机器人设计与控制微专业教材，从 SolidWorks 基础操作与复杂零件建模，逐步完成智能小车、机械手爪和机械臂的几何建模与装配。", "tags": ["SolidWorks", "几何建模", "机器人装配"], "category": "robotics", "type": "course", "coverSource": "pic0/pic.0.0.jpg", "homePage": "solidworks_based_geometric_modeling_of_intelligent_robots.md"},
+    {"slug": "management-operations-research", "title": "管理运筹学（第5版）", "author": "韩伯棠 主编", "contentProvider": "周芸丽", "description": "涵盖线性规划、整数规划、动态规划、网络模型、存储论、排队论、对策论、决策分析与预测。", "tags": ["运筹学", "优化建模", "管理决策"], "category": "management-science", "type": "reference"},
     {
       "slug": "research-skills",
       "localVideos": {
@@ -230,6 +233,17 @@
       "tags": ["ROS", "机器人编程", "SLAM 与导航"],
       "category": "robotics",
       "order": 40,
+      "type": "reference"
+    },
+    {
+      "slug": "mechanism-principles-4e",
+      "title": "机械原理（第四版）",
+      "author": "潘存云、赵又红 主编",
+      "contentProvider": "熊忠帅",
+      "description": "系统讲解机构的结构分析、平面连杆机构、凸轮机构、齿轮机构、轮系、间歇运动机构、组合机构与开式链机构，并延伸到力分析、效率与自锁、机械平衡和运转速度波动调节。",
+      "tags": ["机械原理", "机构分析与设计", "机械动力学"],
+      "category": "robotics",
+      "order": 5,
       "type": "reference"
     },
     {

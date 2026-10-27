@@ -1,0 +1,12 @@
+site_name: 基于 SolidWorks 的智能机器人建模
+docs_dir: docs
+nav:
+- 课程首页与学习导航: solidworks_based_geometric_modeling_of_intelligent_robots.md
+- 第1章 SolidWorks 2026的安装与激活: 1_installation_and_activation_of_solidworks2026/1_installation_and_activation_of_solidworks2026.md
+- 第2章 软件功能概述: 2_software_features_overview/2_software_features_overview.md
+- 第3章 软件基本操作: 3_basic_software_operations/3_basic_software_operations.md
+- 第4章 复杂三维零件建模: 4_complex_3d_part_modeling/4_complex_3d_part_modeling.md
+- 第5章 智能小车几何建模: 5_geometric_modeling_of_intelligent_vehicle/5_geometric_modeling_of_intelligent_vehicle.md
+- 第6章 智能机械手爪几何建模: 6_geometric_modeling_of_intelligent_robotic_gripper/6_geometric_modeling_of_intelligent_robotic_gripper.md
+- 第7章 智能机械臂几何建模: 7_geometric_modeling_of_robotic_arm/7_geometric_modeling_of_robotic_arm.md
+- 第8章 学习资料: 8_learning_resources/8_learning_resources.md

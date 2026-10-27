@@ -153,6 +153,7 @@
   }
 
   function hideViews() {
+    window.ReaderMode.reset();
     document.body.classList.remove("home-view");
     elements.article.classList.remove("article--reading");
     [elements.libraryHome, elements.documentView, elements.codeLibrary, elements.codeView].forEach(function (view) {
@@ -281,6 +282,9 @@
         codeFolders(files, needle, state.activeCode) + '</section>';
     }
     var nav = resourceLink + chapters + codeNav;
+    if (book.slug === 'research-skills') {
+      nav = resourceLink + '<a class="course-resource-link" href="ppt-library.html"><span>▤</span><strong>PPT 资源库 · 预览与下载</strong></a>' + chapters + codeNav;
+    }
     elements.sidebarTitle.textContent = book.title;
     elements.catalogStatus.textContent = needle ? "找到 " + docs.length + " 个章节" :
       (book.author ? book.author + " · " : "") + docs.length + " 个章节";
@@ -351,7 +355,8 @@
       '<div class="section-heading"><div><p class="eyebrow">' + escapeHtml(category.eyebrow || category.id) +
       '</p><h2 id="category-' + escapeHtml(category.id) + '">' + escapeHtml(category.title) + '</h2></div><p>' +
       escapeHtml(category.description || "") + '</p></div><div class="book-grid">' +
-      books.map(renderResourceCard).join("") + '</div></section>';
+      books.map(renderResourceCard).join("") + (category.id === 'research-skills' ?
+        '<article class="book-card ppt-library-entry"><a class="ppt-entry-link" href="ppt-library.html"><span class="ppt-entry-icon" aria-hidden="true">P</span><span><small>PRESENTATION LIBRARY</small><strong>PPT 资源库</strong><span>汇报框架、科研案例与工程技术资料。真实封面，在线逐页预览，下载 PPT 原文件。</span></span><b aria-hidden="true">↗</b></a></article>' : '') + '</div></section>';
   }
 
   function renderHomeSidebar(categories, books, query) {
@@ -470,7 +475,8 @@
     var unnumbered = docs.filter(function (doc) { return doc.chapterNumber == null; })
       .sort(function (a, b) { return a.order - b.order; })
       .map(function (doc) { return { doc: doc }; });
-    return chapters.concat(unnumbered);
+    return unnumbered.filter(function (row) { return row.doc.relPath === book.homePage; })
+      .concat(chapters, unnumbered.filter(function (row) { return row.doc.relPath !== book.homePage; }));
   }
 
   function renderResourceTable(book) {
@@ -502,7 +508,7 @@
     }
 
     function docAuthor(doc, row) {
-      return row.author || (doc && book.docAuthors && book.docAuthors[doc.relPath]) || book.author || "待补充";
+      return row.author || (doc && book.docAuthors && book.docAuthors[doc.relPath]) || book.contentProvider || book.author || "待补充";
     }
 
     var bodyRows = rows.map(function (row) {
@@ -578,8 +584,11 @@
         '<td class="resource-author">' + escapeHtml(link.author || book.author || "待补充") + '</td><td><span class="resource-empty">—</span></td>' +
         '<td><span class="resource-empty">—</span></td><td><span class="resource-empty">—</span></td><td>' + video + '</td><td>' + reference + '</td></tr>';
     }).join("");
+    var homeDoc = docs.find(function (doc) { return doc.relPath === book.homePage; });
     var info = '<section class="resource-book-info"><h2>课程简介</h2>' +
-      '<p class="resource-book-author">作者 / 内容制作：' + escapeHtml(book.author || "待补充") + '</p><p>' +
+      (homeDoc ? '<p>' + resourceAction('#/doc/' + homeDoc.id, '课程首页 · 引言与学习导航') + '</p>' : '') +
+      '<p class="resource-book-author">作者 / 内容制作：' + escapeHtml(book.author || "待补充") + '</p>' +
+      (book.contentProvider ? '<p class="resource-book-provider">内容提供：' + escapeHtml(book.contentProvider) + '</p>' : '') + '<p>' +
       escapeHtml(book.description || "本页汇总课程目录及现有配套资源。") + '</p></section>';
     var table = '<section class="resource-group"><h2>目录与资源</h2><p>' + (compact ? '教材正文与补充实验可直接阅读，配套 PPT 可在线翻页查看。' : '正文、课件、代码、视频和参考附件按目录对应整理；“—”表示该项资源暂未提供。') + '</p>' +
       '<div class="resource-table-wrap"><table class="resource-table' + (compact ? ' resource-table--compact' : '') + '"><thead><tr><th>目录</th><th>资料提供</th><th>正文</th><th>课件</th>' + (compact ? '' : '<th>代码</th><th>视频</th><th>参考附件</th>') +
@@ -637,7 +646,7 @@
     if (!window.MathJax || !window.MathJax.startup || !window.MathJax.startup.promise) return;
     window.MathJax.startup.promise.then(function () {
       if (window.MathJax.typesetClear) window.MathJax.typesetClear([elements.article]);
-      return window.MathJax.typesetPromise([elements.article]);
+      return window.MathJax.typesetPromise([elements.article]).then(window.ReaderMode.reflow);
     }).catch(function () {});
   }
 
@@ -679,10 +688,11 @@
     renderPager(doc);
     renderSidebar(book, elements.searchInput.value);
     document.title = doc.title + " · " + state.catalog.site.title;
+    window.ReaderMode.activate();
     typesetMath();
     requestAnimationFrame(function () {
       var target = anchor && document.getElementById(anchor);
-      if (target) target.scrollIntoView({ block: "start" }); else window.scrollTo(0, 0);
+      if (target) window.ReaderMode.goTo(target); else if (!elements.documentView.classList.contains("is-paged")) window.scrollTo(0, 0);
     });
   }
 
@@ -802,7 +812,7 @@
       if (!link) return;
       event.preventDefault();
       var target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (target) window.ReaderMode.goTo(target, true);
       elements.outline.classList.remove("is-open");
     });
     document.addEventListener("toggle", function (event) {
@@ -854,6 +864,7 @@
 
   async function initialize() {
     cacheElements();
+    window.ReaderMode.init();
     bindEvents();
     var response = await fetch("data/catalog.json", { cache: "no-store" });
     if (!response.ok) throw new Error("课程目录加载失败，请先运行构建命令");

@@ -402,7 +402,7 @@ def copy_public(output: Path) -> None:
         shutil.rmtree(output)
     shutil.copytree(PUBLIC_ROOT, output)
     asset_digest = hashlib.sha1(
-        (output / "app.js").read_bytes() + (output / "styles.css").read_bytes()
+        (output / "app.js").read_bytes() + (output / "reader-mode.js").read_bytes() + (output / "styles.css").read_bytes()
     ).hexdigest()[:12]
     index_path = output / "index.html"
     index_path.write_text(
@@ -698,6 +698,16 @@ def build_book(
     if (slides_root / "manifest.json").is_file():
         manifest = json.loads((slides_root / "manifest.json").read_text(encoding="utf-8"))
         slides = manifest["decks"]
+        if slug == "research-skills":
+            ppt_resources = {r["name"]: r for r in public_resources
+                             if r["path"].startswith("07-research-presentation/extra-resources/")
+                             and r["name"].lower().endswith(".pptx")}
+            if {d["sources"][0] for d in slides} != set(ppt_resources):
+                raise ValueError("PPT 资源库文件已变化，请先运行 tools/import_ppt_library.py 生成预览")
+            for deck in slides:
+                resource = ppt_resources[deck["sources"][0]]
+                if deck.get("downloadUrl") != resource["downloadUrl"] or deck.get("size") != resource["size"]:
+                    raise ValueError("PPT 下载信息已变化，请重新生成资源库预览")
         for deck in slides:
             if not re.fullmatch(r"[a-f0-9]{16}", deck["id"]):
                 raise ValueError(f"{slug}: invalid slide ID")
@@ -791,6 +801,17 @@ def build_book(
     return public_book, public_docs, public_code
 
 
+def build_changelog(output: Path) -> None:
+    """Publish the maintenance log from its single Markdown source."""
+    renderer = markdown.Markdown(extensions=["extra", "toc"], extension_configs={"toc": {"toc_depth": "2-2"}})
+    body = renderer.convert((ROOT / "CHANGELOG.md").read_text(encoding="utf-8"))
+    template = (PUBLIC_ROOT / "changelog.html").read_text(encoding="utf-8")
+    (output / "changelog.html").write_text(
+        template.replace("<!-- CHANGELOG_TOC -->", renderer.toc).replace("<!-- CHANGELOG_BODY -->", body),
+        encoding="utf-8",
+    )
+
+
 def main() -> None:
     args = parse_args()
     output = args.output.resolve()
@@ -804,6 +825,7 @@ def main() -> None:
             raise SystemExit(f"books.json 中没有这些书：{', '.join(sorted(missing))}")
 
     copy_public(output)
+    build_changelog(output)
     catalog_books: list[dict[str, object]] = []
     catalog_docs: list[dict[str, object]] = []
     catalog_code: list[dict[str, object]] = []

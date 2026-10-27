@@ -1,0 +1,23 @@
+site_name: 管理运筹学（第5版）
+docs_dir: docs
+nav:
+- 前置内容: 00-front-matter/index.md
+- 第1章 绪论: chapters/01/index.md
+- 第2章 线性规划的图解法: chapters/02/index.md
+- 第3章 线性规划问题的计算机求解: chapters/03/index.md
+- 第4章 线性规划在工商管理中的应用: chapters/04/index.md
+- 第5章 单纯形法: chapters/05/index.md
+- 第6章 单纯形法的灵敏度分析与对偶: chapters/06/index.md
+- 第7章 运输问题: chapters/07/index.md
+- 第8章 整数规划: chapters/08/index.md
+- 第9章 目标规划: chapters/09/index.md
+- 第10章 动态规划: chapters/10/index.md
+- 第11章 图与网络模型: chapters/11/index.md
+- 第12章 排序与统筹方法: chapters/12/index.md
+- 第13章 存储论: chapters/13/index.md
+- 第14章 排队论: chapters/14/index.md
+- 第15章 对策论: chapters/15/index.md
+- 第16章 决策分析: chapters/16/index.md
+- 第17章 预测: chapters/17/index.md
+- 附录：软件 3.5 版使用说明: appendices/index.md
+- 参考文献与配套资源说明: references/index.md
