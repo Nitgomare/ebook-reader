@@ -35,6 +35,12 @@
         "description": "以真实工程项目贯通机械、硬件、嵌入式、控制、感知与自主导航。"
       },
       {
+        "id": "mechanical-engineering",
+        "title": "机械工程基础",
+        "eyebrow": "MECHANICAL ENGINEERING",
+        "description": "机构分析与设计、机械效率与自锁、机械平衡与运转速度波动的理论基础。"
+      },
+      {
         "id": "wind-energy",
         "title": "风电技术",
         "eyebrow": "WIND ENERGY",
@@ -242,7 +248,7 @@
       "contentProvider": "熊忠帅",
       "description": "系统讲解机构的结构分析、平面连杆机构、凸轮机构、齿轮机构、轮系、间歇运动机构、组合机构与开式链机构，并延伸到力分析、效率与自锁、机械平衡和运转速度波动调节。",
       "tags": ["机械原理", "机构分析与设计", "机械动力学"],
-      "category": "robotics",
+      "category": "mechanical-engineering",
       "order": 5,
       "type": "reference"
     },
