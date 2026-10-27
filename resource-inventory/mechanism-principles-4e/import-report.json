@@ -1,0 +1,115 @@
+{
+  "title": "机械原理（第四版）",
+  "slug": "mechanism-principles-4e",
+  "author": "潘存云、赵又红 主编",
+  "contentProvider": "熊忠帅",
+  "source": "D:\\Userdata\\Desktop\\公共知识\\扫描书籍\\机械原理_中南第4版_熊忠帅_v01\\机械原理_中南第4版_熊忠帅_v01\\02_MD\\机械原理_中南第4版.md",
+  "source_sha256": "d1e86d9e87f7c1cdf3a1213a3cd7ba4a7a74c231e6001076708c47e34ce826f2",
+  "images_in_source": 1064,
+  "referenced_images": 578,
+  "missing_images": [],
+  "documents": [
+    {
+      "path": "00-front-matter/index.md",
+      "title": "前置内容",
+      "characters": 11189
+    },
+    {
+      "path": "chapters/01/index.md",
+      "title": "第1章 绪论",
+      "characters": 19983
+    },
+    {
+      "path": "chapters/02/index.md",
+      "title": "第2章 机构的结构分析",
+      "characters": 29662
+    },
+    {
+      "path": "chapters/03/index.md",
+      "title": "第3章 平面连杆机构分析与设计",
+      "characters": 55072
+    },
+    {
+      "path": "chapters/04/index.md",
+      "title": "第4章 凸轮机构及其设计",
+      "characters": 27939
+    },
+    {
+      "path": "chapters/05/index.md",
+      "title": "第5章 齿轮机构及其设计",
+      "characters": 54353
+    },
+    {
+      "path": "chapters/06/index.md",
+      "title": "第6章 齿轮系及其设计",
+      "characters": 37707
+    },
+    {
+      "path": "chapters/07/index.md",
+      "title": "第7章 间歇运动机构及其设计",
+      "characters": 16070
+    },
+    {
+      "path": "chapters/08/index.md",
+      "title": "第8章 其他常用机构",
+      "characters": 13201
+    },
+    {
+      "path": "chapters/09/index.md",
+      "title": "第9章 组合机构",
+      "characters": 15084
+    },
+    {
+      "path": "chapters/10/index.md",
+      "title": "第10章 开式链机构及工业机器人",
+      "characters": 22786
+    },
+    {
+      "path": "chapters/11/index.md",
+      "title": "第11章 平面机构的力分析",
+      "characters": 17293
+    },
+    {
+      "path": "chapters/12/index.md",
+      "title": "第12章 机械的效率和自锁",
+      "characters": 17431
+    },
+    {
+      "path": "chapters/13/index.md",
+      "title": "第13章 机械的平衡",
+      "characters": 22228
+    },
+    {
+      "path": "chapters/14/index.md",
+      "title": "第14章 机械的运转及其速度波动的调节",
+      "characters": 24352
+    },
+    {
+      "path": "chapters/15/index.md",
+      "title": "第15章 机械系统的方案设计",
+      "characters": 19198
+    },
+    {
+      "path": "appendices/01/index.md",
+      "title": "附录1 世界机械发展史年鉴",
+      "characters": 16404
+    },
+    {
+      "path": "appendices/02/index.md",
+      "title": "附录2 重要名词术语中英文对照",
+      "characters": 16656
+    },
+    {
+      "path": "references/index.md",
+      "title": "参考文献",
+      "characters": 3643
+    },
+    {
+      "path": "author/index.md",
+      "title": "作者简介",
+      "characters": 1006
+    }
+  ],
+  "note": "原始 Markdown 和图片保持只读；署名区分原书主编与内容提供者；保留原文公式，不将 OCR 当作数学结论修订依据。",
+  "figure_captions": 474
+}

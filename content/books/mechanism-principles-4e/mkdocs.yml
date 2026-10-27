@@ -1,0 +1,23 @@
+site_name: 机械原理（第四版）
+docs_dir: docs
+nav:
+- 前置内容: 00-front-matter/index.md
+- 第1章 绪论: chapters/01/index.md
+- 第2章 机构的结构分析: chapters/02/index.md
+- 第3章 平面连杆机构分析与设计: chapters/03/index.md
+- 第4章 凸轮机构及其设计: chapters/04/index.md
+- 第5章 齿轮机构及其设计: chapters/05/index.md
+- 第6章 齿轮系及其设计: chapters/06/index.md
+- 第7章 间歇运动机构及其设计: chapters/07/index.md
+- 第8章 其他常用机构: chapters/08/index.md
+- 第9章 组合机构: chapters/09/index.md
+- 第10章 开式链机构及工业机器人: chapters/10/index.md
+- 第11章 平面机构的力分析: chapters/11/index.md
+- 第12章 机械的效率和自锁: chapters/12/index.md
+- 第13章 机械的平衡: chapters/13/index.md
+- 第14章 机械的运转及其速度波动的调节: chapters/14/index.md
+- 第15章 机械系统的方案设计: chapters/15/index.md
+- 附录1 世界机械发展史年鉴: appendices/01/index.md
+- 附录2 重要名词术语中英文对照: appendices/02/index.md
+- 参考文献: references/index.md
+- 作者简介: author/index.md
