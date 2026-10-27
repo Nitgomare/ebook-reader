@@ -71,7 +71,7 @@ $Wrangler = 'wrangler@4.37.0'
 
 # 只提交这些范围；不包含 tmp/、notebook-preview/、PRD.md 等草稿材料。
 $IncludePaths = @(
-  'CHANGELOG.md', 'books.json', 'build.py', 'manage.py', 'verify.py',
+  'CHANGELOG.md', 'README.md', 'books.json', 'build.py', 'manage.py', 'verify.py',
   'public', 'content', 'tools', 'resource-inventory', 'dist'
 )
 
@@ -190,6 +190,11 @@ if ($staged.Count -eq 0) {
   }
   Invoke-Native 'git' @('-c', 'core.quotepath=false', 'commit', '-q', '-m', $Message) | Out-Null
   Write-Ok '提交完成'
+  $actualSubject = (& git log -1 --format=%s).Trim()
+  if ($actualSubject -ne $Message) {
+    Write-Warn2 "提交说明与预期不一致（实际：$actualSubject）"
+    Write-Warn2 '若因引号被 shell 截断，可在下一次提交中补充说明。'
+  }
 
   if (-not $NoPush) {
     Write-Step '推送到 GitHub'
@@ -271,23 +276,25 @@ Write-Ok "Environment：$envCol　Branch：$branchCol　Source：$source"
 
 if ($envCol -ne 'Production') { Fail "最新部署不是 Production（$envCol），请检查 --branch 参数。" }
 if ($branchCol -ne $Branch) { Fail "最新部署分支不是 $Branch（$branchCol）。" }
-if ($source -and $source -notlike "$HeadAfter*") {
+if ($source -and $source -ne '-' -and $HeadAfter -notlike "$source*") {
   Write-Warn2 "部署 Source（$source）与本次提交（$HeadAfter）不一致，请确认是否夹带未提交改动。"
 }
 
 Write-Step '检查未登录访问是否仍被拦截'
-try {
-  $probe = Invoke-WebRequest -Uri "https://$ProjectName.pages.dev/" -MaximumRedirection 0 -SkipHttpErrorCheck -TimeoutSec 30
-  $loc = $probe.Headers.Location
-  if ($probe.StatusCode -eq 302 -and $loc -match '__auth/login') {
-    Write-Ok "未登录访问跳转登录页（$loc）"
-  } elseif ($probe.StatusCode -eq 200) {
-    Write-Warn2 '未登录访问返回 200：请人工确认是否出现登录页，访问控制可能被削弱。'
-  } else {
-    Write-Warn2 "未登录访问返回 $($probe.StatusCode)，请人工核对。"
-  }
-} catch {
-  Write-Warn2 "无法探测线上状态：$($_.Exception.Message)"
+$headers = @()
+if (Get-Command curl.exe -ErrorAction SilentlyContinue) {
+  $headers = @(& curl.exe -s -o NUL -D - --max-redirs 0 --max-time 25 "https://$ProjectName.pages.dev/" 2>&1)
+}
+$statusLine = $headers | Where-Object { $_ -match '^HTTP/' } | Select-Object -First 1
+$locLine = $headers | Where-Object { $_ -match '^(?i)location:' } | Select-Object -First 1
+if ($statusLine -match ' 30[1237]' -and $locLine -match '__auth/login') {
+  Write-Ok "未登录访问跳转登录页（$($locLine -replace '^(?i)location:\s*','')）"
+} elseif ($statusLine -match ' 200') {
+  Write-Warn2 '未登录访问返回 200：请人工确认是否出现登录页，访问控制可能被削弱。'
+} elseif ($statusLine) {
+  Write-Warn2 "未登录访问返回：$($statusLine.Trim())，请人工核对。"
+} else {
+  Write-Warn2 '无法探测线上状态（curl 不可用或网络受限）。'
 }
 
 Write-Step '发布完成'

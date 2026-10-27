@@ -68,3 +68,12 @@ python -m venv .venv
 ## 部署
 
 Cloudflare Pages 发布构建完成的 `dist/`，其中 `_worker.js` 负责网站登录和内容访问保护。课程源文件同时保存在 `content/books/`，因此仓库克隆后可以独立重建。GitHub 仓库于 2026-10-12 按用户要求改为 Public，源码、教材正文、图片及提交历史可公开访问；网站登录限制不限制 GitHub 仓库内容的访问。
+
+一键发布（构建校验 → 登录保护测试 → 按明确范围提交推送 → 部署 → 核对部署结果）：
+
+```powershell
+.\tools\release.ps1 -Message "本次更新说明"
+.\tools\release.ps1 -DryRun          # 只打印将执行的步骤
+```
+
+脚本读取 `CLOUDFLARE_API_TOKEN`（或 `-TokenFile` 指定的本地令牌文件）与 `CLOUDFLARE_ACCOUNT_ID`，令牌不写入仓库；`-NoPush`、`-NoDeploy`、`-SkipBuild` 可用于分步执行。GitHub 推送本身不会更新线上，`dist/` 只在执行部署命令后才生效。
