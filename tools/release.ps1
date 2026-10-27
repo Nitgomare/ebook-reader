@@ -49,6 +49,8 @@
 .NOTES
   绝不使用 git add .、git reset --hard、git clean -fd、force push。
   工作区中的 PRD.md、tmp/、notebook-preview/ 等草稿不纳入提交范围。
+  传入 -Message 时避免使用中文引号“”，PowerShell 会将其当作字符串分隔符，
+  导致提交信息被截断；脚本会在提交后比对实际提交说明并给出提示。
 #>
 [CmdletBinding()]
 param(
