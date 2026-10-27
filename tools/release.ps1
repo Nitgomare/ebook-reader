@@ -19,8 +19,9 @@
 
 .PARAMETER TokenFile
   存放 Cloudflare API Token 的文本文件（单行）。默认依次尝试
-  $env:CLOUDFLARE_API_TOKEN、$env:CF_TOKEN_FILE、D:\Userdata\Desktop\.cloudflare_api_token、
-  $HOME\Desktop\.cloudflare_api_token。令牌只注入当前进程环境，不打印、不落盘。
+  $env:CLOUDFLARE_API_TOKEN、$env:CF_TOKEN_FILE、D:\Userdata\Desktop\safety\.cloudflare_api_token、
+  D:\Userdata\Desktop\.cloudflare_api_token、$HOME\Desktop\.cloudflare_api_token。
+  令牌只注入当前进程环境，不打印、不落盘。
 
 .PARAMETER AccountId
   Cloudflare 账户 ID。默认取 $env:CLOUDFLARE_ACCOUNT_ID，否则读 .wrangler/cache/wrangler-account.json。
@@ -224,6 +225,7 @@ if (-not $token) {
   $candidates = @()
   if ($env:CF_TOKEN_FILE) { $candidates += $env:CF_TOKEN_FILE }
   if ($TokenFile) { $candidates += $TokenFile }
+  $candidates += 'D:\Userdata\Desktop\safety\.cloudflare_api_token'
   $candidates += 'D:\Userdata\Desktop\.cloudflare_api_token'
   $candidates += (Join-Path $HOME 'Desktop\.cloudflare_api_token')
   foreach ($c in $candidates) {
