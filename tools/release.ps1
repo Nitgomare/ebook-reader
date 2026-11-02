@@ -203,6 +203,10 @@ if ($staged.Count -eq 0) {
     $env:GIT_TERMINAL_PROMPT = '0'
     $pushCode = Invoke-Native 'git' @('push', 'origin', $Branch) -AllowFail
     if ($pushCode -ne 0) {
+      Write-Warn2 '直连推送失败，改为绕过本机代理重试一次（代理未启动时常见）'
+      $pushCode = Invoke-Native 'git' @('-c', 'http.proxy=', '-c', 'https.proxy=', 'push', 'origin', $Branch) -AllowFail
+    }
+    if ($pushCode -ne 0) {
       Fail "推送被拒绝：远端可能有新提交。请手动执行 git fetch 后合并，禁止 force push。"
     }
     Write-Ok '推送完成'
