@@ -1,13 +1,12 @@
 (function () {
   "use strict";
-  var mode = "scroll", active = false, page = 0, count = 1, stride = 1, timer;
-  var article, viewport, view, toolbar, controls, previous, next, status, hint, articleObserver;
+  var active = false, page = 0, count = 1, stride = 1, timer;
+  var article, viewport, view, toolbar, controls, previous, next, status, articleObserver;
   var immersive = false, spread = 1, bar, drawer, enter, exit, fullScreenOwned = false;
   var settings = { size: 20, font: "song", theme: "paper", margin: 28 }, menuOpen = false, suppressClickUntil = 0;
   var guide, guideFadeTimer, guideHideTimer;
   var wheelTotal = 0, wheelDirection = 0, wheelLastEvent = 0, wheelLastTurn = 0;
   var fonts = { song: '"Noto Serif SC", "Songti SC", SimSun, serif', hei: '"Microsoft YaHei", "PingFang SC", sans-serif', kai: 'KaiTi, STKaiti, "Kaiti SC", serif' };
-  try { if (localStorage.getItem("knowledge-reading-mode") === "pages") mode = "pages"; } catch (_) {}
   try {
     var saved = JSON.parse(localStorage.getItem("knowledge-reader-settings") || "null");
     if (saved) {
@@ -18,7 +17,8 @@
     }
   } catch (_) {}
 
-  function paged() { return active && mode === "pages"; }
+  // Reading mode is derived, not toggled: immersive reading pages, everything else scrolls.
+  function paged() { return active && immersive; }
   function visibleNode() {
     var bounds = paged() ? viewport.getBoundingClientRect() : { left: 0, right: innerWidth, top: 80, bottom: innerHeight };
     var nodes = article.querySelectorAll("h1,h2,h3,h4,p,li,pre,figure,table,img");
@@ -110,10 +110,6 @@
   function apply(target) {
     view.classList.toggle("is-paged", paged());
     controls.hidden = !paged();
-    hint.hidden = !paged();
-    toolbar.querySelectorAll("[data-reading-mode]").forEach(function (button) {
-      button.setAttribute("aria-pressed", String(button.dataset.readingMode === mode));
-    });
     viewport.scrollLeft = 0;
     if (paged()) {
       layout(target);
@@ -177,7 +173,6 @@
     resetWheel();
     hideGuide();
     if (value) {
-      mode = "pages";
       document.getElementById("immersiveTitle").textContent = document.getElementById("docTitle").textContent;
       document.getElementById("immersiveOutlineNav").innerHTML = document.getElementById("outlineNav").innerHTML;
       apply(target);
@@ -203,7 +198,6 @@
     previous = document.getElementById("bookPreviousPage");
     next = document.getElementById("bookNextPage");
     status = document.getElementById("bookPageStatus");
-    hint = document.getElementById("readingHint");
     bar = document.getElementById("immersiveBar");
     drawer = document.getElementById("immersiveOutline");
     enter = document.getElementById("enterImmersive");
@@ -292,14 +286,6 @@
       if (target && !article.contains(target)) { leaveImmersive(); }
       goTo(target); closeContents();
       if (immersive) view.focus({ preventScroll: true });
-    });
-    toolbar.addEventListener("click", function (event) {
-      var button = event.target.closest("[data-reading-mode]");
-      if (!button || button.dataset.readingMode === mode) return;
-      var target = visibleNode();
-      mode = button.dataset.readingMode;
-      try { localStorage.setItem("knowledge-reading-mode", mode); } catch (_) {}
-      apply(target);
     });
     previous.addEventListener("click", function () { showPage(page - spread); });
     next.addEventListener("click", function () { showPage(page + spread); });

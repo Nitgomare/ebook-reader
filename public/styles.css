@@ -290,17 +290,15 @@ div.arithmatex { overflow: visible; }
 .loading-copy { color: var(--muted); }
 
 .reading-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: -1.4rem 0 1.2rem; scroll-margin-top: calc(var(--topbar-height) + .75rem); }
-.reading-modes { display: inline-flex; padding: .2rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--surface); }
-.reading-modes button, .page-controls button { min-height: 2.6rem; padding: .5rem .85rem; border: 0; border-radius: .4rem; color: var(--muted); background: transparent; cursor: pointer; font: inherit; font-size: .78rem; }
-.reading-modes button[aria-pressed="true"] { color: var(--accent); background: var(--accent-soft); font-weight: 700; }
-.reading-hint { color: var(--muted); font-size: .65rem; }
+.detail-downloads { display: flex; flex-wrap: wrap; gap: .55rem; align-items: center; }
+.page-controls button { min-height: 2.6rem; padding: .5rem .85rem; border: 0; border-radius: .4rem; color: var(--muted); background: transparent; cursor: pointer; font: inherit; font-size: .78rem; }
 .immersive-button { margin-left: auto; padding: .6rem .9rem; border: 1px solid var(--line); border-radius: .45rem; color: var(--accent); background: var(--surface); cursor: pointer; font-size: .78rem; }
 .reading-viewport { min-width: 0; }
 .page-controls { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-top: 1rem; }
 .page-controls button { border: 1px solid var(--line); background: var(--surface); color: var(--accent); }
 .page-controls button:disabled { opacity: .4; cursor: default; }
 .page-controls span { color: var(--muted); font-size: .75rem; }
-.reading-modes button:focus-visible, .page-controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.page-controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .is-paged .reading-viewport { overflow: hidden; padding: 1.25rem; border: 1px solid var(--line); border-radius: .3rem .8rem .8rem .3rem; background: #fffdf7; box-shadow: inset .4rem 0 .7rem rgb(90 72 40 / 5%), 0 .5rem 1.5rem rgb(30 64 175 / 6%); touch-action: pan-y pinch-zoom; }
 .is-paged .article { height: var(--page-height); column-width: auto; column-count: 1; column-gap: 32px; column-fill: auto; width: 100%; }
 .is-paged .article h1, .is-paged .article h2, .is-paged .article h3, .is-paged .article h4 { break-after: avoid; }
@@ -369,7 +367,6 @@ div.arithmatex { overflow: visible; }
 @media (max-width: 52rem) {
   html:has(.is-paged), body:has(.is-paged) { overflow-x: clip; }
   .is-paged .reading-viewport { padding: .85rem; }
-  .reading-hint { flex-basis: 100%; }
 }
 @media print {
   .document-view.is-immersive { position: static; height: auto; display: block; padding: 0; background: white; }

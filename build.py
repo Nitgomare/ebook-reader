@@ -699,15 +699,25 @@ def build_book(
         manifest = json.loads((slides_root / "manifest.json").read_text(encoding="utf-8"))
         slides = manifest["decks"]
         if slug == "research-skills":
-            ppt_resources = {r["name"]: r for r in public_resources
-                             if r["path"].startswith("07-research-presentation/extra-resources/")
-                             and r["name"].lower().endswith(".pptx")}
-            if {d["sources"][0] for d in slides} != set(ppt_resources):
+            deck_resources = {r["name"]: r for r in public_resources
+                              if r["path"].startswith("07-research-presentation/extra-resources/")
+                              and r["name"].lower().endswith((".pptx", ".pdf"))}
+            registered: set[str] = set()
+            for deck in slides:
+                registered.add(deck["sources"][0])
+                registered.update(extra["name"] for extra in deck.get("extraDownloads", []))
+            if registered != set(deck_resources):
                 raise ValueError("PPT 资源库文件已变化，请先运行 tools/import_ppt_library.py 生成预览")
             for deck in slides:
-                resource = ppt_resources[deck["sources"][0]]
-                if deck.get("downloadUrl") != resource["downloadUrl"] or deck.get("size") != resource["size"]:
-                    raise ValueError("PPT 下载信息已变化，请重新生成资源库预览")
+                downloads = [{"name": deck["sources"][0], "url": deck.get("downloadUrl"),
+                              "size": deck.get("size")}]
+                downloads += [{"name": extra["name"], "url": extra.get("downloadUrl"),
+                               "size": extra.get("size")}
+                              for extra in deck.get("extraDownloads", [])]
+                for item in downloads:
+                    resource = deck_resources[item["name"]]
+                    if item["url"] != resource["downloadUrl"] or item["size"] != resource["size"]:
+                        raise ValueError("PPT 下载信息已变化，请重新生成资源库预览")
         for deck in slides:
             if not re.fullmatch(r"[a-f0-9]{16}", deck["id"]):
                 raise ValueError(f"{slug}: invalid slide ID")

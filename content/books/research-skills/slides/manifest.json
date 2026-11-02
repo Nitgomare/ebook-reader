@@ -13,6 +13,8 @@
       "sources": [
         "PPT复刻(1).pptx"
       ],
+      "format": "PPTX",
+      "provider": null,
       "size": 24246653,
       "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/PPT%E5%A4%8D%E5%88%BB%281%29.pptx"
     },
@@ -28,6 +30,8 @@
       "sources": [
         "国家自然区域创新发展联合基金项目答辩.pptx"
       ],
+      "format": "PPTX",
+      "provider": null,
       "size": 6184915,
       "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E5%9B%BD%E5%AE%B6%E8%87%AA%E7%84%B6%E5%8C%BA%E5%9F%9F%E5%88%9B%E6%96%B0%E5%8F%91%E5%B1%95%E8%81%94%E5%90%88%E5%9F%BA%E9%87%91%E9%A1%B9%E7%9B%AE%E7%AD%94%E8%BE%A9.pptx"
     },
@@ -43,6 +47,8 @@
       "sources": [
         "基于图神经网络的流场预测方法研究进展.pptx"
       ],
+      "format": "PPTX",
+      "provider": null,
       "size": 22261552,
       "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%B5%81%E5%9C%BA%E9%A2%84%E6%B5%8B%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E8%BF%9B%E5%B1%95.pptx"
     },
@@ -58,6 +64,8 @@
       "sources": [
         "基于数据-机理混合驱动的“驭电”仿真大模型.pptx"
       ],
+      "format": "PPTX",
+      "provider": null,
       "size": 7548329,
       "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE-%E6%9C%BA%E7%90%86%E6%B7%B7%E5%90%88%E9%A9%B1%E5%8A%A8%E7%9A%84%E2%80%9C%E9%A9%AD%E7%94%B5%E2%80%9D%E4%BB%BF%E7%9C%9F%E5%A4%A7%E6%A8%A1%E5%9E%8B.pptx"
     },
@@ -73,8 +81,19 @@
       "sources": [
         "大型风电齿轮箱关键技术(1).pptx"
       ],
+      "format": "PPTX",
+      "provider": "戴琼",
       "size": 3009502,
-      "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E5%A4%A7%E5%9E%8B%E9%A3%8E%E7%94%B5%E9%BD%BF%E8%BD%AE%E7%AE%B1%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%281%29.pptx"
+      "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E5%A4%A7%E5%9E%8B%E9%A3%8E%E7%94%B5%E9%BD%BF%E8%BD%AE%E7%AE%B1%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%281%29.pptx",
+      "extraDownloads": [
+        {
+          "name": "大型风电齿轮箱关键技术.pdf",
+          "format": "PDF",
+          "size": 1168469,
+          "provider": "戴琼",
+          "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E5%A4%A7%E5%9E%8B%E9%A3%8E%E7%94%B5%E9%BD%BF%E8%BD%AE%E7%AE%B1%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF.pdf"
+        }
+      ]
     },
     {
       "id": "9648e4a02f7413f3",
@@ -88,6 +107,8 @@
       "sources": [
         "框架一.pptx"
       ],
+      "format": "PPTX",
+      "provider": null,
       "size": 3670732,
       "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E6%A1%86%E6%9E%B6%E4%B8%80.pptx"
     },
@@ -103,6 +124,8 @@
       "sources": [
         "框架二.pptx"
       ],
+      "format": "PPTX",
+      "provider": null,
       "size": 913663,
       "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E6%A1%86%E6%9E%B6%E4%BA%8C.pptx"
     },
@@ -118,8 +141,44 @@
       "sources": [
         "随机系统统计矩估计的降维积分法：研究进展.pptx"
       ],
+      "format": "PPTX",
+      "provider": null,
       "size": 19868321,
       "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E9%9A%8F%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%9F%E8%AE%A1%E7%9F%A9%E4%BC%B0%E8%AE%A1%E7%9A%84%E9%99%8D%E7%BB%B4%E7%A7%AF%E5%88%86%E6%B3%95%EF%BC%9A%E7%A0%94%E7%A9%B6%E8%BF%9B%E5%B1%95.pptx"
+    },
+    {
+      "id": "d39c6d895fb47aa1",
+      "title": "大小微模型赋能先进制造：实践与思考",
+      "pageCount": 42,
+      "category": "科研案例",
+      "width": 1600,
+      "height": 900,
+      "chapters": [],
+      "variant": "扩展资源",
+      "sources": [
+        "大小微模型赋能先进制造：实践与思考.pdf"
+      ],
+      "format": "PDF",
+      "provider": "戴琼",
+      "size": 3802528,
+      "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E5%A4%A7%E5%B0%8F%E5%BE%AE%E6%A8%A1%E5%9E%8B%E8%B5%8B%E8%83%BD%E5%85%88%E8%BF%9B%E5%88%B6%E9%80%A0%EF%BC%9A%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%80%9D%E8%80%83.pdf"
+    },
+    {
+      "id": "62a9020e2d84f3b7",
+      "title": "特高压换流站中性线电流零磁通测量技术与装置",
+      "pageCount": 37,
+      "category": "工程技术",
+      "width": 1600,
+      "height": 900,
+      "chapters": [],
+      "variant": "扩展资源",
+      "sources": [
+        "特高压换流站中性线电流零磁通测量技术与装置.pdf"
+      ],
+      "format": "PDF",
+      "provider": "戴琼",
+      "size": 3584918,
+      "downloadUrl": "files/research-skills/07-research-presentation/extra-resources/%E7%89%B9%E9%AB%98%E5%8E%8B%E6%8D%A2%E6%B5%81%E7%AB%99%E4%B8%AD%E6%80%A7%E7%BA%BF%E7%94%B5%E6%B5%81%E9%9B%B6%E7%A3%81%E9%80%9A%E6%B5%8B%E9%87%8F%E6%8A%80%E6%9C%AF%E4%B8%8E%E8%A3%85%E7%BD%AE.pdf"
     }
   ]
 }
