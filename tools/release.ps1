@@ -74,7 +74,7 @@ $Wrangler = 'wrangler@4.37.0'
 
 # 只提交这些范围；dist/ 是本地构建产物（已在 .gitignore），tmp/、notebook-preview/ 等草稿也不入库。
 $IncludePaths = @(
-  'CHANGELOG.md', 'README.md', 'books.json', 'build.py', 'manage.py', 'verify.py',
+  '.gitignore', 'CHANGELOG.md', 'README.md', 'books.json', 'build.py', 'manage.py', 'verify.py',
   'public', 'content', 'tools', 'resource-inventory'
 )
 
