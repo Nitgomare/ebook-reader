@@ -50,10 +50,33 @@
 
   function solve() { return pose(state.theta); }
 
+  // 装配条件：|BC − CD| ≤ |BD| ≤ BC + CD。BD 只随主动摇杆转角变化，
+  // 因此双摇杆的摆动范围由上式唯一确定，超出即无法装配。
+  var THETA_MIN = 16;
+
+  function thetaMax(cd) {
+    var hi = DIMS.bc + cd - 0.02;
+    var c = (DIMS.ab * DIMS.ab + DIMS.ad * DIMS.ad - hi * hi) / (2 * DIMS.ab * DIMS.ad);
+    if (c <= -1) return 180;
+    if (c >= 1) return THETA_MIN;
+    return Math.acos(c) / FK.DEG;
+  }
+
+  function clampTheta() {
+    var max = Math.max(THETA_MIN + 1, thetaMax(state.cd));
+    if (state.theta < THETA_MIN) state.theta = THETA_MIN;
+    if (state.theta > max - 0.5) state.theta = max - 0.5;
+    var input = document.getElementById("theta");
+    input.min = String(THETA_MIN);
+    input.max = String(Math.round(max - 0.5));
+    return max;
+  }
+
   function sweep(fn, y) {
     var pts = [], i;
+    var max = thetaMax(state.cd) - 0.6;
     for (i = 0; i <= 80; i += 1) {
-      var theta = 26 + i / 80 * 128;
+      var theta = THETA_MIN + i / 80 * Math.max(0.1, max - THETA_MIN);
       var s = pose(theta);
       if (s.C) pts.push(fn(s, y));
     }
@@ -80,9 +103,13 @@
     stand(D[0], DIMS.z0);
     M.box([(A[0] + D[0]) / 2, 0.46, DIMS.z0], [D[0] - A[0] + 0.1, 0.12, 0.15], "graphite", frameLayer);
 
+    // 先把转角夹进可装配区间，滑块范围随之更新，避免出现“无法装配”的空画面
+    clampTheta();
+    syncInputs();
+
     var s = solve();
     if (!s.C) {
-      document.getElementById("psiOut").textContent = "无法装配";
+      document.getElementById("psiOut").textContent = "临界位置";
       return;
     }
     var B = s.B, C = s.C;
@@ -153,11 +180,10 @@
     var dt = Math.min(0.05, (ts - last) / 1000);
     last = ts;
     if (state.auto) {
+      var hi = Math.max(THETA_MIN + 6, thetaMax(state.cd) - 4);
       state.theta += dir * 46 * dt;
-      if (state.theta > 152) { state.theta = 152; dir = -1; }
-      if (state.theta < 28) { state.theta = 28; dir = 1; }
-      document.getElementById("theta").value = state.theta;
-      document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
+      if (state.theta > hi) { state.theta = hi; dir = -1; }
+      if (state.theta < THETA_MIN + 2) { state.theta = THETA_MIN + 2; dir = 1; }
       render();
     }
     requestAnimationFrame(tick);
