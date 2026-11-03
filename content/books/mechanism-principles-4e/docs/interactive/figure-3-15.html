@@ -1223,14 +1223,14 @@ window.MK = (function () {
       M.trace([[C[0] - 0.22, 0.62, zAxis + 0.10], [C[0] + 0.22, 0.62, zAxis + 0.10]], "#5f868d", traceLayer);
     }
 
-    M.bar(B, C, 0.16, 0.00, 0.16, "steel", linkLayer);
-    M.bar(A, B, 0.18, -0.26, 0.16, "brass", linkLayer);
+    M.bar(B, C, 0.16, -0.42, 0.16, "steel", linkLayer);
+    M.bar(A, B, 0.18, -0.22, 0.16, "brass", linkLayer);
     // 滑块：骑在导轨顶面（zAxis-0.10）上的方座，底面与轨面贴合
     M.box([C[0], 0, zAxis + 0.10], [0.46, 0.56, 0.40], "slate", linkLayer);
 
-    M.pin([C[0], zAxis + 0.10], 0.0, 0.13, 0.62, "slate", pinLayer);
-    M.pin(B, -0.26, 0.14, 0.30, "slate", pinLayer);
-    M.pin(A, -0.26, 0.16, 0.34, "ink", pinLayer);
+    M.pin([C[0], zAxis + 0.10], -0.10, 0.13, 0.80, "slate", pinLayer);
+    M.pin(B, -0.32, 0.14, 0.36, "slate", pinLayer);
+    M.pin(A, -0.22, 0.16, 0.30, "ink", pinLayer);
 
     if (state.showLabels) {
       M.label([A[0], -0.26, A[1]], "A", -20, 4, labelLayer);

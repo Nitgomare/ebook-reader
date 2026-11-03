@@ -1229,20 +1229,20 @@ window.MK = (function () {
     }
 
     // 从动件在后、连杆居中、主动曲柄在前：三层深度，遮挡关系与真实机构一致
-    M.bar(D, C, 0.17, 0.20, 0.16, "teal", linkLayer);
-    M.bar(B, C, 0.16, 0.00, 0.16, "steel", linkLayer);
-    M.bar(A, B, 0.18, -0.20, 0.16, "brass", linkLayer);
+    M.bar(D, C, 0.17, 0.22, 0.16, "teal", linkLayer);
+    M.bar(B, C, 0.16, -0.42, 0.16, "steel", linkLayer);
+    M.bar(A, B, 0.18, -0.22, 0.16, "brass", linkLayer);
 
-    M.pin(D, 0.20, 0.15, 0.26, "slate", pinLayer);
-    M.pin(C, 0.00, 0.14, 0.30, "slate", pinLayer);
-    M.pin(B, -0.20, 0.14, 0.30, "slate", pinLayer);
-    M.pin(A, -0.20, 0.16, 0.34, "ink", pinLayer);
+    M.pin(D, 0.22, 0.15, 0.26, "slate", pinLayer);
+    M.pin(C, -0.10, 0.14, 0.80, "slate", pinLayer);
+    M.pin(B, -0.32, 0.14, 0.36, "slate", pinLayer);
+    M.pin(A, -0.22, 0.16, 0.30, "ink", pinLayer);
 
     if (state.showLabels) {
-      M.label([A[0], -0.20, A[1]], "A", -20, 4, labelLayer);
-      M.label([B[0], -0.20, B[1]], "B", 4, -16, labelLayer);
-      M.label([C[0], 0.0, C[1]], "C", 16, -6, labelLayer);
-      M.label([D[0], 0.20, D[1]], "D", 18, 4, labelLayer);
+      M.label([A[0], -0.22, A[1]], "A", -20, 4, labelLayer);
+      M.label([B[0], -0.42, B[1]], "B", 4, -16, labelLayer);
+      M.label([C[0], -0.42, C[1]], "C", 16, -6, labelLayer);
+      M.label([D[0], 0.22, D[1]], "D", 18, 4, labelLayer);
     }
 
     var psi = rad2deg(Math.atan2(C[1] - D[1], C[0] - D[0]));

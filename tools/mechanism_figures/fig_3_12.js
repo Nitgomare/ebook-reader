@@ -119,14 +119,14 @@
       M.trace(sweep(function (p, y) { return [p.C[0], y, p.C[1]]; }, 0.62), "#5f868d", traceLayer);
     }
 
-    M.bar(D, C, 0.17, 0.20, 0.16, "teal", linkLayer);
-    M.bar(B, C, 0.16, 0.00, 0.16, "steel", linkLayer);
-    M.bar(A, B, 0.18, -0.20, 0.16, "brass", linkLayer);
+    M.bar(D, C, 0.17, 0.22, 0.16, "teal", linkLayer);
+    M.bar(B, C, 0.16, -0.42, 0.16, "steel", linkLayer);
+    M.bar(A, B, 0.18, -0.22, 0.16, "brass", linkLayer);
 
-    M.pin(D, 0.20, 0.15, 0.26, "slate", pinLayer);
-    M.pin(C, 0.00, 0.14, 0.30, "slate", pinLayer);
-    M.pin(B, -0.20, 0.14, 0.30, "slate", pinLayer);
-    M.pin(A, -0.20, 0.16, 0.34, "ink", pinLayer);
+    M.pin(D, 0.22, 0.15, 0.26, "slate", pinLayer);
+    M.pin(C, -0.10, 0.14, 0.80, "slate", pinLayer);
+    M.pin(B, -0.32, 0.14, 0.36, "slate", pinLayer);
+    M.pin(A, -0.22, 0.16, 0.30, "ink", pinLayer);
 
     if (state.showLabels) {
       M.label([A[0], -0.20, A[1]], "A", -20, 4, labelLayer);

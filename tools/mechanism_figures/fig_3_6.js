@@ -108,14 +108,14 @@
     }
 
     // 从动曲柄在后、连杆居中、主动曲柄在前
-    M.bar(D, C, 0.17, 0.26, 0.14, "teal", linkLayer);
-    M.bar(B, C, 0.16, 0.00, 0.14, "steel", linkLayer);
-    M.bar(A, B, 0.18, -0.26, 0.14, "brass", linkLayer);
+    M.bar(D, C, 0.17, 0.22, 0.16, "teal", linkLayer);
+    M.bar(B, C, 0.16, -0.42, 0.16, "steel", linkLayer);
+    M.bar(A, B, 0.18, -0.22, 0.16, "brass", linkLayer);
 
-    M.pin(D, 0.26, 0.15, 0.24, "slate", pinLayer);
-    M.pin(C, 0.00, 0.14, 0.30, "slate", pinLayer);
-    M.pin(B, -0.26, 0.14, 0.28, "slate", pinLayer);
-    M.pin(A, -0.26, 0.16, 0.34, "ink", pinLayer);
+    M.pin(D, 0.22, 0.15, 0.26, "slate", pinLayer);
+    M.pin(C, -0.10, 0.14, 0.80, "slate", pinLayer);
+    M.pin(B, -0.32, 0.14, 0.36, "slate", pinLayer);
+    M.pin(A, -0.22, 0.16, 0.30, "ink", pinLayer);
 
     if (state.showLabels) {
       M.label([A[0], -0.20, A[1]], "A", -20, 4, labelLayer);
