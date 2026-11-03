@@ -1,184 +1,154 @@
+/* 图3-15 曲柄滑块机构（偏置）：曲柄整周回转，滑块沿中央导轨往复 */
 (function () {
   "use strict";
 
-  var viewport = document.getElementById("viewport");
-  var baseLayer = document.getElementById("baseLayer");
-  var frameLayer = document.getElementById("frameLayer");
-  var traceLayer = document.getElementById("traceLayer");
-  var linkLayer = document.getElementById("linkLayer");
-  var pinLayer = document.getElementById("pinLayer");
-  var labelLayer = document.getElementById("labelLayer");
-
-  var scene = new FK.Scene({
-    svg: viewport,
-    origin: { x: 470, y: 330 },
-    scale: 92,
-    yaw: -0.40,
-    pitch: 0.30,
-    minScale: 34,
-    maxScale: 190
-  });
-  var M = MK.make(scene);
-
-  // 曲柄滑块：偏距 e = 0 时对心，e > 0 时偏置；滑块沿水平导轨往复
-  // z0 抬高到 1.45：曲柄整周回转时最低点仍在台面（z=0）之上
-  var DIMS = { r: 1.2, l: 3.6, z0: 1.45 };
+  var DIMS = { r: 1.2, l: 3.6, z0: 1.45, railTop: 0.30 };
   var A = [0, DIMS.z0];
-
-  var state = { theta: 30, r: DIMS.r, e: 0.6, auto: true, showTrace: true, showLabels: true };
-
-  function rad2deg(v) { return v * 180 / Math.PI; }
+  var state = { theta: 40, r: 1.2, e: 0.60, auto: true, showTrace: true, showLabels: true };
+  var LAYERS = ["baseLayer", "traceLayer", "frameLayer", "linkLayer", "pinLayer", "labelLayer"];
+  var scene, M, P, S, layer = {};
 
   function pose(theta) {
-    var t = theta * FK.DEG;
-    var B = [A[0] + state.r * Math.cos(t), A[1] + state.r * Math.sin(t)];
-    var zAxis = A[1] - state.e;
-    var dz = B[1] - zAxis;
+    var th = (theta === undefined ? state.theta : theta) * Math.PI / 180;
+    var B = [A[0] + Math.cos(th) * state.r, A[1] + Math.sin(th) * state.r];
+    var zRail = A[1] - state.e;
+    var dz = B[1] - zRail;
     var under = DIMS.l * DIMS.l - dz * dz;
-    if (under <= 0) return { B: B, C: null, zAxis: zAxis };
-    return { B: B, C: [B[0] + Math.sqrt(under), zAxis], zAxis: zAxis };
+    if (under <= 0) return { A: A, B: B, C: null, zRail: zRail };
+    return { A: A, B: B, C: [B[0] + Math.sqrt(under), zRail], zRail: zRail };
   }
 
-  function solve() { return pose(state.theta); }
-
   function stroke() {
-    var lo = Infinity, hi = -Infinity, i;
-    for (i = 0; i <= 180; i += 1) {
-      var s = pose(i / 180 * 360);
+    var lo = 1e9, hi = -1e9;
+    for (var t = 0; t < 360; t += 1) {
+      var s = pose(t);
       if (!s.C) continue;
-      lo = Math.min(lo, s.C[0]);
-      hi = Math.max(hi, s.C[0]);
+      lo = Math.min(lo, s.C[0]); hi = Math.max(hi, s.C[0]);
     }
     return hi - lo;
   }
 
-  function stand() {
-    M.box([A[0], 0.44, 0.09], [0.60, 0.64, 0.18], "graphite", frameLayer);
-    M.box([A[0], 0.44, DIMS.z0 / 2 + 0.04], [0.32, 0.32, DIMS.z0 - 0.06], "graphite", frameLayer);
-    M.box([A[0], 0.42, DIMS.z0], [0.34, 0.40, 0.30], "slate", frameLayer);
-  }
+  function clearAll() { LAYERS.forEach(function (id) { if (layer[id]) layer[id].replaceChildren(); }); }
+  function setText(id, t) { var n = document.getElementById(id); if (n && n.textContent !== t) n.textContent = t; }
 
-  /** 导轨：一条中央导轨，滑块是骑在导轨顶面上的方座（底面正好落在导轨顶面） */
-  function guide(zAxis, x0, x1) {
-    var mid = (x0 + x1) / 2;
-    var bedBottom = zAxis - 0.44;
-    // 床身：托住导轨
-    M.box([mid, 0, zAxis - 0.40], [x1 - x0, 0.52, 0.08], "graphite", frameLayer);
-    // 中央导轨：顶面 zAxis-0.10，滑块坐在这上面
-    M.box([mid, 0, zAxis - 0.25], [x1 - x0, 0.30, 0.30], "slate", frameLayer);
-    // 两端支座：从台面（z=0）接到床身底面
-    M.box([x0 + 0.26, 0, bedBottom / 2], [0.34, 0.50, bedBottom], "graphite", frameLayer);
-    M.box([x1 - 0.26, 0, bedBottom / 2], [0.34, 0.50, bedBottom], "graphite", frameLayer);
+  function ring(cx, cz, radius, y, color) {
+    var d = "";
+    for (var i = 0; i <= 96; i++) {
+      var a = (i / 96) * Math.PI * 2;
+      var p = scene.project([cx + Math.cos(a) * radius, y, cz + Math.sin(a) * radius]);
+      d += (i ? "L" : "M") + p.x.toFixed(2) + " " + p.y.toFixed(2);
+    }
+    MP.el("path", { d: d + "Z", fill: "none", stroke: color, "stroke-width": 1.4, "stroke-dasharray": "7 6", opacity: 0.7 }, layer.traceLayer);
   }
 
   function render() {
-    window.FigureLayout.fit(scene, state, 5.2);
-    baseLayer.replaceChildren();
-    frameLayer.replaceChildren();
-    traceLayer.replaceChildren();
-    linkLayer.replaceChildren();
-    pinLayer.replaceChildren();
-    labelLayer.replaceChildren();
+    clearAll();
+    if (window.FigureLayout) window.FigureLayout.fit(scene, state, 6.6);
+    var s = pose();
+    var zRail = s.zRail;
 
-    var s0 = solve();
-    var zAxis = s0.zAxis;
-    var x0 = -1.4, x1 = 5.2;
+    M.bench(-1.55, 4.85, -1.10, 1.00, 0.26, layer.baseLayer, { label: "FIG 3-15", labelX: 0.55 });
 
-    M.bench(-1.6, 5.6, -1.15, 1.15, 0.22, baseLayer, { label: "FIG 3-15", labelX: 0.0 });
-    stand();
-    guide(zAxis, x0, x1);
+    // 床身 + 两端支座 + 一条中央导轨，滑块骑在轨顶
+    var bedZ = zRail - 0.34;
+    M.box([(A[0] + 4.6) / 2, 0, bedZ + 0.02], [5.0, 0.66, 0.34], "graphite", layer.frameLayer, { bevel: 0.04 });
+    M.box([-0.9, 0, bedZ / 2], [0.26, 0.66, Math.max(0.2, bedZ)], "graphite", layer.frameLayer, { bevel: 0.03 });
+    M.box([4.5, 0, bedZ / 2], [0.26, 0.66, Math.max(0.2, bedZ)], "graphite", layer.frameLayer, { bevel: 0.03 });
+    M.box([1.85, 0, zRail - 0.16], [5.0, 0.26, 0.26], "slate", layer.frameLayer, { bevel: 0.03 });
 
-    if (!s0.C) {
-      document.getElementById("sOut").textContent = "无法装配";
-      return;
-    }
-    var B = s0.B, C = s0.C;
+    if (state.showTrace) ring(A[0], A[1], state.r, -0.30, P.brass.dark);
 
-    if (state.showTrace) {
-      var ring = [], i;
-      for (i = 0; i <= 72; i += 1) {
-        var a = i / 72 * Math.PI * 2;
-        ring.push([A[0] + state.r * Math.cos(a), 0.62, A[1] + state.r * Math.sin(a)]);
-      }
-      M.trace(ring, "#c08a3e", traceLayer);
-      M.trace([[C[0] - 0.22, 0.62, zAxis + 0.10], [C[0] + 0.22, 0.62, zAxis + 0.10]], "#5f868d", traceLayer);
-    }
+    S.pedestal(A[0], A[1], 0.34, { layer: layer.frameLayer });
+    if (!s.C) { setText("sOut", "—"); setText("hOut", "—"); setText("gammaOut", "—"); return; }
 
-    M.bar(B, C, 0.16, -0.42, 0.16, "steel", linkLayer);
-    M.bar(A, B, 0.18, -0.22, 0.16, "brass", linkLayer);
-    // 滑块：骑在导轨顶面（zAxis-0.10）上的方座，底面与轨面贴合
-    M.box([C[0], 0, zAxis + 0.10], [0.46, 0.56, 0.40], "slate", linkLayer);
+    // 滑块
+    M.box([s.C[0], 0, zRail + 0.06], [0.46, 0.62, 0.34], "slate", layer.linkLayer, { bevel: 0.04 });
+    S.linkBar([s.B[0], s.B[1]], [s.C[0], s.C[1]], 0.115, -0.30, 0.16, "steel", layer.linkLayer);
+    S.linkBar([A[0], A[1]], [s.B[0], s.B[1]], 0.115, -0.10, 0.16, "brass", layer.linkLayer);
 
-    M.pin([C[0], zAxis + 0.10], -0.10, 0.13, 0.80, "slate", pinLayer);
-    M.pin(B, -0.32, 0.14, 0.36, "slate", pinLayer);
-    M.pin(A, -0.22, 0.16, 0.30, "ink", pinLayer);
+    S.cylY(A[0], A[1], 0.105, -0.36, 0.50, "ink", layer.pinLayer, { seg: 20 });
+    S.cylY(s.B[0], s.B[1], 0.085, -0.40, -0.02, "steel", layer.pinLayer, { seg: 18 });
+    S.cylY(s.C[0], zRail + 0.06, 0.090, -0.40, 0.36, "steel", layer.pinLayer, { seg: 18 });
 
     if (state.showLabels) {
-      M.label([A[0], -0.26, A[1]], "A", -20, 4, labelLayer);
-      M.label([B[0], -0.26, B[1]], "B", 6, -16, labelLayer);
-      M.label([C[0], 0.0, zAxis + 0.10], "C", 4, 24, labelLayer);
+      var put = function (p, name, dx, dy) {
+        var q = scene.project([p[0], -0.44, p[1]]);
+        var t = MP.el("text", {
+          x: q.x + (dx || 0), y: q.y + (dy || 0), "text-anchor": "middle", "font-size": 15,
+          "font-weight": 700, fill: "#25313f", "paint-order": "stroke", stroke: "#ffffff", "stroke-width": 4
+        }, layer.labelLayer);
+        t.textContent = name;
+      };
+      put(A, "A", -24, 22); put(s.B, "B", 20, -12); put([s.C[0], zRail], "C", 6, 26);
     }
 
-    // 传动角：连杆与滑块运动方向（水平）之间的锐角
-    var u = [B[0] - C[0], B[1] - C[1]];
-    var gamma = rad2deg(Math.acos(Math.max(-1, Math.min(1, -u[0] / Math.sqrt(u[0] * u[0] + u[1] * u[1])))));
-
-    document.getElementById("thetaOut").textContent = state.theta.toFixed(0) + "°";
-    document.getElementById("sOut").textContent = (C[0] - A[0]).toFixed(2);
-    document.getElementById("hOut").textContent = stroke().toFixed(2);
-    document.getElementById("gammaOut").textContent = gamma.toFixed(1) + "°";
+    var gamma = Math.atan2(Math.abs(s.B[1] - s.C[1]), Math.abs(s.C[0] - s.B[0])) * 180 / Math.PI;
+    setText("thetaValue", state.theta.toFixed(0) + "°");
+    setText("rValue", state.r.toFixed(2));
+    setText("eValue", state.e.toFixed(2));
+    setText("thetaOut", state.theta.toFixed(0) + "°");
+    setText("sOut", s.C[0].toFixed(2));
+    setText("hOut", stroke().toFixed(2));
+    setText("gammaOut", gamma.toFixed(1) + "°");
   }
 
-  function syncInputs() {
-    document.getElementById("theta").value = state.theta;
-    document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
-    document.getElementById("r").value = state.r;
-    document.getElementById("rValue").textContent = state.r.toFixed(2);
-    document.getElementById("e").value = state.e;
-    document.getElementById("eValue").textContent = state.e.toFixed(2);
+  var raf = 0, last = 0;
+  function tick(now) {
+    raf = 0;
+    var dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (!state.auto) { last = 0; return; }
+    state.theta = (state.theta + 54 * dt) % 360;
+    render();
+    raf = requestAnimationFrame(tick);
+  }
+  function runLoop() { if (!raf && state.auto) raf = requestAnimationFrame(tick); }
+
+  function bind() {
+    [["theta", "theta", "thetaValue", function (v) { return v.toFixed(0) + "°"; }],
+     ["r", "r", "rValue", function (v) { return v.toFixed(2); }],
+     ["e", "e", "eValue", function (v) { return v.toFixed(2); }]].forEach(function (row) {
+      var input = document.getElementById(row[0]);
+      if (!input) return;
+      input.addEventListener("input", function () {
+        state[row[1]] = parseFloat(input.value);
+        setText(row[2], row[3](state[row[1]]));
+        render();
+      });
+    });
+    ["auto", "showTrace", "showLabels"].forEach(function (id) {
+      var box = document.getElementById(id);
+      if (!box) return;
+      box.addEventListener("change", function () {
+        state[id] = box.checked;
+        if (id === "auto" && box.checked) { last = 0; runLoop(); } else render();
+      });
+    });
+    var reset = document.getElementById("reset");
+    if (reset) reset.addEventListener("click", function () {
+      state.theta = 40; state.r = 1.2; state.e = 0.60;
+      [["theta", 40], ["r", 1.2], ["e", 0.6]].forEach(function (pair) {
+        var input = document.getElementById(pair[0]); if (input) input.value = pair[1];
+      });
+      setText("thetaValue", "40°"); setText("rValue", "1.20"); setText("eValue", "0.60");
+      scene.reset(); render();
+    });
   }
 
-  document.getElementById("theta").addEventListener("input", function (e) {
-    state.theta = Number(e.target.value); syncInputs(); render();
-  });
-  document.getElementById("r").addEventListener("input", function (e) {
-    state.r = Number(e.target.value); syncInputs(); render();
-  });
-  document.getElementById("e").addEventListener("input", function (e) {
-    state.e = Number(e.target.value); syncInputs(); render();
-  });
-  document.getElementById("auto").addEventListener("change", function (e) { state.auto = e.target.checked; });
-  document.getElementById("showTrace").addEventListener("change", function (e) {
-    state.showTrace = e.target.checked; render();
-  });
-  document.getElementById("showLabels").addEventListener("change", function (e) {
-    state.showLabels = e.target.checked; render();
-  });
-  document.getElementById("reset").addEventListener("click", function () {
-    state.theta = 30; state.r = DIMS.r; state.e = 0.6;
-    state.auto = true; state.showTrace = true; state.showLabels = true;
-    document.getElementById("auto").checked = true;
-    document.getElementById("showTrace").checked = true;
-    document.getElementById("showLabels").checked = true;
-    scene.reset();
-    syncInputs(); render();
-  });
-
-  var last = 0;
-  function tick(ts) {
-    if (!last) last = ts;
-    var dt = Math.min(0.05, (ts - last) / 1000);
-    last = ts;
-    if (state.auto) {
-      state.theta = (state.theta + 70 * dt) % 360;
-      document.getElementById("theta").value = state.theta;
-      document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
-      render();
-    }
-    requestAnimationFrame(tick);
+  function boot() {
+    LAYERS.forEach(function (id) { layer[id] = document.getElementById(id); });
+    scene = new FK.Scene({
+      svg: document.getElementById("viewport"), origin: { x: 470, y: 330 }, scale: 96,
+      yaw: -0.40, pitch: 0.30, minScale: 34, maxScale: 190
+    });
+    M = window.MK.make(scene, {});
+    P = M.pal;
+    S = window.MP.make(scene, M);
+    bind(); render();
+    if (window.FigureLayout) window.FigureLayout.attach(scene, state, render, 6.6);
+    runLoop();
   }
 
-  syncInputs();
-  window.FigureLayout.attach(scene, state, render, 5.2);
-  requestAnimationFrame(tick);
-}());
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();

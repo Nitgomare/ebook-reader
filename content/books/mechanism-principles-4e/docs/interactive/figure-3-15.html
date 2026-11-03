@@ -226,17 +226,6 @@ input[type="range"]::-moz-range-thumb {
 <body>
 <main class="app">
 <svg class="viewport" id="viewport" viewBox="0 0 1000 620" role="img" aria-label="曲柄滑块机构交互示意，曲柄整周回转带动滑块沿导轨往复">
-  <defs>
-    <marker id="arrowX" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d93025"></path>
-    </marker>
-    <marker id="arrowZ" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#12944f"></path>
-    </marker>
-    <marker id="arrowV" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c26a10"></path>
-    </marker>
-  </defs>
   <g id="baseLayer"></g>
   <g id="traceLayer"></g>
   <g id="frameLayer"></g>
@@ -272,10 +261,10 @@ input[type="range"]::-moz-range-thumb {
   </div>
 
   <div class="legend">
-    <span><i style="background:#ecd3a2"></i>曲柄 1（AB，整周回转）</span>
-    <span><i style="background:#dde6f3"></i>连杆 2（BC）</span>
-    <span><i style="background:#c8d4e4"></i>滑块 3（C，往复移动）</span>
-    <span><i style="background:#d3d8e0"></i>机架与导轨 4</span>
+    <span><i style="background:#c08a3e"></i>曲柄 1（AB，整周回转）</span>
+    <span><i style="background:#3f6fae"></i>连杆 2（BC）</span>
+    <span><i style="background:#7c6aa8"></i>滑块 3（C，往复移动）</span>
+    <span><i style="background:#8a93a3"></i>机架与导轨 4</span>
   </div>
 </section>
 
@@ -289,8 +278,6 @@ input[type="range"]::-moz-range-thumb {
   <div class="row"><span class="small">偏置曲柄滑块：滑块位移 s = r cosθ + √(l² − (r sinθ − e)²)，行程 H > 2r；e = 0 时退化为对心曲柄滑块，H = 2r 且无急回。</span></div>
 </div>
 </main>
-<link rel="stylesheet" href="figure-layout.css?v=2">
-<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -1117,190 +1104,309 @@ window.MK = (function () {
 }());
 </script>
 <script>
+/* 零件库：等轴测小机械的底座、轴承立柱、销轴与链杆。
+   依赖 figure-kit.js 的 scene.project 与 mkit.js 的挤压/着色，目标按 anatomy 的做工：
+   每个零件都坐在另一个零件上，分面明暗四档，线收在零件边缘。 */
 (function () {
   "use strict";
 
-  var viewport = document.getElementById("viewport");
-  var baseLayer = document.getElementById("baseLayer");
-  var frameLayer = document.getElementById("frameLayer");
-  var traceLayer = document.getElementById("traceLayer");
-  var linkLayer = document.getElementById("linkLayer");
-  var pinLayer = document.getElementById("pinLayer");
-  var labelLayer = document.getElementById("labelLayer");
+  var NS = "http://www.w3.org/2000/svg";
 
-  var scene = new FK.Scene({
-    svg: viewport,
-    origin: { x: 470, y: 330 },
-    scale: 92,
-    yaw: -0.40,
-    pitch: 0.30,
-    minScale: 34,
-    maxScale: 190
-  });
-  var M = MK.make(scene);
-
-  // 曲柄滑块：偏距 e = 0 时对心，e > 0 时偏置；滑块沿水平导轨往复
-  // z0 抬高到 1.45：曲柄整周回转时最低点仍在台面（z=0）之上
-  var DIMS = { r: 1.2, l: 3.6, z0: 1.45 };
-  var A = [0, DIMS.z0];
-
-  var state = { theta: 30, r: DIMS.r, e: 0.6, auto: true, showTrace: true, showLabels: true };
-
-  function rad2deg(v) { return v * 180 / Math.PI; }
-
-  function pose(theta) {
-    var t = theta * FK.DEG;
-    var B = [A[0] + state.r * Math.cos(t), A[1] + state.r * Math.sin(t)];
-    var zAxis = A[1] - state.e;
-    var dz = B[1] - zAxis;
-    var under = DIMS.l * DIMS.l - dz * dz;
-    if (under <= 0) return { B: B, C: null, zAxis: zAxis };
-    return { B: B, C: [B[0] + Math.sqrt(under), zAxis], zAxis: zAxis };
+  function el(tag, attrs, parent) {
+    var node = document.createElementNS(NS, tag);
+    for (var key in attrs) {
+      if (Object.prototype.hasOwnProperty.call(attrs, key)) node.setAttribute(key, attrs[key]);
+    }
+    if (parent) parent.appendChild(node);
+    return node;
   }
 
-  function solve() { return pose(state.theta); }
+  function make(scene, mk) {
+    var pal = mk.pal;
+
+    function linkBar(p, q, halfW, y, thick, toneName, layer, opt) {
+      opt = opt || {};
+      var tone = mk.tone(toneName);
+      mk.bar(p, q, halfW, y, thick, toneName, layer);
+      // 两端圆眼：孔里露出销轴，说明是铰接而不是焊死
+      [p, q].forEach(function (c) {
+        var ring = [];
+        for (var i = 0; i <= 22; i++) {
+          var a = (i / 22) * Math.PI * 2;
+          ring.push([c[0] + Math.cos(a) * halfW * 0.62, y + thick / 2 + 0.004, c[1] + Math.sin(a) * halfW * 0.62]);
+        }
+        var d = "";
+        ring.forEach(function (v, idx) {
+          var s2 = scene.project(v);
+          d += (idx ? "L" : "M") + s2.x.toFixed(2) + " " + s2.y.toFixed(2);
+        });
+        el("path", { d: d + "Z", fill: tone.dark, stroke: tone.line, "stroke-width": 0.8 }, layer);
+      });
+      // 上缘一道受光，让杆件有金属厚度
+      if (opt.highlight !== false) {
+        var up = [];
+        for (var m = 0; m <= 14; m++) {
+          var t2 = m / 14;
+          up.push([
+            p[0] + (q[0] - p[0]) * t2 + (q[1] - p[1]) / Math.hypot(q[0] - p[0], q[1] - p[1]) * halfW * 0.82,
+            y + thick / 2 + 0.006,
+            p[1] + (q[1] - p[1]) * t2 - (q[0] - p[0]) / Math.hypot(q[0] - p[0], q[1] - p[1]) * halfW * 0.82
+          ]);
+        }
+        var dh = "";
+        up.forEach(function (v, idx2) {
+          var s3 = scene.project(v);
+          dh += (idx2 ? "L" : "M") + s3.x.toFixed(2) + " " + s3.y.toFixed(2);
+        });
+        el("path", { d: dh, fill: "none", stroke: tone.hi, "stroke-width": 1.5, "stroke-linecap": "round", opacity: 0.85 }, layer);
+      }
+    }
+
+    function cylY(cx, cz, radius, y0, y1, toneName, layer, opt) {
+      opt = opt || {};
+      var centre = (y0 + y1) / 2;
+      var thick = Math.abs(y1 - y0);
+      mk.pin([cx, cz], centre, radius, thick, toneName, layer);
+      // 两端挡圈
+      [y0, y1].forEach(function (yy) {
+        var tone = mk.tone(toneName);
+        var pts = [];
+        for (var i = 0; i <= 20; i++) {
+          var a = (i / 20) * Math.PI * 2;
+          pts.push([cx + Math.cos(a) * radius * 0.55, yy, cz + Math.sin(a) * radius * 0.55]);
+        }
+        var d = "";
+        pts.forEach(function (v, idx) {
+          var s2 = scene.project(v);
+          d += (idx ? "L" : "M") + s2.x.toFixed(2) + " " + s2.y.toFixed(2);
+        });
+        el("path", { d: d + "Z", fill: "none", stroke: tone.dark, "stroke-width": 1.1 }, layer);
+      });
+    }
+
+    // 轴承立柱：地脚板 → 立柱 → 轴承座（沿 y 的圆柱）→ 压盖螺栓
+    function pedestal(x, zTop, yBoss, opt) {
+      opt = opt || {};
+      var base = opt.layer || null;
+      var foot = 0.46;
+      mk.box([x, yBoss, (opt.z0 || 0) + 0.05], [foot, foot * 1.5, 0.10], "graphite", base, { bevel: 0.03 });
+      mk.box([x, yBoss, ((opt.z0 || 0) + 0.10 + zTop - 0.22) / 2], [foot * 0.62, foot * 0.86, zTop - 0.32 - (opt.z0 || 0)], "graphite", base, { bevel: 0.03 });
+      // 立柱与轴承座之间的肋
+      mk.box([x, yBoss, zTop - 0.24], [foot * 0.5, foot * 1.2, 0.16], "graphite", base, { bevel: 0.02 });
+      cylY(x, zTop, 0.20, yBoss - 0.19, yBoss + 0.19, "steel", base, { seg: 22 });
+      // 压盖螺栓：两颗小圆点落在座顶
+      [-0.10, 0.10].forEach(function (dy) {
+        var p = scene.project([x, yBoss + dy, zTop + 0.21]);
+        el("circle", { cx: p.x, cy: p.y, r: 2.1, fill: pal.graphite.dark, stroke: pal.graphite.line, "stroke-width": 0.7 }, base);
+      });
+    }
+
+    // 底座：台面 + 地脚 + 螺钉 + 刻度尺 + 铭牌
+    function bench(x0, x1, y0, y1, thick, layer, opt) {
+      opt = opt || {};
+      mk.box([(x0 + x1) / 2, (y0 + y1) / 2, -thick / 2], [x1 - x0, y1 - y0, thick], "graphite", layer, { bevel: 0.05 });
+      // 台面倒角与四周倒棱，让台面有厚度而不像纸片
+      mk.box([(x0 + x1) / 2, (y0 + y1) / 2, 0.012], [x1 - x0 - 0.10, y1 - y0 - 0.10, 0.028], "graphite", layer, { bevel: 0.03 });
+      var feet = [[x0 + 0.20, y0 + 0.20], [x1 - 0.20, y0 + 0.20], [x0 + 0.20, y1 - 0.20], [x1 - 0.20, y1 - 0.20]];
+      feet.forEach(function (f) {
+        mk.box([f[0], f[1], -thick - 0.055], [0.30, 0.30, 0.11], "graphite", layer, { bevel: 0.02 });
+        mk.box([f[0], f[1], -thick - 0.115], [0.20, 0.20, 0.02], "ink", layer, { bevel: 0.01 });
+      });
+      feet.forEach(function (f) {
+        var p = scene.project([f[0], f[1], 0.03]);
+        el("circle", { cx: p.x, cy: p.y, r: 2.6, fill: "none", stroke: pal.graphite.mid, "stroke-width": 1 }, layer);
+        el("circle", { cx: p.x, cy: p.y, r: 1.1, fill: pal.graphite.dark }, layer);
+      });
+      // 前沿刻度尺：每 5 小格一长格
+      var ticks = [];
+      var step = (x1 - x0) / 20;
+      for (var i = 0; i <= 20; i++) {
+        var x = x0 + step * i;
+        var long = i % 5 === 0;
+        ticks.push({ a: [x, y1 - 0.02], b: [x, y1 - (long ? 0.13 : 0.07)] });
+      }
+      ticks.forEach(function (t) {
+        var p1 = scene.project([t.a[0], t.a[1], 0.031]);
+        var p2 = scene.project([t.b[0], t.b[1], 0.031]);
+        el("line", { x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y, stroke: pal.graphite.mid, "stroke-width": 1 }, layer);
+      });
+      // 铭牌：黄铜片上压字
+      var label = opt.label || "";
+      if (label) {
+        var lx = opt.labelX === undefined ? (x0 + 0.55) : x0 + opt.labelX;
+        var w = Math.max(0.62, label.length * 0.088);
+        mk.box([lx + w / 2, y1 - 0.30, 0.036], [w, 0.20, 0.018], "brass", layer, { bevel: 0.012 });
+        var p = scene.project([lx + w / 2, y1 - 0.30, 0.046]);
+        var text = el("text", {
+          x: p.x, y: p.y + 3.2, "text-anchor": "middle",
+          "font-size": 10.5, "font-family": "ui-monospace,SFMono-Regular,Menlo,monospace",
+          "letter-spacing": 0.6, fill: "#4a3a1c"
+        }, layer);
+        text.textContent = label;
+      }
+    }
+
+    return { bench: bench, pedestal: pedestal, linkBar: linkBar, cylY: cylY, el: el };
+  }
+
+  window.MP = { make: make, el: el };
+})();
+</script>
+<script>
+/* 图3-15 曲柄滑块机构（偏置）：曲柄整周回转，滑块沿中央导轨往复 */
+(function () {
+  "use strict";
+
+  var DIMS = { r: 1.2, l: 3.6, z0: 1.45, railTop: 0.30 };
+  var A = [0, DIMS.z0];
+  var state = { theta: 40, r: 1.2, e: 0.60, auto: true, showTrace: true, showLabels: true };
+  var LAYERS = ["baseLayer", "traceLayer", "frameLayer", "linkLayer", "pinLayer", "labelLayer"];
+  var scene, M, P, S, layer = {};
+
+  function pose(theta) {
+    var th = (theta === undefined ? state.theta : theta) * Math.PI / 180;
+    var B = [A[0] + Math.cos(th) * state.r, A[1] + Math.sin(th) * state.r];
+    var zRail = A[1] - state.e;
+    var dz = B[1] - zRail;
+    var under = DIMS.l * DIMS.l - dz * dz;
+    if (under <= 0) return { A: A, B: B, C: null, zRail: zRail };
+    return { A: A, B: B, C: [B[0] + Math.sqrt(under), zRail], zRail: zRail };
+  }
 
   function stroke() {
-    var lo = Infinity, hi = -Infinity, i;
-    for (i = 0; i <= 180; i += 1) {
-      var s = pose(i / 180 * 360);
+    var lo = 1e9, hi = -1e9;
+    for (var t = 0; t < 360; t += 1) {
+      var s = pose(t);
       if (!s.C) continue;
-      lo = Math.min(lo, s.C[0]);
-      hi = Math.max(hi, s.C[0]);
+      lo = Math.min(lo, s.C[0]); hi = Math.max(hi, s.C[0]);
     }
     return hi - lo;
   }
 
-  function stand() {
-    M.box([A[0], 0.44, 0.09], [0.60, 0.64, 0.18], "graphite", frameLayer);
-    M.box([A[0], 0.44, DIMS.z0 / 2 + 0.04], [0.32, 0.32, DIMS.z0 - 0.06], "graphite", frameLayer);
-    M.box([A[0], 0.42, DIMS.z0], [0.34, 0.40, 0.30], "slate", frameLayer);
-  }
+  function clearAll() { LAYERS.forEach(function (id) { if (layer[id]) layer[id].replaceChildren(); }); }
+  function setText(id, t) { var n = document.getElementById(id); if (n && n.textContent !== t) n.textContent = t; }
 
-  /** 导轨：一条中央导轨，滑块是骑在导轨顶面上的方座（底面正好落在导轨顶面） */
-  function guide(zAxis, x0, x1) {
-    var mid = (x0 + x1) / 2;
-    var bedBottom = zAxis - 0.44;
-    // 床身：托住导轨
-    M.box([mid, 0, zAxis - 0.40], [x1 - x0, 0.52, 0.08], "graphite", frameLayer);
-    // 中央导轨：顶面 zAxis-0.10，滑块坐在这上面
-    M.box([mid, 0, zAxis - 0.25], [x1 - x0, 0.30, 0.30], "slate", frameLayer);
-    // 两端支座：从台面（z=0）接到床身底面
-    M.box([x0 + 0.26, 0, bedBottom / 2], [0.34, 0.50, bedBottom], "graphite", frameLayer);
-    M.box([x1 - 0.26, 0, bedBottom / 2], [0.34, 0.50, bedBottom], "graphite", frameLayer);
+  function ring(cx, cz, radius, y, color) {
+    var d = "";
+    for (var i = 0; i <= 96; i++) {
+      var a = (i / 96) * Math.PI * 2;
+      var p = scene.project([cx + Math.cos(a) * radius, y, cz + Math.sin(a) * radius]);
+      d += (i ? "L" : "M") + p.x.toFixed(2) + " " + p.y.toFixed(2);
+    }
+    MP.el("path", { d: d + "Z", fill: "none", stroke: color, "stroke-width": 1.4, "stroke-dasharray": "7 6", opacity: 0.7 }, layer.traceLayer);
   }
 
   function render() {
-    window.FigureLayout.fit(scene, state, 5.2);
-    baseLayer.replaceChildren();
-    frameLayer.replaceChildren();
-    traceLayer.replaceChildren();
-    linkLayer.replaceChildren();
-    pinLayer.replaceChildren();
-    labelLayer.replaceChildren();
+    clearAll();
+    if (window.FigureLayout) window.FigureLayout.fit(scene, state, 6.6);
+    var s = pose();
+    var zRail = s.zRail;
 
-    var s0 = solve();
-    var zAxis = s0.zAxis;
-    var x0 = -1.4, x1 = 5.2;
+    M.bench(-1.55, 4.85, -1.10, 1.00, 0.26, layer.baseLayer, { label: "FIG 3-15", labelX: 0.55 });
 
-    M.bench(-1.6, 5.6, -1.15, 1.15, 0.22, baseLayer, { label: "FIG 3-15", labelX: 0.0 });
-    stand();
-    guide(zAxis, x0, x1);
+    // 床身 + 两端支座 + 一条中央导轨，滑块骑在轨顶
+    var bedZ = zRail - 0.34;
+    M.box([(A[0] + 4.6) / 2, 0, bedZ + 0.02], [5.0, 0.66, 0.34], "graphite", layer.frameLayer, { bevel: 0.04 });
+    M.box([-0.9, 0, bedZ / 2], [0.26, 0.66, Math.max(0.2, bedZ)], "graphite", layer.frameLayer, { bevel: 0.03 });
+    M.box([4.5, 0, bedZ / 2], [0.26, 0.66, Math.max(0.2, bedZ)], "graphite", layer.frameLayer, { bevel: 0.03 });
+    M.box([1.85, 0, zRail - 0.16], [5.0, 0.26, 0.26], "slate", layer.frameLayer, { bevel: 0.03 });
 
-    if (!s0.C) {
-      document.getElementById("sOut").textContent = "无法装配";
-      return;
-    }
-    var B = s0.B, C = s0.C;
+    if (state.showTrace) ring(A[0], A[1], state.r, -0.30, P.brass.dark);
 
-    if (state.showTrace) {
-      var ring = [], i;
-      for (i = 0; i <= 72; i += 1) {
-        var a = i / 72 * Math.PI * 2;
-        ring.push([A[0] + state.r * Math.cos(a), 0.62, A[1] + state.r * Math.sin(a)]);
-      }
-      M.trace(ring, "#c08a3e", traceLayer);
-      M.trace([[C[0] - 0.22, 0.62, zAxis + 0.10], [C[0] + 0.22, 0.62, zAxis + 0.10]], "#5f868d", traceLayer);
-    }
+    S.pedestal(A[0], A[1], 0.34, { layer: layer.frameLayer });
+    if (!s.C) { setText("sOut", "—"); setText("hOut", "—"); setText("gammaOut", "—"); return; }
 
-    M.bar(B, C, 0.16, -0.42, 0.16, "steel", linkLayer);
-    M.bar(A, B, 0.18, -0.22, 0.16, "brass", linkLayer);
-    // 滑块：骑在导轨顶面（zAxis-0.10）上的方座，底面与轨面贴合
-    M.box([C[0], 0, zAxis + 0.10], [0.46, 0.56, 0.40], "slate", linkLayer);
+    // 滑块
+    M.box([s.C[0], 0, zRail + 0.06], [0.46, 0.62, 0.34], "slate", layer.linkLayer, { bevel: 0.04 });
+    S.linkBar([s.B[0], s.B[1]], [s.C[0], s.C[1]], 0.115, -0.30, 0.16, "steel", layer.linkLayer);
+    S.linkBar([A[0], A[1]], [s.B[0], s.B[1]], 0.115, -0.10, 0.16, "brass", layer.linkLayer);
 
-    M.pin([C[0], zAxis + 0.10], -0.10, 0.13, 0.80, "slate", pinLayer);
-    M.pin(B, -0.32, 0.14, 0.36, "slate", pinLayer);
-    M.pin(A, -0.22, 0.16, 0.30, "ink", pinLayer);
+    S.cylY(A[0], A[1], 0.105, -0.36, 0.50, "ink", layer.pinLayer, { seg: 20 });
+    S.cylY(s.B[0], s.B[1], 0.085, -0.40, -0.02, "steel", layer.pinLayer, { seg: 18 });
+    S.cylY(s.C[0], zRail + 0.06, 0.090, -0.40, 0.36, "steel", layer.pinLayer, { seg: 18 });
 
     if (state.showLabels) {
-      M.label([A[0], -0.26, A[1]], "A", -20, 4, labelLayer);
-      M.label([B[0], -0.26, B[1]], "B", 6, -16, labelLayer);
-      M.label([C[0], 0.0, zAxis + 0.10], "C", 4, 24, labelLayer);
+      var put = function (p, name, dx, dy) {
+        var q = scene.project([p[0], -0.44, p[1]]);
+        var t = MP.el("text", {
+          x: q.x + (dx || 0), y: q.y + (dy || 0), "text-anchor": "middle", "font-size": 15,
+          "font-weight": 700, fill: "#25313f", "paint-order": "stroke", stroke: "#ffffff", "stroke-width": 4
+        }, layer.labelLayer);
+        t.textContent = name;
+      };
+      put(A, "A", -24, 22); put(s.B, "B", 20, -12); put([s.C[0], zRail], "C", 6, 26);
     }
 
-    // 传动角：连杆与滑块运动方向（水平）之间的锐角
-    var u = [B[0] - C[0], B[1] - C[1]];
-    var gamma = rad2deg(Math.acos(Math.max(-1, Math.min(1, -u[0] / Math.sqrt(u[0] * u[0] + u[1] * u[1])))));
-
-    document.getElementById("thetaOut").textContent = state.theta.toFixed(0) + "°";
-    document.getElementById("sOut").textContent = (C[0] - A[0]).toFixed(2);
-    document.getElementById("hOut").textContent = stroke().toFixed(2);
-    document.getElementById("gammaOut").textContent = gamma.toFixed(1) + "°";
+    var gamma = Math.atan2(Math.abs(s.B[1] - s.C[1]), Math.abs(s.C[0] - s.B[0])) * 180 / Math.PI;
+    setText("thetaValue", state.theta.toFixed(0) + "°");
+    setText("rValue", state.r.toFixed(2));
+    setText("eValue", state.e.toFixed(2));
+    setText("thetaOut", state.theta.toFixed(0) + "°");
+    setText("sOut", s.C[0].toFixed(2));
+    setText("hOut", stroke().toFixed(2));
+    setText("gammaOut", gamma.toFixed(1) + "°");
   }
 
-  function syncInputs() {
-    document.getElementById("theta").value = state.theta;
-    document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
-    document.getElementById("r").value = state.r;
-    document.getElementById("rValue").textContent = state.r.toFixed(2);
-    document.getElementById("e").value = state.e;
-    document.getElementById("eValue").textContent = state.e.toFixed(2);
+  var raf = 0, last = 0;
+  function tick(now) {
+    raf = 0;
+    var dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (!state.auto) { last = 0; return; }
+    state.theta = (state.theta + 54 * dt) % 360;
+    render();
+    raf = requestAnimationFrame(tick);
+  }
+  function runLoop() { if (!raf && state.auto) raf = requestAnimationFrame(tick); }
+
+  function bind() {
+    [["theta", "theta", "thetaValue", function (v) { return v.toFixed(0) + "°"; }],
+     ["r", "r", "rValue", function (v) { return v.toFixed(2); }],
+     ["e", "e", "eValue", function (v) { return v.toFixed(2); }]].forEach(function (row) {
+      var input = document.getElementById(row[0]);
+      if (!input) return;
+      input.addEventListener("input", function () {
+        state[row[1]] = parseFloat(input.value);
+        setText(row[2], row[3](state[row[1]]));
+        render();
+      });
+    });
+    ["auto", "showTrace", "showLabels"].forEach(function (id) {
+      var box = document.getElementById(id);
+      if (!box) return;
+      box.addEventListener("change", function () {
+        state[id] = box.checked;
+        if (id === "auto" && box.checked) { last = 0; runLoop(); } else render();
+      });
+    });
+    var reset = document.getElementById("reset");
+    if (reset) reset.addEventListener("click", function () {
+      state.theta = 40; state.r = 1.2; state.e = 0.60;
+      [["theta", 40], ["r", 1.2], ["e", 0.6]].forEach(function (pair) {
+        var input = document.getElementById(pair[0]); if (input) input.value = pair[1];
+      });
+      setText("thetaValue", "40°"); setText("rValue", "1.20"); setText("eValue", "0.60");
+      scene.reset(); render();
+    });
   }
 
-  document.getElementById("theta").addEventListener("input", function (e) {
-    state.theta = Number(e.target.value); syncInputs(); render();
-  });
-  document.getElementById("r").addEventListener("input", function (e) {
-    state.r = Number(e.target.value); syncInputs(); render();
-  });
-  document.getElementById("e").addEventListener("input", function (e) {
-    state.e = Number(e.target.value); syncInputs(); render();
-  });
-  document.getElementById("auto").addEventListener("change", function (e) { state.auto = e.target.checked; });
-  document.getElementById("showTrace").addEventListener("change", function (e) {
-    state.showTrace = e.target.checked; render();
-  });
-  document.getElementById("showLabels").addEventListener("change", function (e) {
-    state.showLabels = e.target.checked; render();
-  });
-  document.getElementById("reset").addEventListener("click", function () {
-    state.theta = 30; state.r = DIMS.r; state.e = 0.6;
-    state.auto = true; state.showTrace = true; state.showLabels = true;
-    document.getElementById("auto").checked = true;
-    document.getElementById("showTrace").checked = true;
-    document.getElementById("showLabels").checked = true;
-    scene.reset();
-    syncInputs(); render();
-  });
-
-  var last = 0;
-  function tick(ts) {
-    if (!last) last = ts;
-    var dt = Math.min(0.05, (ts - last) / 1000);
-    last = ts;
-    if (state.auto) {
-      state.theta = (state.theta + 70 * dt) % 360;
-      document.getElementById("theta").value = state.theta;
-      document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
-      render();
-    }
-    requestAnimationFrame(tick);
+  function boot() {
+    LAYERS.forEach(function (id) { layer[id] = document.getElementById(id); });
+    scene = new FK.Scene({
+      svg: document.getElementById("viewport"), origin: { x: 470, y: 330 }, scale: 96,
+      yaw: -0.40, pitch: 0.30, minScale: 34, maxScale: 190
+    });
+    M = window.MK.make(scene, {});
+    P = M.pal;
+    S = window.MP.make(scene, M);
+    bind(); render();
+    if (window.FigureLayout) window.FigureLayout.attach(scene, state, render, 6.6);
+    runLoop();
   }
 
-  syncInputs();
-  window.FigureLayout.attach(scene, state, render, 5.2);
-  requestAnimationFrame(tick);
-}());
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
 
 </script>
 </body>

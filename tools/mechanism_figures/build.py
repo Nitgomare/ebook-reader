@@ -1,9 +1,8 @@
-"""按站点既有的交互图约定，为《机械原理（第四版）》生成自包含的交互图页面。
+"""为《机械原理（第四版）》生成交互机构图（自包含页面）。
 
-交互底座与 craig / robot-technology-basics 两本书完全一致：
-  - 每个页面内联 figure-kit.js（FK.Scene 正交投影 + 拖动旋转 + 滚轮缩放 + 双击复位）
-  - 共用 figure-layout.js（平移滑杆、自适应取景、向父页面回报高度）
-  - 面板结构、控件顺序、读数区、图例写法照抄既有页面
+按 anatomy 的做法画成一台真实的小试验台：底板与地脚、轴承立柱与压盖螺栓、
+贯穿销轴与挡圈、带圆眼的链杆；等轴测正交投影、明暗分面、画家序。
+交互沿用站点既有交互图的面板写法（滑块 + 复选项 + 重置 + 读数区）。
 
 用法：python -X utf8 tools/mechanism_figures/build.py
 """
@@ -39,10 +38,10 @@ FIGURES = [
             ("showLabels", "显示铰点标注", True),
         ],
         "legend": [
-            ("#ecd3a2", "曲柄 1（AB，整周回转）"),
-            ("#dde6f3", "连杆 2（BC）"),
-            ("#c8e2e5", "摇杆 3（CD，往复摆动）"),
-            ("#d3d8e0", "机架 4（AD，固定）"),
+            ("#c08a3e", "曲柄 1（AB，整周回转）"),
+            ("#3f6fae", "连杆 2（BC）"),
+            ("#3f8f96", "摇杆 3（CD，往复摆动）"),
+            ("#8a93a3", "机架 4（AD，固定）"),
         ],
         "readout": [
             ("θ", "曲柄转角", "thetaOut", "42°"),
@@ -51,17 +50,15 @@ FIGURES = [
         ],
         "note": "格拉肖夫条件：r + l ≤ d + e（1.0 + 3.2 ≤ 2.4 + 3.0），最短杆 AB 与机架相邻 ⇒ 曲柄摇杆机构。",
         "scene": "fig_3_3.js",
-        "span": 4.9,
     },
     {
         "file": "figure-3-6.html",
         "title": "图3-6 冲床的双曲柄机构",
         "aria": "双曲柄机构交互示意，两根连架杆都能整周回转",
-        "subtitle": "机架 AD 最短且与两连架杆之和满足格拉肖夫条件，AB 与 CD 均可整周回转。"
-        "两曲柄转速不等，冲床由此获得空行程快、工作行程慢的运动。",
+        "subtitle": "机架 AD 最短且与两连架杆之和满足格拉肖夫条件，AB 与 CD 均可整周回转；两曲柄转速不等，冲床由此获得空行程快、工作行程慢的运动。",
         "controls": [
             ("theta", "主动曲柄转角 θ", 0, 360, 1, "0", "0°"),
-            ("bc", "连杆 BC 长度", 2.00, 2.50, 0.01, "2.4", "2.40"),
+            ("bc", "连杆 BC 长度", 1.05, 1.75, 0.01, "1.4", "1.40"),
         ],
         "options": [
             ("auto", "自动运转", True),
@@ -69,19 +66,18 @@ FIGURES = [
             ("showLabels", "显示铰点标注", True),
         ],
         "legend": [
-            ("#ecd3a2", "主动曲柄 1（AB，整周回转）"),
-            ("#dde6f3", "连杆 2（BC）"),
-            ("#c8c0dc", "从动曲柄 3（CD，整周回转）"),
-            ("#d3d8e0", "机架 4（AD，固定）"),
+            ("#c08a3e", "主动曲柄 1（AB，整周回转）"),
+            ("#3f6fae", "连杆 2（BC）"),
+            ("#7c6aa8", "从动曲柄 3（CD，整周回转）"),
+            ("#8a93a3", "机架 4（AD，固定）"),
         ],
         "readout": [
             ("θ", "主动曲柄转角", "thetaOut", "0°"),
             ("φ", "从动曲柄转角", "phiOut", "—"),
             ("i", "瞬时传动比 dφ/dθ", "ratioOut", "—"),
         ],
-        "note": "格拉肖夫条件：l_min + l_max ≤ 其余两杆之和（1.2 + 2.4 ≤ 2.0 + 1.8），最短杆 AD 为机架 ⇒ 双曲柄机构。",
+        "note": "格拉肖夫条件：l_min + l_max ≤ 其余两杆之和（0.9 + 1.4 ≤ 1.4 + 1.3），最短杆 AD 为机架 ⇒ 双曲柄机构；两侧曲柄转速不等，故冲床空行程快、工作行程慢。",
         "scene": "fig_3_6.js",
-        "span": 6.4,
     },
     {
         "file": "figure-3-12.html",
@@ -91,7 +87,7 @@ FIGURES = [
         "两连架杆都只能在有限角度内摆动，不能整周回转。",
         "controls": [
             ("theta", "主动摇杆转角 θ", 16, 80, 1, "60", "60°"),
-            ("cd", "摇杆 CD 长度", 2.00, 2.80, 0.01, "2.4", "2.40"),
+            ("cd", "摇杆 CD 长度", 1.45, 1.95, 0.01, "1.70", "1.70"),
         ],
         "options": [
             ("auto", "自动运转", True),
@@ -99,19 +95,18 @@ FIGURES = [
             ("showLabels", "显示铰点标注", True),
         ],
         "legend": [
-            ("#ecd3a2", "主动摇杆 1（AB，往复摆动）"),
-            ("#dde6f3", "连杆 2（BC）"),
-            ("#c8e2e5", "从动摇杆 3（CD，往复摆动）"),
-            ("#d3d8e0", "机架 4（AD，固定）"),
+            ("#c08a3e", "主动摇杆 1（AB，往复摆动）"),
+            ("#3f6fae", "连杆 2（BC）"),
+            ("#3f8f96", "从动摇杆 3（CD，往复摆动）"),
+            ("#8a93a3", "机架 4（AD，固定）"),
         ],
         "readout": [
             ("θ", "主动摇杆转角", "thetaOut", "60°"),
             ("ψ", "从动摇杆转角", "psiOut", "—"),
             ("β", "连杆方位角", "couplerOut", "—"),
         ],
-        "note": "格拉肖夫条件：l_min + l_max > 其余两杆之和（1.6 + 3.6 > 2.4 + 2.4），得不到曲柄 ⇒ 双摇杆机构。摆动范围由装配条件 |BC − CD| ≤ |BD| ≤ BC + CD 限定，本例约 16°–80°，滑块范围为可装配区间。",
+        "note": "格拉肖夫条件：l_min + l_max > 其余两杆之和（1.2 + 2.6 > 1.7 + 1.7），得不到曲柄 ⇒ 双摇杆机构。摆动范围由装配条件 |BC − CD| ≤ |BD| ≤ BC + CD 限定，滑块范围会自动收在该可装配区间内。",
         "scene": "fig_3_12.js",
-        "span": 6.4,
     },
     {
         "file": "figure-3-15.html",
@@ -130,10 +125,10 @@ FIGURES = [
             ("showLabels", "显示铰点标注", True),
         ],
         "legend": [
-            ("#ecd3a2", "曲柄 1（AB，整周回转）"),
-            ("#dde6f3", "连杆 2（BC）"),
-            ("#c8d4e4", "滑块 3（C，往复移动）"),
-            ("#d3d8e0", "机架与导轨 4"),
+            ("#c08a3e", "曲柄 1（AB，整周回转）"),
+            ("#3f6fae", "连杆 2（BC）"),
+            ("#7c6aa8", "滑块 3（C，往复移动）"),
+            ("#8a93a3", "机架与导轨 4"),
         ],
         "readout": [
             ("θ", "曲柄转角", "thetaOut", "30°"),
@@ -143,7 +138,6 @@ FIGURES = [
         ],
         "note": "偏置曲柄滑块：滑块位移 s = r cosθ + √(l² − (r sinθ − e)²)，行程 H > 2r；e = 0 时退化为对心曲柄滑块，H = 2r 且无急回。",
         "scene": "fig_3_15.js",
-        "span": 5.2,
     },
     {
         "file": "figure-3-20.html",
@@ -161,10 +155,10 @@ FIGURES = [
             ("showLabels", "显示铰点标注", True),
         ],
         "legend": [
-            ("#ecd3a2", "曲柄 1（AB，整周回转）"),
-            ("#c8d4e4", "滑块 2（B，沿导杆滑动）"),
-            ("#c8e2e5", "导杆 3（绕 C 摆动）"),
-            ("#d3d8e0", "机架 4（AC，固定）"),
+            ("#c08a3e", "曲柄 1（AB，整周回转）"),
+            ("#7c6aa8", "滑块 2（B，沿导杆滑动）"),
+            ("#3f8f96", "导杆 3（绕 C 摆动）"),
+            ("#8a93a3", "机架 4（AC，固定）"),
         ],
         "readout": [
             ("θ", "曲柄转角", "thetaOut", "0°"),
@@ -172,11 +166,12 @@ FIGURES = [
             ("2ψ", "总摆角", "swingOut", "—"),
             ("K", "行程速比系数", "kOut", "—"),
         ],
-        "note": "导杆摆角 2ψ = 2arcsin(r/a)；行程速比系数 K = (180° + 2ψ)/(180° − 2ψ)，据此可反求曲柄半径 r = a·sinψ。",
+        "note": "导杆摆角 2ψ = 2arcsin(r/a)（本机 a = 2.0）；行程速比系数 K = (180° + 2ψ)/(180° − 2ψ)，据此可反求曲柄半径 r = a·sinψ。",
         "scene": "fig_3_20.js",
-        "span": 5.4,
     },
 ]
+
+
 
 PAGE = """<!doctype html>
 <html lang="zh-CN">
@@ -190,17 +185,6 @@ PAGE = """<!doctype html>
 <body>
 <main class="app">
 <svg class="viewport" id="viewport" viewBox="0 0 1000 620" role="img" aria-label="{aria}">
-  <defs>
-    <marker id="arrowX" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d93025"></path>
-    </marker>
-    <marker id="arrowZ" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#12944f"></path>
-    </marker>
-    <marker id="arrowV" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c26a10"></path>
-    </marker>
-  </defs>
   <g id="baseLayer"></g>
   <g id="traceLayer"></g>
   <g id="frameLayer"></g>
@@ -234,13 +218,14 @@ PAGE = """<!doctype html>
   <div class="row"><span class="small">{note}</span></div>
 </div>
 </main>
-<link rel="stylesheet" href="figure-layout.css?v=2">
-<script src="figure-layout.js?v=2"></script>
 <script>
 {kit}
 </script>
 <script>
 {mkit}
+</script>
+<script>
+{parts}
 </script>
 <script>
 {scene_js}
@@ -257,7 +242,7 @@ def control_html(cid: str, label: str, lo, hi, step, value: str, shown: str) -> 
   </div>"""
 
 
-def build_page(spec: dict, css: str, kit: str, mkit: str) -> str:
+def build_page(spec: dict, css: str, kit: str, mkit: str, parts: str) -> str:
     controls = "\n".join(control_html(*c) for c in spec["controls"])
     options = "\n".join(
         f'    <label><input id="{oid}" type="checkbox"{" checked" if checked else ""}>{label}</label>'
@@ -284,6 +269,7 @@ def build_page(spec: dict, css: str, kit: str, mkit: str) -> str:
         note=spec["note"],
         kit=kit,
         mkit=mkit,
+        parts=parts,
         scene_js=scene_js,
     )
 
@@ -296,10 +282,11 @@ def main() -> int:
     css = match.group(1).rstrip()
     kit = KIT_SRC.read_text(encoding="utf-8").rstrip()
     mkit = (TOOLS / "mkit.js").read_text(encoding="utf-8").rstrip()
+    parts = (TOOLS / "parts.js").read_text(encoding="utf-8").rstrip()
 
     OUT.mkdir(parents=True, exist_ok=True)
     for spec in FIGURES:
-        html = build_page(spec, css, kit, mkit)
+        html = build_page(spec, css, kit, mkit, parts)
         target = OUT / spec["file"]
         target.write_text(html, encoding="utf-8")
         print(f"写入 {target.relative_to(ROOT)}　{len(html):,} 字节")

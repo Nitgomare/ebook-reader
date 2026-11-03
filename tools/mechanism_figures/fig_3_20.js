@@ -1,165 +1,152 @@
+/* 图3-20 牛头刨床的摆动导杆机构：曲柄整周回转，滑块推着导杆绕 C 摆动 */
 (function () {
   "use strict";
 
-  var viewport = document.getElementById("viewport");
-  var baseLayer = document.getElementById("baseLayer");
-  var frameLayer = document.getElementById("frameLayer");
-  var traceLayer = document.getElementById("traceLayer");
-  var linkLayer = document.getElementById("linkLayer");
-  var pinLayer = document.getElementById("pinLayer");
-  var labelLayer = document.getElementById("labelLayer");
-
-  var scene = new FK.Scene({
-    svg: viewport,
-    origin: { x: 470, y: 330 },
-    scale: 92,
-    yaw: -0.40,
-    pitch: 0.30,
-    minScale: 34,
-    maxScale: 190
-  });
-  var M = MK.make(scene);
-
-  // 牛头刨床的摆动导杆机构 ABC：曲柄 AB 整周回转，导杆绕 C 摆动，滑块在导杆中滑
-  var DIMS = { a: 2.3, r: 1.0, guideLen: 2.9, zA: 3.05, zC: 0.78 };
+  var DIMS = { a: 2.0, r: 0.9, guideLen: 2.75, zA: 2.35, zC: 0.85 };
   var A = [0, DIMS.zA];
   var C = [0, DIMS.zC];
-
-  var state = { theta: 0, r: DIMS.r, auto: true, showTrace: true, showLabels: true };
-
-  function rad2deg(v) { return v * 180 / Math.PI; }
+  var state = { theta: 30, r: 0.9, auto: true, showTrace: true, showLabels: true };
+  var LAYERS = ["baseLayer", "traceLayer", "frameLayer", "linkLayer", "pinLayer", "labelLayer"];
+  var scene, M, P, S, layer = {};
 
   function pose(theta) {
-    var t = theta * FK.DEG;
-    var B = [A[0] + state.r * Math.cos(t), A[1] + state.r * Math.sin(t)];
+    var th = (theta === undefined ? state.theta : theta) * Math.PI / 180;
+    var B = [A[0] + Math.cos(th) * state.r, A[1] + Math.sin(th) * state.r];
     var dx = B[0] - C[0], dz = B[1] - C[1];
-    var len = Math.sqrt(dx * dx + dz * dz);
-    return { B: B, u: [dx / len, dz / len], len: len };
+    var len = Math.hypot(dx, dz);
+    return { A: A, C: C, B: B, u: [dx / len, dz / len], len: len };
   }
 
-  function solve() { return pose(state.theta); }
+  function clearAll() { LAYERS.forEach(function (id) { if (layer[id]) layer[id].replaceChildren(); }); }
+  function setText(id, t) { var n = document.getElementById(id); if (n && n.textContent !== t) n.textContent = t; }
 
-  /** 导杆摆角（相对 AC 竖直方向，顺时针为正） */
-  function swing(theta) {
-    var s = pose(theta);
-    return rad2deg(Math.atan2(s.u[0], s.u[1]));
+  function ring(cx, cz, radius, y, color) {
+    var d = "";
+    for (var i = 0; i <= 96; i++) {
+      var a = (i / 96) * Math.PI * 2;
+      var p = scene.project([cx + Math.cos(a) * radius, y, cz + Math.sin(a) * radius]);
+      d += (i ? "L" : "M") + p.x.toFixed(2) + " " + p.y.toFixed(2);
+    }
+    MP.el("path", { d: d + "Z", fill: "none", stroke: color, "stroke-width": 1.4, "stroke-dasharray": "7 6", opacity: 0.7 }, layer.traceLayer);
   }
 
-  /** 立柱：立在台面上、退到机构后方（y>0.4）的轴承座。销轴从座里穿到机构平面，
-   *  立柱本身只在导杆/滑块的 Y 范围之外，不与摆动的导杆打架。 */
-  function stand(x, zTop, yBoss) {
-    var zBase = 0.20;
-    M.box([x, yBoss, 0.09], [0.62, 0.70, 0.18], "graphite", frameLayer);
-    M.box([x, yBoss, (zTop + zBase) / 2], [0.34, 0.34, Math.max(0.24, zTop - zBase)], "graphite", frameLayer);
-    M.box([x, yBoss, zTop], [0.38, 0.42, 0.32], "slate", frameLayer);
+  function topArc() {
+    var half = Math.asin(Math.min(1, state.r / DIMS.a));
+    var d = "";
+    for (var i = 0; i <= 60; i++) {
+      var a = -half + (2 * half) * i / 60;
+      var p = scene.project([Math.sin(a) * DIMS.guideLen, 0.34, C[1] + Math.cos(a) * DIMS.guideLen]);
+      d += (i ? "L" : "M") + p.x.toFixed(2) + " " + p.y.toFixed(2);
+    }
+    MP.el("path", { d: d, fill: "none", stroke: "#4f9aa2", "stroke-width": 1.4, "stroke-dasharray": "7 6", opacity: 0.7 }, layer.traceLayer);
   }
 
   function render() {
-    window.FigureLayout.fit(scene, state, 5.4);
-    baseLayer.replaceChildren();
-    frameLayer.replaceChildren();
-    traceLayer.replaceChildren();
-    linkLayer.replaceChildren();
-    pinLayer.replaceChildren();
-    labelLayer.replaceChildren();
+    clearAll();
+    if (window.FigureLayout) window.FigureLayout.fit(scene, state, 6.2);
+    var s = pose();
 
-    M.bench(-1.6, 2.4, -1.15, 1.15, 0.22, baseLayer, { label: "FIG 3-20", labelX: -0.6 });
-    stand(A[0], DIMS.zA, 0.62);
-    stand(C[0] + 0.02, DIMS.zC, 0.46);
+    M.bench(-1.05, 1.25, -0.85, 0.85, 0.26, layer.baseLayer, { label: "FIG 3-20", labelX: 0.10 });
 
-    var s = solve();
-    var B = s.B, u = s.u;
-    var tip = [C[0] + u[0] * DIMS.guideLen, C[1] + u[1] * DIMS.guideLen];
-    var back = [C[0] - u[0] * 0.42, C[1] - u[1] * 0.42];
+    if (state.showTrace) { ring(A[0], A[1], state.r, -0.28, P.brass.dark); topArc(); }
 
-    if (state.showTrace) {
-      var ring = [], i;
-      for (i = 0; i <= 72; i += 1) {
-        var a = i / 72 * Math.PI * 2;
-        ring.push([A[0] + state.r * Math.cos(a), 0.62, A[1] + state.r * Math.sin(a)]);
-      }
-      M.trace(ring, "#c08a3e", traceLayer);
-      var arc = [];
-      for (i = 0; i <= 48; i += 1) {
-        var th = i / 48 * 360;
-        var p = pose(th);
-        arc.push([C[0] + p.u[0] * 3.3, 0.52, C[1] + p.u[1] * 3.3]);
-      }
-      M.trace(arc, "#5f868d", traceLayer);
-    }
+    // 机架：A 立柱立在 C 后方，只让销轴穿到机构平面
+    S.pedestal(A[0], A[1], 0.58, { layer: layer.frameLayer });
+    S.pedestal(C[0], C[1], 0.44, { layer: layer.frameLayer });
+    M.box([0, 0.58, 0.42], [0.16, 0.16, Math.max(0.2, C[1] - 0.42)], "graphite", layer.frameLayer, { bevel: 0.02 });
 
-    // 导杆（在后）→ 滑块（中）→ 曲柄（前）
-    M.bar(back, tip, 0.15, 0.18, 0.14, "teal", linkLayer);
-    var sleeveA = [B[0] - u[0] * 0.26, B[1] - u[1] * 0.26];
-    var sleeveB = [B[0] + u[0] * 0.26, B[1] + u[1] * 0.26];
-    M.bar(sleeveA, sleeveB, 0.24, 0.09, 0.42, "slate", linkLayer);
-    M.bar(A, B, 0.18, -0.30, 0.16, "brass", linkLayer);
+    var end = [s.C[0] + s.u[0] * DIMS.guideLen, s.C[1] + s.u[1] * DIMS.guideLen];
+    var back = [s.C[0] - s.u[0] * 0.32, s.C[1] - s.u[1] * 0.32];
+    S.linkBar(back, end, 0.135, 0.16, 0.18, "teal", layer.linkLayer);
 
-    M.pin(C, 0.18, 0.15, 0.28, "slate", pinLayer);
-    M.pin(B, 0.02, 0.15, 0.64, "ink", pinLayer);
-    M.pin(A, -0.10, 0.16, 0.42, "ink", pinLayer);
+    // 滑块：夹在导杆上的一块滑枕，B 处的销轴穿过它
+    var sl = 0.22;
+    S.linkBar([s.B[0] - s.u[0] * sl, s.B[1] - s.u[1] * sl], [s.B[0] + s.u[0] * sl, s.B[1] + s.u[1] * sl], 0.170, 0.02, 0.40, "slate", layer.linkLayer);
+    S.linkBar([A[0], A[1]], [s.B[0], s.B[1]], 0.100, -0.26, 0.14, "brass", layer.linkLayer);
+
+    S.cylY(A[0], A[1], 0.100, -0.38, 0.50, "ink", layer.pinLayer, { seg: 20 });
+    S.cylY(C[0], C[1], 0.095, 0.26, 0.70, "steel", layer.pinLayer, { seg: 20 });
+    S.cylY(s.B[0], s.B[1], 0.105, -0.34, 0.20, "steel", layer.pinLayer, { seg: 18 });
 
     if (state.showLabels) {
-      M.label([A[0], -0.30, A[1]], "A", -20, -2, labelLayer);
-      M.label([B[0], -0.28, B[1]], "B", 18, -8, labelLayer);
-      M.label([C[0], 0.18, C[1]], "C", -18, 16, labelLayer);
+      var put = function (p, name, dx, dy) {
+        var q = scene.project([p[0], -0.42, p[1]]);
+        var t = MP.el("text", {
+          x: q.x + (dx || 0), y: q.y + (dy || 0), "text-anchor": "middle", "font-size": 15,
+          "font-weight": 700, fill: "#25313f", "paint-order": "stroke", stroke: "#ffffff", "stroke-width": 4
+        }, layer.labelLayer);
+        t.textContent = name;
+      };
+      put(A, "A", -24, 14); put(s.B, "B", 22, -10); put(C, "C", -22, 18);
     }
 
-    var phi = swing(state.theta);
-    var psiMax = 2 * Math.asin(Math.min(1, state.r / DIMS.a)) / FK.DEG;
-    var K = (180 + psiMax) / (180 - psiMax);
-
-    document.getElementById("thetaOut").textContent = state.theta.toFixed(0) + "°";
-    document.getElementById("phiOut").textContent = phi.toFixed(1) + "°";
-    document.getElementById("swingOut").textContent = psiMax.toFixed(1) + "°";
-    document.getElementById("kOut").textContent = K.toFixed(2);
+    var phi = Math.atan2(s.u[0], s.u[1]) * 180 / Math.PI;
+    var swing = 2 * Math.asin(Math.min(1, state.r / DIMS.a)) * 180 / Math.PI;
+    var k = (180 + swing) / (180 - swing);
+    setText("thetaValue", state.theta.toFixed(0) + "°");
+    setText("rValue", state.r.toFixed(2));
+    setText("thetaOut", state.theta.toFixed(0) + "°");
+    setText("phiOut", phi.toFixed(1) + "°");
+    setText("swingOut", swing.toFixed(1) + "°");
+    setText("kOut", k.toFixed(2));
   }
 
-  function syncInputs() {
-    document.getElementById("theta").value = state.theta;
-    document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
-    document.getElementById("r").value = state.r;
-    document.getElementById("rValue").textContent = state.r.toFixed(2);
+  var raf = 0, last = 0;
+  function tick(now) {
+    raf = 0;
+    var dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (!state.auto) { last = 0; return; }
+    state.theta = (state.theta + 54 * dt) % 360;
+    render();
+    raf = requestAnimationFrame(tick);
+  }
+  function runLoop() { if (!raf && state.auto) raf = requestAnimationFrame(tick); }
+
+  function bind() {
+    [["theta", "theta", "thetaValue", function (v) { return v.toFixed(0) + "°"; }],
+     ["r", "r", "rValue", function (v) { return v.toFixed(2); }]].forEach(function (row) {
+      var input = document.getElementById(row[0]);
+      if (!input) return;
+      input.addEventListener("input", function () {
+        state[row[1]] = parseFloat(input.value);
+        setText(row[2], row[3](state[row[1]]));
+        render();
+      });
+    });
+    ["auto", "showTrace", "showLabels"].forEach(function (id) {
+      var box = document.getElementById(id);
+      if (!box) return;
+      box.addEventListener("change", function () {
+        state[id] = box.checked;
+        if (id === "auto" && box.checked) { last = 0; runLoop(); } else render();
+      });
+    });
+    var reset = document.getElementById("reset");
+    if (reset) reset.addEventListener("click", function () {
+      state.theta = 30; state.r = 0.9;
+      [["theta", 30], ["r", 0.9]].forEach(function (pair) {
+        var input = document.getElementById(pair[0]); if (input) input.value = pair[1];
+      });
+      setText("thetaValue", "30°"); setText("rValue", "0.90");
+      scene.reset(); render();
+    });
   }
 
-  document.getElementById("theta").addEventListener("input", function (e) {
-    state.theta = Number(e.target.value); syncInputs(); render();
-  });
-  document.getElementById("r").addEventListener("input", function (e) {
-    state.r = Number(e.target.value); syncInputs(); render();
-  });
-  document.getElementById("auto").addEventListener("change", function (e) { state.auto = e.target.checked; });
-  document.getElementById("showTrace").addEventListener("change", function (e) {
-    state.showTrace = e.target.checked; render();
-  });
-  document.getElementById("showLabels").addEventListener("change", function (e) {
-    state.showLabels = e.target.checked; render();
-  });
-  document.getElementById("reset").addEventListener("click", function () {
-    state.theta = 0; state.r = DIMS.r;
-    state.auto = true; state.showTrace = true; state.showLabels = true;
-    document.getElementById("auto").checked = true;
-    document.getElementById("showTrace").checked = true;
-    document.getElementById("showLabels").checked = true;
-    scene.reset();
-    syncInputs(); render();
-  });
-
-  var last = 0;
-  function tick(ts) {
-    if (!last) last = ts;
-    var dt = Math.min(0.05, (ts - last) / 1000);
-    last = ts;
-    if (state.auto) {
-      state.theta = (state.theta + 64 * dt) % 360;
-      document.getElementById("theta").value = state.theta;
-      document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
-      render();
-    }
-    requestAnimationFrame(tick);
+  function boot() {
+    LAYERS.forEach(function (id) { layer[id] = document.getElementById(id); });
+    scene = new FK.Scene({
+      svg: document.getElementById("viewport"), origin: { x: 470, y: 330 }, scale: 96,
+      yaw: -0.40, pitch: 0.30, minScale: 34, maxScale: 190
+    });
+    M = window.MK.make(scene, {});
+    P = M.pal;
+    S = window.MP.make(scene, M);
+    bind(); render();
+    if (window.FigureLayout) window.FigureLayout.attach(scene, state, render, 6.2);
+    runLoop();
   }
 
-  syncInputs();
-  window.FigureLayout.attach(scene, state, render, 5.4);
-  requestAnimationFrame(tick);
-}());
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();

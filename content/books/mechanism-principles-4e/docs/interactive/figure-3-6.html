@@ -226,17 +226,6 @@ input[type="range"]::-moz-range-thumb {
 <body>
 <main class="app">
 <svg class="viewport" id="viewport" viewBox="0 0 1000 620" role="img" aria-label="双曲柄机构交互示意，两根连架杆都能整周回转">
-  <defs>
-    <marker id="arrowX" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d93025"></path>
-    </marker>
-    <marker id="arrowZ" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#12944f"></path>
-    </marker>
-    <marker id="arrowV" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c26a10"></path>
-    </marker>
-  </defs>
   <g id="baseLayer"></g>
   <g id="traceLayer"></g>
   <g id="frameLayer"></g>
@@ -249,7 +238,7 @@ input[type="range"]::-moz-range-thumb {
   <div class="panel-head">
     <div>
       <h1>图3-6 冲床的双曲柄机构</h1>
-      <p class="subtitle">机架 AD 最短且与两连架杆之和满足格拉肖夫条件，AB 与 CD 均可整周回转。两曲柄转速不等，冲床由此获得空行程快、工作行程慢的运动。</p>
+      <p class="subtitle">机架 AD 最短且与两连架杆之和满足格拉肖夫条件，AB 与 CD 均可整周回转；两曲柄转速不等，冲床由此获得空行程快、工作行程慢的运动。</p>
     </div>
     <button class="reset" id="reset" type="button">重置</button>
   </div>
@@ -258,8 +247,8 @@ input[type="range"]::-moz-range-thumb {
     <input id="theta" type="range" min="0" max="360" step="1" value="0">
   </div>
   <div class="control">
-    <div class="control-head"><label for="bc">连杆 BC 长度</label><output id="bcValue">2.40</output></div>
-    <input id="bc" type="range" min="2.0" max="2.5" step="0.01" value="2.4">
+    <div class="control-head"><label for="bc">连杆 BC 长度</label><output id="bcValue">1.40</output></div>
+    <input id="bc" type="range" min="1.05" max="1.75" step="0.01" value="1.4">
   </div>
   <div class="options">
     <label><input id="auto" type="checkbox" checked>自动运转</label>
@@ -268,10 +257,10 @@ input[type="range"]::-moz-range-thumb {
   </div>
 
   <div class="legend">
-    <span><i style="background:#ecd3a2"></i>主动曲柄 1（AB，整周回转）</span>
-    <span><i style="background:#dde6f3"></i>连杆 2（BC）</span>
-    <span><i style="background:#c8c0dc"></i>从动曲柄 3（CD，整周回转）</span>
-    <span><i style="background:#d3d8e0"></i>机架 4（AD，固定）</span>
+    <span><i style="background:#c08a3e"></i>主动曲柄 1（AB，整周回转）</span>
+    <span><i style="background:#3f6fae"></i>连杆 2（BC）</span>
+    <span><i style="background:#7c6aa8"></i>从动曲柄 3（CD，整周回转）</span>
+    <span><i style="background:#8a93a3"></i>机架 4（AD，固定）</span>
   </div>
 </section>
 
@@ -281,11 +270,9 @@ input[type="range"]::-moz-range-thumb {
   <div class="row"><strong>θ</strong> = <span id="thetaOut">0°</span>　<span class="small">（主动曲柄转角）</span></div>
   <div class="row"><strong>φ</strong> = <span id="phiOut">—</span>　<span class="small">（从动曲柄转角）</span></div>
   <div class="row"><strong>i</strong> = <span id="ratioOut">—</span>　<span class="small">（瞬时传动比 dφ/dθ）</span></div>
-  <div class="row"><span class="small">格拉肖夫条件：l_min + l_max ≤ 其余两杆之和（1.2 + 2.4 ≤ 2.0 + 1.8），最短杆 AD 为机架 ⇒ 双曲柄机构。</span></div>
+  <div class="row"><span class="small">格拉肖夫条件：l_min + l_max ≤ 其余两杆之和（0.9 + 1.4 ≤ 1.4 + 1.3），最短杆 AD 为机架 ⇒ 双曲柄机构；两侧曲柄转速不等，故冲床空行程快、工作行程慢。</span></div>
 </div>
 </main>
-<link rel="stylesheet" href="figure-layout.css?v=2">
-<script src="figure-layout.js?v=2"></script>
 <script>
 /*!
  * figure-kit.js — 交互教学图公共底座
@@ -1112,193 +1099,314 @@ window.MK = (function () {
 }());
 </script>
 <script>
+/* 零件库：等轴测小机械的底座、轴承立柱、销轴与链杆。
+   依赖 figure-kit.js 的 scene.project 与 mkit.js 的挤压/着色，目标按 anatomy 的做工：
+   每个零件都坐在另一个零件上，分面明暗四档，线收在零件边缘。 */
 (function () {
   "use strict";
 
-  var viewport = document.getElementById("viewport");
-  var baseLayer = document.getElementById("baseLayer");
-  var frameLayer = document.getElementById("frameLayer");
-  var traceLayer = document.getElementById("traceLayer");
-  var linkLayer = document.getElementById("linkLayer");
-  var pinLayer = document.getElementById("pinLayer");
-  var labelLayer = document.getElementById("labelLayer");
+  var NS = "http://www.w3.org/2000/svg";
 
-  var scene = new FK.Scene({
-    svg: viewport,
-    origin: { x: 470, y: 320 },
-    scale: 96,
-    yaw: -0.40,
-    pitch: 0.30,
-    minScale: 34,
-    maxScale: 190
-  });
-  var M = MK.make(scene);
+  function el(tag, attrs, parent) {
+    var node = document.createElementNS(NS, tag);
+    for (var key in attrs) {
+      if (Object.prototype.hasOwnProperty.call(attrs, key)) node.setAttribute(key, attrs[key]);
+    }
+    if (parent) parent.appendChild(node);
+    return node;
+  }
 
-  // 双曲柄：最短杆是机架，两个连架杆都能整周回转（冲床的传动部分）
-  var DIMS = { ad: 1.2, ab: 2.0, bc: 2.4, cd: 1.8, z0: 2.30 };
+  function make(scene, mk) {
+    var pal = mk.pal;
+
+    function linkBar(p, q, halfW, y, thick, toneName, layer, opt) {
+      opt = opt || {};
+      var tone = mk.tone(toneName);
+      mk.bar(p, q, halfW, y, thick, toneName, layer);
+      // 两端圆眼：孔里露出销轴，说明是铰接而不是焊死
+      [p, q].forEach(function (c) {
+        var ring = [];
+        for (var i = 0; i <= 22; i++) {
+          var a = (i / 22) * Math.PI * 2;
+          ring.push([c[0] + Math.cos(a) * halfW * 0.62, y + thick / 2 + 0.004, c[1] + Math.sin(a) * halfW * 0.62]);
+        }
+        var d = "";
+        ring.forEach(function (v, idx) {
+          var s2 = scene.project(v);
+          d += (idx ? "L" : "M") + s2.x.toFixed(2) + " " + s2.y.toFixed(2);
+        });
+        el("path", { d: d + "Z", fill: tone.dark, stroke: tone.line, "stroke-width": 0.8 }, layer);
+      });
+      // 上缘一道受光，让杆件有金属厚度
+      if (opt.highlight !== false) {
+        var up = [];
+        for (var m = 0; m <= 14; m++) {
+          var t2 = m / 14;
+          up.push([
+            p[0] + (q[0] - p[0]) * t2 + (q[1] - p[1]) / Math.hypot(q[0] - p[0], q[1] - p[1]) * halfW * 0.82,
+            y + thick / 2 + 0.006,
+            p[1] + (q[1] - p[1]) * t2 - (q[0] - p[0]) / Math.hypot(q[0] - p[0], q[1] - p[1]) * halfW * 0.82
+          ]);
+        }
+        var dh = "";
+        up.forEach(function (v, idx2) {
+          var s3 = scene.project(v);
+          dh += (idx2 ? "L" : "M") + s3.x.toFixed(2) + " " + s3.y.toFixed(2);
+        });
+        el("path", { d: dh, fill: "none", stroke: tone.hi, "stroke-width": 1.5, "stroke-linecap": "round", opacity: 0.85 }, layer);
+      }
+    }
+
+    function cylY(cx, cz, radius, y0, y1, toneName, layer, opt) {
+      opt = opt || {};
+      var centre = (y0 + y1) / 2;
+      var thick = Math.abs(y1 - y0);
+      mk.pin([cx, cz], centre, radius, thick, toneName, layer);
+      // 两端挡圈
+      [y0, y1].forEach(function (yy) {
+        var tone = mk.tone(toneName);
+        var pts = [];
+        for (var i = 0; i <= 20; i++) {
+          var a = (i / 20) * Math.PI * 2;
+          pts.push([cx + Math.cos(a) * radius * 0.55, yy, cz + Math.sin(a) * radius * 0.55]);
+        }
+        var d = "";
+        pts.forEach(function (v, idx) {
+          var s2 = scene.project(v);
+          d += (idx ? "L" : "M") + s2.x.toFixed(2) + " " + s2.y.toFixed(2);
+        });
+        el("path", { d: d + "Z", fill: "none", stroke: tone.dark, "stroke-width": 1.1 }, layer);
+      });
+    }
+
+    // 轴承立柱：地脚板 → 立柱 → 轴承座（沿 y 的圆柱）→ 压盖螺栓
+    function pedestal(x, zTop, yBoss, opt) {
+      opt = opt || {};
+      var base = opt.layer || null;
+      var foot = 0.46;
+      mk.box([x, yBoss, (opt.z0 || 0) + 0.05], [foot, foot * 1.5, 0.10], "graphite", base, { bevel: 0.03 });
+      mk.box([x, yBoss, ((opt.z0 || 0) + 0.10 + zTop - 0.22) / 2], [foot * 0.62, foot * 0.86, zTop - 0.32 - (opt.z0 || 0)], "graphite", base, { bevel: 0.03 });
+      // 立柱与轴承座之间的肋
+      mk.box([x, yBoss, zTop - 0.24], [foot * 0.5, foot * 1.2, 0.16], "graphite", base, { bevel: 0.02 });
+      cylY(x, zTop, 0.20, yBoss - 0.19, yBoss + 0.19, "steel", base, { seg: 22 });
+      // 压盖螺栓：两颗小圆点落在座顶
+      [-0.10, 0.10].forEach(function (dy) {
+        var p = scene.project([x, yBoss + dy, zTop + 0.21]);
+        el("circle", { cx: p.x, cy: p.y, r: 2.1, fill: pal.graphite.dark, stroke: pal.graphite.line, "stroke-width": 0.7 }, base);
+      });
+    }
+
+    // 底座：台面 + 地脚 + 螺钉 + 刻度尺 + 铭牌
+    function bench(x0, x1, y0, y1, thick, layer, opt) {
+      opt = opt || {};
+      mk.box([(x0 + x1) / 2, (y0 + y1) / 2, -thick / 2], [x1 - x0, y1 - y0, thick], "graphite", layer, { bevel: 0.05 });
+      // 台面倒角与四周倒棱，让台面有厚度而不像纸片
+      mk.box([(x0 + x1) / 2, (y0 + y1) / 2, 0.012], [x1 - x0 - 0.10, y1 - y0 - 0.10, 0.028], "graphite", layer, { bevel: 0.03 });
+      var feet = [[x0 + 0.20, y0 + 0.20], [x1 - 0.20, y0 + 0.20], [x0 + 0.20, y1 - 0.20], [x1 - 0.20, y1 - 0.20]];
+      feet.forEach(function (f) {
+        mk.box([f[0], f[1], -thick - 0.055], [0.30, 0.30, 0.11], "graphite", layer, { bevel: 0.02 });
+        mk.box([f[0], f[1], -thick - 0.115], [0.20, 0.20, 0.02], "ink", layer, { bevel: 0.01 });
+      });
+      feet.forEach(function (f) {
+        var p = scene.project([f[0], f[1], 0.03]);
+        el("circle", { cx: p.x, cy: p.y, r: 2.6, fill: "none", stroke: pal.graphite.mid, "stroke-width": 1 }, layer);
+        el("circle", { cx: p.x, cy: p.y, r: 1.1, fill: pal.graphite.dark }, layer);
+      });
+      // 前沿刻度尺：每 5 小格一长格
+      var ticks = [];
+      var step = (x1 - x0) / 20;
+      for (var i = 0; i <= 20; i++) {
+        var x = x0 + step * i;
+        var long = i % 5 === 0;
+        ticks.push({ a: [x, y1 - 0.02], b: [x, y1 - (long ? 0.13 : 0.07)] });
+      }
+      ticks.forEach(function (t) {
+        var p1 = scene.project([t.a[0], t.a[1], 0.031]);
+        var p2 = scene.project([t.b[0], t.b[1], 0.031]);
+        el("line", { x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y, stroke: pal.graphite.mid, "stroke-width": 1 }, layer);
+      });
+      // 铭牌：黄铜片上压字
+      var label = opt.label || "";
+      if (label) {
+        var lx = opt.labelX === undefined ? (x0 + 0.55) : x0 + opt.labelX;
+        var w = Math.max(0.62, label.length * 0.088);
+        mk.box([lx + w / 2, y1 - 0.30, 0.036], [w, 0.20, 0.018], "brass", layer, { bevel: 0.012 });
+        var p = scene.project([lx + w / 2, y1 - 0.30, 0.046]);
+        var text = el("text", {
+          x: p.x, y: p.y + 3.2, "text-anchor": "middle",
+          "font-size": 10.5, "font-family": "ui-monospace,SFMono-Regular,Menlo,monospace",
+          "letter-spacing": 0.6, fill: "#4a3a1c"
+        }, layer);
+        text.textContent = label;
+      }
+    }
+
+    return { bench: bench, pedestal: pedestal, linkBar: linkBar, cylY: cylY, el: el };
+  }
+
+  window.MP = { make: make, el: el };
+})();
+</script>
+<script>
+/* 图3-6 冲床的双曲柄机构：两台曲柄箱对置，连杆跨在中间 */
+(function () {
+  "use strict";
+
+  var DIMS = { ad: 0.9, ab: 1.4, cd: 1.3, z0: 1.55 };
   var A = [0, DIMS.z0];
   var D = [DIMS.ad, DIMS.z0];
+  var state = { theta: 20, bc: 1.40, auto: true, showTrace: true, showLabels: true };
+  var LAYERS = ["baseLayer", "traceLayer", "frameLayer", "linkLayer", "pinLayer", "labelLayer"];
+  var scene, M, P, S, layer = {};
 
-  var state = { theta: 0, bc: DIMS.bc, auto: true, showTrace: true, showLabels: true };
-
-  function rad2deg(v) { return v * 180 / Math.PI; }
-
-  function circleHit(c0, r0, c1, r1, upper) {
-    var dx = c1[0] - c0[0], dz = c1[1] - c0[1];
-    var dist = Math.sqrt(dx * dx + dz * dz);
-    if (dist > r0 + r1 - 1e-6 || dist < Math.abs(r0 - r1) + 1e-6) return null;
-    var a = (r0 * r0 - r1 * r1 + dist * dist) / (2 * dist);
-    var h = Math.sqrt(Math.max(0, r0 * r0 - a * a));
-    var mx = c0[0] + a * dx / dist, mz = c0[1] + a * dz / dist;
-    var p1 = [mx + h * dz / dist, mz - h * dx / dist];
-    var p2 = [mx - h * dz / dist, mz + h * dx / dist];
-    return upper ? (p1[1] > p2[1] ? p1 : p2) : (p1[1] < p2[1] ? p1 : p2);
+  function solve() {
+    var th = state.theta * Math.PI / 180;
+    var B = [A[0] + Math.cos(th) * DIMS.ab, A[1] + Math.sin(th) * DIMS.ab];
+    var db = Math.hypot(B[0] - D[0], B[1] - D[1]);
+    var bc = state.bc, cd = DIMS.cd;
+    if (db > bc + cd || db < Math.abs(bc - cd)) return { A: A, D: D, B: B, C: null };
+    var a = (bc * bc - cd * cd + db * db) / (2 * db);
+    var h = Math.sqrt(Math.max(0, bc * bc - a * a));
+    var ux = (B[0] - D[0]) / db, uz = (B[1] - D[1]) / db;
+    var mx = D[0] + ux * a, mz = D[1] + uz * a;
+    var C1 = [mx - uz * h, mz + ux * h], C2 = [mx + uz * h, mz - ux * h];
+    return { A: A, D: D, B: B, C: C1[1] > C2[1] ? C1 : C2 };
   }
 
-  function pose(theta) {
-    var t = theta * FK.DEG;
-    var B = [A[0] + DIMS.ab * Math.cos(t), A[1] + DIMS.ab * Math.sin(t)];
-    var C = circleHit(B, state.bc, D, DIMS.cd, true);
-    return { B: B, C: C };
-  }
+  function clearAll() { LAYERS.forEach(function (id) { if (layer[id]) layer[id].replaceChildren(); }); }
+  function setText(id, t) { var n = document.getElementById(id); if (n && n.textContent !== t) n.textContent = t; }
 
-  function solve() { return pose(state.theta); }
-
-  function phiAt(theta) {
-    var s = pose(theta);
-    if (!s.C) return null;
-    return rad2deg(Math.atan2(s.C[1] - D[1], s.C[0] - D[0]));
-  }
-
-  function ring(center, radius, y) {
-    var pts = [], i;
-    for (i = 0; i <= 72; i += 1) {
-      var a = i / 72 * Math.PI * 2;
-      pts.push([center[0] + radius * Math.cos(a), y, center[1] + radius * Math.sin(a)]);
+  function ring(cx, cz, radius, y, color) {
+    var d = "";
+    for (var i = 0; i <= 96; i++) {
+      var a = (i / 96) * Math.PI * 2;
+      var p = scene.project([cx + Math.cos(a) * radius, y, cz + Math.sin(a) * radius]);
+      d += (i ? "L" : "M") + p.x.toFixed(2) + " " + p.y.toFixed(2);
     }
-    return pts;
-  }
-
-  function arcOf(samples, y) {
-    var pts = [], i;
-    for (i = 0; i <= 96; i += 1) {
-      var s = pose(i / 96 * 360);
-      if (s.C) pts.push([s.C[0], y, s.C[1]]);
-    }
-    return pts;
-  }
-
-  function stand(x, zTop) {
-    M.box([x, 0.62, 0.09], [0.52, 0.72, 0.18], "graphite", frameLayer);
-    M.box([x, 0.74, zTop / 2 + 0.04], [0.28, 0.28, zTop - 0.06], "graphite", frameLayer);
-    M.box([x, 0.42, zTop], [0.26, 0.40, 0.28], "slate", frameLayer);
+    MP.el("path", { d: d + "Z", fill: "none", stroke: color, "stroke-width": 1.4, "stroke-dasharray": "7 6", opacity: 0.7 }, layer.traceLayer);
   }
 
   function render() {
-    window.FigureLayout.fit(scene, state, 6.4);
-    baseLayer.replaceChildren();
-    frameLayer.replaceChildren();
-    traceLayer.replaceChildren();
-    linkLayer.replaceChildren();
-    pinLayer.replaceChildren();
-    labelLayer.replaceChildren();
-
-    M.bench(-1.7, 3.1, -1.15, 1.15, 0.22, baseLayer, { label: "FIG 3-6", labelX: -0.4 });
-    stand(A[0], DIMS.z0);
-    stand(D[0], DIMS.z0);
-    M.box([(A[0] + D[0]) / 2, 0.46, DIMS.z0], [D[0] - A[0] + 0.1, 0.12, 0.15], "graphite", frameLayer);
-
+    clearAll();
+    if (window.FigureLayout) window.FigureLayout.fit(scene, state, 5.2);
     var s = solve();
-    if (!s.C) {
-      document.getElementById("phiOut").textContent = "无法装配";
-      return;
-    }
-    var B = s.B, C = s.C;
+
+    M.bench(-1.75, 2.65, -1.25, 1.10, 0.26, layer.baseLayer, { label: "FIG 3-6", labelX: 0.55 });
 
     if (state.showTrace) {
-      M.trace(ring(A, DIMS.ab, 0.62), "#c08a3e", traceLayer);
-      M.trace(ring(D, DIMS.cd, 0.62), "#8a76b8", traceLayer);
-      M.trace(arcOf(null, 0.30), "#5f868d", traceLayer);
+      ring(A[0], A[1], DIMS.ab, -0.34, P.brass.dark);
+      ring(D[0], D[1], DIMS.cd, 0.34, "#7c6aa8");
     }
 
-    // 从动曲柄在后、连杆居中、主动曲柄在前
-    M.bar(D, C, 0.17, 0.22, 0.16, "teal", linkLayer);
-    M.bar(B, C, 0.16, -0.42, 0.16, "steel", linkLayer);
-    M.bar(A, B, 0.18, -0.22, 0.16, "brass", linkLayer);
+    S.pedestal(A[0], A[1], 0.62, { layer: layer.frameLayer });
+    S.pedestal(D[0], D[1], 0.62, { layer: layer.frameLayer });
+    M.box([(A[0] + D[0]) / 2, 0.62, 0.52], [Math.max(0.2, D[0] - A[0] - 0.25), 0.10, 0.10], "graphite", layer.frameLayer, { bevel: 0.02 });
 
-    M.pin(D, 0.22, 0.15, 0.26, "slate", pinLayer);
-    M.pin(C, -0.10, 0.14, 0.80, "slate", pinLayer);
-    M.pin(B, -0.32, 0.14, 0.36, "slate", pinLayer);
-    M.pin(A, -0.22, 0.16, 0.30, "ink", pinLayer);
+    if (!s.C) {
+      var warn = MP.el("text", { x: 470, y: 300, "text-anchor": "middle", "font-size": 15, fill: "#8a5a1e" }, layer.labelLayer);
+      warn.textContent = "此尺寸下无法装配";
+      setText("phiOut", "—"); setText("ratioOut", "—");
+      return;
+    }
+
+    // 从动曲柄 CD 在里层，连杆居中，主动曲柄 AB 在最外层
+    S.linkBar([s.C[0], s.C[1]], [D[0], D[1]], 0.115, 0.24, 0.16, "graphite", layer.linkLayer);
+    S.linkBar([s.B[0], s.B[1]], [s.C[0], s.C[1]], 0.125, 0.02, 0.17, "steel", layer.linkLayer);
+    S.linkBar([A[0], A[1]], [s.B[0], s.B[1]], 0.115, -0.22, 0.16, "brass", layer.linkLayer);
+
+    S.cylY(A[0], A[1], 0.100, -0.32, 0.82, "ink", layer.pinLayer, { seg: 20 });
+    S.cylY(D[0], D[1], 0.095, 0.16, 0.82, "steel", layer.pinLayer, { seg: 20 });
+    S.cylY(s.B[0], s.B[1], 0.082, -0.30, 0.10, "steel", layer.pinLayer, { seg: 18 });
+    S.cylY(s.C[0], s.C[1], 0.082, -0.06, 0.34, "steel", layer.pinLayer, { seg: 18 });
 
     if (state.showLabels) {
-      M.label([A[0], -0.20, A[1]], "A", -20, 4, labelLayer);
-      M.label([B[0], -0.20, B[1]], "B", 6, -16, labelLayer);
-      M.label([C[0], 0.0, C[1]], "C", 16, -6, labelLayer);
-      M.label([D[0], 0.20, D[1]], "D", 18, 2, labelLayer);
+      var put = function (p, name, dx, dy) {
+        var q = scene.project([p[0], -0.40, p[1]]);
+        var t = MP.el("text", {
+          x: q.x + (dx || 0), y: q.y + (dy || 0), "text-anchor": "middle", "font-size": 15,
+          "font-weight": 700, fill: "#25313f", "paint-order": "stroke", stroke: "#ffffff", "stroke-width": 4
+        }, layer.labelLayer);
+        t.textContent = name;
+      };
+      put(A, "A", -22, 18); put(s.B, "B", 22, -10); put(s.C, "C", 10, -16); put(D, "D", 26, 16);
     }
 
-    var phi = phiAt(state.theta);
-    var p1 = phiAt(state.theta + 0.4), p0 = phiAt(state.theta - 0.4);
-    var ratio = (p1 !== null && p0 !== null) ? (p1 - p0) / 0.8 : NaN;
-    if (ratio < -180) ratio += 360;
-    if (ratio > 180) ratio -= 360;
-
-    document.getElementById("thetaOut").textContent = state.theta.toFixed(0) + "°";
-    document.getElementById("phiOut").textContent = (phi === null ? "—" : phi.toFixed(1) + "°");
-    document.getElementById("ratioOut").textContent = isNaN(ratio) ? "—" : ratio.toFixed(2);
-  }
-
-  function syncInputs() {
-    document.getElementById("theta").value = state.theta;
-    document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
-    document.getElementById("bc").value = state.bc;
-    document.getElementById("bcValue").textContent = state.bc.toFixed(2);
-  }
-
-  document.getElementById("theta").addEventListener("input", function (e) {
-    state.theta = Number(e.target.value);
-    syncInputs(); render();
-  });
-  document.getElementById("bc").addEventListener("input", function (e) {
-    state.bc = Number(e.target.value);
-    syncInputs(); render();
-  });
-  document.getElementById("auto").addEventListener("change", function (e) { state.auto = e.target.checked; });
-  document.getElementById("showTrace").addEventListener("change", function (e) {
-    state.showTrace = e.target.checked; render();
-  });
-  document.getElementById("showLabels").addEventListener("change", function (e) {
-    state.showLabels = e.target.checked; render();
-  });
-  document.getElementById("reset").addEventListener("click", function () {
-    state.theta = 0; state.bc = DIMS.bc;
-    state.auto = true; state.showTrace = true; state.showLabels = true;
-    document.getElementById("auto").checked = true;
-    document.getElementById("showTrace").checked = true;
-    document.getElementById("showLabels").checked = true;
-    scene.reset();
-    syncInputs(); render();
-  });
-
-  var last = 0;
-  function tick(ts) {
-    if (!last) last = ts;
-    var dt = Math.min(0.05, (ts - last) / 1000);
-    last = ts;
-    if (state.auto) {
-      state.theta = (state.theta + 62 * dt) % 360;
-      document.getElementById("theta").value = state.theta;
-      document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
-      render();
+    var phi = Math.atan2(s.C[1] - D[1], s.C[0] - D[0]) * 180 / Math.PI;
+    var save = state.theta;
+    state.theta = save + 0.5; var s2 = solve(); state.theta = save;
+    var ratio = "—";
+    if (s2.C) {
+      var p1 = Math.atan2(s.C[1] - D[1], s.C[0] - D[0]);
+      var p2 = Math.atan2(s2.C[1] - D[1], s2.C[0] - D[0]);
+      var dphi = p2 - p1;
+      while (dphi > Math.PI) dphi -= Math.PI * 2;
+      while (dphi < -Math.PI) dphi += Math.PI * 2;
+      ratio = (dphi * 180 / Math.PI / 0.5).toFixed(2);
     }
-    requestAnimationFrame(tick);
+    setText("thetaValue", state.theta.toFixed(0) + "°");
+    setText("thetaOut", state.theta.toFixed(0) + "°");
+    setText("phiOut", phi.toFixed(1) + "°");
+    setText("ratioOut", ratio);
   }
 
-  syncInputs();
-  window.FigureLayout.attach(scene, state, render, 4.6);
-  requestAnimationFrame(tick);
-}());
+  var raf = 0, last = 0;
+  function tick(now) {
+    raf = 0;
+    var dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (!state.auto) { last = 0; return; }
+    state.theta = (state.theta + 52 * dt) % 360;
+    render();
+    raf = requestAnimationFrame(tick);
+  }
+  function runLoop() { if (!raf && state.auto) raf = requestAnimationFrame(tick); }
+
+  function bind() {
+    [["theta", "theta", "thetaValue", function (v) { return v.toFixed(0) + "°"; }],
+     ["bc", "bc", "bcValue", function (v) { return v.toFixed(2); }]].forEach(function (row) {
+      var input = document.getElementById(row[0]);
+      if (!input) return;
+      input.addEventListener("input", function () {
+        state[row[1]] = parseFloat(input.value);
+        setText(row[2], row[3](state[row[1]]));
+        render();
+      });
+    });
+    ["auto", "showTrace", "showLabels"].forEach(function (id) {
+      var box = document.getElementById(id);
+      if (!box) return;
+      box.addEventListener("change", function () {
+        state[id] = box.checked;
+        if (id === "auto" && box.checked) { last = 0; runLoop(); } else render();
+      });
+    });
+    var reset = document.getElementById("reset");
+    if (reset) reset.addEventListener("click", function () {
+      state.theta = 20; state.bc = 1.40;
+      var t = document.getElementById("theta"); if (t) t.value = 20;
+      var b = document.getElementById("bc"); if (b) b.value = 1.40;
+      setText("thetaValue", "20°"); setText("bcValue", "1.40");
+      scene.reset(); render();
+    });
+  }
+
+  function boot() {
+    LAYERS.forEach(function (id) { layer[id] = document.getElementById(id); });
+    scene = new FK.Scene({
+      svg: document.getElementById("viewport"), origin: { x: 470, y: 330 }, scale: 96,
+      yaw: -0.40, pitch: 0.30, minScale: 34, maxScale: 190
+    });
+    M = window.MK.make(scene, {});
+    P = M.pal;
+    S = window.MP.make(scene, M);
+    bind(); render();
+    if (window.FigureLayout) window.FigureLayout.attach(scene, state, render, 6.6);
+    runLoop();
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
 
 </script>
 </body>
