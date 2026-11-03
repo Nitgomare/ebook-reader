@@ -92,17 +92,25 @@
     setText("gammaOut", gamma.toFixed(1) + "°");
   }
 
-  var raf = 0, last = 0;
-  function tick(now) {
-    raf = 0;
+  var timer = 0, last = 0;
+  function step() {
+    var now = Date.now();
     var dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
     last = now;
     if (!state.auto) { last = 0; return; }
     state.theta = (state.theta + 54 * dt) % 360;
     render();
-    raf = requestAnimationFrame(tick);
   }
-  function runLoop() { if (!raf && state.auto) raf = requestAnimationFrame(tick); }
+  // 用定时器而不是 requestAnimationFrame：页面被 iframe 或标签页隐藏时 rAF 会暂停，
+  // 观感就是“曲柄不走了”；定时器不受此影响。
+  function runLoop() {
+    if (timer) return;
+    last = 0;
+    timer = setInterval(function () {
+      if (!state.auto) { clearInterval(timer); timer = 0; return; }
+      step();
+    }, 33);
+  }
 
   function bind() {
     [["theta", "theta", "thetaValue", function (v) { return v.toFixed(0) + "°"; }],

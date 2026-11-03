@@ -1257,10 +1257,11 @@ window.MK = (function () {
   var D = [DIMS.ad, DIMS.z0];
   var state = { theta: 20, bc: 1.40, auto: true, showTrace: true, showLabels: true };
   var LAYERS = ["baseLayer", "traceLayer", "frameLayer", "linkLayer", "pinLayer", "labelLayer"];
-  var scene, M, P, S, layer = {};
+  var scene, M, P, S, layer = {}, prevC = null;
 
-  function solve() {
-    var th = state.theta * Math.PI / 180;
+  function solve(theta, track) {
+    var deg = (theta === undefined ? state.theta : theta);
+    var th = deg * Math.PI / 180;
     var B = [A[0] + Math.cos(th) * DIMS.ab, A[1] + Math.sin(th) * DIMS.ab];
     var db = Math.hypot(B[0] - D[0], B[1] - D[1]);
     var bc = state.bc, cd = DIMS.cd;
@@ -1270,7 +1271,18 @@ window.MK = (function () {
     var ux = (B[0] - D[0]) / db, uz = (B[1] - D[1]) / db;
     var mx = D[0] + ux * a, mz = D[1] + uz * a;
     var C1 = [mx - uz * h, mz + ux * h], C2 = [mx + uz * h, mz - ux * h];
-    return { A: A, D: D, B: B, C: C1[1] > C2[1] ? C1 : C2 };
+    // 圆交点有两个装配分支；固定取“上方”会在分支切换处让杆件瞬间翻面，
+    // 所以按上一帧的位置就近选择，保证连杆连续转动。
+    var pick;
+    if (prevC) {
+      var d1 = Math.hypot(C1[0] - prevC[0], C1[1] - prevC[1]);
+      var d2 = Math.hypot(C2[0] - prevC[0], C2[1] - prevC[1]);
+      pick = d1 <= d2 ? C1 : C2;
+    } else {
+      pick = C1[1] > C2[1] ? C1 : C2;
+    }
+    if (track) prevC = pick;
+    return { A: A, D: D, B: B, C: pick };
   }
 
   function clearAll() { LAYERS.forEach(function (id) { if (layer[id]) layer[id].replaceChildren(); }); }
@@ -1289,7 +1301,7 @@ window.MK = (function () {
   function render() {
     clearAll();
     if (window.FigureLayout) window.FigureLayout.fit(scene, state, 5.2);
-    var s = solve();
+    var s = solve(undefined, true);
 
     M.bench(-1.75, 2.65, -1.25, 1.10, 0.26, layer.baseLayer, { label: "FIG 3-6", labelX: 0.55 });
 
@@ -1333,7 +1345,7 @@ window.MK = (function () {
 
     var phi = Math.atan2(s.C[1] - D[1], s.C[0] - D[0]) * 180 / Math.PI;
     var save = state.theta;
-    state.theta = save + 0.5; var s2 = solve(); state.theta = save;
+    state.theta = save + 0.5; var s2 = solve(save + 0.5, false); state.theta = save;
     var ratio = "—";
     if (s2.C) {
       var p1 = Math.atan2(s.C[1] - D[1], s.C[0] - D[0]);
@@ -1349,17 +1361,25 @@ window.MK = (function () {
     setText("ratioOut", ratio);
   }
 
-  var raf = 0, last = 0;
-  function tick(now) {
-    raf = 0;
+  var timer = 0, last = 0;
+  function step() {
+    var now = Date.now();
     var dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
     last = now;
     if (!state.auto) { last = 0; return; }
     state.theta = (state.theta + 52 * dt) % 360;
     render();
-    raf = requestAnimationFrame(tick);
   }
-  function runLoop() { if (!raf && state.auto) raf = requestAnimationFrame(tick); }
+  // 用定时器而不是 requestAnimationFrame：页面被 iframe 或标签页隐藏时 rAF 会暂停，
+  // 观感就是“曲柄不走了”；定时器不受此影响。
+  function runLoop() {
+    if (timer) return;
+    last = 0;
+    timer = setInterval(function () {
+      if (!state.auto) { clearInterval(timer); timer = 0; return; }
+      step();
+    }, 33);
+  }
 
   function bind() {
     [["theta", "theta", "thetaValue", function (v) { return v.toFixed(0) + "°"; }],
@@ -1382,7 +1402,7 @@ window.MK = (function () {
     });
     var reset = document.getElementById("reset");
     if (reset) reset.addEventListener("click", function () {
-      state.theta = 20; state.bc = 1.40;
+      state.theta = 20; state.bc = 1.40; prevC = null;
       var t = document.getElementById("theta"); if (t) t.value = 20;
       var b = document.getElementById("bc"); if (b) b.value = 1.40;
       setText("thetaValue", "20°"); setText("bcValue", "1.40");
