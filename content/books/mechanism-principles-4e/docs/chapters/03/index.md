@@ -44,10 +44,21 @@
 
 杆机构时通常以铰链四杆机构为研究对象。如图3-3所示的铰链四杆机构中，固定不动的构件4称为机架，与机架用转动副相连接的构件1和构件3称为连架杆不与机架直接相连的构件2称为连杆。在连架杆中能绕机架上的转动副做360°整周转动的连架杆称为曲柄不能绕机架上的转动副做360°整周转动，而只能在一定角度往复摆动的连架杆称为摇杆。
 
-![](../../images/0a9d07f928528bd7e8e594bc2a2e30157360f992dd5021f5be6cc0a78d0efa4c.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-3.html" data-interactive-title="图3-3 铰链四杆机构">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-3 铰链四杆机构显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/0a9d07f928528bd7e8e594bc2a2e30157360f992dd5021f5be6cc0a78d0efa4c.jpg" alt="图3-3 铰链四杆机构原图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图3-3 铰链四杆机构
-{: .figure-caption }
+<p class="figure-caption">图3-3 铰链四杆机构</p>
+
 
 ### 3.2.1 平面四杆机构的基本类型
 
@@ -73,10 +84,21 @@
 
 如图 3-7 中的双曲柄机构与悬梯是“嫦娥三号”探测器中将月球从着陆器转移到月面上的转移机构。当着陆器稳定着陆后，悬梯展开，月球车从着陆器移动到悬梯上，然后双曲柄机构在自身重力和缓释绳的作用下缓慢旋转使悬梯下降（此时悬梯平动）。当悬梯接触月面后，月球车从悬梯移动到月面上。
 
-![](../../images/573bf5932d04efb3064052445f689b30f962f704a14fa8ac92601c720b4ec7cc.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-6.html" data-interactive-title="图3-6 冲床的双曲柄机构">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-6 冲床的双曲柄机构显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/573bf5932d04efb3064052445f689b30f962f704a14fa8ac92601c720b4ec7cc.jpg" alt="图3-6 冲床的双曲柄机构原图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图3-6 冲床机构
-{: .figure-caption }
+<p class="figure-caption">图3-6 冲床机构</p>
+
 
 在双曲柄机构中, 若相对的两杆平行且长度相等则称其为平行四边形机构(图 3-8)。它有两个显著特征: 一是两个曲柄以相同速度同向转动; 二是连杆作平动。这两个特征在机械工程上均已获得广泛应用。如图 3-9 所示的机车车轮的联动机构就利用了其第一个特征, 而摄影平台升降机构则是利用了其第二个特征(图 3-10)。
 
@@ -115,10 +137,21 @@
 
 在双摇杆机构中，若两个摇杆长度相等，则形成等腰梯形机构。如图3-13所示的汽车、拖拉机前轮的转向机构，即为其应用实例。
 
-![](../../images/ae0e11914636dd50799c9c5819a7b7a9a80d3093086b1962020522cbd1d806c2.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-12.html" data-interactive-title="图3-12 造型机翻箱机构">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-12 造型机翻箱机构显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/ae0e11914636dd50799c9c5819a7b7a9a80d3093086b1962020522cbd1d806c2.jpg" alt="图3-12 造型机翻箱机构原图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图3-12 造型机的翻箱机构
-{: .figure-caption }
+<p class="figure-caption">图3-12 造型机的翻箱机构</p>
+
 
 ![](../../images/46fada60dafd0c64d84d9cf6ae4e42927fbb763be467beed91944743d169614e.jpg)
 
@@ -144,10 +177,21 @@
 
 (α)
 
-![](../../images/fig_cl_01468.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-15.html" data-interactive-title="图3-15 曲柄滑块机构">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-15 曲柄滑块机构显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/fig_cl_01468.jpg" alt="图3-15 曲柄滑块机构原图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图3-15 曲柄滑块机构
-{: .figure-caption }
+<p class="figure-caption">图3-15 曲柄滑块机构</p>
+
 
 曲柄滑块机构应用于榫槽侧拉床机构中。榫槽侧拉床是高精密机床，主要用来加工飞机发动机、汽轮机涡流盘等的榫槽和榫头，属于国防工业的尖端装备，国外拥有该项技术的国家对我国进行技术封锁。我国在榫槽侧拉床机构中应用曲柄滑块巧妙地将圆弧运动的角度变化转变为直线方向上的位移变化，实现了直线位移与角度位移的一一对应，不仅降低了加工成本，还降低了对装配的要求，节约了成本。
 
@@ -183,10 +227,21 @@
 图3-19 小型刨床机构
 {: .figure-caption }
 
-![](../../images/ebaefd7be9ca61e0068237a3d2a2c9050133cb3b1b8f82fd539f5dd60118f87d.jpg)
+<div class="interactive-figure" data-interactive-src="../../interactive/figure-3-20.html" data-interactive-title="图3-20 牛头刨床导杆机构">
+  <div class="interactive-figure-toolbar" role="group" aria-label="图3-20 牛头刨床导杆机构显示方式">
+    <button type="button" class="is-active" data-figure-mode="original" aria-pressed="true">原图</button>
+    <button type="button" data-figure-mode="interactive" aria-pressed="false">可交互</button>
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="original">
+    <img src="../../images/ebaefd7be9ca61e0068237a3d2a2c9050133cb3b1b8f82fd539f5dd60118f87d.jpg" alt="图3-20 牛头刨床导杆机构原图">
+  </div>
+  <div class="interactive-figure-pane" data-figure-pane="interactive" hidden>
+    <div class="interactive-figure-loading">正在载入交互模型…</div>
+  </div>
+</div>
 
-图3-20 牛头刨床机构
-{: .figure-caption }
+<p class="figure-caption">图3-20 牛头刨床机构</p>
+
 
 选用运动链中不同构件作为机架以获得不同机构的演化方法称为机构的倒置。铰链四杆机构、双滑块四杆机构等同样可以经过机构的倒置来获得不同形式的四杆机构。
 

@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图3-15 曲柄滑块机构</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #14213d;
+  --muted: #65748b;
+  --line: #d9e2ef;
+  --surface: rgba(255, 255, 255, 0.94);
+  --blue: #2563eb;
+  --blue-dark: #174ea6;
+  --blue-soft: #eaf2ff;
+  --red: #d93025;
+  --green: #12944f;
+  --violet: #7c3aed;
+  --orange: #c26a10;
+  --cyan: #0e7490;
+}
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; }
+body {
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(160deg, #f8fbff 0%, #eef4fb 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+    "Microsoft YaHei", Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+button, input, select { font: inherit; }
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 460px;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.viewport {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-drag: none;
+  overscroll-behavior: contain;
+}
+.viewport.is-dragging { cursor: grabbing; }
+.fk-grid-line { stroke: #e2eaf5; stroke-width: 1; }
+.fk-axis { stroke-width: 3.2; }
+.fk-axis-label, .fk-point-label, .fk-vec-label, .fk-origin-label {
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: #f7fafe;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.fk-origin-label { font-size: 15px; fill: #475569; }
+.fk-vec-line { stroke-width: 4.4; fill: none; }
+.fk-projection { stroke-width: 2.2; stroke-dasharray: 7 6; fill: none; }
+.fk-arc { fill: none; stroke-width: 2.6; stroke-dasharray: 6 5; }
+.fk-point { stroke: #fff; stroke-width: 2.6; }
+
+.panel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: min(304px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  overflow: auto;
+  padding: 15px 17px 14px;
+  border: 1px solid rgba(30, 64, 175, 0.14);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 16px 36px rgba(30, 64, 175, 0.14);
+}
+.panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.panel h1 { margin: 0; font-size: 15px; line-height: 1.4; }
+.panel .subtitle { margin: 5px 0 12px; color: var(--muted); font-size: 11.5px; line-height: 1.55; }
+.reset {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid #bfd2ef;
+  border-radius: 7px;
+  color: var(--blue-dark);
+  background: #fff;
+  cursor: pointer;
+}
+.reset:hover { background: var(--blue-soft); }
+.control { margin-top: 10px; }
+.control-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.control label { color: #42526a; font-size: 12.5px; }
+.control output {
+  color: var(--blue-dark);
+  font: 700 12.5px ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+input[type="range"] {
+  width: 100%;
+  height: 4px;
+  margin: 8px 0 2px;
+  border-radius: 999px;
+  outline: none;
+  background: #dbe5f1;
+  appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  width: 16px; height: 16px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 2px 7px rgba(37, 99, 235, 0.42);
+  cursor: pointer;
+  appearance: none;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px; height: 12px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+}
+.options { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; }
+.options label { display: inline-flex; align-items: center; gap: 6px; color: #4a5a72; font-size: 12px; cursor: pointer; }
+.options input { accent-color: var(--blue); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 11px; padding-top: 10px; border-top: 1px dashed var(--line); color: #5b6a80; font-size: 11.5px; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; }
+.legend i.dot { width: 9px; height: 9px; border-radius: 50%; }
+
+.readout {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  max-width: min(460px, calc(100% - 32px));
+  padding: 10px 13px;
+  border: 1px solid rgba(30, 64, 175, 0.12);
+  border-radius: 10px;
+  color: #3d4c63;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 26px rgba(30, 64, 175, 0.09);
+  font: 15px/1.6 "Cambria Math", "Times New Roman", serif;
+}
+.readout .row { white-space: nowrap; }
+.readout strong { color: var(--blue-dark); font-family: inherit; }
+.readout .small { font-size: 13px; color: #5b6a80; }
+.hint {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.82);
+  font-size: 11px;
+}
+.tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.tabs button {
+  flex: 1;
+  padding: 6px 4px;
+  border: 1px solid #cfdcf0;
+  border-radius: 8px;
+  color: #45566f;
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+.tabs button.is-active { border-color: var(--blue); color: #fff; background: var(--blue); }
+
+@media (max-width: 720px) {
+  .app { min-height: 540px; }
+  .panel {
+    top: auto;
+    bottom: 8px;
+    left: 8px;
+    width: calc(100% - 16px);
+    max-height: 54%;
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+  .panel .subtitle { display: none; }
+  .readout { top: 8px; right: 8px; bottom: auto; font-size: 13px; max-width: calc(100% - 16px); }
+  .hint { display: none; }
+  .legend { margin-top: 8px; padding-top: 8px; }
+}
+
+/* 矩阵用 monospace 表格排版，避免等宽字体缺失导致的错位 */
+.mtable {
+  border-collapse: collapse;
+  margin: 2px 0 2px 9px;
+  border-left: 1.6px solid #8fa2bd;
+  border-right: 1.6px solid #8fa2bd;
+  border-radius: 3px;
+}
+.mtable td {
+  padding: 0 5px;
+  font: 13px/1.42 ui-monospace, SFMono-Regular, Consolas, monospace;
+  text-align: right;
+  color: #33415a;
+}
+.mtable td.pos { color: #174ea6; font-weight: 700; }
+.break { display: inline; }
+/* 移动端：读数字号略降、矩阵列距收紧、矩阵另起一行避免横向溢出 */
+@media (max-width: 720px) {
+  .mtable { margin: 2px 0 2px 0; }
+  .mtable td { padding: 0 3px; font-size: 11.5px; }
+  .readout { font-size: 12.5px; max-width: calc(100% - 16px); }
+  .readout .row { white-space: normal; }
+  .readout .small { font-size: 11px; }
+  .break { display: block; }
+  .panel .control { margin-top: 7px; }
+  .panel .subtitle { display: none; }
+  .panel .legend { margin-top: 7px; padding-top: 7px; }
+}
+</style>
+</head>
+<body>
+<main class="app">
+<svg class="viewport" id="viewport" viewBox="0 0 1000 620" role="img" aria-label="曲柄滑块机构交互示意，曲柄整周回转带动滑块沿导轨往复">
+  <defs>
+    <marker id="arrowX" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d93025"></path>
+    </marker>
+    <marker id="arrowZ" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#12944f"></path>
+    </marker>
+    <marker id="arrowV" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c26a10"></path>
+    </marker>
+  </defs>
+  <g id="baseLayer"></g>
+  <g id="frameLayer"></g>
+  <g id="traceLayer"></g>
+  <g id="linkLayer"></g>
+  <g id="pinLayer"></g>
+  <g id="labelLayer"></g>
+</svg>
+
+<section class="panel" aria-label="图3-15 曲柄滑块机构 控制面板">
+  <div class="panel-head">
+    <div>
+      <h1>图3-15 曲柄滑块机构</h1>
+      <p class="subtitle">曲柄 AB 整周回转，经连杆 BC 推动滑块 C 沿导轨往复移动。偏距 e 不为零时为偏置曲柄滑块，行程大于 2r，并具有急回特性。</p>
+    </div>
+    <button class="reset" id="reset" type="button">重置</button>
+  </div>
+  <div class="control">
+    <div class="control-head"><label for="theta">曲柄转角 θ</label><output id="thetaValue">30°</output></div>
+    <input id="theta" type="range" min="0" max="360" step="1" value="30">
+  </div>
+  <div class="control">
+    <div class="control-head"><label for="r">曲柄半径 r</label><output id="rValue">1.20</output></div>
+    <input id="r" type="range" min="0.9" max="1.4" step="0.01" value="1.20">
+  </div>
+  <div class="control">
+    <div class="control-head"><label for="e">偏距 e</label><output id="eValue">0.60</output></div>
+    <input id="e" type="range" min="0" max="1.2" step="0.01" value="0.60">
+  </div>
+  <div class="options">
+    <label><input id="auto" type="checkbox" checked>自动运转</label>
+    <label><input id="showTrace" type="checkbox" checked>显示铰点轨迹</label>
+    <label><input id="showLabels" type="checkbox" checked>显示铰点标注</label>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#ecd3a2"></i>曲柄 1（AB，整周回转）</span>
+    <span><i style="background:#dde6f3"></i>连杆 2（BC）</span>
+    <span><i style="background:#c8d4e4"></i>滑块 3（C，往复移动）</span>
+    <span><i style="background:#d3d8e0"></i>机架与导轨 4</span>
+  </div>
+</section>
+
+<div class="hint">拖动旋转视角 · 滚轮缩放 · 双击复位</div>
+
+<div class="readout">
+  <div class="row"><strong>θ</strong> = <span id="thetaOut">30°</span>　<span class="small">（曲柄转角）</span></div>
+  <div class="row"><strong>s</strong> = <span id="sOut">—</span>　<span class="small">（滑块位移）</span></div>
+  <div class="row"><strong>H</strong> = <span id="hOut">—</span>　<span class="small">（行程）</span></div>
+  <div class="row"><strong>γ</strong> = <span id="gammaOut">—</span>　<span class="small">（传动角）</span></div>
+  <div class="row"><span class="small">偏置曲柄滑块：滑块位移 s = r cosθ + √(l² − (r sinθ − e)²)，行程 H > 2r；e = 0 时退化为对心曲柄滑块，H = 2r 且无急回。</span></div>
+</div>
+</main>
+<link rel="stylesheet" href="figure-layout.css?v=2">
+<script src="figure-layout.js?v=2"></script>
+<script>
+/*!
+ * figure-kit.js — 交互教学图公共底座
+ *
+ * 为两本机器人教材的交互图提供统一的三维投影、视图拖动/缩放、滑块与重置逻辑。
+ * 纯原生 JavaScript，无任何外部依赖，可在 iframe sandbox="allow-scripts" 下运行。
+ *
+ * 主要 API（挂在 window.FK 上）：
+ *   FK.Vec        三维向量运算（add/sub/scale/dot/cross/norm/normalize）
+ *   FK.M4         4x4 齐次变换矩阵运算（identity/multiply/rotX/rotY/rotZ/rotAxis/translate/apply/fromRT/inverse）
+ *   FK.Scene      可交互三维场景（SVG 渲染、正交投影、指针捕获、滚轮缩放、自动旋转）
+ *   FK.AdaptiveScene  按 iframe 实际尺寸自适应 viewBox 的场景（推荐使用，见下方注释）
+ *   FK.bindRanges 把 range 输入批量绑定到 state 并刷新
+ *   FK.format     数值格式化
+ *
+ * 坐标约定：右手坐标系，x 向右、y 向前（屏幕内）、z 向上。
+ * 投影：先绕 z 轴 yaw、再绕屏幕水平轴 pitch 的正交投影，可缩放。
+ */
+(function (global) {
+  "use strict";
+
+  /* ------------------------------------------------------------------ 向量 */
+
+  var Vec = {
+    add: function (a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; },
+    sub: function (a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; },
+    scale: function (a, s) { return [a[0] * s, a[1] * s, a[2] * s]; },
+    dot: function (a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; },
+    cross: function (a, b) {
+      return [
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+      ];
+    },
+    len: function (a) { return Math.sqrt(Vec.dot(a, a)); },
+    normalize: function (a) {
+      var n = Vec.len(a);
+      return n < 1e-12 ? [0, 0, 0] : Vec.scale(a, 1 / n);
+    },
+    /** 与教材一致：向量按列写成矩阵，转置后返回行向量字符串 */
+    round: function (a, digits) {
+      var d = digits === undefined ? 3 : digits;
+      var p = Math.pow(10, d);
+      return a.map(function (v) { return Math.round(v * p) / p; });
+    },
+    eq: function (a, b, eps) {
+      var e = eps === undefined ? 1e-6 : eps;
+      return Math.abs(a[0] - b[0]) < e && Math.abs(a[1] - b[1]) < e && Math.abs(a[2] - b[2]) < e;
+    },
+  };
+
+  /* ------------------------------------------------------------------ 矩阵 */
+
+  var M4 = {
+    identity: function () { return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; },
+    /** 行主序 4x4 相乘 */
+    multiply: function (a, b) {
+      var out = new Array(16);
+      for (var i = 0; i < 4; i += 1) {
+        for (var j = 0; j < 4; j += 1) {
+          var sum = 0;
+          for (var k = 0; k < 4; k += 1) sum += a[i * 4 + k] * b[k * 4 + j];
+          out[i * 4 + j] = sum;
+        }
+      }
+      return out;
+    },
+    chain: function () {
+      var out = M4.identity();
+      for (var i = 0; i < arguments.length; i += 1) out = M4.multiply(out, arguments[i]);
+      return out;
+    },
+    rotX: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1];
+    },
+    rotY: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1];
+    },
+    rotZ: function (rad) {
+      var c = Math.cos(rad), s = Math.sin(rad);
+      return [c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+    },
+    /** Rodrigues 轴角旋转；k 必须是单位轴（会自动归一化） */
+    rotAxis: function (axis, rad) {
+      var k = Vec.normalize(axis);
+      var c = Math.cos(rad), s = Math.sin(rad), t = 1 - c;
+      var x = k[0], y = k[1], z = k[2];
+      return [
+        t * x * x + c, t * x * y - s * z, t * x * z + s * y, 0,
+        t * x * y + s * z, t * y * y + c, t * y * z - s * x, 0,
+        t * x * z - s * y, t * y * z + s * x, t * z * z + c, 0,
+        0, 0, 0, 1,
+      ];
+    },
+    translate: function (v) {
+      return [1, 0, 0, v[0], 0, 1, 0, v[1], 0, 0, 1, v[2], 0, 0, 0, 1];
+    },
+    /** 由旋转矩阵（行主序 3x3 数组）与位移构造齐次变换 */
+    fromRT: function (r, p) {
+      return [
+        r[0], r[1], r[2], p[0],
+        r[3], r[4], r[5], p[1],
+        r[6], r[7], r[8], p[2],
+        0, 0, 0, 1,
+      ];
+    },
+    /** 变换一个点（含平移） */
+    apply: function (m, v) {
+      return [
+        m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3],
+        m[4] * v[0] + m[5] * v[1] + m[6] * v[2] + m[7],
+        m[8] * v[0] + m[9] * v[1] + m[10] * v[2] + m[11],
+      ];
+    },
+    /** 只变换方向（不含平移） */
+    applyDir: function (m, v) {
+      return [
+        m[0] * v[0] + m[1] * v[1] + m[2] * v[2],
+        m[4] * v[0] + m[5] * v[1] + m[6] * v[2],
+        m[8] * v[0] + m[9] * v[1] + m[10] * v[2],
+      ];
+    },
+    /** 齐次逆变换：R 转置，-Rᵀp（教材式 2-45 的矩阵形式） */
+    inverse: function (m) {
+      var r = [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]];
+      var rt = [r[0], r[3], r[6], r[1], r[4], r[7], r[2], r[5], r[8]];
+      var p = [m[3], m[7], m[11]];
+      var t = [
+        -(rt[0] * p[0] + rt[1] * p[1] + rt[2] * p[2]),
+        -(rt[3] * p[0] + rt[4] * p[1] + rt[5] * p[2]),
+        -(rt[6] * p[0] + rt[7] * p[1] + rt[8] * p[2]),
+      ];
+      return M4.fromRT(rt, t);
+    },
+    /** 取 3x3 旋转部分 */
+    rotation: function (m) {
+      return [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]];
+    },
+    /** 取位移部分 */
+    position: function (m) { return [m[3], m[7], m[11]]; },
+    /** X-Y-Z 固定角（先绕 X 转 γ、再绕 Y 转 β、最后绕 Z 转 α），教材式 2-63 */
+    fromFixedXYZ: function (gamma, beta, alpha) {
+      return M4.chain(M4.rotZ(alpha), M4.rotY(beta), M4.rotX(gamma));
+    },
+    /** Z-Y-X 欧拉角（每次绕运动坐标系的新轴），教材式 2-71 */
+    fromEulerZYX: function (alpha, beta, gamma) {
+      return M4.chain(M4.rotZ(alpha), M4.rotY(beta), M4.rotX(gamma));
+    },
+  };
+
+  /* ------------------------------------------------------------------ 场景 */
+
+  var NS = "http://www.w3.org/2000/svg";
+  var DEG = Math.PI / 180;
+
+  /**
+   * Scene 构造函数。
+   * @param {object} options
+   *   - svg: 承载投影图形的 SVG 元素（必填）
+   *   - origin: 投影中心在 viewBox 中的位置，默认 {x: 560, y: 360}
+   *   - scale: 每单位长度对应的像素数，默认 78
+   *   - yaw / pitch: 初始视角（弧度）
+   *   - minScale / maxScale / minPitch / maxPitch
+   *   - onRender: 每次绘制后的回调（用于同步读数）
+   *   - layer: 兼容字段；不传则使用 svg 自身作为绘图容器
+   */
+  function Scene(options) {
+    var self = this;
+    var opts = options || {};
+    this.svg = opts.svg;
+    if (!this.svg) throw new Error("FK.Scene 需要一个 svg 元素作为视图容器");
+    this.layer = opts.layer || this.svg;
+    this.defaults = {
+      yaw: opts.yaw === undefined ? -0.72 : opts.yaw,
+      pitch: opts.pitch === undefined ? 0.48 : opts.pitch,
+      scale: opts.scale === undefined ? 78 : opts.scale,
+      panX: 0,
+      panY: 0,
+    };
+    this.limits = {
+      minScale: opts.minScale === undefined ? 34 : opts.minScale,
+      maxScale: opts.maxScale === undefined ? 190 : opts.maxScale,
+      minPitch: opts.minPitch === undefined ? -1.15 : opts.minPitch,
+      maxPitch: opts.maxPitch === undefined ? 1.15 : opts.maxPitch,
+    };
+    this.origin = opts.origin || { x: 560, y: 360 };
+    this.baseOrigin = { x: this.origin.x, y: this.origin.y };
+    this.state = {
+      yaw: this.defaults.yaw,
+      pitch: this.defaults.pitch,
+      scale: this.defaults.scale,
+      dragging: false,
+      panning: false,
+      pointerId: null,
+      lastX: 0,
+      lastY: 0,
+      auto: false,
+    };
+    this.onRender = opts.onRender || null;
+    this.autoSpeed = opts.autoSpeed === undefined ? 0.0032 : opts.autoSpeed;
+    this._frame = 0;
+    this._render = null;
+    this._enableInteraction();
+  }
+
+  Scene.prototype = {
+    /** 世界坐标 -> 屏幕坐标（正交投影 + 深度值） */
+    project: function (v) {
+      var s = this.state;
+      var cy = Math.cos(s.yaw), sy = Math.sin(s.yaw);
+      var cp = Math.cos(s.pitch), sp = Math.sin(s.pitch);
+      var x1 = v[0] * cy - v[1] * sy;
+      var y1 = v[0] * sy + v[1] * cy;
+      var z1 = v[2];
+      var depth = y1 * cp - z1 * sp;
+      var vertical = y1 * sp + z1 * cp;
+      return {
+        x: this.origin.x + x1 * s.scale,
+        y: this.origin.y - vertical * s.scale,
+        depth: depth,
+      };
+    },
+    /** 变换矩阵作用后再投影，便于处理带位姿的坐标系 */
+    projectT: function (m, v) { return this.project(M4.apply(m, v)); },
+    /** 清空图层 */
+    clear: function () { while (this.layer.firstChild) this.layer.removeChild(this.layer.firstChild); },
+    /** 创建 SVG 元素 */
+    el: function (tag, attrs, parent) {
+      var node = document.createElementNS(NS, tag);
+      if (attrs) {
+        Object.keys(attrs).forEach(function (key) {
+          if (attrs[key] === null || attrs[key] === undefined) return;
+          node.setAttribute(key, attrs[key]);
+        });
+      }
+      (parent || this.layer).appendChild(node);
+      return node;
+    },
+    /** 画一条线段（世界坐标） */
+    line: function (a, b, attrs, parent) {
+      var A = this.project(a), B = this.project(b);
+      return this.el("line", Object.assign({ x1: A.x, y1: A.y, x2: B.x, y2: B.y }, attrs || {}), parent);
+    },
+    /** 画一条带箭头的线段，marker 为 marker id（不含 url()） */
+    arrow: function (a, b, cls, marker, parent) {
+      var A = this.project(a), B = this.project(b);
+      return this.el("line", {
+        x1: A.x, y1: A.y, x2: B.x, y2: B.y,
+        class: cls,
+        "marker-end": marker ? "url(#" + marker + ")" : null,
+      }, parent);
+    },
+    /** 画文字标签 */
+    text: function (v, str, attrs, dx, dy, parent) {
+      var p = this.project(v);
+      var node = this.el("text", Object.assign({
+        x: p.x + (dx || 0),
+        y: p.y + (dy || 0),
+      }, attrs || {}), parent);
+      node.textContent = str;
+      return node;
+    },
+    /** 画一条折线 */
+    polyline: function (points, attrs, parent) {
+      var d = points.map(function (p) {
+        var q = this.project(p);
+        return q.x + "," + q.y;
+      }, this).join(" ");
+      return this.el("polyline", Object.assign({ points: d, fill: "none" }, attrs || {}), parent);
+    },
+    /** 画一个实心圆点 */
+    dot: function (v, attrs, parent) {
+      var p = this.project(v);
+      return this.el("circle", Object.assign({ cx: p.x, cy: p.y, r: 6 }, attrs || {}), parent);
+    },
+    /**
+     * 绘制一个坐标系（三根轴 + 标签）。
+     * @param {number[]} m 4x4 齐次变换，定义坐标系在参考系中的位姿
+     * @param {object} cfg { labels:[x,y,z], length, colors:[c1,c2,c3], marker, parent, dash }
+     */
+    axes: function (m, cfg) {
+      var c = cfg || {};
+      var len = c.length === undefined ? 2.4 : c.length;
+      var labels = c.labels || ["X", "Y", "Z"];
+      var colors = c.colors || ["#e23a34", "#1a73e8", "#2e9e63"];
+      var dirs = [[len, 0, 0], [0, len, 0], [0, 0, len]];
+      var group = c.parent || this.layer;
+      for (var i = 0; i < 3; i += 1) {
+        var tip = M4.apply(m, dirs[i]);
+        var base = M4.apply(m, [0, 0, 0]);
+        var A = this.project(base), B = this.project(tip);
+        this.el("line", {
+          x1: A.x, y1: A.y, x2: B.x, y2: B.y,
+          stroke: colors[i],
+          "stroke-width": c.width || 3.4,
+          "stroke-dasharray": c.dash || null,
+          "marker-end": c.marker ? "url(#" + c.marker + ")" : null,
+        }, group);
+        var node = this.el("text", {
+          x: B.x + (c.dx === undefined ? 8 : c.dx),
+          y: B.y + (c.dy === undefined ? -6 : c.dy),
+          fill: colors[i],
+        }, group);
+        node.textContent = labels[i];
+      }
+      var origin = M4.apply(m, [0, 0, 0]);
+      var p = this.project(origin);
+      this.el("circle", { cx: p.x, cy: p.y, r: c.originR || 4, fill: "#2b3a52" }, group);
+      if (c.originLabel) {
+        var t = this.el("text", { x: p.x + 8, y: p.y + 16, fill: "#2b3a52" }, group);
+        t.textContent = c.originLabel;
+      }
+      return group;
+    },
+    /**
+     * 绘制地面网格（xy 平面）。
+     * @param {number} half 网格半宽，默认 3
+     * @param {number} step 网格间距，默认 1
+     * @param {object} attrs 传给每条网格线的额外属性
+     * @param {Element} parent 目标图层；不传时落在 scene.layer。
+     *   注意：调用方若在 render() 里用某个命名图层调用 replaceChildren() 清理，
+     *   就必须把该图层作为 parent 传进来，否则网格会挂在根 SVG 上不断累积。
+     */
+    grid: function (half, step, attrs, parent) {
+      var h = half === undefined ? 3 : half;
+      var s = step === undefined ? 1 : step;
+      var group = this.el("g", { class: "fk-grid" }, parent);
+      for (var i = -h; i <= h; i += s) {
+        this.line([-h, i, 0], [h, i, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
+        this.line([i, -h, 0], [i, h, 0], Object.assign({ class: "fk-grid-line" }, attrs || {}), group);
+      }
+      return group;
+    },
+    /** 每次状态变化时调用的真实绘制函数 */
+    setRenderer: function (fn) { this._render = fn; },
+    /** 触发一次重绘 */
+    render: function () {
+      this.origin.x = this.baseOrigin.x;
+      this.origin.y = this.baseOrigin.y;
+      if (this._render) this._render(this);
+      if (this.onRender) this.onRender(this);
+    },
+    reset: function () {
+      this.state.yaw = this.defaults.yaw;
+      this.state.pitch = this.defaults.pitch;
+      this.state.scale = this.defaults.scale;
+      this.origin.x = this.baseOrigin.x;
+      this.origin.y = this.baseOrigin.y;
+    },
+    setAuto: function (on) {
+      this.state.auto = !!on;
+      if (this.state.auto && !this._frame) this._frame = requestAnimationFrame(this._tick.bind(this));
+    },
+    _tick: function () {
+      this._frame = 0;
+      if (!this.state.auto && !this.state.dragging) return;
+      this.state.yaw += this.autoSpeed;
+      this.render();
+      if (this.state.auto) this._frame = requestAnimationFrame(this._tick.bind(this));
+    },
+    _enableInteraction: function () {
+      var self = this;
+      var svg = this.svg;
+      svg.addEventListener("pointerdown", function (event) {
+        if (event.button !== 0 && event.pointerType === "mouse") return;
+        if (self.state.pointerId !== null) return;
+        event.preventDefault();
+        self.state.dragging = true;
+        self.state.pointerId = event.pointerId;
+        self.state.lastX = event.clientX;
+        self.state.lastY = event.clientY;
+        svg.classList.add("is-dragging");
+        try { svg.setPointerCapture(event.pointerId); } catch (error) { /* 忽略 */ }
+      });
+      svg.addEventListener("pointermove", function (event) {
+        if (!self.state.dragging || event.pointerId !== self.state.pointerId) return;
+        event.preventDefault();
+        var dx = event.clientX - self.state.lastX;
+        var dy = event.clientY - self.state.lastY;
+        self.state.lastX = event.clientX;
+        self.state.lastY = event.clientY;
+        // 水平拖动的直觉方向：向右拖动使模型向右转（观察者绕模型向左移动的等价效果）
+        self.state.yaw += dx * 0.008;
+        self.state.pitch = Math.max(
+          self.limits.minPitch,
+          Math.min(self.limits.maxPitch, self.state.pitch + dy * 0.007)
+        );
+        self.render();
+      });
+      function endDrag(event) {
+        if (event && self.state.pointerId !== null && event.pointerId !== self.state.pointerId) return;
+        self.state.dragging = false;
+        self.state.pointerId = null;
+        svg.classList.remove("is-dragging");
+      }
+      svg.addEventListener("pointerup", endDrag);
+      svg.addEventListener("pointercancel", endDrag);
+      svg.addEventListener("lostpointercapture", endDrag);
+      svg.addEventListener("dragstart", function (event) { event.preventDefault(); });
+      svg.addEventListener("wheel", function (event) {
+        event.preventDefault();
+        var factor = event.deltaY > 0 ? 0.92 : 1.08;
+        self.state.scale = Math.max(
+          self.limits.minScale,
+          Math.min(self.limits.maxScale, self.state.scale * factor)
+        );
+        self.render();
+      }, { passive: false });
+      // 双击复位视角
+      svg.addEventListener("dblclick", function () {
+        self.reset();
+        self.render();
+      });
+    },
+  };
+
+  /* ------------------------------------------------------------------ 自适应场景 */
+
+  /**
+   * 根据 iframe 实际像素尺寸调整 viewBox 与投影中心，避免在窄屏或矮窗口里
+   * 出现大片空白、或图形被压得过小。
+   *
+   * 做法：viewBox 直接取容器的像素宽高（1 单位 = 1 px），因此组件的字号、
+   * 半径、线宽在任何窗口里都保持同样的物理大小；图形位置由 origin 的
+   * 相对锚点决定，缩放由 scale 决定。
+   *
+   * @param {object} options
+   *   - svg / viewport：视图容器（必填）
+   *   - scale：投影缩放（宽屏），默认 78
+   *   - narrowScale：窄屏投影缩放，默认取 scale * 0.86
+   *   - narrowWidth：判定为窄屏的宽度阈值（px），默认 620
+   *   - tallRatio：高度/宽度 大于该值时视为竖屏，默认 1.15
+   *   - wide / narrow / tall：三种形态下的锚点，形如 { x: 0.55, y: 0.62 }
+   *   - design：设计基准尺寸，仅用于日志与默认锚点，默认 { width: 1000, height: 620 }
+   *   - onLayout：每次布局后回调 (scene, layout)
+   *   - 其余选项透传给 Scene
+   */
+  function AdaptiveScene(options) {
+    var opts = options || {};
+    var svg = opts.svg;
+    if (!svg) throw new Error("FK.AdaptiveScene 需要一个 svg 元素作为视图容器");
+    var wide = opts.wide || { x: 0.56, y: 0.62 };
+    var narrow = opts.narrow || { x: 0.5, y: 0.42 };
+    var tall = opts.tall || { x: 0.5, y: 0.4 };
+    var narrowWidth = opts.narrowWidth === undefined ? 620 : opts.narrowWidth;
+    var tallRatio = opts.tallRatio === undefined ? 1.15 : opts.tallRatio;
+    var baseScale = opts.scale === undefined ? 78 : opts.scale;
+    var narrowScale = opts.narrowScale === undefined ? baseScale * 0.86 : opts.narrowScale;
+
+    var sceneOptions = {};
+    Object.keys(opts).forEach(function (key) {
+      if (["wide", "narrow", "tall", "narrowWidth", "tallRatio", "scale", "narrowScale", "onLayout", "design"].indexOf(key) === -1) {
+        sceneOptions[key] = opts[key];
+      }
+    });
+    sceneOptions.scale = baseScale;
+    var scene = new Scene(sceneOptions);
+
+    function layout() {
+      var rect = svg.getBoundingClientRect();
+      var width = Math.max(320, Math.round(rect.width || 1000));
+      var height = Math.max(320, Math.round(rect.height || 620));
+      var isNarrow = width < narrowWidth;
+      var isTall = height / width > tallRatio;
+      var anchor = isNarrow ? (isTall ? tall : narrow) : wide;
+      if (isNarrow && !isTall) anchor = narrow;
+      if (isNarrow && isTall) anchor = tall;
+      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+      svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      scene.baseOrigin.x = width * anchor.x;
+      scene.baseOrigin.y = height * anchor.y;
+      scene.limits.minScale = baseScale * 0.42;
+      scene.limits.maxScale = baseScale * 2.5;
+      var previousScale = scene.state.scale;
+      var previousDefault = scene.defaults.scale;
+      var nextScale = isNarrow ? narrowScale : baseScale;
+      if (previousScale === previousDefault) {
+        scene.state.scale = nextScale;
+      } else {
+        scene.state.scale = Math.max(scene.limits.minScale, Math.min(scene.limits.maxScale, previousScale));
+      }
+      scene.defaults.scale = nextScale;
+      scene.origin.x = scene.baseOrigin.x;
+      scene.origin.y = scene.baseOrigin.y;
+      if (opts.onLayout) opts.onLayout(scene, { width: width, height: height, narrow: isNarrow, tall: isTall });
+      scene.render();
+    }
+
+    scene.fit = layout;
+    if (typeof ResizeObserver !== "undefined") {
+      var observer = new ResizeObserver(function () { layout(); });
+      observer.observe(svg);
+      scene._observer = observer;
+    } else {
+      global.addEventListener("resize", layout);
+    }
+    // 首帧布局：等一帧再测，确保 iframe 已完成布局
+    if (typeof requestAnimationFrame === "function") {
+      requestAnimationFrame(layout);
+    } else {
+      layout();
+    }
+    return scene;
+  }
+
+  /* ------------------------------------------------------------------ 工具 */
+
+  /**
+   * 把一组 range 控件绑定到 state，并统一在 input 时重绘。
+   * @param {object[]} defs 每项 { id, key, value, format, onChange }
+   * @param {object} state 目标状态对象
+   * @param {function} render 刷新函数
+   * @param {string} outputSuffix 输出元素的后缀，默认 "Value"
+   */
+  function bindRanges(defs, state, render, outputSuffix) {
+    var suffix = outputSuffix || "Value";
+    var sync = [];
+    defs.forEach(function (def) {
+      var input = document.getElementById(def.id);
+      if (!input) return;
+      var output = document.getElementById(def.id + suffix);
+      function apply() {
+        var raw = Number(input.value);
+        state[def.key] = raw;
+        if (output) {
+          output.textContent = def.format ? def.format(raw) : String(raw);
+        }
+        if (def.onChange) def.onChange(raw, state);
+        render();
+      }
+      input.value = def.value === undefined ? input.value : def.value;
+      input.addEventListener("input", apply);
+      sync.push({ input: input, output: output, def: def, apply: apply });
+      apply();
+    });
+    return {
+      /** 把 state 当前值写回控件 */
+      refresh: function () {
+        sync.forEach(function (item) {
+          var value = state[item.def.key];
+          if (value === undefined) return;
+          item.input.value = value;
+          if (item.output) {
+            item.output.textContent = item.def.format ? item.def.format(value) : String(value);
+          }
+        });
+      },
+      apply: function () { sync.forEach(function (item) { item.apply(); }); },
+    };
+  }
+
+  function bindToggles(defs, state, render) {
+    defs.forEach(function (def) {
+      var input = document.getElementById(def.id);
+      if (!input) return;
+      input.checked = !!state[def.key];
+      input.addEventListener("change", function () {
+        state[def.key] = input.checked;
+        if (def.onChange) def.onChange(input.checked, state);
+        render();
+      });
+    });
+  }
+
+  function format(value, digits) {
+    var d = digits === undefined ? 2 : digits;
+    var fixed = Number(value).toFixed(d);
+    return fixed === "-" + (0).toFixed(d) ? (0).toFixed(d) : fixed;
+  }
+
+  /** 角度的常见显示：45.0° */
+  function deg(value, digits) {
+    return format(value, digits === undefined ? 1 : digits) + "°";
+  }
+
+  global.FK = {
+    Vec: Vec,
+    M4: M4,
+    Scene: Scene,
+    AdaptiveScene: AdaptiveScene,
+    bindRanges: bindRanges,
+    bindToggles: bindToggles,
+    format: format,
+    deg: deg,
+    DEG: DEG,
+  };
+}(window));
+</script>
+<script>
+/*! mechanism-kit.js — 机械原理交互图的实体辅助（基于 figure-kit.js 的正交投影）
+ *
+ * 只用 SVG 路径堆出"有厚度的零件"：每块零件都是沿 y 方向挤出的棱柱，
+ * 面按深度排序后用四档明暗上色，因此视角一转，侧面自然变暗、前脸保持受光。
+ * 与本目录其它交互图共用 figure-kit.js / figure-layout.js 的交互（拖动、滚轮、双击）。
+ */
+window.MK = (function () {
+  "use strict";
+
+  function r2(v) { return Math.round(v * 100) / 100; }
+
+  function make(scene, pal) {
+    var P = {
+      steel: { hi: "#fbfdff", base: "#c6d3e8", mid: "#9db0cd", dark: "#7186a8", line: "#5d708c" },
+      slate: { hi: "#f2f6fc", base: "#bcc9de", mid: "#94a4bd", dark: "#6d7d97", line: "#5a6a83" },
+      brass: { hi: "#fdf3d9", base: "#e8c98c", mid: "#c49f5c", dark: "#997a42", line: "#7d6334" },
+      teal: { hi: "#eefafb", base: "#b2d6db", mid: "#87b4ba", dark: "#5f8d94", line: "#4e757c" },
+      graphite: { hi: "#e9ebf0", base: "#c0c6d1", mid: "#969ea9", dark: "#747c87", line: "#5e6671" },
+      ink: { hi: "#9aa6b8", base: "#5b6879", mid: "#48535f", dark: "#39424c", line: "#2f373f" }
+    };
+    var tone = function (name) { return P[name] || pal[name] || P.steel; };
+
+    function polyD(pts3) {
+      var d = "";
+      for (var i = 0; i < pts3.length; i += 1) {
+        var q = scene.project(pts3[i]);
+        d += (i ? " L" : "M") + r2(q.x) + "," + r2(q.y);
+      }
+      return d + " Z";
+    }
+
+    function signedArea(pts3) {
+      var a = 0, proj = [];
+      for (var i = 0; i < pts3.length; i += 1) proj.push(scene.project(pts3[i]));
+      for (var j = 0; j < proj.length; j += 1) {
+        var p = proj[j], q = proj[(j + 1) % proj.length];
+        a += p.x * q.y - q.x * p.y;
+      }
+      return a / 2;
+    }
+
+    function depthOf(pts3) {
+      var d = 0;
+      for (var i = 0; i < pts3.length; i += 1) d += scene.project(pts3[i]).depth;
+      return d / pts3.length;
+    }
+
+    /** 一组面：先画远的，再按投影朝向取明暗（正面受光、侧面压暗） */
+    function faces(list, layer) {
+      for (var i = 0; i < list.length; i += 1) list[i].depth = depthOf(list[i].pts);
+      list.sort(function (a, b) { return b.depth - a.depth; });
+      for (var j = 0; j < list.length; j += 1) {
+        var f = list[j];
+        var fill = f.fill || (signedArea(f.pts) > 0 ? f.tone.base : f.tone.dark);
+        scene.el("path", {
+          d: polyD(f.pts),
+          fill: fill,
+          stroke: f.tone.line,
+          "stroke-width": f.width === undefined ? 0.85 : f.width,
+          "stroke-linejoin": "round",
+          opacity: f.opacity === undefined ? 1 : f.opacity
+        }, layer);
+      }
+    }
+
+    /** 把 XZ 平面上的多边形沿 y 方向挤出成棱柱 */
+    function extrude(xz, y0, thick, t, layer, opt) {
+      opt = opt || {};
+      var n = xz.length, front = [], back = [], list = [], i;
+      for (i = 0; i < n; i += 1) {
+        front.push([xz[i][0], y0, xz[i][1]]);
+        back.push([xz[i][0], y0 + thick, xz[i][1]]);
+      }
+      var backRev = back.slice().reverse();
+      list.push({ pts: backRev, fill: t.mid, tone: t });
+      for (i = 0; i < n; i += 1) {
+        var k = (i + 1) % n;
+        list.push({ pts: [front[i], front[k], back[k], back[i]], fill: null, tone: t });
+      }
+      list.push({ pts: front, fill: t.base, tone: t });
+      faces(list, layer);
+      if (opt.edge) {
+        scene.line([xz[0][0], y0, xz[0][1]], [xz[0][0], y0, xz[0][1]], {}, layer);
+      }
+    }
+
+    /** 圆头长条（链杆）在 XZ 平面上的外轮廓 */
+    function stadium(p1, p2, halfW, seg) {
+      seg = seg || 9;
+      var a = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+      var pts = [], i, t;
+      for (i = 0; i <= seg; i += 1) {
+        t = a + Math.PI / 2 + Math.PI * (i / seg);
+        pts.push([p1[0] + halfW * Math.cos(t), p1[1] + halfW * Math.sin(t)]);
+      }
+      for (i = 0; i <= seg; i += 1) {
+        t = a - Math.PI / 2 + Math.PI * (i / seg);
+        pts.push([p2[0] + halfW * Math.cos(t), p2[1] + halfW * Math.sin(t)]);
+      }
+      return pts;
+    }
+
+    /** 链杆：p1/p2 为 XZ 坐标；y 为零件所在深度，thick 为厚度 */
+    function bar(p1, p2, halfW, y, thick, toneName, layer) {
+      var t = tone(toneName);
+      extrude(stadium(p1, p2, halfW), y, thick, t, layer);
+      // 前脸高光：沿杆身上缘的一条窄亮边，让金属有受光感
+      var a = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+      var nx = Math.cos(a + Math.PI / 2), nz = Math.sin(a + Math.PI / 2);
+      var off = halfW * 0.5;
+      scene.line(
+        [p1[0] + nx * off, y, p1[1] + nz * off],
+        [p2[0] + nx * off, y, p2[1] + nz * off],
+        { stroke: t.hi, "stroke-width": 2, "stroke-linecap": "round", opacity: 0.85 }, layer
+      );
+    }
+
+    /** 销轴：沿 y 方向的圆柱，带倒角环与中心孔 */
+    function pin(p, y, radius, thick, toneName, layer) {
+      var t = tone(toneName || "slate");
+      var n = 14, front = [], back = [], list = [], i, ang;
+      for (i = 0; i < n; i += 1) {
+        ang = (i / n) * Math.PI * 2;
+        front.push([p[0] + radius * Math.cos(ang), y, p[1] + radius * Math.sin(ang)]);
+        back.push([p[0] + radius * Math.cos(ang), y + thick, p[1] + radius * Math.sin(ang)]);
+      }
+      list.push({ pts: back.slice().reverse(), fill: t.mid, tone: t });
+      for (i = 0; i < n; i += 1) {
+        var k = (i + 1) % n;
+        list.push({ pts: [front[i], front[k], back[k], back[i]], fill: null, tone: t });
+      }
+      faces(list, layer);
+      scene.el("path", { d: polyD(front), fill: t.base, stroke: t.line, "stroke-width": 0.9 }, layer);
+      scene.el("path", { d: polyD(front), fill: "none", stroke: t.hi, "stroke-width": 1.5, opacity: 0.7 }, layer);
+      scene.el("circle", {
+        cx: scene.project([p[0], y, p[1]]).x, cy: scene.project([p[0], y, p[1]]).y,
+        r: radius * 0.26, fill: t.dark, stroke: t.line, "stroke-width": 0.6
+      }, layer);
+    }
+
+    /** 长方体：底座、立柱、滑座、导轨座都用它 */
+    function box(center, size, toneName, layer, opt) {
+      opt = opt || {};
+      var t = tone(toneName || "graphite");
+      var cx = center[0], cy = center[1], cz = center[2];
+      var hx = size[0] / 2, hy = size[1] / 2, hz = size[2] / 2;
+      var v = [];
+      for (var sx = -1; sx <= 1; sx += 2) {
+        for (var sy = -1; sy <= 1; sy += 2) {
+          for (var sz = -1; sz <= 1; sz += 2) v.push([cx + sx * hx, cy + sy * hy, cz + sz * hz]);
+        }
+      }
+      // 顶点顺序：index = ((sx>0)*4 + (sy>0)*2 + (sz>0))
+      function at(ix, iy, iz) { return v[(ix > 0 ? 4 : 0) + (iy > 0 ? 2 : 0) + (iz > 0 ? 1 : 0)]; }
+      var list = [
+        { pts: [at(-1, -1, -1), at(-1, 1, -1), at(-1, 1, 1), at(-1, -1, 1)], tone: t }, // x-
+        { pts: [at(1, -1, -1), at(1, -1, 1), at(1, 1, 1), at(1, 1, -1)], tone: t },     // x+
+        { pts: [at(-1, -1, -1), at(-1, -1, 1), at(1, -1, 1), at(1, -1, -1)], tone: t }, // y-
+        { pts: [at(-1, 1, -1), at(1, 1, -1), at(1, 1, 1), at(-1, 1, 1)], tone: t },     // y+
+        { pts: [at(-1, -1, 1), at(-1, 1, 1), at(1, 1, 1), at(1, -1, 1)], tone: t },     // z+
+        { pts: [at(-1, -1, -1), at(1, -1, -1), at(1, 1, -1), at(-1, 1, -1)], tone: t }  // z-
+      ];
+      if (opt.topTone) list[4].fill = t.hi;
+      faces(list, layer);
+      var top = opt.highlightTop === false ? null : null;
+      if (top) return top;
+    }
+
+    /** 水平底板：一台机构的工作台，前沿带刻度、四角带螺钉、前立面贴铭牌 */
+    function bench(x0, x1, y0, y1, thick, layer, opt) {
+      opt = opt || {};
+      box([(x0 + x1) / 2, (y0 + y1) / 2, -thick / 2], [x1 - x0, y1 - y0, thick], "graphite", layer);
+      // 台面刻度：只画前沿一条窄带，避免糊住台面
+      for (var x = x0 + 0.25; x < x1 - 0.1; x += 0.25) {
+        var major = Math.abs(x - Math.round(x)) < 1e-6;
+        scene.line([x, y0 + 0.05, 0.001], [x, y0 + (major ? 0.26 : 0.15), 0.001],
+          { stroke: major ? "#7f8794" : "#9aa1ad", "stroke-width": major ? 1.2 : 0.8 }, layer);
+      }
+      // 角螺钉（十字槽）
+      var corners = [[x0 + 0.24, y1 - 0.24], [x1 - 0.24, y1 - 0.24], [x0 + 0.24, y0 + 0.24], [x1 - 0.24, y0 + 0.24]];
+      for (var i = 0; i < corners.length; i += 1) {
+        var c = corners[i], p = scene.project([c[0], c[1], 0]);
+        scene.el("circle", { cx: p.x, cy: p.y, r: 4.8, fill: "#aeb5bf", stroke: "#7d848f", "stroke-width": 0.9 }, layer);
+        scene.el("line", { x1: p.x - 3.2, y1: p.y, x2: p.x + 3.2, y2: p.y, stroke: "#666d78", "stroke-width": 1.3 }, layer);
+        scene.el("line", { x1: p.x, y1: p.y - 3.2, x2: p.x, y2: p.y + 3.2, stroke: "#666d78", "stroke-width": 1.3 }, layer);
+      }
+      // 铭牌贴在前立面正中，不压台面刻度
+      if (opt.label) {
+        var lx = opt.labelX === undefined ? (x0 + x1) / 2 : opt.labelX;
+        var pw = Math.max(0.56, (opt.label.length * 0.085));
+        box([lx, y0 - 0.004, -thick * 0.5], [pw, 0.016, thick * 0.46], "brass", layer);
+        var q = scene.project([lx, y0 - 0.05, -thick * 0.5]);
+        var node = scene.el("text", {
+          x: q.x, y: q.y + 3, "text-anchor": "middle",
+          "font-size": 11.5, "font-family": "ui-monospace, Consolas, monospace",
+          fill: "#4a3a1c", "letter-spacing": "0.5"
+        }, layer);
+        node.textContent = opt.label;
+      }
+    }
+
+    function label(p, text, dx, dy, layer, opt) {
+      opt = opt || {};
+      return scene.text(p, text, {
+        "font-size": opt.size || 15,
+        "font-style": "italic",
+        "font-family": "Georgia, 'Times New Roman', serif",
+        fill: opt.fill || "#33415a",
+        "text-anchor": "middle",
+        "paint-order": "stroke",
+        stroke: "#ffffff",
+        "stroke-width": 3.2,
+        "stroke-linejoin": "round"
+      }, dx || 0, dy || 0, layer);
+    }
+
+    /** 虚线轨迹 */
+    function trace(points, color, layer) {
+      scene.polyline(points, {
+        fill: "none", stroke: color, "stroke-width": 1.6,
+        "stroke-dasharray": "6 5", "stroke-linecap": "round", opacity: 0.9
+      }, layer);
+    }
+
+    return {
+      pal: P, tone: tone, faces: faces, extrude: extrude, stadium: stadium,
+      bar: bar, pin: pin, box: box, bench: bench, label: label, trace: trace
+    };
+  }
+
+  return { make: make };
+}());
+</script>
+<script>
+(function () {
+  "use strict";
+
+  var viewport = document.getElementById("viewport");
+  var baseLayer = document.getElementById("baseLayer");
+  var frameLayer = document.getElementById("frameLayer");
+  var traceLayer = document.getElementById("traceLayer");
+  var linkLayer = document.getElementById("linkLayer");
+  var pinLayer = document.getElementById("pinLayer");
+  var labelLayer = document.getElementById("labelLayer");
+
+  var scene = new FK.Scene({
+    svg: viewport,
+    origin: { x: 470, y: 330 },
+    scale: 92,
+    yaw: -0.40,
+    pitch: 0.30,
+    minScale: 34,
+    maxScale: 190
+  });
+  var M = MK.make(scene);
+
+  // 曲柄滑块：偏距 e = 0 时对心，e > 0 时偏置；滑块沿水平导轨往复
+  var DIMS = { r: 1.2, l: 3.6, z0: 1.05 };
+  var A = [0, DIMS.z0];
+
+  var state = { theta: 30, r: DIMS.r, e: 0.6, auto: true, showTrace: true, showLabels: true };
+
+  function rad2deg(v) { return v * 180 / Math.PI; }
+
+  function pose(theta) {
+    var t = theta * FK.DEG;
+    var B = [A[0] + state.r * Math.cos(t), A[1] + state.r * Math.sin(t)];
+    var zAxis = A[1] - state.e;
+    var dz = B[1] - zAxis;
+    var under = DIMS.l * DIMS.l - dz * dz;
+    if (under <= 0) return { B: B, C: null, zAxis: zAxis };
+    return { B: B, C: [B[0] + Math.sqrt(under), zAxis], zAxis: zAxis };
+  }
+
+  function solve() { return pose(state.theta); }
+
+  function stroke() {
+    var lo = Infinity, hi = -Infinity, i;
+    for (i = 0; i <= 180; i += 1) {
+      var s = pose(i / 180 * 360);
+      if (!s.C) continue;
+      lo = Math.min(lo, s.C[0]);
+      hi = Math.max(hi, s.C[0]);
+    }
+    return hi - lo;
+  }
+
+  function stand() {
+    M.box([A[0], 0.62, 0.09], [0.62, 0.72, 0.18], "graphite", frameLayer);
+    M.box([A[0], 0.74, DIMS.z0 / 2 + 0.04], [0.32, 0.30, DIMS.z0 - 0.06], "graphite", frameLayer);
+    M.box([A[0], 0.40, DIMS.z0], [0.32, 0.54, 0.30], "slate", frameLayer);
+  }
+
+  /** 水平导轨：两条轨道 + 中间滑槽，滑块坐在上面 */
+  function guide(zAxis, x0, x1) {
+    M.box([(x0 + x1) / 2, 0.70, zAxis - 0.16], [x1 - x0, 0.34, 0.14], "graphite", frameLayer);
+    M.box([(x0 + x1) / 2, -0.02, zAxis - 0.16], [x1 - x0, 0.34, 0.14], "graphite", frameLayer);
+    var mid = (x0 + x1) / 2;
+    M.box([mid, 0.34, zAxis - 0.16], [x1 - x0, 0.30, 0.10], "slate", frameLayer, {});
+  }
+
+  function render() {
+    window.FigureLayout.fit(scene, state, 5.2);
+    baseLayer.replaceChildren();
+    frameLayer.replaceChildren();
+    traceLayer.replaceChildren();
+    linkLayer.replaceChildren();
+    pinLayer.replaceChildren();
+    labelLayer.replaceChildren();
+
+    var s0 = solve();
+    var zAxis = s0.zAxis;
+    var x0 = -1.4, x1 = 5.2;
+
+    M.bench(-1.6, 5.6, -1.15, 1.15, 0.22, baseLayer, { label: "FIG 3-15", labelX: 0.0 });
+    stand();
+    guide(zAxis, x0, x1);
+
+    if (!s0.C) {
+      document.getElementById("sOut").textContent = "无法装配";
+      return;
+    }
+    var B = s0.B, C = s0.C;
+
+    if (state.showTrace) {
+      var ring = [], i;
+      for (i = 0; i <= 72; i += 1) {
+        var a = i / 72 * Math.PI * 2;
+        ring.push([A[0] + state.r * Math.cos(a), 0.62, A[1] + state.r * Math.sin(a)]);
+      }
+      M.trace(ring, "#c08a3e", traceLayer);
+      M.trace([[C[0] - 0.2, 0.62, zAxis], [C[0] + 0.2, 0.62, zAxis]], "#5f868d", traceLayer);
+    }
+
+    M.bar(B, C, 0.16, 0.00, 0.16, "steel", linkLayer);
+    M.bar(A, B, 0.18, -0.20, 0.16, "brass", linkLayer);
+    // 滑块：套在铰点 C 上的一块方座
+    M.box([C[0], 0.02, zAxis + 0.02], [0.52, 0.42, 0.52], "slate", linkLayer);
+
+    M.pin(C, -0.02, 0.13, 0.28, "slate", pinLayer);
+    M.pin(B, -0.20, 0.14, 0.30, "slate", pinLayer);
+    M.pin(A, -0.20, 0.16, 0.34, "ink", pinLayer);
+
+    if (state.showLabels) {
+      M.label([A[0], -0.20, A[1]], "A", -20, 4, labelLayer);
+      M.label([B[0], -0.20, B[1]], "B", 6, -16, labelLayer);
+      M.label([C[0], -0.02, zAxis], "C", 4, 24, labelLayer);
+    }
+
+    // 传动角：连杆与滑块运动方向（水平）之间的锐角
+    var u = [B[0] - C[0], B[1] - C[1]];
+    var gamma = rad2deg(Math.acos(Math.max(-1, Math.min(1, -u[0] / Math.sqrt(u[0] * u[0] + u[1] * u[1])))));
+
+    document.getElementById("thetaOut").textContent = state.theta.toFixed(0) + "°";
+    document.getElementById("sOut").textContent = (C[0] - A[0]).toFixed(2);
+    document.getElementById("hOut").textContent = stroke().toFixed(2);
+    document.getElementById("gammaOut").textContent = gamma.toFixed(1) + "°";
+  }
+
+  function syncInputs() {
+    document.getElementById("theta").value = state.theta;
+    document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
+    document.getElementById("r").value = state.r;
+    document.getElementById("rValue").textContent = state.r.toFixed(2);
+    document.getElementById("e").value = state.e;
+    document.getElementById("eValue").textContent = state.e.toFixed(2);
+  }
+
+  document.getElementById("theta").addEventListener("input", function (e) {
+    state.theta = Number(e.target.value); syncInputs(); render();
+  });
+  document.getElementById("r").addEventListener("input", function (e) {
+    state.r = Number(e.target.value); syncInputs(); render();
+  });
+  document.getElementById("e").addEventListener("input", function (e) {
+    state.e = Number(e.target.value); syncInputs(); render();
+  });
+  document.getElementById("auto").addEventListener("change", function (e) { state.auto = e.target.checked; });
+  document.getElementById("showTrace").addEventListener("change", function (e) {
+    state.showTrace = e.target.checked; render();
+  });
+  document.getElementById("showLabels").addEventListener("change", function (e) {
+    state.showLabels = e.target.checked; render();
+  });
+  document.getElementById("reset").addEventListener("click", function () {
+    state.theta = 30; state.r = DIMS.r; state.e = 0.6;
+    state.auto = true; state.showTrace = true; state.showLabels = true;
+    document.getElementById("auto").checked = true;
+    document.getElementById("showTrace").checked = true;
+    document.getElementById("showLabels").checked = true;
+    scene.reset();
+    syncInputs(); render();
+  });
+
+  var last = 0;
+  function tick(ts) {
+    if (!last) last = ts;
+    var dt = Math.min(0.05, (ts - last) / 1000);
+    last = ts;
+    if (state.auto) {
+      state.theta = (state.theta + 70 * dt) % 360;
+      document.getElementById("theta").value = state.theta;
+      document.getElementById("thetaValue").textContent = state.theta.toFixed(0) + "°";
+      render();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  syncInputs();
+  window.FigureLayout.attach(scene, state, render, 5.2);
+  requestAnimationFrame(tick);
+}());
+
+</script>
+</body>
+</html>
