@@ -45,15 +45,13 @@
     return rad2deg(Math.atan2(s.u[0], s.u[1]));
   }
 
-  /** 立柱 + 悬臂：立柱在一旁，用横臂把销轴托到机构平面，避免挡住导杆的摆动范围 */
-  function bracket(xCol, zCol, xPin, zPin, y0, y1) {
+  /** 立柱：立在台面上、退到机构后方（y>0.4）的轴承座。销轴从座里穿到机构平面，
+   *  立柱本身只在导杆/滑块的 Y 范围之外，不与摆动的导杆打架。 */
+  function stand(x, zTop, yBoss) {
     var zBase = 0.20;
-    M.box([xCol, y0, 0.09], [0.56, 0.60, 0.18], "graphite", frameLayer);
-    M.box([xCol, y0, (zCol + zBase) / 2], [0.28, 0.30, Math.max(0.24, zCol + 0.08 - zBase)], "graphite", frameLayer);
-    M.box([(xCol + xPin) / 2, y0, zCol], [Math.abs(xCol - xPin) + 0.26, 0.30, 0.26], "slate", frameLayer);
-    if (Math.abs(y0 - y1) > 0.05) {
-      M.box([xPin, (y0 + y1) / 2, zPin], [0.30, Math.abs(y0 - y1) + 0.14, 0.26], "slate", frameLayer);
-    }
+    M.box([x, yBoss, 0.09], [0.62, 0.70, 0.18], "graphite", frameLayer);
+    M.box([x, yBoss, (zTop + zBase) / 2], [0.34, 0.34, Math.max(0.24, zTop - zBase)], "graphite", frameLayer);
+    M.box([x, yBoss, zTop], [0.38, 0.42, 0.32], "slate", frameLayer);
   }
 
   function render() {
@@ -66,8 +64,8 @@
     labelLayer.replaceChildren();
 
     M.bench(-1.6, 2.4, -1.15, 1.15, 0.22, baseLayer, { label: "FIG 3-20", labelX: -0.6 });
-    bracket(-0.72, DIMS.zA, A[0], DIMS.zA, 0.0, -0.24);
-    bracket(0.02, DIMS.zC, C[0] + 0.02, DIMS.zC, 0.42, 0.18);
+    stand(A[0], DIMS.zA, 0.62);
+    stand(C[0] + 0.02, DIMS.zC, 0.46);
 
     var s = solve();
     var B = s.B, u = s.u;
@@ -94,16 +92,16 @@
     M.bar(back, tip, 0.15, 0.18, 0.14, "teal", linkLayer);
     var sleeveA = [B[0] - u[0] * 0.26, B[1] - u[1] * 0.26];
     var sleeveB = [B[0] + u[0] * 0.26, B[1] + u[1] * 0.26];
-    M.bar(sleeveA, sleeveB, 0.24, -0.06, 0.26, "slate", linkLayer);
-    M.bar(A, B, 0.18, -0.24, 0.16, "brass", linkLayer);
+    M.bar(sleeveA, sleeveB, 0.24, 0.09, 0.42, "slate", linkLayer);
+    M.bar(A, B, 0.18, -0.30, 0.16, "brass", linkLayer);
 
     M.pin(C, 0.18, 0.15, 0.28, "slate", pinLayer);
-    M.pin(B, -0.24, 0.15, 0.32, "ink", pinLayer);
-    M.pin(A, -0.24, 0.16, 0.34, "ink", pinLayer);
+    M.pin(B, 0.02, 0.15, 0.64, "ink", pinLayer);
+    M.pin(A, -0.10, 0.16, 0.42, "ink", pinLayer);
 
     if (state.showLabels) {
-      M.label([A[0], -0.24, A[1]], "A", -20, -2, labelLayer);
-      M.label([B[0], -0.24, B[1]], "B", 18, -8, labelLayer);
+      M.label([A[0], -0.30, A[1]], "A", -20, -2, labelLayer);
+      M.label([B[0], -0.28, B[1]], "B", 18, -8, labelLayer);
       M.label([C[0], 0.18, C[1]], "C", -18, 16, labelLayer);
     }
 

@@ -21,7 +21,7 @@
   var M = MK.make(scene);
 
   // 机构平面离台面 = 1.05，机架铰链 A、D 固定；曲柄 1、连杆 2、摇杆 3、机架 4
-  var DIMS = { r: 1.0, l: 3.2, d: 2.4, ad: 3.0, z0: 1.05 };
+  var DIMS = { r: 1.0, l: 3.2, d: 2.4, ad: 3.0, z0: 1.36 };
   var A = [0, DIMS.z0];
   var D = [DIMS.ad, DIMS.z0];
 

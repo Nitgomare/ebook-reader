@@ -238,8 +238,8 @@ input[type="range"]::-moz-range-thumb {
     </marker>
   </defs>
   <g id="baseLayer"></g>
-  <g id="frameLayer"></g>
   <g id="traceLayer"></g>
+  <g id="frameLayer"></g>
   <g id="linkLayer"></g>
   <g id="pinLayer"></g>
   <g id="labelLayer"></g>
@@ -259,11 +259,11 @@ input[type="range"]::-moz-range-thumb {
   </div>
   <div class="control">
     <div class="control-head"><label for="r">曲柄半径 r</label><output id="rValue">1.20</output></div>
-    <input id="r" type="range" min="0.9" max="1.4" step="0.01" value="1.20">
+    <input id="r" type="range" min="0.9" max="1.2" step="0.01" value="1.20">
   </div>
   <div class="control">
     <div class="control-head"><label for="e">偏距 e</label><output id="eValue">0.60</output></div>
-    <input id="e" type="range" min="0" max="1.2" step="0.01" value="0.60">
+    <input id="e" type="range" min="0" max="1.0" step="0.01" value="0.60">
   </div>
   <div class="options">
     <label><input id="auto" type="checkbox" checked>自动运转</label>
@@ -1140,7 +1140,8 @@ window.MK = (function () {
   var M = MK.make(scene);
 
   // 曲柄滑块：偏距 e = 0 时对心，e > 0 时偏置；滑块沿水平导轨往复
-  var DIMS = { r: 1.2, l: 3.6, z0: 1.05 };
+  // z0 抬高到 1.45：曲柄整周回转时最低点仍在台面（z=0）之上
+  var DIMS = { r: 1.2, l: 3.6, z0: 1.45 };
   var A = [0, DIMS.z0];
 
   var state = { theta: 30, r: DIMS.r, e: 0.6, auto: true, showTrace: true, showLabels: true };
@@ -1171,17 +1172,22 @@ window.MK = (function () {
   }
 
   function stand() {
-    M.box([A[0], 0.62, 0.09], [0.62, 0.72, 0.18], "graphite", frameLayer);
-    M.box([A[0], 0.74, DIMS.z0 / 2 + 0.04], [0.32, 0.30, DIMS.z0 - 0.06], "graphite", frameLayer);
-    M.box([A[0], 0.40, DIMS.z0], [0.32, 0.54, 0.30], "slate", frameLayer);
+    M.box([A[0], 0.44, 0.09], [0.60, 0.64, 0.18], "graphite", frameLayer);
+    M.box([A[0], 0.44, DIMS.z0 / 2 + 0.04], [0.32, 0.32, DIMS.z0 - 0.06], "graphite", frameLayer);
+    M.box([A[0], 0.42, DIMS.z0], [0.34, 0.40, 0.30], "slate", frameLayer);
   }
 
-  /** 水平导轨：两条轨道 + 中间滑槽，滑块坐在上面 */
+  /** 导轨：一条中央导轨，滑块是骑在导轨顶面上的方座（底面正好落在导轨顶面） */
   function guide(zAxis, x0, x1) {
-    M.box([(x0 + x1) / 2, 0.70, zAxis - 0.16], [x1 - x0, 0.34, 0.14], "graphite", frameLayer);
-    M.box([(x0 + x1) / 2, -0.02, zAxis - 0.16], [x1 - x0, 0.34, 0.14], "graphite", frameLayer);
     var mid = (x0 + x1) / 2;
-    M.box([mid, 0.34, zAxis - 0.16], [x1 - x0, 0.30, 0.10], "slate", frameLayer, {});
+    var bedBottom = zAxis - 0.44;
+    // 床身：托住导轨
+    M.box([mid, 0, zAxis - 0.40], [x1 - x0, 0.52, 0.08], "graphite", frameLayer);
+    // 中央导轨：顶面 zAxis-0.10，滑块坐在这上面
+    M.box([mid, 0, zAxis - 0.25], [x1 - x0, 0.30, 0.30], "slate", frameLayer);
+    // 两端支座：从台面（z=0）接到床身底面
+    M.box([x0 + 0.26, 0, bedBottom / 2], [0.34, 0.50, bedBottom], "graphite", frameLayer);
+    M.box([x1 - 0.26, 0, bedBottom / 2], [0.34, 0.50, bedBottom], "graphite", frameLayer);
   }
 
   function render() {
@@ -1214,22 +1220,22 @@ window.MK = (function () {
         ring.push([A[0] + state.r * Math.cos(a), 0.62, A[1] + state.r * Math.sin(a)]);
       }
       M.trace(ring, "#c08a3e", traceLayer);
-      M.trace([[C[0] - 0.2, 0.62, zAxis], [C[0] + 0.2, 0.62, zAxis]], "#5f868d", traceLayer);
+      M.trace([[C[0] - 0.22, 0.62, zAxis + 0.10], [C[0] + 0.22, 0.62, zAxis + 0.10]], "#5f868d", traceLayer);
     }
 
     M.bar(B, C, 0.16, 0.00, 0.16, "steel", linkLayer);
-    M.bar(A, B, 0.18, -0.20, 0.16, "brass", linkLayer);
-    // 滑块：套在铰点 C 上的一块方座
-    M.box([C[0], 0.02, zAxis + 0.02], [0.52, 0.42, 0.52], "slate", linkLayer);
+    M.bar(A, B, 0.18, -0.26, 0.16, "brass", linkLayer);
+    // 滑块：骑在导轨顶面（zAxis-0.10）上的方座，底面与轨面贴合
+    M.box([C[0], 0, zAxis + 0.10], [0.46, 0.56, 0.40], "slate", linkLayer);
 
-    M.pin(C, -0.02, 0.13, 0.28, "slate", pinLayer);
-    M.pin(B, -0.20, 0.14, 0.30, "slate", pinLayer);
-    M.pin(A, -0.20, 0.16, 0.34, "ink", pinLayer);
+    M.pin([C[0], zAxis + 0.10], 0.0, 0.13, 0.62, "slate", pinLayer);
+    M.pin(B, -0.26, 0.14, 0.30, "slate", pinLayer);
+    M.pin(A, -0.26, 0.16, 0.34, "ink", pinLayer);
 
     if (state.showLabels) {
-      M.label([A[0], -0.20, A[1]], "A", -20, 4, labelLayer);
-      M.label([B[0], -0.20, B[1]], "B", 6, -16, labelLayer);
-      M.label([C[0], -0.02, zAxis], "C", 4, 24, labelLayer);
+      M.label([A[0], -0.26, A[1]], "A", -20, 4, labelLayer);
+      M.label([B[0], -0.26, B[1]], "B", 6, -16, labelLayer);
+      M.label([C[0], 0.0, zAxis + 0.10], "C", 4, 24, labelLayer);
     }
 
     // 传动角：连杆与滑块运动方向（水平）之间的锐角
