@@ -207,7 +207,19 @@ if ($staged.Count -eq 0) {
       $pushCode = Invoke-Native 'git' @('-c', 'http.proxy=', '-c', 'https.proxy=', 'push', 'origin', $Branch) -AllowFail
     }
     if ($pushCode -ne 0) {
-      Fail "推送被拒绝：远端可能有新提交。请手动执行 git fetch 后合并，禁止 force push。"
+      # 代理客户端端口可能不是 git 配置里那个，逐个试本机常见的代理端口
+      foreach ($port in @(12000, 7890, 7897, 10809)) {
+        Write-Warn2 "改用本机代理 127.0.0.1:$port 重试推送"
+        $pushCode = Invoke-Native 'git' @(
+          '-c', "http.proxy=http://127.0.0.1:$port",
+          '-c', "https.proxy=http://127.0.0.1:$port",
+          'push', 'origin', $Branch
+        ) -AllowFail
+        if ($pushCode -eq 0) { break }
+      }
+    }
+    if ($pushCode -ne 0) {
+      Fail "推送被拒绝：远端可能有新提交或网络不通。请检查代理后手动执行 git push，禁止 force push。"
     }
     Write-Ok '推送完成'
   } else { Write-Warn2 '按参数跳过推送（仓库与线上将不一致）' }
