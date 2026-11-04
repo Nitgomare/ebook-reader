@@ -445,6 +445,7 @@
         sourcePreview(file.content, file.language);
       enhanceCodeBlocks(target);
       if (file.kind === "notebook") typesetMath([target]);
+      if (window.PythonPlayground) window.PythonPlayground.mount(target, file);
     } catch (error) {
       target.innerHTML = '<p class="error-copy">' + escapeHtml(error.message) + '</p>';
     }
@@ -652,13 +653,25 @@
     elements.relatedCodeList.innerHTML = files.map(inlineCodeItem).join("");
   }
 
+  var pendingMathNodes = [];
+
+  function mathReady() {
+    return Boolean(window.MathJax && window.MathJax.startup && window.MathJax.startup.promise);
+  }
+
   function typesetMath(nodes) {
-    if (!window.MathJax || !window.MathJax.startup || !window.MathJax.startup.promise) return;
     var targets = nodes || [elements.article];
+    if (!mathReady()) { pendingMathNodes.push(targets); return; }
     window.MathJax.startup.promise.then(function () {
       if (window.MathJax.typesetClear) window.MathJax.typesetClear(targets);
       return window.MathJax.typesetPromise(targets).then(window.ReaderMode.reflow);
     }).catch(function () {});
+  }
+
+  function flushPendingMath() {
+    if (!mathReady() || !pendingMathNodes.length) return;
+    var queue = pendingMathNodes.splice(0, pendingMathNodes.length);
+    queue.forEach(function (targets) { typesetMath(targets); });
   }
 
   async function renderDocument(id, anchor) {
@@ -736,11 +749,13 @@
   function renderNotebook(cells) {
     return (cells || []).map(function (cell) {
       if (cell.type === "markdown") {
-        return '<section class="notebook-cell markdown-cell"><span class="cell-label">Markdown ' + cell.index +
+        return '<section class="notebook-cell markdown-cell" data-cell-type="markdown" data-cell-index="' +
+          cell.index + '"><span class="cell-label">Markdown ' + cell.index +
           '</span><div class="notebook-markdown">' + (cell.html || "") + '</div></section>';
       }
       var output = cell.output ? '<div class="cell-output"><span>输出</span><pre>' + escapeHtml(cell.output) + '</pre></div>' : "";
-      return '<section class="notebook-cell"><span class="cell-label">In [' + cell.index +
+      return '<section class="notebook-cell code-cell" data-cell-type="code" data-cell-index="' + cell.index +
+        '"><span class="cell-label">In [' + cell.index +
         ']</span><pre data-language="python"><code>' +
         escapeHtml(cell.source) + '</code></pre>' + output + '</section>';
     }).join("");
@@ -769,6 +784,7 @@
       sourcePreview(file.content, file.language);
     enhanceCodeBlocks(elements.codeContent);
     if (file.kind === "notebook") typesetMath([elements.codeContent]);
+    if (window.PythonPlayground) window.PythonPlayground.mount(elements.codeContent, file);
     renderCodeSidebar(file, elements.searchInput.value);
     document.title = file.name + " · " + state.catalog.site.title;
     window.scrollTo(0, 0);
@@ -808,7 +824,8 @@
 
   function bindEvents() {
     window.addEventListener("hashchange", function () { route().catch(showError); });
-    window.addEventListener("load", function () { if (state.activeDoc) typesetMath(); });
+    window.addEventListener("load", function () { if (state.activeDoc) typesetMath(); flushPendingMath(); });
+    document.addEventListener("mathjax-ready", flushPendingMath);
     elements.openNav.addEventListener("click", openSidebar);
     elements.closeNav.addEventListener("click", closeSidebar);
     elements.scrim.addEventListener("click", closeSidebar);

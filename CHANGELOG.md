@@ -9,6 +9,30 @@
 - 每次推送或部署前必须更新本文件。
 - 不在日志中记录密码、密钥、令牌、用户信息等敏感内容。
 
+## 2026-11-04（网页端直接运行 Python 代码：.py 与 .ipynb）
+
+### 新增
+
+- 代码页新增浏览器内 Python 运行时（Pyodide 314.0.7 / CPython 3.14.2，跑在 Web Worker 里，不卡阅读页）：`.py` 文件顶部出现“▶ 在浏览器中运行”，`.ipynb` 每个可运行单元出现“▶ 运行”，另有“运行全部 Python 单元”按顺序串行执行；输出区显示 stdout、stderr、末表达式值、matplotlib 图形与报错调用栈，可随时“停止”或“重启内核”（重启即清空变量）。
+- 新增代码类型自动识别（`public/python-detect.js`）：按单元内容判定 Python / 终端命令 / XML（URDF、SDF、launch）/ YAML / CMake / 纯文本。非 Python 单元只打类型徽标、不提供运行按钮，避免把终端命令当 Python 跑出一堆红色报错。
+- 运行时改为自托管：`tools/fetch_pyodide.py` 把 Pyodide 核心与 numpy、pandas、matplotlib、scipy、sympy、scikit-learn 的依赖闭包（24 个文件、54.3 MB）下载到 `vendor/pyodide/`（不入版本库），构建时复制到 `dist/pyodide/`；前端默认同源加载，取不到才依次回退 gcore / fastly / cdn 镜像。
+
+### 优化
+
+- MathJax 不再写死 `cdn.jsdelivr.net`（该域名在部分网络下不可达，公式会整页空白），改为镜像回退：npm.elemecdn → unpkg → fastly → cdn，任一个加载成功即用；公式渲染改为“MathJax 就绪后补排”，代码视图与 Notebook 单元里的公式同样生效。
+- 本地预览新增 `tools/dev_server.py`：支持 `Range` 与 `206 Partial Content`，浏览器中断后续传大文件不再把 `python_stdlib.zip` 读成空响应（此前会报 `Failed to import encodings module`）。
+
+### 修复
+
+- 首次点“运行”时运行时还在下载，原先会直接报“Python 运行时尚未就绪”并让按钮一直转圈；现在 Worker 内用 `bootPromise` 排队，下载完自动接着执行，就绪后进度提示清空。
+
+### 验收与部署
+
+- `node --test tools/python-detect.test.mjs` 6 组类型识别用例通过；`tools/python-runtime.smoke.mjs` 在 Node 里加载真实 Pyodide 跑 18 项断言全部通过（stdout、末表达式、跨单元变量、SyntaxError、ZeroDivisionError、input 拦截、stderr 分离、base64 图片）。
+- `tools/check_python_runtime.py` 端到端通过：正文公式 8 处 arithmatex、24 处 MathJax 节点已渲染；第 1 章 Notebook 104 个单元中 29 个可运行、29 个按钮、类型识别出“终端命令 / Python / XML / URDF”；单格执行输出 `Hello, Jupyter Notebook!` 与表达式 `5`；合成 `.py` 输出 `hello 3.14.2` 与表达式 `42`；6 个运行时请求全部落在同源 `/pyodide/`。
+- 构建通过：24 套内容、315 个阅读页面、225 个代码/数据文件、5,232 个正文引用资源；`dist/pyodide` 52 MB 随 dist 一起发布。
+- 发布：部署编号 `（待填）`。
+
 ## 2026-11-04（机器人仿真专栏换新版教材：《Jupyter Notebook 使用与应用》）
 
 ### 新增

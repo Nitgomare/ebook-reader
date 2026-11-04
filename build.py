@@ -27,6 +27,9 @@ BOOKS_CANDIDATES = (
 )
 BOOKS_ROOT = next((path for path in BOOKS_CANDIDATES if path.is_dir()), BOOKS_CANDIDATES[0])
 PUBLIC_ROOT = ROOT / "public"
+PYODIDE_VENDOR = ROOT / "vendor" / "pyodide"
+# 参与 __ASSET_VERSION__ 摘要的前端资源：任何一个变了，浏览器都会重新取文件
+ASSET_FILES = ("app.js", "reader-mode.js", "styles.css", "python-detect.js", "python-runtime.js")
 DEFAULT_OUTPUT = ROOT / "dist"
 SKIP_DIRS = {".git", ".idea", "__pycache__", "site", "dist", "node_modules"}
 CODE_EXTENSIONS = {
@@ -399,12 +402,22 @@ def find_cover(docs_root: Path) -> Path | None:
     return sorted(candidates, key=lambda item: (len(item.parts), item.as_posix()))[0] if candidates else None
 
 
+def copy_pyodide(output: Path) -> int:
+    """把 vendor/pyodide/ 里的浏览器内 Python 运行时复制进 dist，运行时代码与站点同源。"""
+    if not PYODIDE_VENDOR.is_dir():
+        print("  Pyodide 运行时未下载（tools/fetch_pyodide.py），前端将回退到公共 CDN", flush=True)
+        return 0
+    target = output / "pyodide"
+    shutil.copytree(PYODIDE_VENDOR, target)
+    return sum(1 for path in target.rglob("*") if path.is_file())
+
+
 def copy_public(output: Path) -> None:
     if output.exists():
         shutil.rmtree(output)
     shutil.copytree(PUBLIC_ROOT, output)
     asset_digest = hashlib.sha1(
-        (output / "app.js").read_bytes() + (output / "reader-mode.js").read_bytes() + (output / "styles.css").read_bytes()
+        b"".join((output / name).read_bytes() for name in ASSET_FILES if (output / name).exists())
     ).hexdigest()[:12]
     index_path = output / "index.html"
     index_path.write_text(
@@ -414,6 +427,9 @@ def copy_public(output: Path) -> None:
     (output / "data" / "docs").mkdir(parents=True)
     (output / "data" / "code").mkdir(parents=True)
     (output / "files").mkdir(parents=True)
+    runtime_files = copy_pyodide(output)
+    if runtime_files:
+        print(f"  Pyodide 运行时 {runtime_files} 个文件", flush=True)
 
 
 def decode_text(source: Path, limit: int = MAX_CODE_PREVIEW_BYTES) -> tuple[str, bool]:

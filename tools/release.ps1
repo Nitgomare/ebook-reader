@@ -170,6 +170,8 @@ Write-Step '认证与访问控制测试'
 if (Get-Command node -ErrorAction SilentlyContinue) {
   Invoke-Native 'node' @('--test', 'tools/worker-auth.test.mjs') | Out-Null
   Write-Ok '认证测试通过'
+  Invoke-Native 'node' @('--test', 'tools/python-detect.test.mjs') | Out-Null
+  Write-Ok '代码类型识别测试通过'
 } else {
   Write-Warn2 '未找到 node，跳过认证测试'
 }

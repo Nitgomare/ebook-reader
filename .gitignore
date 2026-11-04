@@ -39,3 +39,6 @@ notebook-preview/
 # 本地产品草稿，不入库
 PRD.md
 _backup/
+
+# 浏览器内 Python 运行时体积大，用 tools/fetch_pyodide.py 现取，构建时复制进 dist
+vendor/pyodide/

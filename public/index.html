@@ -21,8 +21,39 @@
       };
     </script>
     <script defer src="reader-mode.js?v=__ASSET_VERSION__"></script>
+    <script defer src="python-detect.js?v=__ASSET_VERSION__"></script>
+    <script defer src="python-runtime.js?v=__ASSET_VERSION__"></script>
     <script defer src="app.js?v=__ASSET_VERSION__"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      /* MathJax 按镜像顺序回退加载：cdn.jsdelivr.net 在部分网络里完全不通，
+         以前直接引用它会让整站公式静默失效。 */
+      (function () {
+        var sources = [
+          "https://npm.elemecdn.com/mathjax@3.2.2/es5/tex-mml-chtml.js",
+          "https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js",
+          "https://fastly.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js",
+          "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        ];
+        function load(index) {
+          if (index >= sources.length) {
+            document.dispatchEvent(new CustomEvent("mathjax-ready"));
+            return;
+          }
+          var script = document.createElement("script");
+          script.src = sources[index];
+          script.async = true;
+          script.onload = function () {
+            document.dispatchEvent(new CustomEvent("mathjax-ready"));
+          };
+          script.onerror = function () {
+            script.remove();
+            load(index + 1);
+          };
+          document.head.appendChild(script);
+        }
+        load(0);
+      })();
+    </script>
   </head>
   <body class="is-loading">
     <header class="topbar">

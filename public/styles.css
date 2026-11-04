@@ -496,5 +496,41 @@ div.arithmatex { overflow: visible; }
   *, *::before, *::after { transition: none !important; }
 }
 
+/* ---- 浏览器内 Python 运行时（Pyodide）---- */
+.py-run-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; margin: 0 0 1rem; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: .6rem; background: var(--surface); }
+.py-run-button, .py-stop-button, .py-reset-button { border: 1px solid var(--line); border-radius: .5rem; padding: .5rem .85rem; color: var(--ink); background: var(--paper); font: inherit; font-size: .78rem; cursor: pointer; }
+.py-run-button { border-color: var(--accent); color: #fff; background: var(--accent); font-weight: 600; }
+.py-run-button:hover { background: #1d4ed8; }
+.py-stop-button:hover, .py-reset-button:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.py-run-button[disabled], .py-stop-button[disabled], .py-reset-button[disabled] { opacity: .55; cursor: progress; }
+.py-run-status { color: var(--muted); font-size: .72rem; }
+.py-run-status.is-ready { color: #0f7b46; }
+.py-run-progress { margin: 0; color: var(--muted); font-size: .78rem; }
+.py-run-progress.is-error { color: #b42318; }
+.py-run-note { margin: 0 0 1rem; padding: .7rem .9rem; border: 1px dashed var(--line); border-radius: .6rem; color: var(--muted); font-size: .78rem; }
+.py-run-output { margin: .8rem 0 0; padding: .9rem 1rem; border: 1px solid var(--line); border-radius: .6rem; background: var(--surface); }
+.py-output-header { margin-bottom: .45rem; color: var(--muted); font-size: .68rem; letter-spacing: .04em; }
+.py-output-header.is-error { color: #b42318; }
+.py-stdout, .py-stderr, .py-expression, .py-traceback { overflow: auto; max-height: 30rem; margin: .45rem 0 0; padding: .7rem .8rem; border-radius: .4rem; font: .8rem/1.65 var(--font-mono); white-space: pre-wrap; word-break: break-word; }
+.py-stdout { border: 1px solid #e2e8f2; color: var(--ink); background: #f4f6fa; }
+.py-stderr { border: 1px solid #f3dcb4; color: #8a4b00; background: #fff7e8; }
+.py-expression { border: 1px solid #cddffb; color: #12386e; background: var(--accent-soft); }
+.py-traceback { border: 1px solid #f3c9c9; color: #8c1d1d; background: #fdf0f0; }
+.py-figure { display: block; max-width: 100%; margin: .6rem 0; border: 1px solid var(--line); border-radius: .4rem; background: #fff; }
+.py-output-note { margin: .3rem 0 0; color: #8a5a00; font-size: .76rem; }
+.py-output-hint { margin: .5rem 0 0; color: var(--muted); font-size: .76rem; line-height: 1.6; }
+.cell-label .cell-kind { display: block; margin-top: .3rem; color: var(--muted); font-size: .55rem; }
+.cell-label .cell-kind[data-kind="python"] { color: #0f7b46; }
+.cell-label .cell-run-button { display: block; width: 100%; margin-top: .35rem; padding: .25rem .3rem; border: 1px solid var(--accent); border-radius: .4rem; color: var(--accent); background: var(--accent-soft); font: inherit; font-size: .6rem; cursor: pointer; }
+.cell-label .cell-run-button:hover { color: #fff; background: var(--accent); }
+.cell-label .cell-run-button[disabled] { opacity: .5; cursor: progress; }
+.notebook-cell.cell--not-runnable > pre { border-style: dashed; }
+.cell-run-output { margin-top: .5rem; }
+
+@media (max-width: 45rem) {
+  .cell-label .cell-kind { display: inline-block; margin: 0 .4rem 0 0; }
+  .cell-label .cell-run-button { display: inline-block; width: auto; margin: 0 0 0 .3rem; }
+}
+
 /* Dedicated presentation library entrance in the research tools shelf. */
 .ppt-library-entry{background:linear-gradient(125deg,#eef3ff,#fff);border:1px solid #dce6fb;border-radius:12px;display:flex;align-items:center}.ppt-entry-link{display:flex;align-items:center;gap:18px;padding:28px;color:#223550;text-decoration:none;width:100%}.ppt-entry-icon{display:grid;place-items:center;flex-shrink:0;width:56px;height:68px;background:#2b63e8;color:white;border-radius:8px;font-size:30px;font-weight:700}.ppt-entry-link>span:nth-child(2){display:flex;flex-direction:column;gap:9px}.ppt-entry-link small{font-size:10px;letter-spacing:1.5px;color:#7186ae}.ppt-entry-link strong{font-size:21px}.ppt-entry-link span span{font-size:13px;line-height:1.8;color:#7d8da6}.ppt-entry-link>b{color:#2b63e8;margin-left:auto}.ppt-entry-link:hover strong{color:#2b63e8}
