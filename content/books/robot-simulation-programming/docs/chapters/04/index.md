@@ -580,70 +580,6 @@ gzclient -g plugin_filename>
 
 Gazebo 的系统包括了主体、通信库、物理库、渲染库、传感器生成器、GUI 和插件。
 
-## 1) Gazebo 的主体
-
-Gazebo 的主体本质上是一个名为服务器的主题。它提供了根据名字搜索的功能，主题管理。可以处理多种自然环境仿真、传感器迭代和 GUI。
-
-## 2）通信库
-
-\- 依赖项：Protibuf 和 boost::ASIO；
-
-\- 外部 API;
-
-\- 内部 API：无；
-
-\- 发布主题：无；
-
-\- 订阅主题：无。
-
-通信库几乎被所有的后续库使用。它作为 Gazebo 的通信和传输机制，目前只支持发布或订阅，但可以以最小代价使用 RPC。
-
-## 3）物理库
-
-\- 依赖项：动力学引擎（内部碰撞检测）；
-
-\- 外部 API：提供了一个用于物理仿真的简单而通用的接口；
-
-\- 内部 API：为物理库定义了一个基本的接口，用于第三方动力学引擎。
-
-物理库提供了一个简单而通用的接口，用于基本的仿真部件，包括刚体、碰撞形状、关节角限制。这个接口集成了四个开源物理引擎：Open Dynamics Engine（ODE）、Bullet、Simbody 和 Dynamic Animation and Robotics Toolkit(DART)。
-
-用 SDF 描述的模型文件可以使用 XML 加载这些物理引擎, 为不同的算法实现和仿真特性提供了一种途径。
-
-## 4）渲染库
-
-\- 依赖项：OGRE；
-
-\- 外部 API;
-
-\- 内部 API。
-
-渲染库使用OGRE来提供一个为GUI和传感器库渲染3D场景的接口。这包括光照、纹理和天空的仿真，可以为渲染引擎引入插件。
-
-## 5）传感器生成库
-
-\- 依赖项：渲染库，物理库；
-
-\- 外部 API：提供初始化和运行的一系列传感器；
-
-\- 内部 API: TBD。
-
-传感器生成库实现所有各种类型的传感器,通过物理仿真器监听场景状态更新,并产生由实例化传感器指定的输出。
-
-## 6) GUI
-
-\- 依赖项：渲染库，Qt；
-
-\- 外部 API: 无;
-
-\- 内部 API: 无。
-
-GUI 库使用 Qt 为用户创建图形部件与仿真进行交互。用户可以通过 GUI 窗口小部件控制时间的流动，如：暂停或改变时间步长。用户也可以更改场景，通过添加、修改或删除模型。另外有一些工具来观察日志记录和仿真传感器数据。
-
-## 7）插件
-
-物理传感器和渲染库支持插件。这些插件可以使用户访问各自相应的库而不使用通信系统。
-
 ## 4.3 创建机器人
 
 ### 4.3.1 模型结构和要求
@@ -773,16 +709,6 @@ A description of the model
 <uri>是必需项,它表示 URI 模式的依赖。
 
 <version>是必需项,它表示版本的模型。
-
-## (6) 模型 SDF 描述格式。
-
-每个模型需要一个 model.sdf 文件, 这其中包含模型的仿真器描述格式。用户可以在 SDF 的网站 (<http://sdformat.org/>) 找到更多的信息。
-
-## (7) 模型 SDF. ERB。
-
-标准的文件 SDF 可以包含 Ruby 代码。这个选项用于通过编程方式嵌入 Ruby 代码模板去生成 SDF 文件。请注意，Ruby 转换应该手动完成，最后 model.sdf 文件必须和模型 sdf.erb 文件一起上传。
-
-此外，可以在 gazebo\_models 存储库中找到 sdf. erb 文件的示例（其中的一些使用弃用的后缀. rsdf）。一个简单的 ERB 文件是 flocking.world. erb，它使用一个简单的循环。
 
 ### 4.3.2 模型的上传
 
@@ -954,6 +880,7 @@ size>1 1 1 /size>
 /model>
 /sdf>
 ```
+
 注意：
 （1）箱体几何的原点在箱体的几何中心，因此为了使箱体的底部与地平面齐平，指令pose>0 0 0.5 0 0 0 /pose>的作用是将箱体的原点提升到地面上。
 （2）上述示例将箱子模型简单地设置为静态，这使得模型不可移动。此功能在模型创建期间很有用。创建模型后，<static>如果希望模型可移动，请将标记设置为 false。
@@ -1083,7 +1010,7 @@ size>.4.2.1 /size>
 
 （3）通过运行 Gazebo，并通过 GUI 上的插入模型界面导入模型来试用用户的模型。如图 4-1 所示，用户应该看到一个白色的盒子漂浮在地面以上 1 米。
 
-![](../../images/part3/06204c1fcfb2218489b23b733b46b797890a359b780e78b2e017ec84c36e92bd.jpg)
+![](../../images/part2/06204c1fcfb2218489b23b733b46b797890a359b780e78b2e017ec84c36e92bd.jpg)
 
 图 4-1 导入的白色盒子
 {: .figure-caption }
@@ -1150,7 +1077,7 @@ radius>.05 /radius>
 
 （5）现在让我们添加一个左轮。将～/.Gazebo/models/my\_robot/model.sdf文件修改为以下内容：
 
-![](../../images/part3/072f94b8b2113fd54cd6ef2392afe481bca99916fb27da8d72fc367466f72597.jpg)
+![](../../images/part2/072f94b8b2113fd54cd6ef2392afe481bca99916fb27da8d72fc367466f72597.jpg)
 
 图4-2 添加了脚轮的模型
 {: .figure-caption }
@@ -1232,7 +1159,7 @@ length > .05 /length>
 
 之后运行 Gazebo, 如图 4-3 所示, 插入用户的机器人模型, 并确保车轮已出现在正确的位置。
 
-![](../../images/part3/77a5d87c543bfa5805c3409b3b52b3039b1d9bfe5b7b8f65d9eb55830687755a.jpg)
+![](../../images/part2/77a5d87c543bfa5805c3409b3b52b3039b1d9bfe5b7b8f65d9eb55830687755a.jpg)
 
 图4-3 添加了左轮的模型
 {: .figure-caption }
@@ -1332,9 +1259,10 @@ length>.05 /length>
 /model>
 /sdf>
 ```
+
 如图 4-4 所示, 此时机器人应该有一个带有脚轮和两个轮子的底盘。
 
-![](../../images/part3/dc5aa05bd00b2241c69aacd909ccafb84f6fd77445a1b58f0b3016b2f18da4cf.jpg)
+![](../../images/part2/dc5aa05bd00b2241c69aacd909ccafb84f6fd77445a1b58f0b3016b2f18da4cf.jpg)
 
 图 4-4 带有脚轮和两轮子的模型
 {: .figure-caption }
@@ -1453,13 +1381,14 @@ xyz > 0 1 0 /xyz>
 /model>
 /sdf>
 ```
+
 其中，代码“<xyz>010</xyz>”的意思是两个关节绕Y轴旋转，并将每个轮连接到机箱。
 (8) 启动 Gazebo, 然后插入用户的模型。单击屏幕右侧的点, 并将它们向左拖动。
 （9）将出现一个新窗口，其中包含每个关节的各种控制器(注意：确保选择要控制的型号)。
 
 （10）在 Force 标签页下，将施加到每个接头的力增加到约 $0.1 ~N \cdot m$ 。如图 4-5 所示，此时机器人应该四处移动。
 
-![](../../images/part3/587402d44d80b6b5966a04e27a788877cef45a648c6103ba2acf6c573543cae5.jpg)
+![](../../images/part2/587402d44d80b6b5966a04e27a788877cef45a648c6103ba2acf6c573543cae5.jpg)
 
 图4-5 可移动的机器人
 {: .figure-caption }
@@ -1542,7 +1471,7 @@ visual name="visual">
 
 生成的场景模型如图 4-6 所示。
 
-![](../../images/part3/3346d19a010989ce9a2a8fc79354d113c8800951aef79379b204b1def4ef53f5.jpg)
+![](../../images/part2/3346d19a010989ce9a2a8fc79354d113c8800951aef79379b204b1def4ef53f5.jpg)
 
 图 4-6 网格文件生成的鸭子模型
 {: .figure-caption }
@@ -1609,7 +1538,7 @@ wget -q -R * index.html *, *.tar.gz -- no -parent -r -x -nH http://models.Gazebo
 
 （7）显然，机箱对于机器人来说太大了，所以需要缩放视觉标签。利用以下的内容，修改 visual 标签以具有缩放因子。
 
-![](../../images/part3/e9cc63bfee50bc0f0bb7afe8d72102fcd59a38d0b111b63644c28f0ca4357574.jpg)
+![](../../images/part2/e9cc63bfee50bc0f0bb7afe8d72102fcd59a38d0b111b63644c28f0ca4357574.jpg)
 
 图 4-7 场景中的机箱模型
 {: .figure-caption }
@@ -1697,7 +1626,7 @@ link name = "link">
 
 （4）现在启动 Gazebo，并使用 GUI 上的“插入”选项卡将机器人添加到仿真中。如图 4-8 所示，用户应该看到带激光的机器人。
 
-![](../../images/part3/8de667ec17a3181e10e604dff523a7d5261ba0399f52ce64181c547176b47c4d.jpg)
+![](../../images/part2/8de667ec17a3181e10e604dff523a7d5261ba0399f52ce64181c547176b47c4d.jpg)
 
 图 4-8 带激光的机器人
 {: .figure-caption }
@@ -2012,7 +1941,7 @@ Gazebo ~/simple_gripper_tutorial/gripper.world
 
 如图 4-9 所示, 用户将会看到创建的夹持器模型。
 
-![](../../images/part3/5ef1a854b713706f231b52bcd9fc42eeb7d62f072ca2011a5b948f0884b52af2.jpg)
+![](../../images/part2/5ef1a854b713706f231b52bcd9fc42eeb7d62f072ca2011a5b948f0884b52af2.jpg)
 
 图 4-9 创建的夹持器模型
 {: .figure-caption }
@@ -2112,13 +2041,13 @@ Gazebo ~/simple_gripper_tutorial/gripper.world
 
 启动 Gazebo，并确保用户可以从前面两个部分内容加载模型。
 
-![](../../images/part3/cbed1322285e9f4ef5650739ed6fd422bad0350c6fdd13da912c3f643a55abb0.jpg)
+![](../../images/part2/cbed1322285e9f4ef5650739ed6fd422bad0350c6fdd13da912c3f643a55abb0.jpg)
 
 图 4-10 关节模型
 {: .figure-caption }
 
 
-![](../../images/part3/c4cb63e845c79de250ef23f54cc81f8dc0bb73d42d1bd7d3fe884e7aaee2a26d.jpg)
+![](../../images/part2/c4cb63e845c79de250ef23f54cc81f8dc0bb73d42d1bd7d3fe884e7aaee2a26d.jpg)
 
 图 4-11 运动的夹持器
 {: .figure-caption }
@@ -2128,7 +2057,7 @@ Gazebo ~/simple_gripper_tutorial/gripper.world
 
 （1）如图 4-12 所示，在完成制作移动机器人部分内容中的每条命令后，在用户的 disposal 上将会产生带基座的移动机器人。
 
-![](../../images/part3/90e024c859220d8819334893091b483024f549f561e5a434083b70f099e67770.jpg)
+![](../../images/part2/90e024c859220d8819334893091b483024f549f561e5a434083b70f099e67770.jpg)
 
 图 4-12 带基座的移动机器人
 {: .figure-caption }
@@ -2334,7 +2263,7 @@ parent>simple_gripper::palm /parent>
 
 （3）确保 model.config 与 manipulator.sdf 已经保存，启动 Gazebo 和通过插入选项卡来产生模型，选择简单的移动机器人模型来重新加载以上模型。如图 4-13 所示，用户可以看到组装得到的移动机器人模型。
 
-![](../../images/part3/3041cd3bebad62d42776faec9bc2a6d6aebc6c93cb6b2aec5928f34f870e730f.jpg)
+![](../../images/part2/3041cd3bebad62d42776faec9bc2a6d6aebc6c93cb6b2aec5928f34f870e730f.jpg)
 
 图 4-13 组装得到的移动机器人模型
 {: .figure-caption }
@@ -2458,7 +2387,7 @@ xyz>1.0 0.0 0.0 /xyz>
 
 （2）单击 Browse 按钮，使用文件浏览器在本地计算机上查找网格文件。如果用户知道网格文件的路径，用户可以直接在 Browse 按钮旁边的文本字段框中输入。Note Gazebo 目前仅支持导入 COLLADA(dae)、STereoLithography(stl) 和 Scalable Vector Graphics(svg) 文件。
 
-![](../../images/part3/117f72bb52fb8c5c3f5c6666797009f0cac22b3e42ab781d3d47b0b14ad0025b.jpg)
+![](../../images/part2/117f72bb52fb8c5c3f5c6666797009f0cac22b3e42ab781d3d47b0b14ad0025b.jpg)
 
 图 4-14 添加网格文件操作
 {: .figure-caption }
@@ -2476,7 +2405,7 @@ xyz>1.0 0.0 0.0 /xyz>
 
 （3）然后，将鼠标移动到用户要成为关节的子连杆的连杆。如图 4-15 所示，单击它可以看到连接两个连杆的彩色线和附加到子连杆的关节视图。
 
-![](../../images/part3/0612da8a1f968c6223483e8570fab5390c422340e1f4f056b0e93451f2e9c0b5.jpg)
+![](../../images/part2/0612da8a1f968c6223483e8570fab5390c422340e1f4f056b0e93451f2e9c0b5.jpg)
 
 图 4-15 关节视图
 {: .figure-caption }
@@ -2498,7 +2427,7 @@ xyz>1.0 0.0 0.0 /xyz>
 
 编辑连杆的属性的方法为：双击连杆或右键单击并选择 Open Link Inspector。将出现一个对话框窗口，如图 4-16 所示，其中包含 Link、Visual 和 Collision 属性选项卡。例如，尝试更改连杆姿势和颜色。完成后，单击 OK 按钮关闭检查器。
 
-![](../../images/part3/f3886810c9b758866c64cedc838e6b58afdc7f52cda6b4598eae8369cc97e1c1.jpg)
+![](../../images/part2/f3886810c9b758866c64cedc838e6b58afdc7f52cda6b4598eae8369cc97e1c1.jpg)
 
 图 4-16 连杆属性设置对话框
 {: .figure-caption }
@@ -2518,19 +2447,19 @@ xyz>1.0 0.0 0.0 /xyz>
 
 如果用户对所创建的模型感到满意,请转到 Model 左侧面板中的标签,并为其命名。保存模型,请选择 File 菜单,然后单击顶部菜单中的 Save As(按钮或单击 Ctrl+S 键)。如图 4-19 所示,将出现一个对话框,用户可以在其中选择模型的位置。
 
-![](../../images/part3/b019abcfaaf7f92ff6f8dfa7c4a08bfe730a7fa091eb4491ab23a859832e202d.jpg)
+![](../../images/part2/b019abcfaaf7f92ff6f8dfa7c4a08bfe730a7fa091eb4491ab23a859832e202d.jpg)
 
 图4-17 关节对话框
 {: .figure-caption }
 
 
-![](../../images/part3/4927bbc8a58f122a79f13ea168469a9797ce67a44089cadad6234eb87cd2e3f8.jpg)
+![](../../images/part2/4927bbc8a58f122a79f13ea168469a9797ce67a44089cadad6234eb87cd2e3f8.jpg)
 
 图 4-18 汽车模型
 {: .figure-caption }
 
 
-![](../../images/part3/709ea8d77dff09911be2e036a0cb504f181af93788eac4db39cd9ebfd6119a11.jpg)
+![](../../images/part2/709ea8d77dff09911be2e036a0cb504f181af93788eac4db39cd9ebfd6119a11.jpg)
 
 图 4-19 模型设置对话框
 {: .figure-caption }
@@ -2540,7 +2469,7 @@ xyz>1.0 0.0 0.0 /xyz>
 
 完成创建模型并保存后,转到 File 然后选择 Exit Model Editor。如图 4-20 所示,用户的模型将显示在主窗口中。
 
-![](../../images/part3/cb2afab7cbde66a99f722ee6d9339435fcc9ed778fc1dccc92444c0efdbe45a4.jpg)
+![](../../images/part2/cb2afab7cbde66a99f722ee6d9339435fcc9ed778fc1dccc92444c0efdbe45a4.jpg)
 
 图 4-20 主窗口中的汽车模型
 {: .figure-caption }
@@ -2552,7 +2481,7 @@ xyz>1.0 0.0 0.0 /xyz>
 
 编辑当前模型的方法为：确保用户已保存创建的模型，并退出模型编辑器。或者，从一个新的Gazebo实例开始。从Insert左侧的选项卡插入模型。例如，让我们插入一个SimpleArm。右键单击刚刚插入的模型，并选择EditModel。生成模型如图4-21所示。现在用户在模型编辑器中,用户可以向模型中添加新连杆或编辑现有连杆。
 
-![](../../images/part3/5a5bb8108069671a097fe6514322fe9920c7121f4faf5e273fb923c250c2e4c4.jpg)
+![](../../images/part2/5a5bb8108069671a097fe6514322fe9920c7121f4faf5e273fb923c250c2e4c4.jpg)
 
 图 4-21 简单的机械臂模型
 {: .figure-caption }
@@ -2810,124 +2739,13 @@ axis momenta are :
 
 似乎我们得到了寻找的东西。但是当用户仔细观察，用户不难发现一个漏洞：输出只写出最多6位的十进制数。因此，我们失去了惯性张量中的大部分有价值的信息。为了克服惯性传感器的精度不足，用户可以按比例放大模型，以增加惯性的大小。该模型可以使用缩放通过 Filters→Normals, Curvatures and Orientation→Transform: Scale。模型缩放比例设置对话框如图4-22所示，在对话框中输入缩放比例并单击Apply。
 
-![](../../images/part3/95b0e65a801091ce2f0c381ad0e496421775575d5b8d2332655d4761d9a07915.jpg)
+![](../../images/part2/95b0e65a801091ce2f0c381ad0e496421775575d5b8d2332655d4761d9a07915.jpg)
 
 图 4-22 模型缩放比例的设置
 {: .figure-caption }
 
 
 对于如何选择缩放因子 s, MeshLab 使用体积替代质量, 其将作为 $s^{3}$ 变化。此外, 惯性对长度的平方具有附加依赖性, 因此惯性矩将根据 $s^{5}$ 而改变。由于 s 存在这样大的依赖性的, 因此缩放 10 倍或 100 倍可能就足够了。
-
-## (9) 获得质量中心。
-
-MeshLab 使用的长度单位并不总是用户想要的(Gazebo 为米)。但是,通过查看 Mesh Bounding Box Size 条目,用户可以轻松地知道 MeshLab 单位与所需单位的比率。例如用户可以以所需单位计算边界框大小,并与 MeshLab 的大小进行比较。
-
-用 Center of Mass 乘以计算的比率, 用户将拥有网格质心的坐标。然而, 如果用户建模的连杆不是均匀的, 用户将不得不使用其他方法(最可能通过真实的实验) 计算质心。
-
-## (10) 重新调整转动惯量值。
-
-就像质心位置必须缩放到正确的单位一样,转动惯量也应该按比例缩放,尽管缩放因子应该平方再考虑转动惯量的长度的平方的变化。此外,惯量应乘以测量值 mass,并除以文本输出的计算体积。
-
-## (11) 在 URDF 或 SDF 中填写标签。
-
-下一步是将计算值记录到包含机器人的 URDF 或 SDF 文件（假设用户已经具有机器人模型；如果没有，请按照前面部分内容制作模型）。
-
-在每个连杆中,用户应该有<inertial>标签。它应该具有如下内容(在 SDF 中):
-
-```txt
-link name = 'antenna'
-inertial>
-pose > -0.022 0.0203 0.02917 0 0 0 /pose>
-mass > 0.56 /mass>
-inertia>
-ixx > 0.004878 /ixx>
-ixy > -6.2341e-07 /ixy>
-ixz > -7.4538e-07 /ixz>
-iyy > 0.00090164 /iyy>
-iyz > -0.00014394 /iyz>
-izz > 0.0042946 /izz>
-/inertia>
-/inertial>
-collision name = 'antenna_collision'>
-...
-/collision>
-visual name = 'antenna_visual'>
-...
-/visual>
-...
-/link>
-```
-
-或者(在 URDF 中):
-
-```txt
-link name = "antenna">
-inertial >
-```
-
-```xml
-origin rpy="0 0 0" xyz="-0.022 0.0203 0.02917"/>
-mass value="0.56"/>
-inertia ixx="0.004878" ixy="-6.2341e-07" ixz="-7.4538e-07" iyy="0.00090164" iyz="-0.00014394" izz="0.0042946"/>
-/inertial>
-visual>
-...
-/visual>
-collision>
-...
-/collision>
-/link>
-```
-
-其中，<mass>应以千克为单位输入，用户需通过实验或者规定它的值。<origin>或<pose>用于输入质量中心的位置（相对于连杆的起点，尤其是与可视的连杆或碰撞起点无关）。旋转元件可以定义与转动惯量轴不同的坐标系。如果用户已经通过实验找到质心，请填写此值，否则填写由MeshLab计算的正确缩放的值。
-
-<inertia>标记包含用户在上一步中计算的惯性张量。由于矩阵是对称的，只有6个数字就足以表示它。从MeshLab的输出的映射如下：
-
-```txt
-| ixx ixy ixz |
-| ixy iyy iyz |
-| ixz iyz izz |
-```
-
-为了快速检查矩阵是否正确,可以使用对角线条目应具有最大的正值并,并且非对角线数字应该或多或少接近零。
-
-确切地说，矩阵必须是正定的（使用用户最喜欢的数学工具来验证）。其对角项也必须满足三角不等式，即， $i_{xx} + i_{yy} \geqslant i_{zz}, i_{xx} + i_{zz} \geqslant i_{yy}$ 和 $i_{yy} + i_{zz} \geqslant i_{xx}$ 。
-
-(12) 在 Gazebo 上检查。
-
-要检查一切是否正确,用户可以使用 Gazebo 的 GUI 客户端。
-
-单独使用 Gazebo 时, 运行 Gazebo, 生成用户的机器人
-
-```batch
-gz model -f my_robot.sdf
-```
-
-使用 Gazebo 和 ROS 时, 首先运行 Gazebo:
-
-```txt
-roslaunchGazebo_ros empty_world.launch
-```
-
-生成用户的机器人(使用户的机器人的包/名称替换 my\_robot, my\_robot\_description, MyRobot):
-
-SDF 模型为:
-
-```shell
-rosrunGazebo_ros spawn_model - sdf - file 'rospack find my_robot_description'/urdf/my_robot.sdf - model MyRobot
-```
-
-URDF型号为：
-
-```txt
-rosrunGazebo_ros spawn_model - urdf - file 'rospack find my_robot_description'/urdf/my_robot.urdf - model MyRobot
-```
-
-当模型加载后,暂停场景并删除 ground\_plane(这不是必需的,但它通常使调试更容易)。转到 Gazebo 菜单并依次选择 View→Inertia。每个连杆目前应显示一个带绿色轴的紫色框。每个盒子的中心与其连杆的指定质心对齐。箱的尺寸和方向对应于具有相同惯性行为单位质量的箱这可以作为它们对应的链接。虽然这对于调试惯性参数很有用,但是我们还可以做一件事来使调试更容易。
-
-用户可以临时将所有连杆设置为质量为 1.0（通过编辑 URDF 或 SDF 文件）。然后所有的紫色框应该或多或少在形状与其连杆的边框相同。这种方式，用户可以很容易地检测问题，如错放的质心或错误旋转的惯性矩阵。当用户完成调试时，不要忘记输入正确的质量。
-
-要修正错误旋转的惯性矩阵(常见错误), 只需交换模型文件中的 ixx、iyy 和 izz 条目, 直到紫色框与其连杆对齐。然后用户显然也必须适当地交换 ixy、ixz 和 iyz 值(当用户交换 ixx↔iyy 时, 用户应该取消 ixy 和交换 ixz↔iyz)。
 
 #### 进一步改进
 
@@ -2992,13 +2810,13 @@ Gazebo 中有许多 SVG 编辑器。本部分内容将使用开源 Inkscape 程�
 
 如图 4-24 所示为另一个文件属性设置对话框。在同一对话框中，选择 Grids 选项卡，按 New 按钮创建自定义网格。最后，检查 Enabled, Visible 和 Snap to visible grid lines only 选项。更改 Spacing X 和 Spacing Y 为 10。
 
-![](../../images/part3/4ac1846a472a26580febd69ca0b68eea90dd413aabd52e5c2bba4b2b5bf97177.jpg)
+![](../../images/part2/4ac1846a472a26580febd69ca0b68eea90dd413aabd52e5c2bba4b2b5bf97177.jpg)
 
 图 4-23 文件属性设置对话框一
 {: .figure-caption }
 
 
-![](../../images/part3/f82d829cc8a73186b939c3c2b35f4498638f25a4818642b688c277f8a4d5387c.jpg)
+![](../../images/part2/f82d829cc8a73186b939c3c2b35f4498638f25a4818642b688c277f8a4d5387c.jpg)
 
 图 4-24 文件属性设置对话框二
 {: .figure-caption }
@@ -3012,13 +2830,13 @@ Gazebo 中有许多 SVG 编辑器。本部分内容将使用开源 Inkscape 程�
 
 注意：一个棒形图或两个彼此接触的圆圈不会产生有效的Gazebo模型。SVG路径必须创建具有孔的封闭轮廓，其中孔不能接触轮廓或其他孔。孔内的孔被视为实心零件（也可以有孔）。
 
-![](../../images/part3/7ae529206e5066faa93803a834034965debc262bfccb09b0bb97c35960438a5d.jpg)
+![](../../images/part2/7ae529206e5066faa93803a834034965debc262bfccb09b0bb97c35960438a5d.jpg)
 
 图 4-25 绘制初始界面
 {: .figure-caption }
 
 
-![](../../images/part3/be51f216541f1060f6ac9aecdea4492623df7c89e4e74188f019ddd7160daee3.jpg)
+![](../../images/part2/be51f216541f1060f6ac9aecdea4492623df7c89e4e74188f019ddd7160daee3.jpg)
 
 图4-26 绘制界面一
 {: .figure-caption }
@@ -3034,13 +2852,13 @@ Gazebo 只能导入 paths, 但通过 Inkscape 很容易将任何形状转换为�
 
 SDF 格式不直接支持 SVG；它支持多线 2D。Gazebo 模型编辑器具有从 SVG 文件中提取多边形线的导入机制，并将它们保存为 SDF 模型文件。启动 Gazebo，从 Edit 菜单中选择 Model Editor 以进入 Gazebo 模型编辑器模式（与仿真模式相反）。如图 4-28 所示，按下选项卡部分中的 Add 按钮，可以添加相应的模型。
 
-![](../../images/part3/d6832fa8ef689e24e253d35320523dd0328d6a7e879f7121ca2d55b415a1990d.jpg)
+![](../../images/part2/d6832fa8ef689e24e253d35320523dd0328d6a7e879f7121ca2d55b415a1990d.jpg)
 
 图 4-27 绘制初始界面二
 {: .figure-caption }
 
 
-![](../../images/part3/7ac144f3bc819832d9b1c16a5463c972e8c39563ef0b4ba1348fe91e82f2a2de.jpg)
+![](../../images/part2/7ac144f3bc819832d9b1c16a5463c972e8c39563ef0b4ba1348fe91e82f2a2de.jpg)
 
 图4-28 模型的添加
 {: .figure-caption }
@@ -3060,7 +2878,7 @@ Import Link 对话框如图 4-29 所示,从中用户可以通过按 Browse 按�
 
 接下来,从 File 菜单中选择 Exit Model Editor。如图 4-30 所示,Gazebo 将注意用户将新模型保存到磁盘。按 Save and Exit 退出对话框上的按钮,Save Model 将出现对话框。
 
-![](../../images/part3/0273ea2ea888899be7eb8e66092b451f120e6c892fbf5ecd14903957d6d614fe.jpg)
+![](../../images/part2/0273ea2ea888899be7eb8e66092b451f120e6c892fbf5ecd14903957d6d614fe.jpg)
 
 图4-29 Import Link对话框
 {: .figure-caption }
@@ -3092,7 +2910,7 @@ Import Link 对话框如图 4-29 所示,从中用户可以通过按 Browse 按�
 
 启动 Gazebo 时, 用户应该看到一个只有地板的场景。Gazebo 提供了两种将对象添加到 Gazebo 的机制。第一种是位于渲染窗口上方的一组简单形状, 如图 4-31 所示。
 
-![](../../images/part3/65d51ebbb0b501aef391ac187d32dfc2fa6151a92be696dad6f5c5b849c8cf12.jpg)
+![](../../images/part2/65d51ebbb0b501aef391ac187d32dfc2fa6151a92be696dad6f5c5b849c8cf12.jpg)
 
 图 4-31 添加对象窗口一
 {: .figure-caption }
@@ -3114,13 +2932,13 @@ Import Link 对话框如图 4-29 所示,从中用户可以通过按 Browse 按�
 
 对球体和圆柱体重复相同的步骤。操作完成后，如图 4-33 所示，用户应该建立出一个类似这样的场景。
 
-![](../../images/part3/5b1b10650db01eabdb9ca82c80327bafb4f82ceeaef4deeca9b692296eb7708a.jpg)
+![](../../images/part2/5b1b10650db01eabdb9ca82c80327bafb4f82ceeaef4deeca9b692296eb7708a.jpg)
 
 图 4-32 添加对象窗口二
 {: .figure-caption }
 
 
-![](../../images/part3/ac8406bd940dffc21870d3546f72decc32f123e4b8c03d67efb0141fe40b493d.jpg)
+![](../../images/part2/ac8406bd940dffc21870d3546f72decc32f123e4b8c03d67efb0141fe40b493d.jpg)
 
 图4-33 添加了简单形状的场景
 {: .figure-caption }
@@ -3140,7 +2958,7 @@ Gazebo 的模型数据库是所有类型模型的存储库,包括机器人、表
 
 如图 4-34 所示, 可以通过平移和旋转工具改变每个模型的姿势。
 
-![](../../images/part3/43966be1f84e0556a5bd3b885525bcd430beeddcb7aecd073e395a84157e5e95.jpg)
+![](../../images/part2/43966be1f84e0556a5bd3b885525bcd430beeddcb7aecd073e395a84157e5e95.jpg)
 
 图 4-34 平移和旋转工具按钮
 {: .figure-caption }
@@ -3204,7 +3022,7 @@ max step size 指定了在每个物理更新步骤的持续时间。
 
 在 SDF 的物理文件可以看到对这些参数的说明。
 
-![](../../images/part3/1847776259728d9fa231d10385ad463f644d397ac34e9794c69c24b5d0e3b5a1.jpg)
+![](../../images/part2/1847776259728d9fa231d10385ad463f644d397ac34e9794c69c24b5d0e3b5a1.jpg)
 
 图 4-35 属性设置对话框
 {: .figure-caption }
@@ -3355,7 +3173,7 @@ $ gdal_merge.py *.tif - o dem_merged.tif
 
 现在，在场景文件中，你只能使用 dem\_merged.tif 场景，Gazebo 将加载地形与所有的补丁合并。如图 4-36 所示，用户可以看到合并加那利群岛周围四个地形补丁的结果。
 
-![](../../images/part3/37892e267cd34dce415087e0078e23a8efb1b6113a3090ef2788884b738458da.jpg)
+![](../../images/part2/37892e267cd34dce415087e0078e23a8efb1b6113a3090ef2788884b738458da.jpg)
 
 图 4-36 Gazebo 加载得到的地形
 {: .figure-caption }
@@ -3472,7 +3290,7 @@ size>2 2 0.01 /size>
 
 上面的代码块指定了对象将被放置的区域。在这种情况下，所有对象都在具有 $2 \times 2 \times 0.01\mathrm{m}$ 以(0,0,0)为中心，具有朝向(0,0,0)的边的3D边界框内产生。作为<box>的替代，通过指定其半径和长度的< cylinder>区域也是允许的。（检查SDF规范以查看< cylinder >的参数的完整描述。)< pose>元素设置总体区域的参考框架。
 
-![](../../images/part3/940f693097c14be4b1079403e9f84d9cad37d5c4d9fb98a9b9d8001525692a08.jpg)
+![](../../images/part2/940f693097c14be4b1079403e9f84d9cad37d5c4d9fb98a9b9d8001525692a08.jpg)
 
 图 4-37 Gazebo 场景中产生的模型列表
 {: .figure-caption }
@@ -3518,7 +3336,7 @@ gazebo worlds/population.world
 
 启动 Gazebo, 在 Edit 菜单上。如图 4-38 所示, 转到 Building Editor 或单击 Ctrl+B 组合键打开编辑器。
 
-![](../../images/part3/4d1d4cc65675dc790bdc296e9e587b07e672a164ff8fe1d8d43d5b6071ec0ea7.jpg)
+![](../../images/part2/4d1d4cc65675dc790bdc296e9e587b07e672a164ff8fe1d8d43d5b6071ec0ea7.jpg)
 
 图 4-38 建筑编辑器的编辑界面
 {: .figure-caption }
@@ -3538,13 +3356,13 @@ gazebo worlds/population.world
 
 如图 4-40 所示, 单击这里获得平面图示例, 然后执行如下操作:
 
-![](../../images/part3/664882f7d61e5ce580cb125615fe40f4cd1ae954c3f9c9b09713e2809c0652ac.jpg)
+![](../../images/part2/664882f7d61e5ce580cb125615fe40f4cd1ae954c3f9c9b09713e2809c0652ac.jpg)
 
 图 4-39 图形用户界面编辑器
 {: .figure-caption }
 
 
-![](../../images/part3/a3313cff15bf588809074466c08bb3867bee5b58097c6a13b06e0490b0936d80.jpg)
+![](../../images/part2/a3313cff15bf588809074466c08bb3867bee5b58097c6a13b06e0490b0936d80.jpg)
 
 图4-40 导入平面图
 {: .figure-caption }
@@ -3602,13 +3420,13 @@ gazebo worlds/population.world
 
 如图 4-42 所示, 在这个平面图上没有楼梯, 但我们将插入一个。
 
-![](../../images/part3/442e291ff1b35f1f9c61a2fa5297c6e4443724f95f1019489c634830b046a4e1.jpg)
+![](../../images/part2/442e291ff1b35f1f9c61a2fa5297c6e4443724f95f1019489c634830b046a4e1.jpg)
 
 图 4-41 添加门窗后的地图
 {: .figure-caption }
 
 
-![](../../images/part3/9e148b6668a219246e49a83c5295fe81eaeaf0d7c6f8d87dda66453cfc8953ae.jpg)
+![](../../images/part2/9e148b6668a219246e49a83c5295fe81eaeaf0d7c6f8d87dda66453cfc8953ae.jpg)
 
 图4-42 添加了楼梯的地图
 {: .figure-caption }
@@ -3624,7 +3442,7 @@ gazebo worlds/population.world
 
 我们已经完成了楼层1。让我们在建筑中添加另一层，这样就完成了楼梯模型的搭建。如图4-43所示，在2D视图的顶部，单击“+”号以添加楼层。或者，右键单击2D视图并选择Add a level。添加新楼层时，会自动插入地板。如果在楼层的下面有楼梯，楼梯上方的一个洞将在建筑物被保存时从地板上切掉。
 
-![](../../images/part3/99d04166cd1dcc45eb8441d386f047c042b6c320181392361c826e73298e8d65.jpg)
+![](../../images/part2/99d04166cd1dcc45eb8441d386f047c042b6c320181392361c826e73298e8d65.jpg)
 
 图4-43 添加了楼层的地图
 {: .figure-caption }
@@ -3666,7 +3484,7 @@ gazebo worlds/population.world
 
 正如在编辑墙壁时做的,我们可以以几种不同的方式更精确地操纵门窗。如图 4-44 所示,在 2D 视图中,单击要编辑的要素。
 
-![](../../images/part3/579ffdfe3416f57e3728c7a728b85f9dbc56d0cf05ace1f499331c4c13892a9a.jpg)
+![](../../images/part2/579ffdfe3416f57e3728c7a728b85f9dbc56d0cf05ace1f499331c4c13892a9a.jpg)
 
 图 4-44 门窗编辑界面
 {: .figure-caption }
@@ -3682,7 +3500,7 @@ gazebo worlds/population.world
 
 最后,编辑我们之前插入的楼梯。由于它不是在平面图上,我们可以根据所想有些创意和调整它的大小。如图 4-45 所示,在 2D 视图中,单击楼梯选择它。
 
-![](../../images/part3/815faad42f68dfc678234c6c57ad574935254967f9187a0ce64029c28a33aea4.jpg)
+![](../../images/part2/815faad42f68dfc678234c6c57ad574935254967f9187a0ce64029c28a33aea4.jpg)
 
 图 4-45 楼梯编辑界面
 {: .figure-caption }
@@ -3702,7 +3520,7 @@ gazebo worlds/population.world
 
 如图 4-46 所示, 用户可以分别从 Wall Inspector、Stairs Inspector 和 Level Inspector 给墙壁、楼梯和地板添加颜色和质地。只需打开检查器, 选择用户的材料, 然后按 Apply。
 
-![](../../images/part3/3e764182af0ba34e5ab3555e92018b70eb9181ef744dfd72b74403b5fd626513.jpg)
+![](../../images/part2/3e764182af0ba34e5ab3555e92018b70eb9181ef744dfd72b74403b5fd626513.jpg)
 
 图 4-46 检查器设置对话框
 {: .figure-caption }
@@ -3724,7 +3542,7 @@ Gazebo 5.1 中的新功能：要选择自定义颜色，在调色板上单击 Mo
 
 注意：每个地图项只能有一种颜色和一个纹理。将相同的材料分配给要素的所有面；目前，不能在建筑编辑器上分配自定义纹理。
 
-![](../../images/part3/fbdb9100953a72156ee0ffcb1150e0e05b769d83aacf6059832a1a2201a9acba.jpg)
+![](../../images/part2/fbdb9100953a72156ee0ffcb1150e0e05b769d83aacf6059832a1a2201a9acba.jpg)
 
 图4-47 调色板设置对话框
 {: .figure-caption }
@@ -3736,13 +3554,13 @@ Gazebo 5.1 中的新功能：要选择自定义颜色，在调色板上单击 Mo
 
 在顶部菜单上,选择 File 菜单,然后单击 Save As 按钮(或按下 Ctrl+S 键)。如图 4-49 所示,将出现一个对话框,用户可以在其中选择模型的位置。需要注意的是,在 Advanced Options 选项下用户可以为用户的建筑设置一些元数据。
 
-![](../../images/part3/6f234ef72c42c23dead9b82125c26d61001c6d45b5678acd2ccef70ee413f0a1.jpg)
+![](../../images/part2/6f234ef72c42c23dead9b82125c26d61001c6d45b5678acd2ccef70ee413f0a1.jpg)
 
 图4-48 建筑命名对话框
 {: .figure-caption }
 
 
-![](../../images/part3/e9592d1733b354c84f82e0c8e8683e77af9f9f912ff0eb4afc934a1396620e70.jpg)
+![](../../images/part2/e9592d1733b354c84f82e0c8e8683e77af9f9f912ff0eb4afc934a1396620e70.jpg)
 
 图4-49 保存模型对话框
 {: .figure-caption }
@@ -3752,7 +3570,7 @@ Gazebo 5.1 中的新功能：要选择自定义颜色，在调色板上单击 Mo
 
 当用户完成创建建筑物并保存之后，请转到 File 菜单，然后选择 Exit Building Editor 命令。需要注意的是，退出建筑编辑器后，用户的建筑物将不再可编辑。如图 4-50 所示，用户的建筑将显示在主窗口中。将来，用户可以在 Insert 标签中找到该建筑。
 
-![](../../images/part3/8bd6a367391746cc987a2e138d9c2da003ed289c76d2a4d7178b5aa611d2f106.jpg)
+![](../../images/part2/8bd6a367391746cc987a2e138d9c2da003ed289c76d2a4d7178b5aa611d2f106.jpg)
 
 图 4-50 完成编辑后的建筑
 {: .figure-caption }
@@ -4911,7 +4729,7 @@ visualize>true /visualize>
 
 （6）启动 Gazebo，插入带噪声的激光器，如图 4-51 所示，在左窗格中，选择“插入”选项卡，然后单击“噪声激光”按钮。将激光器放在场景中某个位置。
 
-![](../../images/part3/919256b3290dacdc8dad128fd95c591e10e96a0e9b5026f4dea070cbd1db9e54.jpg)
+![](../../images/part2/919256b3290dacdc8dad128fd95c591e10e96a0e9b5026f4dea070cbd1db9e54.jpg)
 
 图 4-51 激光器的插入
 {: .figure-caption }
@@ -4919,7 +4737,7 @@ visualize>true /visualize>
 
 （7）可视化带噪声的激光器：如图 4-52 所示，依次单击窗口、主题可视化按钮（或按下 Ctrl+T 组合键）以显示主题选择器。
 
-![](../../images/part3/588da9c703e6b48831db2fb1bc8409a7af517a4ce9b15958238a4228eb20afbb.jpg)
+![](../../images/part2/588da9c703e6b48831db2fb1bc8409a7af517a4ce9b15958238a4228eb20afbb.jpg)
 
 图 4-52 主题选择器对话框
 {: .figure-caption }
@@ -4927,7 +4745,7 @@ visualize>true /visualize>
 
 （8）找到名称为/gazebo/default/hokuyo/link/laser/scan的选项，单击它，然后单击“确定”按钮。如图4-53所示，用户会得到一个激光视图窗口，显示激光数据。
 
-![](../../images/part3/c47d6fcad33028a369d17e99489f54f2d09fc60cc94f58dd893ca7022c8ab944.jpg)
+![](../../images/part2/c47d6fcad33028a369d17e99489f54f2d09fc60cc94f58dd893ca7022c8ab944.jpg)
 
 图 4-53 显示激光数据的窗口
 {: .figure-caption }
@@ -5049,7 +4867,7 @@ visualize>true /visualize>
 
 上面的例子有很高的< stddev>。尝试减小此值，以下的设置参数为数字摄像头的合理值：
 
-![](../../images/part3/325b596708f8ca49dcddc5ae398d4b28fbda6ead4c9b4e41322cc322d7773afb.jpg)
+![](../../images/part2/325b596708f8ca49dcddc5ae398d4b28fbda6ead4c9b4e41322cc322d7773afb.jpg)
 
 图 4-54 显示图像数据的窗口
 {: .figure-caption }
@@ -5476,43 +5294,6 @@ private: event::ConnectionPtrupdateConnection;
 ```
 
 创建一个名为 ContactPlugin.cc 的源文件：
-
-```txt
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-```
 
 ```cpp
 std::cout j "Position:"
@@ -6060,225 +5841,10 @@ gazebospawn_widget_example.world
 
 或者如果用户修改～/. gazebo/gui.ini。最后运行 Gazebo，如图 4-55 所示，单击按钮生成球体。
 
-![](../../images/part4/ea4ba4b518258865aeca3010d09f2404ae9cfc43101b815de47c1f5305e1ceef.jpg)
+![](../../images/part2/ea4ba4b518258865aeca3010d09f2404ae9cfc43101b815de47c1f5305e1ceef.jpg)
 
 图 4-55 球体生成场景
 {: .figure-caption }
-
-
-## 2）示例2：显示仿真时间
-
-步骤如下。
-
-首先,创建工作目录,输入以下命令:
-
-```txt
-mkdir ~/gazebo_gui_time
-cd ~/gazebo_gui_time
-```
-
-下载 GUI 覆盖插件的源代码, 输入以下命令:
-
-```batch
-wget https://bitbucket.org/osrf/gazebo/raw/gazebo7/examples/plugins/gui_overlay_plugin_time/GUIExampleTimeWidget.hh
-wget https://bitbucket.org/osrf/gazebo/raw/gazebo7/examples/plugins/gui_overlay_plugin_time/GUIExampleTimeWidget.cc
-wget https://bitbucket.org/osrf/gazebo/raw/gazebo7/examples/plugins/gui_overlay_plugin_time/CMakeLists.txt
-```
-
-看看头文件,输入以下命令:
-
-```txt
-geditGUIExampleTimeWidget.hh
-```
-
-和第一个例子一样,这个插件继承自 GUIPlugin 类,并且使用 Qt 的 Q\_OBJECT 宏。
-
-```objectivec
-class GAZEBO_VISIBLE GUIExampleTimeWidget : public GUIPlugin
-{
-    Q_OBJECT
-```
-
-我们使用 SetSimTime 信号作为线程安全机制来更新显示的仿真时间：
-
-```c
-///\brief A signal used to set the sim time line edit.
-///\param[in] _string String representation of sim time.
-signals: void SetSimTime(QString_string);
-```
-
-一个 OnStats 回调用于从 Gazebo 接收信息：
-
-```txt
-///\brief Callback that received world statistics messages.
-///\param[in] _msg World statistics message that is received.
-protected: void OnStats(ConstWorldStatisticsPtr&_msg);
-```
-
-我们还将使用 Gazebo 的传输机制来接收来自 Gazebo 的消息：
-
-```txt
-///\brief Node used to establish communication with gzserver.
-private: transport::NodePtr node;
-///\brief Subscriber to world statistics messages.
-private: transport::SubscriberPtrstatsSub;
-```
-
-看看源文件,输入以下命令:
-
-```txt
-gedit GUIExampleTimeWidget.cc
-```
-
-在构造函数中,创建一个 QLabel 来显示时间,并将其连接到 SetSimeTime 信号。
-
-```cpp
-//Create a time label
-QLabel *timeLabel = new QLabel(tr("00:00:00.00"));
-//Add the label to the frame's layout
-frameLayout->addWidget(label);
-frameLayout->addWidget(timeLabel);
-connect(this, SIGNAL(SetSimTime(QString)),
-timeLabel, SLOT.setText(QString)), Qt::QueuedConnection);
-```
-
-将构造函数连接到Gazebo的～/world\_stats:
-
-```rust
-//Create a node for transportation
-this->node = transport::NodePtr(new transport::Node());
-```
-
-```cpp
-this->node->Init("default");
-this->statsSub = this->node->Subscribe("~/world_stats", &GUIExampleTimeWidget::OnStats, this);
-```
-
-当接收到消息时，OnStats 调用该函数并更新显示的时间：
-
-```cpp
-void GUIExampleTimeWidget::OnStats(ConstWorldStatisticsPtr&_msg)
-{
-    this->SetSimTime(QString::fromStdString(
-    this->FormatTime(_msg->sim_time()));
-```
-
-按照与上一个部分内容相同的步骤编译插件,告诉 Gazebo 在哪里找到它,并通过 gui.ini SDFworld 文件加载它。
-
-用户可以按如下所示添加两个插件,输入以下命令:
-
-```batch
-gedit ~/.gazebo/gui.ini
-```
-
-将[overlay\_plugins]部分更改为：
-
-```ini
-[overlay_plugins]
-filenames = libgui_example_spawn_widget.so:libgui_example_time_widget.so
-```
-
-这将加载前一个示例的 spawn 插件和本示例中的时间插件。
-运行 Gazebo 时, 按钮右侧的新文本框应显示仿真时间, 见图 4-56。
-
-![](../../images/part4/812ca717518c9687f7dc11c01e84ed28e86ba14af7769e32944960d7e1746832.jpg)
-
-图 4-56 显示仿真时间的窗口
-{: .figure-caption }
-
-
-```txt
-cd; mkdir gazebo_position2d; cd gazebo_position2d
-
-将下面的配置脚本复制到 position2d.cfg 文件中：
-
-driver
-(
-name "gazebo"
-provides ["simulation:0"]
-plugin "libgazebo_player"
-# The name of a running Gazebo world, specified in a .world file
-world_name "default"
-)
-
-driver
-(
-name "gazebo"
-provides ["position2d:0"]
-# This name must match the name of a model in the "default" world
-model_name "pioneer2dx"
-)
-
-输入以下命令运行 Gazebo:
-
-gazebo worlds/pioneer2dx.world
-
-输入以下命令运行 Player:
-
-player position2d.cfg
-
-输入以下命令运行 playerv:
-
-playerv
-```
-
-### 4.8.3 连接到 Player
-
-Player 是一个机器人控制框架, 下面介绍如何将 position2d Player 接口连接到 Gazebo。
-
-创建工作目录,输入以下命令:
-
-完成以上的步骤后,现在用户可以使用 playerv 驱动 pioneer2dx。
-
-创建工作目录,输入以下命令:
-
-```txt
-cd; mkdirgazebo_camera; cd gazebo_camera
-```
-
-将下面的配置脚本复制到 camera.cfg 文件中：
-
-```txt
-driver
-(
-name "gazebo"
-provides ["simulation:0"]
-plugin "libgazebo_player"
-
-# The name of a running Gazebo world, specified in a .world file
-world_name "default"
-)
-
-driver
-(
-name "gazebo"
-provides ["camera:0"]
-
-# This name must match a scoped name of a sensor in the "default" world
-# The format of a scoped name is "model_name::link_name::sensor_name"
-camera_name "pioneer2dx::camera::link::camera"
-)
-```
-
-输入以下命令运行 Gazebo:
-
-```txt
-gazebo worlds/pioneer2dx_camera.world
-```
-
-输入以下命令运行 Player:
-
-```txt
-playercamera.cfg
-```
-
-输入以下的命令运行 playerv:
-
-```txt
-playerv
-```
-
-完成以上的步骤后,现在用户可以在 playerv 中可看到相机。
 
 ## 本章小结
 
@@ -6293,3 +5859,5 @@ playerv
 [3] Hoffman E M, Traversaro S, Rocchi A, et al. Yarp Based Plugins for Gazebo Simulator[J]. 2014.
 
 [4] Meyer J, Sendobry A, Kohlbrecher S, et al. Comprehensive Simulation of Quadrotor UAVs Using ROS and Gazebo[J]. Lecture Notes in Computer Science, 2012, 7628: 400-411.
+
+---
