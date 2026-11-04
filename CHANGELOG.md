@@ -31,7 +31,7 @@
 - `node --test tools/python-detect.test.mjs` 6 组类型识别用例通过；`tools/python-runtime.smoke.mjs` 在 Node 里加载真实 Pyodide 跑 18 项断言全部通过（stdout、末表达式、跨单元变量、SyntaxError、ZeroDivisionError、input 拦截、stderr 分离、base64 图片）。
 - `tools/check_python_runtime.py` 端到端通过：正文公式 8 处 arithmatex、24 处 MathJax 节点已渲染；第 1 章 Notebook 104 个单元中 29 个可运行、29 个按钮、类型识别出“终端命令 / Python / XML / URDF”；单格执行输出 `Hello, Jupyter Notebook!` 与表达式 `5`；合成 `.py` 输出 `hello 3.14.2` 与表达式 `42`；6 个运行时请求全部落在同源 `/pyodide/`。
 - 构建通过：24 套内容、315 个阅读页面、225 个代码/数据文件、5,232 个正文引用资源；`dist/pyodide` 52 MB 随 dist 一起发布。
-- 发布：部署编号 `（待填）`。
+- 发布：部署编号 `66eef8e1-c808-44cc-9e74-0ff3f52db24f`（源提交 `61e4ff31`，Production/main，上传 33 个文件，含 `dist/pyodide` 的 24 个运行时文件）；未登录访问仍跳转登录页。
 
 ## 2026-11-04（机器人仿真专栏换新版教材：《Jupyter Notebook 使用与应用》）
 
