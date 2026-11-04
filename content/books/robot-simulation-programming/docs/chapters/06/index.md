@@ -928,9 +928,9 @@ rosrun agitrhello
 
 ## 6.4 ROS 与 MATLAB 集成
 
-第 1 章介绍了 MATLAB 拥有机器人原型设计和机器人仿真控制系统等强大的工具。然而，MATLAB 与 ROS 之间的集成还存在着一定的难度。目前，MATLAB 与 ROS 之间集成已经有多种解决方案，包括基于 JavaScript 对象符号的 rosbridge (见[http://wiki.ros.org/rosbridge\_suite)、](http://wiki.ros.org/rosbridge_suite\)、)基于 Java 的 ROS-MATLAB bridge 和 ROSlab-IPCbridge 等。然而，这些集成都没有广泛应用，因为它们的安装比较困难，或者是在可用性和实用性上存在着一定的缺陷。
+MATLAB 拥有机器人原型设计和机器人仿真控制系统等强大的工具。然而，MATLAB 与 ROS 之间的集成还存在着一定的难度。目前，MATLAB 与 ROS 之间集成已经有多种解决方案，包括基于 JavaScript 对象符号的 rosbridge (见[http://wiki.ros.org/rosbridge\_suite)、](http://wiki.ros.org/rosbridge_suite\)、)基于 Java 的 ROS-MATLAB bridge 和 ROSlab-IPCbridge 等。然而，这些集成都没有广泛应用，因为它们的安装比较困难，或者是在可用性和实用性上存在着一定的缺陷。
 
-第 1 章介绍了 Robotics System Toolbox (RST) 工具箱具有的几个主要功能：路径规划、路径跟踪和地图表示算法，用于在不同旋转和平移表示之间转换的函数，与启用 ROS 的机器人进行双向通信。随着 MATLAB 2015a 的发布，MATLAB 与 ROS 之间集成有一个更好的选择。新的 MATLAB 版本引入新的机器人系统工具箱（Robotics System Toolbox）。
+Robotics System Toolbox (RST) 工具箱具有以下几个主要功能：路径规划、路径跟踪和地图表示算法，用于在不同旋转和平移表示之间转换的函数，与启用 ROS 的机器人进行双向通信。随着 MATLAB 2015a 的发布，MATLAB 与 ROS 之间集成有一个更好的选择。新的 MATLAB 版本引入新的机器人系统工具箱（Robotics System Toolbox）。
 
 ### 6.4.1 RST 的 ROS 功能介绍
 
