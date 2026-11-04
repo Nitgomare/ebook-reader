@@ -37,7 +37,7 @@
 - 构建通过：24 套内容、315 个阅读页面、225 个代码/数据文件、5,232 个正文引用资源；新版书籍产出 13 个阅读页面、9 章、194 张图片全部落到 `dist/files/robot-simulation-programming/images/part1|2|3`，正文图片地址均指向该目录。
 - 9 份 Notebook 落到 `dist/files/code/robot-simulation-programming/chapter-1..9`，9 个代码页 JSON 逐格生成，单元插图 36 处全部改写到 `dist/files/robot-simulation-programming/images/`，章节侧“本章代码”与课程资源“代码”列均指向对应章。
 - 旧版内容在建站仓库外另存备份，未纳入版本库。
-- 发布：部署编号 `e2eb9dfe-df77-4f41-bfa8-56207dc86d9b`（源提交 `4d4e588`），Production/main，未登录访问仍跳转至登录页；随后 `fff3e1d8-0c28-4386-b934-7b36dacccca3`（源提交 `bc3db2a`）补发布导言命名修正，`92f4c985-310b-4b8d-94c6-0aafbce7ffa0`（源提交 `47c7884`）补发布记录，`da36a244-d690-4165-a518-16699a26fb5f`（源提交 `6e003d8`）发布正文修正，均未登录访问仍跳转登录页。
+- 发布：部署编号 `e2eb9dfe-df77-4f41-bfa8-56207dc86d9b`（源提交 `4d4e588`），Production/main，未登录访问仍跳转至登录页；随后 `fff3e1d8-0c28-4386-b934-7b36dacccca3`（源提交 `bc3db2a`）补发布导言命名修正，`92f4c985-310b-4b8d-94c6-0aafbce7ffa0`（源提交 `47c7884`）补发布记录，`da36a244-d690-4165-a518-16699a26fb5f`（源提交 `6e003d8`）发布正文修正，`03e24ffe-c8d9-4b0d-b20f-e123aebb2f3c`（源提交 `4aeadba`）发布章节配套 Notebook，均未登录访问仍跳转登录页。
 
 ## 2026-11-03（《机械原理（第四版）》第 3 章新增五个交互机构图）
 
