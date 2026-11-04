@@ -12,6 +12,7 @@ import re
 import shutil
 from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
+from typing import Callable
 from urllib.parse import quote, unquote, urlsplit
 
 import markdown
@@ -44,6 +45,7 @@ CODE_EXTENSIONS = {
     ".toml": ("source", "toml"),
 }
 MAX_CODE_PREVIEW_BYTES = 256 * 1024
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"}
 MARKDOWN_EXTENSIONS = [
     "extra",
     "admonition",
@@ -426,8 +428,63 @@ def decode_text(source: Path, limit: int = MAX_CODE_PREVIEW_BYTES) -> tuple[str,
     return sample.decode("utf-8", errors="replace"), truncated
 
 
-def notebook_cells(source: Path) -> list[dict[str, object]]:
+def build_notebook_image_resolver(
+    docs_root: Path, output: Path, slug: str
+) -> Callable[[str], "str | None"]:
+    """Map notebook image names to the book's published image URLs, copying on first use."""
+    cache: dict[str, str] = {}
+    index: dict[str, Path] | None = None
+
+    def resolve(name: str) -> str | None:
+        nonlocal index
+        if name in cache:
+            return cache[name]
+        if index is None:
+            index = {}
+            for path in docs_root.rglob("*"):
+                if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS:
+                    index.setdefault(path.name, path)
+        source = index.get(name)
+        if source is None:
+            return None
+        rel_path = source.relative_to(docs_root).as_posix()
+        destination = output / "files" / slug / Path(*PurePosixPath(rel_path).parts)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        if not destination.exists() or destination.stat().st_mtime_ns != source.stat().st_mtime_ns:
+            shutil.copy2(source, destination)
+        encoded = "/".join(quote(part) for part in ("files", slug, *PurePosixPath(rel_path).parts))
+        cache[name] = encoded
+        return encoded
+
+    return resolve
+
+
+def rewrite_notebook_image_urls(rendered: str, resolve: Callable[[str], str | None]) -> str:
+    def replace(match: re.Match[str]) -> str:
+        if match.group("attr").lower() != "src":
+            return match.group(0)
+        raw_url = match.group("url")
+        parsed = urlsplit(raw_url)
+        if parsed.scheme or parsed.netloc or raw_url.startswith(("/", "#", "data:")):
+            return match.group(0)
+        target = resolve(PurePosixPath(unquote(parsed.path)).name)
+        if not target:
+            return match.group(0)
+        suffix = f"#{quote(parsed.fragment)}" if parsed.fragment else ""
+        return f'src={match.group("quote")}{target}{suffix}{match.group("quote")}'
+
+    return URL_ATTR_RE.sub(replace, rendered)
+
+
+def notebook_cells(
+    source: Path, resolve_image: Callable[[str], str | None] | None = None
+) -> list[dict[str, object]]:
     notebook = json.loads(source.read_text(encoding="utf-8-sig"))
+    renderer = markdown.Markdown(
+        extensions=MARKDOWN_EXTENSIONS,
+        extension_configs=MARKDOWN_EXTENSION_CONFIGS,
+        output_format="html5",
+    )
     cells: list[dict[str, object]] = []
     for index, cell in enumerate(notebook.get("cells", [])):
         cell_type = str(cell.get("cell_type", "code"))
@@ -435,7 +492,10 @@ def notebook_cells(source: Path) -> list[dict[str, object]]:
         text = "".join(cell_source) if isinstance(cell_source, list) else str(cell_source)
         payload: dict[str, object] = {"index": index + 1, "type": cell_type, "source": text}
         if cell_type == "markdown":
-            payload["html"] = markdown.markdown(text, extensions=["extra"])
+            html_text = renderer.convert(text)
+            if resolve_image is not None:
+                html_text = rewrite_notebook_image_urls(html_text, resolve_image)
+            payload["html"] = html_text
         elif cell_type == "code":
             outputs: list[str] = []
             for output in cell.get("outputs", []):
@@ -453,7 +513,10 @@ def notebook_cells(source: Path) -> list[dict[str, object]]:
 
 
 def build_code_assets(
-    book: dict[str, object], output: Path, docs: list[dict[str, object]]
+    book: dict[str, object],
+    output: Path,
+    docs: list[dict[str, object]],
+    docs_root: Path,
 ) -> tuple[list[dict[str, object]], dict[str, list[str]]]:
     configured = str(book.get("codeSource", "")).strip()
     if not configured:
@@ -469,6 +532,7 @@ def build_code_assets(
     explicit_links = configured_links if isinstance(configured_links, dict) else {}
     by_doc: dict[str, list[str]] = {str(doc["relPath"]): [] for doc in docs}
     public_files: list[dict[str, object]] = []
+    resolve_notebook_image = build_notebook_image_resolver(docs_root, output, slug)
     for source in sorted(code_root.rglob("*"), key=lambda path: path.as_posix().casefold()):
         if not source.is_file() or source.suffix.lower() not in CODE_EXTENSIONS:
             continue
@@ -492,7 +556,7 @@ def build_code_assets(
             "downloadUrl": encoded,
         }
         if kind == "notebook":
-            payload["cells"] = notebook_cells(source)
+            payload["cells"] = notebook_cells(source, resolve_notebook_image)
             payload["truncated"] = False
         else:
             payload["content"], payload["truncated"] = decode_text(source)
@@ -686,7 +750,7 @@ def build_book(
     docs_root, docs, mkdocs_config = collect_book_documents(book)
     slug = str(book["slug"])
     id_map = {str(doc["relPath"]): str(doc["id"]) for doc in docs}
-    public_code, code_by_doc = build_code_assets(book, output, docs)
+    public_code, code_by_doc = build_code_assets(book, output, docs, docs_root)
     local_videos = book.get("localVideos", {})
     if not isinstance(local_videos, dict):
         raise ValueError(f"{slug}: localVideos must map document paths to video paths")

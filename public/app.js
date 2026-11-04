@@ -222,7 +222,16 @@
       linear_model: "线性模型",
       metrices: "评估指标",
       svm: "支持向量机",
-      tree: "决策树"
+      tree: "决策树",
+      "chapter-1": "第 1 章 Jupyter Notebook 的使用",
+      "chapter-2": "第 2 章 Jupyter Notebook 的应用",
+      "chapter-3": "第 3 章 MuJoCo 机器人仿真",
+      "chapter-4": "第 4 章 Gazebo 机器人仿真",
+      "chapter-5": "第 5 章 Isaac 机器人仿真",
+      "chapter-6": "第 6 章 机器人操作系统的基础",
+      "chapter-7": "第 7 章 机器人操作系统的应用",
+      "chapter-8": "第 8 章 LeRobot SO-101 机械臂",
+      "chapter-9": "第 9 章 宇树 Qmini 双足机器人"
     };
     return labels[name] || name.replace("chapter-", "第 ").replace(/^第 (\d+)$/, "第 $1 章").replace(/_/g, " ");
   }
@@ -435,6 +444,7 @@
       target.innerHTML = file.kind === "notebook" ? renderNotebook(file.cells) :
         sourcePreview(file.content, file.language);
       enhanceCodeBlocks(target);
+      if (file.kind === "notebook") typesetMath([target]);
     } catch (error) {
       target.innerHTML = '<p class="error-copy">' + escapeHtml(error.message) + '</p>';
     }
@@ -642,11 +652,12 @@
     elements.relatedCodeList.innerHTML = files.map(inlineCodeItem).join("");
   }
 
-  function typesetMath() {
+  function typesetMath(nodes) {
     if (!window.MathJax || !window.MathJax.startup || !window.MathJax.startup.promise) return;
+    var targets = nodes || [elements.article];
     window.MathJax.startup.promise.then(function () {
-      if (window.MathJax.typesetClear) window.MathJax.typesetClear([elements.article]);
-      return window.MathJax.typesetPromise([elements.article]).then(window.ReaderMode.reflow);
+      if (window.MathJax.typesetClear) window.MathJax.typesetClear(targets);
+      return window.MathJax.typesetPromise(targets).then(window.ReaderMode.reflow);
     }).catch(function () {});
   }
 
@@ -757,6 +768,7 @@
     elements.codeContent.innerHTML = file.kind === "notebook" ? renderNotebook(file.cells) :
       sourcePreview(file.content, file.language);
     enhanceCodeBlocks(elements.codeContent);
+    if (file.kind === "notebook") typesetMath([elements.codeContent]);
     renderCodeSidebar(file, elements.searchInput.value);
     document.title = file.name + " · " + state.catalog.site.title;
     window.scrollTo(0, 0);

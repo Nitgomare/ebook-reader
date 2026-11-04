@@ -309,7 +309,19 @@
       "tags": ["Jupyter Notebook", "机器人仿真", "ROS"],
       "category": "robotics",
       "order": 45,
-      "type": "reference"
+      "type": "reference",
+      "codeSource": "code",
+      "codeLinks": {
+        "chapter-1": ["chapters/01/index.md"],
+        "chapter-2": ["chapters/02/index.md"],
+        "chapter-3": ["chapters/03/index.md"],
+        "chapter-4": ["chapters/04/index.md"],
+        "chapter-5": ["chapters/05/index.md"],
+        "chapter-6": ["chapters/06/index.md"],
+        "chapter-7": ["chapters/07/index.md"],
+        "chapter-8": ["chapters/08/index.md"],
+        "chapter-9": ["chapters/09/index.md"]
+      }
     },
     {
       "slug": "wind-energy",
