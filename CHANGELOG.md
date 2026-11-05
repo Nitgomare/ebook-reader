@@ -32,7 +32,7 @@
 - `node --test tools/python-detect.test.mjs` 6/6 通过；`tools/python-runtime.smoke.mjs` 21/21 通过（新增 input 取值、缺值提示、空提示回显三项）。
 - Playwright 端到端：第 6 章 0 条 traceback、210 个单元标记跳过、19 个可运行；干净的 numpy Notebook 首单元无报错；`input()` 面板填入「肥鱼」后 stdout 为「名字：肥鱼 / 你好 肥鱼」、末表达式回显 21；matplotlib 中文图的 `missing from font` 警告归零（截图 `tmp/python-runtime-qa/font-cjk.png`）。
 - 构建通过：24 套内容、315 个阅读页面、225 个代码/数据文件、5,232 个正文引用资源；`dist/pyodide` 内含 `fonts/NotoSansSC-Regular.otf`。
-- 发布：部署编号 `（待填）`。
+- 发布：部署编号 `6494b8bb-3c96-47a5-bfa4-4b2fae0da366`（源提交 `be18e80a`，Production/main，上传 8 个文件，含 `dist/pyodide/fonts/NotoSansSC-Regular.otf`）；未登录访问仍跳转登录页。
 
 ## 2026-11-04（网页端直接运行 Python 代码：.py 与 .ipynb）
 
