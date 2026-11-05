@@ -23,8 +23,8 @@ await pyodide.runPythonAsync(SETUP);
 console.log("python", pyodide.runPython("_rkh_python_version"));
 
 const runner = pyodide.globals.get("_rkh_run");
-function run(code) {
-  const proxy = runner(code);
+function run(code, inputs) {
+  const proxy = runner(code, inputs || []);
   const plain = proxy.toJs({ dict_converter: Object.fromEntries });
   proxy.destroy();
   return plain;
@@ -56,9 +56,14 @@ check("报错不含内部帧", !/_rkh_run/.test(out.error));
 out = run("1 / 0");
 check("异常被捕获", /ZeroDivisionError/.test(out.error), out.error.split("\n").slice(-1)[0]);
 
-// 5. input() 被拦截
+// 5. input()：没给值时给出可读提示，给了值时回显到 stdout
 out = run("input('名字')");
-check("input 拦截", /不支持 input\(\)/.test(out.error), out.error.split("\n").slice(-1)[0]);
+check("input 缺值提示", /没有提供/.test(out.error), out.error.split("\n").slice(-1)[0]);
+out = run("name = input('名字：')\nprint('你好', name)", ["肥鱼"]);
+check("input 取值", out.stdout === "名字：肥鱼\n你好 肥鱼\n", JSON.stringify(out.stdout));
+check("input 结束不报错", !out.error, out.error);
+out = run("print(input())", ["多余的值"]);
+check("空提示也回显", out.stdout === "多余的值\n多余的值\n", JSON.stringify(out.stdout));
 
 // 6. stderr 分离
 out = run("import sys\nprint('e', file=sys.stderr)");

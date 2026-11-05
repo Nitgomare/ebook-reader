@@ -26,11 +26,44 @@ var SETUP = [
   "sys.stdout = _rkh_out",
   "sys.stderr = _rkh_err",
   "",
-  "def _rkh_input(*args, **kwargs):",
-  "    raise RuntimeError('浏览器环境不支持 input() 交互输入，请把输入改成固定值，或在本机 Jupyter 中运行')",
+  "_rkh_inputs = []",
+  "",
+  "def _rkh_set_inputs(values):",
+  "    global _rkh_inputs",
+  "    _rkh_inputs = [str(item) for item in (values or [])]",
+  "",
+  "def _rkh_input(prompt=''):",
+  "    if not _rkh_inputs:",
+  "        raise EOFError('这段代码还要一个输入值，但这次运行没有提供。请在运行前把输入填进页面上的输入框。')",
+  "    value = _rkh_inputs.pop(0)",
+  "    try:",
+  "        sys.stdout.write(str(prompt) + value + '\\n')",
+  "    except Exception:",
+  "        pass",
+  "    return value",
   "",
   "builtins.input = _rkh_input",
   "builtins.raw_input = _rkh_input",
+  "",
+  "def _rkh_setup_font():",
+  "    path = '/fonts/NotoSansSC-Regular.otf'",
+  "    try:",
+  "        if not os.path.exists(path):",
+  "            return",
+  "        from matplotlib import font_manager",
+  "        if path in getattr(font_manager.fontManager, '_rkh_loaded', set()):",
+  "            return",
+  "        font_manager.fontManager.addfont(path)",
+  "        names = [font_manager.FontProperties(fname=path).get_name(), 'DejaVu Sans']",
+  "        import matplotlib",
+  "        matplotlib.rcParams['font.sans-serif'] = names",
+  "        matplotlib.rcParams['font.family'] = 'sans-serif'",
+  "        matplotlib.rcParams['axes.unicode_minus'] = False",
+  "        if not hasattr(font_manager.fontManager, '_rkh_loaded'):",
+  "            font_manager.fontManager._rkh_loaded = set()",
+  "        font_manager.fontManager._rkh_loaded.add(path)",
+  "    except Exception:",
+  "        pass",
   "",
   "def _rkh_patch_matplotlib():",
   "    pyplot = sys.modules.get('matplotlib.pyplot')",
@@ -65,8 +98,19 @@ var SETUP = [
   "                pass",
   "    return images",
   "",
-  "def _rkh_run(source):",
+  "def _rkh_check(source):",
+  "    try:",
+  "        compile(source, '<cell>', 'exec')",
+  "        return {'ok': True, 'error': '', 'line': 0}",
+  "    except SyntaxError as exc:",
+  "        return {'ok': False, 'error': str(exc.msg or '语法错误'), 'line': int(exc.lineno or 0)}",
+  "    except Exception as exc:",
+  "        return {'ok': False, 'error': str(exc), 'line': 0}",
+  "",
+  "def _rkh_run(source, inputs=None):",
   "    global _rkh_out, _rkh_err",
+  "    _rkh_set_inputs(inputs)",
+  "    _rkh_setup_font()",
   "    _rkh_out = io.StringIO()",
   "    _rkh_err = io.StringIO()",
   "    sys.stdout = _rkh_out",
@@ -138,6 +182,7 @@ async function boot(message) {
       pyodide = await module.loadPyodide({ indexURL: candidate });
       baseUrl = candidate;
       await pyodide.runPythonAsync(SETUP);
+      await installFont(pyodide, candidate);
       pythonVersion = String(pyodide.runPython("_rkh_python_version"));
       post({ type: "ready", baseUrl: baseUrl, pythonVersion: pythonVersion });
       return;
@@ -147,6 +192,18 @@ async function boot(message) {
     }
   }
   post({ type: "fatal", message: "无法加载 Python 运行时。" + failures.join("；") });
+}
+
+async function installFont(instance, base) {
+  try {
+    var response = await fetch(base + "fonts/NotoSansSC-Regular.otf");
+    if (!response.ok) return;
+    var bytes = new Uint8Array(await response.arrayBuffer());
+    instance.FS.mkdirTree("/fonts");
+    instance.FS.writeFile("/fonts/NotoSansSC-Regular.otf", bytes);
+  } catch (error) {
+    // 字体缺失时退回默认字体，中文会显示方框，不影响其它功能
+  }
 }
 
 async function ensurePackages(code) {
@@ -184,11 +241,16 @@ async function run(payload) {
   var started = Date.now();
   post({ type: "status", id: payload.id, message: "准备依赖…" });
   var warning = await ensurePackages(payload.code);
+  try {
+    pyodide.runPython("_rkh_setup_font()");
+  } catch (error) {
+    // 字体设置失败不影响运行
+  }
   post({ type: "status", id: payload.id, message: "运行中…" });
   var runner = pyodide.globals.get("_rkh_run");
   var output;
   try {
-    var proxy = runner(payload.code);
+    var proxy = runner(payload.code, payload.inputs || []);
     output = toPlain(proxy);
   } finally {
     if (runner && runner.destroy) runner.destroy();
@@ -211,6 +273,34 @@ async function run(payload) {
   });
 }
 
+async function analyze(payload) {
+  if (!pyodide) {
+    if (!bootPromise) {
+      post({ type: "analysis", id: payload.id, results: [], error: "运行时尚未开始加载" });
+      return;
+    }
+    await bootPromise;
+    if (!pyodide) {
+      post({ type: "analysis", id: payload.id, results: [], error: "运行时加载失败" });
+      return;
+    }
+  }
+  var check = pyodide.globals.get("_rkh_check");
+  var sources = payload.sources || [];
+  var results = [];
+  try {
+    for (var index = 0; index < sources.length; index += 1) {
+      var proxy = check(String(sources[index] == null ? "" : sources[index]));
+      var plain = toPlain(proxy);
+      if (proxy && proxy.destroy) proxy.destroy();
+      results.push({ ok: !!plain.ok, error: String(plain.error || ""), line: Number(plain.line || 0) });
+    }
+  } finally {
+    if (check && check.destroy) check.destroy();
+  }
+  post({ type: "analysis", id: payload.id, results: results });
+}
+
 self.onmessage = function (event) {
   var message = event.data || {};
   if (message.type === "init") {
@@ -219,6 +309,12 @@ self.onmessage = function (event) {
         post({ type: "fatal", message: String((error && error.message) || error) });
       });
     }
+    return;
+  }
+  if (message.type === "analyze") {
+    analyze(message).catch(function (error) {
+      post({ type: "analysis", id: message.id, results: [], error: String((error && error.message) || error) });
+    });
     return;
   }
   if (message.type === "run") {

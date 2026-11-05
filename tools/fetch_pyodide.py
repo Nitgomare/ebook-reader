@@ -37,6 +37,12 @@ CORE_FILES = [
     "pyodide-lock.json",
 ]
 DEFAULT_PACKAGES = ["numpy", "pandas", "matplotlib", "scipy", "sympy", "scikit-learn"]
+FONT_SOURCES = [
+    "https://gcore.jsdelivr.net/gh/notofonts/noto-cjk@main/Sans/SubsetOTF/SC/NotoSansSC-Regular.otf",
+    "https://fastly.jsdelivr.net/gh/notofonts/noto-cjk@main/Sans/SubsetOTF/SC/NotoSansSC-Regular.otf",
+]
+FONT_DIR = VENDOR / "fonts"
+FONT_NAME = "NotoSansSC-Regular.otf"
 
 
 def download(url: str, target: Path) -> None:
@@ -93,6 +99,63 @@ def dependency_closure(packages: dict[str, dict], seeds: list[str]) -> list[str]
     return sorted(seen)
 
 
+def gb2312_unicodes() -> str:
+    """ASCII + GB2312 全部汉字与常用符号，够教材里的中文图表用。"""
+    codes = set(range(0x20, 0x7F))
+    codes.update({0x3000, 0x3001, 0x3002, 0xFF0C, 0xFF1A, 0xFF1B, 0xFF01, 0xFF1F, 0x2014, 0x2026,
+                  0x201C, 0x201D, 0x2018, 0x2019, 0xFF08, 0xFF09, 0x3010, 0x3011, 0x00B0, 0x00B1,
+                  0x00D7, 0x00F7, 0x2103, 0x00B2, 0x00B3, 0x03BC, 0x03A9, 0x2192})
+    for high in range(0xB0, 0xF8):
+        for low in range(0xA1, 0xFF):
+            try:
+                char = bytes([high, low]).decode("gb2312")
+            except UnicodeDecodeError:
+                continue
+            codes.add(ord(char))
+    return ",".join(f"U+{code:04X}" for code in sorted(codes))
+
+
+def subset_font(source: Path, target: Path) -> bool:
+    try:
+        from fontTools.subset import main as subset_main
+    except ImportError:
+        print("  未安装 fonttools，直接使用完整字体（体积大）")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(source.read_bytes())
+        return True
+    target.parent.mkdir(parents=True, exist_ok=True)
+    subset_main([
+        str(source),
+        f"--unicodes={gb2312_unicodes()}",
+        f"--output-file={target}",
+        "--layout-features=*",
+        "--name-IDs=*",
+        "--drop-tables+=DSIG",
+    ])
+    return target.exists()
+
+
+def ensure_font(force: bool = False) -> None:
+    target = FONT_DIR / FONT_NAME
+    if target.exists() and target.stat().st_size > 500_000 and not force:
+        print(f"  已存在  fonts/{FONT_NAME}")
+        return
+    cache = ROOT / "tmp" / "font" / FONT_NAME
+    if not cache.exists() or force:
+        for url in FONT_SOURCES:
+            try:
+                download(url, cache)
+                break
+            except Exception as error:  # noqa: BLE001 - 换下一个镜像
+                print(f"  字体镜像不可用：{url}（{error}）")
+        else:
+            print("  中文字体下载失败，matplotlib 里的中文会显示方框。")
+            return
+    print(f"  子集化  fonts/{FONT_NAME}")
+    if subset_font(cache, target):
+        print(f"  完成    fonts/{FONT_NAME}（{target.stat().st_size / 1e6:.1f} MB）")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="下载 Pyodide 运行时到 vendor/pyodide/")
     parser.add_argument("--packages", default=",".join(DEFAULT_PACKAGES),
@@ -121,6 +184,8 @@ def main() -> int:
         return 1
 
     print(f"使用镜像：{base}")
+    print("中文字体：")
+    ensure_font(force=args.force)
     print("核心文件：")
     for name in CORE_FILES:
         ensure_file(base, name)

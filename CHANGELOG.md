@@ -9,6 +9,31 @@
 - 每次推送或部署前必须更新本文件。
 - 不在日志中记录密码、密钥、令牌、用户信息等敏感内容。
 
+## 2026-11-05（代码运行：只跑真 Python、支持 input()、图表中文不再方框）
+
+### 修复
+
+- 运行前先用 CPython 的 `compile()` 预检每个单元。教材 9 份章节 Notebook 里 554 个“代码单元”有 435 个其实是终端命令和终端输出（PDF 转 notebook 的产物，例如 `$ sudo apt-get update`、`rospack find actionlib` 和它们的返回值），以前点运行就刷一屏红色 traceback。现在这些单元标成「非 Python 代码」，不给运行按钮；单独点运行只显示一行灰字说明和编译器给的行号，不再抛红字。
+- 「运行全部」先判定后执行，只跑能编译的单元，结束时报「跳过 N 个非 Python 单元」。第 6 章实测：229 个代码单元里 210 个标记跳过、19 个可运行、0 条 traceback。
+
+### 新增
+
+- 支持 `input()`：运行前在页面上依次列出需要的输入值（提示语取自 `input("…")` 里的字面量，如「请输入姓名：」），填好再运行。值会像 Jupyter 一样回显在输出里；没填就运行时给一句可读提示，不再静默挂起。
+- 自带中文字体：Noto Sans SC 子集（GB2312 全字集 + 常用符号，1.8 MB）随运行时一起发布，`matplotlib` 第一次用到时自动注册，中文标题、轴标签、刻度不再显示方框；`axes.unicode_minus` 同步设为 `False`，负号正常显示。
+
+### 优化
+
+- 代码类型识别收紧：C 头文件（`#include`）、终端提示符（`$`、`>>>`、`In [n]:`）、中文说明段落、空格对齐的表格行都不再被当 Python 执行。
+- 代码块正文加内边距（`1.05rem 1.15rem`），代码文字不再紧贴左侧边框。
+- 运行条的体量提示从 12 MB 改为 14 MB（多出 1.8 MB 中文字体）。
+
+### 验收与部署
+
+- `node --test tools/python-detect.test.mjs` 6/6 通过；`tools/python-runtime.smoke.mjs` 21/21 通过（新增 input 取值、缺值提示、空提示回显三项）。
+- Playwright 端到端：第 6 章 0 条 traceback、210 个单元标记跳过、19 个可运行；干净的 numpy Notebook 首单元无报错；`input()` 面板填入「肥鱼」后 stdout 为「名字：肥鱼 / 你好 肥鱼」、末表达式回显 21；matplotlib 中文图的 `missing from font` 警告归零（截图 `tmp/python-runtime-qa/font-cjk.png`）。
+- 构建通过：24 套内容、315 个阅读页面、225 个代码/数据文件、5,232 个正文引用资源；`dist/pyodide` 内含 `fonts/NotoSansSC-Regular.otf`。
+- 发布：部署编号 `（待填）`。
+
 ## 2026-11-04（网页端直接运行 Python 代码：.py 与 .ipynb）
 
 ### 新增

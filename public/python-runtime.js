@@ -90,7 +90,7 @@
       setBusy(document.body, false);
       return;
     }
-    if (message.type === "result") {
+    if (message.type === "result" || message.type === "analysis") {
       var handler = session.pending.get(message.id);
       if (handler) {
         session.pending.delete(message.id);
@@ -132,7 +132,7 @@
     return worker;
   }
 
-  function runCode(code) {
+  function runCode(code, inputs) {
     return new Promise(function (resolve, reject) {
       var worker = ensureWorker();
       var id = "run-" + Date.now() + "-" + Math.random().toString(16).slice(2, 8);
@@ -151,7 +151,70 @@
         original(message);
       });
       session.state = "running";
-      worker.postMessage({ type: "run", id: id, code: code });
+      worker.postMessage({ type: "run", id: id, code: code, inputs: inputs || [] });
+    });
+  }
+
+  var INPUT_CALL = /(^|[^.\w$])input\s*\(/g;
+
+  /** 找出代码里需要输入的位置，以及 input() 里写死的提示语。 */
+  function inputPlan(code) {
+    var text = String(code || "");
+    var prompts = [];
+    var match;
+    INPUT_CALL.lastIndex = 0;
+    while ((match = INPUT_CALL.exec(text))) {
+      var rest = text.slice(match.index + match[0].length);
+      var literal = /^\s*(['"])((?:\\.|(?!\1).){0,160})\1/.exec(rest);
+      prompts.push(literal ? literal[2] : "");
+    }
+    return { count: prompts.length, prompts: prompts };
+  }
+
+  /** 运行前收集输入值：浏览器的 Promise 里没有终端，只能先填好。 */
+  function collectInputs(target, plan, title) {
+    return new Promise(function (resolve) {
+      var panel = element("div", "py-input-panel");
+      panel.appendChild(element("div", "py-input-title", title + "（" + plan.count + " 个值）"));
+      panel.appendChild(element("p", "py-input-note",
+        "浏览器里没有终端可以当场读入，先在下面填好，再点运行。留空表示输入空字符串。"));
+      var fields = [];
+      for (var index = 0; index < plan.count; index += 1) {
+        var row = element("label", "py-input-row");
+        row.appendChild(element("span", "py-input-label", plan.prompts[index] || ("输入 " + (index + 1))));
+        var box = element("input", "py-input-field");
+        box.type = "text";
+        row.appendChild(box);
+        panel.appendChild(row);
+        fields.push(box);
+      }
+      var submit = element("button", "py-run-button py-input-submit", "▶ 填入并运行");
+      submit.type = "button";
+      submit.addEventListener("click", function () {
+        var values = fields.map(function (box) { return box.value; });
+        panel.remove();
+        resolve(values);
+      });
+      panel.appendChild(submit);
+      target.appendChild(panel);
+      panel.scrollIntoView({ block: "nearest" });
+      if (fields[0]) fields[0].focus();
+    });
+  }
+
+  function analyzeSources(sources) {
+    return new Promise(function (resolve, reject) {
+      var worker = ensureWorker();
+      var id = "check-" + Date.now() + "-" + Math.random().toString(16).slice(2, 8);
+      session.pending.set(id, function (message) {
+        session.state = "ready";
+        if (message.error) {
+          reject(new Error(message.error));
+          return;
+        }
+        resolve(message.results || []);
+      });
+      worker.postMessage({ type: "analyze", id: id, sources: sources });
     });
   }
 
@@ -202,7 +265,7 @@
     var reset = element("button", "py-reset-button", "重启内核");
     reset.type = "button";
     reset.hidden = true;
-    var status = element("span", "py-run-status", "首次运行需下载约 12 MB 的 Python 运行时");
+    var status = element("span", "py-run-status", "首次运行需下载约 14 MB 的 Python 运行时");
     bar.appendChild(run);
     bar.appendChild(stop);
     bar.appendChild(reset);
@@ -223,7 +286,13 @@
       progress.textContent = "正在启动 Python 运行时…";
       setBusy(container, true);
       reset.hidden = false;
-      runCode(file.content || "").then(function (message) {
+      var source = file.content || "";
+      var plan = inputPlan(source);
+      var prepared = plan.count ? collectInputs(output, plan, "这段代码需要输入") : Promise.resolve([]);
+      prepared.then(function (values) {
+        progress.textContent = "正在启动 Python 运行时…";
+        return runCode(source, values);
+      }).then(function (message) {
         renderResult(output, message);
       }).catch(function (error) {
         progress.textContent = error && error.message === "timeout" ? "运行超过 10 分钟，已放弃" : "运行失败";
@@ -243,7 +312,7 @@
       terminateWorker();
       progress.textContent = "内核已重启，变量已清空";
       output.hidden = true;
-      status.textContent = "首次运行需下载约 12 MB 的 Python 运行时";
+      status.textContent = "首次运行需下载约 14 MB 的 Python 运行时";
       status.classList.remove("is-ready");
     });
   }
@@ -267,8 +336,9 @@
       var code = target ? target.textContent : source;
       var kind = DETECT.detectUnit(code, DETECT.detectFileKind(file) === "notebook" ? "notebook" : "python");
       var label = node.querySelector(".cell-label");
+      var badge = null;
       if (label) {
-        var badge = element("span", "cell-kind", DETECT.kindLabel(kind.kind));
+        badge = element("span", "cell-kind", DETECT.kindLabel(kind.kind));
         badge.setAttribute("data-kind", kind.kind);
         label.appendChild(badge);
       }
@@ -280,11 +350,14 @@
       var output = element("div", "py-run-output cell-run-output");
       output.hidden = true;
       node.appendChild(output);
-      var entry = { node: node, code: code, output: output };
+      var entry = {
+        node: node, code: code, output: output, badge: badge, kind: kind.kind, verdict: null, button: null,
+      };
       pythonCells.push(entry);
       if (!label) return;
       var button = element("button", "cell-run-button", "▶ 运行");
       button.type = "button";
+      entry.button = button;
       button.addEventListener("click", function () {
         runSingle(entry, button);
       });
@@ -308,7 +381,7 @@
     reset.type = "button";
     reset.hidden = true;
     var status = element("span", "py-run-status",
-      pythonCells.length + " 个 Python 单元 · 首次运行需下载约 12 MB 运行时");
+      pythonCells.length + " 个 Python 单元 · 首次运行需下载约 14 MB 运行时");
     bar.appendChild(runAll);
     bar.appendChild(stop);
     bar.appendChild(reset);
@@ -318,17 +391,73 @@
     var progress = element("p", "py-run-progress");
     container.insertBefore(progress, container.firstChild.nextSibling);
 
-    function runSingle(entry, button) {
+    function markNotRunnable(entry, verdict) {
+      entry.verdict = verdict || { ok: false, error: "" };
+      entry.node.classList.remove("cell--runnable");
+      entry.node.classList.add("cell--not-runnable");
+      if (entry.button) {
+        entry.button.remove();
+        entry.button = null;
+      }
+      if (entry.badge) {
+        entry.badge.textContent = entry.kind === "python" ? "非 Python 代码" : DETECT.kindLabel(entry.kind);
+        entry.badge.setAttribute("data-kind", "text");
+      }
+    }
+
+    function ensureVerdict(entry) {
+      if (entry.verdict) return Promise.resolve(entry.verdict);
+      return analyzeSources([entry.code]).then(function (results) {
+        var verdict = (results && results[0]) || { ok: false, error: "无法判定", line: 0 };
+        if (!verdict.ok) markNotRunnable(entry, verdict);
+        else entry.verdict = verdict;
+        return verdict;
+      });
+    }
+
+    function renderSkipped(target, entry, verdict) {
+      target.textContent = "";
+      target.hidden = false;
+      target.appendChild(element("div", "py-output-header", "不是 Python 代码 · 未执行"));
+      var reason = "";
+      if (verdict && verdict.error) {
+        reason = "编译器报错：" + verdict.error + (verdict.line ? "（第 " + verdict.line + " 行）" : "") + "。";
+      }
+      target.appendChild(element("p", "py-output-note",
+        "这一段的内容是终端命令、程序输出或其它语言的代码，浏览器里只执行 Python，已跳过。" + reason));
+    }
+
+    function runSingle(entry, button, values) {
+      if (entry.verdict && !entry.verdict.ok) {
+        renderSkipped(entry.output, entry, entry.verdict);
+        return Promise.resolve(null);
+      }
       entry.output.textContent = "";
       entry.output.hidden = false;
-      var line = element("p", "py-run-progress", "运行中…");
+      var line = element("p", "py-run-progress", "检查代码…");
       entry.output.appendChild(line);
       if (button) button.disabled = true;
-      return runCode(entry.code).then(function (message) {
-        renderResult(entry.output, message);
-        return message;
+      return ensureVerdict(entry).then(function (verdict) {
+        if (!verdict.ok) {
+          renderSkipped(entry.output, entry, verdict);
+          return null;
+        }
+        var plan = inputPlan(entry.code);
+        if (plan.count && !values) {
+          line.remove();
+          if (button) button.disabled = false;
+          return collectInputs(entry.output, plan, "这个单元需要输入").then(function (collected) {
+            if (button) button.disabled = true;
+            return runSingle(entry, button, collected);
+          });
+        }
+        line.textContent = "运行中…";
+        return runCode(entry.code, values).then(function (message) {
+          renderResult(entry.output, message);
+          return message;
+        });
       }).catch(function (error) {
-        line.textContent = error && error.message === "timeout" ? "运行超过 10 分钟，已放弃" : "运行失败";
+        line.textContent = error && error.message === "timeout" ? "运行超过 10 分钟，已放弃" : "运行时不可用，请刷新页面重试";
         line.classList.add("is-error");
         return null;
       }).finally(function () {
@@ -340,19 +469,70 @@
       reset.hidden = false;
       setBusy(container, true);
       progress.classList.remove("is-error");
-      var index = 0;
-      function next() {
-        if (index >= pythonCells.length) {
-          progress.textContent = "全部 " + pythonCells.length + " 个单元运行完毕";
+      progress.textContent = "正在检查 " + pythonCells.length + " 个单元…";
+      analyzeSources(pythonCells.map(function (entry) { return entry.code; })).then(function (results) {
+        var runnable = [];
+        var skipped = 0;
+        pythonCells.forEach(function (entry, index) {
+          var verdict = (results && results[index]) || { ok: false, error: "无法判定", line: 0 };
+          entry.verdict = verdict;
+          if (verdict.ok) {
+            runnable.push(entry);
+            return;
+          }
+          skipped += 1;
+          markNotRunnable(entry, verdict);
+          renderSkipped(entry.output, entry, verdict);
+        });
+        if (!runnable.length) {
+          progress.textContent = "没有可直接运行的 Python 单元（" + skipped + " 个单元是终端命令、输出或其它语言）";
           setBusy(container, false);
           return;
         }
-        var entry = pythonCells[index];
-        index += 1;
-        progress.textContent = "运行第 " + index + " / " + pythonCells.length + " 个单元…";
-        runSingle(entry, entry.node.querySelector(".cell-run-button")).then(next);
-      }
-      next();
+        var index = 0;
+        var plans = runnable.map(function (entry) { return inputPlan(entry.code); });
+        var total = plans.reduce(function (sum, plan) { return sum + plan.count; }, 0);
+        var begin = Promise.resolve([]);
+        if (total) {
+          var prompts = [];
+          plans.forEach(function (plan, position) {
+            plan.prompts.forEach(function (prompt) {
+              prompts.push(prompt || ("第 " + (position + 1) + " 个可运行单元"));
+            });
+          });
+          progress.textContent = "运行前需要填写 " + total + " 个输入值";
+          var holder = element("div", "py-run-output");
+          container.insertBefore(holder, progress.nextSibling);
+          begin = collectInputs(holder, { count: total, prompts: prompts }, "这次运行需要输入");
+        }
+        begin.then(function (values) {
+          var cursor = 0;
+          var slices = plans.map(function (plan) {
+            var slice = values.slice(cursor, cursor + plan.count);
+            cursor += plan.count;
+            return slice;
+          });
+          progress.textContent = "开始运行 " + runnable.length + " 个单元…";
+        function next() {
+          if (index >= runnable.length) {
+            progress.textContent = "全部 " + runnable.length + " 个单元运行完毕" +
+              (skipped ? "，跳过 " + skipped + " 个非 Python 单元" : "");
+            setBusy(container, false);
+            return;
+          }
+          var entry = runnable[index];
+          var cellInputs = slices[index];
+          index += 1;
+          progress.textContent = "运行第 " + index + " / " + runnable.length + " 个单元…";
+          runSingle(entry, entry.button, cellInputs).then(next);
+        }
+        next();
+        });
+      }).catch(function () {
+        progress.textContent = "运行时不可用，请刷新页面重试";
+        progress.classList.add("is-error");
+        setBusy(container, false);
+      });
     });
 
     stop.addEventListener("click", function () {
@@ -364,7 +544,7 @@
     reset.addEventListener("click", function () {
       terminateWorker();
       progress.textContent = "内核已重启，变量已清空";
-      status.textContent = pythonCells.length + " 个 Python 单元 · 首次运行需下载约 12 MB 运行时";
+      status.textContent = pythonCells.length + " 个 Python 单元 · 首次运行需下载约 14 MB 运行时";
       status.classList.remove("is-ready");
     });
   }
